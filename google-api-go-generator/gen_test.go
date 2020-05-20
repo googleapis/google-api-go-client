@@ -213,3 +213,32 @@ func TestSupportsPaging(t *testing.T) {
 		}
 	}
 }
+
+func TestIsNewerRevision(t *testing.T) {
+	olderBytesPath, newerBytesPath := filepath.Join("testdata", "rev20200415.json"), filepath.Join("testdata", "rev20200416.json")
+	olderBytes, err := ioutil.ReadFile(olderBytesPath)
+	if err != nil {
+		t.Fatalf("ioutil.ReadFile(%q) = %v; want nil", olderBytesPath, err)
+	}
+	newerBytes, err := ioutil.ReadFile(newerBytesPath)
+	if err != nil {
+		t.Fatalf("ioutil.ReadFile(%q) = %v; want nil", newerBytesPath, err)
+	}
+
+	// newBytes > oldBytes
+	if err := isNewerRevision(olderBytes, newerBytes); err != nil {
+		t.Fatalf("isNewerRevision(%q, %q) = %v; want nil", string(olderBytes), string(newerBytes), err)
+	}
+	// newBytes == newBytes
+	if err := isNewerRevision(newerBytes, newerBytes); err != nil {
+		t.Fatalf("isNewerRevision(%q, %q) = %v; want nil", string(newerBytes), string(newerBytes), err)
+	}
+	// newBytes < newBytes
+	err = isNewerRevision(newerBytes, olderBytes)
+	if err == nil {
+		t.Fatalf("isNewerRevision(%q, %q) = nil; want %v", string(newerBytes), string(olderBytes), errOldRevision)
+	}
+	if err != errOldRevision {
+		t.Fatalf("got %v, want %v", err, errOldRevision)
+	}
+}

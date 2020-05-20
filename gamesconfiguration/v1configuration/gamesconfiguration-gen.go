@@ -193,7 +193,7 @@ type AchievementConfiguration struct {
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string <code>gamesConfiguration#achievementConfiguration</code>.
+	// string `gamesConfiguration#achievementConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// Published: The read-only published data of the achievement.
@@ -245,8 +245,7 @@ type AchievementConfigurationDetail struct {
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string
-	// <code>gamesConfiguration#achievementConfigurationDetail</code>.
+	// string `gamesConfiguration#achievementConfigurationDetail`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Localized strings for the achievement name.
@@ -288,11 +287,8 @@ type AchievementConfigurationListResponse struct {
 	Items []*AchievementConfiguration `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the
-	// fixed
-	// string
-	// <code>gamesConfiguration#achievementConfigurationListResp
-	// onse</code>.
+	// the fixed
+	// string `gamesConfiguration#achievementConfigurationListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -453,7 +449,7 @@ type ImageConfiguration struct {
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string <code>gamesConfiguration#imageConfiguration</code>.
+	// string `gamesConfiguration#imageConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// ResourceId: The resource ID of resource which the image belongs to.
@@ -499,7 +495,7 @@ type LeaderboardConfiguration struct {
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string <code>gamesConfiguration#leaderboardConfiguration</code>.
+	// string `gamesConfiguration#leaderboardConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// Published: The read-only published data of the leaderboard.
@@ -555,8 +551,7 @@ type LeaderboardConfigurationDetail struct {
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string
-	// <code>gamesConfiguration#leaderboardConfigurationDetail</code>.
+	// string `gamesConfiguration#leaderboardConfigurationDetail`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Localized strings for the leaderboard name.
@@ -601,8 +596,8 @@ type LeaderboardConfigurationListResponse struct {
 	// the
 	// fixed
 	// string
-	// <code>gamesConfiguration#leaderboardConfigurationListResp
-	// onse</code>.
+	// `gamesConfiguration#leaderboardConfigurationListResponse`
+	// .
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -639,7 +634,7 @@ func (s *LeaderboardConfigurationListResponse) MarshalJSON() ([]byte, error) {
 type LocalizedString struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string <code>gamesConfiguration#localizedString</code>.
+	// string `gamesConfiguration#localizedString`.
 	Kind string `json:"kind,omitempty"`
 
 	// Locale: The locale string.
@@ -675,7 +670,7 @@ func (s *LocalizedString) MarshalJSON() ([]byte, error) {
 type LocalizedStringBundle struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed
-	// string <code>gamesConfiguration#localizedStringBundle</code>.
+	// string `gamesConfiguration#localizedStringBundle`.
 	Kind string `json:"kind,omitempty"`
 
 	// Translations: The locale strings.
@@ -748,7 +743,7 @@ func (c *AchievementConfigurationsDeleteCall) Header() http.Header {
 
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -861,7 +856,7 @@ func (c *AchievementConfigurationsGetCall) Header() http.Header {
 
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -995,7 +990,7 @@ func (c *AchievementConfigurationsInsertCall) Header() http.Header {
 
 func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1111,7 +1106,7 @@ func (r *AchievementConfigurationsService) List(applicationId string) *Achieveme
 // number of resource configurations to return in the response,
 // used for paging. For any response, the actual number of resources
 // returned
-// may be less than the specified <code>maxResults</code>.
+// may be less than the specified `maxResults`.
 func (c *AchievementConfigurationsListCall) MaxResults(maxResults int64) *AchievementConfigurationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1161,7 +1156,7 @@ func (c *AchievementConfigurationsListCall) Header() http.Header {
 
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1239,7 +1234,7 @@ func (c *AchievementConfigurationsListCall) Do(opts ...googleapi.CallOption) (*A
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified \u003ccode\u003emaxResults\u003c/code\u003e.",
+	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1329,7 +1324,7 @@ func (c *AchievementConfigurationsUpdateCall) Header() http.Header {
 
 func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1509,7 +1504,7 @@ func (c *ImageConfigurationsUploadCall) Header() http.Header {
 
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1692,7 +1687,7 @@ func (c *LeaderboardConfigurationsDeleteCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1805,7 +1800,7 @@ func (c *LeaderboardConfigurationsGetCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1939,7 +1934,7 @@ func (c *LeaderboardConfigurationsInsertCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2055,7 +2050,7 @@ func (r *LeaderboardConfigurationsService) List(applicationId string) *Leaderboa
 // number of resource configurations to return in the response,
 // used for paging. For any response, the actual number of resources
 // returned
-// may be less than the specified <code>maxResults</code>.
+// may be less than the specified `maxResults`.
 func (c *LeaderboardConfigurationsListCall) MaxResults(maxResults int64) *LeaderboardConfigurationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -2105,7 +2100,7 @@ func (c *LeaderboardConfigurationsListCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2183,7 +2178,7 @@ func (c *LeaderboardConfigurationsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified \u003ccode\u003emaxResults\u003c/code\u003e.",
+	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2273,7 +2268,7 @@ func (c *LeaderboardConfigurationsUpdateCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

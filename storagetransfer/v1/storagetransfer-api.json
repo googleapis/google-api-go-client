@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200405",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -424,6 +424,36 @@
         },
         "bucketName": {
           "description": "Required. S3 Bucket name (see\n[Creating a\nbucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AzureBlobStorageData": {
+      "description": "An AzureBlobStorageData resource can be a data source, but not a data sink.\nAn AzureBlobStorageData resource represents one Azure container. The storage\naccount determines the [Azure\nendpoint](https://docs.microsoft.com/en-us/azure/storage/common/storage-create-storage-account#storage-account-endpoints).\nIn an AzureBlobStorageData resource, a blobs's name is the [Azure Blob\nStorage blob's key\nname](https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#blob-names).",
+      "id": "AzureBlobStorageData",
+      "properties": {
+        "azureCredentials": {
+          "$ref": "AzureCredentials",
+          "description": "Required. Credentials used to authenticate API requests to Azure."
+        },
+        "container": {
+          "description": "Required. The container to transfer from the Azure Storage account.",
+          "type": "string"
+        },
+        "storageAccount": {
+          "description": "Required. The name of the Azure Storage account.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AzureCredentials": {
+      "description": "Azure credentials",
+      "id": "AzureCredentials",
+      "properties": {
+        "sasToken": {
+          "description": "Required. Azure shared access signature. (see\n[Grant limited access to Azure Storage resources using shared access\nsignatures\n(SAS)](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)).",
           "type": "string"
         }
       },
@@ -601,6 +631,50 @@
             "$ref": "TransferJob"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "NotificationConfig": {
+      "description": "Specification to configure notifications published to Cloud Pub/Sub.\nNotifications will be published to the customer-provided topic using the\nfollowing `PubsubMessage.attributes`:\n\n* `\"eventType\"`: one of the EventType values\n* `\"payloadFormat\"`: one of the PayloadFormat values\n* `\"projectId\"`: the project_id of the\n`TransferOperation`\n* `\"transferJobName\"`: the\ntransfer_job_name of the\n`TransferOperation`\n* `\"transferOperationName\"`: the name of the\n`TransferOperation`\n\nThe `PubsubMessage.data` will contain a TransferOperation resource\nformatted according to the specified `PayloadFormat`.",
+      "id": "NotificationConfig",
+      "properties": {
+        "eventTypes": {
+          "description": "Event types for which a notification is desired. If empty, send\nnotifications for all event types.",
+          "enumDescriptions": [
+            "Illegal value, to avoid allowing a default.",
+            "`TransferOperation` completed with status\nSUCCESS.",
+            "`TransferOperation` completed with status\nFAILED.",
+            "`TransferOperation` completed with status\nABORTED."
+          ],
+          "items": {
+            "enum": [
+              "EVENT_TYPE_UNSPECIFIED",
+              "TRANSFER_OPERATION_SUCCESS",
+              "TRANSFER_OPERATION_FAILED",
+              "TRANSFER_OPERATION_ABORTED"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "payloadFormat": {
+          "description": "Required. The desired format of the notification message payloads.",
+          "enum": [
+            "PAYLOAD_FORMAT_UNSPECIFIED",
+            "NONE",
+            "JSON"
+          ],
+          "enumDescriptions": [
+            "Illegal value, to avoid allowing a default.",
+            "No payload is included with the notification.",
+            "`TransferOperation` is [formatted as a JSON\nresponse](https://developers.google.com/protocol-buffers/docs/proto3#json),\nin application/json."
+          ],
+          "type": "string"
+        },
+        "pubsubTopic": {
+          "description": "Required. The `Topic.name` of the Cloud Pub/Sub topic to which to publish\nnotifications. Must be of the format: `projects/{project}/topics/{topic}`.\nNot matching this format will result in an\nINVALID_ARGUMENT error.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -880,6 +954,10 @@
           "description": "A unique name (within the transfer project) assigned when the job is\ncreated.  If this field is empty in a CreateTransferJobRequest, Storage\nTransfer Service will assign a unique name. Otherwise, the specified name\nis used as the unique name for this job.\n\nIf the specified name is in use by a job, the creation request fails with\nan ALREADY_EXISTS error.\n\nThis name must start with `\"transferJobs/\"` prefix and end with a letter or\na number, and should be no more than 128 characters.\nExample: `\"transferJobs/[A-Za-z0-9-._~]*[A-Za-z0-9]$\"`\n\nInvalid job names will fail with an\nINVALID_ARGUMENT error.",
           "type": "string"
         },
+        "notificationConfig": {
+          "$ref": "NotificationConfig",
+          "description": "Notification configuration."
+        },
         "projectId": {
           "description": "The ID of the Google Cloud Platform Project that owns the job.",
           "type": "string"
@@ -934,6 +1012,10 @@
         "name": {
           "description": "A globally unique ID assigned by the system.",
           "type": "string"
+        },
+        "notificationConfig": {
+          "$ref": "NotificationConfig",
+          "description": "Notification configuration."
         },
         "projectId": {
           "description": "The ID of the Google Cloud Platform Project that owns the operation.",
@@ -1004,6 +1086,10 @@
           "$ref": "AwsS3Data",
           "description": "An AWS S3 data source."
         },
+        "azureBlobStorageDataSource": {
+          "$ref": "AzureBlobStorageData",
+          "description": "An Azure Blob Storage data source."
+        },
         "gcsDataSink": {
           "$ref": "GcsData",
           "description": "A Cloud Storage data sink."
@@ -1037,10 +1123,10 @@
         },
         "transferJob": {
           "$ref": "TransferJob",
-          "description": "Required. The job to update. `transferJob` is expected to specify only\nthree fields:\ndescription,\ntransfer_spec, and\nstatus.  An `UpdateTransferJobRequest` that specifies\nother fields will be rejected with the error\nINVALID_ARGUMENT."
+          "description": "Required. The job to update. `transferJob` is expected to specify only\nfour fields: description,\ntransfer_spec,\nnotification_config, and\nstatus.  An `UpdateTransferJobRequest` that specifies\nother fields will be rejected with the error\nINVALID_ARGUMENT."
         },
         "updateTransferJobFieldMask": {
-          "description": "The field mask of the fields in `transferJob` that are to be updated in\nthis request.  Fields in `transferJob` that can be updated are:\ndescription,\ntransfer_spec, and\nstatus.  To update the `transfer_spec` of the job, a\ncomplete transfer specification must be provided. An incomplete\nspecification missing any required fields will be rejected with the error\nINVALID_ARGUMENT.",
+          "description": "The field mask of the fields in `transferJob` that are to be updated in\nthis request.  Fields in `transferJob` that can be updated are:\ndescription,\ntransfer_spec,\nnotification_config, and\nstatus.  To update the `transfer_spec` of the job, a\ncomplete transfer specification must be provided. An incomplete\nspecification missing any required fields will be rejected with the error\nINVALID_ARGUMENT.",
           "format": "google-fieldmask",
           "type": "string"
         }

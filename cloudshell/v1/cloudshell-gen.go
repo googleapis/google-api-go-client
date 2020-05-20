@@ -247,6 +247,8 @@ type Environment struct {
 	// automatically transition back to DISABLED after a period of
 	// inactivity or
 	// if another environment is started.
+	//   "DELETING" - The environment is being deleted and can't be
+	// connected to.
 	State string `json:"state,omitempty"`
 
 	// VmSizeExpireTime: Output only. The time when the Environment will
@@ -480,9 +482,18 @@ type StartEnvironmentMetadata struct {
 	// this state for an extended period of time if the system is
 	// experiencing
 	// heavy load.
-	//   "FINISHED" - Startup is complete and the user should be able to
-	// establish an SSH
-	// connection to their environment.
+	//   "AWAITING_COMPUTE_RESOURCES" - Startup is waiting for compute
+	// resources to be assigned to the
+	// environment. This should normally happen very quickly, but an
+	// environment
+	// might stay in this state for an extended period of time if the system
+	// is
+	// experiencing heavy load.
+	//   "FINISHED" - Startup has completed. If the start operation was
+	// successful, the user
+	// should be able to establish an SSH connection to their
+	// environment.
+	// Otherwise, the operation will contain details of the failure.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "State") to
@@ -654,7 +665,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -798,7 +809,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -943,7 +954,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1124,7 +1135,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

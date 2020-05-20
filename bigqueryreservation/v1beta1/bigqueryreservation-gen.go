@@ -303,13 +303,13 @@ func (s *BiReservation) MarshalJSON() ([]byte, error) {
 
 // CapacityCommitment: Capacity commitment is a way to purchase compute
 // capacity for BigQuery jobs
-// (in the form of slots) with some committed period of usage. Monthly
-// and
-// annual commitments renew by default. Only flex commitments can be
-// removed. In
-// order to remove monthly or annual commitments, their plan needs to be
-// changed
-// to flex first.
+// (in the form of slots) with some committed period of usage.
+// Annual
+// commitments renew by default. Commitments can be removed after
+// their
+// commitment end time passes. In order to remove annual commitment, its
+// plan
+// needs to be changed to monthly or flex first.
 //
 // A capacity commitment resource exists as a child resource of the
 // admin
@@ -340,19 +340,30 @@ type CapacityCommitment struct {
 	// After that, they are not in a committed period anymore and can be
 	// removed
 	// any time.
+	//   "TRIAL" - Trial commitments have a committed period of 182 days
+	// after becoming
+	// ACTIVE. After that, they are converted to a new commitment based on
+	// the
+	// renewal_plan. Default renewal_plan for Trial commitment is Flex so
+	// that
+	// it can be deleted right after committed period ends.
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming
-	// ACTIVE.
+	// ACTIVE. After that, they are not in a committed period anymore and
+	// can be
+	// removed any time.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming
-	// ACTIVE.
+	// ACTIVE. After that they are converted to a new commitment based on
+	// the
+	// renewal_plan.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
 	// commitment_end_time
 	// passes. Once the plan is changed, committed period is extended
 	// according to
-	// commitment plan. Only applicable for MONTHLY and ANNUAL commitments.
+	// commitment plan. Only applicable for ANNUAL commitments.
 	//
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Invalid plan value. Requests with
@@ -363,12 +374,23 @@ type CapacityCommitment struct {
 	// After that, they are not in a committed period anymore and can be
 	// removed
 	// any time.
+	//   "TRIAL" - Trial commitments have a committed period of 182 days
+	// after becoming
+	// ACTIVE. After that, they are converted to a new commitment based on
+	// the
+	// renewal_plan. Default renewal_plan for Trial commitment is Flex so
+	// that
+	// it can be deleted right after committed period ends.
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
 	// after becoming
-	// ACTIVE.
+	// ACTIVE. After that, they are not in a committed period anymore and
+	// can be
+	// removed any time.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming
-	// ACTIVE.
+	// ACTIVE. After that they are converted to a new commitment based on
+	// the
+	// renewal_plan.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -412,6 +434,39 @@ type CapacityCommitment struct {
 
 func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityCommitment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateSlotPoolMetadata: The metadata for operation returned
+// from
+// ReservationService.CreateSlotPool.
+type CreateSlotPoolMetadata struct {
+	// SlotPool: Resource name of the slot pool that is being created.
+	// E.g.,
+	// projects/myproject/locations/us-central1/reservations/foo/slotPo
+	// ols/123
+	SlotPool string `json:"slotPool,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SlotPool") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SlotPool") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateSlotPoolMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateSlotPoolMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -838,51 +893,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpgradeCapacityCommitmentPlanRequest: The request for
-// ReservationService.UpgradeCapacityCommitmentPlan.
-type UpgradeCapacityCommitmentPlanRequest struct {
-	// Plan: New capacity commitment plan.
-	//
-	// Possible values:
-	//   "COMMITMENT_PLAN_UNSPECIFIED" - Invalid plan value. Requests with
-	// this value will be rejected with
-	// error code `google.rpc.Code.INVALID_ARGUMENT`.
-	//   "FLEX" - Flex commitments have committed period of 1 minute after
-	// becoming ACTIVE.
-	// After that, they are not in a committed period anymore and can be
-	// removed
-	// any time.
-	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
-	// after becoming
-	// ACTIVE.
-	//   "ANNUAL" - Annual commitments have a committed period of 365 days
-	// after becoming
-	// ACTIVE.
-	Plan string `json:"plan,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Plan") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Plan") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UpgradeCapacityCommitmentPlanRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UpgradeCapacityCommitmentPlanRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "bigqueryreservation.projects.locations.getBiReservation":
 
 type ProjectsLocationsGetBiReservationCall struct {
@@ -938,7 +948,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1128,7 +1138,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1314,7 +1324,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1470,7 +1480,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1618,7 +1628,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1760,7 +1770,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1919,7 +1929,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2093,7 +2103,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2201,7 +2211,12 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 
 // Patch: Updates an existing capacity commitment.
 //
-// Only renewal_plan field can be updated.
+// Only plan and renewal_plan fields can be updated.
+// Plan can only be changed to a plan of a longer commitment
+// period.
+// Attempting to change to a plan with shorter commitment period will
+// fail
+// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2243,7 +2258,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,7 +2322,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing capacity commitment.\n\nOnly renewal_plan field can be updated.",
+	//   "description": "Updates an existing capacity commitment.\n\nOnly plan and renewal_plan fields can be updated.\nPlan can only be changed to a plan of a longer commitment period.\nAttempting to change to a plan with shorter commitment period will fail\nwith the error code `google.rpc.Code.FAILED_PRECONDITION`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.patch",
@@ -2398,7 +2413,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2493,155 +2508,6 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Do(opts ...googleapi.Cal
 
 }
 
-// method id "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan":
-
-type ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall struct {
-	s                                    *Service
-	capacityCommitment                   string
-	upgradecapacitycommitmentplanrequest *UpgradeCapacityCommitmentPlanRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
-}
-
-// UpgradeCapacityCommitmentPlan: Replaces an existing commitment with a
-// new commitment of a different plan.
-// Plan can only be changed to a plan of a longer commitment period.
-// New
-// commitment start is set to a current time. Attempting to change to a
-// plan
-// with shorter commitment period will fail with the error
-// code
-// `google.rpc.Code.FAILED_PRECONDITION`.
-func (r *ProjectsLocationsCapacityCommitmentsService) UpgradeCapacityCommitmentPlan(capacityCommitment string, upgradecapacitycommitmentplanrequest *UpgradeCapacityCommitmentPlanRequest) *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall {
-	c := &ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.capacityCommitment = capacityCommitment
-	c.upgradecapacitycommitmentplanrequest = upgradecapacitycommitmentplanrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall) Fields(s ...googleapi.Field) *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall) Context(ctx context.Context) *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upgradecapacitycommitmentplanrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+capacityCommitment}:upgradeCapacityCommitmentPlan")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"capacityCommitment": c.capacityCommitment,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan" call.
-// Exactly one of *CapacityCommitment or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CapacityCommitment.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsCapacityCommitmentsUpgradeCapacityCommitmentPlanCall) Do(opts ...googleapi.CallOption) (*CapacityCommitment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CapacityCommitment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Replaces an existing commitment with a new commitment of a different plan.\nPlan can only be changed to a plan of a longer commitment period. New\ncommitment start is set to a current time. Attempting to change to a plan\nwith shorter commitment period will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:upgradeCapacityCommitmentPlan",
-	//   "httpMethod": "POST",
-	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan",
-	//   "parameterOrder": [
-	//     "capacityCommitment"
-	//   ],
-	//   "parameters": {
-	//     "capacityCommitment": {
-	//       "description": "Required. The resource name e.g.,:\n  projects/myproject/locations/US/capacityCommitments/123",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+capacityCommitment}:upgradeCapacityCommitmentPlan",
-	//   "request": {
-	//     "$ref": "UpgradeCapacityCommitmentPlanRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CapacityCommitment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/bigquery",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "bigqueryreservation.projects.locations.reservations.create":
 
 type ProjectsLocationsReservationsCreateCall struct {
@@ -2697,7 +2563,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2844,7 +2710,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +2852,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3160,7 +3026,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3340,7 +3206,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3493,7 +3359,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3646,7 +3512,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3819,7 +3685,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3997,7 +3863,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -132,7 +132,7 @@
       }
     }
   },
-  "revision": "20200218",
+  "revision": "20200428",
   "rootUrl": "https://driveactivity.googleapis.com/",
   "schemas": {
     "Action": {
@@ -895,10 +895,10 @@
         },
         "consolidationStrategy": {
           "$ref": "ConsolidationStrategy",
-          "description": "Details on how to consolidate related actions that make up the activity. If\nnot set, then related actions will not be consolidated."
+          "description": "Details on how to consolidate related actions that make up the activity. If\nnot set, then related actions are not consolidated."
         },
         "filter": {
-          "description": "The filtering for items returned from this query request. The format of the\nfilter string is a sequence of expressions, joined by an optional \"AND\",\nwhere each expression is of the form \"field operator value\".\n\nSupported fields:\n\n  - \u003ctt\u003etime\u003c/tt\u003e: Uses numerical operators on date values either in\n    terms of milliseconds since Jan 1, 1970 or in RFC 3339 format.\n    Examples:\n      - \u003ctt\u003etime \u003e 1452409200000 AND time \u003c= 1492812924310\u003c/tt\u003e\n      - \u003ctt\u003etime \u003e= \"2016-01-10T01:02:03-05:00\"\u003c/tt\u003e\n\n  - \u003ctt\u003edetail.action_detail_case\u003c/tt\u003e: Uses the \"has\" operator (:) and\n    either a singular value or a list of allowed action types enclosed in\n    parentheses.\n    Examples:\n      - \u003ctt\u003edetail.action_detail_case: RENAME\u003c/tt\u003e\n      - \u003ctt\u003edetail.action_detail_case:(CREATE UPLOAD)\u003c/tt\u003e\n      - \u003ctt\u003e-detail.action_detail_case:MOVE\u003c/tt\u003e",
+          "description": "The filtering for items returned from this query request. The format of the\nfilter string is a sequence of expressions, joined by an optional \"AND\",\nwhere each expression is of the form \"field operator value\".\n\nSupported fields:\n\n  - \u003ctt\u003etime\u003c/tt\u003e: Uses numerical operators on date values either in\n    terms of milliseconds since Jan 1, 1970 or in RFC 3339 format.\n    Examples:\n      - \u003ctt\u003etime \u003e 1452409200000 AND time \u003c= 1492812924310\u003c/tt\u003e\n      - \u003ctt\u003etime \u003e= \"2016-01-10T01:02:03-05:00\"\u003c/tt\u003e\n\n  - \u003ctt\u003edetail.action_detail_case\u003c/tt\u003e: Uses the \"has\" operator (:) and\n    either a singular value or a list of allowed action types enclosed in\n    parentheses.\n    Examples:\n      - \u003ctt\u003edetail.action_detail_case: RENAME\u003c/tt\u003e\n      - \u003ctt\u003edetail.action_detail_case:(CREATE EDIT)\u003c/tt\u003e\n      - \u003ctt\u003e-detail.action_detail_case:MOVE\u003c/tt\u003e",
           "type": "string"
         },
         "itemName": {
@@ -906,12 +906,12 @@
           "type": "string"
         },
         "pageSize": {
-          "description": "The requested number of activity to return. If not set, a default value\nwill be used.",
+          "description": "The miminum number of activities desired in the response; the server will\nattempt to return at least this quanitity. The server may also return fewer\nactivities if it has a partial response ready before the request times out.\nIf not set, a default value is used.",
           "format": "int32",
           "type": "integer"
         },
         "pageToken": {
-          "description": "The next_page_token value returned from a previous QueryDriveActivity\nrequest, if any.",
+          "description": "The token identifying which page of results to return. Set this to the\nnext_page_token value returned from a previous query to obtain the\nfollowing page of results. If not set, the first page of results will be\nreturned.",
           "type": "string"
         }
       },

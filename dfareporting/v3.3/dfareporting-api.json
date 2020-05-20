@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/2DXbE-BPrSqdiwxL8mZiY5h8A4U\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/A0StowLCk6_YQOwCP1AS7g6Vp58\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1147,6 +1147,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Advertiser group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1374,6 +1375,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Landing page ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1619,6 +1621,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Advertiser ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -1991,6 +1994,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Campaign ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -2578,6 +2582,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Content category ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3006,7 +3011,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing creative field. This method supports patch semantics.",
+          "description": "Updates an existing creative field value. This method supports patch semantics.",
           "httpMethod": "PATCH",
           "id": "dfareporting.creativeFieldValues.patch",
           "parameterOrder": [
@@ -3023,6 +3028,7 @@
               "type": "string"
             },
             "id": {
+              "description": "Creative Field Value ID",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3269,6 +3275,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Creative Field ID",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3486,6 +3493,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Creative group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -3804,6 +3812,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Creative ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -4421,6 +4430,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Event tag ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -4848,6 +4858,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Floodlight activity ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -5075,6 +5086,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Floodlight activity Group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -5203,6 +5215,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Floodlight configuration ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6286,6 +6299,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Placement group ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6517,6 +6531,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Placement strategy ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -6942,6 +6957,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Placement ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -7314,6 +7330,7 @@
               "type": "string"
             },
             "remarketingListId": {
+              "description": "Remarketing list ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -7521,6 +7538,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Remarketing list ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -7890,7 +7908,7 @@
         "files": {
           "methods": {
             "get": {
-              "description": "Retrieves a report file. This method supports media download.",
+              "description": "Retrieves a report file by its report ID and file ID. This method supports media download.",
               "httpMethod": "GET",
               "id": "dfareporting.reports.files.get",
               "parameterOrder": [
@@ -7907,7 +7925,7 @@
                   "type": "string"
                 },
                 "profileId": {
-                  "description": "The DFA profile ID.",
+                  "description": "The DFA user profile ID.",
                   "format": "int64",
                   "location": "path",
                   "required": true,
@@ -7954,14 +7972,14 @@
                   "type": "string"
                 },
                 "profileId": {
-                  "description": "The DFA profile ID.",
+                  "description": "The DFA user profile ID.",
                   "format": "int64",
                   "location": "path",
                   "required": true,
                   "type": "string"
                 },
                 "reportId": {
-                  "description": "The ID of the parent report.",
+                  "description": "The ID of the report.",
                   "format": "int64",
                   "location": "path",
                   "required": true,
@@ -7975,8 +7993,8 @@
                     "LAST_MODIFIED_TIME"
                   ],
                   "enumDescriptions": [
-                    "Sort by file ID.",
-                    "Sort by 'lastmodifiedAt' field."
+                    "",
+                    ""
                   ],
                   "location": "query",
                   "type": "string"
@@ -7989,8 +8007,8 @@
                     "DESCENDING"
                   ],
                   "enumDescriptions": [
-                    "Ascending order.",
-                    "Descending order."
+                    "",
+                    ""
                   ],
                   "location": "query",
                   "type": "string"
@@ -8207,6 +8225,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Site ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -8524,6 +8543,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Subaccount ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -8852,6 +8872,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "Targeting template ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -9263,6 +9284,7 @@
           ],
           "parameters": {
             "id": {
+              "description": "User role ID.",
               "format": "int64",
               "location": "query",
               "required": true,
@@ -9377,7 +9399,7 @@
       }
     }
   },
-  "revision": "20200306",
+  "revision": "20200326",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -14269,11 +14291,10 @@
       "id": "File",
       "properties": {
         "dateRange": {
-          "$ref": "DateRange",
-          "description": "The date range for which the file has report data. The date range will always be the absolute date range for which the report is run."
+          "$ref": "DateRange"
         },
         "etag": {
-          "description": "The eTag of this response for caching purposes.",
+          "description": "Etag of this resource.",
           "type": "string"
         },
         "fileName": {
@@ -14282,14 +14303,6 @@
         },
         "format": {
           "description": "The output format of the report. Only available once the file is available.",
-          "enum": [
-            "CSV",
-            "EXCEL"
-          ],
-          "enumDescriptions": [
-            "",
-            ""
-          ],
           "type": "string"
         },
         "id": {
@@ -14299,7 +14312,7 @@
         },
         "kind": {
           "default": "dfareporting#file",
-          "description": "The kind of resource this is, in this case dfareporting#file.",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#file\".",
           "type": "string"
         },
         "lastModifiedTime": {
@@ -14314,18 +14327,6 @@
         },
         "status": {
           "description": "The status of the report file.",
-          "enum": [
-            "CANCELLED",
-            "FAILED",
-            "PROCESSING",
-            "REPORT_AVAILABLE"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
           "type": "string"
         },
         "urls": {
@@ -14346,15 +14347,13 @@
       "type": "object"
     },
     "FileList": {
-      "description": "Represents the list of File resources.",
       "id": "FileList",
       "properties": {
         "etag": {
-          "description": "The eTag of this response for caching purposes.",
+          "description": "Etag of this resource.",
           "type": "string"
         },
         "items": {
-          "description": "The files returned in this response.",
           "items": {
             "$ref": "File"
           },
@@ -14362,7 +14361,7 @@
         },
         "kind": {
           "default": "dfareporting#fileList",
-          "description": "The kind of list this is, in this case dfareporting#fileList.",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#fileList\".",
           "type": "string"
         },
         "nextPageToken": {

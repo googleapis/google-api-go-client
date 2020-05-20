@@ -61,6 +61,11 @@ var (
 	serviceTypes = []string{"Service", "APIService"}
 )
 
+var (
+	errOldRevision = errors.New("revision pulled older than local cached revision")
+	errNoDoc       = errors.New("could not read discovery doc")
+)
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -117,6 +122,12 @@ func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
 }
 
+// skipAPIGeneration is a set of APIs to not generate when generating all clients.
+var skipAPIGeneration = map[string]bool{
+	"customsearch:v1": true,
+	"sql:v1beta4":     true,
+}
+
 func main() {
 	flag.Parse()
 
@@ -137,7 +148,10 @@ func main() {
 		matches = append(matches, api)
 		log.Printf("Generating API %s", api.ID)
 		err := api.WriteGeneratedCode()
-		if err != nil && err != errNoDoc {
+		if err == errOldRevision {
+			log.Printf("Old revision found for %s, skipping generation", api.ID)
+			continue
+		} else if err != nil && err != errNoDoc {
 			errors = append(errors, &generateError{api, err})
 			continue
 		}
@@ -182,6 +196,9 @@ func (a *API) want() bool {
 		if _, err := os.Stat(a.JSONFile()); os.IsNotExist(err) {
 			return false
 		}
+	}
+	if skipAPIGeneration[a.ID] && *apiToGenerate == "*" {
+		return false
 	}
 	return *apiToGenerate == "*" || *apiToGenerate == a.ID
 }
@@ -275,6 +292,40 @@ func apiFromFile(file string) (*API, error) {
 		doc:       doc,
 	}
 	return a, nil
+}
+
+func checkAndUpdateSpecFile(file string, contents []byte) error {
+	// check if file exists
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		return writeFile(file, contents)
+	}
+	existing, err := ioutil.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	if err := isNewerRevision(existing, contents); err != nil {
+		return err
+	}
+	return writeFile(file, contents)
+}
+
+// isNewerRevision returns nil if the contents of new has a newer revision than
+// the contents of old.
+func isNewerRevision(old []byte, new []byte) error {
+	type docRevision struct {
+		Revision string `json:"revision"`
+	}
+	var oldDoc, newDoc docRevision
+	if err := json.Unmarshal(old, &oldDoc); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(new, &newDoc); err != nil {
+		return err
+	}
+	if newDoc.Revision < oldDoc.Revision {
+		return errOldRevision
+	}
+	return nil
 }
 
 func writeFile(file string, contents []byte) error {
@@ -488,10 +539,9 @@ func (a *API) JSONFile() string {
 	return filepath.Join(a.SourceDir(), a.Package()+"-api.json")
 }
 
-var errNoDoc = errors.New("could not read discovery doc")
-
 // WriteGeneratedCode generates code for a.
-// It returns errNoDoc if we couldn't read the discovery doc.
+// It returns errNoDoc if we couldn't read the discovery doc or errOldRevision
+// if the API spec file being pulled in is older than the local cache.
 func (a *API) WriteGeneratedCode() error {
 	genfilename := *output
 	jsonBytes := a.jsonBytes()
@@ -501,7 +551,7 @@ func (a *API) WriteGeneratedCode() error {
 		return errNoDoc
 	}
 	if genfilename == "" {
-		if err := writeFile(a.JSONFile(), jsonBytes); err != nil {
+		if err := checkAndUpdateSpecFile(a.JSONFile(), jsonBytes); err != nil {
 			return err
 		}
 		outdir := a.SourceDir()
@@ -898,9 +948,12 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "DoubleValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
+	{api: "compute:alpha", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:alpha", schema: "Scheduling", field: "AutomaticRestart"},
+	{api: "compute:beta", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:beta", schema: "MetadataItems", field: "Value"},
 	{api: "compute:beta", schema: "Scheduling", field: "AutomaticRestart"},
+	{api: "compute:v1", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:v1", schema: "MetadataItems", field: "Value"},
 	{api: "compute:v1", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "content:v2", schema: "AccountUser", field: "Admin"},
@@ -927,7 +980,14 @@ var pointerFields = []fieldName{
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "DoubleValue"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "Int64Value"},
 	{api: "servicecontrol:v1", schema: "MetricValue", field: "StringValue"},
+	{api: "sheets:v4", schema: "ExtendedValue", field: "BoolValue"},
+	{api: "sheets:v4", schema: "ExtendedValue", field: "FormulaValue"},
+	{api: "sheets:v4", schema: "ExtendedValue", field: "NumberValue"},
+	{api: "sheets:v4", schema: "ExtendedValue", field: "StringValue"},
+	{api: "slides:v1", schema: "Range", field: "EndIndex"},
+	{api: "slides:v1", schema: "Range", field: "StartIndex"},
 	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
+	{api: "sqladmin:v1", schema: "Settings", field: "StorageAutoResize"},
 	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},

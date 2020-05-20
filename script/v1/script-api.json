@@ -822,7 +822,7 @@
       }
     }
   },
-  "revision": "20200215",
+  "revision": "20200420",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -956,7 +956,7 @@
       "properties": {
         "result": {
           "$ref": "ScriptExecutionResult",
-          "description": "The result of the execution.\nTODO (johnlattin): Add debugging and logging."
+          "description": "The result of the execution."
         }
       },
       "type": "object"
@@ -1400,7 +1400,7 @@
       "type": "object"
     },
     "ListValue": {
-      "description": "`ListValue` is a wrapper around a repeated field of values.\nBased on LustValue at:\ngoogle3/apps/maestro/api/struct.proto?q=message%5c%20ListValue",
+      "description": "`ListValue` is a wrapper around a repeated field of values.",
       "id": "ListValue",
       "properties": {
         "values": {
@@ -1542,12 +1542,12 @@
       "type": "object"
     },
     "ScriptExecutionResult": {
-      "description": "The result of an execution\nBased on ScriptExecutionResult at:\ngoogle3/apps/maestro/api/frontend_execution_common.proto?q=message%5c%20ScriptExecutionResult",
+      "description": "The result of an execution.",
       "id": "ScriptExecutionResult",
       "properties": {
         "returnValue": {
           "$ref": "Value",
-          "description": "The returned value of the execution.\nTODO (johnlattin): Add HtmlResponse\nTODO (johnlattin): Add ExceptionResponse\nTODO (johlnattin): Add TextResponse"
+          "description": "The returned value of the execution."
         }
       },
       "type": "object"
@@ -1596,7 +1596,7 @@
       "type": "object"
     },
     "Struct": {
-      "description": "`Struct` represents a structured data value, consisting of fields which map\nto dynamically typed values.\nBased on Struct at:\ngoogle3/apps/maestro/api/struct.proto?q=message%5c%20Struct",
+      "description": "`Struct` represents a structured data value, consisting of fields which map\nto dynamically typed values.",
       "id": "Struct",
       "properties": {
         "fields": {
@@ -1621,7 +1621,7 @@
       "type": "object"
     },
     "Value": {
-      "description": "`Value` represents a dynamically typed value which is the outcome of an\nexecuted script\nBased on Value at:\ngoogle3/apps/maestro/api/struct.proto?q=message%5c%20Value",
+      "description": "`Value` represents a dynamically typed value which is the outcome of an\nexecuted script.",
       "id": "Value",
       "properties": {
         "boolValue": {

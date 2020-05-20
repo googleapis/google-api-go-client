@@ -426,6 +426,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "apigee:v1",
+      "name": "apigee",
+      "version": "v1",
+      "title": "Apigee API",
+      "description": "The Apigee API lets you programmatically manage Apigee hybrid with a set of RESTful operations, including: - Create, edit, and delete API proxies - Manage users - Deploy and undeploy proxy revisions - Configure environments For information on using the APIs described in this section, see Get started using the APIs \u003c/hybrid/api-get-started\u003e. *Note:* This product is available as a free trial for a time period of 60 days.",
+      "discoveryRestUrl": "https://apigee.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/apigee-api-management/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "appengine:v1alpha",
       "name": "appengine",
       "version": "v1alpha",
@@ -796,6 +811,36 @@
       },
       "documentationLink": "https://developers.google.com/classroom",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudasset:v1p1beta1",
+      "name": "cloudasset",
+      "version": "v1p1beta1",
+      "title": "Cloud Asset API",
+      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/asset-inventory/docs/quickstart",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudasset:v1p4beta1",
+      "name": "cloudasset",
+      "version": "v1p4beta1",
+      "title": "Cloud Asset API",
+      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p4beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/asset-inventory/docs/quickstart",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -1261,21 +1306,6 @@
       },
       "documentationLink": "https://cloud.google.com/trace",
       "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "commentanalyzer:v1alpha1",
-      "name": "commentanalyzer",
-      "version": "v1alpha1",
-      "title": "Perspective Comment Analyzer API",
-      "description": "The Perspective Comment Analyzer API provides information about the potential impact of a comment on a conversation (e.g. it can provide a score for the \"toxicity\" of a comment). Users can leverage the \"SuggestCommentScore\" method to submit corrections to improve Perspective over time. Users can set the \"doNotStore\" flag to ensure that all submitted comments are automatically deleted after scores are returned.",
-      "discoveryRestUrl": "https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://github.com/conversationai/perspectiveapi/blob/master/README.md",
-      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
@@ -1819,6 +1849,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "documentai:v1beta2",
+      "name": "documentai",
+      "version": "v1beta2",
+      "title": "Cloud Document AI API",
+      "description": "Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.",
+      "discoveryRestUrl": "https://documentai.googleapis.com/$discovery/rest?version=v1beta2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/document-ai/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "domainsrdap:v1",
       "name": "domainsrdap",
       "version": "v1",
@@ -2040,6 +2085,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "firebaseml:v1beta2",
+      "name": "firebaseml",
+      "version": "v1beta2",
+      "title": "Firebase ML API",
+      "description": "Access custom machine learning models hosted via Firebase ML.",
+      "discoveryRestUrl": "https://firebaseml.googleapis.com/$discovery/rest?version=v1beta2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "firebaserules:v1",
       "name": "firebaserules",
       "version": "v1",
@@ -2164,6 +2224,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "gameservices:v1beta",
+      "name": "gameservices",
+      "version": "v1beta",
+      "title": "Game Services API",
+      "description": "Deploy and manage infrastructure for global multiplayer gaming experiences.",
+      "discoveryRestUrl": "https://gameservices.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/solutions/gaming/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "genomics:v1alpha2",
       "name": "genomics",
       "version": "v1alpha2",
@@ -2257,6 +2332,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "healthcare:v1",
+      "name": "healthcare",
+      "version": "v1",
+      "title": "Cloud Healthcare API",
+      "description": "Manage, store, and access healthcare data in Google Cloud Platform.",
+      "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/healthcare",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "healthcare:v1beta1",
       "name": "healthcare",
       "version": "v1beta1",
@@ -2268,7 +2358,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/healthcare",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -2350,15 +2440,14 @@
       "id": "identitytoolkit:v3",
       "name": "identitytoolkit",
       "version": "v3",
-      "title": "Google Identity Toolkit API",
-      "description": "Help the third party sites to implement federated login.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/identitytoolkit/v3/rest",
-      "discoveryLink": "./apis/identitytoolkit/v3/rest",
+      "title": "Identity Toolkit API",
+      "description": "The Google Identity Toolkit API lets you use open standards to verify a user's identity.",
+      "discoveryRestUrl": "https://identitytoolkit.googleapis.com/$discovery/rest?version=v3",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/identity-toolkit/v3/",
+      "documentationLink": "https://firebase.google.com/docs/auth/",
       "preferred": true
     },
     {
@@ -2533,7 +2622,7 @@
       "name": "logging",
       "version": "v2",
       "title": "Cloud Logging API",
-      "description": "Writes log entries and manages your Cloud Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Logging documentation \u003chttps://cloud.google.com/logging/docs\u003e.",
+      "description": "Writes log entries and manages your Cloud Logging configuration. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the documentation at https://cloud.google.com/logging/docs.",
       "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2604,21 +2693,17 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "mirror:v1",
-      "name": "mirror",
-      "version": "v1",
-      "title": "Google Mirror API",
-      "description": "Interacts with Glass users via the timeline.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/mirror/v1/rest",
-      "discoveryLink": "./apis/mirror/v1/rest",
+      "id": "memcache:v1beta2",
+      "name": "memcache",
+      "version": "v1beta2",
+      "title": "Cloud Memorystore for Memcached API",
+      "description": "Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.",
+      "discoveryRestUrl": "https://memcache.googleapis.com/$discovery/rest?version=v1beta2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/glass",
-      "labels": [
-        "limited_availability"
-      ],
+      "documentationLink": "https://cloud.google.com/memorystore/",
       "preferred": true
     },
     {
@@ -2698,22 +2783,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "oauth2:v1",
-      "name": "oauth2",
-      "version": "v1",
-      "title": "Google OAuth2 API",
-      "description": "Obtains end-user authorization grants for use with other Google APIs.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/oauth2/v1/rest",
-      "discoveryLink": "./apis/oauth2/v1/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "oauth2:v2",
       "name": "oauth2",
       "version": "v2",
@@ -2725,7 +2794,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
+      "documentationLink": "https://developers.google.com/identity/protocols/oauth2/",
       "preferred": true
     },
     {
@@ -2779,7 +2848,7 @@
       "name": "oslogin",
       "version": "v1alpha",
       "title": "Cloud OS Login API",
-      "description": "You can use OS Login to manage access to your VM instances using IAM roles. For more information, read [OS Login](/compute/docs/oslogin/).",
+      "description": "You can use OS Login to manage access to your VM instances using IAM roles.",
       "discoveryRestUrl": "https://oslogin.googleapis.com/$discovery/rest?version=v1alpha",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2794,7 +2863,7 @@
       "name": "oslogin",
       "version": "v1beta",
       "title": "Cloud OS Login API",
-      "description": "You can use OS Login to manage access to your VM instances using IAM roles. For more information, read [OS Login](/compute/docs/oslogin/).",
+      "description": "You can use OS Login to manage access to your VM instances using IAM roles.",
       "discoveryRestUrl": "https://oslogin.googleapis.com/$discovery/rest?version=v1beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2809,7 +2878,7 @@
       "name": "oslogin",
       "version": "v1",
       "title": "Cloud OS Login API",
-      "description": "You can use OS Login to manage access to your VM instances using IAM roles. For more information, read [OS Login](/compute/docs/oslogin/).",
+      "description": "You can use OS Login to manage access to your VM instances using IAM roles.",
       "discoveryRestUrl": "https://oslogin.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2987,21 +3056,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/spectrum-access-system/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "proximitybeacon:v1beta1",
-      "name": "proximitybeacon",
-      "version": "v1beta1",
-      "title": "Proximity Beacon API",
-      "description": "Registers, manages, indexes, and searches beacons.",
-      "discoveryRestUrl": "https://proximitybeacon.googleapis.com/$discovery/rest?version=v1beta1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/beacons/proximity/",
       "preferred": true
     },
     {
@@ -3299,7 +3353,7 @@
       "name": "secretmanager",
       "version": "v1",
       "title": "Secret Manager API",
-      "description": "Stores API keys, passwords, certificates, and other sensitive data. Provides convenience while improving security.",
+      "description": "Stores sensitive data such as API keys, passwords, and certificates. Provides convenience while improving security.",
       "discoveryRestUrl": "https://secretmanager.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3314,7 +3368,7 @@
       "name": "secretmanager",
       "version": "v1beta1",
       "title": "Secret Manager API",
-      "description": "Stores API keys, passwords, certificates, and other sensitive data. Provides convenience while improving security.",
+      "description": "Stores sensitive data such as API keys, passwords, and certificates. Provides convenience while improving security.",
       "discoveryRestUrl": "https://secretmanager.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3328,8 +3382,8 @@
       "id": "securitycenter:v1p1alpha1",
       "name": "securitycenter",
       "version": "v1p1alpha1",
-      "title": "Cloud Security Command Center API",
-      "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+      "title": "Security Command Center API",
+      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
       "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1alpha1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3343,8 +3397,8 @@
       "id": "securitycenter:v1p1beta1",
       "name": "securitycenter",
       "version": "v1p1beta1",
-      "title": "Cloud Security Command Center API",
-      "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+      "title": "Security Command Center API",
+      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
       "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3358,8 +3412,8 @@
       "id": "securitycenter:v1",
       "name": "securitycenter",
       "version": "v1",
-      "title": "Cloud Security Command Center API",
-      "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+      "title": "Security Command Center API",
+      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
       "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3373,8 +3427,8 @@
       "id": "securitycenter:v1beta1",
       "name": "securitycenter",
       "version": "v1beta1",
-      "title": "Cloud Security Command Center API",
-      "description": "Cloud Security Command Center API provides access to temporal views of assets and findings within an organization.",
+      "title": "Security Command Center API",
+      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
       "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3400,6 +3454,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "serviceconsumermanagement:v1beta1",
+      "name": "serviceconsumermanagement",
+      "version": "v1beta1",
+      "title": "Service Consumer Management API",
+      "description": "Manages the service consumers of a Service Infrastructure service.",
+      "discoveryRestUrl": "https://serviceconsumermanagement.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/service-consumer-management/docs/overview",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "servicecontrol:v1",
       "name": "servicecontrol",
       "version": "v1",
@@ -3411,6 +3480,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/service-control/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "servicedirectory:v1beta1",
+      "name": "servicedirectory",
+      "version": "v1beta1",
+      "title": "Service Directory API",
+      "description": "Service Directory is a platform for discovering, publishing, and connecting services.",
+      "discoveryRestUrl": "https://servicedirectory.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/service-directory",
       "preferred": true
     },
     {

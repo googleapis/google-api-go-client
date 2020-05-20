@@ -305,8 +305,7 @@ type Backup struct {
 	// Spanner to free the resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Name: Output only for the CreateBackup][DatabaseAdmin.CreateBackup]
-	// operation.
+	// Name: Output only for the CreateBackup operation.
 	// Required for the UpdateBackup operation.
 	//
 	// A globally unique identifier for the backup which cannot be
@@ -1562,7 +1561,7 @@ func (s *GetDatabaseDdlResponse) MarshalJSON() ([]byte, error) {
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
 	// to
-	// `GetIamPolicy`. This field is only used by Cloud IAM.
+	// `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -3581,9 +3580,8 @@ type RestoreDatabaseMetadata struct {
 	// cancellation,
 	// the operation is not deleted; instead, it becomes an operation
 	// with
-	// an Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// an Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	CancelTime string `json:"cancelTime,omitempty"`
 
 	// Name: Name of the database being created and restored to.
@@ -3598,7 +3596,7 @@ type RestoreDatabaseMetadata struct {
 	// The name is of the
 	// form
 	// `projects/<project>/instances/<instance>/databases/<database>/ope
-	// rations/<operation>
+	// rations/<operation>`
 	// where the <database> is the name of database being created and
 	// restored to.
 	// The metadata type of the  long-running operation
@@ -5159,7 +5157,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5322,7 +5320,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5530,7 +5528,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5680,7 +5678,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5831,7 +5829,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5979,7 +5977,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6174,7 +6172,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6395,7 +6393,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6541,7 +6539,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6691,7 +6689,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6819,67 +6817,56 @@ func (r *ProjectsInstancesBackupOperationsService) List(parent string) *Projects
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters what operations are returned in the
-// response.
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of returned backup operations.
 //
-// The filter expression must specify the field name of an operation,
-// a
-// comparison operator, and the value that you want to use for
-// filtering.
+// A filter expression consists of a field name, a
+// comparison operator, and a value for filtering.
 // The value must be a string, a number, or a boolean. The comparison
 // operator
-// must be
-// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
-// which is
-// roughly synonymous with equality. Filter rules are case
-// insensitive.
+// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// Colon `:` is the contains operator. Filter rules are not case
+// sensitive.
 //
-// The long-running operation fields eligible for filtering are:
-//   * `name` --> The name of the long-running operation
-//   * `done` --> False if the operation is in progress, else true.
-//   * `metadata.type_url` (using filter string `metadata.@type`) and
-// fields
-//      in `metadata.value` (using filter string
-// `metadata.<field_name>`,
-//      where <field_name> is a field in metadata.value) are eligible
-// for
-//      filtering.
-//   * `error` --> Error associated with the long-running operation.
-//   * `response.type_url` (using filter string `response.@type`) and
-// fields
-//      in `response.value` (using filter string
-// `response.<field_name>`,
-//      where <field_name> is a field in response.value) are eligible
-// for
-//      filtering.
+// The following fields in the operation
+// are eligible for filtering:
 //
-// To filter on multiple expressions, provide each separate expression
-// within
-// parentheses. By default, each expression is an AND expression.
-// However,
-// you can include AND, OR, and NOT expressions explicitly.
+//   * `name` - The name of the long-running operation
+//   * `done` - False if the operation is in progress, else true.
+//   * `metadata.@type` - the type of metadata. For example, the type
+// string
+//      for CreateBackupMetadata is
 //
-// Some examples of using filters are:
+// `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMeta
+// data`.
+//   * `metadata.<field_name>` - any field in metadata.value.
+//   * `error` - Error associated with the long-running operation.
+//   * `response.@type` - the type of response.
+//   * `response.<field_name>` - any field in response.value.
 //
-//   * `done:true` --> The operation is complete.
-//   * `metadata.database:prod`
-//          --> The database the backup was taken from has a name
-// containing
-//              the string "prod".
+// You can combine multiple expressions by enclosing each expression
+// in
+// parentheses. By default, expressions are combined with AND logic,
+// but
+// you can specify AND, OR, and NOT logic explicitly.
+//
+// Here are a few examples:
+//
+//   * `done:true` - The operation is complete.
+//   * `metadata.database:prod` - The database the backup was taken from
+// has
+//      a name containing the string "prod".
 //   *
-// `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.
-// CreateBackupMetadata)
-//      AND (metadata.name:howl)
-//      AND (metadata.progress.start_time < \"2018-03-28T14:50:00Z\")
-//      AND (error:*)`
-//          --> Return CreateBackup operations where the created backup
-// name
-//              contains the string "howl", the progress.start_time of
-// the
-//              backup operation is before 2018-03-28T14:50:00Z, and
-// the
-//              operation returned an error.
+// `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
+// CreateBackupMetadata) AND` <br/>
+//     `(metadata.name:howl) AND` <br/>
+//     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND`
+// <br/>
+//     `(error:*)` - Returns operations where:
+//     * The operation's metadata type is CreateBackupMetadata.
+//     * The backup name contains the string "howl".
+//     * The operation started before 2018-03-28T14:50:00Z.
+//     * The operation resulted in an error.
 func (c *ProjectsInstancesBackupOperationsListCall) Filter(filter string) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6940,7 +6927,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7011,7 +6998,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name of an operation, a\ncomparison operator, and the value that you want to use for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `metadata.database:prod`\n         --\u003e The database the backup was taken from has a name containing\n             the string \"prod\".\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata)\n     AND (metadata.name:howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return CreateBackup operations where the created backup name\n             contains the string \"howl\", the progress.start_time of the\n             backup operation is before 2018-03-28T14:50:00Z, and the\n             operation returned an error.",
+	//       "description": "An expression that filters the list of returned backup operations.\n\nA filter expression consists of a field name, a\ncomparison operator, and a value for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the operation\nare eligible for filtering:\n\n  * `name` - The name of the long-running operation\n  * `done` - False if the operation is in progress, else true.\n  * `metadata.@type` - the type of metadata. For example, the type string\n     for CreateBackupMetadata is\n     `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`.\n  * `metadata.\u003cfield_name\u003e` - any field in metadata.value.\n  * `error` - Error associated with the long-running operation.\n  * `response.@type` - the type of response.\n  * `response.\u003cfield_name\u003e` - any field in response.value.\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic, but\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `done:true` - The operation is complete.\n  * `metadata.database:prod` - The database the backup was taken from has\n     a name containing the string \"prod\".\n  * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \u003cbr/\u003e\n    `(metadata.name:howl) AND` \u003cbr/\u003e\n    `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \u003cbr/\u003e\n    `(error:*)` - Returns operations where:\n    * The operation's metadata type is CreateBackupMetadata.\n    * The backup name contains the string \"howl\".\n    * The operation started before 2018-03-28T14:50:00Z.\n    * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7138,7 +7125,7 @@ func (c *ProjectsInstancesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7282,7 +7269,7 @@ func (c *ProjectsInstancesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7424,7 +7411,7 @@ func (c *ProjectsInstancesBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7571,7 +7558,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7687,19 +7674,20 @@ func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstances
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters backups listed in the response.
-// The expression must specify the field name, a comparison
-// operator,
-// and the value that you want to use for filtering. The value must be
-// a
-// string, a number, or a boolean. The comparison operator must be
-// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
-// which is
-// roughly synonymous with equality. Filter rules are case
-// insensitive.
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of returned backups.
 //
-// The fields eligible for filtering are:
+// A filter expression consists of a field name, a comparison operator,
+// and a
+// value for filtering.
+// The value must be a string, a number, or a boolean. The comparison
+// operator
+// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// Colon `:` is the contains operator. Filter rules are not case
+// sensitive.
+//
+// The following fields in the Backup are eligible for filtering:
+//
 //   * `name`
 //   * `database`
 //   * `state`
@@ -7709,27 +7697,26 @@ func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstances
 // YYYY-MM-DDTHH:MM:SSZ)
 //   * `size_bytes`
 //
-// To filter on multiple expressions, provide each separate expression
-// within
-// parentheses. By default, each expression is an AND expression.
-// However,
-// you can include AND, OR, and NOT expressions explicitly.
+// You can combine multiple expressions by enclosing each expression
+// in
+// parentheses. By default, expressions are combined with AND logic,
+// but
+// you can specify AND, OR, and NOT logic explicitly.
 //
-// Some examples of using filters are:
+// Here are a few examples:
 //
-//   * `name:Howl` --> The backup's name contains the string "howl".
+//   * `name:Howl` - The backup's name contains the string "howl".
 //   * `database:prod`
-//          --> The database's name contains the string "prod".
-//   * `state:CREATING` --> The backup is pending creation.
-//   * `state:READY` --> The backup is fully created and ready for use.
+//          - The database's name contains the string "prod".
+//   * `state:CREATING` - The backup is pending creation.
+//   * `state:READY` - The backup is fully created and ready for use.
 //   * `(name:howl) AND (create_time < \"2018-03-28T14:50:00Z\")`
-//          --> The backup name contains the string "howl" and
+//          - The backup name contains the string "howl" and
 // `create_time`
 //              of the backup is before 2018-03-28T14:50:00Z.
 //   * `expire_time < \"2018-03-28T14:50:00Z\"
-//          --> The backup `expire_time` is before
-// 2018-03-28T14:50:00Z.
-//   * `size_bytes > 10000000000` --> The backup's size is greater than
+//          - The backup `expire_time` is before 2018-03-28T14:50:00Z.
+//   * `size_bytes > 10000000000` - The backup's size is greater than
 // 10GB
 func (c *ProjectsInstancesBackupsListCall) Filter(filter string) *ProjectsInstancesBackupsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -7792,7 +7779,7 @@ func (c *ProjectsInstancesBackupsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7863,7 +7850,7 @@ func (c *ProjectsInstancesBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters backups listed in the response.\nThe expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe fields eligible for filtering are:\n  * `name`\n  * `database`\n  * `state`\n  * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `size_bytes`\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `name:Howl` --\u003e The backup's name contains the string \"howl\".\n  * `database:prod`\n         --\u003e The database's name contains the string \"prod\".\n  * `state:CREATING` --\u003e The backup is pending creation.\n  * `state:READY` --\u003e The backup is fully created and ready for use.\n  * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")`\n         --\u003e The backup name contains the string \"howl\" and `create_time`\n             of the backup is before 2018-03-28T14:50:00Z.\n  * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"`\n         --\u003e The backup `expire_time` is before 2018-03-28T14:50:00Z.\n  * `size_bytes \u003e 10000000000` --\u003e The backup's size is greater than 10GB",
+	//       "description": "An expression that filters the list of returned backups.\n\nA filter expression consists of a field name, a comparison operator, and a\nvalue for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the Backup are eligible for filtering:\n\n  * `name`\n  * `database`\n  * `state`\n  * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `size_bytes`\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic, but\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `name:Howl` - The backup's name contains the string \"howl\".\n  * `database:prod`\n         - The database's name contains the string \"prod\".\n  * `state:CREATING` - The backup is pending creation.\n  * `state:READY` - The backup is fully created and ready for use.\n  * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")`\n         - The backup name contains the string \"howl\" and `create_time`\n             of the backup is before 2018-03-28T14:50:00Z.\n  * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"`\n         - The backup `expire_time` is before 2018-03-28T14:50:00Z.\n  * `size_bytes \u003e 10000000000` - The backup's size is greater than 10GB",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7979,7 +7966,7 @@ func (c *ProjectsInstancesBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8052,7 +8039,7 @@ func (c *ProjectsInstancesBackupsPatchCall) Do(opts ...googleapi.CallOption) (*B
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only for the CreateBackup][DatabaseAdmin.CreateBackup] operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Output only for the CreateBackup operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -8134,7 +8121,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8287,7 +8274,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8443,7 +8430,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8580,7 +8567,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8726,7 +8713,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8908,7 +8895,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9064,63 +9051,57 @@ func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *Projec
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter expression that
-// filters what operations are returned in the
-// response.
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of returned operations.
 //
-// The filter expression must specify the field name, a comparison
-// operator,
-// and the value that you want to use for filtering. The value must be
-// a
-// string, a number, or a boolean. The comparison operator must be
-// <, >, <=, >=, !=, =, or :. Colon ‘:’ represents a HAS operator
-// which is
-// roughly synonymous with equality. Filter rules are case
-// insensitive.
+// A filter expression consists of a field name, a
+// comparison operator, and a value for filtering.
+// The value must be a string, a number, or a boolean. The comparison
+// operator
+// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// Colon `:` is the contains operator. Filter rules are not case
+// sensitive.
 //
-// The long-running operation fields eligible for filtering are:
-//   * `name` --> The name of the long-running operation
-//   * `done` --> False if the operation is in progress, else true.
-//   * `metadata.type_url` (using filter string `metadata.@type`) and
-// fields
-//      in `metadata.value` (using filter string
-// `metadata.<field_name>`,
-//      where <field_name> is a field in metadata.value) are eligible
-// for
-//      filtering.
-//   * `error` --> Error associated with the long-running operation.
-//   * `response.type_url` (using filter string `response.@type`) and
-// fields
-//      in `response.value` (using filter string
-// `response.<field_name>`,
-//      where <field_name> is a field in response.value) are eligible
-// for
-//      filtering.
+// The following fields in the Operation
+// are eligible for filtering:
 //
-// To filter on multiple expressions, provide each separate expression
-// within
-// parentheses. By default, each expression is an AND expression.
+//   * `name` - The name of the long-running operation
+//   * `done` - False if the operation is in progress, else true.
+//   * `metadata.@type` - the type of metadata. For example, the type
+// string
+//      for RestoreDatabaseMetadata is
+//
+// `type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseM
+// etadata`.
+//   * `metadata.<field_name>` - any field in metadata.value.
+//   * `error` - Error associated with the long-running operation.
+//   * `response.@type` - the type of response.
+//   * `response.<field_name>` - any field in response.value.
+//
+// You can combine multiple expressions by enclosing each expression
+// in
+// parentheses. By default, expressions are combined with AND logic.
 // However,
-// you can include AND, OR, and NOT expressions explicitly.
+// you can specify AND, OR, and NOT logic explicitly.
 //
-// Some examples of using filters are:
+// Here are a few examples:
 //
-//   * `done:true` --> The operation is complete.
+//   * `done:true` - The operation is complete.
 //   *
-// `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.
-// RestoreDatabaseMetadata)
-//      AND (metadata.source_type:BACKUP)
-//      AND (metadata.backup_info.backup:backup_howl)
-//      AND (metadata.name:restored_howl)
-//      AND (metadata.progress.start_time < \"2018-03-28T14:50:00Z\")
-//      AND (error:*)`
-//          --> Return RestoreDatabase operations from backups whose
-// name
-//              contains "backup_howl", where the created database name
-//              contains the string "restored_howl", the start_time of
-// the
-//              restore operation is before 2018-03-28T14:50:00Z,
-//              and the operation returned an error.
+// `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
+// RestoreDatabaseMetadata) AND` <br/>
+//     `(metadata.source_type:BACKUP) AND` <br/>
+//     `(metadata.backup_info.backup:backup_howl) AND` <br/>
+//     `(metadata.name:restored_howl) AND` <br/>
+//     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND`
+// <br/>
+//     `(error:*)` - Return operations where:
+//     * The operation's metadata type is RestoreDatabaseMetadata.
+//     * The database is restored from a backup.
+//     * The backup name contains "backup_howl".
+//     * The restored database's name contains "restored_howl".
+//     * The operation started before 2018-03-28T14:50:00Z.
+//     * The operation resulted in an error.
 func (c *ProjectsInstancesDatabaseOperationsListCall) Filter(filter string) *ProjectsInstancesDatabaseOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9181,7 +9162,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabaseOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9252,7 +9233,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters what operations are returned in the\nresponse.\n\nThe filter expression must specify the field name, a comparison operator,\nand the value that you want to use for filtering. The value must be a\nstring, a number, or a boolean. The comparison operator must be\n\u003c, \u003e, \u003c=, \u003e=, !=, =, or :. Colon ‘:’ represents a HAS operator which is\nroughly synonymous with equality. Filter rules are case insensitive.\n\nThe long-running operation fields eligible for filtering are:\n  * `name` --\u003e The name of the long-running operation\n  * `done` --\u003e False if the operation is in progress, else true.\n  * `metadata.type_url` (using filter string `metadata.@type`) and fields\n     in `metadata.value` (using filter string `metadata.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in metadata.value) are eligible for\n     filtering.\n  * `error` --\u003e Error associated with the long-running operation.\n  * `response.type_url` (using filter string `response.@type`) and fields\n     in `response.value` (using filter string `response.\u003cfield_name\u003e`,\n     where \u003cfield_name\u003e is a field in response.value) are eligible for\n     filtering.\n\nTo filter on multiple expressions, provide each separate expression within\nparentheses. By default, each expression is an AND expression. However,\nyou can include AND, OR, and NOT expressions explicitly.\n\nSome examples of using filters are:\n\n  * `done:true` --\u003e The operation is complete.\n  * `(metadata.@type:type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata)\n     AND (metadata.source_type:BACKUP)\n     AND (metadata.backup_info.backup:backup_howl)\n     AND (metadata.name:restored_howl)\n     AND (metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\")\n     AND (error:*)`\n         --\u003e Return RestoreDatabase operations from backups whose name\n             contains \"backup_howl\", where the created database name\n             contains the string \"restored_howl\", the start_time of the\n             restore operation is before 2018-03-28T14:50:00Z,\n             and the operation returned an error.",
+	//       "description": "An expression that filters the list of returned operations.\n\nA filter expression consists of a field name, a\ncomparison operator, and a value for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the Operation\nare eligible for filtering:\n\n  * `name` - The name of the long-running operation\n  * `done` - False if the operation is in progress, else true.\n  * `metadata.@type` - the type of metadata. For example, the type string\n     for RestoreDatabaseMetadata is\n     `type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata`.\n  * `metadata.\u003cfield_name\u003e` - any field in metadata.value.\n  * `error` - Error associated with the long-running operation.\n  * `response.@type` - the type of response.\n  * `response.\u003cfield_name\u003e` - any field in response.value.\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic. However,\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `done:true` - The operation is complete.\n  * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata) AND` \u003cbr/\u003e\n    `(metadata.source_type:BACKUP) AND` \u003cbr/\u003e\n    `(metadata.backup_info.backup:backup_howl) AND` \u003cbr/\u003e\n    `(metadata.name:restored_howl) AND` \u003cbr/\u003e\n    `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \u003cbr/\u003e\n    `(error:*)` - Return operations where:\n    * The operation's metadata type is RestoreDatabaseMetadata.\n    * The database is restored from a backup.\n    * The backup name contains \"backup_howl\".\n    * The restored database's name contains \"restored_howl\".\n    * The operation started before 2018-03-28T14:50:00Z.\n    * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9363,7 +9344,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9505,7 +9486,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9647,7 +9628,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9796,7 +9777,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9943,7 +9924,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10110,7 +10091,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10303,7 +10284,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10376,7 +10357,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the instance in which to create the\nrestored database. This instance must be in the same project and\nhave the same instance configuration as the instance containing\nthe source backup. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e.",
+	//       "description": "Required. The name of the instance in which to create the\nrestored database. This instance must be in the same project and\nhave the same instance configuration as the instance containing\nthe source backup. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -10452,7 +10433,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10605,7 +10586,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10755,7 +10736,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10911,7 +10892,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11048,7 +11029,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11194,7 +11175,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11376,7 +11357,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11554,7 +11535,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Header() http.Header
 
 func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11699,7 +11680,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11851,7 +11832,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12021,7 +12002,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12164,7 +12145,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12313,7 +12294,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12467,7 +12448,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12613,7 +12594,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12767,7 +12748,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12946,7 +12927,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13137,7 +13118,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13300,7 +13281,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13456,7 +13437,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13606,7 +13587,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13751,7 +13732,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13907,7 +13888,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14044,7 +14025,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14190,7 +14171,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14372,7 +14353,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

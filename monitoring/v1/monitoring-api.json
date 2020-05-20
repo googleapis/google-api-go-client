@@ -21,7 +21,7 @@
   "baseUrl": "https://monitoring.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Monitoring",
-  "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Stackdriver Monitoring documentation.",
+  "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Monitoring documentation.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/monitoring/api/",
   "fullyEncodeReservedExpansion": true,
@@ -250,7 +250,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the dashboard.",
+                  "description": "Immutable. The resource name of the dashboard.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/dashboards/[^/]+$",
                   "required": true,
@@ -275,11 +275,11 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200416",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
-      "description": "Describes how to combine multiple time series to provide a different view of the data. Aggregation of time series is done in two steps. First, each time series in the set is aligned to the same time interval boundaries, then the set of time series is optionally reduced in number.Alignment consists of applying the per_series_aligner operation to each time series after its data has been divided into regular alignment_period time intervals. This process takes all of the data points in an alignment period, applies a mathematical transformation such as averaging, minimum, maximum, delta, etc., and converts them into a single data point per period.Reduction is when the aligned and transformed time series can optionally be combined, reducing the number of time series through similar mathematical transformations. Reduction involves applying a cross_series_reducer to all the time series, optionally sorting the time series into subsets with group_by_fields, and applying the reducer to each subset.The raw time series data can contain a huge amount of information from multiple sources. Alignment and reduction transforms this mass of data into a more manageable and representative collection of data, for example \"the 95% latency across the average of all tasks in a cluster\". This representative data can be more easily graphed and comprehended, and the individual time series data is still available for later drilldown. For more details, see Aggregating Time Series.",
+      "description": "Describes how to combine multiple time series to provide a different view of the data. Aggregation of time series is done in two steps. First, each time series in the set is aligned to the same time interval boundaries, then the set of time series is optionally reduced in number.Alignment consists of applying the per_series_aligner operation to each time series after its data has been divided into regular alignment_period time intervals. This process takes all of the data points in an alignment period, applies a mathematical transformation such as averaging, minimum, maximum, delta, etc., and converts them into a single data point per period.Reduction is when the aligned and transformed time series can optionally be combined, reducing the number of time series through similar mathematical transformations. Reduction involves applying a cross_series_reducer to all the time series, optionally sorting the time series into subsets with group_by_fields, and applying the reducer to each subset.The raw time series data can contain a huge amount of information from multiple sources. Alignment and reduction transforms this mass of data into a more manageable and representative collection of data, for example \"the 95% latency across the average of all tasks in a cluster\". This representative data can be more easily graphed and comprehended, and the individual time series data is still available for later drilldown. For more details, see Filtering and aggregation (https://cloud.google.com/monitoring/api/v3/aggregation).",
       "id": "Aggregation",
       "properties": {
         "alignmentPeriod": {
@@ -469,7 +469,7 @@
           "description": "The content is divided into equally spaced columns and the widgets are arranged vertically."
         },
         "displayName": {
-          "description": "The mutable, human-readable name.",
+          "description": "Required. The mutable, human-readable name.",
           "type": "string"
         },
         "etag": {
@@ -481,7 +481,7 @@
           "description": "Content is arranged with a basic layout that re-flows a simple list of informational elements like widgets or tiles."
         },
         "name": {
-          "description": "The resource name of the dashboard.",
+          "description": "Immutable. The resource name of the dashboard.",
           "type": "string"
         },
         "rowLayout": {
@@ -524,7 +524,7 @@
         },
         "timeSeriesQuery": {
           "$ref": "TimeSeriesQuery",
-          "description": "Fields for querying time series data from the Stackdriver metrics API."
+          "description": "Required. Fields for querying time series data from the Stackdriver metrics API."
         }
       },
       "type": "object"
@@ -783,7 +783,7 @@
           "description": "By default, the raw time series data is returned. Use this field to combine multiple time series for different views of the data."
         },
         "filter": {
-          "description": "Required. The monitoring filter that identifies the metric types, resources, and projects to query.",
+          "description": "Required. The monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies the metric types, resources, and projects to query.",
           "type": "string"
         }
       },
@@ -843,7 +843,7 @@
         },
         "timeSeriesQuery": {
           "$ref": "TimeSeriesQuery",
-          "description": "Fields for querying time series data from the Stackdriver metrics API."
+          "description": "Required. Fields for querying time series data from the Stackdriver metrics API."
         }
       },
       "type": "object"
@@ -880,7 +880,7 @@
           "type": "string"
         },
         "sparkChartType": {
-          "description": "The type of sparkchart to show in this chartView.",
+          "description": "Required. The type of sparkchart to show in this chartView.",
           "enum": [
             "SPARK_CHART_TYPE_UNSPECIFIED",
             "SPARK_LINE",
@@ -966,7 +966,7 @@
       "type": "object"
     },
     "TimeSeriesFilter": {
-      "description": "A filter that defines a subset of time series data that is displayed in a widget. Time series data is fetched using the ListTimeSeries method.",
+      "description": "A filter that defines a subset of time series data that is displayed in a widget. Time series data is fetched using the ListTimeSeries (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list) method.",
       "id": "TimeSeriesFilter",
       "properties": {
         "aggregation": {
@@ -974,12 +974,16 @@
           "description": "By default, the raw time series data is returned. Use this field to combine multiple time series for different views of the data."
         },
         "filter": {
-          "description": "Required. The monitoring filter that identifies the metric types, resources, and projects to query.",
+          "description": "Required. The monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that identifies the metric types, resources, and projects to query.",
           "type": "string"
         },
         "pickTimeSeriesFilter": {
           "$ref": "PickTimeSeriesFilter",
           "description": "Ranking based time series filter."
+        },
+        "secondaryAggregation": {
+          "$ref": "Aggregation",
+          "description": "Apply a second aggregation after aggregation is applied."
         }
       },
       "type": "object"
@@ -1019,8 +1023,12 @@
           "$ref": "TimeSeriesFilterRatio",
           "description": "Parameters to fetch a ratio between two time series filters."
         },
+        "timeSeriesQueryLanguage": {
+          "description": "A query used to fetch time series.",
+          "type": "string"
+        },
         "unitOverride": {
-          "description": "The unit of data contained in fetched time series. If non-empty, this unit will override any unit that accompanies fetched data. The format is the same as the unit field in MetricDescriptor.",
+          "description": "The unit of data contained in fetched time series. If non-empty, this unit will override any unit that accompanies fetched data. The format is the same as the unit (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors) field in MetricDescriptor.",
           "type": "string"
         }
       },
@@ -1110,7 +1118,7 @@
           "description": "Display options for the chart."
         },
         "dataSets": {
-          "description": "The data displayed in this chart.",
+          "description": "Required. The data displayed in this chart.",
           "items": {
             "$ref": "DataSet"
           },
@@ -1141,7 +1149,7 @@
     }
   },
   "servicePath": "",
-  "title": "Stackdriver Monitoring API",
+  "title": "Cloud Monitoring API",
   "version": "v1",
   "version_module": true
 }

@@ -642,7 +642,7 @@ func (s *GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byt
 type GoogleCloudDialogflowV2Context struct {
 	// LifespanCount: Optional. The number of conversational query requests
 	// after which the
-	// context expires. If set to `0` (the default) the context
+	// context expires. The default is `0`. If set to `0`, the context
 	// expires
 	// immediately. Contexts expire automatically after 20 minutes if
 	// there
@@ -678,11 +678,21 @@ type GoogleCloudDialogflowV2Context struct {
 
 	// Parameters: Optional. The collection of parameters associated with
 	// this context.
-	// Refer to
-	// [this
-	// doc](https://cloud.google.com/dialogflow/docs/intents-actions-pa
-	// rameters)
-	// for syntax.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -936,7 +946,23 @@ type GoogleCloudDialogflowV2EventInput struct {
 	// Name: Required. The unique identifier of the event.
 	Name string `json:"name,omitempty"`
 
-	// Parameters: The collection of parameters associated with the event.
+	// Parameters: The collection of parameters associated with the
+	// event.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -1012,7 +1038,7 @@ type GoogleCloudDialogflowV2Intent struct {
 	// platform).
 	//
 	// Possible values:
-	//   "PLATFORM_UNSPECIFIED" - Not specified.
+	//   "PLATFORM_UNSPECIFIED" - Default platform.
 	//   "FACEBOOK" - Facebook.
 	//   "SLACK" - Slack.
 	//   "TELEGRAM" - Telegram.
@@ -1020,74 +1046,11 @@ type GoogleCloudDialogflowV2Intent struct {
 	//   "SKYPE" - Skype.
 	//   "LINE" - Line.
 	//   "VIBER" - Viber.
-	//   "ACTIONS_ON_GOOGLE" - Actions on Google.
-	// When using Actions on Google, you can choose one of the
-	// specific
-	// Intent.Message types that mention support for Actions on Google,
-	// or you can use the advanced Intent.Message.payload field.
-	// The payload field provides access to AoG features not available in
-	// the
-	// specific message types.
-	// If using the Intent.Message.payload field, it should have a
-	// structure
-	// similar to the JSON message shown here. For more information,
-	// see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "expectUserResponse": true,
-	//   "isSsml": false,
-	//   "noInputPrompts": [],
-	//   "richResponse": {
-	//     "items": [
-	//       {
-	//         "simpleResponse": {
-	//           "displayText": "hi",
-	//           "textToSpeech": "hello"
-	//         }
-	//       }
-	//     ],
-	//     "suggestions": [
-	//       {
-	//         "title": "Say this"
-	//       },
-	//       {
-	//         "title": "or this"
-	//       }
-	//     ]
-	//   },
-	//   "systemIntent": {
-	//     "data": {
-	//       "@type":
-	// "type.googleapis.com/google.actions.v2.OptionValueSpec",
-	//       "listSelect": {
-	//         "items": [
-	//           {
-	//             "optionInfo": {
-	//               "key": "key1",
-	//               "synonyms": [
-	//                 "key one"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           },
-	//           {
-	//             "optionInfo": {
-	//               "key": "key2",
-	//               "synonyms": [
-	//                 "key two"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           }
-	//         ]
-	//       }
-	//     },
-	//     "intent": "actions.intent.OPTION"
-	//   }
-	// }</pre>
+	//   "ACTIONS_ON_GOOGLE" - Google Assistant
+	// See [Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	//   "GOOGLE_HANGOUTS" - Google Hangouts.
 	DefaultResponsePlatforms []string `json:"defaultResponsePlatforms,omitempty"`
 
@@ -1100,6 +1063,7 @@ type GoogleCloudDialogflowV2Intent struct {
 	// must
 	// be present in the active user session for an event to trigger this
 	// intent.
+	// Event names are limited to 150 characters.
 	Events []string `json:"events,omitempty"`
 
 	// FollowupIntentInfo: Read-only. Information about all followup intents
@@ -1132,7 +1096,7 @@ type GoogleCloudDialogflowV2Intent struct {
 	// auto-markup in the UI is turned off.
 	MlDisabled bool `json:"mlDisabled,omitempty"`
 
-	// Name: The unique identifier of this intent.
+	// Name: Optional. The unique identifier of this intent.
 	// Required for Intents.UpdateIntent and
 	// Intents.BatchUpdateIntents
 	// methods.
@@ -1269,8 +1233,15 @@ func (s *GoogleCloudDialogflowV2IntentFollowupIntentInfo) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2IntentMessage: Corresponds to the `Response`
-// field in the Dialogflow console.
+// GoogleCloudDialogflowV2IntentMessage: A rich response
+// message.
+// Corresponds to the intent `Response` field in the Dialogflow
+// console.
+// For more information, see
+// [Rich
+// response
+// messages](https://cloud.google.com/dialogflow/docs/intents-ri
+// ch-messages).
 type GoogleCloudDialogflowV2IntentMessage struct {
 	// BasicCard: The basic card response for Actions on Google.
 	BasicCard *GoogleCloudDialogflowV2IntentMessageBasicCard `json:"basicCard,omitempty"`
@@ -1297,17 +1268,13 @@ type GoogleCloudDialogflowV2IntentMessage struct {
 	// MediaContent: The media content card for Actions on Google.
 	MediaContent *GoogleCloudDialogflowV2IntentMessageMediaContent `json:"mediaContent,omitempty"`
 
-	// Payload: Returns a response containing a custom, platform-specific
-	// payload.
-	// See the Intent.Message.Platform type for a description of
-	// the
-	// structure that may be required for your platform.
+	// Payload: A custom platform-specific response.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Platform: Optional. The platform that this message is intended for.
 	//
 	// Possible values:
-	//   "PLATFORM_UNSPECIFIED" - Not specified.
+	//   "PLATFORM_UNSPECIFIED" - Default platform.
 	//   "FACEBOOK" - Facebook.
 	//   "SLACK" - Slack.
 	//   "TELEGRAM" - Telegram.
@@ -1315,74 +1282,11 @@ type GoogleCloudDialogflowV2IntentMessage struct {
 	//   "SKYPE" - Skype.
 	//   "LINE" - Line.
 	//   "VIBER" - Viber.
-	//   "ACTIONS_ON_GOOGLE" - Actions on Google.
-	// When using Actions on Google, you can choose one of the
-	// specific
-	// Intent.Message types that mention support for Actions on Google,
-	// or you can use the advanced Intent.Message.payload field.
-	// The payload field provides access to AoG features not available in
-	// the
-	// specific message types.
-	// If using the Intent.Message.payload field, it should have a
-	// structure
-	// similar to the JSON message shown here. For more information,
-	// see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "expectUserResponse": true,
-	//   "isSsml": false,
-	//   "noInputPrompts": [],
-	//   "richResponse": {
-	//     "items": [
-	//       {
-	//         "simpleResponse": {
-	//           "displayText": "hi",
-	//           "textToSpeech": "hello"
-	//         }
-	//       }
-	//     ],
-	//     "suggestions": [
-	//       {
-	//         "title": "Say this"
-	//       },
-	//       {
-	//         "title": "or this"
-	//       }
-	//     ]
-	//   },
-	//   "systemIntent": {
-	//     "data": {
-	//       "@type":
-	// "type.googleapis.com/google.actions.v2.OptionValueSpec",
-	//       "listSelect": {
-	//         "items": [
-	//           {
-	//             "optionInfo": {
-	//               "key": "key1",
-	//               "synonyms": [
-	//                 "key one"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           },
-	//           {
-	//             "optionInfo": {
-	//               "key": "key2",
-	//               "synonyms": [
-	//                 "key two"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           }
-	//         ]
-	//       }
-	//     },
-	//     "intent": "actions.intent.OPTION"
-	//   }
-	// }</pre>
+	//   "ACTIONS_ON_GOOGLE" - Google Assistant
+	// See [Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	//   "GOOGLE_HANGOUTS" - Google Hangouts.
 	Platform string `json:"platform,omitempty"`
 
@@ -2458,6 +2362,7 @@ type GoogleCloudDialogflowV2IntentParameter struct {
 	Prompts []string `json:"prompts,omitempty"`
 
 	// Value: Optional. The definition of the parameter value. It can be:
+	//
 	// - a constant string,
 	// - a parameter value defined as `$parameter_name`,
 	// - an original parameter value defined as
@@ -2733,8 +2638,9 @@ type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
 	// Dialogflow
 	// agent may provide additional information in the payload.
 	//
-	// In particular for the Telephony Gateway this field has the
-	// form:
+	// In particular, for the Dialogflow Phone Gateway integration, this
+	// field has
+	// the form:
 	// <pre>{
 	//  "telephony": {
 	//    "caller_id": "+18558363987"
@@ -2856,6 +2762,21 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	OutputContexts []*GoogleCloudDialogflowV2Context `json:"outputContexts,omitempty"`
 
 	// Parameters: The collection of extracted parameters.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text:
@@ -3188,72 +3109,72 @@ func (s *GoogleCloudDialogflowV2WebhookRequest) MarshalJSON() ([]byte, error) {
 // Guide](https://developers.google.com/protocol-buffers/docs/pr
 // oto3#json).
 type GoogleCloudDialogflowV2WebhookResponse struct {
-	// FollowupEventInput: Optional. Makes the platform immediately invoke
-	// another `DetectIntent` call
-	// internally with the specified event as input.
+	// FollowupEventInput: Optional. Invokes the supplied events.
 	// When this field is set, Dialogflow ignores the
 	// `fulfillment_text`,
 	// `fulfillment_messages`, and `payload` fields.
 	FollowupEventInput *GoogleCloudDialogflowV2EventInput `json:"followupEventInput,omitempty"`
 
-	// FulfillmentMessages: Optional. The collection of rich messages to
-	// present to the user. This
-	// value is passed directly to `QueryResult.fulfillment_messages`.
+	// FulfillmentMessages: Optional. The rich response messages intended
+	// for the end-user.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.fulfillment_messages sent to the integration or API
+	// caller.
 	FulfillmentMessages []*GoogleCloudDialogflowV2IntentMessage `json:"fulfillmentMessages,omitempty"`
 
-	// FulfillmentText: Optional. The text to be shown on the screen. This
-	// value is passed directly
-	// to `QueryResult.fulfillment_text`.
+	// FulfillmentText: Optional. The text response message intended for the
+	// end-user.
+	// It is recommended to use `fulfillment_messages.text.text[0]`
+	// instead.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.fulfillment_text sent to the integration or API caller.
 	FulfillmentText string `json:"fulfillmentText,omitempty"`
 
-	// OutputContexts: Optional. The collection of output contexts. This
-	// value is passed directly
-	// to `QueryResult.output_contexts`.
+	// OutputContexts: Optional. The collection of output contexts that will
+	// overwrite currently
+	// active contexts for the session and reset their lifespans.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.output_contexts sent to the integration or API caller.
 	OutputContexts []*GoogleCloudDialogflowV2Context `json:"outputContexts,omitempty"`
 
-	// Payload: Optional. This value is passed directly to
-	// `QueryResult.webhook_payload`.
-	// See the related `fulfillment_messages[i].payload field`, which may be
-	// used
-	// as an alternative to this field.
-	//
-	// This field can be used for Actions on Google responses.
-	// It should have a structure similar to the JSON message shown here.
-	// For more
-	// information, see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "google": {
-	//     "expectUserResponse": true,
-	//     "richResponse": {
-	//       "items": [
-	//         {
-	//           "simpleResponse": {
-	//             "textToSpeech": "this is a simple response"
-	//           }
-	//         }
-	//       ]
-	//     }
-	//   }
-	// }</pre>
+	// Payload: Optional. This field can be used to pass custom data from
+	// your webhook to the
+	// integration or API caller. Arbitrary JSON objects are supported.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.webhook_payload sent to the integration or API
+	// caller.
+	// This field is also used by the
+	// [Google
+	// Assistant
+	// integration](https://cloud.google.com/dialogflow/docs/integr
+	// ations/aog)
+	// for rich response messages.
+	// See the format definition at [Google Assistant Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
 	// replace or extend developer
 	// entity types with. The entity synonyms apply to all languages and
 	// persist
-	// for the session of this query. Setting the session entity types
-	// inside
-	// webhook overwrites the session entity types that have been set
-	// through
-	// `DetectIntentRequest.query_params.session_entity_types`.
+	// for the session. Setting this data from a webhook overwrites
+	// the session entity types that have been set using
+	// `detectIntent`,
+	// `streamingDetectIntent` or SessionEntityType management methods.
 	SessionEntityTypes []*GoogleCloudDialogflowV2SessionEntityType `json:"sessionEntityTypes,omitempty"`
 
-	// Source: Optional. This value is passed directly to
-	// `QueryResult.webhook_source`.
+	// Source: Optional. A custom field used to identify the webhook
+	// source.
+	// Arbitrary strings are supported.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.webhook_source sent to the integration or API caller.
 	Source string `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FollowupEventInput")
@@ -3507,16 +3428,14 @@ type GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest struct {
 	// Entities: Required. The entities to create.
 	Entities []*GoogleCloudDialogflowV2beta1EntityTypeEntity `json:"entities,omitempty"`
 
-	// LanguageCode: Optional. The language of entity synonyms defined in
-	// `entities`. If not
-	// specified, the agent's default language is
-	// used.
-	// [Many
-	// languages](https://cloud.google.com/dialogflow/docs/refere
-	// nce/language)
-	// are supported. Note: languages must be enabled in the agent before
-	// they can
-	// be used.
+	// LanguageCode: Optional. The language used to access language-specific
+	// data.
+	// If not specified, the agent's default language is used.
+	// For more information, see
+	// [Multilingual intent and
+	// entity
+	// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+	// ual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entities") to
@@ -3552,16 +3471,14 @@ type GoogleCloudDialogflowV2beta1BatchDeleteEntitiesRequest struct {
 	// `projects/<Project ID>`.
 	EntityValues []string `json:"entityValues,omitempty"`
 
-	// LanguageCode: Optional. The language of entity synonyms defined in
-	// `entities`. If not
-	// specified, the agent's default language is
-	// used.
-	// [Many
-	// languages](https://cloud.google.com/dialogflow/docs/refere
-	// nce/language)
-	// are supported. Note: languages must be enabled in the agent before
-	// they can
-	// be used.
+	// LanguageCode: Optional. The language used to access language-specific
+	// data.
+	// If not specified, the agent's default language is used.
+	// For more information, see
+	// [Multilingual intent and
+	// entity
+	// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+	// ual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityValues") to
@@ -3656,16 +3573,14 @@ type GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest struct {
 	// Entities: Required. The entities to update or create.
 	Entities []*GoogleCloudDialogflowV2beta1EntityTypeEntity `json:"entities,omitempty"`
 
-	// LanguageCode: Optional. The language of entity synonyms defined in
-	// `entities`. If not
-	// specified, the agent's default language is
-	// used.
-	// [Many
-	// languages](https://cloud.google.com/dialogflow/docs/refere
-	// nce/language)
-	// are supported. Note: languages must be enabled in the agent before
-	// they can
-	// be used.
+	// LanguageCode: Optional. The language used to access language-specific
+	// data.
+	// If not specified, the agent's default language is used.
+	// For more information, see
+	// [Multilingual intent and
+	// entity
+	// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+	// ual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -3710,16 +3625,14 @@ type GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest struct {
 	// "gs://".
 	EntityTypeBatchUri string `json:"entityTypeBatchUri,omitempty"`
 
-	// LanguageCode: Optional. The language of entity synonyms defined in
-	// `entity_types`. If not
-	// specified, the agent's default language is
-	// used.
-	// [Many
-	// languages](https://cloud.google.com/dialogflow/docs/refere
-	// nce/language)
-	// are supported. Note: languages must be enabled in the agent before
-	// they can
-	// be used.
+	// LanguageCode: Optional. The language used to access language-specific
+	// data.
+	// If not specified, the agent's default language is used.
+	// For more information, see
+	// [Multilingual intent and
+	// entity
+	// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+	// ual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -3801,17 +3714,14 @@ type GoogleCloudDialogflowV2beta1BatchUpdateIntentsRequest struct {
 	//   "INTENT_VIEW_FULL" - All fields are populated.
 	IntentView string `json:"intentView,omitempty"`
 
-	// LanguageCode: Optional. The language of training phrases, parameters
-	// and rich messages
-	// defined in `intents`. If not specified, the agent's default language
-	// is
-	// used.
-	// [Many
-	// languages](https://cloud.google.com/dialogflow/docs/reference/la
-	// nguage)
-	// are supported. Note: languages must be enabled in the agent before
-	// they can
-	// be used.
+	// LanguageCode: Optional. The language used to access language-specific
+	// data.
+	// If not specified, the agent's default language is used.
+	// For more information, see
+	// [Multilingual intent and
+	// entity
+	// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+	// ual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -3874,7 +3784,7 @@ func (s *GoogleCloudDialogflowV2beta1BatchUpdateIntentsResponse) MarshalJSON() (
 type GoogleCloudDialogflowV2beta1Context struct {
 	// LifespanCount: Optional. The number of conversational query requests
 	// after which the
-	// context expires. If set to `0` (the default) the context
+	// context expires. The default is `0`. If set to `0`, the context
 	// expires
 	// immediately. Contexts expire automatically after 20 minutes if
 	// there
@@ -3910,11 +3820,21 @@ type GoogleCloudDialogflowV2beta1Context struct {
 
 	// Parameters: Optional. The collection of parameters associated with
 	// this context.
-	// Refer to
-	// [this
-	// doc](https://cloud.google.com/dialogflow/docs/intents-actions-pa
-	// rameters)
-	// for syntax.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3944,11 +3864,8 @@ func (s *GoogleCloudDialogflowV2beta1Context) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1DetectIntentRequest:
-// ======================================================================
-// ======
-// Requests and responses for custom methods.
-// The request to detect user's intent.
+// GoogleCloudDialogflowV2beta1DetectIntentRequest: The request to
+// detect user's intent.
 type GoogleCloudDialogflowV2beta1DetectIntentRequest struct {
 	// InputAudio: The natural language speech audio to be processed. This
 	// field
@@ -4126,6 +4043,32 @@ type GoogleCloudDialogflowV2beta1Document struct {
 	// less; otherwise, the creation request fails.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnableAutoReload: Optional. If true, we try to automatically reload
+	// the document every day
+	// (at a time picked by the system). If false or unspecified, we don't
+	// try
+	// to automatically reload the document.
+	//
+	// Currently you can only enable automatic reload for documents sourced
+	// from
+	// a public url, see `source` field for the source types.
+	//
+	// Reload status can be tracked in `latest_reload_status`. If a
+	// reload
+	// fails, we will keep the document unchanged.
+	//
+	// If a reload fails with internal errors, the system will try to reload
+	// the
+	// document on the next day.
+	// If a reload fails with non-retriable errors (e.g. PERMISION_DENIED),
+	// the
+	// system will not try to reload the document anymore. You need to
+	// manually
+	// reload the document successfully by calling `ReloadDocument` and
+	// clear the
+	// errors.
+	EnableAutoReload bool `json:"enableAutoReload,omitempty"`
+
 	// KnowledgeTypes: Required. The knowledge type of document content.
 	//
 	// Possible values:
@@ -4147,10 +4090,16 @@ type GoogleCloudDialogflowV2beta1Document struct {
 	// question answering.
 	KnowledgeTypes []string `json:"knowledgeTypes,omitempty"`
 
+	// LatestReloadStatus: Output only. The time and status of the latest
+	// reload.
+	// This reload may have been triggered automatically or manually
+	// and may not have succeeded.
+	LatestReloadStatus *GoogleCloudDialogflowV2beta1DocumentReloadStatus `json:"latestReloadStatus,omitempty"`
+
 	// MimeType: Required. The MIME type of this document.
 	MimeType string `json:"mimeType,omitempty"`
 
-	// Name: The document resource name.
+	// Name: Optional. The document resource name.
 	// The name must be empty when creating a document.
 	// Format: `projects/<Project ID>/knowledgeBases/<Knowledge
 	// Base
@@ -4185,6 +4134,42 @@ type GoogleCloudDialogflowV2beta1Document struct {
 
 func (s *GoogleCloudDialogflowV2beta1Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1Document
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1DocumentReloadStatus: The status of a
+// reload attempt.
+type GoogleCloudDialogflowV2beta1DocumentReloadStatus struct {
+	// Status: Output only. The status of a reload attempt or the initial
+	// load.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// Time: Output only. The time of a reload attempt.
+	// This reload may have been triggered automatically or manually and
+	// may
+	// not have succeeded.
+	Time string `json:"time,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1DocumentReloadStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1DocumentReloadStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4355,6 +4340,66 @@ func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1Environment: Represents an agent
+// environment.
+type GoogleCloudDialogflowV2beta1Environment struct {
+	// AgentVersion: Optional. The agent version loaded into this
+	// environment.
+	// Format: `projects/<Project ID>/agent/versions/<Version ID>`.
+	AgentVersion string `json:"agentVersion,omitempty"`
+
+	// Description: Optional. The developer-provided description for this
+	// environment.
+	// The maximum length is 500 characters. If exceeded, the request is
+	// rejected.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. The unique identifier of this agent
+	// environment.
+	// Format: `projects/<Project ID>/agent/environments/<Environment
+	// ID>`.
+	// For Environment ID, "-" is reserved for 'draft' environment.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The state of this environment. This field is
+	// read-only, i.e., it cannot be
+	// set by create and update methods.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified. This value is not used.
+	//   "STOPPED" - Stopped.
+	//   "LOADING" - Loading.
+	//   "RUNNING" - Running.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The last update time of this environment.
+	// This field is read-only, i.e., it
+	// cannot be set by create and update methods.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentVersion") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1Environment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1Environment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1EventInput: Events allow for matching
 // intents by event name instead of the natural
 // language input. For instance, input `<event: { name:
@@ -4378,7 +4423,23 @@ type GoogleCloudDialogflowV2beta1EventInput struct {
 	// Name: Required. The unique identifier of the event.
 	Name string `json:"name,omitempty"`
 
-	// Parameters: The collection of parameters associated with the event.
+	// Parameters: The collection of parameters associated with the
+	// event.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -4573,6 +4634,7 @@ type GoogleCloudDialogflowV2beta1FulfillmentGenericWebService struct {
 	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
 
 	// Uri: Required. The fulfillment URI for receiving POST requests.
+	// It must use https protocol.
 	Uri string `json:"uri,omitempty"`
 
 	// Username: Optional. The user name for HTTP Basic authentication.
@@ -4725,8 +4787,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// wideband is supported. `sample_rate_hertz` must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
-	// EnableWordInfo: Optional. If `true`, Dialogflow returns
-	// SpeechWordInfo in
+	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo
+	// in
 	// StreamingRecognitionResult with information about the recognized
 	// speech
 	// words, e.g. start and end time offsets. If false or unspecified,
@@ -4746,8 +4808,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Model: Optional. Which Speech model to select for the given request.
-	// Select the
+	// Model: Which Speech model to select for the given request. Select
+	// the
 	// model best suited to your domain to get best results. If a model is
 	// not
 	// explicitly specified, then we auto-select a model based on the
@@ -4767,7 +4829,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// for more details.
 	Model string `json:"model,omitempty"`
 
-	// ModelVariant: Optional. Which variant of the Speech model to use.
+	// ModelVariant: Which variant of the Speech model to use.
 	//
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
@@ -4808,8 +4870,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	//   for how to make your project eligible.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
-	// PhraseHints: Optional. A list of strings containing words and phrases
-	// that the speech
+	// PhraseHints: A list of strings containing words and phrases that the
+	// speech
 	// recognizer should recognize with higher likelihood.
 	//
 	// See [the Cloud
@@ -4835,8 +4897,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// more details.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
-	// SingleUtterance: Optional. If `false` (default), recognition does not
-	// cease until the
+	// SingleUtterance: If `false` (default), recognition does not cease
+	// until the
 	// client closes the stream.
 	// If `true`, the recognizer will detect a single spoken utterance in
 	// input
@@ -4853,7 +4915,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// over StreamingDetectIntentRequest.single_utterance.
 	SingleUtterance bool `json:"singleUtterance,omitempty"`
 
-	// SpeechContexts: Optional. Context information to assist speech
+	// SpeechContexts: Context information to assist speech
 	// recognition.
 	//
 	// See [the Cloud
@@ -4910,74 +4972,11 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	//   "SKYPE" - Skype.
 	//   "LINE" - Line.
 	//   "VIBER" - Viber.
-	//   "ACTIONS_ON_GOOGLE" - Actions on Google.
-	// When using Actions on Google, you can choose one of the
-	// specific
-	// Intent.Message types that mention support for Actions on Google,
-	// or you can use the advanced Intent.Message.payload field.
-	// The payload field provides access to AoG features not available in
-	// the
-	// specific message types.
-	// If using the Intent.Message.payload field, it should have a
-	// structure
-	// similar to the JSON message shown here. For more information,
-	// see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "expectUserResponse": true,
-	//   "isSsml": false,
-	//   "noInputPrompts": [],
-	//   "richResponse": {
-	//     "items": [
-	//       {
-	//         "simpleResponse": {
-	//           "displayText": "hi",
-	//           "textToSpeech": "hello"
-	//         }
-	//       }
-	//     ],
-	//     "suggestions": [
-	//       {
-	//         "title": "Say this"
-	//       },
-	//       {
-	//         "title": "or this"
-	//       }
-	//     ]
-	//   },
-	//   "systemIntent": {
-	//     "data": {
-	//       "@type":
-	// "type.googleapis.com/google.actions.v2.OptionValueSpec",
-	//       "listSelect": {
-	//         "items": [
-	//           {
-	//             "optionInfo": {
-	//               "key": "key1",
-	//               "synonyms": [
-	//                 "key one"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           },
-	//           {
-	//             "optionInfo": {
-	//               "key": "key2",
-	//               "synonyms": [
-	//                 "key two"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           }
-	//         ]
-	//       }
-	//     },
-	//     "intent": "actions.intent.OPTION"
-	//   }
-	// }</pre>
+	//   "ACTIONS_ON_GOOGLE" - Google Assistant
+	// See [Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	//   "TELEPHONY" - Telephony Gateway.
 	//   "GOOGLE_HANGOUTS" - Google Hangouts.
 	DefaultResponsePlatforms []string `json:"defaultResponsePlatforms,omitempty"`
@@ -4998,10 +4997,11 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// must
 	// be present in the active user session for an event to trigger this
 	// intent.
+	// Event names are limited to 150 characters.
 	Events []string `json:"events,omitempty"`
 
-	// FollowupIntentInfo: Read-only. Information about all followup intents
-	// that have this intent as
+	// FollowupIntentInfo: Output only. Information about all followup
+	// intents that have this intent as
 	// a direct or indirect parent. We populate this field only in the
 	// output.
 	FollowupIntentInfo []*GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo `json:"followupIntentInfo,omitempty"`
@@ -5047,7 +5047,7 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	//   ml_enabled = true / ml_disabled = false.
 	MlEnabled bool `json:"mlEnabled,omitempty"`
 
-	// Name: The unique identifier of this intent.
+	// Name: Optional. The unique identifier of this intent.
 	// Required for Intents.UpdateIntent and
 	// Intents.BatchUpdateIntents
 	// methods.
@@ -5069,8 +5069,8 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// the intent.
 	Parameters []*GoogleCloudDialogflowV2beta1IntentParameter `json:"parameters,omitempty"`
 
-	// ParentFollowupIntentName: Read-only after creation. The unique
-	// identifier of the parent intent in the
+	// ParentFollowupIntentName: Optional. The unique identifier of the
+	// parent intent in the
 	// chain of followup intents. You can set this field when creating an
 	// intent,
 	// for example with CreateIntent or
@@ -5081,8 +5081,8 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	ParentFollowupIntentName string `json:"parentFollowupIntentName,omitempty"`
 
-	// Priority: The priority of this intent. Higher numbers represent
-	// higher
+	// Priority: Optional. The priority of this intent. Higher numbers
+	// represent higher
 	// priorities.
 	//
 	// - If the supplied value is unspecified or 0, the service
@@ -5097,11 +5097,11 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// session when this intent is matched.
 	ResetContexts bool `json:"resetContexts,omitempty"`
 
-	// RootFollowupIntentName: Read-only. The unique identifier of the root
-	// intent in the chain of
+	// RootFollowupIntentName: Output only. The unique identifier of the
+	// root intent in the chain of
 	// followup intents. It identifies the correct followup intents chain
 	// for
-	// this intent. We populate this field only in the output.
+	// this intent.
 	//
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
@@ -5245,11 +5245,7 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	// MediaContent: The media content card for Actions on Google.
 	MediaContent *GoogleCloudDialogflowV2beta1IntentMessageMediaContent `json:"mediaContent,omitempty"`
 
-	// Payload: Returns a response containing a custom, platform-specific
-	// payload.
-	// See the Intent.Message.Platform type for a description of
-	// the
-	// structure that may be required for your platform.
+	// Payload: A custom platform-specific response.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Platform: Optional. The platform that this message is intended for.
@@ -5263,74 +5259,11 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	//   "SKYPE" - Skype.
 	//   "LINE" - Line.
 	//   "VIBER" - Viber.
-	//   "ACTIONS_ON_GOOGLE" - Actions on Google.
-	// When using Actions on Google, you can choose one of the
-	// specific
-	// Intent.Message types that mention support for Actions on Google,
-	// or you can use the advanced Intent.Message.payload field.
-	// The payload field provides access to AoG features not available in
-	// the
-	// specific message types.
-	// If using the Intent.Message.payload field, it should have a
-	// structure
-	// similar to the JSON message shown here. For more information,
-	// see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "expectUserResponse": true,
-	//   "isSsml": false,
-	//   "noInputPrompts": [],
-	//   "richResponse": {
-	//     "items": [
-	//       {
-	//         "simpleResponse": {
-	//           "displayText": "hi",
-	//           "textToSpeech": "hello"
-	//         }
-	//       }
-	//     ],
-	//     "suggestions": [
-	//       {
-	//         "title": "Say this"
-	//       },
-	//       {
-	//         "title": "or this"
-	//       }
-	//     ]
-	//   },
-	//   "systemIntent": {
-	//     "data": {
-	//       "@type":
-	// "type.googleapis.com/google.actions.v2.OptionValueSpec",
-	//       "listSelect": {
-	//         "items": [
-	//           {
-	//             "optionInfo": {
-	//               "key": "key1",
-	//               "synonyms": [
-	//                 "key one"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           },
-	//           {
-	//             "optionInfo": {
-	//               "key": "key2",
-	//               "synonyms": [
-	//                 "key two"
-	//               ]
-	//             },
-	//             "title": "must not be empty, but unique"
-	//           }
-	//         ]
-	//       }
-	//     },
-	//     "intent": "actions.intent.OPTION"
-	//   }
-	// }</pre>
+	//   "ACTIONS_ON_GOOGLE" - Google Assistant
+	// See [Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	//   "TELEPHONY" - Telephony Gateway.
 	//   "GOOGLE_HANGOUTS" - Google Hangouts.
 	Platform string `json:"platform,omitempty"`
@@ -6139,21 +6072,21 @@ func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent) MarshalJSON() 
 // Business Messaging (RBM) Media displayed in Cards
 // The following media-types are currently supported:
 //
-// ## Image Types
+// Image Types
 //
-//  image/jpeg
-//  image/jpg'
-//  image/gif
-//  image/png
+// * image/jpeg
+// * image/jpg'
+// * image/gif
+// * image/png
 //
-// ## Video Types
+// Video Types
 //
-//  video/h263
-//  video/m4v
-//  video/mp4
-//  video/mpeg
-//  video/mpeg4
-//  video/webm
+// * video/h263
+// * video/m4v
+// * video/mp4
+// * video/mpeg
+// * video/mpeg4
+// * video/webm
 type GoogleCloudDialogflowV2beta1IntentMessageRbmCardContentRbmMedia struct {
 	// FileUri: Required. Publicly reachable URI of the file. The RBM
 	// platform
@@ -7025,6 +6958,7 @@ type GoogleCloudDialogflowV2beta1IntentParameter struct {
 	Prompts []string `json:"prompts,omitempty"`
 
 	// Value: Optional. The definition of the parameter value. It can be:
+	//
 	// - a constant string,
 	// - a parameter value defined as `$parameter_name`,
 	// - an original parameter value defined as
@@ -7364,7 +7298,7 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeBase) MarshalJSON() ([]byte, error
 // GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata: Metadata in
 // google::longrunning::Operation for Knowledge operations.
 type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
-	// State: Required. The current state of this operation.
+	// State: Required. Output only. The current state of this operation.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State unspecified.
@@ -7547,6 +7481,46 @@ func (s *GoogleCloudDialogflowV2beta1ListEntityTypesResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ListEnvironmentsResponse: The response
+// message for Environments.ListEnvironments.
+type GoogleCloudDialogflowV2beta1ListEnvironmentsResponse struct {
+	// Environments: The list of agent environments. There will be a maximum
+	// number of items
+	// returned based on the page_size field in the request.
+	Environments []*GoogleCloudDialogflowV2beta1Environment `json:"environments,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no
+	// more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Environments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ListEnvironmentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1ListIntentsResponse: The response message
 // for Intents.ListIntents.
 type GoogleCloudDialogflowV2beta1ListIntentsResponse struct {
@@ -7676,8 +7650,9 @@ type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
 	// Dialogflow
 	// agent may provide additional information in the payload.
 	//
-	// In particular for the Telephony Gateway this field has the
-	// form:
+	// In particular, for the Dialogflow Phone Gateway integration, this
+	// field has
+	// the form:
 	// <pre>{
 	//  "telephony": {
 	//    "caller_id": "+18558363987"
@@ -7848,9 +7823,13 @@ type GoogleCloudDialogflowV2beta1QueryParameters struct {
 	// Format:  `projects/<Project ID>/knowledgeBases/<Knowledge Base ID>`.
 	KnowledgeBaseNames []string `json:"knowledgeBaseNames,omitempty"`
 
-	// Payload: This field can be used to pass custom data into the
-	// webhook
-	// associated with the agent. Arbitrary JSON objects are supported.
+	// Payload: This field can be used to pass custom data to your
+	// webhook.
+	// Arbitrary JSON objects are supported.
+	// If supplied, the value is used to populate
+	// the
+	// `WebhookRequest.original_detect_intent_request.payload`
+	// field sent to your webhook.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// ResetContexts: Specifies whether to delete all contexts in the
@@ -8010,6 +7989,21 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	OutputContexts []*GoogleCloudDialogflowV2beta1Context `json:"outputContexts,omitempty"`
 
 	// Parameters: The collection of extracted parameters.
+	//
+	// Depending on your protocol or client library language, this is a
+	// map, associative array, symbol table, dictionary, or JSON
+	// object
+	// composed of a collection of (MapKey, MapValue) pairs:
+	//
+	// -   MapKey type: string
+	// -   MapKey value: parameter name
+	// -   MapValue type:
+	//     -   If parameter's entity type is a composite entity: map
+	//     -   Else: string or number, depending on parameter value type
+	// -   MapValue value:
+	//     -   If parameter's entity type is a composite entity:
+	//         map from composite entity property names to property values
+	//     -   Else: parameter value
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text:
@@ -8101,8 +8095,9 @@ func (s *GoogleCloudDialogflowV2beta1QueryResult) UnmarshalJSON(data []byte) err
 // GoogleCloudDialogflowV2beta1ReloadDocumentRequest: Request message
 // for Documents.ReloadDocument.
 type GoogleCloudDialogflowV2beta1ReloadDocumentRequest struct {
-	// GcsSource: The path of gcs source file for reloading document
-	// content.
+	// GcsSource: Optional. The path for a Cloud Storage source file for
+	// reloading document content.
+	// If not provided, the Document's existing source will be reloaded.
 	GcsSource *GoogleCloudDialogflowV2beta1GcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
@@ -8414,7 +8409,9 @@ func (s *GoogleCloudDialogflowV2beta1SessionEntityType) MarshalJSON() ([]byte, e
 // recognizer to help with recognition in a specific
 // conversation state.
 type GoogleCloudDialogflowV2beta1SpeechContext struct {
-	// Boost: Optional. Boost for this context compared to other contexts:
+	// Boost: Optional. Boost for this context compared to other
+	// contexts:
+	//
 	// * If the boost is positive, Dialogflow will increase the probability
 	// that
 	//   the phrases in this context are recognized over similar sounding
@@ -8888,72 +8885,72 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	// to close interaction with an end user. Default is false.
 	EndInteraction bool `json:"endInteraction,omitempty"`
 
-	// FollowupEventInput: Optional. Makes the platform immediately invoke
-	// another `DetectIntent` call
-	// internally with the specified event as input.
+	// FollowupEventInput: Optional. Invokes the supplied events.
 	// When this field is set, Dialogflow ignores the
 	// `fulfillment_text`,
 	// `fulfillment_messages`, and `payload` fields.
 	FollowupEventInput *GoogleCloudDialogflowV2beta1EventInput `json:"followupEventInput,omitempty"`
 
-	// FulfillmentMessages: Optional. The collection of rich messages to
-	// present to the user. This
-	// value is passed directly to `QueryResult.fulfillment_messages`.
+	// FulfillmentMessages: Optional. The rich response messages intended
+	// for the end-user.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.fulfillment_messages sent to the integration or API
+	// caller.
 	FulfillmentMessages []*GoogleCloudDialogflowV2beta1IntentMessage `json:"fulfillmentMessages,omitempty"`
 
-	// FulfillmentText: Optional. The text to be shown on the screen. This
-	// value is passed directly
-	// to `QueryResult.fulfillment_text`.
+	// FulfillmentText: Optional. The text response message intended for the
+	// end-user.
+	// It is recommended to use `fulfillment_messages.text.text[0]`
+	// instead.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.fulfillment_text sent to the integration or API caller.
 	FulfillmentText string `json:"fulfillmentText,omitempty"`
 
-	// OutputContexts: Optional. The collection of output contexts. This
-	// value is passed directly
-	// to `QueryResult.output_contexts`.
+	// OutputContexts: Optional. The collection of output contexts that will
+	// overwrite currently
+	// active contexts for the session and reset their lifespans.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.output_contexts sent to the integration or API caller.
 	OutputContexts []*GoogleCloudDialogflowV2beta1Context `json:"outputContexts,omitempty"`
 
-	// Payload: Optional. This value is passed directly to
-	// `QueryResult.webhook_payload`.
-	// See the related `fulfillment_messages[i].payload field`, which may be
-	// used
-	// as an alternative to this field.
-	//
-	// This field can be used for Actions on Google responses.
-	// It should have a structure similar to the JSON message shown here.
-	// For more
-	// information, see
-	// [Actions on Google
-	// Webhook
-	// Format](https://developers.google.com/actions/dialogflow/webho
-	// ok)
-	// <pre>{
-	//   "google": {
-	//     "expectUserResponse": true,
-	//     "richResponse": {
-	//       "items": [
-	//         {
-	//           "simpleResponse": {
-	//             "textToSpeech": "this is a simple response"
-	//           }
-	//         }
-	//       ]
-	//     }
-	//   }
-	// }</pre>
+	// Payload: Optional. This field can be used to pass custom data from
+	// your webhook to the
+	// integration or API caller. Arbitrary JSON objects are supported.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.webhook_payload sent to the integration or API
+	// caller.
+	// This field is also used by the
+	// [Google
+	// Assistant
+	// integration](https://cloud.google.com/dialogflow/docs/integr
+	// ations/aog)
+	// for rich response messages.
+	// See the format definition at [Google Assistant Dialogflow
+	// webhook
+	// format](https://developers.google.com/assistant/actions/build/
+	// json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
 	// replace or extend developer
 	// entity types with. The entity synonyms apply to all languages and
 	// persist
-	// for the session of this query. Setting the session entity types
-	// inside
-	// webhook overwrites the session entity types that have been set
-	// through
-	// `DetectIntentRequest.query_params.session_entity_types`.
+	// for the session. Setting this data from a webhook overwrites
+	// the session entity types that have been set using
+	// `detectIntent`,
+	// `streamingDetectIntent` or SessionEntityType management methods.
 	SessionEntityTypes []*GoogleCloudDialogflowV2beta1SessionEntityType `json:"sessionEntityTypes,omitempty"`
 
-	// Source: Optional. This value is passed directly to
-	// `QueryResult.webhook_source`.
+	// Source: Optional. A custom field used to identify the webhook
+	// source.
+	// Arbitrary strings are supported.
+	// When provided, Dialogflow uses this field to
+	// populate
+	// QueryResult.webhook_source sent to the integration or API caller.
 	Source string `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndInteraction") to
@@ -8976,6 +8973,40 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1WebhookResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV3alpha1ExportAgentResponse: The response
+// message for Agents.ExportAgent.
+type GoogleCloudDialogflowV3alpha1ExportAgentResponse struct {
+	// AgentContent: Uncompressed raw byte content for agent.
+	AgentContent string `json:"agentContent,omitempty"`
+
+	// AgentUri: The URI to a file containing the exported agent. This field
+	// is populated
+	// only if `agent_uri` is specified in ExportAgentRequest.
+	AgentUri string `json:"agentUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentContent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV3alpha1ExportAgentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV3alpha1ExportAgentResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9264,7 +9295,7 @@ func (c *ProjectsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9406,7 +9437,7 @@ func (c *ProjectsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9550,7 +9581,7 @@ func (c *ProjectsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9701,7 +9732,7 @@ func (c *ProjectsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9851,7 +9882,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10014,7 +10045,7 @@ func (c *ProjectsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10166,7 +10197,7 @@ func (c *ProjectsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10314,7 +10345,7 @@ func (c *ProjectsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10421,7 +10452,6 @@ type ProjectsAgentSearchCall struct {
 }
 
 // Search: Returns the list of agents.
-//
 // Since there is at most one conversational agent per project, this
 // method is
 // useful primarily for listing all agents across projects the caller
@@ -10490,7 +10520,7 @@ func (c *ProjectsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10554,7 +10584,7 @@ func (c *ProjectsAgentSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the list of agents.\n\nSince there is at most one conversational agent per project, this method is\nuseful primarily for listing all agents across projects the caller has\naccess to. One can achieve that with a wildcard project collection id \"-\".\nRefer to [List\nSub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).",
+	//   "description": "Returns the list of agents.\nSince there is at most one conversational agent per project, this method is\nuseful primarily for listing all agents across projects the caller has\naccess to. One can achieve that with a wildcard project collection id \"-\".\nRefer to [List\nSub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent:search",
 	//   "httpMethod": "GET",
 	//   "id": "dialogflow.projects.agent.search",
@@ -10663,7 +10693,7 @@ func (c *ProjectsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10812,7 +10842,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10926,7 +10956,6 @@ type ProjectsAgentEntityTypesBatchDeleteCall struct {
 }
 
 // BatchDelete: Deletes entity types in the specified agent.
-//
 // Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentEntityTypesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitytypesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) *ProjectsAgentEntityTypesBatchDeleteCall {
 	c := &ProjectsAgentEntityTypesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10962,7 +10991,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11026,7 +11055,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+	//   "description": "Deletes entity types in the specified agent.\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.batchDelete",
@@ -11070,7 +11099,6 @@ type ProjectsAgentEntityTypesBatchUpdateCall struct {
 
 // BatchUpdate: Updates/Creates multiple entity types in the specified
 // agent.
-//
 // Operation <response: BatchUpdateEntityTypesResponse>
 func (r *ProjectsAgentEntityTypesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitytypesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) *ProjectsAgentEntityTypesBatchUpdateCall {
 	c := &ProjectsAgentEntityTypesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11106,7 +11134,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11170,7 +11198,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
+	//   "description": "Updates/Creates multiple entity types in the specified agent.\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.batchUpdate",
@@ -11221,15 +11249,13 @@ func (r *ProjectsAgentEntityTypesService) Create(parent string, googleclouddialo
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentEntityTypesCreateCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -11262,7 +11288,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11336,7 +11362,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11407,7 +11433,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11513,15 +11539,13 @@ func (r *ProjectsAgentEntityTypesService) Get(name string) *ProjectsAgentEntityT
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to retrieve entity synonyms for. If not specified,
-// the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentEntityTypesGetCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -11564,7 +11588,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11636,7 +11660,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11679,15 +11703,13 @@ func (r *ProjectsAgentEntityTypesService) List(parent string) *ProjectsAgentEnti
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to list entity synonyms for. If not specified,
-// the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentEntityTypesListCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -11745,7 +11767,7 @@ func (c *ProjectsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11818,7 +11840,7 @@ func (c *ProjectsAgentEntityTypesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11894,15 +11916,13 @@ func (r *ProjectsAgentEntityTypesService) Patch(nameid string, googleclouddialog
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentEntityTypesPatchCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -11942,7 +11962,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12016,7 +12036,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12098,7 +12118,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12242,7 +12262,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12389,7 +12409,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12484,6 +12504,201 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 
 }
 
+// method id "dialogflow.projects.agent.environments.list":
+
+type ProjectsAgentEnvironmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all non-draft environments of the specified
+// agent.
+func (r *ProjectsAgentEnvironmentsService) List(parent string) *ProjectsAgentEnvironmentsListCall {
+	c := &ProjectsAgentEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return in a single page. By default 100 and
+// at most 1000.
+func (c *ProjectsAgentEnvironmentsListCall) PageSize(pageSize int64) *ProjectsAgentEnvironmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsAgentEnvironmentsListCall) PageToken(pageToken string) *ProjectsAgentEnvironmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAgentEnvironmentsListCall) Fields(s ...googleapi.Field) *ProjectsAgentEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAgentEnvironmentsListCall) IfNoneMatch(entityTag string) *ProjectsAgentEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAgentEnvironmentsListCall) Context(ctx context.Context) *ProjectsAgentEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAgentEnvironmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.agent.environments.list" call.
+// Exactly one of *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1ListEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2beta1ListEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all non-draft environments of the specified agent.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/agent/environments",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.agent.environments.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return in a single page. By default 100 and\nat most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The agent to list all environments from.\nFormat: `projects/\u003cProject ID\u003e/agent`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/agent$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/environments",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1ListEnvironmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAgentEnvironmentsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2beta1ListEnvironmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "dialogflow.projects.agent.environments.users.sessions.deleteContexts":
 
 type ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall struct {
@@ -12528,7 +12743,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12667,7 +12882,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12812,7 +13027,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12952,7 +13167,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13094,7 +13309,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Header() http.He
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13255,7 +13470,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13432,7 +13647,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Header() http.
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13588,7 +13803,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13733,7 +13948,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13879,7 +14094,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14046,7 +14261,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Header() htt
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14228,7 +14443,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Header() ht
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14379,7 +14594,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14523,7 +14738,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14649,16 +14864,13 @@ func (c *ProjectsAgentIntentsCreateCall) IntentView(intentView string) *Projects
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of training phrases, parameters and rich messages
-// defined in `intent`. If not specified, the agent's default language
-// is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/reference/la
-// nguage)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentIntentsCreateCall) LanguageCode(languageCode string) *ProjectsAgentIntentsCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -14691,7 +14903,7 @@ func (c *ProjectsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14774,7 +14986,7 @@ func (c *ProjectsAgentIntentsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14846,7 +15058,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14963,15 +15175,13 @@ func (c *ProjectsAgentIntentsGetCall) IntentView(intentView string) *ProjectsAge
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to retrieve training phrases, parameters and rich
-// messages for. If not specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentIntentsGetCall) LanguageCode(languageCode string) *ProjectsAgentIntentsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15014,7 +15224,7 @@ func (c *ProjectsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15095,7 +15305,7 @@ func (c *ProjectsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15149,15 +15359,13 @@ func (c *ProjectsAgentIntentsListCall) IntentView(intentView string) *ProjectsAg
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to list training phrases, parameters and rich
-// messages for. If not specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentIntentsListCall) LanguageCode(languageCode string) *ProjectsAgentIntentsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15215,7 +15423,7 @@ func (c *ProjectsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15297,7 +15505,7 @@ func (c *ProjectsAgentIntentsListCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15384,16 +15592,13 @@ func (c *ProjectsAgentIntentsPatchCall) IntentView(intentView string) *ProjectsA
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of training phrases, parameters and rich messages
-// defined in `intent`. If not specified, the agent's default language
-// is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/reference/la
-// nguage)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsAgentIntentsPatchCall) LanguageCode(languageCode string) *ProjectsAgentIntentsPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15433,7 +15638,7 @@ func (c *ProjectsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15516,12 +15721,12 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "Optional. The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15599,7 +15804,7 @@ func (c *ProjectsAgentKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15752,7 +15957,7 @@ func (c *ProjectsAgentKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15903,7 +16108,7 @@ func (c *ProjectsAgentKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16070,7 +16275,7 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16255,7 +16460,7 @@ func (c *ProjectsAgentKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16408,7 +16613,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16481,7 +16686,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The knoweldge base to create a document for.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
+	//       "description": "The knoweldge base to create a document for.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+$",
 	//       "required": true,
@@ -16551,7 +16756,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16619,7 +16824,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the document to delete.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+	//       "description": "Required. The name of the document to delete.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -16697,7 +16902,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16862,7 +17067,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17046,7 +17251,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17119,7 +17324,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The document resource name.\nThe name must be empty when creating a document.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+	//       "description": "Optional. The document resource name.\nThe name must be empty when creating a document.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -17204,7 +17409,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17277,7 +17482,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the document to reload.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`",
+	//       "description": "Required. The name of the document to reload.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -17343,7 +17548,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17482,7 +17687,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17627,7 +17832,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17767,7 +17972,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17909,7 +18114,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18070,7 +18275,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18247,7 +18452,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18403,7 +18608,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18548,7 +18753,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18694,7 +18899,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18861,7 +19066,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19043,7 +19248,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19196,7 +19401,7 @@ func (c *ProjectsKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19349,7 +19554,7 @@ func (c *ProjectsKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19500,7 +19705,7 @@ func (c *ProjectsKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19667,7 +19872,7 @@ func (c *ProjectsKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19852,7 +20057,7 @@ func (c *ProjectsKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20005,7 +20210,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20078,7 +20283,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The knoweldge base to create a document for.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
+	//       "description": "The knoweldge base to create a document for.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+$",
 	//       "required": true,
@@ -20148,7 +20353,7 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20216,7 +20421,7 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the document to delete.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+	//       "description": "Required. The name of the document to delete.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -20294,7 +20499,7 @@ func (c *ProjectsKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20459,7 +20664,7 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20643,7 +20848,7 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20716,7 +20921,7 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The document resource name.\nThe name must be empty when creating a document.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+	//       "description": "Optional. The document resource name.\nThe name must be empty when creating a document.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -20801,7 +21006,7 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20874,7 +21079,7 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the document to reload.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`",
+	//       "description": "Required. The name of the document to reload.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+/documents/[^/]+$",
 	//       "required": true,
@@ -20940,7 +21145,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21082,7 +21287,7 @@ func (c *ProjectsLocationsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21226,7 +21431,7 @@ func (c *ProjectsLocationsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21377,7 +21582,7 @@ func (c *ProjectsLocationsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21526,7 +21731,7 @@ func (c *ProjectsLocationsAgentFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21683,7 +21888,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21829,7 +22034,7 @@ func (c *ProjectsLocationsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21977,7 +22182,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22121,7 +22326,7 @@ func (c *ProjectsLocationsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22228,7 +22433,6 @@ type ProjectsLocationsAgentEntityTypesBatchDeleteCall struct {
 }
 
 // BatchDelete: Deletes entity types in the specified agent.
-//
 // Operation <response: google.protobuf.Empty>
 func (r *ProjectsLocationsAgentEntityTypesService) BatchDelete(parent string, googleclouddialogflowv2beta1batchdeleteentitytypesrequest *GoogleCloudDialogflowV2beta1BatchDeleteEntityTypesRequest) *ProjectsLocationsAgentEntityTypesBatchDeleteCall {
 	c := &ProjectsLocationsAgentEntityTypesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22264,7 +22468,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22328,7 +22532,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+	//   "description": "Deletes entity types in the specified agent.\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/entityTypes:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.locations.agent.entityTypes.batchDelete",
@@ -22372,7 +22576,6 @@ type ProjectsLocationsAgentEntityTypesBatchUpdateCall struct {
 
 // BatchUpdate: Updates/Creates multiple entity types in the specified
 // agent.
-//
 // Operation <response: BatchUpdateEntityTypesResponse>
 func (r *ProjectsLocationsAgentEntityTypesService) BatchUpdate(parent string, googleclouddialogflowv2beta1batchupdateentitytypesrequest *GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest) *ProjectsLocationsAgentEntityTypesBatchUpdateCall {
 	c := &ProjectsLocationsAgentEntityTypesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -22408,7 +22611,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22472,7 +22675,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
+	//   "description": "Updates/Creates multiple entity types in the specified agent.\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/entityTypes:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.locations.agent.entityTypes.batchUpdate",
@@ -22523,15 +22726,13 @@ func (r *ProjectsLocationsAgentEntityTypesService) Create(parent string, googlec
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentEntityTypesCreateCall) LanguageCode(languageCode string) *ProjectsLocationsAgentEntityTypesCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -22564,7 +22765,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22638,7 +22839,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22709,7 +22910,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22815,15 +23016,13 @@ func (r *ProjectsLocationsAgentEntityTypesService) Get(name string) *ProjectsLoc
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to retrieve entity synonyms for. If not specified,
-// the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentEntityTypesGetCall) LanguageCode(languageCode string) *ProjectsLocationsAgentEntityTypesGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -22866,7 +23065,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22938,7 +23137,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22981,15 +23180,13 @@ func (r *ProjectsLocationsAgentEntityTypesService) List(parent string) *Projects
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to list entity synonyms for. If not specified,
-// the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentEntityTypesListCall) LanguageCode(languageCode string) *ProjectsLocationsAgentEntityTypesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -23047,7 +23244,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23120,7 +23317,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23196,15 +23393,13 @@ func (r *ProjectsLocationsAgentEntityTypesService) Patch(nameid string, googlecl
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentEntityTypesPatchCall) LanguageCode(languageCode string) *ProjectsLocationsAgentEntityTypesPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -23244,7 +23439,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23318,7 +23513,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23400,7 +23595,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23544,7 +23739,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23691,7 +23886,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23786,6 +23981,201 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...go
 
 }
 
+// method id "dialogflow.projects.locations.agent.environments.list":
+
+type ProjectsLocationsAgentEnvironmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all non-draft environments of the specified
+// agent.
+func (r *ProjectsLocationsAgentEnvironmentsService) List(parent string) *ProjectsLocationsAgentEnvironmentsListCall {
+	c := &ProjectsLocationsAgentEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return in a single page. By default 100 and
+// at most 1000.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) PageSize(pageSize int64) *ProjectsLocationsAgentEnvironmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) PageToken(pageToken string) *ProjectsLocationsAgentEnvironmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) Context(ctx context.Context) *ProjectsLocationsAgentEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.agent.environments.list" call.
+// Exactly one of *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDialogflowV2beta1ListEnvironmentsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1ListEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2beta1ListEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all non-draft environments of the specified agent.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/environments",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.agent.environments.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return in a single page. By default 100 and\nat most 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The agent to list all environments from.\nFormat: `projects/\u003cProject ID\u003e/agent`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/environments",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1ListEnvironmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAgentEnvironmentsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2beta1ListEnvironmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "dialogflow.projects.locations.agent.environments.users.sessions.deleteContexts":
 
 type ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall struct {
@@ -23830,7 +24220,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23969,7 +24359,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24114,7 +24504,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24254,7 +24644,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24396,7 +24786,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Header(
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24557,7 +24947,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24734,7 +25124,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Heade
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24890,7 +25280,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25035,7 +25425,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25181,7 +25571,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25348,7 +25738,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Hea
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25530,7 +25920,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) He
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25681,7 +26071,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25825,7 +26215,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25951,16 +26341,13 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) IntentView(intentView string) 
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of training phrases, parameters and rich messages
-// defined in `intent`. If not specified, the agent's default language
-// is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/reference/la
-// nguage)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentIntentsCreateCall) LanguageCode(languageCode string) *ProjectsLocationsAgentIntentsCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -25993,7 +26380,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26076,7 +26463,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26148,7 +26535,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26265,15 +26652,13 @@ func (c *ProjectsLocationsAgentIntentsGetCall) IntentView(intentView string) *Pr
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to retrieve training phrases, parameters and rich
-// messages for. If not specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentIntentsGetCall) LanguageCode(languageCode string) *ProjectsLocationsAgentIntentsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -26316,7 +26701,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26397,7 +26782,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26451,15 +26836,13 @@ func (c *ProjectsLocationsAgentIntentsListCall) IntentView(intentView string) *P
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// to list training phrases, parameters and rich
-// messages for. If not specified, the agent's default language is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/refere
-// nce/language)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentIntentsListCall) LanguageCode(languageCode string) *ProjectsLocationsAgentIntentsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -26517,7 +26900,7 @@ func (c *ProjectsLocationsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26599,7 +26982,7 @@ func (c *ProjectsLocationsAgentIntentsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26686,16 +27069,13 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) IntentView(intentView string) *
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language
-// of training phrases, parameters and rich messages
-// defined in `intent`. If not specified, the agent's default language
-// is
-// used.
-// [Many
-// languages](https://cloud.google.com/dialogflow/docs/reference/la
-// nguage)
-// are supported. Note: languages must be enabled in the agent before
-// they can
-// be used.
+// used to access language-specific data.
+// If not specified, the agent's default language is used.
+// For more information, see
+// [Multilingual intent and
+// entity
+// data](https://cloud.google.com/dialogflow/docs/agents-multiling
+// ual#intent-entity).
 func (c *ProjectsLocationsAgentIntentsPatchCall) LanguageCode(languageCode string) *ProjectsLocationsAgentIntentsPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -26735,7 +27115,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26818,12 +27198,12 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
+	//       "description": "Optional. The language used to access language-specific data.\nIf not specified, the agent's default language is used.\nFor more information, see\n[Multilingual intent and entity\ndata](https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "Optional. The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -26895,7 +27275,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27034,7 +27414,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27179,7 +27559,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27319,7 +27699,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27461,7 +27841,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27622,7 +28002,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27799,7 +28179,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27955,7 +28335,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28100,7 +28480,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28246,7 +28626,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28413,7 +28793,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28595,7 +28975,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28759,7 +29139,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28905,7 +29285,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29087,7 +29467,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29276,7 +29656,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29422,7 +29802,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29604,7 +29984,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

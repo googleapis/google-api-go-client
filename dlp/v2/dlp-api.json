@@ -1997,7 +1997,7 @@
                   ],
                   "parameters": {
                     "locationId": {
-                      "description": "The geographic location to process content inspection. Reserved for future\nextensions.",
+                      "description": "The geographic location to process content inspection. Reserved for future\nextensions.\nWhen inspecting images location is restricted to 'global', 'us', 'asia',\nand 'europe'.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2472,7 +2472,7 @@
                   ],
                   "parameters": {
                     "locationId": {
-                      "description": "The geographic location to process the request. Reserved for future\nextensions.",
+                      "description": "The geographic location to process the request. Reserved for future\nextensions.\nLocation is restricted to 'global', 'us', 'asia', and 'europe'.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -3215,7 +3215,7 @@
       }
     }
   },
-  "revision": "20200315",
+  "revision": "20200505",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3667,12 +3667,12 @@
           "description": "The set of one or more files to scan."
         },
         "fileTypes": {
-          "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied. In addition, the binary content of the selected files\nis always scanned as well.",
+          "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied. In addition, the binary content of the selected files\nis always scanned as well.\nImages are scanned only as binary if the specified region\ndoes not support image inspection and no file_types were specified.\nImage inspection is restricted to 'global', 'us', 'asia', and 'europe'.",
           "enumDescriptions": [
             "Includes all files.",
             "Includes all file extensions not covered by text file types.",
             "Included file extensions:\n  asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh, hpp,\n  hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json,\n  ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw,\n  rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs, wml,\n  xml, xsl, xsd, yml, yaml.",
-            "Included file extensions:\n  bmp, gif, jpg, jpeg, jpe, png.\nbytes_limit_per_file has no effect on image files.",
+            "Included file extensions:\n  bmp, gif, jpg, jpeg, jpe, png.\nbytes_limit_per_file has no effect on image files.\nImage inspection is restricted to 'global', 'us', 'asia', and 'europe'.",
             "Included file extensions:\n  docx, dotx, docm, dotm",
             "Included file extensions:\n  pdf",
             "Included file extensions:\n  avro"
@@ -4246,14 +4246,14 @@
             "SUNDAY"
           ],
           "enumDescriptions": [
-            "The unspecified day-of-week.",
-            "The day-of-week of Monday.",
-            "The day-of-week of Tuesday.",
-            "The day-of-week of Wednesday.",
-            "The day-of-week of Thursday.",
-            "The day-of-week of Friday.",
-            "The day-of-week of Saturday.",
-            "The day-of-week of Sunday."
+            "The day of the week is unspecified.",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
           ],
           "type": "string"
         },
@@ -4757,7 +4757,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The labels associated with this `Finding`.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "The labels associated with this `Finding`.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "likelihood": {
@@ -4848,11 +4848,11 @@
         },
         "lowerBound": {
           "$ref": "GooglePrivacyDlpV2Value",
-          "description": "Required. Lower bound value of buckets. All values less than `lower_bound` are\ngrouped together into a single bucket; for example if `lower_bound` = 10,\nthen all values less than 10 are replaced with the value “-10”."
+          "description": "Required. Lower bound value of buckets. All values less than `lower_bound` are\ngrouped together into a single bucket; for example if `lower_bound` = 10,\nthen all values less than 10 are replaced with the value \"-10\"."
         },
         "upperBound": {
           "$ref": "GooglePrivacyDlpV2Value",
-          "description": "Required. Upper bound value of buckets. All values greater than upper_bound are\ngrouped together into a single bucket; for example if `upper_bound` = 89,\nthen all values greater than 89 are replaced with the value “89+”."
+          "description": "Required. Upper bound value of buckets. All values greater than upper_bound are\ngrouped together into a single bucket; for example if `upper_bound` = 89,\nthen all values greater than 89 are replaced with the value \"89+\"."
         }
       },
       "type": "object"
@@ -4908,7 +4908,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to represent user provided metadata about the data being inspected.\nIf configured by the job, some key values may be required.\nThe labels associated with `Finding`'s produced by hybrid\ninspection.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "Labels to represent user provided metadata about the data being inspected.\nIf configured by the job, some key values may be required.\nThe labels associated with `Finding`'s produced by hybrid\ninspection.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "rowOffset": {
@@ -4985,11 +4985,11 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "To organize findings, these labels will be added to each finding.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression (\\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?)?.\n\nNo more than 10 labels can be associated with a given finding.\n\nExample: \u003ccode\u003e\"environment\" : \"production\"\u003c/code\u003e\nExample: \u003ccode\u003e\"pipeline\" : \"etl\"\u003c/code\u003e",
+          "description": "To organize findings, these labels will be added to each finding.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nLabel values must be between 0 and 63 characters long and must conform\nto the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.\n\nNo more than 10 labels can be associated with a given finding.\n\nExamples:\n* `\"environment\" : \"production\"`\n* `\"pipeline\" : \"etl\"`",
           "type": "object"
         },
         "requiredFindingLabelKeys": {
-          "description": "These are labels that each inspection request must include within their\n'finding_labels' map. Request may contain others, but any missing one of\nthese will be rejected.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: \\[a-z\\](\\[-a-z0-9\\]*\\[a-z0-9\\])?.\n\nNo more than 10 keys can be required.",
+          "description": "These are labels that each inspection request must include within their\n'finding_labels' map. Request may contain others, but any missing one of\nthese will be rejected.\n\nLabel keys must be between 1 and 63 characters long and must conform\nto the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.\n\nNo more than 10 keys can be required.",
           "items": {
             "type": "string"
           },
@@ -5040,7 +5040,7 @@
       "id": "GooglePrivacyDlpV2InfoType",
       "properties": {
         "name": {
-          "description": "Name of the information type. Either a name of your choosing when\ncreating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying\na built-in type. InfoType names should conform to the pattern\n[a-zA-Z0-9_]{1,64}.",
+          "description": "Name of the information type. Either a name of your choosing when\ncreating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying\na built-in type. InfoType names should conform to the pattern\n`[a-zA-Z0-9_]{1,64}`.",
           "type": "string"
         }
       },
@@ -5240,7 +5240,7 @@
           "description": "The item to inspect."
         },
         "locationId": {
-          "description": "The geographic location to process content inspection. Reserved for future\nextensions.",
+          "description": "The geographic location to process content inspection. Reserved for future\nextensions.\nWhen inspecting images location is restricted to 'global', 'us', 'asia',\nand 'europe'.",
           "type": "string"
         }
       },
@@ -5999,7 +5999,7 @@
           ],
           "enumDescriptions": [
             "Unused",
-            "General file metadata provided by GCS."
+            "General file metadata provided by Cloud Storage."
           ],
           "type": "string"
         }
@@ -6426,7 +6426,7 @@
           "description": "Configuration for the inspector."
         },
         "locationId": {
-          "description": "The geographic location to process the request. Reserved for future\nextensions.",
+          "description": "The geographic location to process the request. Reserved for future\nextensions.\nLocation is restricted to 'global', 'us', 'asia', and 'europe'.",
           "type": "string"
         }
       },
@@ -6877,7 +6877,7 @@
       "id": "GooglePrivacyDlpV2TableLocation",
       "properties": {
         "rowIndex": {
-          "description": "The zero-based index of the row where the finding is located.",
+          "description": "The zero-based index of the row where the finding is located. Only\npopulated for resources that have a natural ordering, not BigQuery. In\nBigQuery, to identify the row a finding came from, populate\nBigQueryOptions.identifying_fields with your primary key column names and\nwhen you store the findings the value of those columns will be stored\ninside of Finding.",
           "format": "int64",
           "type": "string"
         }
@@ -7196,14 +7196,14 @@
             "SUNDAY"
           ],
           "enumDescriptions": [
-            "The unspecified day-of-week.",
-            "The day-of-week of Monday.",
-            "The day-of-week of Tuesday.",
-            "The day-of-week of Wednesday.",
-            "The day-of-week of Thursday.",
-            "The day-of-week of Friday.",
-            "The day-of-week of Saturday.",
-            "The day-of-week of Sunday."
+            "The day of the week is unspecified.",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
           ],
           "type": "string"
         },

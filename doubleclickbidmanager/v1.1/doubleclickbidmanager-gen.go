@@ -1636,6 +1636,7 @@ type QueryMetadata struct {
 	//   "LAST_14_DAYS"
 	//   "LAST_30_DAYS"
 	//   "LAST_365_DAYS"
+	//   "LAST_60_DAYS"
 	//   "LAST_7_DAYS"
 	//   "LAST_90_DAYS"
 	//   "MONTH_TO_DATE"
@@ -2032,6 +2033,7 @@ type RunQueryRequest struct {
 	//   "LAST_14_DAYS"
 	//   "LAST_30_DAYS"
 	//   "LAST_365_DAYS"
+	//   "LAST_60_DAYS"
 	//   "LAST_7_DAYS"
 	//   "LAST_90_DAYS"
 	//   "MONTH_TO_DATE"
@@ -2231,7 +2233,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2354,7 +2356,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2449,6 +2451,14 @@ func (r *QueriesService) Createquery(query *Query) *QueriesCreatequeryCall {
 	return c
 }
 
+// Asynchronous sets the optional parameter "asynchronous": If true,
+// tries to run the query asynchronously. Only applicable when the
+// frequency is ONE_TIME.
+func (c *QueriesCreatequeryCall) Asynchronous(asynchronous bool) *QueriesCreatequeryCall {
+	c.urlParams_.Set("asynchronous", fmt.Sprint(asynchronous))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2476,7 +2486,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2540,6 +2550,14 @@ func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error
 	//   "description": "Creates a query.",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.queries.createquery",
+	//   "parameters": {
+	//     "asynchronous": {
+	//       "default": "false",
+	//       "description": "If true, tries to run the query asynchronously. Only applicable when the frequency is ONE_TIME.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
 	//   "path": "query",
 	//   "request": {
 	//     "$ref": "Query"
@@ -2599,7 +2617,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +2729,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2867,7 +2885,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2993,6 +3011,13 @@ func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryReques
 	return c
 }
 
+// Asynchronous sets the optional parameter "asynchronous": If true,
+// tries to run the query asynchronously.
+func (c *QueriesRunqueryCall) Asynchronous(asynchronous bool) *QueriesRunqueryCall {
+	c.urlParams_.Set("asynchronous", fmt.Sprint(asynchronous))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3020,7 +3045,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3066,6 +3091,12 @@ func (c *QueriesRunqueryCall) Do(opts ...googleapi.CallOption) error {
 	//     "queryId"
 	//   ],
 	//   "parameters": {
+	//     "asynchronous": {
+	//       "default": "false",
+	//       "description": "If true, tries to run the query asynchronously.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "queryId": {
 	//       "description": "Query ID to run.",
 	//       "format": "int64",
@@ -3155,7 +3186,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3319,7 +3350,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

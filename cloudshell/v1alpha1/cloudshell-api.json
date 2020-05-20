@@ -288,7 +288,7 @@
       }
     }
   },
-  "revision": "20200224",
+  "revision": "20200512",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "AuthorizeEnvironmentRequest": {
@@ -384,13 +384,15 @@
             "STATE_UNSPECIFIED",
             "DISABLED",
             "STARTING",
-            "RUNNING"
+            "RUNNING",
+            "DELETING"
           ],
           "enumDescriptions": [
             "The environment's states is unknown.",
             "The environment is not running and can't be connected to. Starting the\nenvironment will transition it to the STARTING state.",
             "The environment is being started but is not yet ready to accept\nconnections.",
-            "The environment is running and ready to accept connections. It will\nautomatically transition back to DISABLED after a period of inactivity or\nif another environment is started."
+            "The environment is running and ready to accept connections. It will\nautomatically transition back to DISABLED after a period of inactivity or\nif another environment is started.",
+            "The environment is being deleted and can't be connected to."
           ],
           "type": "string"
         },
@@ -496,6 +498,7 @@
             "STARTING",
             "UNARCHIVING_DISK",
             "AWAITING_VM",
+            "AWAITING_COMPUTE_RESOURCES",
             "FINISHED"
           ],
           "enumDescriptions": [
@@ -503,7 +506,8 @@
             "The environment is in the process of being started, but no additional\ndetails are available.",
             "Startup is waiting for the user's disk to be unarchived. This can happen\nwhen the user returns to Cloud Shell after not having used it for a\nwhile, and suggests that startup will take longer than normal.",
             "Startup is waiting for a VM to be assigned to the environment. This\nshould normally happen very quickly, but an environment might stay in\nthis state for an extended period of time if the system is experiencing\nheavy load.",
-            "Startup is complete and the user should be able to establish an SSH\nconnection to their environment."
+            "Startup is waiting for compute resources to be assigned to the\nenvironment. This should normally happen very quickly, but an environment\nmight stay in this state for an extended period of time if the system is\nexperiencing heavy load.",
+            "Startup has completed. If the start operation was successful, the user\nshould be able to establish an SSH connection to their environment.\nOtherwise, the operation will contain details of the failure."
           ],
           "type": "string"
         }
@@ -517,6 +521,13 @@
         "accessToken": {
           "description": "The initial access token passed to the environment. If this is present and\nvalid, the environment will be pre-authenticated with gcloud so that the\nuser can run gcloud commands in Cloud Shell without having to log in. This\ncode can be updated later by calling AuthorizeEnvironment.",
           "type": "string"
+        },
+        "publicKeys": {
+          "description": "Public keys that should be added to the environment before it is started.",
+          "items": {
+            "$ref": "PublicKey"
+          },
+          "type": "array"
         }
       },
       "type": "object"

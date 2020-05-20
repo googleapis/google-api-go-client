@@ -52,6 +52,7 @@ import (
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -68,6 +69,7 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
 
 const apiId = "apigee:v1"
 const apiName = "apigee"
@@ -87,6 +89,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -159,7 +162,6 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Apiproducts = NewOrganizationsApiproductsService(s)
 	rs.Apis = NewOrganizationsApisService(s)
 	rs.Apps = NewOrganizationsAppsService(s)
-	rs.Companies = NewOrganizationsCompaniesService(s)
 	rs.Deployments = NewOrganizationsDeploymentsService(s)
 	rs.Developers = NewOrganizationsDevelopersService(s)
 	rs.Environments = NewOrganizationsEnvironmentsService(s)
@@ -178,8 +180,6 @@ type OrganizationsService struct {
 	Apis *OrganizationsApisService
 
 	Apps *OrganizationsAppsService
-
-	Companies *OrganizationsCompaniesService
 
 	Deployments *OrganizationsDeploymentsService
 
@@ -280,39 +280,6 @@ func NewOrganizationsAppsService(s *Service) *OrganizationsAppsService {
 }
 
 type OrganizationsAppsService struct {
-	s *Service
-}
-
-func NewOrganizationsCompaniesService(s *Service) *OrganizationsCompaniesService {
-	rs := &OrganizationsCompaniesService{s: s}
-	rs.Apps = NewOrganizationsCompaniesAppsService(s)
-	return rs
-}
-
-type OrganizationsCompaniesService struct {
-	s *Service
-
-	Apps *OrganizationsCompaniesAppsService
-}
-
-func NewOrganizationsCompaniesAppsService(s *Service) *OrganizationsCompaniesAppsService {
-	rs := &OrganizationsCompaniesAppsService{s: s}
-	rs.Keys = NewOrganizationsCompaniesAppsKeysService(s)
-	return rs
-}
-
-type OrganizationsCompaniesAppsService struct {
-	s *Service
-
-	Keys *OrganizationsCompaniesAppsKeysService
-}
-
-func NewOrganizationsCompaniesAppsKeysService(s *Service) *OrganizationsCompaniesAppsKeysService {
-	rs := &OrganizationsCompaniesAppsKeysService{s: s}
-	return rs
-}
-
-type OrganizationsCompaniesAppsKeysService struct {
 	s *Service
 }
 
@@ -1282,10 +1249,10 @@ func (s *GoogleCloudApigeeV1ApiProduct) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1ApiProductRef struct {
-	// Apiproduct: The name of the api product.
+	// Apiproduct: Name of the API product.
 	Apiproduct string `json:"apiproduct,omitempty"`
 
-	// Status: The status of the api product.
+	// Status: Status of the API product.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Apiproduct") to
@@ -1673,60 +1640,12 @@ func (s *GoogleCloudApigeeV1AsyncQueryResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1AsyncQueryResultView struct {
-	// Code: Error code when there is a failure.
-	Code int64 `json:"code,omitempty"`
-
-	// Error: Error message when there is a failure.
-	Error string `json:"error,omitempty"`
-
-	// Metadata: Metadata contains information like metrics, dimenstions
-	// etc
-	// of the AsyncQuery
-	Metadata *GoogleCloudApigeeV1QueryMetadata `json:"metadata,omitempty"`
-
-	// Rows: Rows of query result. Each row is a JSON object.
-	//
-	// Example: {sum(message_count): 1, developer_app: "(not set)",…}
-	Rows []interface{} `json:"rows,omitempty"`
-
-	// State: State of retrieving ResultView.
-	State string `json:"state,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1AsyncQueryResultView) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1AsyncQueryResultView
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudApigeeV1Attribute: A key value pair to store extra
-// metadata.
+// GoogleCloudApigeeV1Attribute: Key-value pair to store extra metadata.
 type GoogleCloudApigeeV1Attribute struct {
-	// Name: The key of the attribute.
+	// Name: API key of the attribute.
 	Name string `json:"name,omitempty"`
 
-	// Value: The value of the attribute.
+	// Value: Value of the attribute.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1757,7 +1676,7 @@ func (s *GoogleCloudApigeeV1Attribute) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1Attributes struct {
-	// Attribute: A list of attributes.
+	// Attribute: List of attributes.
 	Attribute []*GoogleCloudApigeeV1Attribute `json:"attribute,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1910,202 +1829,6 @@ func (s *GoogleCloudApigeeV1CommonNameConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1Company struct {
-	Apps []string `json:"apps,omitempty"`
-
-	// Attributes: A list of attributes
-	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
-
-	// CreatedAt: Output only. Created time as milliseconds since
-	// epoch.
-	// json key: createdAt
-	CreatedAt int64 `json:"createdAt,omitempty,string"`
-
-	// DisplayName: company name displayed in the UI
-	DisplayName string `json:"displayName,omitempty"`
-
-	// LastModifiedAt: Output only. Modified time as milliseconds since
-	// epoch.
-	// json key: lastModifiedAt
-	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
-
-	// Name: Name of the company. Characters you can use in the name are
-	// restricted to:
-	// A-Z0-9._\-$ %.
-	Name string `json:"name,omitempty"`
-
-	// Organization: the org that the company is created
-	Organization string `json:"organization,omitempty"`
-
-	// Status: The status of the company
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Apps") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Apps") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1Company) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1Company
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GoogleCloudApigeeV1CompanyApp struct {
-	// ApiProducts: Any API Products the app consumes
-	ApiProducts []string `json:"apiProducts,omitempty"`
-
-	AppFamily string `json:"appFamily,omitempty"`
-
-	// AppId: The id of the app.
-	AppId string `json:"appId,omitempty"`
-
-	// Attributes: A list of attributes.
-	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
-
-	// CallbackUrl: The callbackUrl is used by OAuth 2.0 authorization
-	// servers to communicate
-	// authorization codes back to apps.
-	CallbackUrl string `json:"callbackUrl,omitempty"`
-
-	// CompanyName: The name of the company owns the app
-	CompanyName string `json:"companyName,omitempty"`
-
-	// CreatedAt: Output only. created time of this environment as
-	// milliseconds since epoch.
-	// JSON key: createdAt
-	CreatedAt int64 `json:"createdAt,omitempty,string"`
-
-	// Credentials: Output only. A set of credentials for the
-	// app
-	// credentials are key/secret pairs
-	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
-
-	// KeyExpiresIn: A setting, in milliseconds, for the lifetime of the
-	// consumer key that will
-	// be generated for the developer app. The default value, -1, indicates
-	// an
-	// infinite validity period. Once set, the expiration can't be
-	// updated.
-	// json key: keyExpiresIn
-	KeyExpiresIn int64 `json:"keyExpiresIn,omitempty,string"`
-
-	// LastModifiedAt: Output only. Modified time as milliseconds since
-	// epoch.
-	// json key: lastModifiedAt
-	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
-
-	// Name: The resoure id of the app.
-	// JSON key: name
-	Name string `json:"name,omitempty"`
-
-	// Scopes: The scopes to apply to the app. The specified scope names
-	// must already
-	// exist on the API product that you associate with the app.
-	Scopes []string `json:"scopes,omitempty"`
-
-	// Status: The status of the credential.
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiProducts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1CompanyApp) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1CompanyApp
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GoogleCloudApigeeV1CompanyAppKey struct {
-	// ApiProducts: A list of api products this credential can be used for.
-	ApiProducts []interface{} `json:"apiProducts,omitempty"`
-
-	// Attributes: A list of attributes tied to the credential.
-	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
-
-	// ConsumerKey: The consumer key.
-	ConsumerKey string `json:"consumerKey,omitempty"`
-
-	// ConsumerSecret: The secret key.
-	ConsumerSecret string `json:"consumerSecret,omitempty"`
-
-	// ExpiresAt: Unix time when the app was created
-	// json key: expiresAt
-	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
-
-	// IssuedAt: Unix time when the app was issued
-	// json key: issuedAt
-	IssuedAt int64 `json:"issuedAt,omitempty,string"`
-
-	// Scopes: The scopes to apply to the app. The specified scope names
-	// must already
-	// exist on the API product that you associate with the app.
-	Scopes []string `json:"scopes,omitempty"`
-
-	// Status: The status of the credential.
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiProducts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1CompanyAppKey) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1CompanyAppKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudApigeeV1ConfigVersion: Version of the API proxy
 // configuration schema. Currently, only 4.0 is
 // supported.
@@ -2140,32 +1863,31 @@ func (s *GoogleCloudApigeeV1ConfigVersion) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1Credential struct {
-	// ApiProducts: A list of api products this credential can be used for.
+	// ApiProducts: List of API products this credential can be used for.
 	ApiProducts []*GoogleCloudApigeeV1ApiProductRef `json:"apiProducts,omitempty"`
 
-	// Attributes: A list of attributes tied to the credential.
+	// Attributes: List of attributes associated with this credential.
 	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
 
-	// ConsumerKey: The consumer key.
+	// ConsumerKey: Consumer key.
 	ConsumerKey string `json:"consumerKey,omitempty"`
 
-	// ConsumerSecret: The secret key.
+	// ConsumerSecret: Secret key.
 	ConsumerSecret string `json:"consumerSecret,omitempty"`
 
-	// ExpiresAt: Unix time when the app was created
-	// json key: expiresAt
+	// ExpiresAt: Time the credential will expire in milliseconds since
+	// epoch.
 	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
 
-	// IssuedAt: Unix time when the app was issued
-	// json key: issuedAt
+	// IssuedAt: Time the credential was issued in milliseconds since epoch.
 	IssuedAt int64 `json:"issuedAt,omitempty,string"`
 
-	// Scopes: The scopes to apply to the app. The specified scope names
-	// must already
+	// Scopes: List of scopes to apply to the app. Specified scopes must
+	// already
 	// exist on the API product that you associate with the app.
 	Scopes []string `json:"scopes,omitempty"`
 
-	// Status: The status of the credential.
+	// Status: Status of the credential.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiProducts") to
@@ -2337,79 +2059,45 @@ func (s *GoogleCloudApigeeV1CustomReportMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1DataLocation struct {
-	// Url: GCS signed url. Signed URLs provide a way to give
-	// time-limited
-	// read or write access to anyone in possession of the URL, regardless
-	// of
-	// whether they have a Google account.
-	Url string `json:"url,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1DataLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1DataLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type GoogleCloudApigeeV1DebugMask struct {
-	// FaultJSONPaths: List of JSON paths that specify JSON elements to be
-	// filtered from JSON
+	// FaultJSONPaths: List of JSON paths that specify the JSON elements to
+	// be filtered from JSON
 	// payloads in error flows.
 	FaultJSONPaths []string `json:"faultJSONPaths,omitempty"`
 
-	// FaultXPaths: List of XPaths that specify XML elements to be filtered
-	// from XML payloads
-	// in error flows.
+	// FaultXPaths: List of XPaths that specify the XML elements to be
+	// filtered from XML
+	// payloads in error flows.
 	FaultXPaths []string `json:"faultXPaths,omitempty"`
 
-	// Name: The DebugMask resource name.
+	// Name: Name of the debug mask.
 	Name string `json:"name,omitempty"`
 
-	// Namespaces: Map of namespaces to uris.
+	// Namespaces: Map of namespaces to URIs.
 	Namespaces map[string]string `json:"namespaces,omitempty"`
 
-	// RequestJSONPaths: List of JSON paths that specify JSON elements to be
-	// filtered from JSON
+	// RequestJSONPaths: List of JSON paths that specify the JSON elements
+	// to be filtered from JSON
 	// request message payloads.
 	RequestJSONPaths []string `json:"requestJSONPaths,omitempty"`
 
-	// RequestXPaths: List of XPaths that specify XML elements to be
-	// filtered from XML request
-	// message payloads.
+	// RequestXPaths: List of XPaths that specify the XML elements to be
+	// filtered from XML
+	// request message payloads.
 	RequestXPaths []string `json:"requestXPaths,omitempty"`
 
-	// ResponseJSONPaths: List of JSON paths that specify JSON elements to
-	// be filtered from JSON
+	// ResponseJSONPaths: List of JSON paths that specify the JSON elements
+	// to be filtered from JSON
 	// response message payloads.
 	ResponseJSONPaths []string `json:"responseJSONPaths,omitempty"`
 
-	// ResponseXPaths: List of XPaths that specify XML elements to be
-	// filtered from XML response
-	// message payloads.
+	// ResponseXPaths: List of XPaths that specify the XML elements to be
+	// filtered from XML
+	// response message payloads.
 	ResponseXPaths []string `json:"responseXPaths,omitempty"`
 
-	// Variables: List of variables that should be masked from debug output.
+	// Variables: List of variables that should be masked from the debug
+	// output.
 	Variables []string `json:"variables,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2590,9 +2278,7 @@ type GoogleCloudApigeeV1Deployment struct {
 	// Environment: Environment.
 	Environment string `json:"environment,omitempty"`
 
-	// Pods: Status reported by runtime pods. This information is displayed
-	// only for
-	// List APIs that specify an API proxy revision.
+	// Pods: Status reported by runtime pods.
 	Pods []*GoogleCloudApigeeV1PodStatus `json:"pods,omitempty"`
 
 	// Revision: API proxy revision.
@@ -2671,55 +2357,57 @@ type GoogleCloudApigeeV1Developer struct {
 	// AccessType: Access type.
 	AccessType string `json:"accessType,omitempty"`
 
-	// AppFamily: App Family
+	// AppFamily: Developer app family.
 	AppFamily string `json:"appFamily,omitempty"`
 
-	// Apps: List of apps for the developer
+	// Apps: List of apps associated with the developer.
 	Apps []string `json:"apps,omitempty"`
 
-	// Attributes: Optional. Name/value pairs that can be used to extend the
-	// default developer
-	// profile.
+	// Attributes: Optional. Developer attributes (name/value pairs). The
+	// custom attribute limit is 18.
 	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
 
-	// Companies: List of companies
+	// Companies: List of companies associated with the developer.
 	Companies []string `json:"companies,omitempty"`
 
-	// CreatedAt: Output only. Time at which this Developer was created, in
+	// CreatedAt: Output only. Time at which the developer was created in
 	// milliseconds
 	// since epoch.
-	// json key: createdAt
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 
-	// DeveloperId: developer id of the developer
+	// DeveloperId: ID of the developer.
+	//
+	// **Note**: IDs are generated internally by Apigee and are
+	// not
+	// guaranteed to stay the same over time.
 	DeveloperId string `json:"developerId,omitempty"`
 
-	// Email: Required. The developer's email. This value is used to
-	// uniquely identify
-	// the developer in Apigee Edge.
+	// Email: Required. Email address of the developer. This value is used
+	// to uniquely identify
+	// the developer in Apigee hybrid.
 	Email string `json:"email,omitempty"`
 
-	// FirstName: Required. The first name of the developer.
+	// FirstName: Required. First name of the developer.
 	FirstName string `json:"firstName,omitempty"`
 
-	// LastModifiedAt: Output only. Time at which this Developer was most
-	// recently modified, in
+	// LastModifiedAt: Output only. Time at which the developer was last
+	// modified in
 	// milliseconds since epoch.
-	// json key: lastModifiedAt
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 
-	// LastName: Required. The last name of the developer.
+	// LastName: Required. Last name of the developer.
 	LastName string `json:"lastName,omitempty"`
 
-	// OrganizationName: Output only. Apigee Organization name of the
-	// developer
+	// OrganizationName: Output only. Name of the Apigee organization in
+	// which the developer resides.
 	OrganizationName string `json:"organizationName,omitempty"`
 
-	// Status: Output only. Status of the developer
+	// Status: Output only. Status of the developer. Valid values are
+	// `active` and `inactive`.
 	Status string `json:"status,omitempty"`
 
-	// UserName: Required. The username of the developer. It is not used by
-	// Apigee's Edge
+	// UserName: Required. User name of the developer. Not used by Apigee
+	// hybrid.
 	UserName string `json:"userName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2750,58 +2438,59 @@ func (s *GoogleCloudApigeeV1Developer) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1DeveloperApp struct {
-	// ApiProducts: A list of api products this app is associated with.
+	// ApiProducts: List of API products associated with the developer app.
 	ApiProducts []string `json:"apiProducts,omitempty"`
 
-	// AppFamily: App family.
+	// AppFamily: Developer app family.
 	AppFamily string `json:"appFamily,omitempty"`
 
-	// AppId: The id of the developer app.
+	// AppId: ID of the developer app.
 	AppId string `json:"appId,omitempty"`
 
-	// Attributes: A list of attributes.
+	// Attributes: List of attributes for the developer app.
 	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
 
-	// CallbackUrl: The callbackUrl is used by OAuth 2.0 authorization
-	// servers to communicate
-	// authorization codes back to apps.
+	// CallbackUrl: Callback URL used by OAuth 2.0 authorization servers to
+	// communicate
+	// authorization codes back to developer apps.
 	CallbackUrl string `json:"callbackUrl,omitempty"`
 
-	// CreatedAt: Output only. Unix time when the app was created
-	// json key: createdAt
+	// CreatedAt: Output only. Time the developer app was created in
+	// milliseconds since epoch.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 
-	// Credentials: Output only. A set of credentials for the
-	// app--credentials are app
-	// key/secret pairs associated with API products
+	// Credentials: Output only. Set of credentials for the developer app
+	// consisting of the
+	// consumer key/secret pairs associated with the API products.
 	Credentials []*GoogleCloudApigeeV1Credential `json:"credentials,omitempty"`
 
-	// DeveloperId: The id of the developer.
+	// DeveloperId: ID of the developer.
 	DeveloperId string `json:"developerId,omitempty"`
 
-	// KeyExpiresIn: A setting, in milliseconds, for the lifetime of the
-	// consumer key that will
-	// be generated for the developer app. The default value, -1, indicates
-	// an
-	// infinite validity period. Once set, the expiration can't be
-	// updated.
-	// json key: keyExpiresIn
+	// KeyExpiresIn: Expiration time, in milliseconds, for the consumer key
+	// that
+	// is generated for the developer app. If not set or left to the
+	// default
+	// value of `-1`, the API key never expires.
+	// The expiration time can't be updated after it is set.
 	KeyExpiresIn int64 `json:"keyExpiresIn,omitempty,string"`
 
-	// LastModifiedAt: Output only. Modified time of this environment as
+	// LastModifiedAt: Output only. Time the developer app was modified in
 	// milliseconds since epoch.
-	// json key: lastModifiedAt
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 
-	// Name: The name of the developer app.
+	// Name: Name of the developer app.
 	Name string `json:"name,omitempty"`
 
-	// Scopes: The scopes to apply to the app. The specified scope names
-	// must already
-	// exist on the API product that you associate with the app.
+	// Scopes: Scopes to apply to the developer app. The specified scopes
+	// must
+	// already exist for the API product that you associate with the
+	// developer
+	// app.
 	Scopes []string `json:"scopes,omitempty"`
 
-	// Status: The status of the credential.
+	// Status: Status of the credential. Valid values include `approved` or
+	// `revoked`.
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2832,32 +2521,34 @@ func (s *GoogleCloudApigeeV1DeveloperApp) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1DeveloperAppKey struct {
-	// ApiProducts: A list of api products this credential can be used for.
+	// ApiProducts: List of API products for which the credential can be
+	// used.
 	ApiProducts []interface{} `json:"apiProducts,omitempty"`
 
-	// Attributes: A list of attributes tied to the credential.
+	// Attributes: List of attributes associated with the credential.
 	Attributes []*GoogleCloudApigeeV1Attribute `json:"attributes,omitempty"`
 
-	// ConsumerKey: The consumer key.
+	// ConsumerKey: Consumer key.
 	ConsumerKey string `json:"consumerKey,omitempty"`
 
-	// ConsumerSecret: The secret key.
+	// ConsumerSecret: Secret key.
 	ConsumerSecret string `json:"consumerSecret,omitempty"`
 
-	// ExpiresAt: Unix time when the app was created
-	// json key: expiresAt
+	// ExpiresAt: Time the developer app expires in milliseconds since
+	// epoch.
 	ExpiresAt int64 `json:"expiresAt,omitempty,string"`
 
-	// IssuedAt: Unix time when the app was issued
-	// json key: issuedAt
+	// IssuedAt: Time the developer app was created in milliseconds since
+	// epoch.
 	IssuedAt int64 `json:"issuedAt,omitempty,string"`
 
-	// Scopes: The scopes to apply to the app. The specified scope names
-	// must already
-	// exist on the API product that you associate with the app.
+	// Scopes: Scopes to apply to the app. The specified scope names must
+	// already
+	// be defined for the API product that you associate with the app.
 	Scopes []string `json:"scopes,omitempty"`
 
-	// Status: The status of the credential.
+	// Status: Status of the credential. Valid values include `approved` or
+	// `revoked`.
 	Status string `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2962,12 +2653,10 @@ type GoogleCloudApigeeV1Environment struct {
 	// milliseconds since epoch.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 
-	// Description: Optional. A human-readable description of this
-	// Environment.
+	// Description: Optional. Description of the environment.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Optional. A human-readable display name for this
-	// Environment.
+	// DisplayName: Optional. Display name for this environment.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LastModifiedAt: Output only. Last modification time of this
@@ -2975,8 +2664,8 @@ type GoogleCloudApigeeV1Environment struct {
 	// since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 
-	// Name: Required. The resource id of this environment. Values must
-	// match the
+	// Name: Required. Name of the environment. Values must match
+	// the
 	// regular expression `^[.\\p{Alnum}-_]{1,255}$`
 	Name string `json:"name,omitempty"`
 
@@ -3107,8 +2796,8 @@ type GoogleCloudApigeeV1FlowHook struct {
 	// Description: Description of the flow hook.
 	Description string `json:"description,omitempty"`
 
-	// FlowHookPoint: Where in the API call flow the flow hook is invoked.
-	// Must be one of
+	// FlowHookPoint: Output only. Where in the API call flow the flow hook
+	// is invoked. Must be one of
 	// `PreProxyFlowHook`, `PostProxyFlowHook`, `PreTargetFlowHook`,
 	// or
 	// `PostTargetFlowHook`.
@@ -3190,7 +2879,7 @@ func (s *GoogleCloudApigeeV1FlowHookConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1GetSyncAuthorizationRequest: The request
+// GoogleCloudApigeeV1GetSyncAuthorizationRequest: Request
 // for
 // GetSyncAuthorization.
 type GoogleCloudApigeeV1GetSyncAuthorizationRequest struct {
@@ -3461,68 +3150,6 @@ func (s *GoogleCloudApigeeV1ListAsyncQueriesResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1ListCompaniesResponse struct {
-	// Company: A list of company.
-	Company []*GoogleCloudApigeeV1Company `json:"company,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Company") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Company") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ListCompaniesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ListCompaniesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type GoogleCloudApigeeV1ListCompanyAppsResponse struct {
-	// App: A list of apps for a company.
-	App []*GoogleCloudApigeeV1CompanyApp `json:"app,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "App") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "App") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudApigeeV1ListCompanyAppsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1ListCompanyAppsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudApigeeV1ListCustomReportsResponse: This message
 // encapsulates a list of custom report definitions
 type GoogleCloudApigeeV1ListCustomReportsResponse struct {
@@ -3559,7 +3186,7 @@ type GoogleCloudApigeeV1ListDebugSessionsResponse struct {
 	// Sessions: Session info that includes debug session ID and the first
 	// transaction
 	// creation timestamp.
-	Sessions []*GoogleCloudApigeeV1Sesssion `json:"sessions,omitempty"`
+	Sessions []*GoogleCloudApigeeV1Session `json:"sessions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3620,7 +3247,7 @@ func (s *GoogleCloudApigeeV1ListDeploymentsResponse) MarshalJSON() ([]byte, erro
 }
 
 type GoogleCloudApigeeV1ListDeveloperAppsResponse struct {
-	// App: A list of developer apps and the credentials for the app.
+	// App: List of developer apps and their credentials.
 	App []*GoogleCloudApigeeV1DeveloperApp `json:"app,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3650,11 +3277,11 @@ func (s *GoogleCloudApigeeV1ListDeveloperAppsResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1ListEnvironmentResourcesResponse: The response
+// GoogleCloudApigeeV1ListEnvironmentResourcesResponse: Response
 // for
 // ListEnvironmentResources
 type GoogleCloudApigeeV1ListEnvironmentResourcesResponse struct {
-	// ResourceFile: The list of resources files.
+	// ResourceFile: List of resources files.
 	ResourceFile []*GoogleCloudApigeeV1ResourceFile `json:"resourceFile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3716,7 +3343,7 @@ func (s *GoogleCloudApigeeV1ListHybridIssuersResponse) MarshalJSON() ([]byte, er
 }
 
 type GoogleCloudApigeeV1ListOfDevelopersResponse struct {
-	// Developer: A list of developers
+	// Developer: List of developers.
 	Developer []*GoogleCloudApigeeV1Developer `json:"developer,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3747,9 +3374,8 @@ func (s *GoogleCloudApigeeV1ListOfDevelopersResponse) MarshalJSON() ([]byte, err
 }
 
 type GoogleCloudApigeeV1ListOrganizationsResponse struct {
-	// Organizations: List of Apigee organizations, and the GCP projects
-	// associated with each
-	// Apigee organization.
+	// Organizations: List of Apigee organizations and associated GCP
+	// projects.
 	Organizations []*GoogleCloudApigeeV1OrganizationProjectMapping `json:"organizations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4094,40 +3720,80 @@ func (s *GoogleCloudApigeeV1OptimizedStatsResponse) MarshalJSON() ([]byte, error
 }
 
 type GoogleCloudApigeeV1Organization struct {
-	// AnalyticsRegion: Output only. The supported GCP Region where
-	// analytics data is stored.
+	// AnalyticsRegion: Required. Primary GCP region for analytics data
+	// storage. For valid values, see
+	// [Create
+	// an
+	// organization](https://docs.apigee.com/hybrid/latest/precog-provisio
+	// n).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
+	// Attributes: Not used by Apigee.
 	Attributes []string `json:"attributes,omitempty"`
 
-	// CreatedAt: Timestamp when this Organization was created.
+	// CreatedAt: Output only. Time that the Apigee organization was created
+	// in milliseconds since epoch.
 	CreatedAt int64 `json:"createdAt,omitempty,string"`
 
+	// CustomerName: Not used by Apigee.
 	CustomerName string `json:"customerName,omitempty"`
 
+	// Description: Description of the Apigee organization.
 	Description string `json:"description,omitempty"`
 
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Environments: List of environments within this Organization.
+	// Environments: Output only. List of environments in the Apigee
+	// organization.
 	Environments []string `json:"environments,omitempty"`
 
-	// LastModifiedAt: Timestamp when this Organization was last modified.
+	// LastModifiedAt: Output only. Time that the Apigee organization was
+	// last modified in milliseconds
+	// since epoch.
 	LastModifiedAt int64 `json:"lastModifiedAt,omitempty,string"`
 
-	// Name: Unique name of this Organization.
+	// Name: Output only. Name of the Apigee organization.
 	Name string `json:"name,omitempty"`
 
-	// Properties: This Organization's properties.
+	// Properties: Properties defined in the Apigee organization profile.
 	Properties *GoogleCloudApigeeV1Properties `json:"properties,omitempty"`
 
-	// Type: The organization's Type.
+	// RuntimeType: Output only. Runtime type of the Apigee organization
+	// based on the Apigee subscription
+	// purchased.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "TRIAL"
-	//   "PAID"
-	//   "INTERNAL"
+	//   "RUNTIME_TYPE_UNSPECIFIED"
+	//   "CLOUD" - Google-managed Apigee runtime.
+	//   "HYBRID" - User-managed Apigee hybrid runtime.
+	RuntimeType string `json:"runtimeType,omitempty"`
+
+	// SubscriptionType: Output only. Subscription type of the Apigee
+	// organization. Valid values include trial
+	// (free, limited, and for evaluation purposes only) or paid
+	// (full
+	// subscription has been purchased). See
+	// [Apigee pricing](https://cloud.google.com/apigee/pricing/).
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED"
+	//   "PAID" - Full subscription to Apigee has been purchased.
+	//   "TRIAL" - Subscription to Apigee is free, limited, and used for
+	// evaluation purposes
+	// only.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
+
+	// Type: Not used by Apigee.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Subscription type not specified.
+	//   "TYPE_TRIAL" - Subscription to Apigee is free, limited, and used
+	// for evaluation purposes
+	// only.
+	//   "TYPE_PAID" - Full subscription to Apigee has been purchased.
+	// See
+	// [Apigee pricing](https://cloud.google.com/apigee/pricing/).
+	//   "TYPE_INTERNAL" - For internal users only.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4159,10 +3825,11 @@ func (s *GoogleCloudApigeeV1Organization) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1OrganizationProjectMapping struct {
-	// Organization: String indicating the Apigee organization.
+	// Organization: Name of the Apigee organization.
 	Organization string `json:"organization,omitempty"`
 
-	// ProjectIds: List of Projects that the organization has resources in.
+	// ProjectIds: List of GCP projects associated with the Apigee
+	// organization.
 	ProjectIds []string `json:"projectIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Organization") to
@@ -4429,6 +4096,9 @@ type GoogleCloudApigeeV1Query struct {
 
 	// Metrics: A list of Metrics
 	Metrics []*GoogleCloudApigeeV1QueryMetric `json:"metrics,omitempty"`
+
+	// Name: Asynchronous Query Name.
+	Name string `json:"name,omitempty"`
 
 	// OutputFormat: Valid values include: `csv` or `json`. Defaults to
 	// `json`.
@@ -4723,12 +4393,10 @@ func (s *GoogleCloudApigeeV1ResourceConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1ResourceFile: Metadata about a resource file.
 type GoogleCloudApigeeV1ResourceFile struct {
-	// Name: The id of the resource file.
+	// Name: ID of the resource file.
 	Name string `json:"name,omitempty"`
 
-	// Type: The resource file type. Must be `js`, `jsc`,
-	// `java`,
-	// `properties`, `py`, `xsl`, `wsdl`, or `xsd`
+	// Type: Resource file type. {{ resource_file_type }}
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5034,7 +4702,9 @@ func (s *GoogleCloudApigeeV1ServiceIssuersMapping) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type GoogleCloudApigeeV1Sesssion struct {
+// GoogleCloudApigeeV1Session: Session carries the debug session id and
+// its creation time.
+type GoogleCloudApigeeV1Session struct {
 	// Id: The debug session ID.
 	Id string `json:"id,omitempty"`
 
@@ -5059,8 +4729,8 @@ type GoogleCloudApigeeV1Sesssion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudApigeeV1Sesssion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudApigeeV1Sesssion
+func (s *GoogleCloudApigeeV1Session) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1Session
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5321,12 +4991,13 @@ func (s *GoogleCloudApigeeV1StatsEnvironmentStats) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1Subscription: The pubsub subscription of an
+// GoogleCloudApigeeV1Subscription: Pub/Sub subscription of an
 // environment.
 type GoogleCloudApigeeV1Subscription struct {
-	// Name: The full name of cloud Pub/Sub subcription. E.g.
-	// subscription
-	// "projects/foo/subscription/bar".
+	// Name: Full name of the Pub/Sub subcription. Use the following
+	// structure in your
+	// request:
+	//   `subscription "projects/foo/subscription/bar"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5357,28 +5028,47 @@ func (s *GoogleCloudApigeeV1Subscription) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudApigeeV1SyncAuthorization struct {
-	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates from overwriting each other. It is
-	// strongly
-	// suggested that systems make use of the `etag` in the
-	// read-modify-write
-	// cycle to avoid race conditions: An `etag` is returned in the response
-	// to
-	// `getSyncAuthorization`, and systems are expected to put that etag in
-	// the
-	// request to `setSyncAuthorization` to ensure that their change will
-	// be
-	// applied to the same version.
+	// Etag: Entity tag (ETag) used for optimistic concurrency control as a
+	// way to help
+	// prevent simultaneous updates from overwriting each other.
 	//
-	// If no `etag` is provided in the call to `setSyncAuthorization`, then
+	// For example, when you call
+	// [getSyncAuthorization](getSyncAuthorization)
+	// an ETag is returned in the response. Pass that ETag when calling
+	// the [setSyncAuthorization](setSyncAuthorization) to ensure
+	// that you are updating the correct version. If you don't pass the
+	// ETag in the call to `setSyncAuthorization`, then the
+	// existing authorization is overwritten indiscriminately.
+	//
+	// **Note**: We strongly recommend that you use the ETag in
 	// the
-	// existing authorization is overwritten blindly.
+	// read-modify-write cycle to avoid race conditions.
 	Etag string `json:"etag,omitempty"`
 
-	// Identities: Required. The list of identities to grant access to
+	// Identities: Required. Array of service accounts to grant access to
 	// control plane
-	// resources.
+	// resources, each specified using the following
+	// format: `serviceAccount:`<var>service-account-name</var>.
+	//
+	// The <var>service-account-name</var> is formatted like an email
+	// address.
+	// For
+	// example:
+	// `my-synchronizer-manager-service_account@my_project_id.ia
+	// m.gserviceaccount.com`
+	//
+	// You might specify multiple service accounts, for example, if you
+	// have
+	// multiple environments and wish to assign a unique service account to
+	// each
+	// one.
+	//
+	// The service accounts must have **Apigee Synchronizer Manager**
+	// role.
+	// See also [Create
+	// service
+	// accounts](https://docs.apigee.com/hybrid/latest/sa-about#creat
+	// e-the-service-accounts).
 	Identities []string `json:"identities,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5843,11 +5533,23 @@ func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 // GoogleIamV1Binding: Associates `members` with a `role`.
 type GoogleIamV1Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -5875,6 +5577,38 @@ type GoogleIamV1Binding struct {
 	// * `group:{emailid}`: An email address that represents a Google
 	// group.
 	//    For example, `admins@example.com`.
+	//
+	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a user that has been recently deleted.
+	// For
+	//    example, `alice@example.com?uid=123456789012345678901`. If the
+	// user is
+	//    recovered, this value reverts to `user:{emailid}` and the
+	// recovered user
+	//    retains the role in the binding.
+	//
+	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus
+	//    unique identifier) representing a service account that has been
+	// recently
+	//    deleted. For example,
+	//
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
+	//
+	//    If the service account is undeleted, this value reverts to
+	//    `serviceAccount:{emailid}` and the undeleted service account
+	// retains the
+	//    role in the binding.
+	//
+	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique
+	//    identifier) representing a Google group that has been recently
+	//    deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If
+	//    the group is recovered, this value reverts to `group:{emailid}`
+	// and the
+	//    recovered group retains the role in the binding.
 	//
 	//
 	// * `domain:{domain}`: The G Suite domain (primary) that represents all
@@ -5912,9 +5646,9 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1Policy: Defines an Identity and Access Management (IAM)
-// policy. It is used to
-// specify access control policies for Cloud Platform resources.
+// GoogleIamV1Policy: An Identity and Access Management (IAM) policy,
+// which specifies access
+// controls for Google Cloud resources.
 //
 //
 // A `Policy` is a collection of `bindings`. A `binding` binds one or
@@ -5923,15 +5657,24 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
 // list of
-// permissions (defined by IAM or configured by users). A `binding`
-// can
-// optionally specify a `condition`, which is a logic expression that
-// further
-// constrains the role binding based on attributes about the request
-// and/or
-// target resource.
+// permissions; each `role` can be an IAM predefined role or a
+// user-created
+// custom role.
 //
-// **JSON Example**
+// For some types of Google Cloud resources, a `binding` can also
+// specify a
+// `condition`, which is a logical expression that allows access to a
+// resource
+// only if the expression evaluates to `true`. A condition can add
+// constraints
+// based on attributes of the request, the resource, or both. To learn
+// which
+// resources support conditions in their IAM policies, see the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
+//
+// **JSON example:**
 //
 //     {
 //       "bindings": [
@@ -5947,18 +5690,22 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 //         },
 //         {
 //           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
+//           "members": [
+//             "user:eve@example.com"
+//           ],
 //           "condition": {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
 //             "expression": "request.time <
-//             timestamp('2020-10-01T00:00:00.000Z')",
+// timestamp('2020-10-01T00:00:00.000Z')",
 //           }
 //         }
-//       ]
+//       ],
+//       "etag": "BwWWja0YfJA=",
+//       "version": 3
 //     }
 //
-// **YAML Example**
+// **YAML example:**
 //
 //     bindings:
 //     - members:
@@ -5975,18 +5722,21 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 //         description: Does not grant access after Sep 2020
 //         expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z')
+//     - etag: BwWWja0YfJA=
+//     - version: 3
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam/docs).
+// [IAM documentation](https://cloud.google.com/iam/docs/).
 type GoogleIamV1Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*GoogleIamV1AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally may
+	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a
-	// `condition` that determines when binding is in effect.
-	// `bindings` with no members will result in an error.
+	// `condition` that determines how and when the `bindings` are applied.
+	// Each
+	// of the `bindings` must contain at least one member.
 	Bindings []*GoogleIamV1Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -6004,34 +5754,49 @@ type GoogleIamV1Policy struct {
 	// ensure that their change will be applied to the same version of the
 	// policy.
 	//
-	// If no `etag` is provided in the call to `setIamPolicy`, then the
-	// existing
-	// policy is overwritten. Due to blind-set semantics of an etag-less
-	// policy,
-	// 'setIamPolicy' will not fail even if either of incoming or stored
-	// policy
-	// does not meet the version requirements.
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM
+	// allows
+	// you to overwrite a version `3` policy with a version `1` policy, and
+	// all of
+	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Specifies the format of the policy.
 	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
+	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
+	// value
+	// are rejected.
 	//
-	// Operations affecting conditional bindings must specify version 3.
-	// This can
-	// be either setting a conditional policy, modifying a conditional
-	// binding,
-	// or removing a conditional binding from the stored conditional
-	// policy.
-	// Operations on non-conditional policies may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// If no etag is provided in the call to `setIamPolicy`, any
+	// Any operation that affects conditional role bindings must specify
 	// version
-	// compliance checks on the incoming and/or stored policy is skipped.
+	// `3`. This requirement applies to the following operations:
+	//
+	// * Getting a policy that includes a conditional role binding
+	// * Adding a conditional role binding to a policy
+	// * Changing a conditional role binding in a policy
+	// * Removing any role binding, with or without a condition, from a
+	// policy
+	//   that includes conditions
+	//
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM
+	// allows
+	// you to overwrite a version `3` policy with a version `1` policy, and
+	// all of
+	// the conditions in the version `3` policy are lost.
+	//
+	// If a policy does not include any conditions, operations on that
+	// policy may
+	// specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6077,8 +5842,8 @@ type GoogleIamV1SetIamPolicyRequest struct {
 	// the fields in the mask will be modified. If no mask is provided,
 	// the
 	// following default mask is used:
-	// paths: "bindings, etag"
-	// This field is only used by Cloud IAM.
+	//
+	// `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -6172,11 +5937,6 @@ func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1TestIamPermissionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleLongrunningCancelOperationRequest: The request message for
-// Operations.CancelOperation.
-type GoogleLongrunningCancelOperationRequest struct {
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -6362,31 +6122,62 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeExpr: Represents an expression text. Example:
+// GoogleTypeExpr: Represents a textual expression in the Common
+// Expression Language (CEL)
+// syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL
+// are documented at https://github.com/google/cel-spec.
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+// Example (Comparison):
+//
+//     title: "Summary size limit"
+//     description: "Determines if a summary is less than 100 chars"
+//     expression: "document.summary.size() < 100"
+//
+// Example (Equality):
+//
+//     title: "Requestor is owner"
+//     description: "Determines if requestor is the document owner"
+//     expression: "document.owner ==
+// request.auth.claims.email"
+//
+// Example (Logic):
+//
+//     title: "Public documents"
+//     description: "Determine whether the document should be publicly
+// visible"
+//     expression: "document.type != 'private' && document.type !=
+// 'internal'"
+//
+// Example (Data Manipulation):
+//
+//     title: "Notification string"
+//     description: "Create a notification string with a timestamp."
+//     expression: "'New message received at ' +
+// string(document.create_time)"
+//
+// The exact variables and functions that may be referenced within an
+// expression
+// are determined by the service that evaluates it. See the
+// service
+// documentation for additional information.
 type GoogleTypeExpr struct {
-	// Description: An optional description of the expression. This is a
+	// Description: Optional. Description of the expression. This is a
 	// longer text which
 	// describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
 
-	// Expression: Textual representation of an expression in
-	// Common Expression Language syntax.
-	//
-	// The application context of the containing message determines
-	// which
-	// well-known feature set of CEL is supported.
+	// Expression: Textual representation of an expression in Common
+	// Expression Language
+	// syntax.
 	Expression string `json:"expression,omitempty"`
 
-	// Location: An optional string indicating the location of the
-	// expression for error
+	// Location: Optional. String indicating the location of the expression
+	// for error
 	// reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
-	// Title: An optional title for the expression, i.e. a short string
+	// Title: Optional. Title for the expression, i.e. a short string
 	// describing
 	// its purpose. This can be used e.g. in UIs which allow to enter
 	// the
@@ -6477,7 +6268,7 @@ func (c *HybridIssuersListCall) Header() http.Header {
 
 func (c *HybridIssuersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6578,18 +6369,23 @@ type OrganizationsCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an Organization. Only Name and
-// Analytics Region will be used from the
-// request body.
+// Create: Creates an Apigee organization. See
+// [Create
+// an
+// organization](https://docs.apigee.com/hybrid/latest/precog-provisio
+// n).
 func (r *OrganizationsService) Create(googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsCreateCall {
 	c := &OrganizationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudapigeev1organization = googlecloudapigeev1organization
 	return c
 }
 
-// Parent sets the optional parameter "parent": Required. The name of
-// the project in which to associate the organization. Values are
-// of the form `projects/<project>`.
+// Parent sets the optional parameter "parent": Required. Name of the
+// GCP project in which to associate the Apigee organization.
+// Pass the information as a query parameter using the following
+// structure
+// in your request:
+//   `projects/<project>`
 func (c *OrganizationsCreateCall) Parent(parent string) *OrganizationsCreateCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -6622,7 +6418,7 @@ func (c *OrganizationsCreateCall) Header() http.Header {
 
 func (c *OrganizationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6683,14 +6479,14 @@ func (c *OrganizationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Organization. Only Name and\nAnalytics Region will be used from the\nrequest body.",
+	//   "description": "Creates an Apigee organization. See\n[Create an\norganization](https://docs.apigee.com/hybrid/latest/precog-provision).",
 	//   "flatPath": "v1/organizations",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.create",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project in which to associate the organization. Values are\nof the form `projects/\u003cproject\u003e`.",
+	//       "description": "Required. Name of the GCP project in which to associate the Apigee organization.\nPass the information as a query parameter using the following structure\nin your request:\n  `projects/\u003cproject\u003e`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6720,7 +6516,11 @@ type OrganizationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an Organization.
+// Get: Gets the profile for an Apigee
+// organization.
+// See
+// [Organizations](https://docs.apigee.com/hybrid/lates
+// t/terminology#organizations).
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6764,7 +6564,7 @@ func (c *OrganizationsGetCall) Header() http.Header {
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6826,7 +6626,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApi
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an Organization.",
+	//   "description": "Gets the profile for an Apigee organization.\nSee\n[Organizations](https://docs.apigee.com/hybrid/latest/terminology#organizations).",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.get",
@@ -6835,7 +6635,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Organization resource name of the form:\n    `organizations/{organization_id}`",
+	//       "description": "Required. Apigee organization name in the following format:\n  `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -6864,7 +6664,27 @@ type OrganizationsGetSyncAuthorizationCall struct {
 	header_                                        http.Header
 }
 
-// GetSyncAuthorization: Gets an Organization's.
+// GetSyncAuthorization: Lists the service accounts with the permissions
+// required to allow
+// the Synchronizer to download environment data from the control
+// plane.
+//
+// An ETag is returned in the response to `getSyncAuthorization`.
+// Pass that ETag when calling
+// [setSyncAuthorization](setSyncAuthorization)
+// to ensure that you are updating the correct version. If you don't
+// pass the
+// ETag in the call to `setSyncAuthorization`, then the existing
+// authorization
+// is overwritten indiscriminately.
+//
+// For more information, see
+// [Enable
+// Synchronizer
+// access](https://docs.apigee.com/hybrid/latest/synchronize
+// r-access#enable-synchronizer-access).
+//
+// **Note**: Available to Apigee hybrid only.
 func (r *OrganizationsService) GetSyncAuthorization(name string, googlecloudapigeev1getsyncauthorizationrequest *GoogleCloudApigeeV1GetSyncAuthorizationRequest) *OrganizationsGetSyncAuthorizationCall {
 	c := &OrganizationsGetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6899,7 +6719,7 @@ func (c *OrganizationsGetSyncAuthorizationCall) Header() http.Header {
 
 func (c *OrganizationsGetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6964,7 +6784,7 @@ func (c *OrganizationsGetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an Organization's.",
+	//   "description": "Lists the service accounts with the permissions required to allow\nthe Synchronizer to download environment data from the control plane.\n\nAn ETag is returned in the response to `getSyncAuthorization`.\nPass that ETag when calling [setSyncAuthorization](setSyncAuthorization)\nto ensure that you are updating the correct version. If you don't pass the\nETag in the call to `setSyncAuthorization`, then the existing authorization\nis overwritten indiscriminately.\n\nFor more information, see\n[Enable Synchronizer\naccess](https://docs.apigee.com/hybrid/latest/synchronizer-access#enable-synchronizer-access).\n\n**Note**: Available to Apigee hybrid only.",
 	//   "flatPath": "v1/organizations/{organizationsId}:getSyncAuthorization",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.getSyncAuthorization",
@@ -6973,7 +6793,7 @@ func (c *OrganizationsGetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Organization resource name of the form:\n    `organizations/{organization_id}`",
+	//       "description": "Required. Name of the Apigee organization. Use the following structure in your\nrequest:\n `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -7005,13 +6825,12 @@ type OrganizationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Apigee organizations, and the related projects that a
-// user has
-// permissions for.
-// This call will be used by the Unified Experience in order to populate
-// the
-// list of Apigee organizations in a dropdown that the user has access
-// to.
+// List: Lists the Apigee organizations and associated GCP projects that
+// you have
+// permission to access.
+// See
+// [Organizations](https://docs.apigee.com/hybrid/latest/terminology#
+// organizations).
 func (r *OrganizationsService) List(parent string) *OrganizationsListCall {
 	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7055,7 +6874,7 @@ func (c *OrganizationsListCall) Header() http.Header {
 
 func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7119,7 +6938,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Apigee organizations, and the related projects that a user has\npermissions for.\nThis call will be used by the Unified Experience in order to populate the\nlist of Apigee organizations in a dropdown that the user has access to.",
+	//   "description": "Lists the Apigee organizations and associated GCP projects that you have\npermission to access. See\n[Organizations](https://docs.apigee.com/hybrid/latest/terminology#organizations).",
 	//   "flatPath": "v1/organizations",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.list",
@@ -7128,7 +6947,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Must be of the form `organizations`.",
+	//       "description": "Required. Use the following structure in your request:\n  `organizations`",
 	//       "location": "path",
 	//       "pattern": "^organizations$",
 	//       "required": true,
@@ -7157,7 +6976,26 @@ type OrganizationsSetSyncAuthorizationCall struct {
 	header_                              http.Header
 }
 
-// SetSyncAuthorization: Updates an Organization's.
+// SetSyncAuthorization: Sets the permissions required to allow the
+// Synchronizer to download
+// environment data from the control plane. You must call this API to
+// enable
+// proper functioning of hybrid.
+//
+// Pass the ETag when calling `setSyncAuthorization` to ensure that
+// you are updating the correct version. To get an ETag,
+// call [getSyncAuthorization](getSyncAuthorization).
+// If you don't pass the ETag in the call to `setSyncAuthorization`,
+// then the
+// existing authorization is overwritten indiscriminately.
+//
+// For more information, see
+// [Enable
+// Synchronizer
+// access](https://docs.apigee.com/hybrid/latest/synchronize
+// r-access#enable-synchronizer-access).
+//
+// **Note**: Available to Apigee hybrid only.
 func (r *OrganizationsService) SetSyncAuthorization(name string, googlecloudapigeev1syncauthorization *GoogleCloudApigeeV1SyncAuthorization) *OrganizationsSetSyncAuthorizationCall {
 	c := &OrganizationsSetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7192,7 +7030,7 @@ func (c *OrganizationsSetSyncAuthorizationCall) Header() http.Header {
 
 func (c *OrganizationsSetSyncAuthorizationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7257,7 +7095,7 @@ func (c *OrganizationsSetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an Organization's.",
+	//   "description": "Sets the permissions required to allow the Synchronizer to download\nenvironment data from the control plane. You must call this API to enable\nproper functioning of hybrid.\n\nPass the ETag when calling `setSyncAuthorization` to ensure that\nyou are updating the correct version. To get an ETag,\ncall [getSyncAuthorization](getSyncAuthorization).\nIf you don't pass the ETag in the call to `setSyncAuthorization`, then the\nexisting authorization is overwritten indiscriminately.\n\nFor more information, see\n[Enable Synchronizer\naccess](https://docs.apigee.com/hybrid/latest/synchronizer-access#enable-synchronizer-access).\n\n**Note**: Available to Apigee hybrid only.",
 	//   "flatPath": "v1/organizations/{organizationsId}:setSyncAuthorization",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.setSyncAuthorization",
@@ -7266,7 +7104,7 @@ func (c *OrganizationsSetSyncAuthorizationCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Organization resource name of the form:\n    `organizations/{organization_id}`",
+	//       "description": "Required. Name of the Apigee organization. Use the following structure in your\nrequest:\n `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -7298,8 +7136,9 @@ type OrganizationsUpdateCall struct {
 	header_                         http.Header
 }
 
-// Update: Updates an Organization's properties. No other fields will
-// be updated.
+// Update: Updates the properties for an Apigee organization. No other
+// fields in the
+// organization profile will be updated.
 func (r *OrganizationsService) Update(name string, googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7334,7 +7173,7 @@ func (c *OrganizationsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7398,7 +7237,7 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an Organization's properties. No other fields will\nbe updated.",
+	//   "description": "Updates the properties for an Apigee organization. No other fields in the\norganization profile will be updated.",
 	//   "flatPath": "v1/organizations/{organizationsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.update",
@@ -7407,149 +7246,7 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Organization resource name of the form:\n    `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1Organization"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1Organization"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.updateOrganization":
-
-type OrganizationsUpdateOrganizationCall struct {
-	s                               *Service
-	name                            string
-	googlecloudapigeev1organization *GoogleCloudApigeeV1Organization
-	urlParams_                      gensupport.URLParams
-	ctx_                            context.Context
-	header_                         http.Header
-}
-
-// UpdateOrganization: Updates an Organization's properties. No other
-// fields will
-// be updated.
-func (r *OrganizationsService) UpdateOrganization(name string, googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsUpdateOrganizationCall {
-	c := &OrganizationsUpdateOrganizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudapigeev1organization = googlecloudapigeev1organization
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsUpdateOrganizationCall) Fields(s ...googleapi.Field) *OrganizationsUpdateOrganizationCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsUpdateOrganizationCall) Context(ctx context.Context) *OrganizationsUpdateOrganizationCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsUpdateOrganizationCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsUpdateOrganizationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1organization)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.updateOrganization" call.
-// Exactly one of *GoogleCloudApigeeV1Organization or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1Organization.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsUpdateOrganizationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Organization, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1Organization{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an Organization's properties. No other fields will\nbe updated.",
-	//   "flatPath": "v1/organizations/{organizationsId}",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.updateOrganization",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Organization resource name of the form:\n    `organizations/{organization_id}`",
+	//       "description": "Required. Apigee organization name in the following format:\n  `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -7634,7 +7331,7 @@ func (c *OrganizationsApiproductsAttributesCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7818,7 +7515,7 @@ func (c *OrganizationsApiproductsCreateCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7975,7 +7672,7 @@ func (c *OrganizationsApiproductsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8087,28 +7784,6 @@ func (r *OrganizationsApiproductsService) Get(name string) *OrganizationsApiprod
 	return c
 }
 
-// Entity sets the optional parameter "entity": The type of entity for
-// which you want to get a count. Possible values are:
-//
-// - `apps`
-// - `companies`
-// - `developers`
-// - `keys`
-func (c *OrganizationsApiproductsGetCall) Entity(entity string) *OrganizationsApiproductsGetCall {
-	c.urlParams_.Set("entity", entity)
-	return c
-}
-
-// Query sets the optional parameter "query": The type of query.
-// Possible values are:
-//
-// - `count`: Gets an entity count
-// - `list`: Gets a list of entities
-func (c *OrganizationsApiproductsGetCall) Query(query string) *OrganizationsApiproductsGetCall {
-	c.urlParams_.Set("query", query)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8146,7 +7821,7 @@ func (c *OrganizationsApiproductsGetCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8216,21 +7891,11 @@ func (c *OrganizationsApiproductsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "name"
 	//   ],
 	//   "parameters": {
-	//     "entity": {
-	//       "description": "The type of entity for which you want to get a count. Possible values are:\n\n- `apps`\n- `companies`\n- `developers`\n- `keys`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "name": {
 	//       "description": "**Required.** API product name in the following form:\n\u003cpre\u003eorganizations/\u003cvar\u003eorganization_ID\u003c/var\u003e/apiproducts/\u003cvar\u003eapi_product_name\u003c/var\u003e\u003c/pre\u003e",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apiproducts/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The type of query. Possible values are:\n\n- `count`: Gets an entity count\n- `list`: Gets a list of entities",
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -8351,7 +8016,7 @@ func (c *OrganizationsApiproductsListCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8525,7 +8190,7 @@ func (c *OrganizationsApiproductsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8663,7 +8328,7 @@ func (c *OrganizationsApiproductsAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8804,7 +8469,7 @@ func (c *OrganizationsApiproductsAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8948,7 +8613,7 @@ func (c *OrganizationsApiproductsAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsApiproductsAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9095,7 +8760,7 @@ func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) Header
 
 func (c *OrganizationsApiproductsAttributesUpdateApiProductAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9216,8 +8881,9 @@ type OrganizationsApisCreateCall struct {
 // * Set the `action` query parameter to `import`.
 // * Set the `Content-Type` header to `multipart/form-data`.
 // * Pass as a file the name of API proxy
-//   configuration bundle stored in zip format on your local
-// machine.
+//   configuration bundle stored in zip format on your local machine
+// using
+//   the `file` form field.
 //
 // **Note**: To validate the API proxy configuration bundle only
 //   without importing it, set the `action` query
@@ -9292,7 +8958,7 @@ func (c *OrganizationsApisCreateCall) Header() http.Header {
 
 func (c *OrganizationsApisCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9357,7 +9023,7 @@ func (c *OrganizationsApisCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an API proxy.\nThe API proxy created will not be accessible at runtime until it is\ndeployed to an environment.\n\nCreate a new API proxy by setting the `name` query parameter to the\nname of the API proxy.\n\nImport an API proxy configuration bundle stored in zip format\non your local machine to your organization by doing the following:\n\n* Set the `name` query parameter to the name of the API proxy.\n* Set the `action` query parameter to `import`.\n* Set the `Content-Type` header to `multipart/form-data`.\n* Pass as a file the name of API proxy\n  configuration bundle stored in zip format on your local machine.\n\n**Note**: To validate the API proxy configuration bundle only\n  without importing it, set the `action` query\n  parameter to `validate`.\n\nWhen importing an API proxy configuration bundle, if the API proxy\ndoes not exist, it will be created.\nIf the API proxy exists, then a new revision is created. Invalid API\nproxy configurations are rejected, and a list of validation errors is\nreturned to the client.",
+	//   "description": "Creates an API proxy.\nThe API proxy created will not be accessible at runtime until it is\ndeployed to an environment.\n\nCreate a new API proxy by setting the `name` query parameter to the\nname of the API proxy.\n\nImport an API proxy configuration bundle stored in zip format\non your local machine to your organization by doing the following:\n\n* Set the `name` query parameter to the name of the API proxy.\n* Set the `action` query parameter to `import`.\n* Set the `Content-Type` header to `multipart/form-data`.\n* Pass as a file the name of API proxy\n  configuration bundle stored in zip format on your local machine using\n  the `file` form field.\n\n**Note**: To validate the API proxy configuration bundle only\n  without importing it, set the `action` query\n  parameter to `validate`.\n\nWhen importing an API proxy configuration bundle, if the API proxy\ndoes not exist, it will be created.\nIf the API proxy exists, then a new revision is created. Invalid API\nproxy configurations are rejected, and a list of validation errors is\nreturned to the client.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.apis.create",
@@ -9376,7 +9042,7 @@ func (c *OrganizationsApisCreateCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization in the following format:\n  `organizations/{organization_id}`",
+	//       "description": "Required. Name of the organization in the following format:\n  `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -9448,7 +9114,7 @@ func (c *OrganizationsApisDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9516,7 +9182,7 @@ func (c *OrganizationsApisDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the API proxy in the following format:\n  `organizations/{organization_id}/apis/{api_id}`",
+	//       "description": "Required. Name of the API proxy in the following format:\n  `organizations/{org}/apis/{api}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+$",
 	//       "required": true,
@@ -9589,7 +9255,7 @@ func (c *OrganizationsApisGetCall) Header() http.Header {
 
 func (c *OrganizationsApisGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9660,7 +9326,7 @@ func (c *OrganizationsApisGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the API proxy in the following format:\n  `organizations/{organization_id}/apis/{api_id}`",
+	//       "description": "Required. Name of the API proxy in the following format:\n  `organizations/{org}/apis/{api}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+$",
 	//       "required": true,
@@ -9752,7 +9418,7 @@ func (c *OrganizationsApisListCall) Header() http.Header {
 
 func (c *OrganizationsApisListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9835,7 +9501,7 @@ func (c *OrganizationsApisListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization in the following format:\n  `organizations/{organization_id}`",
+	//       "description": "Required. Name of the organization in the following format:\n  `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -9908,7 +9574,7 @@ func (c *OrganizationsApisDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10045,7 +9711,7 @@ func (c *OrganizationsApisKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsApisKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10183,7 +9849,7 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10269,128 +9935,6 @@ func (c *OrganizationsApisKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOptio
 
 }
 
-// method id "apigee.organizations.apis.keyvaluemaps.list":
-
-type OrganizationsApisKeyvaluemapsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List key value maps in an api proxy.
-func (r *OrganizationsApisKeyvaluemapsService) List(parent string) *OrganizationsApisKeyvaluemapsListCall {
-	c := &OrganizationsApisKeyvaluemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsApisKeyvaluemapsListCall) Fields(s ...googleapi.Field) *OrganizationsApisKeyvaluemapsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsApisKeyvaluemapsListCall) IfNoneMatch(entityTag string) *OrganizationsApisKeyvaluemapsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsApisKeyvaluemapsListCall) Context(ctx context.Context) *OrganizationsApisKeyvaluemapsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsApisKeyvaluemapsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsApisKeyvaluemapsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.apis.keyvaluemaps.list" call.
-func (c *OrganizationsApisKeyvaluemapsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "List key value maps in an api proxy.",
-	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.apis.keyvaluemaps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the environment in which to list key value maps.\nMust be of the form\n`organizations/{organization}/apis/{api}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/apis/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/keyvaluemaps",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.apis.revisions.delete":
 
 type OrganizationsApisRevisionsDeleteCall struct {
@@ -10439,7 +9983,7 @@ func (c *OrganizationsApisRevisionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10508,7 +10052,7 @@ func (c *OrganizationsApisRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. API proxy revision in the following format:\n  `organizations/{organization_id}/apis/{api_id}/revisions/{revision_id}`",
+	//       "description": "Required. API proxy revision in the following format:\n  `organizations/{org}/apis/{api}/revisions/{rev}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -10608,7 +10152,7 @@ func (c *OrganizationsApisRevisionsGetCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10684,7 +10228,7 @@ func (c *OrganizationsApisRevisionsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. API proxy revision in the following format:\n  `organizations/{organization_id}/apis/{api_id}/revisions/{revision_id}`",
+	//       "description": "Required. API proxy revision in the following format:\n  `organizations/{org}/apis/{api}/revisions/{rev}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -10694,128 +10238,6 @@ func (c *OrganizationsApisRevisionsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleApiHttpBody"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.apis.revisions.list":
-
-type OrganizationsApisRevisionsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all revisions for an API proxy.
-func (r *OrganizationsApisRevisionsService) List(parent string) *OrganizationsApisRevisionsListCall {
-	c := &OrganizationsApisRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsApisRevisionsListCall) Fields(s ...googleapi.Field) *OrganizationsApisRevisionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsApisRevisionsListCall) IfNoneMatch(entityTag string) *OrganizationsApisRevisionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsApisRevisionsListCall) Context(ctx context.Context) *OrganizationsApisRevisionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsApisRevisionsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsApisRevisionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/revisions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.apis.revisions.list" call.
-func (c *OrganizationsApisRevisionsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all revisions for an API proxy.",
-	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/revisions",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.apis.revisions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the API proxy in the following format:\n  `organizations/{organization_id}/apis/{api_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/apis/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/revisions",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10888,7 +10310,7 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) Header() http.Hea
 
 func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10962,7 +10384,7 @@ func (c *OrganizationsApisRevisionsUpdateApiProxyRevisionCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. API proxy revision to update in the following format:\n  `organizations/{organization_id}/apis/{api_id}/revisions/{revision_id}`",
+	//       "description": "Required. API proxy revision to update in the following format:\n  `organizations/{org}/apis/{api}/revisions/{rev}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/apis/[^/]+/revisions/[^/]+$",
 	//       "required": true,
@@ -10999,9 +10421,7 @@ type OrganizationsApisRevisionsDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all deployments of an API proxy revision and actual state
-// reported by
-// runtime pods.
+// List: Lists all deployments of an API proxy revision.
 func (r *OrganizationsApisRevisionsDeploymentsService) List(parent string) *OrganizationsApisRevisionsDeploymentsListCall {
 	c := &OrganizationsApisRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11045,7 +10465,7 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsApisRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11109,7 +10529,7 @@ func (c *OrganizationsApisRevisionsDeploymentsListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all deployments of an API proxy revision and actual state reported by\nruntime pods.",
+	//   "description": "Lists all deployments of an API proxy revision.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/revisions/{revisionsId}/deployments",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.apis.revisions.deployments.list",
@@ -11191,7 +10611,7 @@ func (c *OrganizationsAppsGetCall) Header() http.Header {
 
 func (c *OrganizationsAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11405,7 +10825,7 @@ func (c *OrganizationsAppsListCall) Header() http.Header {
 
 func (c *OrganizationsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11541,1960 +10961,6 @@ func (c *OrganizationsAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 
 }
 
-// method id "apigee.organizations.companies.create":
-
-type OrganizationsCompaniesCreateCall struct {
-	s                          *Service
-	parent                     string
-	googlecloudapigeev1company *GoogleCloudApigeeV1Company
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// Create: Creates an app for a company. Note that you must first create
-// a profile
-// for the company in your organization before you can register apps
-// that
-// are associated with the company.
-func (r *OrganizationsCompaniesService) Create(parent string, googlecloudapigeev1company *GoogleCloudApigeeV1Company) *OrganizationsCompaniesCreateCall {
-	c := &OrganizationsCompaniesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudapigeev1company = googlecloudapigeev1company
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesCreateCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesCreateCall) Context(ctx context.Context) *OrganizationsCompaniesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1company)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/companies")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.create" call.
-// Exactly one of *GoogleCloudApigeeV1Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudApigeeV1Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Company, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1Company{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an app for a company. Note that you must first create a profile\nfor the company in your organization before you can register apps that\nare associated with the company.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.companies.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Name of org that the company will be created in\n`{parent=organizations/*}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/companies",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.delete":
-
-type OrganizationsCompaniesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes an existing company.
-func (r *OrganizationsCompaniesService) Delete(name string) *OrganizationsCompaniesDeleteCall {
-	c := &OrganizationsCompaniesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesDeleteCall) Context(ctx context.Context) *OrganizationsCompaniesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.delete" call.
-// Exactly one of *GoogleCloudApigeeV1Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudApigeeV1Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Company, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1Company{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes an existing company.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "apigee.organizations.companies.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The company resource name\n`organizations/{org}/companies/{company}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.get":
-
-type OrganizationsCompaniesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: List details for a company.
-func (r *OrganizationsCompaniesService) Get(name string) *OrganizationsCompaniesGetCall {
-	c := &OrganizationsCompaniesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesGetCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsCompaniesGetCall) IfNoneMatch(entityTag string) *OrganizationsCompaniesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesGetCall) Context(ctx context.Context) *OrganizationsCompaniesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.get" call.
-// Exactly one of *GoogleCloudApigeeV1Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudApigeeV1Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Company, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1Company{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List details for a company.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.companies.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The company resource name\n`organizations/{org}/companies/{company}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.list":
-
-type OrganizationsCompaniesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List all companies in an organization, and optionally returns
-// an
-// expanded list of companies, displaying a full profile for each
-// company in
-// the organization.
-func (r *OrganizationsCompaniesService) List(parent string) *OrganizationsCompaniesListCall {
-	c := &OrganizationsCompaniesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Count sets the optional parameter "count": Limits the list to the
-// number you specify. The limit is 100.
-func (c *OrganizationsCompaniesListCall) Count(count int64) *OrganizationsCompaniesListCall {
-	c.urlParams_.Set("count", fmt.Sprint(count))
-	return c
-}
-
-// Expand sets the optional parameter "expand": Set expand to true to
-// return a full profile for each company.
-func (c *OrganizationsCompaniesListCall) Expand(expand bool) *OrganizationsCompaniesListCall {
-	c.urlParams_.Set("expand", fmt.Sprint(expand))
-	return c
-}
-
-// IncludeDevelopers sets the optional parameter "includeDevelopers":
-// include developers in the response.
-func (c *OrganizationsCompaniesListCall) IncludeDevelopers(includeDevelopers bool) *OrganizationsCompaniesListCall {
-	c.urlParams_.Set("includeDevelopers", fmt.Sprint(includeDevelopers))
-	return c
-}
-
-// StartKey sets the optional parameter "startKey": To filter the keys
-// that are returned, enter the email of a developer
-// that the list will start with.
-func (c *OrganizationsCompaniesListCall) StartKey(startKey string) *OrganizationsCompaniesListCall {
-	c.urlParams_.Set("startKey", startKey)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesListCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsCompaniesListCall) IfNoneMatch(entityTag string) *OrganizationsCompaniesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesListCall) Context(ctx context.Context) *OrganizationsCompaniesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/companies")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.list" call.
-// Exactly one of *GoogleCloudApigeeV1ListCompaniesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudApigeeV1ListCompaniesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsCompaniesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListCompaniesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1ListCompaniesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List all companies in an organization, and optionally returns an\nexpanded list of companies, displaying a full profile for each company in\nthe organization.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.companies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "count": {
-	//       "description": "Limits the list to the number you specify. The limit is 100.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "expand": {
-	//       "description": "Set expand to true to return a full profile for each company.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "includeDevelopers": {
-	//       "description": "Optional. include developers in the response.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "parent": {
-	//       "description": "The parent organization name\n`organizations/{org}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startKey": {
-	//       "description": "To filter the keys that are returned, enter the email of a developer\nthat the list will start with.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/companies",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ListCompaniesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.update":
-
-type OrganizationsCompaniesUpdateCall struct {
-	s                          *Service
-	name                       string
-	googlecloudapigeev1company *GoogleCloudApigeeV1Company
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
-}
-
-// Update: Updates an existing company.
-// Send the complete company record as a payload with any changes you
-// want to
-// make. Note that to change the status of the Company you use Set the
-// Status
-// of a Company. The attributes in the sample payload below apply to
-// company
-// configuration in monetization. For non-monetized companies, you need
-// send
-// only displayName.
-func (r *OrganizationsCompaniesService) Update(name string, googlecloudapigeev1company *GoogleCloudApigeeV1Company) *OrganizationsCompaniesUpdateCall {
-	c := &OrganizationsCompaniesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudapigeev1company = googlecloudapigeev1company
-	return c
-}
-
-// Action sets the optional parameter "action": Specify the status as
-// active or inactive.
-func (c *OrganizationsCompaniesUpdateCall) Action(action string) *OrganizationsCompaniesUpdateCall {
-	c.urlParams_.Set("action", action)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesUpdateCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesUpdateCall) Context(ctx context.Context) *OrganizationsCompaniesUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesUpdateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1company)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.update" call.
-// Exactly one of *GoogleCloudApigeeV1Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudApigeeV1Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1Company, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1Company{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing company.\nSend the complete company record as a payload with any changes you want to\nmake. Note that to change the status of the Company you use Set the Status\nof a Company. The attributes in the sample payload below apply to company\nconfiguration in monetization. For non-monetized companies, you need send\nonly displayName.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}",
-	//   "httpMethod": "PUT",
-	//   "id": "apigee.organizations.companies.update",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "action": {
-	//       "description": "Specify the status as active or inactive.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Name of the company to be updated.\n`{name=organizations/*/companies/*}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1Company"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.create":
-
-type OrganizationsCompaniesAppsCreateCall struct {
-	s                             *Service
-	parent                        string
-	googlecloudapigeev1companyapp *GoogleCloudApigeeV1CompanyApp
-	urlParams_                    gensupport.URLParams
-	ctx_                          context.Context
-	header_                       http.Header
-}
-
-// Create: Creates an app for a company.
-func (r *OrganizationsCompaniesAppsService) Create(parent string, googlecloudapigeev1companyapp *GoogleCloudApigeeV1CompanyApp) *OrganizationsCompaniesAppsCreateCall {
-	c := &OrganizationsCompaniesAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudapigeev1companyapp = googlecloudapigeev1companyapp
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsCreateCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsCreateCall) Context(ctx context.Context) *OrganizationsCompaniesAppsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1companyapp)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.create" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyApp or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyApp.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyApp, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyApp{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an app for a company.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.companies.apps.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Resource path of the parent: `organizations/{org}/companies/{company_name}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.delete":
-
-type OrganizationsCompaniesAppsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a company app.
-func (r *OrganizationsCompaniesAppsService) Delete(name string) *OrganizationsCompaniesAppsDeleteCall {
-	c := &OrganizationsCompaniesAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsDeleteCall) Context(ctx context.Context) *OrganizationsCompaniesAppsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.delete" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyApp or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyApp.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyApp, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyApp{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a company app.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "apigee.organizations.companies.apps.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "name of the app resource:\n`organizations/{org}/companies/{company_name}/apps/{app_name}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.get":
-
-type OrganizationsCompaniesAppsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets the profile of a specific company app.
-func (r *OrganizationsCompaniesAppsService) Get(name string) *OrganizationsCompaniesAppsGetCall {
-	c := &OrganizationsCompaniesAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsGetCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsCompaniesAppsGetCall) IfNoneMatch(entityTag string) *OrganizationsCompaniesAppsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsGetCall) Context(ctx context.Context) *OrganizationsCompaniesAppsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.get" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyApp or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyApp.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyApp, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyApp{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the profile of a specific company app.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.companies.apps.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "name of the app resource:\n`organizations/{org}/companies/{company_name}/apps/{app_name}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.list":
-
-type OrganizationsCompaniesAppsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List company apps in an organization. You can optionally expand
-// the
-// response to include the profile for each app.
-func (r *OrganizationsCompaniesAppsService) List(parent string) *OrganizationsCompaniesAppsListCall {
-	c := &OrganizationsCompaniesAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Count sets the optional parameter "count": Limits the list to the
-// number you specify. The limit is 100.
-func (c *OrganizationsCompaniesAppsListCall) Count(count int64) *OrganizationsCompaniesAppsListCall {
-	c.urlParams_.Set("count", fmt.Sprint(count))
-	return c
-}
-
-// Expand sets the optional parameter "expand": Set expand to true to
-// return a full profile
-func (c *OrganizationsCompaniesAppsListCall) Expand(expand bool) *OrganizationsCompaniesAppsListCall {
-	c.urlParams_.Set("expand", fmt.Sprint(expand))
-	return c
-}
-
-// StartKey sets the optional parameter "startKey": Lets you return a
-// list of app starting with a specific app name in the
-// list.
-func (c *OrganizationsCompaniesAppsListCall) StartKey(startKey string) *OrganizationsCompaniesAppsListCall {
-	c.urlParams_.Set("startKey", startKey)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsListCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsCompaniesAppsListCall) IfNoneMatch(entityTag string) *OrganizationsCompaniesAppsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsListCall) Context(ctx context.Context) *OrganizationsCompaniesAppsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.list" call.
-// Exactly one of *GoogleCloudApigeeV1ListCompanyAppsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudApigeeV1ListCompanyAppsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsCompaniesAppsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListCompanyAppsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1ListCompanyAppsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "List company apps in an organization. You can optionally expand the\nresponse to include the profile for each app.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.companies.apps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "count": {
-	//       "description": "Limits the list to the number you specify. The limit is 100.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "expand": {
-	//       "description": "Set expand to true to return a full profile",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "parent": {
-	//       "description": "The name of a company resource:\n`organizations/{org}/companies/{company_name}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startKey": {
-	//       "description": "Lets you return a list of app starting with a specific app name in the\nlist.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/apps",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1ListCompanyAppsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.update":
-
-type OrganizationsCompaniesAppsUpdateCall struct {
-	s                             *Service
-	name                          string
-	googlecloudapigeev1companyapp *GoogleCloudApigeeV1CompanyApp
-	urlParams_                    gensupport.URLParams
-	ctx_                          context.Context
-	header_                       http.Header
-}
-
-// Update: Updates an existing company app.
-func (r *OrganizationsCompaniesAppsService) Update(name string, googlecloudapigeev1companyapp *GoogleCloudApigeeV1CompanyApp) *OrganizationsCompaniesAppsUpdateCall {
-	c := &OrganizationsCompaniesAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudapigeev1companyapp = googlecloudapigeev1companyapp
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsUpdateCall) Context(ctx context.Context) *OrganizationsCompaniesAppsUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsUpdateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1companyapp)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.update" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyApp or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyApp.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyApp, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyApp{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing company app.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}",
-	//   "httpMethod": "PUT",
-	//   "id": "apigee.organizations.companies.apps.update",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource path of the app:\n`organizations/{org}/companies/{company_name}/apps/{app_name}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyApp"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.keys.delete":
-
-type OrganizationsCompaniesAppsKeysDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a key for a company app and removes all API products
-// associated
-// with the app. The key can no longer be used to access any APIs.
-func (r *OrganizationsCompaniesAppsKeysService) Delete(name string) *OrganizationsCompaniesAppsKeysDeleteCall {
-	c := &OrganizationsCompaniesAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsKeysDeleteCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsKeysDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsKeysDeleteCall) Context(ctx context.Context) *OrganizationsCompaniesAppsKeysDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsKeysDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.keys.delete" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyAppKey or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyAppKey.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsKeysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyAppKey, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyAppKey{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a key for a company app and removes all API products associated\nwith the app. The key can no longer be used to access any APIs.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}/keys/{keysId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "apigee.organizations.companies.apps.keys.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name of a company app key\n`organizations/{org}/companies/{company}/apps/{app}/keys/{key}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+/keys/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyAppKey"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.keys.get":
-
-type OrganizationsCompaniesAppsKeysGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets information about the consumer key issued to a specific
-// company app.
-func (r *OrganizationsCompaniesAppsKeysService) Get(name string) *OrganizationsCompaniesAppsKeysGetCall {
-	c := &OrganizationsCompaniesAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsKeysGetCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsKeysGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsCompaniesAppsKeysGetCall) IfNoneMatch(entityTag string) *OrganizationsCompaniesAppsKeysGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsKeysGetCall) Context(ctx context.Context) *OrganizationsCompaniesAppsKeysGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsKeysGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.keys.get" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyAppKey or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyAppKey.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsKeysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyAppKey, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyAppKey{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets information about the consumer key issued to a specific company app.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}/keys/{keysId}",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.companies.apps.keys.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name of a company app key\n`organizations/{org}/companies/{company}/apps/{app}/keys/{key}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+/keys/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyAppKey"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.companies.apps.keys.updateCompanyAppKey":
-
-type OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall struct {
-	s                                *Service
-	name                             string
-	googlecloudapigeev1companyappkey *GoogleCloudApigeeV1CompanyAppKey
-	urlParams_                       gensupport.URLParams
-	ctx_                             context.Context
-	header_                          http.Header
-}
-
-// UpdateCompanyAppKey: Updates an existing company app key to add
-// additional API products or
-// attributes. Note that only a single API product can be resolved per
-// app
-// key at runtime. API products are resolved by name, in alphabetical
-// order.
-// The first API product found in the list will be returned.
-func (r *OrganizationsCompaniesAppsKeysService) UpdateCompanyAppKey(name string, googlecloudapigeev1companyappkey *GoogleCloudApigeeV1CompanyAppKey) *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall {
-	c := &OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudapigeev1companyappkey = googlecloudapigeev1companyappkey
-	return c
-}
-
-// Action sets the optional parameter "action": Set action to approve or
-// revoke.
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) Action(action string) *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall {
-	c.urlParams_.Set("action", action)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) Fields(s ...googleapi.Field) *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) Context(ctx context.Context) *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1companyappkey)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.companies.apps.keys.updateCompanyAppKey" call.
-// Exactly one of *GoogleCloudApigeeV1CompanyAppKey or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1CompanyAppKey.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsCompaniesAppsKeysUpdateCompanyAppKeyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1CompanyAppKey, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1CompanyAppKey{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing company app key to add additional API products or\nattributes. Note that only a single API product can be resolved per app\nkey at runtime. API products are resolved by name, in alphabetical order.\nThe first API product found in the list will be returned.",
-	//   "flatPath": "v1/organizations/{organizationsId}/companies/{companiesId}/apps/{appsId}/keys/{keysId}",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.companies.apps.keys.updateCompanyAppKey",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "action": {
-	//       "description": "Set action to approve or revoke.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Resource name of a company app key\n`organizations/{org}/companies/{company}/apps/{app}/keys/{key}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/companies/[^/]+/apps/[^/]+/keys/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyAppKey"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1CompanyAppKey"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.deployments.list":
 
 type OrganizationsDeploymentsListCall struct {
@@ -13559,7 +11025,7 @@ func (c *OrganizationsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13666,26 +11132,26 @@ type OrganizationsDevelopersAttributesCall struct {
 	header_                       http.Header
 }
 
-// Attributes: Updates or creates developer attributes.This API replaces
-// the current
-// list of attributes with the attributes specified in the request
-// body.
-// This lets you update existing attributes, add new attributes, or
-// delete
-// existing attributes by omitting them from the request body. the
-// attribute
-// limit is 18. Core Persistence Services caching minimum: OAuth
-// access
-// tokens and Key Management Service (KMS) entities (Apps,
-// Developers,
-// API Products) are cached for 180 seconds.
-// Any custom attributes associated with entities also get cached for at
-// least
-// 180 seconds after entity is accessed during runtime. This also means
-// the
-// ExpiresIn element on the OAuthV2 policy won't be able to expire an
-// access
-// token in less than 180 seconds.
+// Attributes: Updates developer attributes.
+//
+// This API replaces the
+// existing attributes with those specified in the request.
+// Add new attributes, and include or exclude any existing
+// attributes that you want to retain or
+// remove, respectively.
+//
+// The custom attribute limit is 18.
+//
+// **Note**: OAuth access tokens and Key Management Service (KMS)
+// entities
+// (apps, developers, and API products) are cached for 180
+// seconds
+// (default). Any custom attributes associated with these entities
+// are cached for at least 180 seconds after the entity is accessed
+// at
+// runtime. Therefore, an `ExpiresIn` element on the OAuthV2
+// policy
+// won't be able to expire an access token in less than 180 seconds.
 func (r *OrganizationsDevelopersService) Attributes(parent string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAttributesCall {
 	c := &OrganizationsDevelopersAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13720,7 +11186,7 @@ func (c *OrganizationsDevelopersAttributesCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13784,7 +11250,7 @@ func (c *OrganizationsDevelopersAttributesCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates or creates developer attributes.This API replaces the current\nlist of attributes with the attributes specified in the request body.\nThis lets you update existing attributes, add new attributes, or delete\nexisting attributes by omitting them from the request body. the attribute\nlimit is 18. Core Persistence Services caching minimum: OAuth access\ntokens and Key Management Service (KMS) entities (Apps, Developers,\nAPI Products) are cached for 180 seconds.\nAny custom attributes associated with entities also get cached for at least\n180 seconds after entity is accessed during runtime. This also means the\nExpiresIn element on the OAuthV2 policy won't be able to expire an access\ntoken in less than 180 seconds.",
+	//   "description": "Updates developer attributes.\n\nThis API replaces the\nexisting attributes with those specified in the request.\nAdd new attributes, and include or exclude any existing\nattributes that you want to retain or\nremove, respectively.\n\nThe custom attribute limit is 18.\n\n**Note**: OAuth access tokens and Key Management Service (KMS) entities\n(apps, developers, and API products) are cached for 180 seconds\n(default). Any custom attributes associated with these entities\nare cached for at least 180 seconds after the entity is accessed at\nruntime. Therefore, an `ExpiresIn` element on the OAuthV2 policy\nwon't be able to expire an access token in less than 180 seconds.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/attributes",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.attributes",
@@ -13793,7 +11259,7 @@ func (c *OrganizationsDevelopersAttributesCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent developer for which attributes are being updated.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer for which attributes are being updated in\nthe following format:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -13825,13 +11291,12 @@ type OrganizationsDevelopersCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a profile for a developer in an organization. Once
-// created, the
-// developer can register an app and receive an API key. The developer
-// is
-// always created with a status of active. To set the status
-// explicitly,
-// use SetDeveloperStatus
+// Create: Creates a developer. Once created,
+// the developer can register an app and obtain an API key.
+//
+// At creation time, a developer is set as `active`. To change the
+// developer
+// status, use the SetDeveloperStatus API.
 func (r *OrganizationsDevelopersService) Create(parent string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersCreateCall {
 	c := &OrganizationsDevelopersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13866,7 +11331,7 @@ func (c *OrganizationsDevelopersCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13930,7 +11395,7 @@ func (c *OrganizationsDevelopersCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a profile for a developer in an organization. Once created, the\ndeveloper can register an app and receive an API key. The developer is\nalways created with a status of active. To set the status explicitly,\nuse SetDeveloperStatus",
+	//   "description": "Creates a developer. Once created,\nthe developer can register an app and obtain an API key.\n\nAt creation time, a developer is set as `active`. To change the developer\nstatus, use the SetDeveloperStatus API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.create",
@@ -13939,7 +11404,7 @@ func (c *OrganizationsDevelopersCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent organization name under which the Developer will\nbe created. Must be of the form `organizations/{org}`.",
+	//       "description": "Required. Name of the Apigee organization in which the developer is created.\nUse the following structure in your request:\n  `organizations/{org}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -13970,11 +11435,22 @@ type OrganizationsDevelopersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a developer from an organization. All apps and API
-// keys associated
-// with the developer are also removed from the organization. All times
-// in the
-// response are UNIX times.
+// Delete: Deletes a developer. All apps and API keys associated
+// with the developer are also removed.
+//
+// **Warning**: This API will permanently delete the developer
+// and related artifacts.
+//
+// To avoid permanently deleting developers and their artifacts,
+// set the developer status to `inactive` using
+// the SetDeveloperStatus API.
+//
+// **Note**: The delete operation is asynchronous. The developer app
+// is
+// deleted immediately,
+// but its associated resources, such as apps and API keys, may take
+// anywhere
+// from a few seconds to a few minutes to be deleted.
 func (r *OrganizationsDevelopersService) Delete(name string) *OrganizationsDevelopersDeleteCall {
 	c := &OrganizationsDevelopersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14008,7 +11484,7 @@ func (c *OrganizationsDevelopersDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14067,7 +11543,7 @@ func (c *OrganizationsDevelopersDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a developer from an organization. All apps and API keys associated\nwith the developer are also removed from the organization. All times in the\nresponse are UNIX times.",
+	//   "description": "Deletes a developer. All apps and API keys associated\nwith the developer are also removed.\n\n**Warning**: This API will permanently delete the developer\nand related artifacts.\n\nTo avoid permanently deleting developers and their artifacts,\nset the developer status to `inactive` using\nthe SetDeveloperStatus API.\n\n**Note**: The delete operation is asynchronous. The developer app is\ndeleted immediately,\nbut its associated resources, such as apps and API keys, may take anywhere\nfrom a few seconds to a few minutes to be deleted.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.delete",
@@ -14076,7 +11552,7 @@ func (c *OrganizationsDevelopersDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Developer to be deleted.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -14105,25 +11581,19 @@ type OrganizationsDevelopersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the profile for a developer by email address or ID. All
-// time values
-// are UNIX time values. The profile includes the developer's email
-// address,
-// ID, name, and other information. Apigee recommends using the
-// developer
-// email in the API call. Developer ID is generated internally and is
-// not
-// guaranteed to stay the same over time. For example, Apigee could
-// change
-// the format or length of this variable.
+// Get: Returns the developer details, including the
+// developer's name, email address, apps, and other
+// information.
+//
+// **Note**: The response includes only the first 100 developer apps.
 func (r *OrganizationsDevelopersService) Get(name string) *OrganizationsDevelopersGetCall {
 	c := &OrganizationsDevelopersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Action sets the optional parameter "action": Status to set
-// active/inactive
+// Action sets the optional parameter "action": Status of the developer.
+// Valid values are `active` or `inactive`.
 func (c *OrganizationsDevelopersGetCall) Action(action string) *OrganizationsDevelopersGetCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -14166,7 +11636,7 @@ func (c *OrganizationsDevelopersGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14228,7 +11698,7 @@ func (c *OrganizationsDevelopersGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the profile for a developer by email address or ID. All time values\nare UNIX time values. The profile includes the developer's email address,\nID, name, and other information. Apigee recommends using the developer\nemail in the API call. Developer ID is generated internally and is not\nguaranteed to stay the same over time. For example, Apigee could change\nthe format or length of this variable.",
+	//   "description": "Returns the developer details, including the\ndeveloper's name, email address, apps, and other information.\n\n**Note**: The response includes only the first 100 developer apps.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.get",
@@ -14237,12 +11707,12 @@ func (c *OrganizationsDevelopersGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Status to set active/inactive",
+	//       "description": "Status of the developer. Valid values are `active` or `inactive`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the Developer to be get.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -14271,48 +11741,79 @@ type OrganizationsDevelopersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all developers in an organization by email address. This
-// call does
-// not list any company developers who are a part of the
-// designated
-// organization.
+// List: Lists all developers in an organization by email address.
+//
+// By default,
+// the response does not include company developers. Set the
+// `includeCompany`
+// query parameter to `true` to include company developers.
+//
+// **Note**: A maximum of 1000 developers are returned in the response.
+// You
+// paginate the list of developers returned using the `startKey` and
+// `count`
+// query parameters.
 func (r *OrganizationsDevelopersService) List(parent string) *OrganizationsDevelopersListCall {
 	c := &OrganizationsDevelopersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Count sets the optional parameter "count": Enter the number of
-// developers you want returned in the API call. The
-// limit is 1000.
+// Count sets the optional parameter "count": Number of developers to
+// return in the API call. Use with the `startKey`
+// parameter to provide more targeted filtering.
+// The limit is 1000.
 func (c *OrganizationsDevelopersListCall) Count(count int64) *OrganizationsDevelopersListCall {
 	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 
-// Expand sets the optional parameter "expand": For Verbose response
+// Expand sets the optional parameter "expand": Specifies whether to
+// expand the results. Set to `true`
+// to expand the results. This query parameter is not valid if you
+// use
+// the `count` or `startKey` query parameters.
 func (c *OrganizationsDevelopersListCall) Expand(expand bool) *OrganizationsDevelopersListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
 	return c
 }
 
-// Ids sets the optional parameter "ids": Filtery by id, accepts list of
-// ids with comma seperation.
+// Ids sets the optional parameter "ids": List of IDs to include,
+// separated by commas.
 func (c *OrganizationsDevelopersListCall) Ids(ids string) *OrganizationsDevelopersListCall {
 	c.urlParams_.Set("ids", ids)
 	return c
 }
 
-// IncludeCompany sets the optional parameter "includeCompany": Filter
-// to incude company details in the response.
+// IncludeCompany sets the optional parameter "includeCompany": Flag
+// that specifies whether to include company details in the response.
 func (c *OrganizationsDevelopersListCall) IncludeCompany(includeCompany bool) *OrganizationsDevelopersListCall {
 	c.urlParams_.Set("includeCompany", fmt.Sprint(includeCompany))
 	return c
 }
 
-// StartKey sets the optional parameter "startKey": Lets you return a
-// list of developers starting with a specific developer
-// in the list.
+// StartKey sets the optional parameter "startKey": **Note**: Must be
+// used in conjunction with the `count` parameter.
+//
+// Email address of the developer from which to start displaying the
+// list of
+// developers. For example, if the an unfiltered list
+// returns:
+//
+// ```
+// westley@example.com
+// fezzik@example.com
+// buttercup@example
+// .com
+// ```
+//
+// and your `startKey` is `fezzik@example.com`, the list returned will
+// be
+//
+// ```
+// fezzik@example.com
+// buttercup@example.com
+// ```
 func (c *OrganizationsDevelopersListCall) StartKey(startKey string) *OrganizationsDevelopersListCall {
 	c.urlParams_.Set("startKey", startKey)
 	return c
@@ -14355,7 +11856,7 @@ func (c *OrganizationsDevelopersListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14419,7 +11920,7 @@ func (c *OrganizationsDevelopersListCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all developers in an organization by email address. This call does\nnot list any company developers who are a part of the designated\norganization.",
+	//   "description": "Lists all developers in an organization by email address.\n\nBy default,\nthe response does not include company developers. Set the `includeCompany`\nquery parameter to `true` to include company developers.\n\n**Note**: A maximum of 1000 developers are returned in the response. You\npaginate the list of developers returned using the `startKey` and `count`\nquery parameters.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.list",
@@ -14428,35 +11929,35 @@ func (c *OrganizationsDevelopersListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "count": {
-	//       "description": "Enter the number of developers you want returned in the API call. The\nlimit is 1000.",
+	//       "description": "Optional. Number of developers to return in the API call. Use with the `startKey`\nparameter to provide more targeted filtering.\nThe limit is 1000.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "expand": {
-	//       "description": "For Verbose response",
+	//       "description": "Specifies whether to expand the results. Set to `true`\nto expand the results. This query parameter is not valid if you use\nthe `count` or `startKey` query parameters.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "ids": {
-	//       "description": "Optional. Filtery by id, accepts list of ids with comma seperation.",
+	//       "description": "Optional. List of IDs to include, separated by commas.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "includeCompany": {
-	//       "description": "Optional. Filter to incude company details in the response.",
+	//       "description": "Flag that specifies whether to include company details in the response.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent organization name.\nMust be of the form `organizations/{org}`.",
+	//       "description": "Required. Name of the Apigee organization. Use the following structure in your\nrequest:\n  `organizations/{org}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startKey": {
-	//       "description": "Lets you return a list of developers starting with a specific developer\nin the list.",
+	//       "description": "**Note**: Must be used in conjunction with the `count` parameter.\n\nEmail address of the developer from which to start displaying the list of\ndevelopers. For example, if the an unfiltered list returns:\n\n```\nwestley@example.com\nfezzik@example.com\nbuttercup@example.com\n```\n\nand your `startKey` is `fezzik@example.com`, the list returned will be\n\n```\nfezzik@example.com\nbuttercup@example.com\n```",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -14482,40 +11983,29 @@ type OrganizationsDevelopersSetDeveloperStatusCall struct {
 	header_    http.Header
 }
 
-// SetDeveloperStatus: Sets a developer's status to active or inactive
-// for a specific organization
-// Run this API for each organization where you want to change the
-// developer's
-// status. By default, the status of a developer is set to active.
-// Admins with
-// proper permissions (such as Organization Administrator) can change
-// a
-// developer's status using this API call. If you set a developer's
-// status to
-// inactive, the API keys assigned to the developer's apps are no longer
+// SetDeveloperStatus: Sets the status of a developer. Valid values are
+// `active` or `inactive`.
+//
+// A developer is `active` by default. If you set a developer's status
+// to
+// `inactive`, the API keys assigned to the developer apps are no longer
 // valid
-// even though keys continue to show a status of "Approved" (in
-// strikethrough
-// text in the management UI). Inactive developers, however, can still
-// log
-// into the developer portal and create apps. The new keys that get
-// created
-// just won't work.Apigee recommends using the developer email in the
-// API
-// call. Developer ID is generated internally and is not guaranteed to
-// stay
-// the same over time. For example, Apigee could change the format or
-// length
-// of this variable. The HTTP status code for success is: 204 No
-// Content.
+// even though the API keys are set to `approved`. Inactive
+// developers
+// can still sign in to the developer portal and create apps; however,
+// any
+// new API keys generated during app creation won't work.
+//
+// If successful, the API call returns the
+// following HTTP status code: `204 No Content`
 func (r *OrganizationsDevelopersService) SetDeveloperStatus(name string) *OrganizationsDevelopersSetDeveloperStatusCall {
 	c := &OrganizationsDevelopersSetDeveloperStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Action sets the optional parameter "action": Status to set
-// active/inactive
+// Action sets the optional parameter "action": Status of the developer.
+// Valid values are `active` and `inactive`.
 func (c *OrganizationsDevelopersSetDeveloperStatusCall) Action(action string) *OrganizationsDevelopersSetDeveloperStatusCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -14548,7 +12038,7 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersSetDeveloperStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14607,7 +12097,7 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets a developer's status to active or inactive for a specific organization\nRun this API for each organization where you want to change the developer's\nstatus. By default, the status of a developer is set to active. Admins with\nproper permissions (such as Organization Administrator) can change a\ndeveloper's status using this API call. If you set a developer's status to\ninactive, the API keys assigned to the developer's apps are no longer valid\neven though keys continue to show a status of \"Approved\" (in strikethrough\ntext in the management UI). Inactive developers, however, can still log\ninto the developer portal and create apps. The new keys that get created\njust won't work.Apigee recommends using the developer email in the API\ncall. Developer ID is generated internally and is not guaranteed to stay\nthe same over time. For example, Apigee could change the format or length\nof this variable. The HTTP status code for success is: 204 No Content.",
+	//   "description": "Sets the status of a developer. Valid values are `active` or `inactive`.\n\nA developer is `active` by default. If you set a developer's status to\n`inactive`, the API keys assigned to the developer apps are no longer valid\neven though the API keys are set to `approved`. Inactive developers\ncan still sign in to the developer portal and create apps; however, any\nnew API keys generated during app creation won't work.\n\nIf successful, the API call returns the\nfollowing HTTP status code: `204 No Content`",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.setDeveloperStatus",
@@ -14616,12 +12106,12 @@ func (c *OrganizationsDevelopersSetDeveloperStatusCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Status to set active/inactive",
+	//       "description": "Status of the developer. Valid values are `active` and `inactive`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the Developer to be deleted.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -14650,35 +12140,26 @@ type OrganizationsDevelopersUpdateCall struct {
 	header_                      http.Header
 }
 
-// Update: Update an existing developer profile. To add new values or
-// update existing
-// values, submit the new or updated portion of the developer profile
-// along
-// with the rest of the developer profile, even if no values are
-// changing.
-// To delete attributes from a developer profile, submit the entire
-// profile
-// without the attributes that you want to delete. Apigee recommends
-// using
-// the developer email in the API call. Developer ID is generated
-// internally
-// and is not guaranteed to stay the same over time. For example, Apigee
-// could
-// change the format or length of this variable. the custom attribute
-// limit
-// is 18. Core Persistence Services caching minimum: OAuth access tokens
-// and
-// Key Management Service (KMS) entities (Apps, Developers, API
-// Products) are
-// cached for 180 seconds (current default). Any custom attributes
-// associated
-// with entities also get cached for at least 180 seconds after entity
-// is
-// accessed during runtime. This also means the ExpiresIn element on
-// the
-// OAuthV2 policy won't be able to expire an access token in less than
-// 180
-// seconds.
+// Update: Updates a developer.
+//
+// This API replaces the existing developer details with those
+// specified
+// in the request. Include or exclude any existing details that
+// you want to retain or delete, respectively.
+//
+// The custom attribute limit is 18.
+//
+// **Note**: OAuth access tokens and Key Management Service (KMS)
+// entities
+// (apps, developers, and API products) are cached for 180
+// seconds
+// (current default). Any custom attributes associated with these
+// entities
+// are cached for at least 180 seconds after the entity is accessed
+// at
+// runtime. Therefore, an `ExpiresIn` element on the OAuthV2
+// policy
+// won't be able to expire an access token in less than 180 seconds.
 func (r *OrganizationsDevelopersService) Update(name string, googlecloudapigeev1developer *GoogleCloudApigeeV1Developer) *OrganizationsDevelopersUpdateCall {
 	c := &OrganizationsDevelopersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14713,7 +12194,7 @@ func (c *OrganizationsDevelopersUpdateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14777,7 +12258,7 @@ func (c *OrganizationsDevelopersUpdateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Update an existing developer profile. To add new values or update existing\nvalues, submit the new or updated portion of the developer profile along\nwith the rest of the developer profile, even if no values are changing.\nTo delete attributes from a developer profile, submit the entire profile\nwithout the attributes that you want to delete. Apigee recommends using\nthe developer email in the API call. Developer ID is generated internally\nand is not guaranteed to stay the same over time. For example, Apigee could\nchange the format or length of this variable. the custom attribute limit\nis 18. Core Persistence Services caching minimum: OAuth access tokens and\nKey Management Service (KMS) entities (Apps, Developers, API Products) are\ncached for 180 seconds (current default). Any custom attributes associated\nwith entities also get cached for at least 180 seconds after entity is\naccessed during runtime. This also means the ExpiresIn element on the\nOAuthV2 policy won't be able to expire an access token in less than 180\nseconds.",
+	//   "description": "Updates a developer.\n\nThis API replaces the existing developer details with those specified\nin the request. Include or exclude any existing details that\nyou want to retain or delete, respectively.\n\nThe custom attribute limit is 18.\n\n**Note**: OAuth access tokens and Key Management Service (KMS) entities\n(apps, developers, and API products) are cached for 180 seconds\n(current default). Any custom attributes associated with these entities\nare cached for at least 180 seconds after the entity is accessed at\nruntime. Therefore, an `ExpiresIn` element on the OAuthV2 policy\nwon't be able to expire an access token in less than 180 seconds.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.developers.update",
@@ -14786,7 +12267,7 @@ func (c *OrganizationsDevelopersUpdateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Developer to be updated.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -14818,13 +12299,9 @@ type OrganizationsDevelopersAppsAttributesCall struct {
 	header_                       http.Header
 }
 
-// Attributes: Updates or creates app attributes. This API replaces the
-// current list of
-// attributes with the attributes specified in the request body. This
-// lets you
-// update existing attributes, add new attributes, or delete
-// existing
-// attributes by omitting them from the request body.
+// Attributes: Updates attributes for a developer app. This API replaces
+// the
+// current attributes with those specified in the request.
 func (r *OrganizationsDevelopersAppsService) Attributes(name string, googlecloudapigeev1attributes *GoogleCloudApigeeV1Attributes) *OrganizationsDevelopersAppsAttributesCall {
 	c := &OrganizationsDevelopersAppsAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14859,7 +12336,7 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14923,7 +12400,7 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates or creates app attributes. This API replaces the current list of\nattributes with the attributes specified in the request body. This lets you\nupdate existing attributes, add new attributes, or delete existing\nattributes by omitting them from the request body.",
+	//   "description": "Updates attributes for a developer app. This API replaces the\ncurrent attributes with those specified in the request.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/attributes",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.attributes",
@@ -14932,7 +12409,7 @@ func (c *OrganizationsDevelopersAppsAttributesCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App Attribute name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -14964,21 +12441,18 @@ type OrganizationsDevelopersAppsCreateCall struct {
 	header_                         http.Header
 }
 
-// Create: Creates an app associated with a developer, associates the
-// app with an API
-// product, and auto-generates an API key for the app to use in calls to
+// Create: Creates an app associated with a developer. This API
+// associates the
+// developer app with the specified API
+// product and auto-generates an API key for the app to use in calls to
 // API
-// proxies inside the API product. The name is the unique ID of the app
-// that
-// you can use in management API calls. The DisplayName (set with
+// proxies inside that API product.
+//
+// The `name` is the unique ID of the app
+// that you can use in API calls. The `DisplayName` (set as
 // an
-// attribute) is what appears in the management UI. If you don't provide
-// a
-// DisplayName, the name is used. The keyExpiresIn property sets
-// the
-// expiration on the API key. If you don't set this, or set the value to
-// -1,
-// they API key never expires.
+// attribute) appears in the UI. If you don't set the
+// `DisplayName` attribute, the `name` appears in the UI.
 func (r *OrganizationsDevelopersAppsService) Create(parent string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsCreateCall {
 	c := &OrganizationsDevelopersAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15013,7 +12487,7 @@ func (c *OrganizationsDevelopersAppsCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15077,7 +12551,7 @@ func (c *OrganizationsDevelopersAppsCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an app associated with a developer, associates the app with an API\nproduct, and auto-generates an API key for the app to use in calls to API\nproxies inside the API product. The name is the unique ID of the app that\nyou can use in management API calls. The DisplayName (set with an\nattribute) is what appears in the management UI. If you don't provide a\nDisplayName, the name is used. The keyExpiresIn property sets the\nexpiration on the API key. If you don't set this, or set the value to -1,\nthey API key never expires.",
+	//   "description": "Creates an app associated with a developer. This API associates the\ndeveloper app with the specified API\nproduct and auto-generates an API key for the app to use in calls to API\nproxies inside that API product.\n\nThe `name` is the unique ID of the app\nthat you can use in API calls. The `DisplayName` (set as an\nattribute) appears in the UI. If you don't set the\n`DisplayName` attribute, the `name` appears in the UI.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.create",
@@ -15086,7 +12560,7 @@ func (c *OrganizationsDevelopersAppsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent organization name under which the Developer App will\nbe created. Must be of the form:\n   `organizations/{organization_id}/developers/{developer_id}`",
+	//       "description": "Required. Name of the developer. Use the following structure in your request:\n   `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -15117,9 +12591,14 @@ type OrganizationsDevelopersAppsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a developer app. This API returns the developer app
-// that was
-// deleted.
+// Delete: Deletes a developer app.
+//
+// **Note**: The delete operation is asynchronous. The developer app
+// is
+// deleted immediately,
+// but its associated resources, such as app
+// keys or access tokens, may take anywhere from a few seconds to a
+// few minutes to be deleted.
 func (r *OrganizationsDevelopersAppsService) Delete(name string) *OrganizationsDevelopersAppsDeleteCall {
 	c := &OrganizationsDevelopersAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15153,7 +12632,7 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15212,7 +12691,7 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a developer app. This API returns the developer app that was\ndeleted.",
+	//   "description": "Deletes a developer app.\n\n**Note**: The delete operation is asynchronous. The developer app is\ndeleted immediately,\nbut its associated resources, such as app\nkeys or access tokens, may take anywhere from a few seconds to a\nfew minutes to be deleted.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.apps.delete",
@@ -15221,7 +12700,7 @@ func (c *OrganizationsDevelopersAppsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -15250,29 +12729,57 @@ type OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall st
 	header_                         http.Header
 }
 
-// GenerateKeyPairOrUpdateDeveloperAppStatus: (2) Create new developer
-// KeyPairs
-// Generates a new consumer key and consumer secret for the named
-// developer
-// app. Rather than replacing an existing key, this API call generates a
-// new
-// key. For example, if you're using API key rotation, you can generate
-// new
-// keys whose expiration overlaps keys that will be out of rotation when
-// they
-// expire. You might also generate a new key/secret if the security of
+// GenerateKeyPairOrUpdateDeveloperAppStatus: Manages access to a
+// developer app by enabling you to:
+//
+// * Approve or revoke a developer app
+// * Generate a new consumer key and secret for a developer app
+//
+// To approve or revoke a developer app, set the `action` query
+// parameter to
+// `approved` or `revoked`, respectively, and the
+// `Content-Type` header to `application/octet-stream`. If a developer
+// app is
+// revoked, none of its API keys are valid for API calls even though
+// the keys are still `approved`. If successful, the API call returns
 // the
-// original key/secret is compromised. After using this API, multiple
-// key
-// pairs will be associated with a single app. Each key pair has
-// an
-// independent status (revoked or approved) and an independent expiry
-// time.
-// Any non-expired, approved key can be used in an API call. The
-// keyExpiresIn
-// value is in milliseconds. A value of -1 means the key/secret pair
-// never
+// following HTTP status code: `204 No Content`
+//
+// To generate a new consumer key and secret for a developer
+// app, pass the new key/secret details. Rather than
+// replace an existing key, this API generates a new
+// key. In this case, multiple key
+// pairs may be associated with a single developer app. Each key pair
+// has an
+// independent status (`approved` or `revoked`) and expiration time.
+// Any approved, non-expired key can be used in an API call.
+//
+// For example, if you're using API key rotation, you can generate
+// new
+// keys with expiration times that overlap keys that are going to
 // expire.
+// You might also generate a new consumer key/secret if the security of
+// the
+// original key/secret is compromised.
+//
+// The `keyExpiresIn` property defines the
+// expiration time for the API key in milliseconds. If you don't
+// set
+// this property or set it to `-1`, the API key never
+// expires.
+//
+// **Notes**:
+//
+// * When generating a new key/secret, this API replaces the
+// existing attributes, notes, and callback URLs with those specified in
+// the
+// request. Include or exclude any existing information that you want
+// to
+// retain or delete, respectively.
+// * To migrate existing consumer keys and secrets to hybrid from
+// another
+// system, see the
+// CreateDeveloperAppKey API.
 func (r *OrganizationsDevelopersAppsService) GenerateKeyPairOrUpdateDeveloperAppStatus(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall {
 	c := &OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15280,8 +12787,8 @@ func (r *OrganizationsDevelopersAppsService) GenerateKeyPairOrUpdateDeveloperApp
 	return c
 }
 
-// Action sets the optional parameter "action": Set the action to
-// approve or revoke.
+// Action sets the optional parameter "action": Action. Valid values are
+// `approve` or `revoke`.
 func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall) Action(action string) *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -15314,7 +12821,7 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 
 func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15378,7 +12885,7 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 	}
 	return ret, nil
 	// {
-	//   "description": "(2) Create new developer KeyPairs\nGenerates a new consumer key and consumer secret for the named developer\napp. Rather than replacing an existing key, this API call generates a new\nkey. For example, if you're using API key rotation, you can generate new\nkeys whose expiration overlaps keys that will be out of rotation when they\nexpire. You might also generate a new key/secret if the security of the\noriginal key/secret is compromised. After using this API, multiple key\npairs will be associated with a single app. Each key pair has an\nindependent status (revoked or approved) and an independent expiry time.\nAny non-expired, approved key can be used in an API call. The keyExpiresIn\nvalue is in milliseconds. A value of -1 means the key/secret pair never\nexpire.",
+	//   "description": "Manages access to a developer app by enabling you to:\n\n* Approve or revoke a developer app\n* Generate a new consumer key and secret for a developer app\n\nTo approve or revoke a developer app, set the `action` query parameter to\n`approved` or `revoked`, respectively, and the\n`Content-Type` header to `application/octet-stream`. If a developer app is\nrevoked, none of its API keys are valid for API calls even though\nthe keys are still `approved`. If successful, the API call returns the\nfollowing HTTP status code: `204 No Content`\n\nTo generate a new consumer key and secret for a developer\napp, pass the new key/secret details. Rather than\nreplace an existing key, this API generates a new\nkey. In this case, multiple key\npairs may be associated with a single developer app. Each key pair has an\nindependent status (`approved` or `revoked`) and expiration time.\nAny approved, non-expired key can be used in an API call.\n\nFor example, if you're using API key rotation, you can generate new\nkeys with expiration times that overlap keys that are going to expire.\nYou might also generate a new consumer key/secret if the security of the\noriginal key/secret is compromised.\n\nThe `keyExpiresIn` property defines the\nexpiration time for the API key in milliseconds. If you don't set\nthis property or set it to `-1`, the API key never expires.\n\n**Notes**:\n\n* When generating a new key/secret, this API replaces the\nexisting attributes, notes, and callback URLs with those specified in the\nrequest. Include or exclude any existing information that you want to\nretain or delete, respectively.\n* To migrate existing consumer keys and secrets to hybrid from another\nsystem, see the\nCreateDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.generateKeyPairOrUpdateDeveloperAppStatus",
@@ -15387,12 +12894,12 @@ func (c *OrganizationsDevelopersAppsGenerateKeyPairOrUpdateDeveloperAppStatusCal
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Set the action to approve or revoke.",
+	//       "description": "Action. Valid values are `approve` or `revoke`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Developer App name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -15424,24 +12931,33 @@ type OrganizationsDevelopersAppsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the profile of a specific developer app. All times in the
-// response are
-// UNIX times. Note that the response contains a top-level attribute
-// named
-// accessType that is no longer used by Apigee.
+// Get: Returns the details for a developer app.
 func (r *OrganizationsDevelopersAppsService) Get(name string) *OrganizationsDevelopersAppsGetCall {
 	c := &OrganizationsDevelopersAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Entity sets the optional parameter "entity": Entity.
+// Entity sets the optional parameter "entity": **Note**: Must be used
+// in conjunction with the `query` parameter.
+//
+// Set to `apiresources`
+// to return the number of API resources
+// that have been approved for access by a developer app in
+// the
+// specified Apigee organization.
 func (c *OrganizationsDevelopersAppsGetCall) Entity(entity string) *OrganizationsDevelopersAppsGetCall {
 	c.urlParams_.Set("entity", entity)
 	return c
 }
 
-// Query sets the optional parameter "query": Query.
+// Query sets the optional parameter "query": **Note**: Must be used in
+// conjunction with the `entity` parameter.
+//
+// Set to `count` to return the number of API resources
+// that have been approved for access by a developer app in
+// the
+// specified Apigee organization.
 func (c *OrganizationsDevelopersAppsGetCall) Query(query string) *OrganizationsDevelopersAppsGetCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -15484,7 +13000,7 @@ func (c *OrganizationsDevelopersAppsGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15546,7 +13062,7 @@ func (c *OrganizationsDevelopersAppsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the profile of a specific developer app. All times in the response are\nUNIX times. Note that the response contains a top-level attribute named\naccessType that is no longer used by Apigee.",
+	//   "description": "Returns the details for a developer app.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.apps.get",
@@ -15555,19 +13071,19 @@ func (c *OrganizationsDevelopersAppsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "entity": {
-	//       "description": "Entity.",
+	//       "description": "**Note**: Must be used in conjunction with the `query` parameter.\n\nSet to `apiresources`\nto return the number of API resources\nthat have been approved for access by a developer app in the\nspecified Apigee organization.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Developer App name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Query.",
+	//       "description": "**Note**: Must be used in conjunction with the `entity` parameter.\n\nSet to `count` to return the number of API resources\nthat have been approved for access by a developer app in the\nspecified Apigee organization.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15594,44 +13110,60 @@ type OrganizationsDevelopersAppsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all apps created by a developer in an organization, and
-// optionally
-// provides an expanded view of the apps. All time values in the
-// response are
-// UNIX times. You can specify either the developer's email address or
-// Edge
-// ID.
+// List: Lists all apps created by a developer in an Apigee
+// organization.
+// Optionally, you can request an expanded view of the developer
+// apps.
+//
+// A maximum of 100 developer apps are returned per API call. You can
+// paginate
+// the list of deveoper apps returned using the `startKey` and `count`
+// query
+// parameters.
 func (r *OrganizationsDevelopersAppsService) List(parent string) *OrganizationsDevelopersAppsListCall {
 	c := &OrganizationsDevelopersAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Count sets the optional parameter "count": Limits the list to the
-// number you specify.
+// Count sets the optional parameter "count": Number of developer apps
+// to return in the API call. Use with the `startKey`
+// parameter to provide more targeted filtering.
+// The limit is 1000.
 func (c *OrganizationsDevelopersAppsListCall) Count(count int64) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 
-// Expand sets the optional parameter "expand": Set to true to expand
-// the results. This query parameter does not
-// work if you use the count or startKey query parameters.
+// Expand sets the optional parameter "expand": Specifies whether to
+// expand the results. Set to `true`
+// to expand the results. This query parameter is not valid if you
+// use
+// the `count` or `startKey` query parameters.
 func (c *OrganizationsDevelopersAppsListCall) Expand(expand bool) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("expand", fmt.Sprint(expand))
 	return c
 }
 
-// ShallowExpand sets the optional parameter "shallowExpand": Set to
-// true to expand the results in shallow.
+// ShallowExpand sets the optional parameter "shallowExpand": Specifies
+// whether to expand the results in shallow mode.
+// Set to `true` to expand the results in shallow mode.
 func (c *OrganizationsDevelopersAppsListCall) ShallowExpand(shallowExpand bool) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("shallowExpand", fmt.Sprint(shallowExpand))
 	return c
 }
 
-// StartKey sets the optional parameter "startKey": To filter the keys
-// that are returned, enter the name of a company app that
-// the list will start with.
+// StartKey sets the optional parameter "startKey": **Note**: Must be
+// used in conjunction with the `count` parameter.
+//
+// Name of the developer app from which to start displaying the list
+// of
+// developer apps. For example, if you're returning 50 developer apps
+// at
+// a time (using the `count` query parameter), you can view developer
+// apps
+// 50-99 by entering the name of the 50th developer app.
+// The developer app name is case sensitive.
 func (c *OrganizationsDevelopersAppsListCall) StartKey(startKey string) *OrganizationsDevelopersAppsListCall {
 	c.urlParams_.Set("startKey", startKey)
 	return c
@@ -15674,7 +13206,7 @@ func (c *OrganizationsDevelopersAppsListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15738,7 +13270,7 @@ func (c *OrganizationsDevelopersAppsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all apps created by a developer in an organization, and optionally\nprovides an expanded view of the apps. All time values in the response are\nUNIX times. You can specify either the developer's email address or Edge\nID.",
+	//   "description": "Lists all apps created by a developer in an Apigee organization.\nOptionally, you can request an expanded view of the developer apps.\n\nA maximum of 100 developer apps are returned per API call. You can paginate\nthe list of deveoper apps returned using the `startKey` and `count` query\nparameters.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.apps.list",
@@ -15747,30 +13279,30 @@ func (c *OrganizationsDevelopersAppsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "count": {
-	//       "description": "Limits the list to the number you specify.",
+	//       "description": "Number of developer apps to return in the API call. Use with the `startKey`\nparameter to provide more targeted filtering.\nThe limit is 1000.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "expand": {
-	//       "description": "Optional. Set to true to expand the results. This query parameter does not\nwork if you use the count or startKey query parameters.",
+	//       "description": "Optional. Specifies whether to expand the results. Set to `true`\nto expand the results. This query parameter is not valid if you use\nthe `count` or `startKey` query parameters.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent organization name. Must be of the form:\n  `organizations/{organization_id}/developers/{developer_id}`",
+	//       "description": "Required. Name of the developer. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "shallowExpand": {
-	//       "description": "Optional. Set to true to expand the results in shallow.",
+	//       "description": "Optional. Specifies whether to expand the results in shallow mode.\nSet to `true` to expand the results in shallow mode.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "startKey": {
-	//       "description": "To filter the keys that are returned, enter the name of a company app that\nthe list will start with.",
+	//       "description": "**Note**: Must be used in conjunction with the `count` parameter.\n\nName of the developer app from which to start displaying the list of\ndeveloper apps. For example, if you're returning 50 developer apps at\na time (using the `count` query parameter), you can view developer apps\n50-99 by entering the name of the 50th developer app.\nThe developer app name is case sensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15797,23 +13329,31 @@ type OrganizationsDevelopersAppsUpdateCall struct {
 	header_                         http.Header
 }
 
-// Update: Updates a developer app. You can also add an app to an API
-// product with
-// this call, which automatically generates an API key for the app to
-// use when
-// calling APIs in the product. (If you want to use an existing API key
-// for
-// another API product as well, see Add API Product to Key.) Be sure
-// to
-// include all existing attributes in the request body. Note that you
+// Update: Updates the details for a developer app. In addition, you
+// can
+// add an API product to a developer app and automatically generate
+// an API key for the app to use when calling APIs in the API
+// product.
+//
+// If you want to use an existing API key for the API product,
+// add the API product to the API key using
+// the
+// UpdateDeveloperAppKey
+// API.
+//
+// Using this API, you cannot update the following:
+//
+// * App name as it is the primary key used to identify the app and
 // cannot
-// update the scopes associated with the app by using this API. Instead,
-// use
-// "Update the Scope of an App". The app name is the primary key used by
-// Edge
-// to identify the app. Therefore, you cannot change the app name
-// after
-// creating it.
+//   be changed.
+// * Scopes associated with the app. Instead, use the
+//   ReplaceDeveloperAppKey API.
+//
+// This API replaces the
+// existing attributes with those specified in the request.
+// Include or exclude any existing attributes that you want to retain
+// or
+// delete, respectively.
 func (r *OrganizationsDevelopersAppsService) Update(name string, googlecloudapigeev1developerapp *GoogleCloudApigeeV1DeveloperApp) *OrganizationsDevelopersAppsUpdateCall {
 	c := &OrganizationsDevelopersAppsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15848,7 +13388,7 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15912,7 +13452,7 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a developer app. You can also add an app to an API product with\nthis call, which automatically generates an API key for the app to use when\ncalling APIs in the product. (If you want to use an existing API key for\nanother API product as well, see Add API Product to Key.) Be sure to\ninclude all existing attributes in the request body. Note that you cannot\nupdate the scopes associated with the app by using this API. Instead, use\n\"Update the Scope of an App\". The app name is the primary key used by Edge\nto identify the app. Therefore, you cannot change the app name after\ncreating it.",
+	//   "description": "Updates the details for a developer app. In addition, you can\nadd an API product to a developer app and automatically generate\nan API key for the app to use when calling APIs in the API product.\n\nIf you want to use an existing API key for the API product,\nadd the API product to the API key using the\nUpdateDeveloperAppKey\nAPI.\n\nUsing this API, you cannot update the following:\n\n* App name as it is the primary key used to identify the app and cannot\n  be changed.\n* Scopes associated with the app. Instead, use the\n  ReplaceDeveloperAppKey API.\n\nThis API replaces the\nexisting attributes with those specified in the request.\nInclude or exclude any existing attributes that you want to retain or\ndelete, respectively.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.developers.apps.update",
@@ -15921,7 +13461,7 @@ func (c *OrganizationsDevelopersAppsUpdateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -15952,7 +13492,7 @@ type OrganizationsDevelopersAppsAttributesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an app attribute.
+// Delete: Deletes a developer app attribute.
 func (r *OrganizationsDevelopersAppsAttributesService) Delete(name string) *OrganizationsDevelopersAppsAttributesDeleteCall {
 	c := &OrganizationsDevelopersAppsAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15986,7 +13526,7 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16045,7 +13585,7 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an app attribute.",
+	//   "description": "Deletes a developer app attribute.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/attributes/{attributesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.apps.attributes.delete",
@@ -16054,7 +13594,7 @@ func (c *OrganizationsDevelopersAppsAttributesDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App Attribute name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}/attributes/{attribute_name}`",
+	//       "description": "Required. Name of the developer app attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -16083,7 +13623,7 @@ type OrganizationsDevelopersAppsAttributesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the value of an app attribute.
+// Get: Returns a developer app attribute.
 func (r *OrganizationsDevelopersAppsAttributesService) Get(name string) *OrganizationsDevelopersAppsAttributesGetCall {
 	c := &OrganizationsDevelopersAppsAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16127,7 +13667,7 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16189,7 +13729,7 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the value of an app attribute.",
+	//   "description": "Returns a developer app attribute.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/attributes/{attributesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.apps.attributes.get",
@@ -16198,7 +13738,7 @@ func (c *OrganizationsDevelopersAppsAttributesGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App Attribute name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}/attributes/{attribute_name}`",
+	//       "description": "Required. Name of the developer app attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -16227,7 +13767,7 @@ type OrganizationsDevelopersAppsAttributesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of all app attributes.
+// List: Returns a list of all developer app attributes.
 func (r *OrganizationsDevelopersAppsAttributesService) List(parent string) *OrganizationsDevelopersAppsAttributesListCall {
 	c := &OrganizationsDevelopersAppsAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16271,7 +13811,7 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16333,7 +13873,7 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of all app attributes.",
+	//   "description": "Returns a list of all developer app attributes.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/attributes",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.apps.attributes.list",
@@ -16342,7 +13882,7 @@ func (c *OrganizationsDevelopersAppsAttributesListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent organization name. Must be of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}`",
+	//       "description": "Required. Name of the developer app. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -16371,7 +13911,20 @@ type OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall struct
 	header_                      http.Header
 }
 
-// UpdateDeveloperAppAttribute: Updates an app attribute
+// UpdateDeveloperAppAttribute: Updates a developer app
+// attribute.
+//
+// **Note**: OAuth access tokens and Key Management Service (KMS)
+// entities
+// (apps, developers, and API products) are cached for 180
+// seconds
+// (current default). Any custom attributes associated with these
+// entities
+// are cached for at least 180 seconds after the entity is accessed
+// at
+// runtime. Therefore, an `ExpiresIn` element on the OAuthV2
+// policy
+// won't be able to expire an access token in less than 180 seconds.
 func (r *OrganizationsDevelopersAppsAttributesService) UpdateDeveloperAppAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall {
 	c := &OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16406,7 +13959,7 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) H
 
 func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16470,7 +14023,7 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an app attribute",
+	//   "description": "Updates a developer app attribute.\n\n**Note**: OAuth access tokens and Key Management Service (KMS) entities\n(apps, developers, and API products) are cached for 180 seconds\n(current default). Any custom attributes associated with these entities\nare cached for at least 180 seconds after the entity is accessed at\nruntime. Therefore, an `ExpiresIn` element on the OAuthV2 policy\nwon't be able to expire an access token in less than 180 seconds.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/attributes/{attributesId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.attributes.updateDeveloperAppAttribute",
@@ -16479,7 +14032,7 @@ func (c *OrganizationsDevelopersAppsAttributesUpdateDeveloperAppAttributeCall) D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Developer App Attribute name of the form:\n  `organizations/{organization_id}/developers/{developer_id}/apps/{app_name}/attributes/{attribute_name}`",
+	//       "description": "Required. Name of the developer app attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -16513,24 +14066,26 @@ type OrganizationsDevelopersAppsKeysCreateCall struct {
 
 // Create: Creates a custom consumer key and secret for a developer app.
 // This is
-// particularly useful if you want to migrate existing consumer
-// keys/secrets
-// to Edge from another system.
-// Be aware of the following size limits on API keys. By staying within
-// these
-// limits, you help avoid service disruptions (2KB each for Consumer Key
+// particularly useful if you want to migrate existing consumer keys
 // and
-// Secret). After creating the consumer key and secret, associate the
-// key with
-// an API product using the API
-// UpdateDeveloperAppKey
-// If a consumer key and secret already exist, you can either keep them
-// or
-// delete them with this API
-// DeleteKeyFromDeveloperApp
+// secrets to Apigee hybrid from another system.
+//
 // Consumer keys and secrets can contain letters, numbers, underscores,
 // and
 // hyphens. No other special characters are allowed.
+//
+// **Note**: To avoid service disruptions, a consumer key and
+// secret
+// should not exceed 2 KBs each.
+//
+// After creating the consumer key and secret, associate the key with
+// an API product using the
+// UpdateDeveloperAppKey API.
+//
+// If a consumer key and secret already exist, you can keep them
+// or
+// delete them using the
+// DeleteDeveloperAppKey API.
 func (r *OrganizationsDevelopersAppsKeysService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16565,7 +14120,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16630,7 +14185,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is\nparticularly useful if you want to migrate existing consumer keys/secrets\nto Edge from another system.\nBe aware of the following size limits on API keys. By staying within these\nlimits, you help avoid service disruptions (2KB each for Consumer Key and\nSecret). After creating the consumer key and secret, associate the key with\nan API product using the API\nUpdateDeveloperAppKey\nIf a consumer key and secret already exist, you can either keep them or\ndelete them with this API\nDeleteKeyFromDeveloperApp\nConsumer keys and secrets can contain letters, numbers, underscores, and\nhyphens. No other special characters are allowed.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is\nparticularly useful if you want to migrate existing consumer keys and\nsecrets to Apigee hybrid from another system.\n\nConsumer keys and secrets can contain letters, numbers, underscores, and\nhyphens. No other special characters are allowed.\n\n**Note**: To avoid service disruptions, a consumer key and secret\nshould not exceed 2 KBs each.\n\nAfter creating the consumer key and secret, associate the key with\nan API product using the\nUpdateDeveloperAppKey API.\n\nIf a consumer key and secret already exist, you can keep them or\ndelete them using the\nDeleteDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create",
@@ -16639,7 +14194,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent of a developer app key in the form\n`organizations/{org}/developers/{developer}/apps`",
+	//       "description": "Parent of the developer app key. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/apps`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -16670,15 +14225,18 @@ type OrganizationsDevelopersAppsKeysDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a consumer key that belongs to an app, and removes
-// all API products
-// associated with the app. Once deleted, the consumer key cannot be
-// used to
-// access any APIs.
-// Note: After you delete a consumer key, you may want to:
-// 1. Create a new consumer key and secret for the developer app,
-// and
-// subsequently add an API product to the key.
+// Delete: Deletes an app's consumer key and removes all API
+// products
+// associated with the app. After the consumer key is deleted,
+// it cannot be used to access any APIs.
+//
+// **Note**: After you delete a consumer key, you may want to:
+// 1. Create a new consumer key and secret for the developer app using
+// the
+// CreateDeveloperAppKey API, and
+// subsequently add an API product to the key using
+// the
+// UpdateDeveloperAppKey API.
 // 2. Delete the developer app, if it is no longer required.
 func (r *OrganizationsDevelopersAppsKeysService) Delete(name string) *OrganizationsDevelopersAppsKeysDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16713,7 +14271,7 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16773,7 +14331,7 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a consumer key that belongs to an app, and removes all API products\nassociated with the app. Once deleted, the consumer key cannot be used to\naccess any APIs.\nNote: After you delete a consumer key, you may want to:\n1. Create a new consumer key and secret for the developer app, and\nsubsequently add an API product to the key.\n2. Delete the developer app, if it is no longer required.",
+	//   "description": "Deletes an app's consumer key and removes all API products\nassociated with the app. After the consumer key is deleted,\nit cannot be used to access any APIs.\n\n**Note**: After you delete a consumer key, you may want to:\n1. Create a new consumer key and secret for the developer app using the\nCreateDeveloperAppKey API, and\nsubsequently add an API product to the key using the\nUpdateDeveloperAppKey API.\n2. Delete the developer app, if it is no longer required.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.apps.keys.delete",
@@ -16782,7 +14340,7 @@ func (c *OrganizationsDevelopersAppsKeysDeleteCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of a developer app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}`",
+	//       "description": "Name of the developer app key. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -16813,9 +14371,7 @@ type OrganizationsDevelopersAppsKeysGetCall struct {
 
 // Get: Returns details for a consumer key for a developer app,
 // including the key
-// and secret value, associated API products, and other information. All
-// times
-// are displayed as UNIX times.
+// and secret value, associated API products, and other information.
 func (r *OrganizationsDevelopersAppsKeysService) Get(name string) *OrganizationsDevelopersAppsKeysGetCall {
 	c := &OrganizationsDevelopersAppsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16859,7 +14415,7 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16922,7 +14478,7 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns details for a consumer key for a developer app, including the key\nand secret value, associated API products, and other information. All times\nare displayed as UNIX times.",
+	//   "description": "Returns details for a consumer key for a developer app, including the key\nand secret value, associated API products, and other information.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.apps.keys.get",
@@ -16931,7 +14487,7 @@ func (c *OrganizationsDevelopersAppsKeysGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of a developer app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}`",
+	//       "description": "Name of the developer app key. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -16960,9 +14516,17 @@ type OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall struct {
 	header_                            http.Header
 }
 
-// ReplaceDeveloperAppKey: Updates the scope of an app. Note that this
-// API sets the scopes element
-// under the apiProducts element in the attributes of the app.
+// ReplaceDeveloperAppKey: Updates the scope of an app.
+//
+// This API replaces the
+// existing scopes with those specified in the request.
+// Include or exclude any existing scopes that you want to retain
+// or
+// delete, respectively. The specified scopes must already
+// be defined for the API products associated with the app.
+//
+// This API sets the `scopes` element
+// under the `apiProducts` element in the attributes of the app.
 func (r *OrganizationsDevelopersAppsKeysService) ReplaceDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16997,7 +14561,7 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Header() htt
 
 func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17062,7 +14626,7 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the scope of an app. Note that this API sets the scopes element\nunder the apiProducts element in the attributes of the app.",
+	//   "description": "Updates the scope of an app.\n\nThis API replaces the\nexisting scopes with those specified in the request.\nInclude or exclude any existing scopes that you want to retain or\ndelete, respectively. The specified scopes must already\nbe defined for the API products associated with the app.\n\nThis API sets the `scopes` element\nunder the `apiProducts` element in the attributes of the app.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.developers.apps.keys.replaceDeveloperAppKey",
@@ -17071,7 +14635,7 @@ func (c *OrganizationsDevelopersAppsKeysReplaceDeveloperAppKeyCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of a company app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}`",
+	//       "description": "Name of the developer app key. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -17105,18 +14669,17 @@ type OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall struct {
 
 // UpdateDeveloperAppKey: Adds an API product to a developer app key,
 // enabling the app that holds
-// the key to access the API resources bundled in the API product. You
-// can
-// also use this API to add attributes to the key.
-// Use this API to add a new API product to an existing app. After
-// adding the
-// API product, you can use the same key to access all API
-// products
-// associated with the app. You must include all existing
-// attributes,
-// whether or not you are updating them, as well as any new attributes
-// that
-// you are adding.
+// the key to access the API resources bundled in the API product.
+//
+// In addition, you can add
+// attributes to a developer app key. This API replaces the
+// existing attributes with those specified in the request.
+// Include or exclude any existing attributes that you want to retain
+// or
+// delete, respectively.
+//
+// You can use the same key to access all API products
+// associated with the app.
 func (r *OrganizationsDevelopersAppsKeysService) UpdateDeveloperAppKey(name string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall {
 	c := &OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17124,8 +14687,9 @@ func (r *OrganizationsDevelopersAppsKeysService) UpdateDeveloperAppKey(name stri
 	return c
 }
 
-// Action sets the optional parameter "action": Set the action to
-// approve or revoke.
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to
+// `approve` or `revoke`, respectively.
 func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Action(action string) *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -17158,7 +14722,7 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Header() http
 
 func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17223,7 +14787,7 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds an API product to a developer app key, enabling the app that holds\nthe key to access the API resources bundled in the API product. You can\nalso use this API to add attributes to the key.\nUse this API to add a new API product to an existing app. After adding the\nAPI product, you can use the same key to access all API products\nassociated with the app. You must include all existing attributes,\nwhether or not you are updating them, as well as any new attributes that\nyou are adding.",
+	//   "description": "Adds an API product to a developer app key, enabling the app that holds\nthe key to access the API resources bundled in the API product.\n\nIn addition, you can add\nattributes to a developer app key. This API replaces the\nexisting attributes with those specified in the request.\nInclude or exclude any existing attributes that you want to retain or\ndelete, respectively.\n\nYou can use the same key to access all API products\nassociated with the app.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.updateDeveloperAppKey",
@@ -17232,12 +14796,12 @@ func (c *OrganizationsDevelopersAppsKeysUpdateDeveloperAppKeyCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Set the action to approve or revoke.",
+	//       "description": "Approve or revoke the consumer key by setting this value to\n`approve` or `revoke`, respectively.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Resource name of a company app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}`",
+	//       "description": "Name of the developer app key. Use the following structure in your request:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+$",
 	//       "required": true,
@@ -17268,13 +14832,14 @@ type OrganizationsDevelopersAppsKeysApiproductsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes an API product from an app's consumer key, and
-// thereby renders the
-// app unable to access the API resources defined in that API
-// product.
-// Note : The consumer key itself still exists after this call. Only
+// Delete: Removes an API product from an app's consumer key. After the
+// API product is
+// removed, the app cannot access the API resources defined in
+// that API product.
+//
+// **Note**: The consumer key is not removed, only its association with
 // the
-// association of the key with the API product is removed.
+// API product.
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) Delete(name string) *OrganizationsDevelopersAppsKeysApiproductsDeleteCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17308,7 +14873,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Header() http.Hea
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17368,7 +14933,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an API product from an app's consumer key, and thereby renders the\napp unable to access the API resources defined in that API product.\nNote : The consumer key itself still exists after this call. Only the\nassociation of the key with the API product is removed.",
+	//   "description": "Removes an API product from an app's consumer key. After the API product is\nremoved, the app cannot access the API resources defined in\nthat API product.\n\n**Note**: The consumer key is not removed, only its association with the\nAPI product.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.apps.keys.apiproducts.delete",
@@ -17377,7 +14942,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsDeleteCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of a api product in a developer app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "description": "Name of the API product in the developer app key in the following\nformat:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
 	//       "required": true,
@@ -17405,16 +14970,26 @@ type OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCa
 	header_    http.Header
 }
 
-// UpdateDeveloperAppKeyApiProduct: Approve or Revoke the key for a
-// given api product.
+// UpdateDeveloperAppKeyApiProduct: Approve or revoke an app's consumer
+// key. After a consumer key is approved,
+// the app can use it to access APIs.
+//
+// A consumer key that is revoked or pending cannot be used to access an
+// API.
+// Any access tokens associated with a revoked consumer key will
+// remain
+// active. However, Apigee hybrid checks the status of the consumer key
+// and
+// if set to `revoked` will not allow access to the API.
 func (r *OrganizationsDevelopersAppsKeysApiproductsService) UpdateDeveloperAppKeyApiProduct(name string) *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall {
 	c := &OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Action sets the optional parameter "action": Set the action to
-// approve or revoke.
+// Action sets the optional parameter "action": Approve or revoke the
+// consumer key by setting this value to
+// `approve` or `revoke`, respectively.
 func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall) Action(action string) *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -17447,7 +15022,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 
 func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17506,7 +15081,7 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 	}
 	return ret, nil
 	// {
-	//   "description": "Approve or Revoke the key for a given api product.",
+	//   "description": "Approve or revoke an app's consumer key. After a consumer key is approved,\nthe app can use it to access APIs.\n\nA consumer key that is revoked or pending cannot be used to access an API.\nAny access tokens associated with a revoked consumer key will remain\nactive. However, Apigee hybrid checks the status of the consumer key and\nif set to `revoked` will not allow access to the API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.apiproducts.updateDeveloperAppKeyApiProduct",
@@ -17515,12 +15090,12 @@ func (c *OrganizationsDevelopersAppsKeysApiproductsUpdateDeveloperAppKeyApiProdu
 	//   ],
 	//   "parameters": {
 	//     "action": {
-	//       "description": "Set the action to approve or revoke.",
+	//       "description": "Approve or revoke the consumer key by setting this value to\n`approve` or `revoke`, respectively.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Resource name of a api product in a developer app key\n`organizations/{org}/developers/{developer}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
+	//       "description": "Name of the API product in the developer app key in the following\nformat:\n  `organizations/{org}/developers/{developer_email}/apps/{app}/keys/{key}/apiproducts/{apiproduct}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+/keys/[^/]+/apiproducts/[^/]+$",
 	//       "required": true,
@@ -17551,24 +15126,26 @@ type OrganizationsDevelopersAppsKeysCreateCreateCall struct {
 
 // Create: Creates a custom consumer key and secret for a developer app.
 // This is
-// particularly useful if you want to migrate existing consumer
-// keys/secrets
-// to Edge from another system.
-// Be aware of the following size limits on API keys. By staying within
-// these
-// limits, you help avoid service disruptions (2KB each for Consumer Key
+// particularly useful if you want to migrate existing consumer keys
 // and
-// Secret). After creating the consumer key and secret, associate the
-// key with
-// an API product using the API
-// UpdateDeveloperAppKey
-// If a consumer key and secret already exist, you can either keep them
-// or
-// delete them with this API
-// DeleteKeyFromDeveloperApp
+// secrets to Apigee hybrid from another system.
+//
 // Consumer keys and secrets can contain letters, numbers, underscores,
 // and
 // hyphens. No other special characters are allowed.
+//
+// **Note**: To avoid service disruptions, a consumer key and
+// secret
+// should not exceed 2 KBs each.
+//
+// After creating the consumer key and secret, associate the key with
+// an API product using the
+// UpdateDeveloperAppKey API.
+//
+// If a consumer key and secret already exist, you can keep them
+// or
+// delete them using the
+// DeleteDeveloperAppKey API.
 func (r *OrganizationsDevelopersAppsKeysCreateService) Create(parent string, googlecloudapigeev1developerappkey *GoogleCloudApigeeV1DeveloperAppKey) *OrganizationsDevelopersAppsKeysCreateCreateCall {
 	c := &OrganizationsDevelopersAppsKeysCreateCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17603,7 +15180,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17668,7 +15245,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom consumer key and secret for a developer app. This is\nparticularly useful if you want to migrate existing consumer keys/secrets\nto Edge from another system.\nBe aware of the following size limits on API keys. By staying within these\nlimits, you help avoid service disruptions (2KB each for Consumer Key and\nSecret). After creating the consumer key and secret, associate the key with\nan API product using the API\nUpdateDeveloperAppKey\nIf a consumer key and secret already exist, you can either keep them or\ndelete them with this API\nDeleteKeyFromDeveloperApp\nConsumer keys and secrets can contain letters, numbers, underscores, and\nhyphens. No other special characters are allowed.",
+	//   "description": "Creates a custom consumer key and secret for a developer app. This is\nparticularly useful if you want to migrate existing consumer keys and\nsecrets to Apigee hybrid from another system.\n\nConsumer keys and secrets can contain letters, numbers, underscores, and\nhyphens. No other special characters are allowed.\n\n**Note**: To avoid service disruptions, a consumer key and secret\nshould not exceed 2 KBs each.\n\nAfter creating the consumer key and secret, associate the key with\nan API product using the\nUpdateDeveloperAppKey API.\n\nIf a consumer key and secret already exist, you can keep them or\ndelete them using the\nDeleteDeveloperAppKey API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/create",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.apps.keys.create.create",
@@ -17677,7 +15254,7 @@ func (c *OrganizationsDevelopersAppsKeysCreateCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent of a developer app key in the form\n`organizations/{org}/developers/{developer}/apps`",
+	//       "description": "Parent of the developer app key. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/apps`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -17708,13 +15285,7 @@ type OrganizationsDevelopersAttributesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an attribute of a Developer resource
-// Apigee recommends using the developer email in the API call.
-// Developer ID
-// is generated internally and is not guaranteed to stay the same over
-// time.
-// For example, Apigee could change the format or length of this
-// variable.
+// Delete: Deletes a developer attribute.
 func (r *OrganizationsDevelopersAttributesService) Delete(name string) *OrganizationsDevelopersAttributesDeleteCall {
 	c := &OrganizationsDevelopersAttributesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17748,7 +15319,7 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17807,7 +15378,7 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an attribute of a Developer resource\nApigee recommends using the developer email in the API call. Developer ID\nis generated internally and is not guaranteed to stay the same over time.\nFor example, Apigee could change the format or length of this variable.",
+	//   "description": "Deletes a developer attribute.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/attributes/{attributesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.developers.attributes.delete",
@@ -17816,7 +15387,7 @@ func (c *OrganizationsDevelopersAttributesDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the attribute for a developer.\nMust be of the form\n`organizations/{org}/developers/{developer}/attributes/{attribute}`",
+	//       "description": "Required. Name of the developer attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -17845,13 +15416,7 @@ type OrganizationsDevelopersAttributesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get developer attributes. Apigee recommends using the developer
-// email in
-// the API call. Developer ID is generated internally and is not
-// guaranteed
-// to stay the same over time. For example, Apigee could change the
-// format or
-// length of this variable.
+// Get: Returns the value of the specified developer attribute.
 func (r *OrganizationsDevelopersAttributesService) Get(name string) *OrganizationsDevelopersAttributesGetCall {
 	c := &OrganizationsDevelopersAttributesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17895,7 +15460,7 @@ func (c *OrganizationsDevelopersAttributesGetCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17957,7 +15522,7 @@ func (c *OrganizationsDevelopersAttributesGetCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Get developer attributes. Apigee recommends using the developer email in\nthe API call. Developer ID is generated internally and is not guaranteed\nto stay the same over time. For example, Apigee could change the format or\nlength of this variable.",
+	//   "description": "Returns the value of the specified developer attribute.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/attributes/{attributesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.attributes.get",
@@ -17966,7 +15531,7 @@ func (c *OrganizationsDevelopersAttributesGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the attribute for a developer.\nMust be of the form\n`organizations/{org}/developers/{developer}/attributes/{attribute}`",
+	//       "description": "Required. Name of the developer attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -17995,13 +15560,7 @@ type OrganizationsDevelopersAttributesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of all developer attributes. Apigee recommends
-// using the
-// developer email in the API call. Developer ID is generated internally
-// and
-// is not guaranteed to stay the same over time. For example, Apigee
-// could
-// change the format or length of this variable.
+// List: Returns a list of all developer attributes.
 func (r *OrganizationsDevelopersAttributesService) List(parent string) *OrganizationsDevelopersAttributesListCall {
 	c := &OrganizationsDevelopersAttributesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18045,7 +15604,7 @@ func (c *OrganizationsDevelopersAttributesListCall) Header() http.Header {
 
 func (c *OrganizationsDevelopersAttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18107,7 +15666,7 @@ func (c *OrganizationsDevelopersAttributesListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of all developer attributes. Apigee recommends using the\ndeveloper email in the API call. Developer ID is generated internally and\nis not guaranteed to stay the same over time. For example, Apigee could\nchange the format or length of this variable.",
+	//   "description": "Returns a list of all developer attributes.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/attributes",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.developers.attributes.list",
@@ -18116,7 +15675,7 @@ func (c *OrganizationsDevelopersAttributesListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent developer for which attributes are being listed.\nMust be of the form `organizations/{org}/developers/{developer}`",
+	//       "description": "Required. Email address of the developer for which attributes are being listed in the\nfollowing format:\n  `organizations/{org}/developers/{developer_email}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+$",
 	//       "required": true,
@@ -18145,23 +15704,18 @@ type OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall struct {
 	header_                      http.Header
 }
 
-// UpdateDeveloperAttribute: Update developer attribute. OAuth access
-// tokens and Key Management Service
-// (KMS) entities (Apps, Developers, API Products) are cached for 180
+// UpdateDeveloperAttribute: Updates a developer attribute.
+//
+// **Note**: OAuth access tokens and Key Management Service (KMS)
+// entities
+// (apps, developers, and API products) are cached for 180
 // seconds
-// (current default). Any custom attributes associated with entities
-// also get
-// cached for at least 180 seconds after entity is accessed during
-// runtime.
-// This also means the ExpiresIn element on the OAuthV2 policy won't be
-// able
-// to expire an access token in less than 180 seconds. Apigee
-// recommends
-// using the developer email in the API call. Developer ID is
-// generated
-// internally and is not guaranteed to stay the same over time. For
-// example,
-// Apigee could change the format or length of this variable.
+// (default). Any custom attributes associated with these entities
+// are cached for at least 180 seconds after the entity is accessed
+// at
+// runtime. Therefore, an `ExpiresIn` element on the OAuthV2
+// policy
+// won't be able to expire an access token in less than 180 seconds.
 func (r *OrganizationsDevelopersAttributesService) UpdateDeveloperAttribute(name string, googlecloudapigeev1attribute *GoogleCloudApigeeV1Attribute) *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall {
 	c := &OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18196,7 +15750,7 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Header()
 
 func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18260,7 +15814,7 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Update developer attribute. OAuth access tokens and Key Management Service\n(KMS) entities (Apps, Developers, API Products) are cached for 180 seconds\n(current default). Any custom attributes associated with entities also get\ncached for at least 180 seconds after entity is accessed during runtime.\nThis also means the ExpiresIn element on the OAuthV2 policy won't be able\nto expire an access token in less than 180 seconds. Apigee recommends\nusing the developer email in the API call. Developer ID is generated\ninternally and is not guaranteed to stay the same over time. For example,\nApigee could change the format or length of this variable.",
+	//   "description": "Updates a developer attribute.\n\n**Note**: OAuth access tokens and Key Management Service (KMS) entities\n(apps, developers, and API products) are cached for 180 seconds\n(default). Any custom attributes associated with these entities\nare cached for at least 180 seconds after the entity is accessed at\nruntime. Therefore, an `ExpiresIn` element on the OAuthV2 policy\nwon't be able to expire an access token in less than 180 seconds.",
 	//   "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/attributes/{attributesId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.developers.attributes.updateDeveloperAttribute",
@@ -18269,7 +15823,7 @@ func (c *OrganizationsDevelopersAttributesUpdateDeveloperAttributeCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the attribute for a developer.\nMust be of the form\n`organizations/{org}/developers/{developer}/attributes/{attribute}`",
+	//       "description": "Required. Name of the developer attribute. Use the following structure in your\nrequest:\n  `organizations/{org}/developers/{developer_email}/attributes/{attribute}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/developers/[^/]+/attributes/[^/]+$",
 	//       "required": true,
@@ -18301,7 +15855,7 @@ type OrganizationsEnvironmentsCreateCall struct {
 	header_                        http.Header
 }
 
-// Create: Creates an Environment in the specified organization.
+// Create: Creates an environment in an organization.
 func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsCreateCall {
 	c := &OrganizationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18309,9 +15863,9 @@ func (r *OrganizationsEnvironmentsService) Create(parent string, googlecloudapig
 	return c
 }
 
-// Name sets the optional parameter "name": The ID to give the new
-// Environment. The Environment ID may
-// alternatively be specified in the request body in the
+// Name sets the optional parameter "name": Name of the environment.
+// Alternatively, the name may
+// be specified in the request body in the
 // environment_id field.
 func (c *OrganizationsEnvironmentsCreateCall) Name(name string) *OrganizationsEnvironmentsCreateCall {
 	c.urlParams_.Set("name", name)
@@ -18345,7 +15899,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18409,7 +15963,7 @@ func (c *OrganizationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an Environment in the specified organization.",
+	//   "description": "Creates an environment in an organization.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.create",
@@ -18418,12 +15972,12 @@ func (c *OrganizationsEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The ID to give the new Environment. The Environment ID may\nalternatively be specified in the request body in the\nenvironment_id field.",
+	//       "description": "Optional. Name of the environment. Alternatively, the name may\nbe specified in the request body in the\nenvironment_id field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent organization name under which the Environment will\nbe created. Must be of the form `organizations/{org}`.",
+	//       "description": "Required. Name of the organization in which the environment will\nbe created. Use the following structure in your request:\n `organizations/{org}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -18454,9 +16008,7 @@ type OrganizationsEnvironmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an Environment from an organization. Returns the
-// deleted
-// Environment resource.
+// Delete: Deletes an environment from an organization.
 func (r *OrganizationsEnvironmentsService) Delete(name string) *OrganizationsEnvironmentsDeleteCall {
 	c := &OrganizationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18490,7 +16042,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18549,7 +16101,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an Environment from an organization. Returns the deleted\nEnvironment resource.",
+	//   "description": "Deletes an environment from an organization.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.delete",
@@ -18558,7 +16110,7 @@ func (c *OrganizationsEnvironmentsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment to delete. Must be\nof the form `organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your\nrequest:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -18587,7 +16139,7 @@ type OrganizationsEnvironmentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an Environment.
+// Get: Gets environment details.
 func (r *OrganizationsEnvironmentsService) Get(name string) *OrganizationsEnvironmentsGetCall {
 	c := &OrganizationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18631,7 +16183,7 @@ func (c *OrganizationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18693,7 +16245,7 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an Environment.",
+	//   "description": "Gets environment details.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.get",
@@ -18702,7 +16254,7 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment to get. Must be of the form\n`organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your request:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -18712,200 +16264,6 @@ func (c *OrganizationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.environments.getDatalocation":
-
-type OrganizationsEnvironmentsGetDatalocationCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetDatalocation: Get Google Cloud Storage (GCS) signed url for
-// specific organization and
-// environment. Collection agent uses this signed url to upload data
-// to GCS bucket.
-func (r *OrganizationsEnvironmentsService) GetDatalocation(name string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c := &OrganizationsEnvironmentsGetDatalocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// ContentType sets the optional parameter "contentType": Content-Type
-// for uploaded file.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) ContentType(contentType string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.urlParams_.Set("contentType", contentType)
-	return c
-}
-
-// Dataset sets the optional parameter "dataset": Required. Dataset
-// could be one of `api`, `mint`, `trace` and `event`
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Dataset(dataset string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.urlParams_.Set("dataset", dataset)
-	return c
-}
-
-// RelativeFilePath sets the optional parameter "relativeFilePath":
-// Required. Relative path to the GCS bucket
-func (c *OrganizationsEnvironmentsGetDatalocationCall) RelativeFilePath(relativeFilePath string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.urlParams_.Set("relativeFilePath", relativeFilePath)
-	return c
-}
-
-// Repo sets the optional parameter "repo": Required. Repository name
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Repo(repo string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.urlParams_.Set("repo", repo)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Context(ctx context.Context) *OrganizationsEnvironmentsGetDatalocationCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsGetDatalocationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.getDatalocation" call.
-// Exactly one of *GoogleCloudApigeeV1DataLocation or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudApigeeV1DataLocation.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsEnvironmentsGetDatalocationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DataLocation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1DataLocation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Get Google Cloud Storage (GCS) signed url for specific organization and\nenvironment. Collection agent uses this signed url to upload data\nto GCS bucket.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/datalocation",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.getDatalocation",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "contentType": {
-	//       "description": "Content-Type for uploaded file.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "dataset": {
-	//       "description": "Required. Dataset could be one of `api`, `mint`, `trace` and `event`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. The parent organization and environment names. Must be of the\nform `organizations/{org}/environments/{env}/datalocation`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/datalocation$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "relativeFilePath": {
-	//       "description": "Required. Relative path to the GCS bucket",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "repo": {
-	//       "description": "Required. Repository name",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1DataLocation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -18926,7 +16284,7 @@ type OrganizationsEnvironmentsGetDebugmaskCall struct {
 }
 
 // GetDebugmask: Gets the debug mask singleton resource for an
-// Environment.
+// environment.
 func (r *OrganizationsEnvironmentsService) GetDebugmask(name string) *OrganizationsEnvironmentsGetDebugmaskCall {
 	c := &OrganizationsEnvironmentsGetDebugmaskCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18970,7 +16328,7 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetDebugmaskCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19032,7 +16390,7 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the debug mask singleton resource for an Environment.",
+	//   "description": "Gets the debug mask singleton resource for an environment.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/debugmask",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.getDebugmask",
@@ -19041,7 +16399,7 @@ func (c *OrganizationsEnvironmentsGetDebugmaskCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment debug mask to get. Must be of the\nform `organizations/{org}/environments/{env}/debugmask`.",
+	//       "description": "Required. Name of the debug mask. Use the following structure in your request:\n  `organizations/{org}/environments/{env}/debugmask`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/debugmask$",
 	//       "required": true,
@@ -19070,8 +16428,8 @@ type OrganizationsEnvironmentsGetDeployedConfigCall struct {
 	header_      http.Header
 }
 
-// GetDeployedConfig: Gets the deployed config (aka env.json) for an
-// Environment.
+// GetDeployedConfig: Gets the deployed configuration for an
+// environment.
 func (r *OrganizationsEnvironmentsService) GetDeployedConfig(name string) *OrganizationsEnvironmentsGetDeployedConfigCall {
 	c := &OrganizationsEnvironmentsGetDeployedConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19115,7 +16473,7 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetDeployedConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19178,7 +16536,7 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the deployed config (aka env.json) for an Environment.",
+	//   "description": "Gets the deployed configuration for an environment.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/deployedConfig",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.getDeployedConfig",
@@ -19187,7 +16545,7 @@ func (c *OrganizationsEnvironmentsGetDeployedConfigCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment deployed config resource. Must be of\nthe form `organizations/{org}/environments/{env}/deployedConfig`.",
+	//       "description": "Required. Name of the environment deployed configuration resource. Use the following\nstructure in your request:\n `organizations/{org}/environments/{env}/deployedConfig`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/deployedConfig$",
 	//       "required": true,
@@ -19216,8 +16574,15 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the IAM policy on an Environment.
-// Callers must have the permission apigee.environments.getIamPolicy.
+// GetIamPolicy: Gets the IAM policy on an environment. For more
+// information, see
+// [Manage users, roles, and permissions
+// using the
+// API](https://docs.apigee.com/hybrid/latest/manage-users-roles).
+//
+// You must have the `apigee.environments.getIamPolicy` permission to
+// call
+// this API.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19237,6 +16602,13 @@ func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *Organi
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
+//
+// To learn which resources support conditions in their IAM policies,
+// see
+// the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/r
+// esource-policies).
 func (c *OrganizationsEnvironmentsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -19279,7 +16651,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19341,7 +16713,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the IAM policy on an Environment.\nCallers must have the permission apigee.environments.getIamPolicy.",
+	//   "description": "Gets the IAM policy on an environment. For more information, see\n[Manage users, roles, and permissions\nusing the API](https://docs.apigee.com/hybrid/latest/manage-users-roles).\n\nYou must have the `apigee.environments.getIamPolicy` permission to call\nthis API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.getIamPolicy",
@@ -19350,7 +16722,7 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -19374,128 +16746,6 @@ func (c *OrganizationsEnvironmentsGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 
 }
 
-// method id "apigee.organizations.environments.list":
-
-type OrganizationsEnvironmentsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all Environments in an organization.
-func (r *OrganizationsEnvironmentsService) List(parent string) *OrganizationsEnvironmentsListCall {
-	c := &OrganizationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsListCall) Context(ctx context.Context) *OrganizationsEnvironmentsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/environments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.list" call.
-func (c *OrganizationsEnvironmentsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all Environments in an organization.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent organization name. Must be of the form\n`organizations/{org}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/environments",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.setIamPolicy":
 
 type OrganizationsEnvironmentsSetIamPolicyCall struct {
@@ -19507,10 +16757,16 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 	header_                        http.Header
 }
 
-// SetIamPolicy: Sets the IAM policy on an Environment, if the policy
+// SetIamPolicy: Sets the IAM policy on an environment, if the policy
 // already
-// exists it will be replaced.
-// Callers must have the permission apigee.environments.setIamPolicy.
+// exists it will be replaced. For more information, see
+// [Manage users, roles, and permissions
+// using the
+// API](https://docs.apigee.com/hybrid/latest/manage-users-roles).
+//
+// You must have the `apigee.environments.setIamPolicy` permission
+// to
+// call this API.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19545,7 +16801,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19609,7 +16865,7 @@ func (c *OrganizationsEnvironmentsSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM policy on an Environment, if the policy already\nexists it will be replaced.\nCallers must have the permission apigee.environments.setIamPolicy.",
+	//   "description": "Sets the IAM policy on an environment, if the policy already\nexists it will be replaced. For more information, see\n[Manage users, roles, and permissions\nusing the API](https://docs.apigee.com/hybrid/latest/manage-users-roles).\n\nYou must have the `apigee.environments.setIamPolicy` permission to\ncall this API.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.setIamPolicy",
@@ -19649,7 +16905,7 @@ type OrganizationsEnvironmentsSubscribeCall struct {
 	header_    http.Header
 }
 
-// Subscribe: Creates a subscription for the environment's pubsub
+// Subscribe: Creates a subscription for the environment's Pub/Sub
 // topic.
 // The server will assign a random name for this subscription.
 // The "name" and "push_config" must *not* be specified.
@@ -19686,7 +16942,7 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsSubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19745,7 +17001,7 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription for the environment's pubsub topic.\nThe server will assign a random name for this subscription.\nThe \"name\" and \"push_config\" must *not* be specified.",
+	//   "description": "Creates a subscription for the environment's Pub/Sub topic.\nThe server will assign a random name for this subscription.\nThe \"name\" and \"push_config\" must *not* be specified.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:subscribe",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.subscribe",
@@ -19754,7 +17010,7 @@ func (c *OrganizationsEnvironmentsSubscribeCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the environment to subscribe. Must be of the form\n`organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your request:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -19784,10 +17040,10 @@ type OrganizationsEnvironmentsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Tests the permissions of a user on an
-// Environment,
+// environment,
 // and returns a subset of permissions that the user has on the
-// Environment
-// If the environment does not exist an empty permission set is
+// environment.
+// If the environment does not exist, an empty permission set is
 // returned
 // (a NOT_FOUND error is not returned).
 func (r *OrganizationsEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *OrganizationsEnvironmentsTestIamPermissionsCall {
@@ -19824,7 +17080,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19889,7 +17145,7 @@ func (c *OrganizationsEnvironmentsTestIamPermissionsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Tests the permissions of a user on an Environment,\nand returns a subset of permissions that the user has on the Environment\nIf the environment does not exist an empty permission set is returned\n(a NOT_FOUND error is not returned).",
+	//   "description": "Tests the permissions of a user on an environment,\nand returns a subset of permissions that the user has on the environment.\nIf the environment does not exist, an empty permission set is returned\n(a NOT_FOUND error is not returned).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.testIamPermissions",
@@ -19930,7 +17186,7 @@ type OrganizationsEnvironmentsUnsubscribeCall struct {
 	header_                         http.Header
 }
 
-// Unsubscribe: Deletes a subscription for the environment's pubsub
+// Unsubscribe: Deletes a subscription for the environment's Pub/Sub
 // topic.
 func (r *OrganizationsEnvironmentsService) Unsubscribe(parent string, googlecloudapigeev1subscription *GoogleCloudApigeeV1Subscription) *OrganizationsEnvironmentsUnsubscribeCall {
 	c := &OrganizationsEnvironmentsUnsubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19966,7 +17222,7 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUnsubscribeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20030,7 +17286,7 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a subscription for the environment's pubsub topic.",
+	//   "description": "Deletes a subscription for the environment's Pub/Sub topic.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:unsubscribe",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.unsubscribe",
@@ -20039,7 +17295,7 @@ func (c *OrganizationsEnvironmentsUnsubscribeCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the environment to subscribe. Must be of the form\n`organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your request:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -20071,13 +17327,15 @@ type OrganizationsEnvironmentsUpdateCall struct {
 	header_                        http.Header
 }
 
-// Update: Updates an existing Environment. Note that this operation has
-// PUT
-// semantics despite using POST; it will replace the entirety of the
-// existing
-// Environment with the resource in the request body. A PUT mapping for
+// Update: Updates an existing environment.
+//
+// When updating properties, you must pass all existing properties to
+// the API,
+// even if they are not being changed. If you omit properties from
 // the
-// same operation at the same URI is also defined.
+// payload, the properties are removed. To get the current list
+// of
+// properties for the environment, use the [Get Environment API](get).
 func (r *OrganizationsEnvironmentsService) Update(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateCall {
 	c := &OrganizationsEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20112,7 +17370,7 @@ func (c *OrganizationsEnvironmentsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20176,7 +17434,7 @@ func (c *OrganizationsEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing Environment. Note that this operation has PUT\nsemantics despite using POST; it will replace the entirety of the existing\nEnvironment with the resource in the request body. A PUT mapping for the\nsame operation at the same URI is also defined.",
+	//   "description": "Updates an existing environment.\n\nWhen updating properties, you must pass all existing properties to the API,\neven if they are not being changed. If you omit properties from the\npayload, the properties are removed. To get the current list of\nproperties for the environment, use the [Get Environment API](get).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.environments.update",
@@ -20185,7 +17443,7 @@ func (c *OrganizationsEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment to replace. Must be of the form\n`organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your request:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -20227,16 +17485,18 @@ func (r *OrganizationsEnvironmentsService) UpdateDebugmask(name string, googlecl
 }
 
 // ReplaceRepeatedFields sets the optional parameter
-// "replaceRepeatedFields": If true, repeated fields covered by the
-// update_mask will replace
-// the existing values. The default behavior is to append.
+// "replaceRepeatedFields": Boolean flag that specifies whether to
+// replace existing values in the debug
+// mask when doing an update. Set to true to replace existing
+// values.
+// The default behavior is to append the values (false).
 func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) ReplaceRepeatedFields(replaceRepeatedFields bool) *OrganizationsEnvironmentsUpdateDebugmaskCall {
 	c.urlParams_.Set("replaceRepeatedFields", fmt.Sprint(replaceRepeatedFields))
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask to
-// support partial updates.
+// UpdateMask sets the optional parameter "updateMask": Field debug mask
+// to support partial updates.
 func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) UpdateMask(updateMask string) *OrganizationsEnvironmentsUpdateDebugmaskCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -20269,7 +17529,7 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20342,19 +17602,19 @@ func (c *OrganizationsEnvironmentsUpdateDebugmaskCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The DebugMask resource name.",
+	//       "description": "Name of the debug mask.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+/debugmask$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "replaceRepeatedFields": {
-	//       "description": "If true, repeated fields covered by the update_mask will replace\nthe existing values. The default behavior is to append.",
+	//       "description": "Boolean flag that specifies whether to replace existing values in the debug\nmask when doing an update. Set to true to replace existing values.\nThe default behavior is to append the values (false).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "updateMask": {
-	//       "description": "Field mask to support partial updates.",
+	//       "description": "Field debug mask to support partial updates.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -20385,13 +17645,15 @@ type OrganizationsEnvironmentsUpdateEnvironmentCall struct {
 	header_                        http.Header
 }
 
-// UpdateEnvironment: Updates an existing Environment. Note that this
-// operation has PUT
-// semantics despite using POST; it will replace the entirety of the
-// existing
-// Environment with the resource in the request body. A PUT mapping for
+// UpdateEnvironment: Updates an existing environment.
+//
+// When updating properties, you must pass all existing properties to
+// the API,
+// even if they are not being changed. If you omit properties from
 // the
-// same operation at the same URI is also defined.
+// payload, the properties are removed. To get the current list
+// of
+// properties for the environment, use the [Get Environment API](get).
 func (r *OrganizationsEnvironmentsService) UpdateEnvironment(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsUpdateEnvironmentCall {
 	c := &OrganizationsEnvironmentsUpdateEnvironmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20426,7 +17688,7 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20490,7 +17752,7 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing Environment. Note that this operation has PUT\nsemantics despite using POST; it will replace the entirety of the existing\nEnvironment with the resource in the request body. A PUT mapping for the\nsame operation at the same URI is also defined.",
+	//   "description": "Updates an existing environment.\n\nWhen updating properties, you must pass all existing properties to the API,\neven if they are not being changed. If you omit properties from the\npayload, the properties are removed. To get the current list of\nproperties for the environment, use the [Get Environment API](get).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.updateEnvironment",
@@ -20499,7 +17761,7 @@ func (c *OrganizationsEnvironmentsUpdateEnvironmentCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the Environment to replace. Must be of the form\n`organizations/{org}/environments/{env}`.",
+	//       "description": "Required. Name of the environment. Use the following structure in your request:\n `organizations/{org}/environments/{env}`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -20588,7 +17850,7 @@ func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) Header() http.H
 
 func (c *OrganizationsEnvironmentsAnalyticsAdminGetSchemav2Call) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20737,7 +17999,7 @@ func (c *OrganizationsEnvironmentsApisDeploymentsListCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsApisDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20879,7 +18141,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsCall) Header() http.He
 
 func (c *OrganizationsEnvironmentsApisRevisionsDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21022,7 +18284,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) Header() http
 
 func (c *OrganizationsEnvironmentsApisRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21165,7 +18427,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) Header()
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21313,7 +18575,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) Head
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21399,6 +18661,150 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDeleteDataCall) Do(o
 
 }
 
+// method id "apigee.organizations.environments.apis.revisions.debugsessions.get":
+
+type OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a debug session.
+func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsService) Get(name string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
+	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Context(ctx context.Context) *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.apis.revisions.debugsessions.get" call.
+// Exactly one of *GoogleCloudApigeeV1DebugSession or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudApigeeV1DebugSession.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1DebugSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1DebugSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a debug session.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/apis/{apisId}/revisions/{revisionsId}/debugsessions/{debugsessionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.environments.apis.revisions.debugsessions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the debug session to retrieve.\nMust be of the form:\n `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}/debugsessions/{session}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/apis/[^/]+/revisions/[^/]+/debugsessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1DebugSession"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.environments.apis.revisions.debugsessions.list":
 
 type OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall struct {
@@ -21456,7 +18862,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) Header() h
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21602,7 +19008,7 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) Header(
 
 func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21693,142 +19099,6 @@ func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataGetCall) Do(opts
 
 }
 
-// method id "apigee.organizations.environments.apis.revisions.debugsessions.data.list":
-
-type OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists the transaction IDs from a debug session.
-func (r *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataService) List(parent string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall {
-	c := &OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Limit sets the optional parameter "limit": A http query parameter
-// that can control the maximum number of
-// debug session transactions that can be returned by UAP.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) Limit(limit int64) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall {
-	c.urlParams_.Set("limit", fmt.Sprint(limit))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) Context(ctx context.Context) *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/data")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.apis.revisions.debugsessions.data.list" call.
-func (c *OrganizationsEnvironmentsApisRevisionsDebugsessionsDataListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists the transaction IDs from a debug session.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/apis/{apisId}/revisions/{revisionsId}/debugsessions/{debugsessionsId}/data",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.apis.revisions.debugsessions.data.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "limit": {
-	//       "description": "Optional. A http query parameter that can control the maximum number of\ndebug session transactions that can be returned by UAP.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the debug sessions for which to list transactions.\nMust be of the form:\n `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}/debugsessions/{session}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/apis/[^/]+/revisions/[^/]+/debugsessions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/data",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.caches.delete":
 
 type OrganizationsEnvironmentsCachesDeleteCall struct {
@@ -21873,7 +19143,7 @@ func (c *OrganizationsEnvironmentsCachesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsCachesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21959,128 +19229,6 @@ func (c *OrganizationsEnvironmentsCachesDeleteCall) Do(opts ...googleapi.CallOpt
 
 }
 
-// method id "apigee.organizations.environments.caches.list":
-
-type OrganizationsEnvironmentsCachesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all caches in an environment.
-func (r *OrganizationsEnvironmentsCachesService) List(parent string) *OrganizationsEnvironmentsCachesListCall {
-	c := &OrganizationsEnvironmentsCachesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsCachesListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsCachesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsCachesListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsCachesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsCachesListCall) Context(ctx context.Context) *OrganizationsEnvironmentsCachesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsCachesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsCachesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/caches")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.caches.list" call.
-func (c *OrganizationsEnvironmentsCachesListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all caches in an environment.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/caches",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.caches.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the parent environment under which to get caches.\nMust be of the form:\n    `organizations/{organization_id}/environments/{environment_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/caches",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.deployments.list":
 
 type OrganizationsEnvironmentsDeploymentsListCall struct {
@@ -22146,7 +19294,7 @@ func (c *OrganizationsEnvironmentsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22288,7 +19436,7 @@ func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) Heade
 
 func (c *OrganizationsEnvironmentsFlowhooksAttachSharedFlowToFlowHookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22427,7 +19575,7 @@ func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) Hea
 
 func (c *OrganizationsEnvironmentsFlowhooksDetachSharedFlowFromFlowHookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22572,7 +19720,7 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsFlowhooksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22661,132 +19809,6 @@ func (c *OrganizationsEnvironmentsFlowhooksGetCall) Do(opts ...googleapi.CallOpt
 
 }
 
-// method id "apigee.organizations.environments.flowhooks.list":
-
-type OrganizationsEnvironmentsFlowhooksListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists the flow hooks attached to an environment. This API
-// always
-// returns: `["PreProxyFlowHook", "PostProxyFlowHook",
-// "PreTargetFlowHook",
-// "PostTargetFlowHook"]`
-func (r *OrganizationsEnvironmentsFlowhooksService) List(parent string) *OrganizationsEnvironmentsFlowhooksListCall {
-	c := &OrganizationsEnvironmentsFlowhooksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsFlowhooksListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsFlowhooksListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsFlowhooksListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsFlowhooksListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsFlowhooksListCall) Context(ctx context.Context) *OrganizationsEnvironmentsFlowhooksListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsFlowhooksListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsFlowhooksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/flowhooks")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.flowhooks.list" call.
-func (c *OrganizationsEnvironmentsFlowhooksListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists the flow hooks attached to an environment. This API always\nreturns: `[\"PreProxyFlowHook\", \"PostProxyFlowHook\", \"PreTargetFlowHook\",\n\"PostTargetFlowHook\"]`",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/flowhooks",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.flowhooks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the environment for which to display flow hooks in the following\nformat:\n  `organizations/{org}/environments/{env}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/flowhooks",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.keystores.create":
 
 type OrganizationsEnvironmentsKeystoresCreateCall struct {
@@ -22844,7 +19866,7 @@ func (c *OrganizationsEnvironmentsKeystoresCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22987,7 +20009,7 @@ func (c *OrganizationsEnvironmentsKeystoresDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23128,7 +20150,7 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeystoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23209,128 +20231,6 @@ func (c *OrganizationsEnvironmentsKeystoresGetCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1Keystore"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.environments.keystores.list":
-
-type OrganizationsEnvironmentsKeystoresListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all keystores and truststores.
-func (r *OrganizationsEnvironmentsKeystoresService) List(parent string) *OrganizationsEnvironmentsKeystoresListCall {
-	c := &OrganizationsEnvironmentsKeystoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsKeystoresListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeystoresListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsKeystoresListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsKeystoresListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsKeystoresListCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeystoresListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsKeystoresListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsKeystoresListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keystores")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.keystores.list" call.
-func (c *OrganizationsEnvironmentsKeystoresListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all keystores and truststores.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keystores",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.keystores.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the environment in which list keystores.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/keystores",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -23450,7 +20350,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23626,7 +20526,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesCsrCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23759,7 +20659,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23900,7 +20800,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24045,7 +20945,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) Header() h
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24134,128 +21034,6 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesGetCertificateCall) Do(opts ..
 
 }
 
-// method id "apigee.organizations.environments.keystores.aliases.list":
-
-type OrganizationsEnvironmentsKeystoresAliasesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all aliases.
-func (r *OrganizationsEnvironmentsKeystoresAliasesService) List(parent string) *OrganizationsEnvironmentsKeystoresAliasesListCall {
-	c := &OrganizationsEnvironmentsKeystoresAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeystoresAliasesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsKeystoresAliasesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeystoresAliasesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/aliases")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.keystores.aliases.list" call.
-func (c *OrganizationsEnvironmentsKeystoresAliasesListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all aliases.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keystores/{keystoresId}/aliases",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.keystores.aliases.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the keystore. Must be of the form\n`organizations/{organization}/environments/{environment}/keystores/{keystore}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/keystores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/aliases",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.keystores.aliases.update":
 
 type OrganizationsEnvironmentsKeystoresAliasesUpdateCall struct {
@@ -24321,7 +21099,7 @@ func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) Header() http.Head
 
 func (c *OrganizationsEnvironmentsKeystoresAliasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24471,7 +21249,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24609,7 +21387,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24687,128 +21465,6 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsDeleteCall) Do(opts ...googleapi.C
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1KeyValueMap"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.environments.keyvaluemaps.list":
-
-type OrganizationsEnvironmentsKeyvaluemapsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List key value maps in an environment.
-func (r *OrganizationsEnvironmentsKeyvaluemapsService) List(parent string) *OrganizationsEnvironmentsKeyvaluemapsListCall {
-	c := &OrganizationsEnvironmentsKeyvaluemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsKeyvaluemapsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsKeyvaluemapsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) Context(ctx context.Context) *OrganizationsEnvironmentsKeyvaluemapsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.keyvaluemaps.list" call.
-func (c *OrganizationsEnvironmentsKeyvaluemapsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "List key value maps in an environment.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.keyvaluemaps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the environment in which to list key value maps.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/keyvaluemaps",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -24997,7 +21653,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25091,7 +21747,7 @@ func (c *OrganizationsEnvironmentsOptimizedStatsGetCall) Do(opts ...googleapi.Ca
 	//     "name": {
 	//       "description": "Required. The organization and environment name for which the interactive\nquery will be executed. Must be of the form\n  `organizations/{organization_id}/environments/{environment_id/stats/{dimensions}`\nDimensions let you view metrics in meaningful groupings. E.g. apiproxy,\ntarget_host. The value of dimensions should be comma separated list as\nshown below\n`organizations/{org}/environments/{env}/stats/apiproxy,request_verb`",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/optimizedStats/.+$",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/optimizedStats/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -25213,7 +21869,7 @@ func (c *OrganizationsEnvironmentsQueriesCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25366,7 +22022,7 @@ func (c *OrganizationsEnvironmentsQueriesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25519,7 +22175,7 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesGetResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25600,151 +22256,6 @@ func (c *OrganizationsEnvironmentsQueriesGetResultCall) Do(opts ...googleapi.Cal
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleApiHttpBody"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.environments.queries.getResultView":
-
-type OrganizationsEnvironmentsQueriesGetResultViewCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetResultView:
-func (r *OrganizationsEnvironmentsQueriesService) GetResultView(name string) *OrganizationsEnvironmentsQueriesGetResultViewCall {
-	c := &OrganizationsEnvironmentsQueriesGetResultViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsQueriesGetResultViewCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsQueriesGetResultViewCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) Context(ctx context.Context) *OrganizationsEnvironmentsQueriesGetResultViewCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.queries.getResultView" call.
-// Exactly one of *GoogleCloudApigeeV1AsyncQueryResultView or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudApigeeV1AsyncQueryResultView.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsEnvironmentsQueriesGetResultViewCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1AsyncQueryResultView, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudApigeeV1AsyncQueryResultView{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/queries/{queriesId}/resultView",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.queries.getResultView",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the asynchronous query result view to get. Must be of the\nform `organizations/{org}/environments/{env}/queries/{queryId}/resultView`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/queries/[^/]+/resultView$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudApigeeV1AsyncQueryResultView"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -25858,7 +22369,7 @@ func (c *OrganizationsEnvironmentsQueriesListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26025,7 +22536,7 @@ func (c *OrganizationsEnvironmentsReferencesCreateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26165,7 +22676,7 @@ func (c *OrganizationsEnvironmentsReferencesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26306,7 +22817,7 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26395,128 +22906,6 @@ func (c *OrganizationsEnvironmentsReferencesGetCall) Do(opts ...googleapi.CallOp
 
 }
 
-// method id "apigee.organizations.environments.references.list":
-
-type OrganizationsEnvironmentsReferencesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all References in an environment as a JSON array.
-func (r *OrganizationsEnvironmentsReferencesService) List(parent string) *OrganizationsEnvironmentsReferencesListCall {
-	c := &OrganizationsEnvironmentsReferencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsReferencesListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsReferencesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsReferencesListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsReferencesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsReferencesListCall) Context(ctx context.Context) *OrganizationsEnvironmentsReferencesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsReferencesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsReferencesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/references")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.references.list" call.
-func (c *OrganizationsEnvironmentsReferencesListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all References in an environment as a JSON array.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/references",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.references.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent environment name. Must be of the form\n`organizations/{org}/environments/{env}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/references",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.references.update":
 
 type OrganizationsEnvironmentsReferencesUpdateCall struct {
@@ -26567,7 +22956,7 @@ func (c *OrganizationsEnvironmentsReferencesUpdateCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsReferencesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26672,10 +23061,14 @@ type OrganizationsEnvironmentsResourcefilesCreateCall struct {
 	header_           http.Header
 }
 
-// Create: Creates a resource file in an environment.
-// `Content-Type` must be either `multipart/form-data` with the resource
-// file
-// provided in the only field, or 'application/octet-stream'.
+// Create: Creates a resource file.
+//
+// Specify the `Content-Type` as `application/octet-stream`
+// or
+// `multipart/form-data`.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c := &OrganizationsEnvironmentsResourcefilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26683,18 +23076,17 @@ func (r *OrganizationsEnvironmentsResourcefilesService) Create(parent string, go
 	return c
 }
 
-// Name sets the optional parameter "name": Required. The id of the
+// Name sets the optional parameter "name": Required. Name of the
 // resource file.  Must match the regular
-// expression
-// [a-zA-Z0-9:/\\!@#$%^&{}\[\]()+\-=,.~'` ]{1,255}
+// expression:
+// <var>[a-zA-Z0-9:/\\!@#$%^&{}\[\]()+\-=,.~'` ]{1,255}</var>
 func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Name(name string) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c.urlParams_.Set("name", name)
 	return c
 }
 
-// Type sets the optional parameter "type": Required. The resource file
-// type, must be `js`, `jsc`, `java`,
-// `properties`, `py`, `xsl`, `wsdl`, or `xsd`.
+// Type sets the optional parameter "type": Required. Resource file
+// type. {{ resource_file_type }}
 func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Type(type_ string) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -26727,7 +23119,7 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26791,7 +23183,7 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a resource file in an environment.\n`Content-Type` must be either `multipart/form-data` with the resource file\nprovided in the only field, or 'application/octet-stream'.",
+	//   "description": "Creates a resource file.\n\nSpecify the `Content-Type` as `application/octet-stream` or\n`multipart/form-data`.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.resourcefiles.create",
@@ -26800,19 +23192,19 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The id of the resource file.  Must match the regular expression\n[a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}",
+	//       "description": "Required. Name of the resource file.  Must match the regular expression:\n\u003cvar\u003e[a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}\u003c/var\u003e",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the environment in which to create the resource file.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in which to create the resource file in the\nfollowing format:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Required. The resource file type, must be `js`, `jsc`, `java`,\n`properties`, `py`, `xsl`, `wsdl`, or `xsd`.",
+	//       "description": "Required. Resource file type. {{ resource_file_type }}",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -26834,21 +23226,24 @@ func (c *OrganizationsEnvironmentsResourcefilesCreateCall) Do(opts ...googleapi.
 // method id "apigee.organizations.environments.resourcefiles.delete":
 
 type OrganizationsEnvironmentsResourcefilesDeleteCall struct {
-	s              *Service
-	parent         string
-	type_          string
-	resourceFileId string
-	urlParams_     gensupport.URLParams
-	ctx_           context.Context
-	header_        http.Header
+	s          *Service
+	parent     string
+	type_      string
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
-// Delete: Deletes a resource file in an environment.
-func (r *OrganizationsEnvironmentsResourcefilesService) Delete(parent string, type_ string, resourceFileId string) *OrganizationsEnvironmentsResourcefilesDeleteCall {
+// Delete: Deletes a resource file.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
+func (r *OrganizationsEnvironmentsResourcefilesService) Delete(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesDeleteCall {
 	c := &OrganizationsEnvironmentsResourcefilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.type_ = type_
-	c.resourceFileId = resourceFileId
+	c.name = name
 	return c
 }
 
@@ -26879,7 +23274,7 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26887,7 +23282,7 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) doRequest(alt string)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{resourceFileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -26895,9 +23290,9 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) doRequest(alt string)
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":         c.parent,
-		"type":           c.type_,
-		"resourceFileId": c.resourceFileId,
+		"parent": c.parent,
+		"type":   c.type_,
+		"name":   c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -26940,37 +23335,37 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a resource file in an environment.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{resourceFileId}",
+	//   "description": "Deletes a resource file.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{name}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.resourcefiles.delete",
 	//   "parameterOrder": [
 	//     "parent",
 	//     "type",
-	//     "resourceFileId"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. ID of the resource file to delete. Must match the regular\nexpression: \u003cvar\u003e[a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}\u003c/var\u003e",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent environment.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in the following format:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "resourceFileId": {
-	//       "description": "Required. The id of the resource file to delete. Must match the regular\nexpression [a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "type": {
-	//       "description": "Required. The resource file type, must be `js`, `jsc`, `java`,\n`properties`, `py`, `xsl`, `wsdl`, or `xsd`.",
+	//       "description": "Required. Resource file type. {{ resource_file_type }}",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+parent}/resourcefiles/{type}/{resourceFileId}",
+	//   "path": "v1/{+parent}/resourcefiles/{type}/{name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1ResourceFile"
 	//   },
@@ -26984,22 +23379,25 @@ func (c *OrganizationsEnvironmentsResourcefilesDeleteCall) Do(opts ...googleapi.
 // method id "apigee.organizations.environments.resourcefiles.get":
 
 type OrganizationsEnvironmentsResourcefilesGetCall struct {
-	s              *Service
-	parent         string
-	type_          string
-	resourceFileId string
-	urlParams_     gensupport.URLParams
-	ifNoneMatch_   string
-	ctx_           context.Context
-	header_        http.Header
+	s            *Service
+	parent       string
+	type_        string
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
-// Get: Gets a resource file in an environment.
-func (r *OrganizationsEnvironmentsResourcefilesService) Get(parent string, type_ string, resourceFileId string) *OrganizationsEnvironmentsResourcefilesGetCall {
+// Get: Gets the contents of a resource file.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
+func (r *OrganizationsEnvironmentsResourcefilesService) Get(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesGetCall {
 	c := &OrganizationsEnvironmentsResourcefilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.type_ = type_
-	c.resourceFileId = resourceFileId
+	c.name = name
 	return c
 }
 
@@ -27040,7 +23438,7 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27051,7 +23449,7 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{resourceFileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -27059,9 +23457,9 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) doRequest(alt string) (*
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":         c.parent,
-		"type":           c.type_,
-		"resourceFileId": c.resourceFileId,
+		"parent": c.parent,
+		"type":   c.type_,
+		"name":   c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -27104,37 +23502,37 @@ func (c *OrganizationsEnvironmentsResourcefilesGetCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a resource file in an environment.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{resourceFileId}",
+	//   "description": "Gets the contents of a resource file.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{name}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.resourcefiles.get",
 	//   "parameterOrder": [
 	//     "parent",
 	//     "type",
-	//     "resourceFileId"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. ID of the resource file. Must match the regular\nexpression: \u003cvar\u003e[a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}\u003c/var\u003e",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent environment.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in the following format:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "resourceFileId": {
-	//       "description": "Required. The id of the resource file to get. Must match the regular\nexpression [a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "type": {
-	//       "description": "Required. The resource file type, must be `js`, `jsc`, `java`,\n`properties`, `py`, `xsl`, `wsdl`, or `xsd`.",
+	//       "description": "Required. Resource file type.  {{ resource_file_type }}",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+parent}/resourcefiles/{type}/{resourceFileId}",
+	//   "path": "v1/{+parent}/resourcefiles/{type}/{name}",
 	//   "response": {
 	//     "$ref": "GoogleApiHttpBody"
 	//   },
@@ -27156,15 +23554,19 @@ type OrganizationsEnvironmentsResourcefilesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all resource files in an environment.
+// List: Lists all resource files.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) List(parent string) *OrganizationsEnvironmentsResourcefilesListCall {
 	c := &OrganizationsEnvironmentsResourcefilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Type sets the optional parameter "type": Restricts the response to
-// resources of the given type.
+// Type sets the optional parameter "type": Type of resource files to
+// list.
+// {{ resource_file_type }}
 func (c *OrganizationsEnvironmentsResourcefilesListCall) Type(type_ string) *OrganizationsEnvironmentsResourcefilesListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -27207,7 +23609,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsResourcefilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27271,7 +23673,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all resource files in an environment.",
+	//   "description": "Lists all resource files.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.resourcefiles.list",
@@ -27280,14 +23682,14 @@ func (c *OrganizationsEnvironmentsResourcefilesListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the environment in which to list resource files.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in which to list resource files in the following\nformat:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Optional. Restricts the response to resources of the given type.",
+	//       "description": "Optional. Type of resource files to list.\n{{ resource_file_type }}",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -27315,7 +23717,10 @@ type OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall struct {
 	header_      http.Header
 }
 
-// ListEnvironmentResources: Lists all resource files in an environment.
+// ListEnvironmentResources: Lists all resource files.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) ListEnvironmentResources(parent string, type_ string) *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall {
 	c := &OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27360,7 +23765,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Hea
 
 func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27425,7 +23830,7 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Do(
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all resource files in an environment.",
+	//   "description": "Lists all resource files.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.resourcefiles.listEnvironmentResources",
@@ -27435,14 +23840,14 @@ func (c *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall) Do(
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the environment in which to list resource files.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in which to list resource files in the following\nformat:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "Optional. Restricts the response to resources of the given type.",
+	//       "description": "Optional. Type of resource files to list.\n{{ resource_file_type }}",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -27465,22 +23870,26 @@ type OrganizationsEnvironmentsResourcefilesUpdateCall struct {
 	s                 *Service
 	parent            string
 	type_             string
-	resourceFileId    string
+	name              string
 	googleapihttpbody *GoogleApiHttpBody
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
 	header_           http.Header
 }
 
-// Update: Updates a resource file in an environment.
-// `Content-Type` must be either `multipart/form-data` with the resource
-// file
-// provided in the only field, or 'application/octet-stream'.
-func (r *OrganizationsEnvironmentsResourcefilesService) Update(parent string, type_ string, resourceFileId string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesUpdateCall {
+// Update: Updates a resource file.
+//
+// Specify the `Content-Type` as `application/octet-stream`
+// or
+// `multipart/form-data`.
+//
+// For more information about resource files, see
+// [Resource files](/api-platform/develop/resource-files).
+func (r *OrganizationsEnvironmentsResourcefilesService) Update(parent string, type_ string, name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesUpdateCall {
 	c := &OrganizationsEnvironmentsResourcefilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.type_ = type_
-	c.resourceFileId = resourceFileId
+	c.name = name
 	c.googleapihttpbody = googleapihttpbody
 	return c
 }
@@ -27512,7 +23921,7 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27525,7 +23934,7 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{resourceFileId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcefiles/{type}/{name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -27533,9 +23942,9 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) doRequest(alt string)
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":         c.parent,
-		"type":           c.type_,
-		"resourceFileId": c.resourceFileId,
+		"parent": c.parent,
+		"type":   c.type_,
+		"name":   c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -27578,37 +23987,37 @@ func (c *OrganizationsEnvironmentsResourcefilesUpdateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a resource file in an environment.\n`Content-Type` must be either `multipart/form-data` with the resource file\nprovided in the only field, or 'application/octet-stream'.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{resourceFileId}",
+	//   "description": "Updates a resource file.\n\nSpecify the `Content-Type` as `application/octet-stream` or\n`multipart/form-data`.\n\nFor more information about resource files, see\n[Resource files](/api-platform/develop/resource-files).",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/resourcefiles/{type}/{name}",
 	//   "httpMethod": "PUT",
 	//   "id": "apigee.organizations.environments.resourcefiles.update",
 	//   "parameterOrder": [
 	//     "parent",
 	//     "type",
-	//     "resourceFileId"
+	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. ID of the resource file to update. Must match the regular\nexpression: \u003cvar\u003e[a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}\u003c/var\u003e",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent environment.\nMust be of the form\n`organizations/{organization}/environments/{environment}`.",
+	//       "description": "Required. Name of the environment in the following format:\n  `organizations/{org}/environments/{env}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
-	//     "resourceFileId": {
-	//       "description": "Required. The id of the resource file to update. Must match the regular\nexpression [a-zA-Z0-9:/\\\\!@#$%^\u0026{}\\[\\]()+\\-=,.~'` ]{1,255}",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "type": {
-	//       "description": "Required. The resource file type, must be `js`, `jsc`, `java`,\n`properties`, `py`, `xsl`, `wsdl`, or `xsd`.",
+	//       "description": "Required. Resource file type. {{ resource_file_type }}",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+parent}/resourcefiles/{type}/{resourceFileId}",
+	//   "path": "v1/{+parent}/resourcefiles/{type}/{name}",
 	//   "request": {
 	//     "$ref": "GoogleApiHttpBody"
 	//   },
@@ -27677,7 +24086,7 @@ func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) Header() http.
 
 func (c *OrganizationsEnvironmentsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27812,7 +24221,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeploymentsCall) Header() 
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27955,7 +24364,7 @@ func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) Header
 
 func (c *OrganizationsEnvironmentsSharedflowsRevisionsGetDeploymentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28230,7 +24639,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28323,7 +24732,7 @@ func (c *OrganizationsEnvironmentsStatsGetCall) Do(opts ...googleapi.CallOption)
 	//     "name": {
 	//       "description": "Required. The organization and environment name for which the interactive\nquery will be executed. Must be of the form\n  `organizations/{organization_id}/environments/{environment_id/stats/{dimensions}`\nDimensions let you view metrics in meaningful groupings. E.g. apiproxy,\ntarget_host. The value of dimensions should be comma separated list as\nshown below\n`organizations/{org}/environments/{env}/stats/apiproxy,request_verb`",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+/stats/.+$",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+/stats/.*$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -28448,7 +24857,7 @@ func (c *OrganizationsEnvironmentsTargetserversCreateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28593,7 +25002,7 @@ func (c *OrganizationsEnvironmentsTargetserversDeleteCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28734,7 +25143,7 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) Header() http.Header {
 
 func (c *OrganizationsEnvironmentsTargetserversGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28823,128 +25232,6 @@ func (c *OrganizationsEnvironmentsTargetserversGetCall) Do(opts ...googleapi.Cal
 
 }
 
-// method id "apigee.organizations.environments.targetservers.list":
-
-type OrganizationsEnvironmentsTargetserversListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all TargetServers in an environment as a JSON array.
-func (r *OrganizationsEnvironmentsTargetserversService) List(parent string) *OrganizationsEnvironmentsTargetserversListCall {
-	c := &OrganizationsEnvironmentsTargetserversListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsEnvironmentsTargetserversListCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsTargetserversListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsEnvironmentsTargetserversListCall) IfNoneMatch(entityTag string) *OrganizationsEnvironmentsTargetserversListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsEnvironmentsTargetserversListCall) Context(ctx context.Context) *OrganizationsEnvironmentsTargetserversListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsEnvironmentsTargetserversListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsEnvironmentsTargetserversListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/targetservers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.environments.targetservers.list" call.
-func (c *OrganizationsEnvironmentsTargetserversListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all TargetServers in an environment as a JSON array.",
-	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/targetservers",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.environments.targetservers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent environment name. Must be of the form\n`organizations/{org}/environments/{env}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/targetservers",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.environments.targetservers.update":
 
 type OrganizationsEnvironmentsTargetserversUpdateCall struct {
@@ -28995,7 +25282,7 @@ func (c *OrganizationsEnvironmentsTargetserversUpdateCall) Header() http.Header 
 
 func (c *OrganizationsEnvironmentsTargetserversUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29135,7 +25422,7 @@ func (c *OrganizationsKeyvaluemapsCreateCall) Header() http.Header {
 
 func (c *OrganizationsKeyvaluemapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29273,7 +25560,7 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsKeyvaluemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29359,421 +25646,6 @@ func (c *OrganizationsKeyvaluemapsDeleteCall) Do(opts ...googleapi.CallOption) (
 
 }
 
-// method id "apigee.organizations.keyvaluemaps.list":
-
-type OrganizationsKeyvaluemapsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List key value maps in an organization.
-func (r *OrganizationsKeyvaluemapsService) List(parent string) *OrganizationsKeyvaluemapsListCall {
-	c := &OrganizationsKeyvaluemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsKeyvaluemapsListCall) Fields(s ...googleapi.Field) *OrganizationsKeyvaluemapsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsKeyvaluemapsListCall) IfNoneMatch(entityTag string) *OrganizationsKeyvaluemapsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsKeyvaluemapsListCall) Context(ctx context.Context) *OrganizationsKeyvaluemapsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsKeyvaluemapsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsKeyvaluemapsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/keyvaluemaps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.keyvaluemaps.list" call.
-func (c *OrganizationsKeyvaluemapsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "List key value maps in an organization.",
-	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.keyvaluemaps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the organization in which to list key value maps.\nMust be of the form\n`organizations/{organization}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/keyvaluemaps",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.operations.cancel":
-
-type OrganizationsOperationsCancelCall struct {
-	s                                       *Service
-	name                                    string
-	googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
-func (r *OrganizationsOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OrganizationsOperationsCancelCall {
-	c := &OrganizationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlelongrunningcanceloperationrequest = googlelongrunningcanceloperationrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsOperationsCancelCall) Fields(s ...googleapi.Field) *OrganizationsOperationsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsOperationsCancelCall) Context(ctx context.Context) *OrganizationsOperationsCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsOperationsCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningcanceloperationrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/organizations/{organizationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "apigee.organizations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleLongrunningCancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "apigee.organizations.operations.delete":
-
-type OrganizationsOperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
-func (r *OrganizationsOperationsService) Delete(name string) *OrganizationsOperationsDeleteCall {
-	c := &OrganizationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsOperationsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsOperationsDeleteCall) Context(ctx context.Context) *OrganizationsOperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.operations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/organizations/{organizationsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "apigee.organizations.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.operations.get":
 
 type OrganizationsOperationsGetCall struct {
@@ -29833,7 +25705,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30014,7 +25886,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30199,7 +26071,7 @@ func (c *OrganizationsReportsCreateCall) Header() http.Header {
 
 func (c *OrganizationsReportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30337,7 +26209,7 @@ func (c *OrganizationsReportsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30480,7 +26352,7 @@ func (c *OrganizationsReportsGetCall) Header() http.Header {
 
 func (c *OrganizationsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30631,7 +26503,7 @@ func (c *OrganizationsReportsListCall) Header() http.Header {
 
 func (c *OrganizationsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30773,7 +26645,7 @@ func (c *OrganizationsReportsUpdateCall) Header() http.Header {
 
 func (c *OrganizationsReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30938,7 +26810,7 @@ func (c *OrganizationsSharedflowsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31089,7 +26961,7 @@ func (c *OrganizationsSharedflowsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31230,7 +27102,7 @@ func (c *OrganizationsSharedflowsGetCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31388,7 +27260,7 @@ func (c *OrganizationsSharedflowsListCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31544,7 +27416,7 @@ func (c *OrganizationsSharedflowsDeploymentsListCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31681,7 +27553,7 @@ func (c *OrganizationsSharedflowsRevisionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31835,7 +27707,7 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) Header() http.Header {
 
 func (c *OrganizationsSharedflowsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31929,128 +27801,6 @@ func (c *OrganizationsSharedflowsRevisionsGetCall) Do(opts ...googleapi.CallOpti
 
 }
 
-// method id "apigee.organizations.sharedflows.revisions.list":
-
-type OrganizationsSharedflowsRevisionsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists all revisions for a shared flow.
-func (r *OrganizationsSharedflowsRevisionsService) List(parent string) *OrganizationsSharedflowsRevisionsListCall {
-	c := &OrganizationsSharedflowsRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsSharedflowsRevisionsListCall) Fields(s ...googleapi.Field) *OrganizationsSharedflowsRevisionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsSharedflowsRevisionsListCall) IfNoneMatch(entityTag string) *OrganizationsSharedflowsRevisionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsSharedflowsRevisionsListCall) Context(ctx context.Context) *OrganizationsSharedflowsRevisionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsSharedflowsRevisionsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsSharedflowsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/revisions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apigee.organizations.sharedflows.revisions.list" call.
-func (c *OrganizationsSharedflowsRevisionsListCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Lists all revisions for a shared flow.",
-	//   "flatPath": "v1/organizations/{organizationsId}/sharedflows/{sharedflowsId}/revisions",
-	//   "httpMethod": "GET",
-	//   "id": "apigee.organizations.sharedflows.revisions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the parent API proxy under which to get API proxy\nrevisions. Must be of the form:\n  `organizations/{organization_id}/sharedflows/{shared_flow_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/sharedflows/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/revisions",
-	//   "response": {
-	//     "items": {
-	//       "type": "any"
-	//     },
-	//     "type": "array"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "apigee.organizations.sharedflows.revisions.updateSharedFlowRevision":
 
 type OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall struct {
@@ -32115,7 +27865,7 @@ func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) Header()
 
 func (c *OrganizationsSharedflowsRevisionsUpdateSharedFlowRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32226,9 +27976,7 @@ type OrganizationsSharedflowsRevisionsDeploymentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all deployments of a shared flow and actual state
-// reported by runtime
-// pods.
+// List: Lists all deployments of a shared flow revision.
 func (r *OrganizationsSharedflowsRevisionsDeploymentsService) List(parent string) *OrganizationsSharedflowsRevisionsDeploymentsListCall {
 	c := &OrganizationsSharedflowsRevisionsDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32272,7 +28020,7 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Header() http.Hea
 
 func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32336,7 +28084,7 @@ func (c *OrganizationsSharedflowsRevisionsDeploymentsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all deployments of a shared flow and actual state reported by runtime\npods.",
+	//   "description": "Lists all deployments of a shared flow revision.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sharedflows/{sharedflowsId}/revisions/{revisionsId}/deployments",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.sharedflows.revisions.deployments.list",

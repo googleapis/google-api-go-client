@@ -184,7 +184,7 @@
       }
     }
   },
-  "revision": "20200220",
+  "revision": "20200406",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -222,6 +222,10 @@
         "startTime": {
           "description": "Output only. Time when the request was received.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of the audio file being transcribed. Empty if the audio was sent\nas byte content.",
           "type": "string"
         }
       },

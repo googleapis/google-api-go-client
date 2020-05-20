@@ -232,6 +232,39 @@
               ]
             }
           }
+        },
+        "workers": {
+          "methods": {
+            "checkIn": {
+              "description": "The worker uses this method to retrieve the assigned operation and\nprovide periodic status updates.",
+              "flatPath": "v2alpha1/projects/{projectsId}/workers/{workersId}:checkIn",
+              "httpMethod": "POST",
+              "id": "genomics.projects.workers.checkIn",
+              "parameterOrder": [
+                "id"
+              ],
+              "parameters": {
+                "id": {
+                  "description": "The worker id, assigned when it was created.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/workers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2alpha1/{+id}:checkIn",
+              "request": {
+                "$ref": "CheckInRequest"
+              },
+              "response": {
+                "$ref": "CheckInResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/genomics"
+              ]
+            }
+          }
         }
       }
     },
@@ -268,7 +301,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200414",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {

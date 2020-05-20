@@ -70,11 +70,11 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 	}{
 		{
 			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://foo.mtls.googleapis.com/bar/baz",
+			Want:            "https://foo.googleapis.com/bar/baz",
 		},
 		{
 			DefaultEndpoint: "https://staging-foo.sandbox.googleapis.com/bar/baz",
-			Want:            "https://staging-foo.mtls.sandbox.googleapis.com/bar/baz",
+			Want:            "https://staging-foo.sandbox.googleapis.com/bar/baz",
 		},
 		{
 			UserEndpoint:    "myhost:3999",

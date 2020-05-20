@@ -291,7 +291,7 @@ type ExecStepConfig struct {
 	// execution can return to indicate a success.
 	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
 
-	// GcsObject: A Google Cloud Storage object containing the executable.
+	// GcsObject: A Cloud Storage object containing the executable.
 	GcsObject *GcsObject `json:"gcsObject,omitempty"`
 
 	// Interpreter: The script interpreter to use to run the script. If no
@@ -344,7 +344,7 @@ func (s *ExecStepConfig) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutePatchJobRequest: A request message to initiate patching across
-// Google Compute Engine
+// Compute Engine
 // instances.
 type ExecutePatchJobRequest struct {
 	// Description: Description of the patch job. Length of the description
@@ -399,17 +399,17 @@ func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GcsObject: Google Cloud Storage object representation.
+// GcsObject: Cloud Storage object representation.
 type GcsObject struct {
-	// Bucket: Required. Bucket of the Google Cloud Storage object.
+	// Bucket: Required. Bucket of the Cloud Storage object.
 	Bucket string `json:"bucket,omitempty"`
 
-	// GenerationNumber: Required. Generation number of the Google Cloud
-	// Storage object. This is used to
+	// GenerationNumber: Required. Generation number of the Cloud Storage
+	// object. This is used to
 	// ensure that the ExecStep specified by this PatchJob does not change.
 	GenerationNumber int64 `json:"generationNumber,omitempty,string"`
 
-	// Object: Required. Name of the Google Cloud Storage object.
+	// Object: Required. Name of the Cloud Storage object.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -591,9 +591,7 @@ func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
 
 // OneTimeSchedule: Sets the time for a one time patch deployment.
 // Timestamp is in
-// <a href="https://www.ietf.org/rfc/rfc3339.txt"
-// target="_blank">RFC3339</a>
-// text format.
+// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 type OneTimeSchedule struct {
 	// ExecuteTime: Required. The desired patch job execution time.
 	ExecuteTime string `json:"executeTime,omitempty"`
@@ -701,13 +699,12 @@ func (s *PatchConfig) MarshalJSON() ([]byte, error) {
 // creating and
 // managing patch deployments, see [Scheduling
 // patch
-// jobs](/compute/docs/os-patch-management/schedule-patch-jobs).
+// jobs](https://cloud.google.com/compute/docs/os-patch-management/
+// schedule-patch-jobs).
 type PatchDeployment struct {
 	// CreateTime: Output only. Time the patch deployment was created.
 	// Timestamp is in
-	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
-	// target="_blank">RFC3339</a>
-	// text format.
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. Description of the patch deployment. Length of
@@ -724,10 +721,9 @@ type PatchDeployment struct {
 
 	// LastExecuteTime: Output only. The last time a patch job was started
 	// by this deployment.
-	// Timestamp is in
-	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
-	// target="_blank">RFC3339</a>
-	// text format.
+	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt)
+	// text
+	// format.
 	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
 
 	// Name: Unique name for the patch deployment resource in a project. The
@@ -750,9 +746,7 @@ type PatchDeployment struct {
 
 	// UpdateTime: Output only. Time the patch deployment was last updated.
 	// Timestamp is in
-	// <a href="https://www.ietf.org/rfc/rfc3339.txt"
-	// target="_blank">RFC3339</a>
-	// text format.
+	// [RFC3339]("https://www.ietf.org/rfc/rfc3339.txt) text format.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -795,9 +789,9 @@ type PatchInstanceFilter struct {
 	// permitted.
 	All bool `json:"all,omitempty"`
 
-	// GroupLabels: Targets VM instances matching at least one of these
-	// label sets. This allows
-	// targeting of disparate groups, for example "env=prod or env=staging".
+	// GroupLabels: Targets VM instances matching ANY of these GroupLabels.
+	// This allows
+	// targeting of disparate groups of VM instances.
 	GroupLabels []*PatchInstanceFilterGroupLabel `json:"groupLabels,omitempty"`
 
 	// InstanceNamePrefixes: Targets VMs whose name starts with one of these
@@ -846,12 +840,22 @@ func (s *PatchInstanceFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PatchInstanceFilterGroupLabel: Represents a group of VMs that can be
-// identified as having all these
-// labels, for example "env=prod and app=web".
+// PatchInstanceFilterGroupLabel: Targets a group of VM instances by
+// using their
+// [assigned
+// labels](https://cloud.google.com/compute/docs/labeling-resou
+// rces). Labels
+// are key-value pairs. A `GroupLabel` is a combination of labels
+// that is used to target VMs for a patch job.
+//
+// For example, a patch job can target VMs that have the
+// following
+// `GroupLabel`: `{"env":"test", "app":"web"}`. This means that the
+// patch job
+// is applied to VMs that have both the labels `env=test` and `app=web`.
 type PatchInstanceFilterGroupLabel struct {
-	// Labels: Google Compute Engine instance labels that must be present
-	// for a VM
+	// Labels: Compute Engine instance labels that must be present for a
+	// VM
 	// instance to be targeted by this filter.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -887,8 +891,10 @@ func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 // details, use ListPatchJobInstanceDetails.
 //
 // For more information about patch jobs, see
-// [Creating patch
-// jobs](/compute/docs/os-patch-management/create-patch-job).
+// [Creating
+// patch
+// jobs](https://cloud.google.com/compute/docs/os-patch-management/
+// create-patch-job).
 type PatchJob struct {
 	// CreateTime: Time this patch job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1004,8 +1010,8 @@ func (s *PatchJob) UnmarshalJSON(data []byte) error {
 // instance details, see
 // [Listing all VM instance details for a specific
 // patch
-// job](/compute/docs/os-patch-management/manage-patch-jobs#list-in
-// stance-details).
+// job](https://cloud.google.com/compute/docs/os-patch-management/m
+// anage-patch-jobs#list-instance-details).
 type PatchJobInstanceDetails struct {
 	// AttemptCount: The number of times the agent that the agent attempts
 	// to apply the patch.
@@ -1320,14 +1326,14 @@ type WeekDayOfMonth struct {
 	// DayOfWeek: Required. A day of the week.
 	//
 	// Possible values:
-	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
-	//   "MONDAY" - The day-of-week of Monday.
-	//   "TUESDAY" - The day-of-week of Tuesday.
-	//   "WEDNESDAY" - The day-of-week of Wednesday.
-	//   "THURSDAY" - The day-of-week of Thursday.
-	//   "FRIDAY" - The day-of-week of Friday.
-	//   "SATURDAY" - The day-of-week of Saturday.
-	//   "SUNDAY" - The day-of-week of Sunday.
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// WeekOrdinal: Required. Week number in a month. 1-4 indicates the 1st
@@ -1363,14 +1369,14 @@ type WeeklySchedule struct {
 	// DayOfWeek: Required. Day of the week.
 	//
 	// Possible values:
-	//   "DAY_OF_WEEK_UNSPECIFIED" - The unspecified day-of-week.
-	//   "MONDAY" - The day-of-week of Monday.
-	//   "TUESDAY" - The day-of-week of Tuesday.
-	//   "WEDNESDAY" - The day-of-week of Wednesday.
-	//   "THURSDAY" - The day-of-week of Thursday.
-	//   "FRIDAY" - The day-of-week of Friday.
-	//   "SATURDAY" - The day-of-week of Saturday.
-	//   "SUNDAY" - The day-of-week of Sunday.
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
@@ -1650,7 +1656,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1793,7 +1799,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1934,7 +1940,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2093,7 +2099,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2262,7 +2268,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2402,7 +2408,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2553,7 +2559,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +2727,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2927,7 +2933,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

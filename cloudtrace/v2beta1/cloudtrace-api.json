@@ -273,7 +273,7 @@
       }
     }
   },
-  "revision": "20200309",
+  "revision": "20200330",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -324,7 +324,7 @@
           "description": "Required. The export destination."
         },
         "writerIdentity": {
-          "description": "Output only. A service account name for exporting the data. This field is\nset by sinks.create and sinks.update. The service account will need to be\ngranted write access to the destination specified in the output\nconfiguration, see [Granting access for a\nresource](/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource).\nTo create tables and write data this account will need the dataEditor role.\nRead more about roles in the [BigQuery\ndocumentation](https://cloud.google.com/bigquery/docs/access-control#permissions_and_roles).\nE.g.:\n\n   \"service-00000001@00000002.iam.gserviceaccount.com\"",
+          "description": "Output only. A service account name for exporting the data. This field is\nset by sinks.create and sinks.update. The service account will need to be\ngranted write access to the destination specified in the output\nconfiguration, see [Granting access for a\nresource](/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource).\nTo create tables and write data this account will need the dataEditor role.\nRead more about roles in the [BigQuery\ndocumentation](https://cloud.google.com/bigquery/docs/access-control).\nE.g.:\n\n   \"service-00000001@00000002.iam.gserviceaccount.com\"",
           "type": "string"
         }
       },

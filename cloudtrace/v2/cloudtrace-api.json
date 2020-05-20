@@ -181,7 +181,7 @@
       }
     }
   },
-  "revision": "20200309",
+  "revision": "20200414",
   "rootUrl": "https://cloudtrace.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -227,7 +227,7 @@
           "additionalProperties": {
             "$ref": "AttributeValue"
           },
-          "description": "The set of attributes. Each attribute's key can be up to 128 bytes\nlong. The value can be a string up to 256 bytes, a signed 64-bit integer,\nor the Boolean values `true` and `false`. For example:\n\n    \"/instance_id\": \"my-instance\"\n    \"/http/user_agent\": \"\"\n    \"/http/request_bytes\": 300\n    \"abc.com/myattribute\": true",
+          "description": "The set of attributes. Each attribute's key can be up to 128 bytes\nlong. The value can be a string up to 256 bytes, a signed 64-bit integer,\nor the Boolean values `true` and `false`. For example:\n\n    \"/instance_id\": { \"string_value\": { \"value\": \"my-instance\" } }\n    \"/http/request_bytes\": { \"int_value\": 300 }\n    \"abc.com/myattribute\": { \"bool_value\": false }",
           "type": "object"
         },
         "droppedAttributesCount": {

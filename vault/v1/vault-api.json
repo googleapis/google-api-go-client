@@ -372,7 +372,7 @@
           ]
         },
         "update": {
-          "description": "Updates the specified matter.\nThis updates only the name and description of the matter, identified by\nmatter id. Changes to any other fields are ignored.\nReturns the default view of the matter.",
+          "description": "Updates the specified matter.\nThis updates only the name and description of the matter, identified by\nmatter ID. Changes to any other fields are ignored.\nReturns the default view of the matter.",
           "flatPath": "v1/matters/{matterId}",
           "httpMethod": "PUT",
           "id": "vault.matters.update",
@@ -904,7 +904,7 @@
               ],
               "parameters": {
                 "matterId": {
-                  "description": "The matter id of the parent matter for which the saved query is to be\ncreated.",
+                  "description": "The matter ID of the parent matter for which the saved query is to be\ncreated.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -932,13 +932,13 @@
               ],
               "parameters": {
                 "matterId": {
-                  "description": "The matter id of the parent matter for which the saved query is to be\ndeleted.",
+                  "description": "The matter ID of the parent matter for which the saved query is to be\ndeleted.",
                   "location": "path",
                   "required": true,
                   "type": "string"
                 },
                 "savedQueryId": {
-                  "description": "Id of the saved query to be deleted.",
+                  "description": "ID of the saved query to be deleted.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -963,13 +963,13 @@
               ],
               "parameters": {
                 "matterId": {
-                  "description": "The matter id of the parent matter for which the saved query is to be\nretrieved.",
+                  "description": "The matter ID of the parent matter for which the saved query is to be\nretrieved.",
                   "location": "path",
                   "required": true,
                   "type": "string"
                 },
                 "savedQueryId": {
-                  "description": "Id of the saved query to be retrieved.",
+                  "description": "ID of the saved query to be retrieved.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -994,7 +994,7 @@
               ],
               "parameters": {
                 "matterId": {
-                  "description": "The matter id of the parent matter for which the saved queries are to be\nretrieved.",
+                  "description": "The matter ID of the parent matter for which the saved queries are to be\nretrieved.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -1051,7 +1051,7 @@
       }
     }
   },
-  "revision": "20200305",
+  "revision": "20200501",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {
@@ -1088,7 +1088,7 @@
       "id": "AddHeldAccountsRequest",
       "properties": {
         "accountIds": {
-          "description": "Account ids to identify which accounts to add. Only account_ids or only\nemails should be specified, but not both.",
+          "description": "Account IDs to identify which accounts to add. Only account_ids or only\nemails should be specified, but not both.",
           "items": {
             "type": "string"
           },
@@ -1159,7 +1159,7 @@
       "id": "CloudStorageFile",
       "properties": {
         "bucketName": {
-          "description": "The cloud storage bucket name of this export file.\nCan be used in cloud storage JSON/XML API.",
+          "description": "The cloud storage bucket name of this export file.\nCan be used in cloud storage JSON/XML API, but not to list the bucket\ncontents. Instead, you can \u003ca\nhref=\"https://cloud.google.com/storage/docs/json_api/v1/objects/get\"\u003e\nget individual export files\u003c/a\u003e by object name.",
           "type": "string"
         },
         "md5Hash": {
@@ -1774,7 +1774,7 @@
       "id": "MatterPermission",
       "properties": {
         "accountId": {
-          "description": "The account id, as provided by \u003ca\nhref=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
+          "description": "The account ID, as provided by \u003ca\nhref=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
           "type": "string"
         },
         "role": {
@@ -1945,7 +1945,7 @@
       "id": "RemoveHeldAccountsRequest",
       "properties": {
         "accountIds": {
-          "description": "Account ids to identify HeldAccounts to remove.",
+          "description": "Account IDs to identify HeldAccounts to remove.",
           "items": {
             "type": "string"
           },
@@ -2010,7 +2010,7 @@
           "type": "string"
         },
         "matterId": {
-          "description": "Output only. The matter id of the associated matter.\nThe server does not look at this field during create and always uses matter\nid in the URL.",
+          "description": "Output only. The matter ID of the associated matter.\nThe server does not look at this field during create and always uses matter\nid in the URL.",
           "type": "string"
         },
         "query": {
@@ -2029,7 +2029,7 @@
       "id": "SharedDriveInfo",
       "properties": {
         "sharedDriveIds": {
-          "description": "List of Shared drive ids, as provided by \u003ca\nhref=\"https://developers.google.com/drive\"\u003eDrive API\u003c/a\u003e.",
+          "description": "List of Shared drive IDs, as provided by \u003ca\nhref=\"https://developers.google.com/drive\"\u003eDrive API\u003c/a\u003e.",
           "items": {
             "type": "string"
           },
@@ -2070,7 +2070,7 @@
       "id": "TeamDriveInfo",
       "properties": {
         "teamDriveIds": {
-          "description": "List of Team Drive ids, as provided by \u003ca\nhref=\"https://developers.google.com/drive\"\u003eDrive API\u003c/a\u003e.",
+          "description": "List of Team Drive IDs, as provided by \u003ca\nhref=\"https://developers.google.com/drive\"\u003eDrive API\u003c/a\u003e.",
           "items": {
             "type": "string"
           },

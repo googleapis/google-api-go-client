@@ -1348,7 +1348,7 @@ type QueryDriveActivityRequest struct {
 
 	// ConsolidationStrategy: Details on how to consolidate related actions
 	// that make up the activity. If
-	// not set, then related actions will not be consolidated.
+	// not set, then related actions are not consolidated.
 	ConsolidationStrategy *ConsolidationStrategy `json:"consolidationStrategy,omitempty"`
 
 	// Filter: The filtering for items returned from this query request. The
@@ -1373,7 +1373,7 @@ type QueryDriveActivityRequest struct {
 	//     parentheses.
 	//     Examples:
 	//       - <tt>detail.action_detail_case: RENAME</tt>
-	//       - <tt>detail.action_detail_case:(CREATE UPLOAD)</tt>
+	//       - <tt>detail.action_detail_case:(CREATE EDIT)</tt>
 	//       - <tt>-detail.action_detail_case:MOVE</tt>
 	Filter string `json:"filter,omitempty"`
 
@@ -1382,14 +1382,22 @@ type QueryDriveActivityRequest struct {
 	// "items/ITEM_ID".
 	ItemName string `json:"itemName,omitempty"`
 
-	// PageSize: The requested number of activity to return. If not set, a
-	// default value
-	// will be used.
+	// PageSize: The miminum number of activities desired in the response;
+	// the server will
+	// attempt to return at least this quanitity. The server may also return
+	// fewer
+	// activities if it has a partial response ready before the request
+	// times out.
+	// If not set, a default value is used.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: The next_page_token value returned from a previous
-	// QueryDriveActivity
-	// request, if any.
+	// PageToken: The token identifying which page of results to return. Set
+	// this to the
+	// next_page_token value returned from a previous query to obtain
+	// the
+	// following page of results. If not set, the first page of results will
+	// be
+	// returned.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AncestorName") to
@@ -1929,7 +1937,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

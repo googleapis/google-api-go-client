@@ -123,8 +123,18 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Advertisers = NewAdvertisersService(s)
+	s.CombinedAudiences = NewCombinedAudiencesService(s)
+	s.CustomLists = NewCustomListsService(s)
+	s.FirstAndThirdPartyAudiences = NewFirstAndThirdPartyAudiencesService(s)
+	s.FloodlightGroups = NewFloodlightGroupsService(s)
+	s.GoogleAudiences = NewGoogleAudiencesService(s)
+	s.InventorySourceGroups = NewInventorySourceGroupsService(s)
+	s.InventorySources = NewInventorySourcesService(s)
 	s.Media = NewMediaService(s)
+	s.Partners = NewPartnersService(s)
 	s.Sdfdownloadtasks = NewSdfdownloadtasksService(s)
+	s.TargetingTypes = NewTargetingTypesService(s)
 	return s, nil
 }
 
@@ -133,9 +143,29 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Advertisers *AdvertisersService
+
+	CombinedAudiences *CombinedAudiencesService
+
+	CustomLists *CustomListsService
+
+	FirstAndThirdPartyAudiences *FirstAndThirdPartyAudiencesService
+
+	FloodlightGroups *FloodlightGroupsService
+
+	GoogleAudiences *GoogleAudiencesService
+
+	InventorySourceGroups *InventorySourceGroupsService
+
+	InventorySources *InventorySourcesService
+
 	Media *MediaService
 
+	Partners *PartnersService
+
 	Sdfdownloadtasks *SdfdownloadtasksService
+
+	TargetingTypes *TargetingTypesService
 }
 
 func (s *Service) userAgent() string {
@@ -145,12 +175,225 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func NewAdvertisersService(s *Service) *AdvertisersService {
+	rs := &AdvertisersService{s: s}
+	rs.Assets = NewAdvertisersAssetsService(s)
+	rs.Campaigns = NewAdvertisersCampaignsService(s)
+	rs.Channels = NewAdvertisersChannelsService(s)
+	rs.Creatives = NewAdvertisersCreativesService(s)
+	rs.InsertionOrders = NewAdvertisersInsertionOrdersService(s)
+	rs.LineItems = NewAdvertisersLineItemsService(s)
+	rs.LocationLists = NewAdvertisersLocationListsService(s)
+	rs.NegativeKeywordLists = NewAdvertisersNegativeKeywordListsService(s)
+	return rs
+}
+
+type AdvertisersService struct {
+	s *Service
+
+	Assets *AdvertisersAssetsService
+
+	Campaigns *AdvertisersCampaignsService
+
+	Channels *AdvertisersChannelsService
+
+	Creatives *AdvertisersCreativesService
+
+	InsertionOrders *AdvertisersInsertionOrdersService
+
+	LineItems *AdvertisersLineItemsService
+
+	LocationLists *AdvertisersLocationListsService
+
+	NegativeKeywordLists *AdvertisersNegativeKeywordListsService
+}
+
+func NewAdvertisersAssetsService(s *Service) *AdvertisersAssetsService {
+	rs := &AdvertisersAssetsService{s: s}
+	return rs
+}
+
+type AdvertisersAssetsService struct {
+	s *Service
+}
+
+func NewAdvertisersCampaignsService(s *Service) *AdvertisersCampaignsService {
+	rs := &AdvertisersCampaignsService{s: s}
+	return rs
+}
+
+type AdvertisersCampaignsService struct {
+	s *Service
+}
+
+func NewAdvertisersChannelsService(s *Service) *AdvertisersChannelsService {
+	rs := &AdvertisersChannelsService{s: s}
+	return rs
+}
+
+type AdvertisersChannelsService struct {
+	s *Service
+}
+
+func NewAdvertisersCreativesService(s *Service) *AdvertisersCreativesService {
+	rs := &AdvertisersCreativesService{s: s}
+	return rs
+}
+
+type AdvertisersCreativesService struct {
+	s *Service
+}
+
+func NewAdvertisersInsertionOrdersService(s *Service) *AdvertisersInsertionOrdersService {
+	rs := &AdvertisersInsertionOrdersService{s: s}
+	return rs
+}
+
+type AdvertisersInsertionOrdersService struct {
+	s *Service
+}
+
+func NewAdvertisersLineItemsService(s *Service) *AdvertisersLineItemsService {
+	rs := &AdvertisersLineItemsService{s: s}
+	rs.TargetingTypes = NewAdvertisersLineItemsTargetingTypesService(s)
+	return rs
+}
+
+type AdvertisersLineItemsService struct {
+	s *Service
+
+	TargetingTypes *AdvertisersLineItemsTargetingTypesService
+}
+
+func NewAdvertisersLineItemsTargetingTypesService(s *Service) *AdvertisersLineItemsTargetingTypesService {
+	rs := &AdvertisersLineItemsTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewAdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type AdvertisersLineItemsTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewAdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService(s *Service) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService {
+	rs := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersLocationListsService(s *Service) *AdvertisersLocationListsService {
+	rs := &AdvertisersLocationListsService{s: s}
+	return rs
+}
+
+type AdvertisersLocationListsService struct {
+	s *Service
+}
+
+func NewAdvertisersNegativeKeywordListsService(s *Service) *AdvertisersNegativeKeywordListsService {
+	rs := &AdvertisersNegativeKeywordListsService{s: s}
+	return rs
+}
+
+type AdvertisersNegativeKeywordListsService struct {
+	s *Service
+}
+
+func NewCombinedAudiencesService(s *Service) *CombinedAudiencesService {
+	rs := &CombinedAudiencesService{s: s}
+	return rs
+}
+
+type CombinedAudiencesService struct {
+	s *Service
+}
+
+func NewCustomListsService(s *Service) *CustomListsService {
+	rs := &CustomListsService{s: s}
+	return rs
+}
+
+type CustomListsService struct {
+	s *Service
+}
+
+func NewFirstAndThirdPartyAudiencesService(s *Service) *FirstAndThirdPartyAudiencesService {
+	rs := &FirstAndThirdPartyAudiencesService{s: s}
+	return rs
+}
+
+type FirstAndThirdPartyAudiencesService struct {
+	s *Service
+}
+
+func NewFloodlightGroupsService(s *Service) *FloodlightGroupsService {
+	rs := &FloodlightGroupsService{s: s}
+	return rs
+}
+
+type FloodlightGroupsService struct {
+	s *Service
+}
+
+func NewGoogleAudiencesService(s *Service) *GoogleAudiencesService {
+	rs := &GoogleAudiencesService{s: s}
+	return rs
+}
+
+type GoogleAudiencesService struct {
+	s *Service
+}
+
+func NewInventorySourceGroupsService(s *Service) *InventorySourceGroupsService {
+	rs := &InventorySourceGroupsService{s: s}
+	return rs
+}
+
+type InventorySourceGroupsService struct {
+	s *Service
+}
+
+func NewInventorySourcesService(s *Service) *InventorySourcesService {
+	rs := &InventorySourcesService{s: s}
+	return rs
+}
+
+type InventorySourcesService struct {
+	s *Service
+}
+
 func NewMediaService(s *Service) *MediaService {
 	rs := &MediaService{s: s}
 	return rs
 }
 
 type MediaService struct {
+	s *Service
+}
+
+func NewPartnersService(s *Service) *PartnersService {
+	rs := &PartnersService{s: s}
+	rs.Channels = NewPartnersChannelsService(s)
+	return rs
+}
+
+type PartnersService struct {
+	s *Service
+
+	Channels *PartnersChannelsService
+}
+
+func NewPartnersChannelsService(s *Service) *PartnersChannelsService {
+	rs := &PartnersChannelsService{s: s}
+	return rs
+}
+
+type PartnersChannelsService struct {
 	s *Service
 }
 
@@ -173,6 +416,3088 @@ func NewSdfdownloadtasksOperationsService(s *Service) *SdfdownloadtasksOperation
 
 type SdfdownloadtasksOperationsService struct {
 	s *Service
+}
+
+func NewTargetingTypesService(s *Service) *TargetingTypesService {
+	rs := &TargetingTypesService{s: s}
+	rs.TargetingOptions = NewTargetingTypesTargetingOptionsService(s)
+	return rs
+}
+
+type TargetingTypesService struct {
+	s *Service
+
+	TargetingOptions *TargetingTypesTargetingOptionsService
+}
+
+func NewTargetingTypesTargetingOptionsService(s *Service) *TargetingTypesTargetingOptionsService {
+	rs := &TargetingTypesTargetingOptionsService{s: s}
+	return rs
+}
+
+type TargetingTypesTargetingOptionsService struct {
+	s *Service
+}
+
+// ActiveViewVideoViewabilityMetricConfig: Configuration for custom
+// Active View video viewability metrics.
+type ActiveViewVideoViewabilityMetricConfig struct {
+	// DisplayName: Required. The display name of the custom metric.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MinimumDuration: The minimum visible video duration required (in
+	// seconds) in order for an
+	// impression to be recorded.
+	//
+	// You must specify
+	// minimum_duration,
+	// minimum_quartile
+	// or both. If both are specified, an impression meets the metric
+	// criteria if
+	// either requirement is met (whichever happens first).
+	//
+	// Possible values:
+	//   "VIDEO_DURATION_UNSPECIFIED" - Value is not specified or is unknown
+	// in this version.
+	//   "VIDEO_DURATION_SECONDS_NONE" - No duration value.
+	//   "VIDEO_DURATION_SECONDS_0" - 0 seconds.
+	//   "VIDEO_DURATION_SECONDS_1" - 1 second.
+	//   "VIDEO_DURATION_SECONDS_2" - 2 seconds.
+	//   "VIDEO_DURATION_SECONDS_3" - 3 seconds.
+	//   "VIDEO_DURATION_SECONDS_4" - 4 seconds.
+	//   "VIDEO_DURATION_SECONDS_5" - 5 seconds.
+	//   "VIDEO_DURATION_SECONDS_6" - 6 seconds.
+	//   "VIDEO_DURATION_SECONDS_7" - 7 seconds.
+	//   "VIDEO_DURATION_SECONDS_8" - 8 seconds.
+	//   "VIDEO_DURATION_SECONDS_9" - 9 seconds.
+	//   "VIDEO_DURATION_SECONDS_10" - 10 seconds.
+	//   "VIDEO_DURATION_SECONDS_11" - 11 seconds.
+	//   "VIDEO_DURATION_SECONDS_12" - 12 seconds.
+	//   "VIDEO_DURATION_SECONDS_13" - 13 seconds.
+	//   "VIDEO_DURATION_SECONDS_14" - 14 seconds.
+	//   "VIDEO_DURATION_SECONDS_15" - 15 seconds.
+	//   "VIDEO_DURATION_SECONDS_30" - 30 seconds.
+	//   "VIDEO_DURATION_SECONDS_45" - 45 seconds.
+	//   "VIDEO_DURATION_SECONDS_60" - 60 seconds.
+	MinimumDuration string `json:"minimumDuration,omitempty"`
+
+	// MinimumQuartile: The minimum visible video duration required, based
+	// on the video quartiles,
+	// in order for an impression to be recorded.
+	//
+	// You must specify
+	// minimum_duration,
+	// minimum_quartile
+	// or both. If both are specified, an impression meets the metric
+	// criteria if
+	// either requirement is met (whichever happens first).
+	//
+	// Possible values:
+	//   "VIDEO_DURATION_QUARTILE_UNSPECIFIED" - Value is not specified or
+	// is unknown in this version.
+	//   "VIDEO_DURATION_QUARTILE_NONE" - No quartile value.
+	//   "VIDEO_DURATION_QUARTILE_FIRST" - First quartile.
+	//   "VIDEO_DURATION_QUARTILE_SECOND" - Second quartile (midpoint).
+	//   "VIDEO_DURATION_QUARTILE_THIRD" - Third quartile.
+	//   "VIDEO_DURATION_QUARTILE_FOURTH" - Fourth quartile (completion).
+	MinimumQuartile string `json:"minimumQuartile,omitempty"`
+
+	// MinimumViewability: Required. The minimum percentage of the video
+	// ad's pixels visible on the screen in
+	// order for an impression to be recorded.
+	//
+	// Possible values:
+	//   "VIEWABILITY_PERCENT_UNSPECIFIED" - Value is not specified or is
+	// unknown in this version.
+	//   "VIEWABILITY_PERCENT_0" - 0% viewable.
+	//   "VIEWABILITY_PERCENT_25" - 25% viewable.
+	//   "VIEWABILITY_PERCENT_50" - 50% viewable.
+	//   "VIEWABILITY_PERCENT_75" - 75% viewable.
+	//   "VIEWABILITY_PERCENT_100" - 100% viewable.
+	MinimumViewability string `json:"minimumViewability,omitempty"`
+
+	// MinimumVolume: Required. The minimum percentage of the video ad's
+	// volume required in order for an
+	// impression to be recorded.
+	//
+	// Possible values:
+	//   "VIDEO_VOLUME_PERCENT_UNSPECIFIED" - Value is not specified or is
+	// unknown in this version.
+	//   "VIDEO_VOLUME_PERCENT_0" - 0% volume.
+	//   "VIDEO_VOLUME_PERCENT_10" - 10% volume.
+	MinimumVolume string `json:"minimumVolume,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ActiveViewVideoViewabilityMetricConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Adloox: Details of Adloox settings.
+type Adloox struct {
+	// ExcludedAdlooxCategories: Adloox's brand safety settings.
+	//
+	// Possible values:
+	//   "ADLOOX_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any Adloox option.
+	//   "ADULT_CONTENT_HARD" - Adult content (hard).
+	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
+	//   "ILLEGAL_CONTENT" - Illegal content.
+	//   "BORDERLINE_CONTENT" - Borderline content.
+	//   "DISCRIMINATORY_CONTENT" - Discriminatory content.
+	//   "VIOLENT_CONTENT_WEAPONS" - Violent content & weapons.
+	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
+	//   "FRAUD" - Fraud.
+	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExcludedAdlooxCategories") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludedAdlooxCategories")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Adloox) MarshalJSON() ([]byte, error) {
+	type NoMethod Adloox
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Advertiser: A single advertiser in Display & Video 360 (DV360).
+type Advertiser struct {
+	// AdServerConfig: Required. Immutable. Ad server related settings of
+	// the advertiser.
+	AdServerConfig *AdvertiserAdServerConfig `json:"adServerConfig,omitempty"`
+
+	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned
+	// by the system.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// CreativeConfig: Required. Creative related settings of the
+	// advertiser.
+	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
+
+	// DataAccessConfig: Settings that control how advertiser data may be
+	// accessed.
+	DataAccessConfig *AdvertiserDataAccessConfig `json:"dataAccessConfig,omitempty"`
+
+	// DisplayName: Required. The display name of the advertiser.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Required. Controls whether or not insertion orders and
+	// line items of the
+	// advertiser can spend their budgets and bid on inventory.
+	//
+	// * Accepted values are `ENTITY_STATUS_ACTIVE`
+	// and
+	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`.
+	// * If set to
+	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`, the advertiser will be
+	// deleted 30
+	// days from when it was first scheduled for deletion.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// GeneralConfig: Required. General settings of the advertiser.
+	GeneralConfig *AdvertiserGeneralConfig `json:"generalConfig,omitempty"`
+
+	// IntegrationDetails: Integration details of the advertiser.
+	// Only integrationCode is currently
+	// applicable to advertiser. Other fields of IntegrationDetails are
+	// not
+	// supported and will be ignored if provided.
+	IntegrationDetails *IntegrationDetails `json:"integrationDetails,omitempty"`
+
+	// Name: Output only. The resource name of the advertiser.
+	Name string `json:"name,omitempty"`
+
+	// PartnerId: Required. Immutable. The unique ID of the partner that the
+	// advertiser belongs to.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// UpdateTime: Output only. The timestamp when the advertiser was last
+	// updated. Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdServerConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdServerConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Advertiser) MarshalJSON() ([]byte, error) {
+	type NoMethod Advertiser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserAdServerConfig: Ad server related settings of an
+// advertiser.
+type AdvertiserAdServerConfig struct {
+	// CmHybridConfig: The configuration for advertisers that use both
+	// Campaign Manager (CM) and
+	// third-party ad servers.
+	CmHybridConfig *CmHybridConfig `json:"cmHybridConfig,omitempty"`
+
+	// ThirdPartyOnlyConfig: The configuration for advertisers that use
+	// third-party ad servers
+	// only.
+	ThirdPartyOnlyConfig *ThirdPartyOnlyConfig `json:"thirdPartyOnlyConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CmHybridConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CmHybridConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserAdServerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserCreativeConfig: Creatives related settings of an
+// advertiser.
+type AdvertiserCreativeConfig struct {
+	// DynamicCreativeEnabled: Whether or not the advertiser is enabled for
+	// dynamic creatives.
+	DynamicCreativeEnabled bool `json:"dynamicCreativeEnabled,omitempty"`
+
+	// IasClientId: An ID for configuring campaign monitoring provided by
+	// Integral Ad Service
+	// (IAS). The DV360 system will append an IAS "Campaign Monitor"
+	// tag
+	// containing this ID to the creative tag.
+	IasClientId int64 `json:"iasClientId,omitempty,string"`
+
+	// ObaComplianceDisabled: Whether or not to use DV360's Online
+	// Behavioral Advertising (OBA)
+	// compliance.
+	//
+	// Warning: Changing OBA settings may cause the audit status of your
+	// creatives
+	// to be reset by some ad exchanges, making them ineligible to serve
+	// until
+	// they are re-approved.
+	ObaComplianceDisabled bool `json:"obaComplianceDisabled,omitempty"`
+
+	// VideoCreativeDataSharingAuthorized: By setting this field to `true`,
+	// you, on behalf of your company,
+	// authorize Google to use video creatives associated with this Display
+	// &
+	// Video 360 advertiser to provide reporting and features related to
+	// the
+	// advertiser's television campaigns.
+	//
+	// Applicable only when the advertiser has a
+	// CM hybrid ad server
+	// configuration.
+	VideoCreativeDataSharingAuthorized bool `json:"videoCreativeDataSharingAuthorized,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DynamicCreativeEnabled") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DynamicCreativeEnabled")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserCreativeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserCreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserDataAccessConfig: Settings that control how advertiser
+// related data may be accessed.
+type AdvertiserDataAccessConfig struct {
+	// SdfConfig: Structured Data Files (SDF) settings for the
+	// advertiser.
+	//
+	// If not specified, the SDF settings of the parent partner are used.
+	SdfConfig *AdvertiserSdfConfig `json:"sdfConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdfConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdfConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserDataAccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserDataAccessConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserGeneralConfig: General settings of an advertiser.
+type AdvertiserGeneralConfig struct {
+	// CurrencyCode: Required. Immutable. Advertiser's currency in ISO 4217
+	// format.
+	//
+	// Accepted codes and the currencies they represent are:
+	//
+	// Currency Code : Currency Name
+	//
+	// * `ARS` : Argentine Peso
+	// * `AUD` : Australian Dollar
+	// * `BRL` : Brazilian Real
+	// * `CAD` : Canadian Dollar
+	// * `CHF` : Swiss Franc
+	// * `CLP` : Chilean Peso
+	// * `CNY` : Chinese Yuan
+	// * `COP` : Colombian Peso
+	// * `CZK` : Czech Koruna
+	// * `DKK` : Danish Krone
+	// * `EGP` : Egyption Pound
+	// * `EUR` : Euro
+	// * `GBP` : British Pound
+	// * `HKD` : Hong Kong Dollar
+	// * `HUF` : Hungarian Forint
+	// * `IDR` : Indonesian Rupiah
+	// * `ILS` : Israeli Shekel
+	// * `INR` : Indian Rupee
+	// * `JPY` : Japanese Yen
+	// * `KRW` : South Korean Won
+	// * `MXN` : Mexican Pesos
+	// * `MYR` : Malaysian Ringgit
+	// * `NGN` : Nigerian Naira
+	// * `NOK` : Norwegian Krone
+	// * `NZD` : New Zealand Dollar
+	// * `PEN` : Peruvian Nuevo Sol
+	// * `PLN` : Polish Zloty
+	// * `RON` : New Romanian Leu
+	// * `RUB` : Russian Ruble
+	// * `SEK` : Swedish Krona
+	// * `TRY` : Turkish Lira
+	// * `TWD` : New Taiwan Dollar
+	// * `USD` : US Dollar
+	// * `ZAR` : South African Rand
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DomainUrl: Required. The domain URL of the advertiser's primary
+	// website.
+	// The system will send this information to publishers that require
+	// website
+	// URL to associate a campaign with an advertiser.
+	//
+	// Provide a URL with no path or query string, beginning with `http:`
+	// or
+	// `https:`.
+	// For example, http://www.example.com
+	DomainUrl string `json:"domainUrl,omitempty"`
+
+	// TimeZone: Output only. The standard TZ database name of the
+	// advertiser's time zone.
+	// For example, `America/New_York`.
+	//
+	// See more
+	// at:
+	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+	//
+	// For CM hybrid advertisers, the time zone is the same as that of
+	// the
+	// associated CM account; for third-party only advertisers, the time
+	// zone is
+	// the same as that of the parent partner.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserGeneralConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserGeneralConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserSdfConfig: Structured Data Files (SDF) settings of an
+// advertiser.
+type AdvertiserSdfConfig struct {
+	// OverridePartnerSdfConfig: Whether or not this advertiser overrides
+	// the SDF configuration of its
+	// parent partner.
+	//
+	// By default, an advertiser inherits the SDF configuration from the
+	// parent
+	// partner. To override the partner configuration, set this field to
+	// `true`
+	// and provide the new configuration in
+	// sdfConfig.
+	OverridePartnerSdfConfig bool `json:"overridePartnerSdfConfig,omitempty"`
+
+	// SdfConfig: The SDF configuration for the advertiser.
+	//
+	// * Required when
+	// overridePartnerSdfConfig
+	// is `true`.
+	// * Output only when
+	// overridePartnerSdfConfig
+	// is `false`.
+	SdfConfig *SdfConfig `json:"sdfConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "OverridePartnerSdfConfig") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OverridePartnerSdfConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserSdfConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserSdfConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgeRangeAssignedTargetingOptionDetails: Represents a targetable age
+// range. This will be populated in the details
+// field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_AGE_RANGE`.
+type AgeRangeAssignedTargetingOptionDetails struct {
+	// AgeRange: Output only. The age range of an audience. We only support
+	// targeting a continuous age
+	// range of an audience. Thus, the age range represented in this field
+	// can be
+	// 1) targeted solely, or, 2) part of a larger continuous age range. The
+	// reach
+	// of a continuous age range targeting can be expanded by also targeting
+	// an
+	// audience of an unknown age.
+	//
+	// Possible values:
+	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
+	// specified in this version. This enum is
+	// a placeholder for default value and does not represent a real age
+	// range
+	// option.
+	//   "AGE_RANGE_18_24" - The age range of the audience is 18 to 24.
+	//   "AGE_RANGE_25_34" - The age range of the audience is 25 to 34.
+	//   "AGE_RANGE_35_44" - The age range of the audience is 35 to 44.
+	//   "AGE_RANGE_45_54" - The age range of the audience is 45 to 54.
+	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
+	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
+	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
+	AgeRange string `json:"ageRange,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_AGE_RANGE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgeRangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AgeRangeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AgeRangeTargetingOptionDetails: Represents a targetable age range.
+// This will be populated in the
+// age_range_details field when
+// targeting_type is
+// `TARGETING_TYPE_AGE_RANGE`.
+type AgeRangeTargetingOptionDetails struct {
+	// AgeRange: Output only. The age range of an audience.
+	//
+	// Possible values:
+	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
+	// specified in this version. This enum is
+	// a placeholder for default value and does not represent a real age
+	// range
+	// option.
+	//   "AGE_RANGE_18_24" - The age range of the audience is 18 to 24.
+	//   "AGE_RANGE_25_34" - The age range of the audience is 25 to 34.
+	//   "AGE_RANGE_35_44" - The age range of the audience is 35 to 44.
+	//   "AGE_RANGE_45_54" - The age range of the audience is 45 to 54.
+	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
+	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
+	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
+	AgeRange string `json:"ageRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgeRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AgeRangeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppAssignedTargetingOptionDetails: Details for assigned app targeting
+// option. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_APP`.
+type AppAssignedTargetingOptionDetails struct {
+	// AppId: Required. The ID of the app.
+	//
+	// Android's Play store app uses bundle ID, for
+	// example
+	// `com.google.android.gm`. Apple's App store app ID uses 9 digit
+	// string, for
+	// example `422689480`.
+	AppId string `json:"appId,omitempty"`
+
+	// DisplayName: Output only. The display name of the app.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AppAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppCategoryAssignedTargetingOptionDetails: Details for assigned app
+// category targeting option. This will be
+// populated in the
+// app_category_details field of
+// an AssignedTargetingOption when
+// targeting_type
+// is `TARGETING_TYPE_APP_CATEGORY`.
+type AppCategoryAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the app category.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_APP_CATEGORY`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AppCategoryAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppCategoryTargetingOptionDetails: Represents a targetable collection
+// of apps. A collection lets you target
+// dynamic groups of related apps that are maintained by the platform,
+// for
+// example `All Apps/Google Play/Games`. This will be populated in
+// the
+// app_category_details field when
+// targeting_type is
+// `TARGETING_TYPE_APP_CATEGORY`.
+type AppCategoryTargetingOptionDetails struct {
+	// DisplayName: Output only. The name of the app collection.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AppCategoryTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Asset: A single asset.
+type Asset struct {
+	// Content: The asset content.
+	// For uploaded assets, the content is the serving path.
+	Content string `json:"content,omitempty"`
+
+	// MediaId: Media ID of the uploaded asset. This is a unique identifier
+	// for the asset.
+	// This ID can be passed to other API calls, e.g.
+	// CreateCreative to associate
+	// the asset with a creative.
+	MediaId int64 `json:"mediaId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Asset) MarshalJSON() ([]byte, error) {
+	type NoMethod Asset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssetAssociation: Asset association for the creative.
+type AssetAssociation struct {
+	// Asset: The associated asset.
+	Asset *Asset `json:"asset,omitempty"`
+
+	// Role: The role of this asset for the creative.
+	//
+	// Possible values:
+	//   "ASSET_ROLE_UNSPECIFIED" - Asset role is not specified or is
+	// unknown in this version.
+	//   "ASSET_ROLE_MAIN" - The asset is the main asset of the creative.
+	//   "ASSET_ROLE_BACKUP" - The asset is a backup asset of the creative.
+	//   "ASSET_ROLE_POLITE_LOAD" - The asset is a polite load asset of the
+	// creative.
+	//   "ASSET_ROLE_HEADLINE" - Headline of a native creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 25 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_LONG_HEADLINE" - Long headline of a native
+	// creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 50 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_BODY" - Body text of a native creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 90 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_LONG_BODY" - Long body text of a native creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 150 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_CAPTION_URL" - A short, friendly version of the landing
+	// page URL to show in the creative.
+	// This URL gives people an idea of where they'll arrive after they
+	// click on
+	// the creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 30 characters.
+	//
+	// For example, if the landing page URL is
+	// 'http://www.example.com/page',
+	// the caption URL can be 'example.com'.
+	// The protocol (http://) is optional, but the URL can't contain spaces
+	// or
+	// special characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_CALL_TO_ACTION" - The text to use on the call-to-action
+	// button of a native creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 15 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_ADVERTISER_NAME" - The text that identifies the
+	// advertiser or brand name.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 25 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_PRICE" - The purchase price of your app in the Google
+	// play store or iOS app store
+	// (for example, $5.99).
+	//
+	// Note that this value is not automatically synced with the actual
+	// value
+	// listed in the store. It will always be the one provided when save
+	// the
+	// creative.
+	//
+	// The content must be UTF-8 encoded with a length of no more
+	// than 15 characters.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_ANDROID_APP_ID" - The ID of an Android app in the
+	// Google play store.
+	//
+	// You can find this ID in the App’s Google Play Store URL after
+	// ‘id’. For
+	// example,
+	// in
+	// https://play.google.com/store/apps/details?id=com.company.appname
+	// the
+	// identifier is com.company.appname.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_IOS_APP_ID" - The ID of an iOS app in the Apple app
+	// store.
+	//
+	// This ID number can be found in the Apple App Store URL as the string
+	// of
+	// numbers directly after "id". For example,
+	// in
+	// https://apps.apple.com/us/app/gmail-email-by-google/id422689480 the
+	// ID is
+	// 422689480.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_RATING" - The rating of an app in the Google play store
+	// or iOS app store.
+	//
+	// Note that this value is not automatically synced with the actual
+	// rating
+	// in the store. It will always be the one provided when save the
+	// creative.
+	//
+	// This role is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_ICON" - The icon of a creative.
+	//
+	// This role is only supported and required in
+	// following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_COVER_IMAGE" - The cover image of a native video
+	// creative.
+	//
+	// This role is only supported and required in
+	// following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssetAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetAssociation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssignedTargetingOption: A single assigned targeting option, which
+// defines the state of a targeting
+// option for an entity with targeting settings, such as a Line Item
+// or
+// Insertion Order.
+type AssignedTargetingOption struct {
+	// AgeRangeDetails: Age range details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_AGE_RANGE`.
+	AgeRangeDetails *AgeRangeAssignedTargetingOptionDetails `json:"ageRangeDetails,omitempty"`
+
+	// AppCategoryDetails: App category details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_APP_CATEGORY`.
+	AppCategoryDetails *AppCategoryAssignedTargetingOptionDetails `json:"appCategoryDetails,omitempty"`
+
+	// AppDetails: App details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_APP`.
+	AppDetails *AppAssignedTargetingOptionDetails `json:"appDetails,omitempty"`
+
+	// AssignedTargetingOptionId: Output only. The unique ID of the assigned
+	// targeting option. The ID is only unique
+	// within a given line item and targeting type. It may be reused in
+	// other
+	// contexts.
+	AssignedTargetingOptionId string `json:"assignedTargetingOptionId,omitempty"`
+
+	// AudienceGroupDetails: Audience targeting details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_AUDIENCE_GROUP`.
+	// You can only target one audience group option per line item.
+	AudienceGroupDetails *AudienceGroupAssignedTargetingOptionDetails `json:"audienceGroupDetails,omitempty"`
+
+	// AuthorizedSellerStatusDetails: Authorized seller status details. This
+	// field will be populated when the
+	// TargetingType is `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
+	//
+	// You can only target one authorized seller status option per line
+	// item.
+	//
+	// If a line item doesn't have an authorized seller status option,
+	// all
+	// authorized sellers indicated as DIRECT or RESELLER in the ads.txt
+	// file
+	// are targeted by default.
+	AuthorizedSellerStatusDetails *AuthorizedSellerStatusAssignedTargetingOptionDetails `json:"authorizedSellerStatusDetails,omitempty"`
+
+	// BrowserDetails: Browser details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_BROWSER`.
+	BrowserDetails *BrowserAssignedTargetingOptionDetails `json:"browserDetails,omitempty"`
+
+	// CarrierAndIspDetails: Carrier and ISP details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_CARRIER_AND_ISP`.
+	CarrierAndIspDetails *CarrierAndIspAssignedTargetingOptionDetails `json:"carrierAndIspDetails,omitempty"`
+
+	// CategoryDetails: Category details. This field will be populated when
+	// the TargetingType is
+	// `TARGETING_TYPE_CATEGORY`.
+	//
+	// Targeting a category will also target its subcategories. If a
+	// category is
+	// excluded from targeting and a subcategory is included, the exclusion
+	// will
+	// take precedence.
+	CategoryDetails *CategoryAssignedTargetingOptionDetails `json:"categoryDetails,omitempty"`
+
+	// ChannelDetails: Channel details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_CHANNEL`.
+	ChannelDetails *ChannelAssignedTargetingOptionDetails `json:"channelDetails,omitempty"`
+
+	// ContentInstreamPositionDetails: Content instream position details.
+	// This field will be populated when the
+	// TargetingType is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+	ContentInstreamPositionDetails *ContentInstreamPositionAssignedTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
+
+	// ContentOutstreamPositionDetails: Content outstream position details.
+	// This field will be populated when the
+	// TargetingType is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+	ContentOutstreamPositionDetails *ContentOutstreamPositionAssignedTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// DayAndTimeDetails: Day and time details. This field will be populated
+	// when the
+	// TargetingType is `TARGETING_TYPE_DAY_AND_TIME`.
+	DayAndTimeDetails *DayAndTimeAssignedTargetingOptionDetails `json:"dayAndTimeDetails,omitempty"`
+
+	// DeviceMakeModelDetails: Device make and model details. This field
+	// will be populated when the
+	// TargetingType is `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+	DeviceMakeModelDetails *DeviceMakeModelAssignedTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
+
+	// DeviceTypeDetails: Device Type details. This field will be populated
+	// when the
+	// TargetingType is
+	// `TARGETING_TYPE_DEVICE_TYPE`.
+	DeviceTypeDetails *DeviceTypeAssignedTargetingOptionDetails `json:"deviceTypeDetails,omitempty"`
+
+	// DigitalContentLabelExclusionDetails: Digital content label details.
+	// This field will be populated when the
+	// TargetingType is
+	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
+	//
+	// Digital content labels are targeting exclusions. Advertiser level
+	// digital
+	// content label exclusions, if set, are always applied in serving
+	// (even
+	// though they aren't visible in line item settings). Line item settings
+	// can
+	// exclude content labels in addition to advertiser exclusions, but
+	// can't
+	// override them. A line item won't serve if all the digital content
+	// labels
+	// are excluded.
+	DigitalContentLabelExclusionDetails *DigitalContentLabelAssignedTargetingOptionDetails `json:"digitalContentLabelExclusionDetails,omitempty"`
+
+	// EnvironmentDetails: Environment details. This field will be populated
+	// when the
+	// TargetingType is `TARGETING_TYPE_ENVIRONMENT`.
+	EnvironmentDetails *EnvironmentAssignedTargetingOptionDetails `json:"environmentDetails,omitempty"`
+
+	// ExchangeDetails: Exchange details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_EXCHANGE`.
+	ExchangeDetails *ExchangeAssignedTargetingOptionDetails `json:"exchangeDetails,omitempty"`
+
+	// GenderDetails: Gender details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_GENDER`.
+	GenderDetails *GenderAssignedTargetingOptionDetails `json:"genderDetails,omitempty"`
+
+	// GeoRegionDetails: Geographic region details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_GEO_REGION`.
+	GeoRegionDetails *GeoRegionAssignedTargetingOptionDetails `json:"geoRegionDetails,omitempty"`
+
+	// HouseholdIncomeDetails: Household income details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+	HouseholdIncomeDetails *HouseholdIncomeAssignedTargetingOptionDetails `json:"householdIncomeDetails,omitempty"`
+
+	// Inheritance: Output only. The inheritance status of the assigned
+	// targeting option.
+	//
+	// Possible values:
+	//   "INHERITANCE_UNSPECIFIED" - The inheritance is unspecified or
+	// unknown.
+	//   "NOT_INHERITED" - The assigned targeting option is not inherited
+	// from higher level entity.
+	//   "INHERITED_FROM_PARTNER" - The assigned targeting option is
+	// inherited from partner targeting
+	// settings.
+	//   "INHERITED_FROM_ADVERTISER" - The assigned targeting option is
+	// inherited from advertiser targeting
+	// settings.
+	Inheritance string `json:"inheritance,omitempty"`
+
+	// InventorySourceDetails: Inventory source details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_INVENTORY_SOURCE`.
+	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
+
+	// InventorySourceGroupDetails: Inventory source group details. This
+	// field will be populated when the
+	// TargetingType is `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
+	InventorySourceGroupDetails *InventorySourceGroupAssignedTargetingOptionDetails `json:"inventorySourceGroupDetails,omitempty"`
+
+	// KeywordDetails: Keyword details. This field will be populated when
+	// the TargetingType is
+	// `TARGETING_TYPE_KEYWORD`.
+	//
+	// A maximum of 5000 direct negative keywords can be assigned to a
+	// line item. No limit on number of positive keywords that can be
+	// assigned.
+	KeywordDetails *KeywordAssignedTargetingOptionDetails `json:"keywordDetails,omitempty"`
+
+	// LanguageDetails: Language details. This field will be populated when
+	// the TargetingType is
+	// `TARGETING_TYPE_LANGUAGE`.
+	LanguageDetails *LanguageAssignedTargetingOptionDetails `json:"languageDetails,omitempty"`
+
+	// Name: Output only. The resource name for this assigned targeting
+	// option.
+	Name string `json:"name,omitempty"`
+
+	// NegativeKeywordListDetails: Keyword details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`.
+	//
+	// A maximum of 4 negative keyword lists can be assigned to a line item.
+	NegativeKeywordListDetails *NegativeKeywordListAssignedTargetingOptionDetails `json:"negativeKeywordListDetails,omitempty"`
+
+	// OnScreenPositionDetails: On screen position details. This field will
+	// be populated when the
+	// TargetingType is `TARGETING_TYPE_ON_SCREEN_POSITION`.
+	OnScreenPositionDetails *OnScreenPositionAssignedTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
+
+	// OperatingSystemDetails: Operating system details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_OPERATING_SYSTEM`.
+	OperatingSystemDetails *OperatingSystemAssignedTargetingOptionDetails `json:"operatingSystemDetails,omitempty"`
+
+	// ParentalStatusDetails: Parental status details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_PARENTAL_STATUS`.
+	ParentalStatusDetails *ParentalStatusAssignedTargetingOptionDetails `json:"parentalStatusDetails,omitempty"`
+
+	// ProximityLocationListDetails: Proximity location list details. This
+	// field will be populated when the
+	// TargetingType is
+	// `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`.
+	ProximityLocationListDetails *ProximityLocationListAssignedTargetingOptionDetails `json:"proximityLocationListDetails,omitempty"`
+
+	// RegionalLocationListDetails: Regional location list details. This
+	// field will be populated when the
+	// TargetingType is `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
+	RegionalLocationListDetails *RegionalLocationListAssignedTargetingOptionDetails `json:"regionalLocationListDetails,omitempty"`
+
+	// SensitiveCategoryExclusionDetails: Sensitive category details. This
+	// field will be populated when the
+	// TargetingType is
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+	//
+	// Sensitive categories are targeting exclusions. Advertiser level
+	// sensitive
+	// category exclusions, if set, are always applied in serving (even
+	// though
+	// they aren't visible in line item settings). Line item settings
+	// can
+	// exclude sensitive categories in addition to advertiser exclusions,
+	// but
+	// can't override them.
+	SensitiveCategoryExclusionDetails *SensitiveCategoryAssignedTargetingOptionDetails `json:"sensitiveCategoryExclusionDetails,omitempty"`
+
+	// SubExchangeDetails: Sub-exchange details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_SUB_EXCHANGE`.
+	SubExchangeDetails *SubExchangeAssignedTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
+
+	// TargetingType: Output only. Identifies the type of this assigned
+	// targeting option.
+	//
+	// Possible values:
+	//   "TARGETING_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown in this version.
+	//   "TARGETING_TYPE_CHANNEL" - Target a channel (a custom group of
+	// related websites or apps).
+	//   "TARGETING_TYPE_APP_CATEGORY" - Target an app category (for
+	// example, education or puzzle games).
+	//   "TARGETING_TYPE_APP" - Target a specific app (for example, Angry
+	// Birds).
+	//   "TARGETING_TYPE_URL" - Target a specific url (for example,
+	// quora.com).
+	//   "TARGETING_TYPE_DAY_AND_TIME" - Target ads during a chosen time
+	// period on a specific day.
+	//   "TARGETING_TYPE_AGE_RANGE" - Target ads to a specific age range
+	// (for example, 18-24).
+	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
+	// specified regions on a regional location list.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
+	// specified points of interest on a proximity location
+	// list.
+	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
+	// example, female or male).
+	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
+	// size for video ads.
+	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
+	// content for video ads.
+	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
+	// parental status (for example, parent or not a
+	// parent).
+	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
+	// ads in a specific content instream position (for
+	// example, pre-roll, mid-roll, or post-roll).
+	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
+	// specific content outstream position.
+	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
+	// (for example, tablet or connected TV).
+	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
+	// groups of audiences.
+	// Singleton field, at most one can exist on a single Lineitem at a
+	// time.
+	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
+	// example, Chrome).
+	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
+	// household income range (for example, top 10%).
+	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
+	// screen position.
+	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
+	// third party verification (for example, IAS or
+	// DoubleVerify).
+	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
+	// by specific digital content label ratings (for example,
+	// DL-MA: suitable only for mature audiences).
+	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
+	// content by sensitive categories (for example, adult).
+	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
+	// (for example, web or app).
+	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
+	// carrier or internet service provider
+	// (ISP) (for example, Comcast or Orange).
+	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
+	// operating system (for example, macOS).
+	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
+	// device make or model (for example, Roku or
+	// Samsung).
+	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
+	// example, dog or retriever).
+	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
+	// negative keyword list.
+	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
+	// (for example, 80% viewable).
+	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
+	// category (for example, arts &
+	// entertainment).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
+	// specific deals and auction packages.
+	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
+	// example, English or Japanese).
+	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
+	// authorized sellers.
+	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
+	// location (for example, a city or state).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
+	// a group of deals and auction packages.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION" - Target ads to business
+	// chains, individual points of interests (POIs),
+	// street addresses, and latitude/longitude coordinates.
+	//   "TARGETING_TYPE_EXCHANGE" - Purchase impressions from specific
+	// exchanges.
+	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
+	// sub-exchanges.
+	TargetingType string `json:"targetingType,omitempty"`
+
+	// ThirdPartyVerifierDetails: Third party verification details. This
+	// field will be populated when the
+	// TargetingType is `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
+	ThirdPartyVerifierDetails *ThirdPartyVerifierAssignedTargetingOptionDetails `json:"thirdPartyVerifierDetails,omitempty"`
+
+	// UrlDetails: URL details. This field will be populated when
+	// the
+	// TargetingType is `TARGETING_TYPE_URL`.
+	UrlDetails *UrlAssignedTargetingOptionDetails `json:"urlDetails,omitempty"`
+
+	// UserRewardedContentDetails: User rewarded content details. This field
+	// will be populated when the
+	// TargetingType is
+	// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+	UserRewardedContentDetails *UserRewardedContentAssignedTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
+
+	// VideoPlayerSizeDetails: Video player size details. This field will be
+	// populated when the
+	// TargetingType is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+	VideoPlayerSizeDetails *VideoPlayerSizeAssignedTargetingOptionDetails `json:"videoPlayerSizeDetails,omitempty"`
+
+	// ViewabilityDetails: Viewability details. This field will be populated
+	// when the TargetingType
+	// is `TARGETING_TYPE_VIEWABILITY`.
+	//
+	// You can only target one viewability option per line item.
+	ViewabilityDetails *ViewabilityAssignedTargetingOptionDetails `json:"viewabilityDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRangeDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgeRangeDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssignedTargetingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod AssignedTargetingOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AudienceGroupAssignedTargetingOptionDetails: Assigned audience group
+// targeting option details. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_AUDIENCE_GROUP`.
+// The relation between each group is UNION, except
+// for
+// excluded_first_and_third_party_audience_group
+// and
+// excluded_google_audience_group, of which COMPLEMENT is UNION'ed with
+// other
+// groups.
+type AudienceGroupAssignedTargetingOptionDetails struct {
+	// ExcludedFirstAndThirdPartyAudienceGroup: The first and third party
+	// audience ids and recencies of the excluded
+	// first and third party audience group. Used for negative targeting.
+	// Its
+	// COMPLEMENT is used to UNION other audience groups.
+	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
+
+	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded
+	// Google audience group.
+	// Used for negative targeting. It's COMPLEMENT is used to UNION
+	// other
+	// audience groups.
+	// Only contains Affinity, In-market and Installed-apps type Google
+	// audiences.
+	// All items are logically ‘OR’ of each other.
+	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
+
+	// IncludedCombinedAudienceGroup: The combined audience ids of the
+	// included combined audience group.
+	// Contains combined audience ids only.
+	IncludedCombinedAudienceGroup *CombinedAudienceGroup `json:"includedCombinedAudienceGroup,omitempty"`
+
+	// IncludedCustomListGroup: The custom list ids of the included custom
+	// list group.
+	// Contains custom list ids only.
+	IncludedCustomListGroup *CustomListGroup `json:"includedCustomListGroup,omitempty"`
+
+	// IncludedFirstAndThirdPartyAudienceGroups: The first and third party
+	// audience ids and recencies of included first
+	// and third party audience groups. Each first and third party audience
+	// group
+	// contains first and third party audience ids only.
+	// The relation between each first and third party audience group
+	// is
+	// INTERSECTION, and the result is UNION'ed with other audience
+	// groups.
+	// Repeated groups with same settings will be ignored.
+	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
+
+	// IncludedGoogleAudienceGroup: The Google audience ids of the included
+	// Google audience group.
+	// Contains Google audience ids only.
+	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExcludedFirstAndThirdPartyAudienceGroup") to unconditionally include
+	// in API requests. By default, fields with empty values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExcludedFirstAndThirdPartyAudienceGroup") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AudienceGroupAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AudioVideoOffset: The length an audio or a video has been played.
+type AudioVideoOffset struct {
+	// Percentage: The offset in percentage of the audio or video duration.
+	Percentage int64 `json:"percentage,omitempty,string"`
+
+	// Seconds: The offset in seconds from the start of the audio or video.
+	Seconds int64 `json:"seconds,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Percentage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Percentage") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AudioVideoOffset) MarshalJSON() ([]byte, error) {
+	type NoMethod AudioVideoOffset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuthorizedSellerStatusAssignedTargetingOptionDetails: Represents an
+// assigned authorized seller status. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
+type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
+	// AuthorizedSellerStatus: Output only. The authorized seller status to
+	// target.
+	//
+	// Possible values:
+	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
+	// authorized seller status is not specified in this
+	// version. This enum is a placeholder for default value and does
+	// not
+	// represent a real authorized seller status option.
+	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
+	// authorized sellers that directly own the inventory being monetized,
+	// as
+	// indicated by a DIRECT declaration in the ads.txt file.
+	//
+	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
+	//  - All authorized sellers, including publishers that have not posted
+	// an
+	// ads.txt file. Display & Video 360 automatically disallows
+	// unauthorized
+	// sellers.
+	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizedSellerStatus") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizedSellerStatus")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedSellerStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedSellerStatusAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuthorizedSellerStatusTargetingOptionDetails: Represents a targetable
+// authorized seller status. This will be populated
+// in
+// the
+// authorized_seller_status_details
+// field when targeting_type
+// is
+// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
+type AuthorizedSellerStatusTargetingOptionDetails struct {
+	// AuthorizedSellerStatus: Output only. The authorized seller status.
+	//
+	// Possible values:
+	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
+	// authorized seller status is not specified in this
+	// version. This enum is a placeholder for default value and does
+	// not
+	// represent a real authorized seller status option.
+	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
+	// authorized sellers that directly own the inventory being monetized,
+	// as
+	// indicated by a DIRECT declaration in the ads.txt file.
+	//
+	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
+	//  - All authorized sellers, including publishers that have not posted
+	// an
+	// ads.txt file. Display & Video 360 automatically disallows
+	// unauthorized
+	// sellers.
+	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizedSellerStatus") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizedSellerStatus")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedSellerStatusTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BiddingStrategy: Settings that control the bid strategy.
+// Bid strategy determines the bid price.
+type BiddingStrategy struct {
+	// FixedBid: A strategy that uses a fixed bid price.
+	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
+
+	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid
+	// to optimize to your
+	// performance goal while spending the full budget.
+	//
+	// At insertion order level, the
+	// markup_type of line items
+	// cannot be set to `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In
+	// addition,
+	// when
+	// performance_goal_type
+	// is one of:
+	//
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` ,
+	//
+	// the line_item_type
+	// of the insertion order line items must be either:
+	//
+	// * `LINE_ITEM_TYPE_DISPLAY_DEFAULT`
+	// * `LINE_ITEM_TYPE_VIDEO_DEFAULT` ,
+	//
+	// and when
+	// performance_goal_type
+	// is either:
+	//
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA`
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN`
+	//
+	// the line_item_type
+	// of the insertion order line items must be
+	// `LINE_ITEM_TYPE_VIDEO_DEFAULT`.
+	MaximizeSpendAutoBid *MaximizeSpendBidStrategy `json:"maximizeSpendAutoBid,omitempty"`
+
+	// PerformanceGoalAutoBid: A strategy that automatically adjusts the bid
+	// to meet or beat a specified
+	// performance goal. It is to be used only for a line item entity.
+	PerformanceGoalAutoBid *PerformanceGoalBidStrategy `json:"performanceGoalAutoBid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FixedBid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FixedBid") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BiddingStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod BiddingStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BrowserAssignedTargetingOptionDetails: Details for assigned browser
+// targeting option. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_BROWSER`.
+type BrowserAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the browser.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted. All
+	// assigned browser
+	// targeting options on the same line item must have the same value for
+	// this
+	// field.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_BROWSER`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BrowserAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BrowserAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BrowserTargetingOptionDetails: Represents a targetable browser. This
+// will be populated in the
+// browser_details field when
+// targeting_type is
+// `TARGETING_TYPE_BROWSER`.
+type BrowserTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the browser.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BrowserTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditLineItemAssignedTargetingOptionsRequest: Request message
+// for
+// BulkEditLineItemAssignedTargetingOptions.
+type BulkEditLineItemAssignedTargetingOptionsRequest struct {
+	// CreateRequests: The assigned targeting options to create in batch,
+	// specified as a list of
+	// `CreateAssignedTargetingOptionsRequest`.
+	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
+
+	// DeleteRequests: The assigned targeting options to delete in batch,
+	// specified as a list of
+	// `DeleteAssignedTargetingOptionsRequest`.
+	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateRequests") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditLineItemAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditLineItemAssignedTargetingOptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkEditLineItemAssignedTargetingOptionsResponse struct {
+	// CreatedAssignedTargetingOptions: The list of assigned targeting
+	// options that have been successfully created.
+	//
+	// This list will be absent if empty.
+	CreatedAssignedTargetingOptions []*AssignedTargetingOption `json:"createdAssignedTargetingOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditLineItemAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkListLineItemAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting
+	// options.
+	//
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be
+	// specified as the
+	// pageToken in
+	// a subsequent BulkListLineItemAssignedTargetingOptionsRequest to
+	// fetch
+	// the next page of results. This token will be absent if there are no
+	// more
+	// assigned_targeting_options
+	// to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkListLineItemAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Campaign: A single campaign.
+type Campaign struct {
+	// AdvertiserId: Output only. The unique ID of the advertiser the
+	// campaign belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// CampaignFlight: Required. The planned spend and duration of the
+	// campaign.
+	CampaignFlight *CampaignFlight `json:"campaignFlight,omitempty"`
+
+	// CampaignGoal: Required. The goal of the campaign.
+	CampaignGoal *CampaignGoal `json:"campaignGoal,omitempty"`
+
+	// CampaignId: Output only. The unique ID of the campaign. Assigned by
+	// the system.
+	CampaignId int64 `json:"campaignId,omitempty,string"`
+
+	// DisplayName: Required. The display name of the campaign.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Required. Controls whether or not the insertion orders
+	// under this campaign
+	// can spend their budgets and bid on inventory.
+	//
+	// * Accepted values are `ENTITY_STATUS_ACTIVE`,
+	// `ENTITY_STATUS_ARCHIVED`, and
+	// `ENTITY_STATUS_PAUSED`.
+	// * For
+	// CreateCampaign method,
+	// `ENTITY_STATUS_ARCHIVED` is not allowed.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// FrequencyCap: Required. The frequency cap setting of the campaign.
+	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
+
+	// Name: Output only. The resource name of the campaign.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the campaign was last
+	// updated. Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Campaign) MarshalJSON() ([]byte, error) {
+	type NoMethod Campaign
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CampaignFlight: Settings that track the planned spend and duration of
+// a campaign.
+type CampaignFlight struct {
+	// PlannedDates: Required. The dates that the campaign is expected to
+	// run. They are resolved
+	// relative to the parent advertiser's time zone.
+	//
+	// * The dates specified here will not affect serving. They are used
+	// to
+	// generate alerts and warnings. For example, if the flight date of any
+	// child
+	// insertion order is outside the range of these dates, the user
+	// interface
+	// will show a warning.
+	// * `start_date` is required and must be the current date or later.
+	// * `end_date` is optional. If specified, it must be the `start_date`
+	// or
+	// later.
+	// * Any specified date must be before the year 2037.
+	PlannedDates *DateRange `json:"plannedDates,omitempty"`
+
+	// PlannedSpendAmountMicros: The amount the campaign is expected to
+	// spend for its given
+	// planned_dates. This will not limit serving,
+	// but will be used for tracking spend in the DV360 UI.
+	//
+	// The amount is in micros. Must be greater than or equal to 0. For
+	// example,
+	// 500000000 represents 500 standard units of the currency.
+	PlannedSpendAmountMicros int64 `json:"plannedSpendAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PlannedDates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlannedDates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CampaignFlight) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignFlight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CampaignGoal: Settings that control the goal of a campaign.
+type CampaignGoal struct {
+	// CampaignGoalType: Required. The type of the campaign goal.
+	//
+	// Possible values:
+	//   "CAMPAIGN_GOAL_TYPE_UNSPECIFIED" - Goal value is not specified or
+	// unknown in this version.
+	//   "CAMPAIGN_GOAL_TYPE_APP_INSTALL" - Drive app installs or
+	// engagements.
+	//   "CAMPAIGN_GOAL_TYPE_BRAND_AWARENESS" - Raise awareness of a brand
+	// or product.
+	//   "CAMPAIGN_GOAL_TYPE_OFFLINE_ACTION" - Drive offline or in-store
+	// sales.
+	//   "CAMPAIGN_GOAL_TYPE_ONLINE_ACTION" - Drive online action or visits.
+	CampaignGoalType string `json:"campaignGoalType,omitempty"`
+
+	// PerformanceGoal: Required. The performance goal of the
+	// campaign.
+	//
+	// Acceptable values for
+	// performance_goal_type are:
+	//
+	// * `PERFORMANCE_GOAL_TYPE_CPM`
+	// * `PERFORMANCE_GOAL_TYPE_CPC`
+	// * `PERFORMANCE_GOAL_TYPE_CPA`
+	// * `PERFORMANCE_GOAL_TYPE_CPIAVC`
+	// * `PERFORMANCE_GOAL_TYPE_CTR`
+	// * `PERFORMANCE_GOAL_TYPE_VIEWABILITY`
+	// * `PERFORMANCE_GOAL_TYPE_OTHER`
+	PerformanceGoal *PerformanceGoal `json:"performanceGoal,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CampaignGoalType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CampaignGoalType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CampaignGoal) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignGoal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CarrierAndIspAssignedTargetingOptionDetails: Details for assigned
+// carrier and ISP targeting option. This will be populated
+// in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_CARRIER_AND_ISP`.
+type CarrierAndIspAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the carrier or ISP.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted. All
+	// assigned carrier
+	// and ISP targeting options on the same line item must have the same
+	// value
+	// for this field.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_CARRIER_AND_ISP`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CarrierAndIspAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CarrierAndIspAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CarrierAndIspTargetingOptionDetails: Represents a targetable carrier
+// or ISP. This will be populated in the
+// carrier_and_isp_details field of
+// a TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_CARRIER_AND_ISP`.
+type CarrierAndIspTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the carrier or ISP.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Type: Output only. The type indicating if it's carrier or ISP.
+	//
+	// Possible values:
+	//   "CARRIER_AND_ISP_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown in this version.
+	//   "CARRIER_AND_ISP_TYPE_ISP" - Indicates this targeting resource
+	// refers to an ISP.
+	//   "CARRIER_AND_ISP_TYPE_CARRIER" - Indicates this targeting resource
+	// refers to a mobile carrier.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CarrierAndIspTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CarrierAndIspTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CategoryAssignedTargetingOptionDetails: Assigned category targeting
+// option details. This will be populated in the
+// category_details field when
+// targeting_type is
+// `TARGETING_TYPE_CATEGORY`.
+type CategoryAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the category.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_CATEGORY`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CategoryAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CategoryTargetingOptionDetails: Represents a targetable category.
+// This will be populated in the
+// category_details field of a
+// TargetingOption when targeting_type is
+// `TARGETING_TYPE_CATEGORY`.
+type CategoryTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the category.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CategoryTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Channel: A single channel. Channels are custom groups of related
+// websites and apps.
+type Channel struct {
+	// AdvertiserId: The ID of the advertiser that owns the channel.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// ChannelId: Output only. The unique ID of the channel. Assigned by the
+	// system.
+	ChannelId int64 `json:"channelId,omitempty,string"`
+
+	// DisplayName: Required. The display name of the channel.
+	// Must be UTF-8 encoded with a maximum length of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Output only. The resource name of the channel.
+	Name string `json:"name,omitempty"`
+
+	// PartnerId: The ID of the partner that owns the channel.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Channel) MarshalJSON() ([]byte, error) {
+	type NoMethod Channel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChannelAssignedTargetingOptionDetails: Details for assigned channel
+// targeting option. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_CHANNEL`.
+type ChannelAssignedTargetingOptionDetails struct {
+	// ChannelId: Required. ID of the channel. Should refer to the channel
+	// ID
+	// field on a
+	// [Partner-owned channel](partners.channels#Channel.FIELDS.channel_id)
+	// or
+	// [advertiser-owned
+	// channel](advertisers.channels#Channel.FIELDS.channel_id)
+	// resource.
+	ChannelId int64 `json:"channelId,omitempty,string"`
+
+	// Negative: Indicates if this option is being negatively targeted. For
+	// advertiser
+	// level assigned targeting option, this field must be true.
+	Negative bool `json:"negative,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CmHybridConfig: Settings for advertisers that use both Campaign
+// Manager (CM) and third-party
+// ad servers.
+type CmHybridConfig struct {
+	// CmAccountId: Required. Immutable. Account ID of the CM Floodlight
+	// configuration linked with the DV360
+	// advertiser.
+	CmAccountId int64 `json:"cmAccountId,omitempty,string"`
+
+	// CmFloodlightConfigId: Required. Immutable. ID of the CM Floodlight
+	// configuration linked with the DV360 advertiser.
+	CmFloodlightConfigId int64 `json:"cmFloodlightConfigId,omitempty,string"`
+
+	// CmFloodlightLinkingAuthorized: Required. Immutable. By setting this
+	// field to `true`, you, on behalf of your company,
+	// authorize the sharing of information from the given
+	// Floodlight
+	// configuration to this Display & Video 360 advertiser.
+	CmFloodlightLinkingAuthorized bool `json:"cmFloodlightLinkingAuthorized,omitempty"`
+
+	// CmSyncableSiteIds: A list of CM sites whose placements will be synced
+	// to DV360 as creatives.
+	//
+	// If absent or empty in
+	// CreateAdvertiser method, the system
+	// will automatically create a CM site.
+	//
+	// Removing sites from this list may cause DV360 creatives synced from
+	// CM to
+	// be deleted. At least one site must be specified.
+	CmSyncableSiteIds googleapi.Int64s `json:"cmSyncableSiteIds,omitempty"`
+
+	// Dv360ToCmCostReportingEnabled: Whether or not to report DV360 cost to
+	// CM.
+	Dv360ToCmCostReportingEnabled bool `json:"dv360ToCmCostReportingEnabled,omitempty"`
+
+	// Dv360ToCmDataSharingEnabled: Whether or not to include DV360 data in
+	// CM data transfer reports.
+	Dv360ToCmDataSharingEnabled bool `json:"dv360ToCmDataSharingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CmAccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CmAccountId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CmHybridConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CmHybridConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CmTrackingAd: A Campaign Manager tracking ad.
+type CmTrackingAd struct {
+	// CmAdId: The ad ID of the campaign manager tracking Ad.
+	CmAdId int64 `json:"cmAdId,omitempty,string"`
+
+	// CmCreativeId: The creative ID of the campaign manager tracking Ad.
+	CmCreativeId int64 `json:"cmCreativeId,omitempty,string"`
+
+	// CmPlacementId: The placement ID of the campaign manager tracking Ad.
+	CmPlacementId int64 `json:"cmPlacementId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CmAdId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CmAdId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CmTrackingAd) MarshalJSON() ([]byte, error) {
+	type NoMethod CmTrackingAd
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CombinedAudience: Describes a combined audience resource.
+type CombinedAudience struct {
+	// CombinedAudienceId: Output only. The unique ID of the combined
+	// audience. Assigned by the system.
+	CombinedAudienceId int64 `json:"combinedAudienceId,omitempty,string"`
+
+	// DisplayName: Output only. The display name of the combined
+	// audience.
+	// .
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Output only. The resource name of the combined audience.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CombinedAudienceId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CombinedAudienceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CombinedAudience) MarshalJSON() ([]byte, error) {
+	type NoMethod CombinedAudience
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CombinedAudienceGroup: Details of combined audience group.
+// All combined audience targeting settings are logically ‘OR’ of
+// each other.
+type CombinedAudienceGroup struct {
+	// Settings: Required. All combined audience targeting settings in
+	// combined audience group.
+	// Repeated settings with same id will be ignored.
+	// The number of combined audience settings should be no more than five,
+	// error
+	// will be thrown otherwise.
+	Settings []*CombinedAudienceTargetingSetting `json:"settings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Settings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Settings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CombinedAudienceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod CombinedAudienceGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CombinedAudienceTargetingSetting: Details of combined audience
+// targeting setting.
+type CombinedAudienceTargetingSetting struct {
+	// CombinedAudienceId: Required. Combined audience id of combined
+	// audience targeting setting.
+	// This id is combined_audience_id.
+	CombinedAudienceId int64 `json:"combinedAudienceId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CombinedAudienceId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CombinedAudienceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod CombinedAudienceTargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentInstreamPositionAssignedTargetingOptionDetails: Assigned
+// content instream position targeting option details. This will
+// be
+// populated in the
+// content_instream_position_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+type ContentInstreamPositionAssignedTargetingOptionDetails struct {
+	// ContentInstreamPosition: Output only. The content instream position
+	// for video or audio ads.
+	//
+	// Possible values:
+	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
+	// is not specified in this version. This enum is a
+	// place holder for a default value and does not represent a real in
+	// stream ad
+	// position.
+	//   "CONTENT_INSTREAM_POSITION_PRE_ROLL" - Ads that play before
+	// streaming content.
+	//   "CONTENT_INSTREAM_POSITION_MID_ROLL" - Ads that play between the
+	// beginning and end of streaming content.
+	//   "CONTENT_INSTREAM_POSITION_POST_ROLL" - Ads that play at the end of
+	// streaming content.
+	ContentInstreamPosition string `json:"contentInstreamPosition,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentInstreamPosition") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentInstreamPosition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentInstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentInstreamPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentInstreamPositionTargetingOptionDetails: Represents a
+// targetable content instream position, which could be used by
+// video and audio ads. This will be populated in
+// the
+// content_instream_position_details
+// field when targeting_type
+// is
+// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+type ContentInstreamPositionTargetingOptionDetails struct {
+	// ContentInstreamPosition: Output only. The content instream position.
+	//
+	// Possible values:
+	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
+	// is not specified in this version. This enum is a
+	// place holder for a default value and does not represent a real in
+	// stream ad
+	// position.
+	//   "CONTENT_INSTREAM_POSITION_PRE_ROLL" - Ads that play before
+	// streaming content.
+	//   "CONTENT_INSTREAM_POSITION_MID_ROLL" - Ads that play between the
+	// beginning and end of streaming content.
+	//   "CONTENT_INSTREAM_POSITION_POST_ROLL" - Ads that play at the end of
+	// streaming content.
+	ContentInstreamPosition string `json:"contentInstreamPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentInstreamPosition") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentInstreamPosition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentInstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentInstreamPositionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentOutstreamPositionAssignedTargetingOptionDetails: Assigned
+// content outstream position targeting option details. This will
+// be
+// populated in the
+// content_outstream_position_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
+	// ContentOutstreamPosition: Output only. The content outstream
+	// position.
+	//
+	// Possible values:
+	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
+	// position is not specified in this version. This enum is a
+	// place holder for a default value and does not represent a real
+	// content
+	// outstream position.
+	//   "CONTENT_OUTSTREAM_POSITION_UNKNOWN" - The ad position is unknown
+	// in the content outstream.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_ARTICLE" - Ads that appear between
+	// the paragraphs of your pages.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_BANNER" - Ads that display on the
+	// top and the sides of a page.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_FEED" - Ads that appear in a
+	// scrollable stream of content. A feed is typically
+	// editorial (e.g. a list of articles or news) or listings (e.g. a list
+	// of
+	// products or services).
+	//   "CONTENT_OUTSTREAM_POSITION_INTERSTITIAL" - Ads shown before or
+	// between content loads.
+	ContentOutstreamPosition string `json:"contentOutstreamPosition,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentOutstreamPosition") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentOutstreamPosition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentOutstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentOutstreamPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContentOutstreamPositionTargetingOptionDetails: Represents a
+// targetable content outstream position, which could be used by
+// display and video ads. This will be populated in
+// the
+// content_outstream_position_details
+// field when targeting_type
+// is
+// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+type ContentOutstreamPositionTargetingOptionDetails struct {
+	// ContentOutstreamPosition: Output only. The content outstream
+	// position.
+	//
+	// Possible values:
+	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
+	// position is not specified in this version. This enum is a
+	// place holder for a default value and does not represent a real
+	// content
+	// outstream position.
+	//   "CONTENT_OUTSTREAM_POSITION_UNKNOWN" - The ad position is unknown
+	// in the content outstream.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_ARTICLE" - Ads that appear between
+	// the paragraphs of your pages.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_BANNER" - Ads that display on the
+	// top and the sides of a page.
+	//   "CONTENT_OUTSTREAM_POSITION_IN_FEED" - Ads that appear in a
+	// scrollable stream of content. A feed is typically
+	// editorial (e.g. a list of articles or news) or listings (e.g. a list
+	// of
+	// products or services).
+	//   "CONTENT_OUTSTREAM_POSITION_INTERSTITIAL" - Ads shown before or
+	// between content loads.
+	ContentOutstreamPosition string `json:"contentOutstreamPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentOutstreamPosition") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentOutstreamPosition")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ContentOutstreamPositionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConversionCountingConfig: Settings that control how conversions are
+// counted.
+//
+// All post-click conversions will be counted. A percentage value can be
+// set
+// for post-view conversions counting.
+type ConversionCountingConfig struct {
+	// FloodlightActivityConfigs: The Floodlight activity configs used to
+	// track conversions.
+	//
+	// The number of conversions counted is the sum of all of the
+	// conversions
+	// counted by all of the Floodlight activity IDs specified in this
+	// field.
+	FloodlightActivityConfigs []*TrackingFloodlightActivityConfig `json:"floodlightActivityConfigs,omitempty"`
+
+	// PostViewCountPercentageMillis: The percentage of post-view
+	// conversions to count, in millis (1/1000 of a
+	// percent). Must be between 0 and 100000 inclusive.
+	//
+	// For example, to track 50% of the post-click conversions, set a value
+	// of
+	// 50000.
+	PostViewCountPercentageMillis int64 `json:"postViewCountPercentageMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FloodlightActivityConfigs") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FloodlightActivityConfigs") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConversionCountingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConversionCountingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CounterEvent: Counter event of the creative.
+type CounterEvent struct {
+	// Name: Required. The name of the counter event.
+	Name string `json:"name,omitempty"`
+
+	// ReportingName: Required. The name used to identify this counter event
+	// in reports.
+	ReportingName string `json:"reportingName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CounterEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod CounterEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateAssetRequest: A request message for CreateAsset.
+type CreateAssetRequest struct {
+	// Filename: Required. The filename of the asset, including the file
+	// extension.
+	//
+	// The filename must be UTF-8 encoded with a maximum size of 240 bytes.
+	Filename string `json:"filename,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filename") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filename") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateAssetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAssetRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateAssetResponse: A response message for CreateAsset.
+type CreateAssetResponse struct {
+	// Asset: The uploaded asset, if successful.
+	Asset *Asset `json:"asset,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateAssetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAssetResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateAssignedTargetingOptionsRequest: A request listing which
+// assigned targeting options of a given targeting type
+// should be created and added.
+type CreateAssignedTargetingOptionsRequest struct {
+	// AssignedTargetingOptions: Required. The assigned targeting options to
+	// create and add.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// TargetingType: Required. Identifies the type of this assigned
+	// targeting option.
+	//
+	// Possible values:
+	//   "TARGETING_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown in this version.
+	//   "TARGETING_TYPE_CHANNEL" - Target a channel (a custom group of
+	// related websites or apps).
+	//   "TARGETING_TYPE_APP_CATEGORY" - Target an app category (for
+	// example, education or puzzle games).
+	//   "TARGETING_TYPE_APP" - Target a specific app (for example, Angry
+	// Birds).
+	//   "TARGETING_TYPE_URL" - Target a specific url (for example,
+	// quora.com).
+	//   "TARGETING_TYPE_DAY_AND_TIME" - Target ads during a chosen time
+	// period on a specific day.
+	//   "TARGETING_TYPE_AGE_RANGE" - Target ads to a specific age range
+	// (for example, 18-24).
+	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
+	// specified regions on a regional location list.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
+	// specified points of interest on a proximity location
+	// list.
+	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
+	// example, female or male).
+	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
+	// size for video ads.
+	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
+	// content for video ads.
+	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
+	// parental status (for example, parent or not a
+	// parent).
+	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
+	// ads in a specific content instream position (for
+	// example, pre-roll, mid-roll, or post-roll).
+	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
+	// specific content outstream position.
+	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
+	// (for example, tablet or connected TV).
+	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
+	// groups of audiences.
+	// Singleton field, at most one can exist on a single Lineitem at a
+	// time.
+	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
+	// example, Chrome).
+	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
+	// household income range (for example, top 10%).
+	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
+	// screen position.
+	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
+	// third party verification (for example, IAS or
+	// DoubleVerify).
+	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
+	// by specific digital content label ratings (for example,
+	// DL-MA: suitable only for mature audiences).
+	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
+	// content by sensitive categories (for example, adult).
+	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
+	// (for example, web or app).
+	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
+	// carrier or internet service provider
+	// (ISP) (for example, Comcast or Orange).
+	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
+	// operating system (for example, macOS).
+	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
+	// device make or model (for example, Roku or
+	// Samsung).
+	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
+	// example, dog or retriever).
+	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
+	// negative keyword list.
+	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
+	// (for example, 80% viewable).
+	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
+	// category (for example, arts &
+	// entertainment).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
+	// specific deals and auction packages.
+	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
+	// example, English or Japanese).
+	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
+	// authorized sellers.
+	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
+	// location (for example, a city or state).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
+	// a group of deals and auction packages.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION" - Target ads to business
+	// chains, individual points of interests (POIs),
+	// street addresses, and latitude/longitude coordinates.
+	//   "TARGETING_TYPE_EXCHANGE" - Purchase impressions from specific
+	// exchanges.
+	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
+	// sub-exchanges.
+	TargetingType string `json:"targetingType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAssignedTargetingOptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CreateSdfDownloadTaskRequest: Request message for
@@ -239,6 +3564,3128 @@ func (s *CreateSdfDownloadTaskRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Creative: A single Creative.
+type Creative struct {
+	// AdditionalDimensions: Additional dimensions.
+	// Applicable when creative_type is one of:
+	//
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_LIGHTBOX`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_PUBLISHER_HOSTED`
+	//
+	// If this field is specified, width_pixels and
+	// height_pixels are both required and must be
+	// greater than or equal to 0.
+	AdditionalDimensions []*Dimensions `json:"additionalDimensions,omitempty"`
+
+	// AdvertiserId: Output only. The unique ID of the advertiser the
+	// creative belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AppendedTag: Third-party HTML tracking tag to be appended to the
+	// creative tag.
+	AppendedTag string `json:"appendedTag,omitempty"`
+
+	// Assets: Required. Assets associated to this creative.
+	// Assets can be associated to the creative in one of following
+	// roles:
+	//
+	// * `ASSET_ROLE_UNSPECIFIED`
+	// * `ASSET_ROLE_MAIN`
+	// * `ASSET_ROLE_BACKUP`
+	// * `ASSET_ROLE_POLITE_LOAD`
+	Assets []*AssetAssociation `json:"assets,omitempty"`
+
+	// CmPlacementId: Output only. The unique ID of the Campaign Manager
+	// placement associated with the
+	// creative.
+	// This field is only applicable for creatives that are synced from
+	// Campaign
+	// Manager.
+	CmPlacementId int64 `json:"cmPlacementId,omitempty,string"`
+
+	// CmTrackingAd: The Campaign Manager tracking ad associated with the
+	// creative.
+	//
+	// Optional for the following creative_type when
+	// created by an advertiser that uses both Campaign Manager and
+	// third-party ad
+	// serving:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//
+	// Output only for other cases.
+	CmTrackingAd *CmTrackingAd `json:"cmTrackingAd,omitempty"`
+
+	// CompanionCreativeIds: The IDs of companion creatives for a video
+	// creative.
+	//
+	// You can assign existing display creatives (with image or HTML5
+	// assets)
+	// to serve surrounding the publisher's video player. Companions
+	// display
+	// around the video player while the video is playing and remain after
+	// the
+	// video has completed.
+	//
+	// Creatives contain additional dimensions
+	// can not be companion creatives.
+	//
+	// This field is only supported for following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_AUDIO`
+	// * `CREATIVE_TYPE_VIDEO`
+	CompanionCreativeIds googleapi.Int64s `json:"companionCreativeIds,omitempty"`
+
+	// CounterEvents: Counter events for a rich media creative.
+	// Counters track the number of times that a user interacts with any
+	// part of a
+	// rich media creative in a specified way (mouse-overs, mouse-outs,
+	// clicks,
+	// taps, data loading, keyboard entries, etc.).
+	// Any event that can be captured in the creative can be recorded as
+	// a
+	// counter.
+	// Leave it empty or unset for creatives containing image assets only.
+	CounterEvents []*CounterEvent `json:"counterEvents,omitempty"`
+
+	// CreateTime: Output only. The timestamp when the creative was created.
+	// Assigned by
+	// the system.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CreativeAttributes: Output only. A list of attributes of the creative
+	// that is generated by the system.
+	//
+	// Possible values:
+	//   "CREATIVE_ATTRIBUTE_UNSPECIFIED" - The creative attribute is not
+	// specified or is unknown in this version.
+	//   "CREATIVE_ATTRIBUTE_VAST" - The creative is a VAST creative.
+	//   "CREATIVE_ATTRIBUTE_VPAID_LINEAR" - The creative is a linear VPAID
+	// creative.
+	//   "CREATIVE_ATTRIBUTE_VPAID_NON_LINEAR" - The creative is a
+	// non-linear VPAID creative.
+	CreativeAttributes []string `json:"creativeAttributes,omitempty"`
+
+	// CreativeId: Output only. The unique ID of the creative. Assigned by
+	// the system.
+	CreativeId int64 `json:"creativeId,omitempty,string"`
+
+	// CreativeType: Required. Immutable. The type of the creative.
+	//
+	// Possible values:
+	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "CREATIVE_TYPE_STANDARD" - Standard display creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is one of the following:
+	//
+	// * `HOSTING_SOURCE_HOSTED`
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_VIDEO" - Video creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is one of the following:
+	//
+	// * `HOSTING_SOURCE_HOSTED`
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_NATIVE" - Native creative rendered by publishers
+	// with assets from advertiser.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL" - Templated app install
+	// mobile creative (banner).
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native
+	// creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL" - Interstitial
+	// creative including both display and video.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_LIGHTBOX" - Responsive and expandable Lightbox
+	// creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install
+	// creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE" - Square native app
+	// install creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_AUDIO" - Audio creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted
+	// creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install
+	// mobile video creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	CreativeType string `json:"creativeType,omitempty"`
+
+	// Dimensions: Required. Primary dimensions of the creative.
+	// Applicable to all creative types. The value of
+	// width_pixels and
+	// height_pixels defaults to `0`
+	// when creative_type is one of:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL`
+	// * `CREATIVE_TYPE_AUDIO`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO`
+	Dimensions *Dimensions `json:"dimensions,omitempty"`
+
+	// DisplayName: Required. The display name of the creative.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Dynamic: Output only. Indicates whether the creative is dynamic.
+	Dynamic bool `json:"dynamic,omitempty"`
+
+	// EntityStatus: Required. Controls whether or not the creative can
+	// serve.
+	//
+	// Accepted values are:
+	//
+	// * `ENTITY_STATUS_ACTIVE`
+	// * `ENTITY_STATUS_ARCHIVED`
+	// * `ENTITY_STATUS_PAUSED`
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// ExitEvents: Required. Exit events for this creative.
+	// An exit (also known as a click tag) is any area in your creative
+	// that
+	// someone can click or tap to open an advertiser's landing page.
+	// Every creative must include at least one exit.
+	// You can add an exit to your creative in any of the following ways:
+	//
+	// * Use Google Web Designer's tap area.
+	// * Define a JavaScript variable called "clickTag".
+	// * Use the Enabler (Enabler.exit()) to track exits in rich media
+	// formats.
+	ExitEvents []*ExitEvent `json:"exitEvents,omitempty"`
+
+	// ExpandOnHover: Optional. Indicates the creative will automatically
+	// expand on hover.
+	//
+	// Optional and only valid for third-party expandable
+	// creatives.
+	// Third-party expandable creatives are creatives with following
+	// hosting
+	// source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	ExpandOnHover bool `json:"expandOnHover,omitempty"`
+
+	// ExpandingDirection: Optional. Specifies the expanding direction of
+	// the creative.
+	//
+	// Required and only valid for third-party expandable
+	// creatives.
+	//
+	// Third-party expandable creatives are creatives with following
+	// hosting
+	// source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	//
+	// Possible values:
+	//   "EXPANDING_DIRECTION_UNSPECIFIED" - The expanding direction is not
+	// specified.
+	//   "EXPANDING_DIRECTION_NONE" - Does not expand in any direction.
+	//   "EXPANDING_DIRECTION_UP" - Expands up.
+	//   "EXPANDING_DIRECTION_DOWN" - Expands down.
+	//   "EXPANDING_DIRECTION_LEFT" - Expands left.
+	//   "EXPANDING_DIRECTION_RIGHT" - Expands right.
+	//   "EXPANDING_DIRECTION_UP_AND_LEFT" - Expands up and to the left
+	// side.
+	//   "EXPANDING_DIRECTION_UP_AND_RIGHT" - Expands up and to the right
+	// side.
+	//   "EXPANDING_DIRECTION_DOWN_AND_LEFT" - Expands down and to the left
+	// side.
+	//   "EXPANDING_DIRECTION_DOWN_AND_RIGHT" - Expands down and to the
+	// right side.
+	//   "EXPANDING_DIRECTION_UP_OR_DOWN" - Expands either up or down.
+	//   "EXPANDING_DIRECTION_LEFT_OR_RIGHT" - Expands to either the left or
+	// the right side.
+	//   "EXPANDING_DIRECTION_ANY_DIAGONAL" - Can expand in any diagonal
+	// direction.
+	ExpandingDirection string `json:"expandingDirection,omitempty"`
+
+	// HostingSource: Required. Indicates where the creative is hosted.
+	//
+	// Possible values:
+	//   "HOSTING_SOURCE_UNSPECIFIED" - Hosting source is not specified or
+	// is unknown in this version.
+	//   "HOSTING_SOURCE_CM" - A creative synced from Campaign
+	// Manager.
+	//
+	// Create and update methods are **not** supported for this hosting
+	// type.
+	//   "HOSTING_SOURCE_THIRD_PARTY" - A creative hosted by a third-party
+	// ad server (3PAS).
+	//
+	// Create and update methods are supported for this hosting type if
+	// the
+	// creative_type is one of the following:
+	//
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_VIDEO`
+	//   "HOSTING_SOURCE_HOSTED" - A creative created in DV360 and hosted by
+	// Campaign Manager.
+	//
+	// Create and update methods are supported for this hosting type if
+	// the
+	// creative_type is one of the following:
+	//
+	// * `CREATIVE_TYPE_AUDIO`
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_VIDEO`
+	//   "HOSTING_SOURCE_RICH_MEDIA" - A rich media creative created in
+	// Studio and hosted by Campaign Manager.
+	//
+	// Create and update methods are **not** supported for this hosting
+	// type.
+	HostingSource string `json:"hostingSource,omitempty"`
+
+	// Html5Video: Output only. Indicates the third-party VAST tag creative
+	// requires HTML5 Video support.
+	//
+	// Output only and only valid for third-party VAST tag
+	// creatives.
+	//
+	// Third-party VAST tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	Html5Video bool `json:"html5Video,omitempty"`
+
+	// IasCampaignMonitoring: Indicates whether Integral Ad Science (IAS)
+	// campaign monitoring is enabled.
+	// To enable this for the creative, make sure
+	// the
+	// Advertiser.creative_config.ias_client_id
+	// has been set to your IAS client ID.
+	IasCampaignMonitoring bool `json:"iasCampaignMonitoring,omitempty"`
+
+	// IntegrationCode: ID information used to link this creative to an
+	// external system.
+	// Must be UTF-8 encoded with a length of no more than 10,000
+	// characters.
+	IntegrationCode string `json:"integrationCode,omitempty"`
+
+	// JsTrackerUrl: JavaScript measurement URL from supported third-party
+	// verification
+	// providers (ComScore, DoubleVerify, IAS, Moat). HTML script tags are
+	// not
+	// supported.
+	//
+	// This field is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	JsTrackerUrl string `json:"jsTrackerUrl,omitempty"`
+
+	// MediaDuration: Output only. Media duration of the
+	// creative.
+	// Applicable when creative_type
+	// is one of:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	// * `CREATIVE_TYPE_AUDIO`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// * `CREATIVE_TYPE_PUBLISHER_HOSTED`
+	MediaDuration string `json:"mediaDuration,omitempty"`
+
+	// Name: Output only. The resource name of the creative.
+	Name string `json:"name,omitempty"`
+
+	// Notes: User notes for this creative.
+	// Must be UTF-8 encoded with a length of no more than 20,000
+	// characters.
+	Notes string `json:"notes,omitempty"`
+
+	// ObaIcon: Specifies the OBA icon for a video creative.
+	//
+	// This field is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	ObaIcon *ObaIcon `json:"obaIcon,omitempty"`
+
+	// ProgressOffset: Amount of time to play the video before counting a
+	// view.
+	//
+	// This field is required when skippable is true.
+	//
+	// This field is only supported for the following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	ProgressOffset *AudioVideoOffset `json:"progressOffset,omitempty"`
+
+	// RequireHtml5: Optional. Indicates that the creative relies on HTML5
+	// to render properly.
+	//
+	// Optional and only valid for third-party tag creatives.
+	// Third-party tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	RequireHtml5 bool `json:"requireHtml5,omitempty"`
+
+	// RequireMraid: Optional. Indicates that the creative requires MRAID
+	// (Mobile Rich Media Ad Interface
+	// Definitions system).
+	//
+	// Set this if the creative relies on mobile gestures for interactivity,
+	// such
+	// as swiping or tapping.
+	//
+	// Optional and only valid for third-party tag creatives.
+	//
+	// Third-party tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	RequireMraid bool `json:"requireMraid,omitempty"`
+
+	// RequirePingForAttribution: Optional. Indicates that the creative will
+	// wait for a return ping for attribution.
+	//
+	// Only valid when using a Campaign Manager tracking ad with a
+	// third-party ad
+	// server parameter and the ${DC_DBM_TOKEN} macro.
+	//
+	// Optional and only valid for third-party tag creatives or third-party
+	// VAST
+	// tag creatives.
+	//
+	// Third-party tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	//
+	// Third-party VAST tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	RequirePingForAttribution bool `json:"requirePingForAttribution,omitempty"`
+
+	// ReviewStatus: Output only. The current status of the creative review
+	// process.
+	ReviewStatus *ReviewStatusInfo `json:"reviewStatus,omitempty"`
+
+	// SkipOffset: Amount of time to play the video before the skip button
+	// appears.
+	//
+	// This field is required when skippable is true.
+	//
+	// This field is only supported for the following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	SkipOffset *AudioVideoOffset `json:"skipOffset,omitempty"`
+
+	// Skippable: Whether the user can choose to skip a video
+	// creative.
+	//
+	// This field is only supported for the following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	Skippable bool `json:"skippable,omitempty"`
+
+	// ThirdPartyTag: Optional. The original third-party tag used for the
+	// creative.
+	//
+	// Required and only valid for third-party tag creatives.
+	//
+	// Third-party tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_STANDARD`
+	// * `CREATIVE_TYPE_EXPANDABLE`
+	ThirdPartyTag string `json:"thirdPartyTag,omitempty"`
+
+	// ThirdPartyUrls: Tracking URLs from third parties to track
+	// interactions with a video
+	// creative.
+	//
+	// This field is only supported for the following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_AUDIO`
+	// * `CREATIVE_TYPE_VIDEO`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	ThirdPartyUrls []*ThirdPartyUrl `json:"thirdPartyUrls,omitempty"`
+
+	// TimerEvents: Timer custom events for a rich media creative.
+	// Timers track the time during which a user views and interacts with
+	// a
+	// specified part of a rich media creative.
+	// A creative can have multiple timer events, each timed
+	// independently.
+	// Leave it empty or unset for creatives containing image assets only.
+	TimerEvents []*TimerEvent `json:"timerEvents,omitempty"`
+
+	// TrackerUrls: Tracking URLs for analytics providers or third-party ad
+	// technology vendors.
+	//
+	// The URLs must start with https (except on inventory that doesn't
+	// require
+	// SSL compliance).
+	// If using macros in your URL, use only macros supported by Display &
+	// Video
+	// 360.
+	//
+	// Standard URLs only, no IMG or SCRIPT tags.
+	//
+	// This field is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_NATIVE`
+	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
+	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	TrackerUrls []string `json:"trackerUrls,omitempty"`
+
+	// Transcodes: Output only. Audio/Video transcodes.
+	//
+	// Display & Video 360 transcodes the main asset into a number of
+	// alternative
+	// versions that use different file formats or have different
+	// properties
+	// (resolution, audio bit rate, and video bit rate), each designed
+	// for
+	// specific video players or bandwidths.
+	//
+	// These transcodes give a publisher's system more options to choose
+	// from for
+	// each impression on your video and ensures that the appropriate file
+	// serves
+	// based on the viewer’s connection and screen size.
+	//
+	// This field is only supported in following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// * `CREATIVE_TYPE_AUDIO`
+	Transcodes []*Transcode `json:"transcodes,omitempty"`
+
+	// UniversalAdId: Optional. An optional creative identifier provided by
+	// a registry that is unique
+	// across all platforms.
+	//
+	// Universal Ad ID is part of the VAST 4.0 standard. It can be modified
+	// after
+	// the creative is created.
+	//
+	// This field is only supported for the following
+	// creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	UniversalAdId *UniversalAdId `json:"universalAdId,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the creative was last
+	// updated. Assigned by
+	// the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VastTagUrl: Optional. The URL of the VAST tag for a third-party VAST
+	// tag creative.
+	//
+	// Required and only valid for third-party VAST tag
+	// creatives.
+	//
+	// Third-party VAST tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	VastTagUrl string `json:"vastTagUrl,omitempty"`
+
+	// Vpaid: Output only. Indicates the third-party VAST tag creative
+	// requires VPAID (Digital Video
+	// Player-Ad Interface).
+	//
+	// Output only and only valid for third-party VAST tag
+	// creatives.
+	//
+	// Third-party VAST tag creatives are creatives with
+	// following
+	// hosting_source:
+	//
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//
+	// combined with following creative_type:
+	//
+	// * `CREATIVE_TYPE_VIDEO`
+	Vpaid bool `json:"vpaid,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalDimensions") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalDimensions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Creative) MarshalJSON() ([]byte, error) {
+	type NoMethod Creative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreativeConfig: Creative requirements configuration for the inventory
+// source.
+type CreativeConfig struct {
+	// CreativeType: The type of creative that can be assigned to the
+	// inventory source.
+	//
+	// Possible values:
+	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "CREATIVE_TYPE_STANDARD" - Standard display creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is one of the following:
+	//
+	// * `HOSTING_SOURCE_HOSTED`
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_VIDEO" - Video creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is one of the following:
+	//
+	// * `HOSTING_SOURCE_HOSTED`
+	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_NATIVE" - Native creative rendered by publishers
+	// with assets from advertiser.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL" - Templated app install
+	// mobile creative (banner).
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native
+	// creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL" - Interstitial
+	// creative including both display and video.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_LIGHTBOX" - Responsive and expandable Lightbox
+	// creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install
+	// creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE" - Square native app
+	// install creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_AUDIO" - Audio creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted
+	// creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative.
+	//
+	// Create and update methods are supported for this creative type if
+	// the
+	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install
+	// mobile video creative.
+	//
+	// Create and update methods are **not** supported for this creative
+	// type.
+	CreativeType string `json:"creativeType,omitempty"`
+
+	// DisplayCreativeConfig: The configuration for display
+	// creatives.
+	// Applicable when creative_type is
+	// `CREATIVE_TYPE_STANDARD`.
+	DisplayCreativeConfig *InventorySourceDisplayCreativeConfig `json:"displayCreativeConfig,omitempty"`
+
+	// VideoCreativeConfig: The configuration for video
+	// creatives.
+	// Applicable when creative_type is
+	// `CREATIVE_TYPE_VIDEO`.
+	VideoCreativeConfig *InventorySourceVideoCreativeConfig `json:"videoCreativeConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreativeType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreativeType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreativeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomList: Describes a custom list entity, such as a custom affinity
+// or custom intent
+// audience list.
+type CustomList struct {
+	// CustomListId: Output only. The unique ID of the custom list. Assigned
+	// by the system.
+	CustomListId int64 `json:"customListId,omitempty,string"`
+
+	// DisplayName: Output only. The display name of the custom list.
+	// .
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Output only. The resource name of the custom list.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomListId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomListId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomList) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomListGroup: Details of custom list group.
+// All custom list targeting settings are logically ‘OR’ of each
+// other.
+type CustomListGroup struct {
+	// Settings: Required. All custom list targeting settings in custom list
+	// group.
+	// Repeated settings with same id will be ignored.
+	Settings []*CustomListTargetingSetting `json:"settings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Settings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Settings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomListGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomListGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomListTargetingSetting: Details of custom list targeting setting.
+type CustomListTargetingSetting struct {
+	// CustomListId: Required. Custom id of custom list targeting
+	// setting.
+	// This id is custom_list_id.
+	CustomListId int64 `json:"customListId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomListId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomListId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomListTargetingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomListTargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, e.g. a birthday.
+// The time of day
+// and time zone are either specified elsewhere or are not significant.
+// The date
+// is relative to the Proleptic Gregorian Calendar. This can
+// represent:
+//
+// * A full date, with non-zero year, month and day values
+// * A month and day value, with a zero year, e.g. an anniversary
+// * A year on its own, with zero month and day values
+// * A year and month value, with a zero day, e.g. a credit card
+// expiration date
+//
+// Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
+type Date struct {
+	// Day: Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0
+	// if specifying a year by itself or a year and month where the day is
+	// not
+	// significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
+	// without a
+	// month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
+	// without
+	// a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DateRange: A date range.
+type DateRange struct {
+	// EndDate: The upper bound of the date range, inclusive. Must specify a
+	// positive value
+	// for `year`, `month`, and `day`.
+	EndDate *Date `json:"endDate,omitempty"`
+
+	// StartDate: The lower bound of the date range, inclusive. Must specify
+	// a positive value
+	// for `year`, `month`, and `day`.
+	StartDate *Date `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DateRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DayAndTimeAssignedTargetingOptionDetails: Representation of a segment
+// of time defined on a specific day of the week and
+// with a start and end time.
+// The time represented by `start_hour` must be before the time
+// represented by
+// `end_hour`.
+type DayAndTimeAssignedTargetingOptionDetails struct {
+	// DayOfWeek: Required. The day of the week for this day and time
+	// targeting setting.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	// EndHour: Required. The end hour for day and time targeting. Must be
+	// between 1 (1 hour after
+	// start of day) and 24 (end of day).
+	EndHour int64 `json:"endHour,omitempty"`
+
+	// StartHour: Required. The start hour for day and time targeting. Must
+	// be between 0 (start of day)
+	// and 23 (1 hour before end of day).
+	StartHour int64 `json:"startHour,omitempty"`
+
+	// TimeZoneResolution: Required. The mechanism used to determine which
+	// timezone to use for this day and time
+	// targeting setting.
+	//
+	// Possible values:
+	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
+	// unspecific or unknown.
+	//   "TIME_ZONE_RESOLUTION_END_USER" - Times are resolved in the time
+	// zone of the user that saw the ad.
+	//   "TIME_ZONE_RESOLUTION_ADVERTISER" - Times are resolved in the time
+	// zone of the advertiser that served the ad.
+	TimeZoneResolution string `json:"timeZoneResolution,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DayAndTimeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DayAndTimeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteAssignedTargetingOptionsRequest: A request listing which
+// assigned targeting options of a given targeting type
+// should be deleted.
+type DeleteAssignedTargetingOptionsRequest struct {
+	// AssignedTargetingOptionIds: Required. The assigned targeting option
+	// IDs to delete.
+	AssignedTargetingOptionIds []string `json:"assignedTargetingOptionIds,omitempty"`
+
+	// TargetingType: Required. Identifies the type of this assigned
+	// targeting option.
+	//
+	// Possible values:
+	//   "TARGETING_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown in this version.
+	//   "TARGETING_TYPE_CHANNEL" - Target a channel (a custom group of
+	// related websites or apps).
+	//   "TARGETING_TYPE_APP_CATEGORY" - Target an app category (for
+	// example, education or puzzle games).
+	//   "TARGETING_TYPE_APP" - Target a specific app (for example, Angry
+	// Birds).
+	//   "TARGETING_TYPE_URL" - Target a specific url (for example,
+	// quora.com).
+	//   "TARGETING_TYPE_DAY_AND_TIME" - Target ads during a chosen time
+	// period on a specific day.
+	//   "TARGETING_TYPE_AGE_RANGE" - Target ads to a specific age range
+	// (for example, 18-24).
+	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
+	// specified regions on a regional location list.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
+	// specified points of interest on a proximity location
+	// list.
+	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
+	// example, female or male).
+	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
+	// size for video ads.
+	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
+	// content for video ads.
+	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
+	// parental status (for example, parent or not a
+	// parent).
+	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
+	// ads in a specific content instream position (for
+	// example, pre-roll, mid-roll, or post-roll).
+	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
+	// specific content outstream position.
+	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
+	// (for example, tablet or connected TV).
+	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
+	// groups of audiences.
+	// Singleton field, at most one can exist on a single Lineitem at a
+	// time.
+	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
+	// example, Chrome).
+	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
+	// household income range (for example, top 10%).
+	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
+	// screen position.
+	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
+	// third party verification (for example, IAS or
+	// DoubleVerify).
+	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
+	// by specific digital content label ratings (for example,
+	// DL-MA: suitable only for mature audiences).
+	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
+	// content by sensitive categories (for example, adult).
+	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
+	// (for example, web or app).
+	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
+	// carrier or internet service provider
+	// (ISP) (for example, Comcast or Orange).
+	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
+	// operating system (for example, macOS).
+	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
+	// device make or model (for example, Roku or
+	// Samsung).
+	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
+	// example, dog or retriever).
+	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
+	// negative keyword list.
+	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
+	// (for example, 80% viewable).
+	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
+	// category (for example, arts &
+	// entertainment).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
+	// specific deals and auction packages.
+	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
+	// example, English or Japanese).
+	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
+	// authorized sellers.
+	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
+	// location (for example, a city or state).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
+	// a group of deals and auction packages.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION" - Target ads to business
+	// chains, individual points of interests (POIs),
+	// street addresses, and latitude/longitude coordinates.
+	//   "TARGETING_TYPE_EXCHANGE" - Purchase impressions from specific
+	// exchanges.
+	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
+	// sub-exchanges.
+	TargetingType string `json:"targetingType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptionIds") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssignedTargetingOptionIds") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteAssignedTargetingOptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceMakeModelAssignedTargetingOptionDetails: Assigned device make
+// and model targeting option details. This will be
+// populated in the
+// device_make_model_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+type DeviceMakeModelAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the device make and
+	// model.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceMakeModelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceMakeModelAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceMakeModelTargetingOptionDetails: Represents a targetable device
+// make and model. This will be populated in
+// the
+// device_make_model_details
+// field of a TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+type DeviceMakeModelTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the device make and
+	// model.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceMakeModelTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceTypeAssignedTargetingOptionDetails: Targeting details for
+// device type. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_DEVICE_TYPE`.
+type DeviceTypeAssignedTargetingOptionDetails struct {
+	// DeviceType: Output only. The display name of the device type.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
+	// specified in this version. This
+	// enum is a placeholder for default value and does not represent a
+	// real
+	// device type option.
+	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
+	//   "DEVICE_TYPE_TABLET" - The device type is tablet.
+	DeviceType string `json:"deviceType,omitempty"`
+
+	// TargetingOptionId: Required. ID of the device type.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceTypeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceTypeTargetingOptionDetails: Represents a targetable device
+// type. This will be populated in the
+// device_type_details field of a
+// TargetingOption when targeting_type is
+// `TARGETING_TYPE_DEVICE_TYPE`.
+type DeviceTypeTargetingOptionDetails struct {
+	// DeviceType: Output only. The device type that is used to be targeted.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
+	// specified in this version. This
+	// enum is a placeholder for default value and does not represent a
+	// real
+	// device type option.
+	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
+	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
+	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
+	//   "DEVICE_TYPE_TABLET" - The device type is tablet.
+	DeviceType string `json:"deviceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceTypeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DigitalContentLabelAssignedTargetingOptionDetails: Targeting details
+// for digital content label. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
+type DigitalContentLabelAssignedTargetingOptionDetails struct {
+	// ContentRatingTier: Output only. The display name of the digital
+	// content label rating tier.
+	//
+	// Possible values:
+	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified
+	// in this version. This enum is a place
+	// holder for a default value and does not represent a real content
+	// rating.
+	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
+	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general
+	// audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
+	// audiences with parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
+	// audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature
+	// audiences.
+	ContentRatingTier string `json:"contentRatingTier,omitempty"`
+
+	// ExcludedTargetingOptionId: Required. ID of the digital content label
+	// to be EXCLUDED.
+	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentRatingTier")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentRatingTier") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DigitalContentLabelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DigitalContentLabelAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DigitalContentLabelTargetingOptionDetails: Represents a targetable
+// digital content label rating tier. This will be
+// populated in the
+// digital_content_label_details
+// field of the TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
+type DigitalContentLabelTargetingOptionDetails struct {
+	// ContentRatingTier: Output only. An enum for the content label brand
+	// safety tiers.
+	//
+	// Possible values:
+	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified
+	// in this version. This enum is a place
+	// holder for a default value and does not represent a real content
+	// rating.
+	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
+	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general
+	// audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
+	// audiences with parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
+	// audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature
+	// audiences.
+	ContentRatingTier string `json:"contentRatingTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentRatingTier")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentRatingTier") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DigitalContentLabelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DigitalContentLabelTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Dimensions: Dimensions.
+type Dimensions struct {
+	// HeightPixels: The height in pixels.
+	HeightPixels int64 `json:"heightPixels,omitempty"`
+
+	// WidthPixels: The width in pixels.
+	WidthPixels int64 `json:"widthPixels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HeightPixels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HeightPixels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Dimensions) MarshalJSON() ([]byte, error) {
+	type NoMethod Dimensions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerify: Details of DoubleVerify settings.
+type DoubleVerify struct {
+	// AppStarRating: Avoid bidding on apps with the star ratings.
+	AppStarRating *DoubleVerifyAppStarRating `json:"appStarRating,omitempty"`
+
+	// AvoidedAgeRatings: Avoid bidding on apps with the age rating.
+	//
+	// Possible values:
+	//   "AGE_RATING_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any age rating
+	// options.
+	//   "APP_AGE_RATE_UNKNOWN" - Apps with unknown age rating.
+	//   "APP_AGE_RATE_4_PLUS" - Apps rated for Everyone (4+).
+	//   "APP_AGE_RATE_9_PLUS" - Apps rated for Everyone (9+).
+	//   "APP_AGE_RATE_12_PLUS" - Apps rated for Teens (12+).
+	//   "APP_AGE_RATE_17_PLUS" - Apps rated for Mature (17+).
+	//   "APP_AGE_RATE_18_PLUS" - Apps rated for Adults Only (18+).
+	AvoidedAgeRatings []string `json:"avoidedAgeRatings,omitempty"`
+
+	// BrandSafetyCategories: DV Brand Safety Controls.
+	BrandSafetyCategories *DoubleVerifyBrandSafetyCategories `json:"brandSafetyCategories,omitempty"`
+
+	// DisplayViewability: Display viewability settings (applicable to
+	// display line items only).
+	DisplayViewability *DoubleVerifyDisplayViewability `json:"displayViewability,omitempty"`
+
+	// FraudInvalidTraffic: Avoid Sites and Apps with historical Fraud & IVT
+	// Rates.
+	FraudInvalidTraffic *DoubleVerifyFraudInvalidTraffic `json:"fraudInvalidTraffic,omitempty"`
+
+	// VideoViewability: Video viewability settings (applicable to video
+	// line items only).
+	VideoViewability *DoubleVerifyVideoViewability `json:"videoViewability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppStarRating") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppStarRating") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerify) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerify
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerifyAppStarRating: Details of DoubleVerify star ratings
+// settings.
+type DoubleVerifyAppStarRating struct {
+	// AvoidInsufficientStarRating: Avoid bidding on apps with insufficient
+	// star ratings.
+	AvoidInsufficientStarRating bool `json:"avoidInsufficientStarRating,omitempty"`
+
+	// AvoidedStarRating: Avoid bidding on apps with the star ratings.
+	//
+	// Possible values:
+	//   "APP_STAR_RATE_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any app star
+	// rating options.
+	//   "APP_STAR_RATE_1_POINT_5_LESS" - Official Apps with rating < 1.5
+	// Stars.
+	//   "APP_STAR_RATE_2_LESS" - Official Apps with rating < 2 Stars.
+	//   "APP_STAR_RATE_2_POINT_5_LESS" - Official Apps with rating < 2.5
+	// Stars.
+	//   "APP_STAR_RATE_3_LESS" - Official Apps with rating < 3 Stars.
+	//   "APP_STAR_RATE_3_POINT_5_LESS" - Official Apps with rating < 3.5
+	// Stars.
+	//   "APP_STAR_RATE_4_LESS" - Official Apps with rating < 4 Stars.
+	//   "APP_STAR_RATE_4_POINT_5_LESS" - Official Apps with rating < 4.5
+	// Stars.
+	AvoidedStarRating string `json:"avoidedStarRating,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvoidInsufficientStarRating") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AvoidInsufficientStarRating") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerifyAppStarRating) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerifyAppStarRating
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerifyBrandSafetyCategories: Settings for brand safety
+// controls.
+type DoubleVerifyBrandSafetyCategories struct {
+	// AvoidUnknownBrandSafetyCategory: Unknown or unrateable.
+	AvoidUnknownBrandSafetyCategory bool `json:"avoidUnknownBrandSafetyCategory,omitempty"`
+
+	// AvoidedHighSeverityCategories: Brand safety high severity avoidance
+	// categories.
+	//
+	// Possible values:
+	//   "HIGHER_SEVERITY_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any high
+	// severity categories.
+	//   "ADULT_CONTENT_PORNOGRAPHY" - Adult Content: Pornography, Mature
+	// Topics & Nudity.
+	//   "COPYRIGHT_INFRINGEMENT" - Copyright Infringement.
+	//   "SUBSTANCE_ABUSE" - Drugs/Alcohol/Controlled Substances: Substance
+	// Abuse.
+	//   "GRAPHIC_VIOLENCE_WEAPONS" - Extreme Graphic/Explicit
+	// Violence/Weapons.
+	//   "HATE_PROFANITY" - Hate/Profanity.
+	//   "CRIMINAL_SKILLS" - Illegal Activities: Criminal Skills.
+	//   "NUISANCE_INCENTIVIZED_MALWARE_CLUTTER" -
+	// Incentivized/Malware/Clutter.
+	AvoidedHighSeverityCategories []string `json:"avoidedHighSeverityCategories,omitempty"`
+
+	// AvoidedMediumSeverityCategories: Brand safety medium severity
+	// avoidance categories.
+	//
+	// Possible values:
+	//   "MEDIUM_SEVERITY_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any medium
+	// severity categories.
+	//   "AD_SERVERS" - Ad Servers.
+	//   "ADULT_CONTENT_SWIMSUIT" - Adult Content: Swimsuit.
+	//   "ALTERNATIVE_LIFESTYLES" - Controversial Subjects: Alternative
+	// Lifestyles.
+	//   "CELEBRITY_GOSSIP" - Controversial Subjects: Celebrity Gossip.
+	//   "GAMBLING" - Controversial Subjects: Gambling.
+	//   "OCCULT" - Controversial Subjects: Occult.
+	//   "SEX_EDUCATION" - Controversial Subjects: Sex Education.
+	//   "DISASTER_AVIATION" - Disaster: Aviation.
+	//   "DISASTER_MAN_MADE" - Disaster: Man-made.
+	//   "DISASTER_NATURAL" - Disaster: Natural.
+	//   "DISASTER_TERRORIST_EVENTS" - Disaster: Terrorist Events.
+	//   "DISASTER_VEHICLE" - Disaster: Vehicle.
+	//   "ALCOHOL" - Drugs/Alcohol/Controlled Substances: Alcohol.
+	//   "SMOKING" - Drugs/Alcohol/Controlled Substances: Smoking.
+	//   "NEGATIVE_NEWS_FINANCIAL" - Negative News: Financial.
+	//   "NON_ENGLISH" - Non-Std Content: Non-English.
+	//   "PARKING_PAGE" - Non-Std Content: Parking Page.
+	//   "UNMODERATED_UGC" - Unmoderated UGC: Forums, Images & Video.
+	//   "INFLAMMATORY_POLITICS_AND_NEWS" - Controversial Subjects:
+	// Inflammatory Politics and News.
+	//   "NEGATIVE_NEWS_PHARMACEUTICAL" - Negative News: Pharmaceutical.
+	AvoidedMediumSeverityCategories []string `json:"avoidedMediumSeverityCategories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvoidUnknownBrandSafetyCategory") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AvoidUnknownBrandSafetyCategory") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerifyBrandSafetyCategories) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerifyBrandSafetyCategories
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerifyDisplayViewability: Details of DoubleVerify display
+// viewability settings.
+type DoubleVerifyDisplayViewability struct {
+	// Iab: Target web and app inventory to maximize IAB viewable rate.
+	//
+	// Possible values:
+	//   "IAB_VIEWED_RATE_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any IAB viewed
+	// rate options.
+	//   "IAB_VIEWED_RATE_80_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 80% or
+	// higher.
+	//   "IAB_VIEWED_RATE_75_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 75% or
+	// higher.
+	//   "IAB_VIEWED_RATE_70_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 70% or
+	// higher.
+	//   "IAB_VIEWED_RATE_65_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 65% or
+	// higher.
+	//   "IAB_VIEWED_RATE_60_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 60% or
+	// higher.
+	//   "IAB_VIEWED_RATE_55_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 55% or
+	// higher.
+	//   "IAB_VIEWED_RATE_50_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 50% or
+	// higher.
+	//   "IAB_VIEWED_RATE_40_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 40% or
+	// higher.
+	//   "IAB_VIEWED_RATE_30_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 30% or
+	// higher.
+	Iab string `json:"iab,omitempty"`
+
+	// ViewableDuring: Target web and app inventory to maximize 100%
+	// viewable duration.
+	//
+	// Possible values:
+	//   "AVERAGE_VIEW_DURATION_UNSPECIFIED" - This enum is only a
+	// placeholder and it doesn't specify any average view
+	// duration options.
+	//   "AVERAGE_VIEW_DURATION_5_SEC" - Target web and app inventory to
+	// maximize 100% viewable duration 5
+	// seconds or more.
+	//   "AVERAGE_VIEW_DURATION_10_SEC" - Target web and app inventory to
+	// maximize 100% viewable duration 10
+	// seconds or more.
+	//   "AVERAGE_VIEW_DURATION_15_SEC" - Target web and app inventory to
+	// maximize 100% viewable duration 15
+	// seconds or more.
+	ViewableDuring string `json:"viewableDuring,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Iab") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Iab") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerifyDisplayViewability) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerifyDisplayViewability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerifyFraudInvalidTraffic: DoubleVerify Fraud & Invalid Traffic
+// settings.
+type DoubleVerifyFraudInvalidTraffic struct {
+	// AvoidInsufficientOption: Insufficient Historical Fraud & IVT Stats.
+	AvoidInsufficientOption bool `json:"avoidInsufficientOption,omitempty"`
+
+	// AvoidedFraudOption: Avoid Sites and Apps with historical Fraud & IVT.
+	//
+	// Possible values:
+	//   "FRAUD_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any fraud and
+	// invalid traffic options.
+	//   "AD_IMPRESSION_FRAUD_100" - 100% Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_50" - 50% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_25" - 25% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_10" - 10% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_8" - 8% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_6" - 6% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_4" - 4% or Higher Fraud & IVT.
+	//   "AD_IMPRESSION_FRAUD_2" - 2% or Higher Fraud & IVT.
+	AvoidedFraudOption string `json:"avoidedFraudOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvoidInsufficientOption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvoidInsufficientOption")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerifyFraudInvalidTraffic) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerifyFraudInvalidTraffic
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DoubleVerifyVideoViewability: Details of DoubleVerify video
+// viewability settings.
+type DoubleVerifyVideoViewability struct {
+	// PlayerImpressionRate: Target inventory to maximize impressions with
+	// 400x300 or greater player
+	// size.
+	//
+	// Possible values:
+	//   "PLAYER_SIZE_400X300_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any impressions
+	// options.
+	//   "PLAYER_SIZE_400X300_95" - Sites with 95%+ of impressions.
+	//   "PLAYER_SIZE_400X300_70" - Sites with 70%+ of impressions.
+	//   "PLAYER_SIZE_400X300_25" - Sites with 25%+ of impressions.
+	//   "PLAYER_SIZE_400X300_5" - Sites with 5%+ of impressions.
+	PlayerImpressionRate string `json:"playerImpressionRate,omitempty"`
+
+	// VideoIab: Target web inventory to maximize IAB viewable rate.
+	//
+	// Possible values:
+	//   "VIDEO_IAB_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any video IAB
+	// viewable rate options.
+	//   "IAB_VIEWABILITY_80_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 80% or
+	// higher.
+	//   "IAB_VIEWABILITY_75_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 75% or
+	// higher.
+	//   "IAB_VIEWABILITY_70_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 70% or
+	// higher.
+	//   "IAB_VIEWABILITY_65_PERCENT_HIHGER" - Target web and app inventory
+	// to maximize IAB viewable rate 65% or
+	// higher.
+	//   "IAB_VIEWABILITY_60_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 60% or
+	// higher.
+	//   "IAB_VIEWABILITY_55_PERCENT_HIHGER" - Target web and app inventory
+	// to maximize IAB viewable rate 55% or
+	// higher.
+	//   "IAB_VIEWABILITY_50_PERCENT_HIGHER" - Target web and app inventory
+	// to maximize IAB viewable rate 50% or
+	// higher.
+	//   "IAB_VIEWABILITY_40_PERCENT_HIHGER" - Target web and app inventory
+	// to maximize IAB viewable rate 40% or
+	// higher.
+	//   "IAB_VIEWABILITY_30_PERCENT_HIHGER" - Target web and app inventory
+	// to maximize IAB viewable rate 30% or
+	// higher.
+	VideoIab string `json:"videoIab,omitempty"`
+
+	// VideoViewableRate: Target web inventory to maximize fully viewable
+	// rate.
+	//
+	// Possible values:
+	//   "VIDEO_VIEWABLE_RATE_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any video
+	// viewable rate options.
+	//   "VIEWED_PERFORMANCE_40_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 40% or higher.
+	//   "VIEWED_PERFORMANCE_35_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 35% or higher.
+	//   "VIEWED_PERFORMANCE_30_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 30% or higher.
+	//   "VIEWED_PERFORMANCE_25_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 25% or higher.
+	//   "VIEWED_PERFORMANCE_20_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 20% or higher.
+	//   "VIEWED_PERFORMANCE_10_PERCENT_HIGHER" - Target web inventory to
+	// maximize fully viewable rate 10% or higher.
+	VideoViewableRate string `json:"videoViewableRate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PlayerImpressionRate") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlayerImpressionRate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
+	type NoMethod DoubleVerifyVideoViewability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated
+// empty messages in your APIs. A typical example is to use it as the
+// request
+// or the response type of an API method. For instance:
+//
+//     service Foo {
+//       rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty);
+//     }
+//
+// The JSON representation for `Empty` is empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// EnvironmentAssignedTargetingOptionDetails: Assigned environment
+// targeting option details. This will be populated
+// in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_ENVIRONMENT`.
+type EnvironmentAssignedTargetingOptionDetails struct {
+	// Environment: Output only. The serving environment.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
+	// specified in this version. This enum
+	// is a placeholder for default value and does not represent a
+	// real
+	// environment option.
+	//   "ENVIRONMENT_WEB_OPTIMIZED" - Target inventory displayed in
+	// browsers. This includes inventory that was
+	// designed for the device it was viewed on, such as mobile websites
+	// viewed on
+	// a mobile device. ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should
+	// be
+	// deleted prior to the deletion of this targeting option.
+	//   "ENVIRONMENT_WEB_NOT_OPTIMIZED" - Target inventory displayed in
+	// browsers. This includes inventory that was
+	// not designed for the device but viewed on it, such as websites
+	// optimized
+	// for desktop but viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED
+	// should
+	// be targeted prior to the addition of this targeting option.
+	//   "ENVIRONMENT_APP" - Target inventory displayed in apps.
+	Environment string `json:"environment,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_ENVIRONMENT` (e.g.,
+	// "508010"
+	// for targeting the `ENVIRONMENT_WEB_OPTIMIZED` option).
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvironmentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnvironmentTargetingOptionDetails: Represents a targetable
+// environment. This will be populated in the
+// environment_details field of a
+// TargetingOption when targeting_type is
+// `TARGETING_TYPE_ENVIRONMENT`.
+type EnvironmentTargetingOptionDetails struct {
+	// Environment: Output only. The serving environment.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
+	// specified in this version. This enum
+	// is a placeholder for default value and does not represent a
+	// real
+	// environment option.
+	//   "ENVIRONMENT_WEB_OPTIMIZED" - Target inventory displayed in
+	// browsers. This includes inventory that was
+	// designed for the device it was viewed on, such as mobile websites
+	// viewed on
+	// a mobile device. ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should
+	// be
+	// deleted prior to the deletion of this targeting option.
+	//   "ENVIRONMENT_WEB_NOT_OPTIMIZED" - Target inventory displayed in
+	// browsers. This includes inventory that was
+	// not designed for the device but viewed on it, such as websites
+	// optimized
+	// for desktop but viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED
+	// should
+	// be targeted prior to the addition of this targeting option.
+	//   "ENVIRONMENT_APP" - Target inventory displayed in apps.
+	Environment string `json:"environment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Environment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvironmentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvironmentTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeAssignedTargetingOptionDetails: Details for assigned exchange
+// targeting option. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_EXCHANGE`.
+type ExchangeAssignedTargetingOptionDetails struct {
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_EXCHANGE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeReviewStatus: Exchange review status for the creative.
+type ExchangeReviewStatus struct {
+	// Exchange: The exchange reviewing the creative.
+	//
+	// Possible values:
+	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
+	// this version.
+	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
+	//   "EXCHANGE_APPNEXUS" - AppNexus.
+	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
+	//   "EXCHANGE_ADFORM" - Adform.
+	//   "EXCHANGE_ADMETA" - Admeta.
+	//   "EXCHANGE_ADMIXER" - Admixer.
+	//   "EXCHANGE_ADSMOGO" - AdsMogo.
+	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
+	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
+	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
+	// from Yahoo!.
+	//   "EXCHANGE_CADREON" - Cadreon.
+	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
+	//   "EXCHANGE_FIVE" - Five.
+	//   "EXCHANGE_FLUCT" - Fluct.
+	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
+	//   "EXCHANGE_GENIEE" - Geniee.
+	//   "EXCHANGE_GUMGUM" - GumGum.
+	//   "EXCHANGE_IMOBILE" - i-mobile.
+	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
+	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
+	//   "EXCHANGE_INDEX" - Index Exchange.
+	//   "EXCHANGE_KARGO" - Kargo.
+	//   "EXCHANGE_MICROAD" - MicroAd.
+	//   "EXCHANGE_MOPUB" - MoPub.
+	//   "EXCHANGE_NEND" - Nend.
+	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
+	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
+	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
+	//   "EXCHANGE_OOYALA" - Ooyala.
+	//   "EXCHANGE_OPENX" - OpenX.
+	//   "EXCHANGE_PERMODO" - Permodo.
+	//   "EXCHANGE_PLATFORMONE" - Platform One.
+	//   "EXCHANGE_PLATFORMID" - PlatformId.
+	//   "EXCHANGE_PUBMATIC" - PubMatic.
+	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
+	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
+	//   "EXCHANGE_RUBICON" - Rubicon.
+	//   "EXCHANGE_SMARTCLIP" - SmartClip.
+	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
+	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
+	//   "EXCHANGE_SOVRN" - Sovrn.
+	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
+	//   "EXCHANGE_STROER" - Ströer SSP.
+	//   "EXCHANGE_TEADSTV" - TeadsTv.
+	//   "EXCHANGE_TELARIA" - Telaria.
+	//   "EXCHANGE_TVN" - TVN.
+	//   "EXCHANGE_UNITED" - United.
+	//   "EXCHANGE_YIELDLAB" - Yieldlab.
+	//   "EXCHANGE_YIELDMO" - Yieldmo.
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift
+	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_INMOBI" - InMobi.
+	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_AJA" - Aja.
+	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
+	//   "EXCHANGE_WAZE" - Waze.
+	Exchange string `json:"exchange,omitempty"`
+
+	// Status: Status of the exchange review.
+	//
+	// Possible values:
+	//   "REVIEW_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "REVIEW_STATUS_APPROVED" - The creative is approved.
+	//   "REVIEW_STATUS_REJECTED" - The creative is rejected.
+	//   "REVIEW_STATUS_PENDING" - The creative is pending review.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exchange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exchange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeReviewStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeReviewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeTargetingOptionDetails: Represents a targetable exchange.
+// This will be populated in the
+// exchange_details field
+// of a TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_EXCHANGE`.
+type ExchangeTargetingOptionDetails struct {
+	// Exchange: Output only. The type of exchange.
+	//
+	// Possible values:
+	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
+	// this version.
+	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
+	//   "EXCHANGE_APPNEXUS" - AppNexus.
+	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
+	//   "EXCHANGE_ADFORM" - Adform.
+	//   "EXCHANGE_ADMETA" - Admeta.
+	//   "EXCHANGE_ADMIXER" - Admixer.
+	//   "EXCHANGE_ADSMOGO" - AdsMogo.
+	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
+	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
+	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
+	// from Yahoo!.
+	//   "EXCHANGE_CADREON" - Cadreon.
+	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
+	//   "EXCHANGE_FIVE" - Five.
+	//   "EXCHANGE_FLUCT" - Fluct.
+	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
+	//   "EXCHANGE_GENIEE" - Geniee.
+	//   "EXCHANGE_GUMGUM" - GumGum.
+	//   "EXCHANGE_IMOBILE" - i-mobile.
+	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
+	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
+	//   "EXCHANGE_INDEX" - Index Exchange.
+	//   "EXCHANGE_KARGO" - Kargo.
+	//   "EXCHANGE_MICROAD" - MicroAd.
+	//   "EXCHANGE_MOPUB" - MoPub.
+	//   "EXCHANGE_NEND" - Nend.
+	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
+	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
+	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
+	//   "EXCHANGE_OOYALA" - Ooyala.
+	//   "EXCHANGE_OPENX" - OpenX.
+	//   "EXCHANGE_PERMODO" - Permodo.
+	//   "EXCHANGE_PLATFORMONE" - Platform One.
+	//   "EXCHANGE_PLATFORMID" - PlatformId.
+	//   "EXCHANGE_PUBMATIC" - PubMatic.
+	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
+	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
+	//   "EXCHANGE_RUBICON" - Rubicon.
+	//   "EXCHANGE_SMARTCLIP" - SmartClip.
+	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
+	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
+	//   "EXCHANGE_SOVRN" - Sovrn.
+	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
+	//   "EXCHANGE_STROER" - Ströer SSP.
+	//   "EXCHANGE_TEADSTV" - TeadsTv.
+	//   "EXCHANGE_TELARIA" - Telaria.
+	//   "EXCHANGE_TVN" - TVN.
+	//   "EXCHANGE_UNITED" - United.
+	//   "EXCHANGE_YIELDLAB" - Yieldlab.
+	//   "EXCHANGE_YIELDMO" - Yieldmo.
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift
+	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_INMOBI" - InMobi.
+	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_AJA" - Aja.
+	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
+	//   "EXCHANGE_WAZE" - Waze.
+	Exchange string `json:"exchange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exchange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exchange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExitEvent: Exit event of the creative.
+type ExitEvent struct {
+	// Name: The name of the click tag of the exit event.
+	//
+	// The name must be unique within one creative.
+	//
+	// Leave it empty or unset for creatives containing image assets only.
+	Name string `json:"name,omitempty"`
+
+	// ReportingName: The name used to identify this event in reports.
+	// Leave it empty or unset for creatives containing image assets only.
+	ReportingName string `json:"reportingName,omitempty"`
+
+	// Type: Required. The type of the exit event.
+	//
+	// Possible values:
+	//   "EXIT_EVENT_TYPE_UNSPECIFIED" - Exit event type is not specified or
+	// is unknown in this version.
+	//   "EXIT_EVENT_TYPE_DEFAULT" - The exit event is the default one.
+	//   "EXIT_EVENT_TYPE_BACKUP" - The exit event is a backup exit
+	// event.
+	// There could be multiple backup exit events in a creative.
+	Type string `json:"type,omitempty"`
+
+	// Url: Required. The click through URL of the exit event.
+	// This is required when type is:
+	//
+	// * `EXIT_EVENT_TYPE_DEFAULT`
+	// * `EXIT_EVENT_TYPE_BACKUP`
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExitEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ExitEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FirstAndThirdPartyAudience: Describes a first or third party audience
+// list used for targeting.
+// First party audiences are created via usage of client data.
+// Third party audiences are provided by Third Party data providers and
+// can only
+// be licensed to customers.
+type FirstAndThirdPartyAudience struct {
+	// DisplayName: Output only. The display name of the first and third
+	// party audience.
+	// .
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FirstAndThirdPartyAudienceId: Output only. The unique ID of the first
+	// and third party audience. Assigned by the
+	// system.
+	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
+
+	// FirstAndThirdPartyAudienceType: Output only. Whether the audience is
+	// a first or third party audience.
+	// .
+	//
+	// Possible values:
+	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_UNSPECIFIED" - Default value
+	// when type is not specified or is unknown.
+	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_FIRST_PARTY" - Audience that
+	// is created via usage of client data.
+	//   "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_THIRD_PARTY" - Audience that
+	// is provided by Third Party data providers.
+	FirstAndThirdPartyAudienceType string `json:"firstAndThirdPartyAudienceType,omitempty"`
+
+	// Name: Output only. The resource name of the first and third party
+	// audience.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FirstAndThirdPartyAudience) MarshalJSON() ([]byte, error) {
+	type NoMethod FirstAndThirdPartyAudience
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FirstAndThirdPartyAudienceGroup: Details of first and third party
+// audience group.
+// All first and third party audience targeting settings are logically
+// ‘OR’ of
+// each other.
+type FirstAndThirdPartyAudienceGroup struct {
+	// Settings: Required. All first and third party audience targeting
+	// settings in first and
+	// third party audience group.
+	// Repeated settings with same id are not allowed.
+	Settings []*FirstAndThirdPartyAudienceTargetingSetting `json:"settings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Settings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Settings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FirstAndThirdPartyAudienceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod FirstAndThirdPartyAudienceGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FirstAndThirdPartyAudienceTargetingSetting: Details of first and
+// third party audience targeting setting.
+type FirstAndThirdPartyAudienceTargetingSetting struct {
+	// FirstAndThirdPartyAudienceId: Required. First and third party
+	// audience id of the first and third party audience
+	// targeting setting. This id is
+	// first_and_third_party_audience_id.
+	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
+
+	// Recency: The recency of the first and third party audience targeting
+	// setting.
+	// Only applicable to first party audiences, otherwise
+	// will be ignored. For more info, refer
+	// to
+	// https://support.google.com/displayvideo/answer/2949947#recency
+	// When
+	//  unspecified, no recency limit will be used.
+	//
+	// Possible values:
+	//   "RECENCY_NO_LIMIT" - No limit of recency.
+	//   "RECENCY_1_MINUTE" - Recency is 1 minute.
+	//   "RECENCY_5_MINUTES" - Recency is 5 minutes.
+	//   "RECENCY_10_MINUTES" - Recency is 10 minutes.
+	//   "RECENCY_15_MINUTES" - Recency is 15 minutes.
+	//   "RECENCY_30_MINUTES" - Recency is 30 minutes.
+	//   "RECENCY_1_HOUR" - Recency is 1 hour.
+	//   "RECENCY_2_HOURS" - Recency is 2 hours.
+	//   "RECENCY_3_HOURS" - Recency is 3 hours.
+	//   "RECENCY_6_HOURS" - Recency is 6 hours.
+	//   "RECENCY_12_HOURS" - Recency is 12 hours.
+	//   "RECENCY_1_DAY" - Recency is 1 day.
+	//   "RECENCY_2_DAYS" - Recency is 2 days.
+	//   "RECENCY_3_DAYS" - Recency is 3 days.
+	//   "RECENCY_5_DAYS" - Recency is 5 days.
+	//   "RECENCY_7_DAYS" - Recency is 7 days.
+	//   "RECENCY_10_DAYS" - Recency is 10 days.
+	//   "RECENCY_14_DAYS" - Recency is 14 days.
+	//   "RECENCY_15_DAYS" - Recency is 15 days.
+	//   "RECENCY_21_DAYS" - Recency is 21 days.
+	//   "RECENCY_28_DAYS" - Recency is 28 days.
+	//   "RECENCY_30_DAYS" - Recency is 30 days.
+	//   "RECENCY_40_DAYS" - Recency is 40 days.
+	//   "RECENCY_60_DAYS" - Recency is 60 days.
+	//   "RECENCY_90_DAYS" - Recency is 90 days.
+	//   "RECENCY_120_DAYS" - Recency is 120 days.
+	//   "RECENCY_180_DAYS" - Recency is 180 days.
+	//   "RECENCY_270_DAYS" - Recency is 270 days.
+	//   "RECENCY_365_DAYS" - Recency is 365 days.
+	Recency string `json:"recency,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FirstAndThirdPartyAudienceId") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FirstAndThirdPartyAudienceId") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FirstAndThirdPartyAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod FirstAndThirdPartyAudienceTargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FixedBidStrategy: A strategy that uses a fixed bidding price.
+type FixedBidStrategy struct {
+	// BidAmountMicros: The fixed bid amount, in micros of the advertiser's
+	// currency.
+	// For insertion order entity,
+	// bid_amount_micros should be set as 0.
+	// For line item entity,
+	// bid_amount_micros must be greater
+	// than or equal to billable unit of the given currency and smaller than
+	// or
+	// equal to the upper limit 1000000000.
+	//
+	// For example, 1500000 represents 1.5 standard units of the currency.
+	BidAmountMicros int64 `json:"bidAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BidAmountMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BidAmountMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FixedBidStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedBidStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FloodlightGroup: A single Floodlight group.
+type FloodlightGroup struct {
+	// ActiveViewConfig: The Active View video viewability metric
+	// configuration for the Floodlight
+	// group.
+	ActiveViewConfig *ActiveViewVideoViewabilityMetricConfig `json:"activeViewConfig,omitempty"`
+
+	// CustomVariables: User-defined custom variables owned by the
+	// Floodlight group.
+	// Use custom Floodlight variables to create reporting data that is
+	// tailored
+	// to your unique business needs. Custom Floodlight variables use the
+	// keys
+	// `U1=`, `U2=`, and so on, and can take any values that you choose to
+	// pass to
+	// them. You can use them to track virtually any type of data that you
+	// collect
+	// about your customers, such as the genre of movie that a customer
+	// purchases,
+	// the country to which the item is shipped, and so on.
+	//
+	// Custom Floodlight variables may not be used to pass any data that
+	// could be
+	// used or recognized as personally identifiable information
+	// (PII).
+	//
+	// Example:
+	// `custom_variables {
+	//   fields {
+	//     "U1": value { number_value: 123.4 },
+	//     "U2": value { string_value: "MyVariable2" },
+	//     "U3": value { string_value: "MyVariable3" }
+	//   }
+	// }`
+	//
+	// Acceptable values for keys are "U1" through "U100", inclusive.
+	// String
+	// values must be less than 64 characters long, and cannot contain
+	// the
+	// following characters: "<>`.
+	CustomVariables googleapi.RawMessage `json:"customVariables,omitempty"`
+
+	// DisplayName: Required. The display name of the Floodlight group.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FloodlightGroupId: Output only. The unique ID of the Floodlight
+	// group. Assigned by the system.
+	FloodlightGroupId int64 `json:"floodlightGroupId,omitempty,string"`
+
+	// LookbackWindow: Required. The lookback window for the Floodlight
+	// group.
+	// Both click_days and
+	// impression_days are required. Acceptable
+	// values for both are `0` to `90`, inclusive.
+	LookbackWindow *LookbackWindow `json:"lookbackWindow,omitempty"`
+
+	// Name: Output only. The resource name of the Floodlight group.
+	Name string `json:"name,omitempty"`
+
+	// WebTagType: Required. The web tag type enabled for the Floodlight
+	// group.
+	//
+	// Possible values:
+	//   "WEB_TAG_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "WEB_TAG_TYPE_NONE" - No tag type.
+	//   "WEB_TAG_TYPE_IMAGE" - Image tag.
+	//   "WEB_TAG_TYPE_DYNAMIC" - Dynamic tag.
+	WebTagType string `json:"webTagType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveViewConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveViewConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod FloodlightGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FrequencyCap: Settings that control the number of times a user may be
+// shown with the same
+// ad during a given time period.
+type FrequencyCap struct {
+	// MaxImpressions: The maximum number of times a user may be shown with
+	// the same ad
+	// during this period. Must be greater than 0.
+	//
+	// Applicable when unlimited is `false`.
+	MaxImpressions int64 `json:"maxImpressions,omitempty"`
+
+	// TimeUnit: The time unit in which the frequency cap will be
+	// applied.
+	//
+	// Applicable when unlimited is `false`.
+	//
+	// Possible values:
+	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is
+	// unknown in this version.
+	//   "TIME_UNIT_LIFETIME" - The frequency cap will be applied to the
+	// whole life time of the line
+	// item.
+	//   "TIME_UNIT_MONTHS" - The frequency cap will be applied to a number
+	// of months.
+	//   "TIME_UNIT_WEEKS" - The frequency cap will be applied to a number
+	// of weeks.
+	//   "TIME_UNIT_DAYS" - The frequency cap will be applied to a number of
+	// days.
+	//   "TIME_UNIT_HOURS" - The frequency cap will be applied to a number
+	// of hours.
+	//   "TIME_UNIT_MINUTES" - The frequency cap will be applied to a number
+	// of minutes.
+	TimeUnit string `json:"timeUnit,omitempty"`
+
+	// TimeUnitCount: The number of time_unit the frequency cap
+	// will
+	// last.
+	//
+	// Applicable when unlimited is `false`.
+	// The following restrictions apply based on the value of
+	// time_unit:
+	//
+	// * `TIME_UNIT_LIFETIME` - this field is output only and will
+	// default to 1
+	// * `TIME_UNIT_MONTHS` - must be between 1 and 2
+	// * `TIME_UNIT_WEEKS` - must be between 1 and 4
+	// * `TIME_UNIT_DAYS` - must be between 1 and 6
+	// * `TIME_UNIT_HOURS` - must be between 1 and 23
+	// * `TIME_UNIT_MINUTES` - must be between 1 and 59
+	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
+
+	// Unlimited: Whether unlimited frequency capping is applied. When this
+	// field is set to
+	// `true`, the remaining frequency cap fields are not applicable.
+	Unlimited bool `json:"unlimited,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxImpressions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxImpressions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
+	type NoMethod FrequencyCap
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenderAssignedTargetingOptionDetails: Details for assigned gender
+// targeting option. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARTGETING_TYPE_GENDER`.
+type GenderAssignedTargetingOptionDetails struct {
+	// Gender: Output only. The gender of the audience.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
+	// in this version. This enum is a
+	// place holder for default value and does not represent a real gender
+	// option.
+	//   "GENDER_MALE" - The audience gender is male.
+	//   "GENDER_FEMALE" - The audience gender is female.
+	//   "GENDER_UNKNOWN" - The audience gender is unknown.
+	Gender string `json:"gender,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_GENDER`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Gender") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Gender") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenderAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GenderAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenderTargetingOptionDetails: Represents a targetable gender. This
+// will be populated in the
+// gender_details field of a TargetingOption
+// when targeting_type is
+// `TARGETING_TYPE_GENDER`.
+type GenderTargetingOptionDetails struct {
+	// Gender: Output only. The gender of an audience.
+	//
+	// Possible values:
+	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
+	// in this version. This enum is a
+	// place holder for default value and does not represent a real gender
+	// option.
+	//   "GENDER_MALE" - The audience gender is male.
+	//   "GENDER_FEMALE" - The audience gender is female.
+	//   "GENDER_UNKNOWN" - The audience gender is unknown.
+	Gender string `json:"gender,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Gender") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Gender") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GenderTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeoRegionAssignedTargetingOptionDetails: Details for assigned
+// geographic region targeting option. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_GEO_REGION`.
+type GeoRegionAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the geographic region
+	// (e.g., "Ontario, Canada").
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GeoRegionType: Output only. The type of geographic region targeting.
+	//
+	// Possible values:
+	//   "GEO_REGION_TYPE_UNKNOWN" - The geographic region type is unknown.
+	//   "GEO_REGION_TYPE_OTHER" - The geographic region type is other.
+	//   "GEO_REGION_TYPE_COUNTRY" - The geographic region is a country.
+	//   "GEO_REGION_TYPE_REGION" - The geographic region type is region.
+	//   "GEO_REGION_TYPE_TERRITORY" - The geographic region is a territory.
+	//   "GEO_REGION_TYPE_PROVINCE" - The geographic region is a province.
+	//   "GEO_REGION_TYPE_STATE" - The geographic region is a state.
+	//   "GEO_REGION_TYPE_PREFECTURE" - The geographic region is a
+	// prefecture.
+	//   "GEO_REGION_TYPE_GOVERNORATE" - The geographic region is a
+	// governorate.
+	//   "GEO_REGION_TYPE_CANTON" - The geographic region is a canton.
+	//   "GEO_REGION_TYPE_UNION_TERRITORY" - The geographic region is a
+	// union territory.
+	//   "GEO_REGION_TYPE_AUTONOMOUS_COMMUNITY" - The geographic region is
+	// an autonomous community.
+	//   "GEO_REGION_TYPE_DMA_REGION" - The geographic region is a
+	// designated market area (DMA) region.
+	//   "GEO_REGION_TYPE_METRO" - The geographic region type is metro.
+	//   "GEO_REGION_TYPE_CONGRESSIONAL_DISTRICT" - The geographic region is
+	// a congressional district.
+	//   "GEO_REGION_TYPE_COUNTY" - The geographic region is a county.
+	//   "GEO_REGION_TYPE_MUNICIPALITY" - The geographic region is a
+	// municipality.
+	//   "GEO_REGION_TYPE_CITY" - The geographic region is a city.
+	//   "GEO_REGION_TYPE_POSTAL_CODE" - The geographic region targeting
+	// type is postal code.
+	//   "GEO_REGION_TYPE_DEPARTMENT" - The geographic region targeting type
+	// is department.
+	//   "GEO_REGION_TYPE_AIRPORT" - The geographic region is an airport.
+	//   "GEO_REGION_TYPE_TV_REGION" - The geographic region is a TV region.
+	//   "GEO_REGION_TYPE_OKRUG" - The geographic region is an okrug.
+	//   "GEO_REGION_TYPE_BOROUGH" - The geographic region is a borough.
+	//   "GEO_REGION_TYPE_CITY_REGION" - The geographic region is a city
+	// region.
+	//   "GEO_REGION_TYPE_ARRONDISSEMENT" - The geographic region is an
+	// arrondissement.
+	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a
+	// neighborhood.
+	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a
+	// university.
+	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	GeoRegionType string `json:"geoRegionType,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_GEO_REGION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeoRegionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoRegionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeoRegionTargetingOptionDetails: Represents a targetable geographic
+// region. This will be populated in the
+// geo_region_details field when
+// targeting_type is
+// `TARGETING_TYPE_GEO_REGION`.
+type GeoRegionTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the geographic region
+	// (e.g., "Ontario, Canada").
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GeoRegionType: Output only. The type of geographic region targeting.
+	//
+	// Possible values:
+	//   "GEO_REGION_TYPE_UNKNOWN" - The geographic region type is unknown.
+	//   "GEO_REGION_TYPE_OTHER" - The geographic region type is other.
+	//   "GEO_REGION_TYPE_COUNTRY" - The geographic region is a country.
+	//   "GEO_REGION_TYPE_REGION" - The geographic region type is region.
+	//   "GEO_REGION_TYPE_TERRITORY" - The geographic region is a territory.
+	//   "GEO_REGION_TYPE_PROVINCE" - The geographic region is a province.
+	//   "GEO_REGION_TYPE_STATE" - The geographic region is a state.
+	//   "GEO_REGION_TYPE_PREFECTURE" - The geographic region is a
+	// prefecture.
+	//   "GEO_REGION_TYPE_GOVERNORATE" - The geographic region is a
+	// governorate.
+	//   "GEO_REGION_TYPE_CANTON" - The geographic region is a canton.
+	//   "GEO_REGION_TYPE_UNION_TERRITORY" - The geographic region is a
+	// union territory.
+	//   "GEO_REGION_TYPE_AUTONOMOUS_COMMUNITY" - The geographic region is
+	// an autonomous community.
+	//   "GEO_REGION_TYPE_DMA_REGION" - The geographic region is a
+	// designated market area (DMA) region.
+	//   "GEO_REGION_TYPE_METRO" - The geographic region type is metro.
+	//   "GEO_REGION_TYPE_CONGRESSIONAL_DISTRICT" - The geographic region is
+	// a congressional district.
+	//   "GEO_REGION_TYPE_COUNTY" - The geographic region is a county.
+	//   "GEO_REGION_TYPE_MUNICIPALITY" - The geographic region is a
+	// municipality.
+	//   "GEO_REGION_TYPE_CITY" - The geographic region is a city.
+	//   "GEO_REGION_TYPE_POSTAL_CODE" - The geographic region targeting
+	// type is postal code.
+	//   "GEO_REGION_TYPE_DEPARTMENT" - The geographic region targeting type
+	// is department.
+	//   "GEO_REGION_TYPE_AIRPORT" - The geographic region is an airport.
+	//   "GEO_REGION_TYPE_TV_REGION" - The geographic region is a TV region.
+	//   "GEO_REGION_TYPE_OKRUG" - The geographic region is an okrug.
+	//   "GEO_REGION_TYPE_BOROUGH" - The geographic region is a borough.
+	//   "GEO_REGION_TYPE_CITY_REGION" - The geographic region is a city
+	// region.
+	//   "GEO_REGION_TYPE_ARRONDISSEMENT" - The geographic region is an
+	// arrondissement.
+	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a
+	// neighborhood.
+	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a
+	// university.
+	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	GeoRegionType string `json:"geoRegionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeoRegionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoRegionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAudience: Describes a Google audience resource.
+// Includes Google audience lists.
+type GoogleAudience struct {
+	// DisplayName: Output only. The display name of the Google audience.
+	// .
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GoogleAudienceId: Output only. The unique ID of the Google audience.
+	// Assigned by the system.
+	GoogleAudienceId int64 `json:"googleAudienceId,omitempty,string"`
+
+	// GoogleAudienceType: Output only. The type of Google audience.
+	// .
+	//
+	// Possible values:
+	//   "GOOGLE_AUDIENCE_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown.
+	//   "GOOGLE_AUDIENCE_TYPE_AFFINITY" - Affinity type Google audience.
+	//   "GOOGLE_AUDIENCE_TYPE_IN_MARKET" - In-Market type Google audience.
+	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Installed-apps type Google
+	// audience.
+	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - New-mobile-devices type
+	// Google audience.
+	GoogleAudienceType string `json:"googleAudienceType,omitempty"`
+
+	// Name: Output only. The resource name of the google audience.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAudience) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAudience
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAudienceGroup: Details of Google audience group.
+// All Google audience targeting settings are logically ‘OR’ of each
+// other.
+type GoogleAudienceGroup struct {
+	// Settings: Required. All Google audience targeting settings in Google
+	// audience group.
+	// Repeated settings with same id will be ignored.
+	Settings []*GoogleAudienceTargetingSetting `json:"settings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Settings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Settings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAudienceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAudienceGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAudienceTargetingSetting: Details of Google audience targeting
+// setting.
+type GoogleAudienceTargetingSetting struct {
+	// GoogleAudienceId: Required. Google audience id of the Google audience
+	// targeting setting.
+	// This id is google_audience_id.
+	GoogleAudienceId int64 `json:"googleAudienceId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleAudienceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleAudienceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAudienceTargetingSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleBytestreamMedia: Media resource.
 type GoogleBytestreamMedia struct {
 	// ResourceName: Name of the media resource.
@@ -267,6 +6714,122 @@ type GoogleBytestreamMedia struct {
 
 func (s *GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBytestreamMedia
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HouseholdIncomeAssignedTargetingOptionDetails: Details for assigned
+// household income targeting option. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+type HouseholdIncomeAssignedTargetingOptionDetails struct {
+	// HouseholdIncome: Output only. The household income of the audience.
+	//
+	// Possible values:
+	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household
+	// income is not specified in this version. This
+	// enum is a placeholder for default value and does not represent a
+	// real
+	// household income option.
+	//   "HOUSEHOLD_INCOME_UNKNOWN" - The household income of the audience
+	// is unknown.
+	//   "HOUSEHOLD_INCOME_LOWER_50_PERCENT" - The audience is in the lower
+	// 50% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_41_TO_50_PERCENT" - The audience is in the
+	// top 41-50% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_31_TO_40_PERCENT" - The audience is in the
+	// top 31-40% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_21_TO_30_PERCENT" - The audience is in the
+	// top 21-30% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_11_TO_20_PERCENT" - The audience is in the
+	// top 11-20% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_10_PERCENT" - The audience is in the top 10%
+	// of U.S. household incomes.
+	HouseholdIncome string `json:"householdIncome,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HouseholdIncome") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HouseholdIncome") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HouseholdIncomeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod HouseholdIncomeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HouseholdIncomeTargetingOptionDetails: Represents a targetable
+// household income. This will be populated in
+// the
+// household_income_details field of
+// a TargetingOption when targeting_type
+// is
+// `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+type HouseholdIncomeTargetingOptionDetails struct {
+	// HouseholdIncome: Output only. The household income of an audience.
+	//
+	// Possible values:
+	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household
+	// income is not specified in this version. This
+	// enum is a placeholder for default value and does not represent a
+	// real
+	// household income option.
+	//   "HOUSEHOLD_INCOME_UNKNOWN" - The household income of the audience
+	// is unknown.
+	//   "HOUSEHOLD_INCOME_LOWER_50_PERCENT" - The audience is in the lower
+	// 50% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_41_TO_50_PERCENT" - The audience is in the
+	// top 41-50% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_31_TO_40_PERCENT" - The audience is in the
+	// top 31-40% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_21_TO_30_PERCENT" - The audience is in the
+	// top 21-30% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_11_TO_20_PERCENT" - The audience is in the
+	// top 11-20% of U.S. household incomes.
+	//   "HOUSEHOLD_INCOME_TOP_10_PERCENT" - The audience is in the top 10%
+	// of U.S. household incomes.
+	HouseholdIncome string `json:"householdIncome,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HouseholdIncome") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HouseholdIncome") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HouseholdIncomeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod HouseholdIncomeTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -339,6 +6902,714 @@ func (s *IdFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InsertionOrder: A single insertion order.
+type InsertionOrder struct {
+	// AdvertiserId: Output only. The unique ID of the advertiser the
+	// insertion order belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// BidStrategy: Optional. The bidding strategy of the insertion order.
+	// By default,
+	// fixed_bid is set.
+	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
+
+	// Budget: Required. The budget allocation settings of the insertion
+	// order.
+	Budget *InsertionOrderBudget `json:"budget,omitempty"`
+
+	// CampaignId: Required. Immutable. The unique ID of the campaign that
+	// the insertion order belongs to.
+	CampaignId int64 `json:"campaignId,omitempty,string"`
+
+	// DisplayName: Required. The display name of the insertion order.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Required. Controls whether or not the insertion order
+	// can spend its budget
+	// and bid on inventory.
+	//
+	// * For
+	// CreateInsertionOrder method,
+	// only `ENTITY_STATUS_DRAFT` is allowed. To activate an insertion
+	// order, use
+	// UpdateInsertionOrder method
+	// and update the status to `ENTITY_STATUS_ACTIVE` after creation.
+	// * An insertion order cannot be changed back to `ENTITY_STATUS_DRAFT`
+	// status
+	// from any other status.
+	// * An insertion order cannot be set to `ENTITY_STATUS_ACTIVE` if its
+	// parent
+	// campaign is not active.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// FrequencyCap: Required. The frequency capping setting of the
+	// insertion order.
+	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
+
+	// InsertionOrderId: Output only. The unique ID of the insertion order.
+	// Assigned by the system.
+	InsertionOrderId int64 `json:"insertionOrderId,omitempty,string"`
+
+	// IntegrationDetails: Additional integration details of the insertion
+	// order.
+	IntegrationDetails *IntegrationDetails `json:"integrationDetails,omitempty"`
+
+	// Name: Output only. The resource name of the insertion order.
+	Name string `json:"name,omitempty"`
+
+	// Pacing: Required. The budget spending speed setting of the insertion
+	// order.
+	Pacing *Pacing `json:"pacing,omitempty"`
+
+	// PartnerCosts: The partner costs associated with the insertion
+	// order.
+	//
+	// If absent or empty in
+	// CreateInsertionOrder
+	// method, the newly created insertion order will inherit partner costs
+	// from
+	// the partner settings.
+	PartnerCosts []*PartnerCost `json:"partnerCosts,omitempty"`
+
+	// PerformanceGoal: Required. Performance goal of the insertion order.
+	PerformanceGoal *PerformanceGoal `json:"performanceGoal,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the insertion order was
+	// last updated.
+	// Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertionOrder) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertionOrder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InsertionOrderBudget: Settings that control how insertion order
+// budget is allocated.
+type InsertionOrderBudget struct {
+	// AutomationType: The type of automation used to manage bid and budget
+	// for
+	// the insertion order.
+	//
+	// If this field is unspecified in creation, the value defaults
+	// to
+	// `INSERTION_ORDER_AUTOMATION_TYPE_NONE`.
+	//
+	// Possible values:
+	//   "INSERTION_ORDER_AUTOMATION_TYPE_UNSPECIFIED" - Insertion order
+	// automation option is not specified or is unknown in
+	// this version.
+	//   "INSERTION_ORDER_AUTOMATION_TYPE_BUDGET" - Automatic budget
+	// allocation. Allow the system to automatically shift
+	// budget to owning line items to optimize performance defined
+	// by
+	// performance_goal. No automation
+	// on bid settings.
+	//   "INSERTION_ORDER_AUTOMATION_TYPE_NONE" - No automation of bid or
+	// budget on insertion order level.
+	// Bid and budget must be manually configured at the line item level.
+	//   "INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET" - Allow the system to
+	// automatically adjust bids and shift budget to
+	// owning line items to optimize performance defined
+	// by
+	// performance_goal.
+	AutomationType string `json:"automationType,omitempty"`
+
+	// BudgetSegments: Required. The list of budget segments. Use a budget
+	// segment to specify
+	// a specific budget for a given period of time an insertion order is
+	// running.
+	BudgetSegments []*InsertionOrderBudgetSegment `json:"budgetSegments,omitempty"`
+
+	// BudgetUnit: Required. Immutable. The budget unit specifies whether
+	// the budget is currency based or
+	// impression based.
+	//
+	// Possible values:
+	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "BUDGET_UNIT_CURRENCY" - Budgeting in currency amounts.
+	//   "BUDGET_UNIT_IMPRESSIONS" - Budgeting in impression amounts.
+	BudgetUnit string `json:"budgetUnit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutomationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutomationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertionOrderBudget) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertionOrderBudget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InsertionOrderBudgetSegment: Settings that control the budget of a
+// single budget segment.
+type InsertionOrderBudgetSegment struct {
+	// BudgetAmountMicros: Required. The budget amount the insertion order
+	// will spend for the given
+	// date_range.
+	// The amount is in micros. Must be greater than 0. For example,
+	// 500000000
+	// represents 500 standard units of the currency.
+	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
+
+	// CampaignBudgetId: The ID of the campaign budget linked to this
+	// insertion order budget
+	// segment.
+	CampaignBudgetId int64 `json:"campaignBudgetId,omitempty,string"`
+
+	// DateRange: Required. The start and end date settings of the budget
+	// segment. They are resolved
+	// relative to the parent advertiser's time zone.
+	//
+	// * When creating a new budget segment, both `start_date` and
+	// `end_date`
+	// must be in the future.
+	// * An existing budget segment with a `start_date` in the past has a
+	// mutable
+	// `end_date` but an immutable `start_date`.
+	// * `end_date` must be the `start_date` or later, both before the year
+	// 2037.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// Description: The budget segment description. It can be used to enter
+	// Purchase Order
+	// information for each budget segment and have that information printed
+	// on
+	// the invoices.
+	//
+	// Must be UTF-8 encoded with a length of no more than 80 characters.
+	Description string `json:"description,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetAmountMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertionOrderBudgetSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertionOrderBudgetSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntegralAdScience: Details of Integral Ad Science settings.
+type IntegralAdScience struct {
+	// DisplayViewability: Display Viewability section (applicable to
+	// display line items only).
+	//
+	// Possible values:
+	//   "PERFORMANCE_VIEWABILITY_UNSPECIFIED" - This enum is only a
+	// placeholder and it doesn't specify any display
+	// viewability options.
+	//   "PERFORMANCE_VIEWABILITY_40" - Target 40% Viewability or Higher.
+	//   "PERFORMANCE_VIEWABILITY_50" - Target 50% Viewability or Higher.
+	//   "PERFORMANCE_VIEWABILITY_60" - Target 60% Viewability or Higher.
+	//   "PERFORMANCE_VIEWABILITY_70" - Target 70% Viewability or Higher.
+	DisplayViewability string `json:"displayViewability,omitempty"`
+
+	// ExcludeUnrateable: Brand Safety - **Unrateable**.
+	ExcludeUnrateable bool `json:"excludeUnrateable,omitempty"`
+
+	// ExcludedAdFraudRisk: Ad Fraud settings.
+	//
+	// Possible values:
+	//   "SUSPICIOUS_ACTIVITY_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any ad fraud
+	// prevention options.
+	//   "SUSPICIOUS_ACTIVITY_HR" - Ad Fraud - Exclude High Risk.
+	//   "SUSPICIOUS_ACTIVITY_HMR" - Ad Fraud - Exclude High and Moderate
+	// Risk.
+	ExcludedAdFraudRisk string `json:"excludedAdFraudRisk,omitempty"`
+
+	// ExcludedAdultRisk: Brand Safety - **Adult content**.
+	//
+	// Possible values:
+	//   "ADULT_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any adult options.
+	//   "ADULT_HR" - Adult - Exclude High Risk.
+	//   "ADULT_HMR" - Adult - Exclude High and Moderate Risk.
+	ExcludedAdultRisk string `json:"excludedAdultRisk,omitempty"`
+
+	// ExcludedAlcoholRisk: Brand Safety - **Alcohol**.
+	//
+	// Possible values:
+	//   "ALCOHOL_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any alcohol
+	// options.
+	//   "ALCOHOL_HR" - Alcohol - Exclude High Risk.
+	//   "ALCOHOL_HMR" - Alcohol - Exclude High and Moderate Risk.
+	ExcludedAlcoholRisk string `json:"excludedAlcoholRisk,omitempty"`
+
+	// ExcludedDrugsRisk: Brand Safety - **Drugs**.
+	//
+	// Possible values:
+	//   "DRUGS_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any drugs options.
+	//   "DRUGS_HR" - Drugs - Exclude High Risk.
+	//   "DRUGS_HMR" - Drugs - Exclude High and Moderate Risk.
+	ExcludedDrugsRisk string `json:"excludedDrugsRisk,omitempty"`
+
+	// ExcludedGamblingRisk: Brand Safety - **Gambling**.
+	//
+	// Possible values:
+	//   "GAMBLING_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any gambling
+	// options.
+	//   "GAMBLING_HR" - Gambling - Exclude High Risk.
+	//   "GAMBLING_HMR" - Gambling - Exclude High and Moderate Risk.
+	ExcludedGamblingRisk string `json:"excludedGamblingRisk,omitempty"`
+
+	// ExcludedHateSpeechRisk: Brand Safety - **Hate speech**.
+	//
+	// Possible values:
+	//   "HATE_SPEECH_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any hate speech
+	// options.
+	//   "HATE_SPEECH_HR" - Hate Speech - Exclude High Risk.
+	//   "HATE_SPEECH_HMR" - Hate Speech - Exclude High and Moderate Risk.
+	ExcludedHateSpeechRisk string `json:"excludedHateSpeechRisk,omitempty"`
+
+	// ExcludedIllegalDownloadsRisk: Brand Safety - **Illegal downloads**.
+	//
+	// Possible values:
+	//   "ILLEGAL_DOWNLOADS_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any illegal
+	// downloads options.
+	//   "ILLEGAL_DOWNLOADS_HR" - Illegal Downloads - Exclude High Risk.
+	//   "ILLEGAL_DOWNLOADS_HMR" - Illegal Downloads - Exclude High and
+	// Moderate Risk.
+	ExcludedIllegalDownloadsRisk string `json:"excludedIllegalDownloadsRisk,omitempty"`
+
+	// ExcludedOffensiveLanguageRisk: Brand Safety - **Offensive language**.
+	//
+	// Possible values:
+	//   "OFFENSIVE_LANGUAGE_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any language
+	// options.
+	//   "OFFENSIVE_LANGUAGE_HR" - Offensive Language - Exclude High Risk.
+	//   "OFFENSIVE_LANGUAGE_HMR" - Offensive Language - Exclude High and
+	// Moderate Risk.
+	ExcludedOffensiveLanguageRisk string `json:"excludedOffensiveLanguageRisk,omitempty"`
+
+	// ExcludedViolenceRisk: Brand Safety - **Violence**.
+	//
+	// Possible values:
+	//   "VIOLENCE_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any violence
+	// options.
+	//   "VIOLENCE_HR" - Violence - Exclude High Risk.
+	//   "VIOLENCE_HMR" - Violence - Exclude High and Moderate Risk.
+	ExcludedViolenceRisk string `json:"excludedViolenceRisk,omitempty"`
+
+	// TraqScoreOption: True advertising quality (applicable to Display line
+	// items only).
+	//
+	// Possible values:
+	//   "TRAQ_UNSPECIFIED" - This enum is only a placeholder and it doesn't
+	// specify any true
+	// advertising quality scores.
+	//   "TRAQ_250" - TRAQ score 250-1000.
+	//   "TRAQ_500" - TRAQ score 500-1000.
+	//   "TRAQ_600" - TRAQ score 600-1000.
+	//   "TRAQ_700" - TRAQ score 700-1000.
+	//   "TRAQ_750" - TRAQ score 750-1000.
+	//   "TRAQ_875" - TRAQ score 875-1000.
+	//   "TRAQ_1000" - TRAQ score 1000.
+	TraqScoreOption string `json:"traqScoreOption,omitempty"`
+
+	// VideoViewability: Video Viewability Section (applicable to video line
+	// items only).
+	//
+	// Possible values:
+	//   "VIDEO_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any video
+	// viewability options.
+	//   "VIDEO_VIEWABILITY_40" - 40%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_VIEWABILITY_50" - 50%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_VIEWABILITY_60" - 60%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_VIEWABILITY_70" - 70%+ in view (IAB video viewability
+	// standard).
+	VideoViewability string `json:"videoViewability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayViewability")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayViewability") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntegralAdScience) MarshalJSON() ([]byte, error) {
+	type NoMethod IntegralAdScience
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IntegrationDetails: Integration details of an entry.
+type IntegrationDetails struct {
+	// Details: Additional details of the entry in string format.
+	//
+	// Must be UTF-8 encoded with a length of no more than 1000 characters.
+	Details string `json:"details,omitempty"`
+
+	// IntegrationCode: An external identifier to be associated with the
+	// entry.
+	// The integration code will show up together with the entry in
+	// many
+	// places in the system, for example, reporting.
+	//
+	// Must be UTF-8 encoded with a length of no more than 500 characters.
+	IntegrationCode string `json:"integrationCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntegrationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod IntegrationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySource: An inventory source.
+type InventorySource struct {
+	// Commitment: Whether the inventory source has a guaranteed or
+	// non-guaranteed delivery.
+	//
+	// Possible values:
+	//   "INVENTORY_SOURCE_COMMITMENT_UNSPECIFIED" - The commitment is not
+	// specified or is unknown in this version.
+	//   "INVENTORY_SOURCE_COMMITMENT_GUARANTEED" - The commitment is
+	// guaranteed delivery.
+	//   "INVENTORY_SOURCE_COMMITMENT_NON_GUARANTEED" - The commitment is
+	// non-guaranteed delivery.
+	Commitment string `json:"commitment,omitempty"`
+
+	// CreativeConfigs: The creative requirements of the inventory
+	// source.
+	//
+	// Not applicable for auction packages.
+	CreativeConfigs []*CreativeConfig `json:"creativeConfigs,omitempty"`
+
+	// DealId: The ID in the exchange space that uniquely identifies the
+	// inventory source.
+	//
+	// Must be unique across buyers within each exchange but not
+	// necessarily
+	// unique across exchanges.
+	DealId string `json:"dealId,omitempty"`
+
+	// DeliveryMethod: The delivery method of the inventory source.
+	//
+	// * For non-guaranteed inventory sources, the only acceptable value
+	// is
+	// `INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC`.
+	// * For guaranteed inventory sources, acceptable values
+	// are
+	// `INVENTORY_SOURCE_DELIVERY_METHOD_TAG`
+	// and
+	// `INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC`.
+	//
+	// Possible values:
+	//   "INVENTORY_SOURCE_DELIVERY_METHOD_UNSPECIFIED" - The delivery
+	// method is not specified or is unknown in this version.
+	//   "INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC" - The delivery
+	// method is programmatic.
+	//   "INVENTORY_SOURCE_DELIVERY_METHOD_TAG" - The delivery method is
+	// tag.
+	DeliveryMethod string `json:"deliveryMethod,omitempty"`
+
+	// DisplayName: The display name of the inventory source.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Exchange: The exchange to which the inventory source belongs.
+	//
+	// Possible values:
+	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
+	// this version.
+	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
+	//   "EXCHANGE_APPNEXUS" - AppNexus.
+	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
+	//   "EXCHANGE_ADFORM" - Adform.
+	//   "EXCHANGE_ADMETA" - Admeta.
+	//   "EXCHANGE_ADMIXER" - Admixer.
+	//   "EXCHANGE_ADSMOGO" - AdsMogo.
+	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
+	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
+	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
+	// from Yahoo!.
+	//   "EXCHANGE_CADREON" - Cadreon.
+	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
+	//   "EXCHANGE_FIVE" - Five.
+	//   "EXCHANGE_FLUCT" - Fluct.
+	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
+	//   "EXCHANGE_GENIEE" - Geniee.
+	//   "EXCHANGE_GUMGUM" - GumGum.
+	//   "EXCHANGE_IMOBILE" - i-mobile.
+	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
+	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
+	//   "EXCHANGE_INDEX" - Index Exchange.
+	//   "EXCHANGE_KARGO" - Kargo.
+	//   "EXCHANGE_MICROAD" - MicroAd.
+	//   "EXCHANGE_MOPUB" - MoPub.
+	//   "EXCHANGE_NEND" - Nend.
+	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
+	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
+	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
+	//   "EXCHANGE_OOYALA" - Ooyala.
+	//   "EXCHANGE_OPENX" - OpenX.
+	//   "EXCHANGE_PERMODO" - Permodo.
+	//   "EXCHANGE_PLATFORMONE" - Platform One.
+	//   "EXCHANGE_PLATFORMID" - PlatformId.
+	//   "EXCHANGE_PUBMATIC" - PubMatic.
+	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
+	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
+	//   "EXCHANGE_RUBICON" - Rubicon.
+	//   "EXCHANGE_SMARTCLIP" - SmartClip.
+	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
+	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
+	//   "EXCHANGE_SOVRN" - Sovrn.
+	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
+	//   "EXCHANGE_STROER" - Ströer SSP.
+	//   "EXCHANGE_TEADSTV" - TeadsTv.
+	//   "EXCHANGE_TELARIA" - Telaria.
+	//   "EXCHANGE_TVN" - TVN.
+	//   "EXCHANGE_UNITED" - United.
+	//   "EXCHANGE_YIELDLAB" - Yieldlab.
+	//   "EXCHANGE_YIELDMO" - Yieldmo.
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift
+	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_INMOBI" - InMobi.
+	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_AJA" - Aja.
+	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
+	//   "EXCHANGE_WAZE" - Waze.
+	Exchange string `json:"exchange,omitempty"`
+
+	// InventorySourceId: Output only. The unique ID of the inventory
+	// source. Assigned by the system.
+	InventorySourceId int64 `json:"inventorySourceId,omitempty,string"`
+
+	// InventorySourceType: Denotes the type of the inventory source.
+	//
+	// Possible values:
+	//   "INVENTORY_SOURCE_TYPE_UNSPECIFIED" - The inventory source type is
+	// not specified or is unknown in this version.
+	//   "INVENTORY_SOURCE_TYPE_PRIVATE" - Private inventory source.
+	//   "INVENTORY_SOURCE_TYPE_AUCTION_PACKAGE" - Auction package.
+	InventorySourceType string `json:"inventorySourceType,omitempty"`
+
+	// Name: Output only. The resource name of the inventory source.
+	Name string `json:"name,omitempty"`
+
+	// PublisherName: The publisher/seller name of the inventory source.
+	PublisherName string `json:"publisherName,omitempty"`
+
+	// RateDetails: Required. The rate details of the inventory source.
+	RateDetails *RateDetails `json:"rateDetails,omitempty"`
+
+	// Status: The status settings of the inventory source.
+	Status *InventorySourceStatus `json:"status,omitempty"`
+
+	// TimeRange: The time range when this inventory source starts and stops
+	// serving.
+	TimeRange *TimeRange `json:"timeRange,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the inventory source was
+	// last updated. Assigned by the
+	// system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Commitment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Commitment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySource) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceAssignedTargetingOptionDetails: Targeting details for
+// inventory source. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_INVENTORY_SOURCE`.
+type InventorySourceAssignedTargetingOptionDetails struct {
+	// InventorySourceId: Required. ID of the inventory source. Should refer
+	// to the
+	// inventory_source_id field of an
+	// InventorySource resource.
+	InventorySourceId int64 `json:"inventorySourceId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "InventorySourceId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventorySourceId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceDisplayCreativeConfig: The configuration for display
+// creatives.
+type InventorySourceDisplayCreativeConfig struct {
+	// CreativeSize: The size requirements for display creatives that can be
+	// assigned to the
+	// inventory source.
+	CreativeSize *Dimensions `json:"creativeSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreativeSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreativeSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceDisplayCreativeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceDisplayCreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InventorySourceFilter: A filtering option for filtering on Inventory
 // Source entities.
 type InventorySourceFilter struct {
@@ -371,6 +7642,1862 @@ type InventorySourceFilter struct {
 
 func (s *InventorySourceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceGroup: A collection of targetable inventory sources.
+type InventorySourceGroup struct {
+	// DisplayName: Required. The display name of the inventory source
+	// group.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InventorySourceGroupId: Output only. The unique ID of the inventory
+	// source group. Assigned by the system.
+	InventorySourceGroupId int64 `json:"inventorySourceGroupId,omitempty,string"`
+
+	// Name: Output only. The resource name of the inventory source group.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceGroupAssignedTargetingOptionDetails: Targeting details
+// for inventory source group. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
+type InventorySourceGroupAssignedTargetingOptionDetails struct {
+	// InventorySourceGroupId: Required. ID of the inventory source group.
+	// Should refer to the
+	// inventory_source_group_id
+	// field of an InventorySourceGroup resource.
+	InventorySourceGroupId int64 `json:"inventorySourceGroupId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InventorySourceGroupId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventorySourceGroupId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceGroupAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceStatus: The status related settings of the inventory
+// source.
+type InventorySourceStatus struct {
+	// ConfigStatus: Output only. The configuration status of the inventory
+	// source.
+	//
+	// Only applicable for guaranteed inventory sources.
+	// Acceptable values are `INVENTORY_SOURCE_CONFIG_STATUS_PENDING`
+	// and
+	// `INVENTORY_SOURCE_CONFIG_STATUS_COMPLETED`.
+	//
+	// An inventory source must be configured (fill in the required fields,
+	// choose
+	// creatives, and select a default campaign) before it can serve.
+	//
+	// Possible values:
+	//   "INVENTORY_SOURCE_CONFIG_STATUS_UNSPECIFIED" - The approval status
+	// is not specified or is unknown in this version.
+	//   "INVENTORY_SOURCE_CONFIG_STATUS_PENDING" - The beginning state of a
+	// guaranteed inventory source. The inventory
+	// source in this state needs to be configured.
+	//   "INVENTORY_SOURCE_CONFIG_STATUS_COMPLETED" - The state after the
+	// buyer configures a guaranteed inventory source.
+	ConfigStatus string `json:"configStatus,omitempty"`
+
+	// EntityPauseReason: The user-provided reason for pausing this
+	// inventory source.
+	//
+	// Must not exceed 100 characters.
+	//
+	// Only applicable when entity_status
+	// is set to `ENTITY_STATUS_PAUSED`.
+	EntityPauseReason string `json:"entityPauseReason,omitempty"`
+
+	// EntityStatus: Whether or not the inventory source is
+	// servable.
+	//
+	// Acceptable values are `ENTITY_STATUS_ACTIVE`,
+	// `ENTITY_STATUS_ARCHIVED`, and
+	// `ENTITY_STATUS_PAUSED`.
+	// Default value is `ENTITY_STATUS_ACTIVE`.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// SellerPauseReason: Output only. The seller-provided reason for
+	// pausing this inventory source.
+	//
+	// Only applicable for inventory sources synced directly from
+	// the
+	// publishers and when seller_status
+	// is set to `ENTITY_STATUS_PAUSED`.
+	SellerPauseReason string `json:"sellerPauseReason,omitempty"`
+
+	// SellerStatus: Output only. The status set by the seller for the
+	// inventory source.
+	//
+	// Only applicable for inventory sources synced directly from
+	// the
+	// publishers.
+	// Acceptable values are `ENTITY_STATUS_ACTIVE` and
+	// `ENTITY_STATUS_PAUSED`.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	SellerStatus string `json:"sellerStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfigStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfigStatus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InventorySourceVideoCreativeConfig: The configuration for video
+// creatives.
+type InventorySourceVideoCreativeConfig struct {
+	// Duration: The duration requirements for the video creatives that can
+	// be assigned to
+	// the inventory source.
+	Duration string `json:"duration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InventorySourceVideoCreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeywordAssignedTargetingOptionDetails: Details for assigned keyword
+// targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_KEYWORD`.
+type KeywordAssignedTargetingOptionDetails struct {
+	// Keyword: Required. The keyword, for example `car
+	// insurance`.
+	//
+	// Positive keyword cannot be offensive word.
+	// Must be UTF-8 encoded with a maximum size of 255 bytes. Maximum
+	// number
+	// of characters is 80. Maximum number of words is 10.
+	Keyword string `json:"keyword,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Keyword") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Keyword") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeywordAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod KeywordAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LanguageAssignedTargetingOptionDetails: Details for assigned language
+// targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_LANGUAGE`.
+type LanguageAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the language (e.g.,
+	// "French").
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted. All
+	// assigned
+	// language targeting options on the same line item must have the same
+	// value
+	// for this field.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_LANGUAGE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LanguageAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LanguageAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LanguageTargetingOptionDetails: Represents a targetable language.
+// This will be populated in the
+// language_details field when
+// targeting_type is
+// `TARGETING_TYPE_LANGUAGE`.
+type LanguageTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the language (e.g.,
+	// "French").
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LanguageTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LanguageTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LineItem: A single line item.
+type LineItem struct {
+	// AdvertiserId: Output only. The unique ID of the advertiser the line
+	// item belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// BidStrategy: Required. The bidding strategy of the line item.
+	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
+
+	// Budget: Required. The budget allocation setting of the line item.
+	Budget *LineItemBudget `json:"budget,omitempty"`
+
+	// CampaignId: Output only. The unique ID of the campaign that the line
+	// item belongs to.
+	CampaignId int64 `json:"campaignId,omitempty,string"`
+
+	// ConversionCounting: The conversion tracking setting of the line item.
+	ConversionCounting *ConversionCountingConfig `json:"conversionCounting,omitempty"`
+
+	// CreativeIds: The IDs of the creatives associated with the line item.
+	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
+
+	// DisplayName: Required. The display name of the line item.
+	//
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Required. Controls whether or not the line item can
+	// spend its budget and
+	// bid on inventory.
+	//
+	// * For CreateLineItem method, only
+	// `ENTITY_STATUS_DRAFT` is allowed. To activate a line item,
+	// use
+	// UpdateLineItem method and update the
+	// status to `ENTITY_STATUS_ACTIVE` after creation.
+	// * A line item cannot be changed back to `ENTITY_STATUS_DRAFT` status
+	// from
+	// any other status.
+	// * If the line item's parent insertion order is not active, the line
+	// item
+	// can't spend its budget even if its own status is
+	// `ENTITY_STATUS_ACTIVE`.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An
+	// entity can be deleted after archived. Deleted entities cannot be
+	// retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// Flight: Required. The start and end time of the line item's flight.
+	Flight *LineItemFlight `json:"flight,omitempty"`
+
+	// FrequencyCap: Required. The frequency capping setting of the line
+	// item.
+	FrequencyCap *FrequencyCap `json:"frequencyCap,omitempty"`
+
+	// InsertionOrderId: Required. Immutable. The unique ID of the insertion
+	// order that the line item belongs to.
+	InsertionOrderId int64 `json:"insertionOrderId,omitempty,string"`
+
+	// IntegrationDetails: Integration details of the line item.
+	IntegrationDetails *IntegrationDetails `json:"integrationDetails,omitempty"`
+
+	// InventorySourceIds: The IDs of the private inventory sources assigned
+	// to the line item.
+	InventorySourceIds googleapi.Int64s `json:"inventorySourceIds,omitempty"`
+
+	// LineItemId: Output only. The unique ID of the line item. Assigned by
+	// the system.
+	LineItemId int64 `json:"lineItemId,omitempty,string"`
+
+	// LineItemType: Required. Immutable. The type of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "LINE_ITEM_TYPE_DISPLAY_DEFAULT" - Image, HTML5, native, or rich
+	// media ads.
+	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL" - Display ads that
+	// drive installs of an app.
+	//   "LINE_ITEM_TYPE_VIDEO_DEFAULT" - Video ads sold on a CPM basis for
+	// a variety of environments.
+	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL" - Video ads that drive
+	// installs of an app.
+	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INVENTORY" - Display ads served
+	// on mobile app inventory.
+	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
+	// mobile app inventory.
+	LineItemType string `json:"lineItemType,omitempty"`
+
+	// Name: Output only. The resource name of the line item.
+	Name string `json:"name,omitempty"`
+
+	// Pacing: Required. The budget spending speed setting of the line item.
+	Pacing *Pacing `json:"pacing,omitempty"`
+
+	// PartnerCosts: The partner costs associated with the line item.
+	//
+	// If absent or empty in CreateLineItem
+	// method, the newly created line item will inherit partner costs from
+	// its
+	// parent insertion order.
+	PartnerCosts []*PartnerCost `json:"partnerCosts,omitempty"`
+
+	// PartnerRevenueModel: Required. The partner revenue model setting of
+	// the line item.
+	PartnerRevenueModel *PartnerRevenueModel `json:"partnerRevenueModel,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the line item was last
+	// updated. Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LineItem) MarshalJSON() ([]byte, error) {
+	type NoMethod LineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LineItemBudget: Settings that control how budget is allocated.
+type LineItemBudget struct {
+	// BudgetAllocationType: Required. The type of the budget
+	// allocation.
+	//
+	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable
+	// when
+	// automatic budget allocation is enabled for the parent insertion
+	// order.
+	//
+	// Possible values:
+	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNSPECIFIED" - Type value is not
+	// specified or is unknown in this version.
+	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC" - Automatic budget
+	// allocation is enabled for the line item.
+	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED" - A fixed max budget
+	// amount is allocated for the line item.
+	//   "LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNLIMITED" - No budget limit is
+	// applied to the line item.
+	BudgetAllocationType string `json:"budgetAllocationType,omitempty"`
+
+	// BudgetUnit: Output only. The budget unit specifies whether the budget
+	// is currency based
+	// or impression based. This value is inherited from the parent
+	// insertion
+	// order.
+	//
+	// Possible values:
+	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "BUDGET_UNIT_CURRENCY" - Budgeting in currency amounts.
+	//   "BUDGET_UNIT_IMPRESSIONS" - Budgeting in impression amounts.
+	BudgetUnit string `json:"budgetUnit,omitempty"`
+
+	// MaxAmount: The maximum budget amount the line item will spend. Must
+	// be greater than 0.
+	//
+	// When budget_allocation_type is:
+	//
+	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC`, this field is
+	// immutable
+	// and is set by the system.
+	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`, if
+	// budget_unit is:
+	//     - `BUDGET_UNIT_CURRENCY`, this field represents maximum budget
+	// amount
+	//     to spend, in micros of the advertiser's currency. For example,
+	// 1500000
+	//     represents 1.5 standard units of the currency.
+	//     - `BUDGET_UNIT_IMPRESSIONS`, this field represents the maximum
+	// number
+	//     of impressions to serve.
+	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNLIMITED`, this field is
+	// not
+	// applicable and will be ignored by the system.
+	MaxAmount int64 `json:"maxAmount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BudgetAllocationType") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetAllocationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LineItemBudget) MarshalJSON() ([]byte, error) {
+	type NoMethod LineItemBudget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LineItemFlight: Settings that control the active duration of a line
+// item.
+type LineItemFlight struct {
+	// DateRange: The flight start and end dates of the line item. They are
+	// resolved
+	// relative to the parent advertiser's time zone.
+	//
+	// * Required when
+	// flight_date_type is
+	// `LINE_ITEM_FLIGHT_DATE_TYPE_CUSTOM`. Output only otherwise.
+	// * When creating a new flight, both `start_date` and `end_date` must
+	// be in
+	// the future.
+	// * An existing flight with a `start_date` in the past has a
+	// mutable
+	// `end_date` but an immutable `start_date`.
+	// * `end_date` must be the `start_date` or later, both before the year
+	// 2037.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// FlightDateType: Required. The type of the line item's flight dates.
+	//
+	// Possible values:
+	//   "LINE_ITEM_FLIGHT_DATE_TYPE_UNSPECIFIED" - Type value is not
+	// specified or is unknown in this version.
+	//   "LINE_ITEM_FLIGHT_DATE_TYPE_INHERITED" - The line item's flight
+	// dates are inherited from its parent insertion order.
+	//   "LINE_ITEM_FLIGHT_DATE_TYPE_CUSTOM" - The line item uses its own
+	// custom flight dates.
+	FlightDateType string `json:"flightDateType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LineItemFlight) MarshalJSON() ([]byte, error) {
+	type NoMethod LineItemFlight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListAdvertisersResponse struct {
+	// Advertisers: The list of advertisers.
+	//
+	// This list will be absent if empty.
+	Advertisers []*Advertiser `json:"advertisers,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListAdvertisers` method to retrieve
+	// the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Advertisers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Advertisers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdvertisersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdvertisersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCampaignsResponse struct {
+	// Campaigns: The list of campaigns.
+	//
+	// This list will be absent if empty.
+	Campaigns []*Campaign `json:"campaigns,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the page_token field
+	// in the subsequent call to `ListCampaigns` method to retrieve the next
+	// page
+	// of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Campaigns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Campaigns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCampaignsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCampaignsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListChannelsResponse struct {
+	// Channels: The list of channels.
+	//
+	// This list will be absent if empty.
+	Channels []*Channel `json:"channels,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the page_token field
+	// in the subsequent call to `ListChannels` method to retrieve the next
+	// page
+	// of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Channels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channels") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListChannelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCombinedAudiencesResponse struct {
+	// CombinedAudiences: The list of combined audiences.
+	//
+	// This list will be absent if empty.
+	CombinedAudiences []*CombinedAudience `json:"combinedAudiences,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListCombinedAudiences` method to
+	// retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CombinedAudiences")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CombinedAudiences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCombinedAudiencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCombinedAudiencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCreativesResponse struct {
+	// Creatives: The list of creatives.
+	//
+	// This list will be absent if empty.
+	Creatives []*Creative `json:"creatives,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the page_token field
+	// in the subsequent call to `ListCreativesRequest` method to retrieve
+	// the
+	// next page of results.
+	// If this field is null, it means this is the last page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Creatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Creatives") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCreativesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListCustomListsResponse struct {
+	// CustomLists: The list of custom lists.
+	//
+	// This list will be absent if empty.
+	CustomLists []*CustomList `json:"customLists,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListCustomLists` method to retrieve
+	// the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomLists") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomLists") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomListsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListFirstAndThirdPartyAudiencesResponse struct {
+	// FirstAndThirdPartyAudiences: The list of first and third party
+	// audiences. Audience size properties will
+	// not be included.
+	//
+	// This list will be absent if empty.
+	FirstAndThirdPartyAudiences []*FirstAndThirdPartyAudience `json:"firstAndThirdPartyAudiences,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListFirstAndThirdPartyAudiences`
+	// method to
+	// retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FirstAndThirdPartyAudiences") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FirstAndThirdPartyAudiences") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFirstAndThirdPartyAudiencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListGoogleAudiencesResponse struct {
+	// GoogleAudiences: The list of Google audiences.
+	//
+	// This list will be absent if empty.
+	GoogleAudiences []*GoogleAudience `json:"googleAudiences,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListGoogleAudiences` method to
+	// retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleAudiences") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleAudiences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListGoogleAudiencesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListGoogleAudiencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListInsertionOrdersResponse struct {
+	// InsertionOrders: The list of insertion orders.
+	//
+	// This list will be absent if empty.
+	InsertionOrders []*InsertionOrder `json:"insertionOrders,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the page_token
+	// field in the subsequent call to `ListInsertionOrders` method to
+	// retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InsertionOrders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InsertionOrders") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInsertionOrdersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInsertionOrdersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListInventorySourceGroupsResponse: Response message for
+// InventorySourceGroupService.ListInventorySourceGroups.
+type ListInventorySourceGroupsResponse struct {
+	// InventorySourceGroups: The list of inventory source groups.
+	//
+	// This list will be absent if empty.
+	InventorySourceGroups []*InventorySourceGroup `json:"inventorySourceGroups,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListInventorySourceGroups` method
+	// to
+	// retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InventorySourceGroups") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventorySourceGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInventorySourceGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInventorySourceGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListInventorySourcesResponse struct {
+	// InventorySources: The list of inventory sources.
+	//
+	// This list will be absent if empty.
+	InventorySources []*InventorySource `json:"inventorySources,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListInventorySources` method to
+	// retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InventorySources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventorySources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInventorySourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListLineItemAssignedTargetingOptionsResponse: Response message
+// for
+// ListLineItemAssignedTargetingOptions.
+type ListLineItemAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting
+	// options.
+	//
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be
+	// specified as the
+	// pageToken in a
+	// subsequent ListLineItemAssignedTargetingOptionsRequest to fetch
+	// the
+	// next page of results. This token will be absent if there are no
+	// more
+	// assigned_targeting_options
+	// to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLineItemAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListLineItemsResponse struct {
+	// LineItems: The list of line items.
+	//
+	// This list will be absent if empty.
+	LineItems []*LineItem `json:"lineItems,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListLineItems` method to retrieve
+	// the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LineItems") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LineItems") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLineItemsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLineItemsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListLocationListsResponse struct {
+	// LocationLists: The list of location lists.
+	//
+	// This list will be absent if empty.
+	LocationLists []*LocationList `json:"locationLists,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	//
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListLocationLists` method to
+	// retrieve the
+	// next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationLists") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationLists") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLocationListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLocationListsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListNegativeKeywordListsResponse: Response message for
+// NegativeKeywordListService.ListNegativeKeywordLists.
+type ListNegativeKeywordListsResponse struct {
+	// NegativeKeywordLists: The list of negative keyword lists.
+	//
+	// This list will be absent if empty.
+	NegativeKeywordLists []*NegativeKeywordList `json:"negativeKeywordLists,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	//
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListNegativeKeywordLists` method
+	// to
+	// retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NegativeKeywordLists") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NegativeKeywordLists") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListNegativeKeywordListsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNegativeKeywordListsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListTargetingOptionsResponse: Response message
+// for
+// ListTargetingOptions.
+type ListTargetingOptionsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results.
+	// Pass this value in the
+	// page_token
+	// field in the subsequent call to `ListTargetingOptions` method to
+	// retrieve
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TargetingOptions: The list of targeting options.
+	//
+	// This list will be absent if empty.
+	TargetingOptions []*TargetingOption `json:"targetingOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LocationList: A list of locations used for targeting.
+type LocationList struct {
+	// AdvertiserId: Required. Immutable. The unique ID of the advertiser
+	// the location list belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// DisplayName: Required. The display name of the location list.
+	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LocationListId: Output only. The unique ID of the location list.
+	// Assigned by the system.
+	LocationListId int64 `json:"locationListId,omitempty,string"`
+
+	// LocationType: Required. Immutable. The type of location. All
+	// locations in the list will share this type.
+	//
+	// Possible values:
+	//   "TARGETING_LOCATION_TYPE_UNSPECIFIED" - Default value when type is
+	// not specified or is unknown.
+	//   "TARGETING_LOCATION_TYPE_PROXIMITY" - The type for proximity geo
+	// location.
+	//   "TARGETING_LOCATION_TYPE_REGIONAL" - The type for regional geo
+	// location.
+	LocationType string `json:"locationType,omitempty"`
+
+	// Name: Output only. The resource name of the location list.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocationList) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LookbackWindow: Specifies how many days into the past to look when
+// determining whether to
+// record a conversion.
+type LookbackWindow struct {
+	// ClickDays: Lookback window, in days, from the last time a given user
+	// clicked on one of
+	// your ads.
+	ClickDays int64 `json:"clickDays,omitempty"`
+
+	// ImpressionDays: Lookback window, in days, from the last time a given
+	// user viewed one of
+	// your ads.
+	ImpressionDays int64 `json:"impressionDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClickDays") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClickDays") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookbackWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod LookbackWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaximizeSpendBidStrategy: A strategy that automatically adjusts the
+// bid to optimize a specified
+// performance goal while spending the full budget.
+type MaximizeSpendBidStrategy struct {
+	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be
+	// bid, in micros of the advertiser's
+	// currency. Must be greater than or equal to a billable unit of the
+	// given
+	// currency.
+	//
+	// For example, 1500000 represents 1.5 standard units of the currency.
+	MaxAverageCpmBidAmountMicros int64 `json:"maxAverageCpmBidAmountMicros,omitempty,string"`
+
+	// PerformanceGoalType: Required. The type of the performance goal that
+	// the bidding strategy
+	// tries to minimize while spending the full
+	// budget.
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` is not
+	// supported for
+	// this strategy.
+	//
+	// Possible values:
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_UNSPECIFIED" - Type value
+	// is not specified or is unknown in this version.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA" - Cost per action.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC" - Cost per click.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM" - Viewable
+	// CPM.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA" - Completed inview
+	// and audible views.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN" - Inview time over
+	// 10 secs views.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED" - Viewable
+	// impressions.
+	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxAverageCpmBidAmountMicros") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MaxAverageCpmBidAmountMicros") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaximizeSpendBidStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod MaximizeSpendBidStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Money: Represents an amount of money with its currency type.
+type Money struct {
+	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Nanos: Number of nano (10^-9) units of the amount.
+	// The value must be between -999,999,999 and +999,999,999 inclusive.
+	// If `units` is positive, `nanos` must be positive or zero.
+	// If `units` is zero, `nanos` can be positive, zero, or negative.
+	// If `units` is negative, `nanos` must be negative or zero.
+	// For example $-1.75 is represented as `units`=-1 and
+	// `nanos`=-750,000,000.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Units: The whole units of the amount.
+	// For example if `currencyCode` is "USD", then 1 unit is one US
+	// dollar.
+	Units int64 `json:"units,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Money) MarshalJSON() ([]byte, error) {
+	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NegativeKeywordList: A list of negative keywords used for targeting.
+type NegativeKeywordList struct {
+	// AdvertiserId: Output only. The unique ID of the advertiser the
+	// negative keyword list belongs to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// DisplayName: Required. The display name of the negative keyword
+	// list.
+	// Must be UTF-8 encoded with a maximum size of 255 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Output only. The resource name of the negative keyword list.
+	Name string `json:"name,omitempty"`
+
+	// NegativeKeywordListId: Output only. The unique ID of the negative
+	// keyword list. Assigned by the system.
+	NegativeKeywordListId int64 `json:"negativeKeywordListId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NegativeKeywordList) MarshalJSON() ([]byte, error) {
+	type NoMethod NegativeKeywordList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NegativeKeywordListAssignedTargetingOptionDetails: Targeting details
+// for negative keyword list. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`.
+type NegativeKeywordListAssignedTargetingOptionDetails struct {
+	// NegativeKeywordListId: Required. ID of the negative keyword list.
+	// Should refer to the
+	// negative_keyword_list_id
+	// field of a NegativeKeywordList resource.
+	NegativeKeywordListId int64 `json:"negativeKeywordListId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NegativeKeywordListId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NegativeKeywordListId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NegativeKeywordListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ObaIcon: OBA Icon for a Creative
+type ObaIcon struct {
+	// ClickTrackingUrl: Required. The click tracking URL of the OBA
+	// icon.
+	//
+	// Only URLs of the following domains are allowed:
+	//
+	// * https://info.evidon.com
+	// * https://l.betrad.com
+	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
+
+	// Dimensions: The dimensions of the OBA icon.
+	Dimensions *Dimensions `json:"dimensions,omitempty"`
+
+	// LandingPageUrl: Required. The landing page URL of the OBA icon.
+	//
+	// Only URLs of the following domains are allowed:
+	//
+	// * https://info.evidon.com
+	// * https://l.betrad.com
+	LandingPageUrl string `json:"landingPageUrl,omitempty"`
+
+	// Position: The position of the OBA icon on the creative.
+	//
+	// Possible values:
+	//   "OBA_ICON_POSITION_UNSPECIFIED" - The OBA icon position is not
+	// specified.
+	//   "OBA_ICON_POSITION_UPPER_RIGHT" - At the upper right side of the
+	// creative.
+	//   "OBA_ICON_POSITION_UPPER_LEFT" - At the upper left side of the
+	// creative.
+	//   "OBA_ICON_POSITION_LOWER_RIGHT" - At the lower right side of the
+	// creative.
+	//   "OBA_ICON_POSITION_LOWER_LEFT" - At the lower left side of the
+	// creative.
+	Position string `json:"position,omitempty"`
+
+	// Program: The program of the OBA icon. For example: “AdChoices”.
+	Program string `json:"program,omitempty"`
+
+	// ResourceMimeType: The MIME type of the OBA icon resource.
+	ResourceMimeType string `json:"resourceMimeType,omitempty"`
+
+	// ResourceUrl: The URL of the OBA icon resource.
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// ViewTrackingUrl: Required. The view tracking URL of the OBA
+	// icon.
+	//
+	// Only URLs of the following domains are allowed:
+	//
+	// * https://info.evidon.com
+	// * https://l.betrad.com
+	ViewTrackingUrl string `json:"viewTrackingUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClickTrackingUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClickTrackingUrl") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ObaIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod ObaIcon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnScreenPositionAssignedTargetingOptionDetails: On screen position
+// targeting option details. This will be
+// populated in the
+// on_screen_position_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_ON_SCREEN_POSITION`.
+type OnScreenPositionAssignedTargetingOptionDetails struct {
+	// OnScreenPosition: Output only. The on screen position.
+	//
+	// Possible values:
+	//   "ON_SCREEN_POSITION_UNSPECIFIED" - On screen position is not
+	// specified in this version. This enum is a place
+	// holder for a default value and does not represent a real on
+	// screen
+	// position.
+	//   "ON_SCREEN_POSITION_UNKNOWN" - The ad position is unknown on the
+	// screen.
+	//   "ON_SCREEN_POSITION_ABOVE_THE_FOLD" - The ad is located above the
+	// fold.
+	//   "ON_SCREEN_POSITION_BELOW_THE_FOLD" - The ad is located below the
+	// fold.
+	OnScreenPosition string `json:"onScreenPosition,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_ON_SCREEN_POSITION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OnScreenPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OnScreenPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnScreenPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OnScreenPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnScreenPositionTargetingOptionDetails: Represents a targetable on
+// screen position, which could be used by display
+// and video ads. This will be populated in
+// the
+// on_screen_position_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_ON_SCREEN_POSITION`.
+type OnScreenPositionTargetingOptionDetails struct {
+	// OnScreenPosition: Output only. The on screen position.
+	//
+	// Possible values:
+	//   "ON_SCREEN_POSITION_UNSPECIFIED" - On screen position is not
+	// specified in this version. This enum is a place
+	// holder for a default value and does not represent a real on
+	// screen
+	// position.
+	//   "ON_SCREEN_POSITION_UNKNOWN" - The ad position is unknown on the
+	// screen.
+	//   "ON_SCREEN_POSITION_ABOVE_THE_FOLD" - The ad is located above the
+	// fold.
+	//   "ON_SCREEN_POSITION_BELOW_THE_FOLD" - The ad is located below the
+	// fold.
+	OnScreenPosition string `json:"onScreenPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OnScreenPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OnScreenPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnScreenPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OnScreenPositionTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperatingSystemAssignedTargetingOptionDetails: Assigned operating
+// system targeting option details. This will be
+// populated in the
+// operating_system_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_OPERATING_SYSTEM`.
+type OperatingSystemAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the operating system.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// TargetingOptionId: Required. The targeting option ID populated
+	// in
+	// targeting_option_id field when
+	// targeting_type is
+	// `TARGETING_TYPE_OPERATING_SYSTEM`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperatingSystemAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OperatingSystemAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperatingSystemTargetingOptionDetails: Represents a targetable
+// operating system. This will be populated in
+// the
+// operating_system_details field
+// of a TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_OPERATING_SYSTEM`.
+type OperatingSystemTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the operating system.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperatingSystemTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OperatingSystemTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -447,6 +9574,101 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Pacing: Settings that control the rate at which a budget is spent.
+type Pacing struct {
+	// DailyMaxImpressions: Maximum number of impressions to serve every
+	// day.
+	//
+	// Applicable when the budget is impression based. Must be greater than
+	// 0.
+	DailyMaxImpressions int64 `json:"dailyMaxImpressions,omitempty,string"`
+
+	// DailyMaxMicros: Maximum currency amount to spend every day in micros
+	// of
+	// advertiser's currency.
+	//
+	// Applicable when the budget is currency based. Must be greater than
+	// 0.
+	// For example, for 1.5 standard unit of the currency, set this field
+	// to
+	// 1500000.
+	//
+	// The value assigned will be rounded to whole billable units for
+	// the
+	// relevant currency by the following rules: any positive value less
+	// than a
+	// single billable unit will be rounded up to one billable unit and
+	// any
+	// value larger than a single billable unit will be rounded down to
+	// the
+	// nearest billable value. For example, if the currency's billable unit
+	// is
+	// 0.01, and this field is set to 10257770, it will round down to
+	// 10250000,
+	// a value of 10.25. If set to 505, it will round up to 10000, a value
+	// of
+	// 0.01.
+	DailyMaxMicros int64 `json:"dailyMaxMicros,omitempty,string"`
+
+	// PacingPeriod: Required. The time period in which the pacing budget
+	// will be spent.
+	//
+	// When automatic budget allocation is enabled at the insertion order
+	// via
+	// auto_budget_allocation, this
+	// field is output only and defaults to `PACING_PERIOD_FLIGHT`.
+	//
+	// Possible values:
+	//   "PACING_PERIOD_UNSPECIFIED" - Period value is not specified or is
+	// unknown in this version.
+	//   "PACING_PERIOD_DAILY" - The pacing setting will be applied on daily
+	// basis.
+	//   "PACING_PERIOD_FLIGHT" - The pacing setting will be applied to the
+	// whole flight duration.
+	PacingPeriod string `json:"pacingPeriod,omitempty"`
+
+	// PacingType: Required. The type of pacing that defines how the budget
+	// amount will be
+	// spent across the pacing_period.
+	//
+	// Possible values:
+	//   "PACING_TYPE_UNSPECIFIED" - Pacing mode value is not specified or
+	// is unknown in this version.
+	//   "PACING_TYPE_AHEAD" - Only applicable to `PACING_PERIOD_FLIGHT`
+	// pacing period.
+	// Ahead pacing attempts to spend faster than evenly, to make sure
+	// the
+	// entire budget is spent by the end of the flight.
+	//   "PACING_TYPE_ASAP" - Spend all of pacing budget amount as quick as
+	// possible.
+	//   "PACING_TYPE_EVEN" - Spend a consistent budget amount every period
+	// of time.
+	PacingType string `json:"pacingType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DailyMaxImpressions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailyMaxImpressions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Pacing) MarshalJSON() ([]byte, error) {
+	type NoMethod Pacing
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -541,6 +9763,846 @@ func (s *ParentEntityFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ParentalStatusAssignedTargetingOptionDetails: Details for assigned
+// parental status targeting option. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARTGETING_TYPE_PARENTAL_STATUS`.
+type ParentalStatusAssignedTargetingOptionDetails struct {
+	// ParentalStatus: Output only. The parental status of the audience.
+	//
+	// Possible values:
+	//   "PARENTAL_STATUS_UNSPECIFIED" - Default value when parental status
+	// is not specified in this version. This
+	// enum is a place holder for default value and does not represent a
+	// real
+	// parental status option.
+	//   "PARENTAL_STATUS_PARENT" - The audience is a parent.
+	//   "PARENTAL_STATUS_NOT_A_PARENT" - The audience is not a parent.
+	//   "PARENTAL_STATUS_UNKNOWN" - The parental status of the audience is
+	// unknown.
+	ParentalStatus string `json:"parentalStatus,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_PARENTAL_STATUS`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParentalStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParentalStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ParentalStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ParentalStatusAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ParentalStatusTargetingOptionDetails: Represents a targetable
+// parental status. This will be populated in
+// the
+// parental_status_details field of a
+// TargetingOption when targeting_type
+// is
+// `TARGETING_TYPE_PARENTAL_STATUS`.
+type ParentalStatusTargetingOptionDetails struct {
+	// ParentalStatus: Output only. The parental status of an audience.
+	//
+	// Possible values:
+	//   "PARENTAL_STATUS_UNSPECIFIED" - Default value when parental status
+	// is not specified in this version. This
+	// enum is a place holder for default value and does not represent a
+	// real
+	// parental status option.
+	//   "PARENTAL_STATUS_PARENT" - The audience is a parent.
+	//   "PARENTAL_STATUS_NOT_A_PARENT" - The audience is not a parent.
+	//   "PARENTAL_STATUS_UNKNOWN" - The parental status of the audience is
+	// unknown.
+	ParentalStatus string `json:"parentalStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParentalStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParentalStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ParentalStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ParentalStatusTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerCost: Settings that control a partner cost.
+//
+// A partner cost is any type of expense involved in running a campaign,
+// other
+// than the costs of purchasing impressions (which is called the media
+// cost)
+// and using third-party audience segment data (data fee). Some examples
+// of
+// partner costs include the fees for using DV360, a third-party ad
+// server,
+// or a third-party ad serving verification service.
+type PartnerCost struct {
+	// CostType: Required. The type of the partner cost.
+	//
+	// Possible values:
+	//   "PARTNER_COST_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "PARTNER_COST_TYPE_ADLOOX" - The cost is charged for using Adloox.
+	//   "PARTNER_COST_TYPE_ADLOOX_PREBID" - The cost is charged for using
+	// Adloox Pre-Bid.
+	//   "PARTNER_COST_TYPE_ADSAFE" - The cost is charged for using AdSafe.
+	//   "PARTNER_COST_TYPE_ADXPOSE" - The cost is charged for using
+	// AdExpose.
+	//   "PARTNER_COST_TYPE_AGGREGATE_KNOWLEDGE" - The cost is charged for
+	// using Aggregate Knowledge.
+	//   "PARTNER_COST_TYPE_AGENCY_TRADING_DESK" - The cost is charged for
+	// using an Agency Trading Desk.
+	//   "PARTNER_COST_TYPE_DV360_FEE" - The cost is charged for using
+	// DV360.
+	//   "PARTNER_COST_TYPE_COMSCORE_VCE" - The cost is charged for using
+	// comScore vCE.
+	//   "PARTNER_COST_TYPE_DATA_MANAGEMENT_PLATFORM" - The cost is charged
+	// for using a Data Management Platform.
+	//   "PARTNER_COST_TYPE_DEFAULT" - The default cost type.
+	//   "PARTNER_COST_TYPE_DOUBLE_VERIFY" - The cost is charged for using
+	// DoubleVerify.
+	//   "PARTNER_COST_TYPE_DOUBLE_VERIFY_PREBID" - The cost is charged for
+	// using DoubleVerify Pre-Bid.
+	//   "PARTNER_COST_TYPE_EVIDON" - The cost is charged for using Evidon.
+	//   "PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_VIDEO" - The cost is charged
+	// for using Integral Ad Science Video.
+	//   "PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_PREBID" - The cost is
+	// charged for using Integral Ad Science Pre-Bid.
+	//   "PARTNER_COST_TYPE_MEDIA_COST_DATA" - The cost is charged for using
+	// media cost data.
+	//   "PARTNER_COST_TYPE_MOAT_VIDEO" - The cost is charged for using MOAT
+	// Video.
+	//   "PARTNER_COST_TYPE_NIELSEN_DAR" - The cost is charged for using
+	// Nielsen Digital Ad Ratings.
+	//   "PARTNER_COST_TYPE_SHOP_LOCAL" - The cost is charged for using
+	// ShopLocal.
+	//   "PARTNER_COST_TYPE_TERACENT" - The cost is charged for using
+	// Teracent.
+	//   "PARTNER_COST_TYPE_THIRD_PARTY_AD_SERVER" - The cost is charged for
+	// using a third-party ad server.
+	//   "PARTNER_COST_TYPE_TRUST_METRICS" - The cost is charged for using
+	// TrustMetrics.
+	//   "PARTNER_COST_TYPE_VIZU" - The cost is charged for using Vizu.
+	//   "PARTNER_COST_TYPE_ADLINGO_FEE" - The cost is charged for using
+	// AdLingo.
+	//   "PARTNER_COST_TYPE_CUSTOM_FEE_1" - The cost is charged as custom
+	// fee 1.
+	//   "PARTNER_COST_TYPE_CUSTOM_FEE_2" - The cost is charged as custom
+	// fee 2.
+	//   "PARTNER_COST_TYPE_CUSTOM_FEE_3" - The cost is charged as custom
+	// fee 3.
+	//   "PARTNER_COST_TYPE_CUSTOM_FEE_4" - The cost is charged as custom
+	// fee 4.
+	//   "PARTNER_COST_TYPE_CUSTOM_FEE_5" - The cost is charged as custom
+	// fee 5.
+	CostType string `json:"costType,omitempty"`
+
+	// FeeAmount: The CPM fee amount in micros of advertiser's
+	// currency.
+	//
+	// Applicable when the fee_type is
+	// `PARTNER_FEE_TYPE_CPM_FEE`. Must be greater than or equal to 0.
+	//
+	// For example, for 1.5 standard unit of the advertiser's currency,
+	// set
+	// this field to 1500000.
+	FeeAmount int64 `json:"feeAmount,omitempty,string"`
+
+	// FeePercentageMillis: The media fee percentage in millis (1/1000 of a
+	// percent).
+	//
+	// Applicable when the fee_type is
+	// `PARTNER_FEE_TYPE_MEDIA_FEE`. Must be greater than or equal to
+	// 0.
+	//
+	// For example: 100 represents 0.1%.
+	FeePercentageMillis int64 `json:"feePercentageMillis,omitempty,string"`
+
+	// FeeType: Required. The fee type for this partner cost.
+	//
+	// Possible values:
+	//   "PARTNER_COST_FEE_TYPE_UNSPECIFIED" - Value is not specified or is
+	// unknown in this version.
+	//   "PARTNER_COST_FEE_TYPE_CPM_FEE" - The partner cost is a fixed CPM
+	// fee.
+	//
+	// Not applicable when the partner cost cost_type
+	// is one of:
+	//
+	// * `PARTNER_COST_TYPE_MEDIA_COST_DATA`
+	// * `PARTNER_COST_TYPE_DV360_FEE`.
+	//   "PARTNER_COST_FEE_TYPE_MEDIA_FEE" - The partner cost is a
+	// percentage surcharge based on the media cost.
+	//
+	// Not applicable when the partner cost_type is one
+	// of:
+	//
+	// * `PARTNER_COST_TYPE_SHOP_LOCAL`
+	// * `PARTNER_COST_TYPE_TRUST_METRICS`
+	// * `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_VIDEO`
+	// * `PARTNER_COST_TYPE_MOAT_VIDEO`.
+	FeeType string `json:"feeType,omitempty"`
+
+	// InvoiceType: The invoice type for this partner cost.
+	//
+	// * Required when cost_type is one of:
+	//     - `PARTNER_COST_TYPE_ADLOOX`
+	//     - `PARTNER_COST_TYPE_DOUBLE_VERIFY`
+	//     - `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE`.
+	// * Output only for other types.
+	//
+	// Possible values:
+	//   "PARTNER_COST_INVOICE_TYPE_UNSPECIFIED" - Type value is not
+	// specified or is unknown in this version.
+	//   "PARTNER_COST_INVOICE_TYPE_DV360" - Partner cost is billed through
+	// DV360.
+	//   "PARTNER_COST_INVOICE_TYPE_PARTNER" - Partner cost is billed by the
+	// partner.
+	InvoiceType string `json:"invoiceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CostType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CostType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerCost) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerCost
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerRevenueModel: Settings that control how partner revenue is
+// calculated.
+type PartnerRevenueModel struct {
+	// MarkupAmount: Required. The markup amount of the partner revenue
+	// model.
+	// Must be greater than or equal to 0.
+	//
+	// * When the markup_type is set to
+	// be
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`, this field represents the
+	// CPM
+	// markup in micros of advertiser's currency. For example,
+	// 1500000
+	// represents 1.5 standard units of the currency.
+	// * When the markup_type is set to
+	// be
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_MEDIA_COST_MARKUP`, this
+	// field
+	// represents the media cost percent markup in millis. For example,
+	// 100 represents 0.1% (decimal 0.001).
+	// * When the markup_type is set to
+	// be
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP`, this
+	// field
+	// represents the total media cost percent markup in millis. For
+	// example,
+	// 100 represents 0.1% (decimal 0.001).
+	MarkupAmount int64 `json:"markupAmount,omitempty,string"`
+
+	// MarkupType: Required. The markup type of the partner revenue model.
+	//
+	// Possible values:
+	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_UNSPECIFIED" - Type value is not
+	// specified or is unknown in this version.
+	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM" - Calculate the partner
+	// revenue based on a fixed CPM.
+	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_MEDIA_COST_MARKUP" - Calculate
+	// the partner revenue based on a percentage surcharge of its
+	// media cost.
+	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP" -
+	// Calculate the partner revenue based on a percentage surcharge of
+	// its
+	// total media cost, which includes all partner costs and data costs.
+	MarkupType string `json:"markupType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MarkupAmount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MarkupAmount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerRevenueModel) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerRevenueModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceGoal: Settings that control the performance goal of a
+// campaign or insertion order.
+type PerformanceGoal struct {
+	// PerformanceGoalAmountMicros: The goal amount, in micros of the
+	// advertiser's currency.
+	//
+	// Applicable when
+	// performance_goal_type is one of:
+	//
+	// * `PERFORMANCE_GOAL_TYPE_CPM`
+	// * `PERFORMANCE_GOAL_TYPE_CPC`
+	// * `PERFORMANCE_GOAL_TYPE_CPA`
+	// * `PERFORMANCE_GOAL_TYPE_CPIAVC`
+	//
+	// For example 1500000 represents 1.5 standard units of the currency.
+	PerformanceGoalAmountMicros int64 `json:"performanceGoalAmountMicros,omitempty,string"`
+
+	// PerformanceGoalPercentageMicros: The decimal representation of the
+	// goal percentage in micros.
+	//
+	// Applicable when
+	// performance_goal_type is one of:
+	//
+	// * `PERFORMANCE_GOAL_TYPE_CTR`
+	// * `PERFORMANCE_GOAL_TYPE_VIEWABILITY`
+	//
+	// For example, 70000 represents 7% (decimal 0.07).
+	PerformanceGoalPercentageMicros int64 `json:"performanceGoalPercentageMicros,omitempty,string"`
+
+	// PerformanceGoalString: A key performance indicator (KPI) string,
+	// which can be empty.
+	// Must be UTF-8 encoded with a length of no more than 100
+	// characters.
+	//
+	// Applicable when
+	// performance_goal_type is set to
+	// `PERFORMANCE_GOAL_TYPE_OTHER`.
+	PerformanceGoalString string `json:"performanceGoalString,omitempty"`
+
+	// PerformanceGoalType: Required. The type of the performance goal.
+	//
+	// Possible values:
+	//   "PERFORMANCE_GOAL_TYPE_UNSPECIFIED" - Performance goal type is not
+	// specified or is unknown in this version.
+	//   "PERFORMANCE_GOAL_TYPE_CPM" - The performance goal is set in CPM
+	// (cost per mille).
+	//   "PERFORMANCE_GOAL_TYPE_CPC" - The performance goal is set in CPC
+	// (cost per click).
+	//   "PERFORMANCE_GOAL_TYPE_CPA" - The performance goal is set in CPA
+	// (cost per action).
+	//   "PERFORMANCE_GOAL_TYPE_VIEWABILITY" - The performance goal is set
+	// in Viewability percentage.
+	//   "PERFORMANCE_GOAL_TYPE_CPIAVC" - The performance goal is set as
+	// CPIAVC (cost per impression audible and
+	// visible at completion).
+	//   "PERFORMANCE_GOAL_TYPE_CPE" - The performance goal is set in CPE
+	// (cost per engagement).
+	//   "PERFORMANCE_GOAL_TYPE_OTHER" - The performance goal is set to
+	// Other.
+	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PerformanceGoalAmountMicros") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PerformanceGoalAmountMicros") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerformanceGoal) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceGoal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceGoalBidStrategy: A strategy that automatically adjusts the
+// bid to meet or beat a specified
+// performance goal.
+type PerformanceGoalBidStrategy struct {
+	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be
+	// bid, in micros of the advertiser's
+	// currency. Must be greater than or equal to a billable unit of the
+	// given
+	// currency. Not applicable when
+	// performance_goal_type
+	// is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`.
+	//
+	// For example, 1500000 represents 1.5 standard units of the currency.
+	MaxAverageCpmBidAmountMicros int64 `json:"maxAverageCpmBidAmountMicros,omitempty,string"`
+
+	// PerformanceGoalAmountMicros: Required. The performance goal the
+	// bidding strategy will attempt to
+	// meet or beat, in micros of the advertiser's currency.
+	// Must be greater than or equal to a billable unit of the given
+	// currency and
+	// smaller or equal to upper bounds. Each
+	// performance_goal_type
+	// has its upper bound:
+	//
+	// * when
+	// performance_goal_type
+	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
+	// upper bound is 10000.00 USD.
+	// * when
+	// performance_goal_type
+	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`,
+	// upper bound is 1000.00 USD.
+	// * when
+	// performance_goal_type
+	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`, upper bound
+	// is
+	// 1000.00 USD.
+	//
+	// Example: If set
+	// to
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`, the bid price
+	// will
+	// be based on the probability that each available impression will
+	// be
+	// viewable. For example, if viewable CPM target is $2 and an impression
+	// is
+	// 40% likely to be viewable, the bid price will be $0.80 CPM (40% of
+	// $2).
+	//
+	// For example, 1500000 represents 1.5 standard units of the currency.
+	PerformanceGoalAmountMicros int64 `json:"performanceGoalAmountMicros,omitempty,string"`
+
+	// PerformanceGoalType: Required. The type of the performance goal that
+	// the bidding strategy
+	// will try to meet or beat.
+	//
+	// For line item level usage, the value must be one of:
+	//
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`
+	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`.
+	//
+	// Possible values:
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_UNSPECIFIED" - Type value
+	// is not specified or is unknown in this version.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA" - Cost per action.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC" - Cost per click.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM" - Viewable
+	// CPM.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA" - Completed inview
+	// and audible views.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN" - Inview time over
+	// 10 secs views.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED" - Viewable
+	// impressions.
+	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxAverageCpmBidAmountMicros") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MaxAverageCpmBidAmountMicros") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceGoalBidStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProximityLocationListAssignedTargetingOptionDetails: Targeting
+// details for proximity location list. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`.
+type ProximityLocationListAssignedTargetingOptionDetails struct {
+	// ProximityLocationListId: Required. ID of the proximity location list.
+	// Should refer to the
+	// location_list_id field of a
+	// LocationList resource whose type
+	// is
+	// `TARGETING_LOCATION_TYPE_PROXIMITY`.
+	ProximityLocationListId int64 `json:"proximityLocationListId,omitempty,string"`
+
+	// ProximityRadiusRange: Required. Radius range for proximity location
+	// list.
+	// This represents the size of the area around a chosen location that
+	// will be
+	// targeted.
+	//
+	// `All` proximity location targeting under a single line item must have
+	// the
+	// same radius range value. Set this value to match any existing
+	// targeting.
+	// If updated, this field will change the radius range for all
+	// proximity
+	// targeting under the line item.
+	//
+	// Possible values:
+	//   "PROXIMITY_RADIUS_RANGE_UNSPECIFIED" - The targeted radius range is
+	// not specified or is unknown.
+	// Default value when radius range is not specified in this
+	// version.
+	// This enum is a placeholder for default value and does not represent a
+	// real
+	// radius range option.
+	//   "PROXIMITY_RADIUS_RANGE_SMALL" - The targeted radius range is
+	// small.
+	//   "PROXIMITY_RADIUS_RANGE_MEDIUM" - The targeted radius range is
+	// medium.
+	//   "PROXIMITY_RADIUS_RANGE_LARGE" - The targeted radius range is
+	// large.
+	ProximityRadiusRange string `json:"proximityRadiusRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ProximityLocationListId") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProximityLocationListId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProximityLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProximityLocationListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PublisherReviewStatus: Publisher review status for the creative.
+type PublisherReviewStatus struct {
+	// PublisherName: The publisher reviewing the creative.
+	PublisherName string `json:"publisherName,omitempty"`
+
+	// Status: Status of the publisher review.
+	//
+	// Possible values:
+	//   "REVIEW_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "REVIEW_STATUS_APPROVED" - The creative is approved.
+	//   "REVIEW_STATUS_REJECTED" - The creative is rejected.
+	//   "REVIEW_STATUS_PENDING" - The creative is pending review.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublisherName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublisherName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PublisherReviewStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PublisherReviewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RateDetails: The rate related settings of the inventory source.
+type RateDetails struct {
+	// InventorySourceRateType: The rate type.
+	//
+	// Acceptable values are
+	// `INVENTORY_SOURCE_RATE_TYPE_CPM_FIXED`,
+	// `INVENTORY_SOURCE_RATE_TYPE_CP
+	// M_FLOOR`, and
+	// `INVENTORY_SOURCE_RATE_TYPE_CPD`.
+	//
+	// Possible values:
+	//   "INVENTORY_SOURCE_RATE_TYPE_UNSPECIFIED" - The rate type is not
+	// specified or is unknown in this version.
+	//   "INVENTORY_SOURCE_RATE_TYPE_CPM_FIXED" - The rate type is CPM
+	// (Fixed).
+	//   "INVENTORY_SOURCE_RATE_TYPE_CPM_FLOOR" - The rate type is CPM
+	// (Floor).
+	//   "INVENTORY_SOURCE_RATE_TYPE_CPD" - The rate type is Cost per Day.
+	//   "INVENTORY_SOURCE_RATE_TYPE_FLAT" - The rate type is Flat.
+	InventorySourceRateType string `json:"inventorySourceRateType,omitempty"`
+
+	// MinimumSpend: Output only. The amount that the buyer has committed to
+	// spending on the inventory source
+	// up front.
+	//
+	// Only applicable for guaranteed inventory sources.
+	MinimumSpend *Money `json:"minimumSpend,omitempty"`
+
+	// Rate: The rate for the inventory source.
+	Rate *Money `json:"rate,omitempty"`
+
+	// UnitsPurchased: Required for guaranteed inventory sources.
+	// The number of impressions guaranteed by the seller.
+	UnitsPurchased int64 `json:"unitsPurchased,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InventorySourceRateType") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventorySourceRateType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RateDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RateDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RegionalLocationListAssignedTargetingOptionDetails: Targeting details
+// for regional location list. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
+type RegionalLocationListAssignedTargetingOptionDetails struct {
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// RegionalLocationListId: Required. ID of the regional location list.
+	// Should refer to the
+	// location_list_id field of a
+	// LocationList resource whose type is
+	// `TARGETING_LOCATION_TYPE_REGIONAL`.
+	RegionalLocationListId int64 `json:"regionalLocationListId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Negative") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Negative") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalLocationListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReviewStatusInfo: Review statuses for the creative.
+type ReviewStatusInfo struct {
+	// ApprovalStatus: Represents the basic approval needed for a creative
+	// to begin serving.
+	// Summary
+	// of
+	// creative_and_landing_page_review_status
+	// and
+	// content_and_policy_revi
+	// ew_status.
+	//
+	// Possible values:
+	//   "APPROVAL_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "APPROVAL_STATUS_PENDING_NOT_SERVABLE" - The creative is still
+	// under review and not servable.
+	//   "APPROVAL_STATUS_PENDING_SERVABLE" - The creative has passed
+	// creative & landing page
+	// review and is servable, but is awaiting additional
+	// content & policy review.
+	//   "APPROVAL_STATUS_APPROVED_SERVABLE" - Both creative & landing page
+	// review and
+	// content & policy review are approved. The creative is servable.
+	//   "APPROVAL_STATUS_REJECTED_NOT_SERVABLE" - There is an issue with
+	// the creative that must be fixed before it can serve.
+	ApprovalStatus string `json:"approvalStatus,omitempty"`
+
+	// ContentAndPolicyReviewStatus: Content and policy review status for
+	// the creative.
+	//
+	// Possible values:
+	//   "REVIEW_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "REVIEW_STATUS_APPROVED" - The creative is approved.
+	//   "REVIEW_STATUS_REJECTED" - The creative is rejected.
+	//   "REVIEW_STATUS_PENDING" - The creative is pending review.
+	ContentAndPolicyReviewStatus string `json:"contentAndPolicyReviewStatus,omitempty"`
+
+	// CreativeAndLandingPageReviewStatus: Creative and landing page review
+	// status for the creative.
+	//
+	// Possible values:
+	//   "REVIEW_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "REVIEW_STATUS_APPROVED" - The creative is approved.
+	//   "REVIEW_STATUS_REJECTED" - The creative is rejected.
+	//   "REVIEW_STATUS_PENDING" - The creative is pending review.
+	CreativeAndLandingPageReviewStatus string `json:"creativeAndLandingPageReviewStatus,omitempty"`
+
+	// ExchangeReviewStatuses: Exchange review statuses for the creative.
+	ExchangeReviewStatuses []*ExchangeReviewStatus `json:"exchangeReviewStatuses,omitempty"`
+
+	// PublisherReviewStatuses: Publisher review statuses for the creative.
+	PublisherReviewStatuses []*PublisherReviewStatus `json:"publisherReviewStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApprovalStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReviewStatusInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ReviewStatusInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SdfConfig: Structured Data File (SDF) related settings.
+type SdfConfig struct {
+	// AdminEmail: An administrator email address to which the SDF
+	// processing status reports
+	// will be sent.
+	AdminEmail string `json:"adminEmail,omitempty"`
+
+	// Version: Required. The version of SDF being used.
+	//
+	// Possible values:
+	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or
+	// is unknown in this version.
+	//   "SDF_VERSION_3_1" - SDF version 3.1
+	//   "SDF_VERSION_4" - SDF version 4
+	//   "SDF_VERSION_4_1" - SDF version 4.1
+	//   "SDF_VERSION_4_2" - SDF version 4.2
+	//   "SDF_VERSION_5" - SDF version 5.
+	//   "SDF_VERSION_5_1" - SDF version 5.1
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SdfConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SdfConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SdfDownloadTask: Type for the response returned
 // by [SdfDownloadTaskService.CreateSdfDownloadTask].
 type SdfDownloadTask struct {
@@ -623,6 +10685,217 @@ func (s *SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SensitiveCategoryAssignedTargetingOptionDetails: Targeting details
+// for sensitive category. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+type SensitiveCategoryAssignedTargetingOptionDetails struct {
+	// ExcludedTargetingOptionId: Required. ID of the sensitive category to
+	// be EXCLUDED.
+	ExcludedTargetingOptionId string `json:"excludedTargetingOptionId,omitempty"`
+
+	// SensitiveCategory: Output only. An enum for the DV360 Sensitive
+	// category content classifier.
+	//
+	// Possible values:
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
+	// and doesn't specify a DV360 sensitive
+	// category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or
+	// video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as
+	// biased against individuals, groups, or
+	// organizations based on criteria such as race, religion, disability,
+	// sex,
+	// age, veteran status, sexual orientation, gender identity, or
+	// political
+	// affiliation. May also indicate discussion of such content, for
+	// instance,
+	// in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio,
+	// video, or software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
+	// weapons, including knives, guns,
+	// small firearms, and ammunition. Selecting either "weapons"
+	// or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting
+	// or wagering in a real-world or
+	// online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
+	// graphically violent, gory, gruesome, or
+	// shocking, such as street fighting videos, accident photos,
+	// descriptions
+	// of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as
+	// suggestive content that's not explicitly
+	// pornographic. This category includes all pages categorized as adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
+	// indecent, such as curse words and
+	// sexual slang. Pages with only very occasional usage, such as news
+	// sites
+	// that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to
+	// alcoholic beverages, alcohol brands,
+	// recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the
+	// recreational use of legal or illegal
+	// drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco
+	// and tobacco accessories, including
+	// lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
+	// discussions of social, governmental,
+	// and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious
+	// thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
+	// accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to
+	// motor vehicle, aviation or other transportation
+	// accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke
+	// strong, opposing views and spark debate. These include
+	// issues that are controversial in most countries and markets (such
+	// as
+	// abortion), as well as those that are controversial in specific
+	// countries
+	// and markets (such as immigration reform in the United States).
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered
+	// shocking or disturbing, such as violent
+	// news stories, stunts, or toilet humor.
+	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExcludedTargetingOptionId") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExcludedTargetingOptionId") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SensitiveCategoryAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SensitiveCategoryTargetingOptionDetails: Represents a targetable
+// sensitive category. This will be
+// populated in the
+// sensitive_category_details
+// field of the TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+type SensitiveCategoryTargetingOptionDetails struct {
+	// SensitiveCategory: Output only. An enum for the DV360 Sensitive
+	// category content classifier.
+	//
+	// Possible values:
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
+	// and doesn't specify a DV360 sensitive
+	// category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or
+	// video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as
+	// biased against individuals, groups, or
+	// organizations based on criteria such as race, religion, disability,
+	// sex,
+	// age, veteran status, sexual orientation, gender identity, or
+	// political
+	// affiliation. May also indicate discussion of such content, for
+	// instance,
+	// in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio,
+	// video, or software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
+	// weapons, including knives, guns,
+	// small firearms, and ammunition. Selecting either "weapons"
+	// or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting
+	// or wagering in a real-world or
+	// online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
+	// graphically violent, gory, gruesome, or
+	// shocking, such as street fighting videos, accident photos,
+	// descriptions
+	// of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as
+	// suggestive content that's not explicitly
+	// pornographic. This category includes all pages categorized as adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
+	// indecent, such as curse words and
+	// sexual slang. Pages with only very occasional usage, such as news
+	// sites
+	// that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to
+	// alcoholic beverages, alcohol brands,
+	// recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the
+	// recreational use of legal or illegal
+	// drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco
+	// and tobacco accessories, including
+	// lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
+	// discussions of social, governmental,
+	// and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious
+	// thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
+	// accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to
+	// motor vehicle, aviation or other transportation
+	// accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke
+	// strong, opposing views and spark debate. These include
+	// issues that are controversial in most countries and markets (such
+	// as
+	// abortion), as well as those that are controversial in specific
+	// countries
+	// and markets (such as immigration reform in the United States).
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered
+	// shocking or disturbing, such as violent
+	// news stories, stunts, or toilet humor.
+	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SensitiveCategory")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SensitiveCategory") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SensitiveCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SensitiveCategoryTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for
 // different programming environments, including REST APIs and RPC APIs.
@@ -673,6 +10946,11135 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubExchangeAssignedTargetingOptionDetails: Details for assigned
+// sub-exchange targeting option. This will be populated in
+// the details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_SUB_EXCHANGE`.
+type SubExchangeAssignedTargetingOptionDetails struct {
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_SUB_EXCHANGE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubExchangeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SubExchangeTargetingOptionDetails: Represents a targetable
+// sub-exchange. This will be populated in the
+// sub_exchange_details field
+// of a TargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_SUB_EXCHANGE`.
+type SubExchangeTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of the sub-exchange.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubExchangeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetingOption: Represents a single targeting option, which is a
+// targetable concept in
+// DV360.
+type TargetingOption struct {
+	// AgeRangeDetails: Age range details.
+	AgeRangeDetails *AgeRangeTargetingOptionDetails `json:"ageRangeDetails,omitempty"`
+
+	// AppCategoryDetails: App category details.
+	AppCategoryDetails *AppCategoryTargetingOptionDetails `json:"appCategoryDetails,omitempty"`
+
+	// AuthorizedSellerStatusDetails: Authorized seller status resource
+	// details.
+	AuthorizedSellerStatusDetails *AuthorizedSellerStatusTargetingOptionDetails `json:"authorizedSellerStatusDetails,omitempty"`
+
+	// BrowserDetails: Browser details.
+	BrowserDetails *BrowserTargetingOptionDetails `json:"browserDetails,omitempty"`
+
+	// CarrierAndIspDetails: Carrier and ISP details.
+	CarrierAndIspDetails *CarrierAndIspTargetingOptionDetails `json:"carrierAndIspDetails,omitempty"`
+
+	// CategoryDetails: Category resource details.
+	CategoryDetails *CategoryTargetingOptionDetails `json:"categoryDetails,omitempty"`
+
+	// ContentInstreamPositionDetails: Content instream position details.
+	ContentInstreamPositionDetails *ContentInstreamPositionTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
+
+	// ContentOutstreamPositionDetails: Content outstream position details.
+	ContentOutstreamPositionDetails *ContentOutstreamPositionTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
+
+	// DeviceMakeModelDetails: Device make and model resource details.
+	DeviceMakeModelDetails *DeviceMakeModelTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
+
+	// DeviceTypeDetails: Device type details.
+	DeviceTypeDetails *DeviceTypeTargetingOptionDetails `json:"deviceTypeDetails,omitempty"`
+
+	// DigitalContentLabelDetails: Digital content label details.
+	DigitalContentLabelDetails *DigitalContentLabelTargetingOptionDetails `json:"digitalContentLabelDetails,omitempty"`
+
+	// EnvironmentDetails: Environment details.
+	EnvironmentDetails *EnvironmentTargetingOptionDetails `json:"environmentDetails,omitempty"`
+
+	// ExchangeDetails: Exchange details.
+	ExchangeDetails *ExchangeTargetingOptionDetails `json:"exchangeDetails,omitempty"`
+
+	// GenderDetails: Gender details.
+	GenderDetails *GenderTargetingOptionDetails `json:"genderDetails,omitempty"`
+
+	// GeoRegionDetails: Geographic region resource details.
+	GeoRegionDetails *GeoRegionTargetingOptionDetails `json:"geoRegionDetails,omitempty"`
+
+	// HouseholdIncomeDetails: Household income details.
+	HouseholdIncomeDetails *HouseholdIncomeTargetingOptionDetails `json:"householdIncomeDetails,omitempty"`
+
+	// LanguageDetails: Language resource details.
+	LanguageDetails *LanguageTargetingOptionDetails `json:"languageDetails,omitempty"`
+
+	// Name: Output only. The resource name for this targeting option.
+	Name string `json:"name,omitempty"`
+
+	// OnScreenPositionDetails: On screen position details.
+	OnScreenPositionDetails *OnScreenPositionTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
+
+	// OperatingSystemDetails: Operating system resources details.
+	OperatingSystemDetails *OperatingSystemTargetingOptionDetails `json:"operatingSystemDetails,omitempty"`
+
+	// ParentalStatusDetails: Parental status details.
+	ParentalStatusDetails *ParentalStatusTargetingOptionDetails `json:"parentalStatusDetails,omitempty"`
+
+	// SensitiveCategoryDetails: Sensitive Category details.
+	SensitiveCategoryDetails *SensitiveCategoryTargetingOptionDetails `json:"sensitiveCategoryDetails,omitempty"`
+
+	// SubExchangeDetails: Sub-exchange details.
+	SubExchangeDetails *SubExchangeTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
+
+	// TargetingOptionId: Output only. A unique identifier for this
+	// targeting option. The tuple
+	// {`targeting_type`, `targeting_option_id`} will be unique.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// TargetingType: Output only. The type of this targeting option.
+	//
+	// Possible values:
+	//   "TARGETING_TYPE_UNSPECIFIED" - Default value when type is not
+	// specified or is unknown in this version.
+	//   "TARGETING_TYPE_CHANNEL" - Target a channel (a custom group of
+	// related websites or apps).
+	//   "TARGETING_TYPE_APP_CATEGORY" - Target an app category (for
+	// example, education or puzzle games).
+	//   "TARGETING_TYPE_APP" - Target a specific app (for example, Angry
+	// Birds).
+	//   "TARGETING_TYPE_URL" - Target a specific url (for example,
+	// quora.com).
+	//   "TARGETING_TYPE_DAY_AND_TIME" - Target ads during a chosen time
+	// period on a specific day.
+	//   "TARGETING_TYPE_AGE_RANGE" - Target ads to a specific age range
+	// (for example, 18-24).
+	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
+	// specified regions on a regional location list.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
+	// specified points of interest on a proximity location
+	// list.
+	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
+	// example, female or male).
+	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
+	// size for video ads.
+	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
+	// content for video ads.
+	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
+	// parental status (for example, parent or not a
+	// parent).
+	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
+	// ads in a specific content instream position (for
+	// example, pre-roll, mid-roll, or post-roll).
+	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
+	// specific content outstream position.
+	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
+	// (for example, tablet or connected TV).
+	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
+	// groups of audiences.
+	// Singleton field, at most one can exist on a single Lineitem at a
+	// time.
+	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
+	// example, Chrome).
+	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
+	// household income range (for example, top 10%).
+	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
+	// screen position.
+	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
+	// third party verification (for example, IAS or
+	// DoubleVerify).
+	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
+	// by specific digital content label ratings (for example,
+	// DL-MA: suitable only for mature audiences).
+	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
+	// content by sensitive categories (for example, adult).
+	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
+	// (for example, web or app).
+	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
+	// carrier or internet service provider
+	// (ISP) (for example, Comcast or Orange).
+	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
+	// operating system (for example, macOS).
+	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
+	// device make or model (for example, Roku or
+	// Samsung).
+	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
+	// example, dog or retriever).
+	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
+	// negative keyword list.
+	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
+	// (for example, 80% viewable).
+	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
+	// category (for example, arts &
+	// entertainment).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
+	// specific deals and auction packages.
+	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
+	// example, English or Japanese).
+	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
+	// authorized sellers.
+	//   "TARGETING_TYPE_GEO_REGION" - Target ads to a specific regional
+	// location (for example, a city or state).
+	//   "TARGETING_TYPE_INVENTORY_SOURCE_GROUP" - Purchase impressions from
+	// a group of deals and auction packages.
+	//   "TARGETING_TYPE_PROXIMITY_LOCATION" - Target ads to business
+	// chains, individual points of interests (POIs),
+	// street addresses, and latitude/longitude coordinates.
+	//   "TARGETING_TYPE_EXCHANGE" - Purchase impressions from specific
+	// exchanges.
+	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
+	// sub-exchanges.
+	TargetingType string `json:"targetingType,omitempty"`
+
+	// UserRewardedContentDetails: User rewarded content details.
+	UserRewardedContentDetails *UserRewardedContentTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
+
+	// VideoPlayerSizeDetails: Video player size details.
+	VideoPlayerSizeDetails *VideoPlayerSizeTargetingOptionDetails `json:"videoPlayerSizeDetails,omitempty"`
+
+	// ViewabilityDetails: Viewability resource details.
+	ViewabilityDetails *ViewabilityTargetingOptionDetails `json:"viewabilityDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AgeRangeDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgeRangeDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetingOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyOnlyConfig: Settings for advertisers that use third-party
+// ad servers only.
+type ThirdPartyOnlyConfig struct {
+	// PixelOrderIdReportingEnabled: Whether or not order ID reporting for
+	// pixels is enabled.
+	// This value cannot be changed once set to `true`.
+	PixelOrderIdReportingEnabled bool `json:"pixelOrderIdReportingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PixelOrderIdReportingEnabled") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PixelOrderIdReportingEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyOnlyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyOnlyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyUrl: Tracking URLs from third parties to track interactions
+// with an audio or a
+// video creative.
+type ThirdPartyUrl struct {
+	// Type: The type of interaction needs to be tracked by the tracking URL
+	//
+	// Possible values:
+	//   "THIRD_PARTY_URL_TYPE_UNSPECIFIED" - The type of third-party URL is
+	// unspecified or is unknown in this version.
+	//   "THIRD_PARTY_URL_TYPE_IMPRESSION" - Used to count impressions of
+	// the creative after the audio or video
+	// buffering is complete.
+	//   "THIRD_PARTY_URL_TYPE_CLICK_TRACKING" - Used to track user clicks
+	// on the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_START" - Used to track the number
+	// of times a user starts the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_FIRST_QUARTILE" - Used to track
+	// the number of times the audio or video plays to 25% of its
+	// length.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_MIDPOINT" - Used to track the
+	// number of times the audio or video plays to 50% of its
+	// length.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_THIRD_QUARTILE" - Used to track
+	// the number of times the audio or video plays to 75% of its
+	// length.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_COMPLETE" - Used to track the
+	// number of times the audio or video plays to the end.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_MUTE" - Used to track the number
+	// of times a user mutes the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_PAUSE" - Used to track the number
+	// of times a user pauses the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_REWIND" - Used to track the
+	// number of times a user replays the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_FULLSCREEN" - Used to track the
+	// number of times a user expands the player to
+	// full-screen size.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_STOP" - Used to track the number
+	// of times a user stops the audio or video.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_CUSTOM" - Used to track the
+	// number of times a user performs a custom click,
+	// such as clicking on a video hot spot.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_SKIP" - Used to track the number
+	// of times the audio or video was skipped.
+	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_PROGRESS" - Used to track the
+	// number of times the audio or video plays to an offset
+	// determined by the progress_offset.
+	Type string `json:"type,omitempty"`
+
+	// Url: Tracking URL used to track the interaction.
+	//
+	// Provide a URL with optional path or query string, beginning with
+	// `https:`.
+	// For example, https://www.example.com/path
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyVerifierAssignedTargetingOptionDetails: Assigned third
+// party verifier targeting option details. This will be
+// populated in the details field of an AssignedTargetingOption
+// when
+// targeting_type is
+// `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
+type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
+	// Adloox: Third party brand verifier -- Adloox.
+	Adloox *Adloox `json:"adloox,omitempty"`
+
+	// DoubleVerify: Third party brand verifier -- DoubleVerify.
+	DoubleVerify *DoubleVerify `json:"doubleVerify,omitempty"`
+
+	// IntegralAdScience: Third party brand verifier -- Integral Ad Science.
+	IntegralAdScience *IntegralAdScience `json:"integralAdScience,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Adloox") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Adloox") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyVerifierAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyVerifierAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeRange: A time range.
+type TimeRange struct {
+	// EndTime: Required. The upper bound of a time range, inclusive.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Required. The lower bound of a time range, inclusive.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimerEvent: Timer event of the creative.
+type TimerEvent struct {
+	// Name: Required. The name of the timer event.
+	Name string `json:"name,omitempty"`
+
+	// ReportingName: Required. The name used to identify this timer event
+	// in reports.
+	ReportingName string `json:"reportingName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimerEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod TimerEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TrackingFloodlightActivityConfig: Settings that control the behavior
+// of a single Floodlight activity config.
+type TrackingFloodlightActivityConfig struct {
+	// FloodlightActivityId: Required. The ID of the Floodlight activity.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+
+	// PostClickLookbackWindowDays: Required. The number of days after an ad
+	// has been clicked in which a
+	// conversion may be counted.
+	// Must be between 0 and 90 inclusive.
+	PostClickLookbackWindowDays int64 `json:"postClickLookbackWindowDays,omitempty"`
+
+	// PostViewLookbackWindowDays: Required. The number of days after an ad
+	// has been viewed in which a
+	// conversion may be counted.
+	// Must be between 0 and 90 inclusive.
+	PostViewLookbackWindowDays int64 `json:"postViewLookbackWindowDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FloodlightActivityId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FloodlightActivityId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrackingFloodlightActivityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackingFloodlightActivityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Transcode: Represents information about the transcoded audio or video
+// file.
+type Transcode struct {
+	// AudioBitRateKbps: The bit rate for the audio stream of the transcoded
+	// video, or the bit rate
+	// for the transcoded audio, in kilobits per second.
+	AudioBitRateKbps int64 `json:"audioBitRateKbps,omitempty,string"`
+
+	// AudioSampleRateHz: The sample rate for the audio stream of the
+	// transcoded video, or the sample
+	// rate for the transcoded audio, in hertz.
+	AudioSampleRateHz int64 `json:"audioSampleRateHz,omitempty,string"`
+
+	// BitRateKbps: The transcoding bit rate of the transcoded video, in
+	// kilobits per second.
+	BitRateKbps int64 `json:"bitRateKbps,omitempty,string"`
+
+	// Dimensions: The dimensions of the transcoded video.
+	Dimensions *Dimensions `json:"dimensions,omitempty"`
+
+	// FileSizeBytes: The size of the transcoded file, in bytes.
+	FileSizeBytes int64 `json:"fileSizeBytes,omitempty,string"`
+
+	// FrameRate: The frame rate of the transcoded video, in frames per
+	// second.
+	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// MimeType: The MIME type of the transcoded file.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// Name: The name of the transcoded file.
+	Name string `json:"name,omitempty"`
+
+	// Transcoded: Indicates if the transcoding was successful.
+	Transcoded bool `json:"transcoded,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioBitRateKbps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioBitRateKbps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Transcode) MarshalJSON() ([]byte, error) {
+	type NoMethod Transcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Transcode) UnmarshalJSON(data []byte) error {
+	type NoMethod Transcode
+	var s1 struct {
+		FrameRate gensupport.JSONFloat64 `json:"frameRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FrameRate = float64(s1.FrameRate)
+	return nil
+}
+
+// UniversalAdId: A creative identifier provided by a registry that is
+// unique across all
+// platforms. This is part of the VAST 4.0 standard.
+type UniversalAdId struct {
+	// Id: The unique creative identifier.
+	Id string `json:"id,omitempty"`
+
+	// Registry: The registry provides unique creative identifiers.
+	//
+	// Possible values:
+	//   "UNIVERSAL_AD_REGISTRY_UNSPECIFIED" - The Universal Ad registry is
+	// unspecified or is unknown in this version.
+	//   "UNIVERSAL_AD_REGISTRY_OTHER" - Use a custom provider to provide
+	// the Universal Ad ID.
+	//   "UNIVERSAL_AD_REGISTRY_AD_ID" - Use Ad-ID to provide the Universal
+	// Ad ID.
+	//   "UNIVERSAL_AD_REGISTRY_CLEARCAST" - Use clearcast.co.uk to provide
+	// the Universal Ad ID.
+	//   "UNIVERSAL_AD_REGISTRY_DV360" - Use Display & Video 360 to provide
+	// the Universal Ad ID.
+	//   "UNIVERSAL_AD_REGISTRY_CM" - Use Campaign Manager to provide the
+	// Universal Ad ID.
+	Registry string `json:"registry,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UniversalAdId) MarshalJSON() ([]byte, error) {
+	type NoMethod UniversalAdId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UrlAssignedTargetingOptionDetails: Details for assigned URL targeting
+// option. This will be populated in the
+// details field of an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_URL`.
+type UrlAssignedTargetingOptionDetails struct {
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// Url: Required. The URL, for example `example.com`.
+	//
+	// DV360 supports two levels of subdirectory targeting, for
+	// example
+	// `www.example.com/one-subdirectory-level/second-level`, and five
+	// levels of
+	// subdomain targeting, for example
+	// `five.four.three.two.one.example.com`.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Negative") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Negative") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UrlAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod UrlAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserRewardedContentAssignedTargetingOptionDetails: User rewarded
+// content targeting option details. This will be populated
+// in
+// the
+// user_rewarded_content_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+type UserRewardedContentAssignedTargetingOptionDetails struct {
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// UserRewardedContent: Output only. User rewarded content status for
+	// video ads.
+	//
+	// Possible values:
+	//   "USER_REWARDED_CONTENT_UNSPECIFIED" - User rewarded content is not
+	// specified or is unknown in this version.
+	//   "USER_REWARDED_CONTENT_USER_REWARDED" - Represents ads where the
+	// user will see a reward after viewing.
+	//   "USER_REWARDED_CONTENT_NOT_USER_REWARDED" - Represents all other
+	// ads besides user-rewarded.
+	UserRewardedContent string `json:"userRewardedContent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserRewardedContentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod UserRewardedContentAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserRewardedContentTargetingOptionDetails: Represents a targetable
+// user rewarded content status for video ads only. This
+// will be populated in the
+// user_rewarded_content_details
+// field when
+// targeting_type is
+// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+type UserRewardedContentTargetingOptionDetails struct {
+	// UserRewardedContent: Output only. User rewarded content status for
+	// video ads.
+	//
+	// Possible values:
+	//   "USER_REWARDED_CONTENT_UNSPECIFIED" - User rewarded content is not
+	// specified or is unknown in this version.
+	//   "USER_REWARDED_CONTENT_USER_REWARDED" - Represents ads where the
+	// user will see a reward after viewing.
+	//   "USER_REWARDED_CONTENT_NOT_USER_REWARDED" - Represents all other
+	// ads besides user-rewarded.
+	UserRewardedContent string `json:"userRewardedContent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UserRewardedContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UserRewardedContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod UserRewardedContentTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VideoPlayerSizeAssignedTargetingOptionDetails: Video player size
+// targeting option details. This will be populated in
+// the
+// video_player_size_details
+// field when targeting_type
+// is
+// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+// Explicitly targeting all options is not supported. Remove all video
+// player
+// size targeting options to achieve this effect.
+type VideoPlayerSizeAssignedTargetingOptionDetails struct {
+	// TargetingOptionId: Required. The targeting_option_id field
+	// when
+	// targeting_type is
+	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// VideoPlayerSize: Output only. The video player size.
+	//
+	// Possible values:
+	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
+	// specified in this version. This enum is a place
+	// holder for a default value and does not represent a real video player
+	// size.
+	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are
+	// less than 400×300 (desktop), or up
+	// to 20% of screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are
+	// between 400x300 and 1280x720 pixels
+	// (desktop), or 20% to 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are
+	// 1280×720 or greater (desktop), or
+	// over 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player
+	// are unknown.
+	VideoPlayerSize string `json:"videoPlayerSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoPlayerSizeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPlayerSizeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VideoPlayerSizeTargetingOptionDetails: Represents a targetable video
+// player size. This will be populated in
+// the
+// video_player_size_details
+// field when targeting_type is
+// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+type VideoPlayerSizeTargetingOptionDetails struct {
+	// VideoPlayerSize: Output only. The video player size.
+	//
+	// Possible values:
+	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
+	// specified in this version. This enum is a place
+	// holder for a default value and does not represent a real video player
+	// size.
+	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are
+	// less than 400×300 (desktop), or up
+	// to 20% of screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are
+	// between 400x300 and 1280x720 pixels
+	// (desktop), or 20% to 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are
+	// 1280×720 or greater (desktop), or
+	// over 90% of the screen covered (mobile).
+	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player
+	// are unknown.
+	VideoPlayerSize string `json:"videoPlayerSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VideoPlayerSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VideoPlayerSize") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoPlayerSizeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPlayerSizeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ViewabilityAssignedTargetingOptionDetails: Assigned viewability
+// targeting option details. This will be populated in
+// the
+// viewability_details field of
+// an AssignedTargetingOption when
+// targeting_type is
+// `TARGETING_TYPE_VIEWABILITY`.
+type ViewabilityAssignedTargetingOptionDetails struct {
+	// TargetingOptionId: Required. The targeting_option_id of
+	// a
+	// TargetingOption of type `TARGETING_TYPE_VIEWABILITY` (e.g.,
+	// "509010"
+	// for targeting the `VIEWABILITY_10_PERCENT_OR_MORE` option).
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// Viewability: Output only. The predicted viewability percentage.
+	//
+	// Possible values:
+	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
+	// specified in this version. This enum
+	// is a placeholder for default value and does not represent a
+	// real
+	// viewability option.
+	//   "VIEWABILITY_10_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 10% likely to be viewable.
+	//   "VIEWABILITY_20_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 20% likely to be viewable.
+	//   "VIEWABILITY_30_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 30% likely to be viewable.
+	//   "VIEWABILITY_40_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 40% likely to be viewable.
+	//   "VIEWABILITY_50_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 50% likely to be viewable.
+	//   "VIEWABILITY_60_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 60% likely to be viewable.
+	//   "VIEWABILITY_70_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 70% likely to be viewable.
+	//   "VIEWABILITY_80_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 80% likely to be viewable.
+	//   "VIEWABILITY_90_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 90% likely to be viewable.
+	Viewability string `json:"viewability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ViewabilityAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ViewabilityAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ViewabilityTargetingOptionDetails: Represents a targetable
+// viewability. This will be populated in the
+// viewability_details field of a
+// TargetingOption when targeting_type is
+// `TARGETING_TYPE_VIEWABILITY`.
+type ViewabilityTargetingOptionDetails struct {
+	// Viewability: Output only. The predicted viewability percentage.
+	//
+	// Possible values:
+	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
+	// specified in this version. This enum
+	// is a placeholder for default value and does not represent a
+	// real
+	// viewability option.
+	//   "VIEWABILITY_10_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 10% likely to be viewable.
+	//   "VIEWABILITY_20_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 20% likely to be viewable.
+	//   "VIEWABILITY_30_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 30% likely to be viewable.
+	//   "VIEWABILITY_40_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 40% likely to be viewable.
+	//   "VIEWABILITY_50_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 50% likely to be viewable.
+	//   "VIEWABILITY_60_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 60% likely to be viewable.
+	//   "VIEWABILITY_70_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 70% likely to be viewable.
+	//   "VIEWABILITY_80_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 80% likely to be viewable.
+	//   "VIEWABILITY_90_PERCENT_OR_MORE" - Bid only on impressions that are
+	// at least 90% likely to be viewable.
+	Viewability string `json:"viewability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Viewability") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Viewability") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ViewabilityTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "displayvideo.advertisers.create":
+
+type AdvertisersCreateCall struct {
+	s          *Service
+	advertiser *Advertiser
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new advertiser.
+// Returns the newly created advertiser if successful.
+// This method can take up to 180 seconds to complete.
+func (r *AdvertisersService) Create(advertiser *Advertiser) *AdvertisersCreateCall {
+	c := &AdvertisersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiser = advertiser
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreateCall) Fields(s ...googleapi.Field) *AdvertisersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreateCall) Context(ctx context.Context) *AdvertisersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.advertiser)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.create" call.
+// Exactly one of *Advertiser or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Advertiser.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Advertiser{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new advertiser.\nReturns the newly created advertiser if successful.\nThis method can take up to 180 seconds to complete.",
+	//   "flatPath": "v1/advertisers",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/advertisers",
+	//   "request": {
+	//     "$ref": "Advertiser"
+	//   },
+	//   "response": {
+	//     "$ref": "Advertiser"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.delete":
+
+type AdvertisersDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes an advertiser.
+// Deleting an advertiser will delete all of its child resources, for
+// example,
+// campaigns, insertion orders and line items.
+// A deleted advertiser cannot be recovered.
+func (r *AdvertisersService) Delete(advertiserId int64) *AdvertisersDeleteCall {
+	c := &AdvertisersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersDeleteCall) Fields(s ...googleapi.Field) *AdvertisersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersDeleteCall) Context(ctx context.Context) *AdvertisersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an advertiser.\nDeleting an advertiser will delete all of its child resources, for example,\ncampaigns, insertion orders and line items.\nA deleted advertiser cannot be recovered.",
+	//   "flatPath": "v1/advertisers/{advertisersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.delete",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser we need to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.get":
+
+type AdvertisersGetCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an advertiser.
+func (r *AdvertisersService) Get(advertiserId int64) *AdvertisersGetCall {
+	c := &AdvertisersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersGetCall) IfNoneMatch(entityTag string) *AdvertisersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersGetCall) Context(ctx context.Context) *AdvertisersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.get" call.
+// Exactly one of *Advertiser or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Advertiser.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Advertiser{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an advertiser.",
+	//   "flatPath": "v1/advertisers/{advertisersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.get",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}",
+	//   "response": {
+	//     "$ref": "Advertiser"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.list":
+
+type AdvertisersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists advertisers that are accessible to the current user.
+//
+// The order is defined by the order_by
+// parameter.
+//
+// A single partner_id is required.
+// Cross-partner listing is not supported.
+func (r *AdvertisersService) List() *AdvertisersListCall {
+	c := &AdvertisersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// advertiser properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `entityStatus`
+//
+// Examples:
+//
+// * All active advertisers under a
+// partner:
+// `entityStatus="ENTITY_STATUS_ACTIVE"
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+// * `entityStatus`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name. For
+// example,
+// `displayName desc`.
+func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`.
+func (c *AdvertisersListCall) PageSize(pageSize int64) *AdvertisersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListAdvertisers` method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the partner that the fetched advertisers should all belong to.
+// The system only supports listing advertisers for one partner at a
+// time.
+func (c *AdvertisersListCall) PartnerId(partnerId int64) *AdvertisersListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersListCall) IfNoneMatch(entityTag string) *AdvertisersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersListCall) Context(ctx context.Context) *AdvertisersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.list" call.
+// Exactly one of *ListAdvertisersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAdvertisersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAdvertisersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists advertisers that are accessible to the current user.\n\nThe order is defined by the order_by\nparameter.\n\nA single partner_id is required.\nCross-partner listing is not supported.",
+	//   "flatPath": "v1/advertisers",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by advertiser properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `entityStatus`\n\nExamples:\n\n* All active advertisers under a partner:\n`entityStatus=\"ENTITY_STATUS_ACTIVE\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `entityStatus`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListAdvertisers` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner that the fetched advertisers should all belong to.\nThe system only supports listing advertisers for one partner at a time.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers",
+	//   "response": {
+	//     "$ref": "ListAdvertisersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersListCall) Pages(ctx context.Context, f func(*ListAdvertisersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.patch":
+
+type AdvertisersPatchCall struct {
+	s            *Service
+	advertiserId int64
+	advertiser   *Advertiser
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing advertiser.
+// Returns the updated advertiser if successful.
+func (r *AdvertisersService) Patch(advertiserId int64, advertiser *Advertiser) *AdvertisersPatchCall {
+	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.advertiser = advertiser
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *AdvertisersPatchCall) UpdateMask(updateMask string) *AdvertisersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersPatchCall) Fields(s ...googleapi.Field) *AdvertisersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersPatchCall) Context(ctx context.Context) *AdvertisersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.advertiser)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.patch" call.
+// Exactly one of *Advertiser or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Advertiser.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Advertiser{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing advertiser.\nReturns the updated advertiser if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.advertisers.patch",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}",
+	//   "request": {
+	//     "$ref": "Advertiser"
+	//   },
+	//   "response": {
+	//     "$ref": "Advertiser"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.assets.upload":
+
+type AdvertisersAssetsUploadCall struct {
+	s                  *Service
+	advertiserId       int64
+	createassetrequest *CreateAssetRequest
+	urlParams_         gensupport.URLParams
+	mediaInfo_         *gensupport.MediaInfo
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Upload: Uploads an asset.
+// Returns the ID of the newly uploaded asset if successful.
+// The asset file size should be no more than 10 MB for images, 200 MB
+// for
+// ZIP files, and 1 GB for videos.
+func (r *AdvertisersAssetsService) Upload(advertiserId int64, createassetrequest *CreateAssetRequest) *AdvertisersAssetsUploadCall {
+	c := &AdvertisersAssetsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.createassetrequest = createassetrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk
+// size may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
+// upload request will be determined by sniffing the contents of r,
+// unless a MediaOption generated by googleapi.ContentType is
+// supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *AdvertisersAssetsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *AdvertisersAssetsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
+func (c *AdvertisersAssetsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *AdvertisersAssetsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
+func (c *AdvertisersAssetsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *AdvertisersAssetsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersAssetsUploadCall) Fields(s ...googleapi.Field) *AdvertisersAssetsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *AdvertisersAssetsUploadCall) Context(ctx context.Context) *AdvertisersAssetsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersAssetsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createassetrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/assets")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/advertisers/{+advertiserId}/assets")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.assets.upload" call.
+// Exactly one of *CreateAssetResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CreateAssetResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateAssetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
+	}
+	ret := &CreateAssetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Uploads an asset.\nReturns the ID of the newly uploaded asset if successful.\nThe asset file size should be no more than 10 MB for images, 200 MB for\nZIP files, and 1 GB for videos.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/assets",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.assets.upload",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "protocols": {
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/v1/advertisers/{+advertiserId}/assets"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this asset belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/assets",
+	//   "request": {
+	//     "$ref": "CreateAssetRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CreateAssetResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
+}
+
+// method id "displayvideo.advertisers.campaigns.create":
+
+type AdvertisersCampaignsCreateCall struct {
+	s            *Service
+	advertiserId int64
+	campaign     *Campaign
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new campaign.
+// Returns the newly created campaign if successful.
+func (r *AdvertisersCampaignsService) Create(advertiserId int64, campaign *Campaign) *AdvertisersCampaignsCreateCall {
+	c := &AdvertisersCampaignsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaign = campaign
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsCreateCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsCreateCall) Context(ctx context.Context) *AdvertisersCampaignsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.campaign)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.create" call.
+// Exactly one of *Campaign or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Campaign.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCampaignsCreateCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Campaign{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new campaign.\nReturns the newly created campaign if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.campaigns.create",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns",
+	//   "request": {
+	//     "$ref": "Campaign"
+	//   },
+	//   "response": {
+	//     "$ref": "Campaign"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.campaigns.delete":
+
+type AdvertisersCampaignsDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	campaignId   int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Permanently deletes a campaign. A deleted campaign cannot be
+// recovered.
+// The campaign should be archived first, i.e. set
+// entity_status to `ENTITY_STATUS_ARCHIVED`, to be
+// able to delete it.
+func (r *AdvertisersCampaignsService) Delete(advertiserId int64, campaignId int64) *AdvertisersCampaignsDeleteCall {
+	c := &AdvertisersCampaignsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsDeleteCall) Context(ctx context.Context) *AdvertisersCampaignsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":   strconv.FormatInt(c.campaignId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered.\nThe campaign should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, to be\nable to delete it.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.campaigns.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser this campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "The ID of the campaign we need to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.campaigns.get":
+
+type AdvertisersCampaignsGetCall struct {
+	s            *Service
+	advertiserId int64
+	campaignId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a campaign.
+func (r *AdvertisersCampaignsService) Get(advertiserId int64, campaignId int64) *AdvertisersCampaignsGetCall {
+	c := &AdvertisersCampaignsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsGetCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCampaignsGetCall) IfNoneMatch(entityTag string) *AdvertisersCampaignsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsGetCall) Context(ctx context.Context) *AdvertisersCampaignsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":   strconv.FormatInt(c.campaignId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.get" call.
+// Exactly one of *Campaign or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Campaign.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Campaign{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a campaign.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.campaigns.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Required. The ID of the campaign to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}",
+	//   "response": {
+	//     "$ref": "Campaign"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.campaigns.list":
+
+type AdvertisersCampaignsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists campaigns in an advertiser.
+//
+// The order is defined by the order_by
+// parameter.
+// If a filter by
+// entity_status is not specified, campaigns
+// with
+// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampaignsListCall {
+	c := &AdvertisersCampaignsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// campaign properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `entityStatus`
+//
+// Examples:
+//
+// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns
+// under an
+// advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE"
+// OR
+// entityStatus="ENTITY_STATUS_PAUSED")`
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersCampaignsListCall) Filter(filter string) *AdvertisersCampaignsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+// * `entityStatus`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *AdvertisersCampaignsListCall) OrderBy(orderBy string) *AdvertisersCampaignsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`.
+func (c *AdvertisersCampaignsListCall) PageSize(pageSize int64) *AdvertisersCampaignsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token returned from the
+// previous call to `ListCampaigns` method. If not specified, the first
+// page
+// of results will be returned.
+func (c *AdvertisersCampaignsListCall) PageToken(pageToken string) *AdvertisersCampaignsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsListCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCampaignsListCall) IfNoneMatch(entityTag string) *AdvertisersCampaignsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsListCall) Context(ctx context.Context) *AdvertisersCampaignsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.list" call.
+// Exactly one of *ListCampaignsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCampaignsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCampaignsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCampaignsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists campaigns in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, campaigns with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.campaigns.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser to list campaigns for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by campaign properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `entityStatus`\n\nExamples:\n\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an\nadvertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `entityStatus`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListCampaigns` method. If not specified, the first page\nof results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns",
+	//   "response": {
+	//     "$ref": "ListCampaignsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersCampaignsListCall) Pages(ctx context.Context, f func(*ListCampaignsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.campaigns.patch":
+
+type AdvertisersCampaignsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	campaignId   int64
+	campaign     *Campaign
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing campaign.
+// Returns the updated campaign if successful.
+func (r *AdvertisersCampaignsService) Patch(advertiserId int64, campaignId int64, campaign *Campaign) *AdvertisersCampaignsPatchCall {
+	c := &AdvertisersCampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	c.campaign = campaign
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *AdvertisersCampaignsPatchCall) UpdateMask(updateMask string) *AdvertisersCampaignsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsPatchCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsPatchCall) Context(ctx context.Context) *AdvertisersCampaignsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.campaign)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":   strconv.FormatInt(c.campaignId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.patch" call.
+// Exactly one of *Campaign or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Campaign.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Campaign{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing campaign.\nReturns the updated campaign if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.advertisers.campaigns.patch",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Output only. The unique ID of the campaign. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}",
+	//   "request": {
+	//     "$ref": "Campaign"
+	//   },
+	//   "response": {
+	//     "$ref": "Campaign"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.channels.get":
+
+type AdvertisersChannelsGetCall struct {
+	s            *Service
+	advertiserId int64
+	channelId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a channel for a partner or advertiser.
+func (r *AdvertisersChannelsService) Get(advertiserId int64, channelId int64) *AdvertisersChannelsGetCall {
+	c := &AdvertisersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.channelId = channelId
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that owns the fetched channel.
+func (c *AdvertisersChannelsGetCall) PartnerId(partnerId int64) *AdvertisersChannelsGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersChannelsGetCall) Fields(s ...googleapi.Field) *AdvertisersChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersChannelsGetCall) IfNoneMatch(entityTag string) *AdvertisersChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersChannelsGetCall) Context(ctx context.Context) *AdvertisersChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/channels/{+channelId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"channelId":    strconv.FormatInt(c.channelId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.channels.get" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a channel for a partner or advertiser.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/channels/{channelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.channels.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that owns the fetched channel.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "channelId": {
+	//       "description": "Required. The ID of the channel to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that owns the fetched channel.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/channels/{+channelId}",
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.channels.list":
+
+type AdvertisersChannelsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists channels for a partner or advertiser.
+func (r *AdvertisersChannelsService) List(advertiserId int64) *AdvertisersChannelsListCall {
+	c := &AdvertisersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// channel fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for channel currently can only contain at most
+// one
+// * restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All channels for which the display name contains
+// "google":
+// `displayName : "google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersChannelsListCall) Filter(filter string) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+// * `channelId`
+//
+// The default sorting order is ascending. To specify descending order
+// for a
+// field, a suffix " desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *AdvertisersChannelsListCall) OrderBy(orderBy string) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *AdvertisersChannelsListCall) PageSize(pageSize int64) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token returned from the
+// previous call to `ListChannels` method. If not specified, the first
+// page
+// of results will be returned.
+func (c *AdvertisersChannelsListCall) PageToken(pageToken string) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that owns the channels.
+func (c *AdvertisersChannelsListCall) PartnerId(partnerId int64) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersChannelsListCall) Fields(s ...googleapi.Field) *AdvertisersChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersChannelsListCall) IfNoneMatch(entityTag string) *AdvertisersChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersChannelsListCall) Context(ctx context.Context) *AdvertisersChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.channels.list" call.
+// Exactly one of *ListChannelsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists channels for a partner or advertiser.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/channels",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.channels.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that owns the channels.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by channel fields.\n\nSupported syntax:\n\n* Filter expressions for channel currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All channels for which the display name contains \"google\":\n`displayName : \"google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `channelId`\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListChannels` method. If not specified, the first page\nof results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that owns the channels.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/channels",
+	//   "response": {
+	//     "$ref": "ListChannelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.creatives.create":
+
+type AdvertisersCreativesCreateCall struct {
+	s            *Service
+	advertiserId int64
+	creative     *Creative
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new creative.
+// Returns the newly created creative if successful.
+func (r *AdvertisersCreativesService) Create(advertiserId int64, creative *Creative) *AdvertisersCreativesCreateCall {
+	c := &AdvertisersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.creative = creative
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreativesCreateCall) Fields(s ...googleapi.Field) *AdvertisersCreativesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreativesCreateCall) Context(ctx context.Context) *AdvertisersCreativesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreativesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/creatives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.creatives.create" call.
+// Exactly one of *Creative or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Creative.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Creative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new creative.\nReturns the newly created creative if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/creatives",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.creatives.create",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the creative belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/creatives",
+	//   "request": {
+	//     "$ref": "Creative"
+	//   },
+	//   "response": {
+	//     "$ref": "Creative"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.creatives.delete":
+
+type AdvertisersCreativesDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	creativeId   int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes a creative.
+// Returns error code `NOT_FOUND` if the creative does not exist.
+// The creative should be archived first, i.e. set
+// entity_status to `ENTITY_STATUS_ARCHIVED`, before
+// it can be deleted.
+func (r *AdvertisersCreativesService) Delete(advertiserId int64, creativeId int64) *AdvertisersCreativesDeleteCall {
+	c := &AdvertisersCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.creativeId = creativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreativesDeleteCall) Fields(s ...googleapi.Field) *AdvertisersCreativesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreativesDeleteCall) Context(ctx context.Context) *AdvertisersCreativesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreativesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/creatives/{+creativeId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"creativeId":   strconv.FormatInt(c.creativeId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.creatives.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a creative.\nReturns error code `NOT_FOUND` if the creative does not exist.\nThe creative should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, before\nit can be deleted.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/creatives/{creativesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.creatives.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "creativeId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser this creative belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "creativeId": {
+	//       "description": "The ID of the creative to be deleted.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/creatives/{+creativeId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.creatives.get":
+
+type AdvertisersCreativesGetCall struct {
+	s            *Service
+	advertiserId int64
+	creativeId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a creative.
+func (r *AdvertisersCreativesService) Get(advertiserId int64, creativeId int64) *AdvertisersCreativesGetCall {
+	c := &AdvertisersCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.creativeId = creativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreativesGetCall) Fields(s ...googleapi.Field) *AdvertisersCreativesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCreativesGetCall) IfNoneMatch(entityTag string) *AdvertisersCreativesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreativesGetCall) Context(ctx context.Context) *AdvertisersCreativesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreativesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/creatives/{+creativeId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"creativeId":   strconv.FormatInt(c.creativeId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.creatives.get" call.
+// Exactly one of *Creative or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Creative.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Creative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a creative.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/creatives/{creativesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.creatives.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "creativeId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this creative belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "creativeId": {
+	//       "description": "Required. The ID of the creative to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/creatives/{+creativeId}",
+	//   "response": {
+	//     "$ref": "Creative"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.creatives.list":
+
+type AdvertisersCreativesListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists creatives in an advertiser.
+//
+// The order is defined by the order_by
+// parameter.
+// If a filter by
+// entity_status is not specified, creatives
+// with
+// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreativesListCall {
+	c := &AdvertisersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// creative properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restriction for the same field must be combined by `OR`.
+// * Restriction for different fields must be combined by `AND`.
+// * Between `(` and `)` there can only be restrictions combined by
+// `OR`
+// for the same field.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `entityStatus`
+//     - `creativeType`.
+//     - `dimensions`
+//     - `minDuration`
+//     - `maxDuration`
+//     - `approvalStatus`
+//     - `exchangeReviewStatus`
+//     - `dynamic`
+// * For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic`
+// there may
+// be at most one restriction.
+// * For `dimensions`, the value is in the form of
+// "{width}x{height}".
+// * For `exchangeReviewStatus`, the value is in the form
+// of
+// `{exchange}-{reviewStatus}`.
+// * For `minDuration` and `maxDuration`, the value is in the form
+// of
+// "{duration}s". Only seconds are supported with millisecond
+// granularity.
+//
+// Examples:
+//
+// * All native creatives: `creativeType="CREATIVE_TYPE_NATIVE"
+// * All active creatives with 300x400 or 50x100
+// dimensions:
+// `entityStatus="ENTITY_STATUS_ACTIVE" AND (dimensions="300x400"
+// OR dimensions="50x100")`
+// * All dynamic creatives that are approved by AdX or
+// AppNexus, with a minimum duration of 5 seconds and
+// 200ms.
+// `dynamic="true" AND minDuration="5.2s"
+// AND
+// (exchangeReviewStatus="EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_AP
+// PROVED"
+// OR
+// exchangeReviewStatus="EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED")`
+//
+// The
+//  length of this field should be no more than 500 characters.
+func (c *AdvertisersCreativesListCall) Filter(filter string) *AdvertisersCreativesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `creativeId` (default)
+// * `createTime`
+// * `mediaDuration`
+// * `dimensions` (sorts by width first, then by height)
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example: `createTime desc`.
+func (c *AdvertisersCreativesListCall) OrderBy(orderBy string) *AdvertisersCreativesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *AdvertisersCreativesListCall) PageSize(pageSize int64) *AdvertisersCreativesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListCreatives` method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersCreativesListCall) PageToken(pageToken string) *AdvertisersCreativesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreativesListCall) Fields(s ...googleapi.Field) *AdvertisersCreativesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCreativesListCall) IfNoneMatch(entityTag string) *AdvertisersCreativesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreativesListCall) Context(ctx context.Context) *AdvertisersCreativesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreativesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/creatives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.creatives.list" call.
+// Exactly one of *ListCreativesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCreativesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCreativesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists creatives in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, creatives with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/creatives",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.creatives.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to list creatives for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by creative properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restriction for the same field must be combined by `OR`.\n* Restriction for different fields must be combined by `AND`.\n* Between `(` and `)` there can only be restrictions combined by `OR`\nfor the same field.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `entityStatus`\n    - `creativeType`.\n    - `dimensions`\n    - `minDuration`\n    - `maxDuration`\n    - `approvalStatus`\n    - `exchangeReviewStatus`\n    - `dynamic`\n* For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic` there may\nbe at most one restriction.\n* For `dimensions`, the value is in the form of `\"{width}x{height}\"`.\n* For `exchangeReviewStatus`, the value is in the form of\n`{exchange}-{reviewStatus}`.\n* For `minDuration` and `maxDuration`, the value is in the form of\n`\"{duration}s\"`. Only seconds are supported with millisecond granularity.\n\nExamples:\n\n* All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"`\n* All active creatives with 300x400 or 50x100 dimensions:\n`entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\"\nOR dimensions=\"50x100\")`\n* All dynamic creatives that are approved by AdX or\nAppNexus, with a minimum duration of 5 seconds and 200ms.\n`dynamic=\"true\" AND minDuration=\"5.2s\" AND\n(exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\"\nOR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `creativeId` (default)\n* `createTime`\n* `mediaDuration`\n* `dimensions` (sorts by width first, then by height)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name.\nExample: `createTime desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCreatives` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/creatives",
+	//   "response": {
+	//     "$ref": "ListCreativesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersCreativesListCall) Pages(ctx context.Context, f func(*ListCreativesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.creatives.patch":
+
+type AdvertisersCreativesPatchCall struct {
+	s            *Service
+	advertiserId int64
+	creativeId   int64
+	creative     *Creative
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing creative.
+// Returns the updated creative if successful.
+func (r *AdvertisersCreativesService) Patch(advertiserId int64, creativeId int64, creative *Creative) *AdvertisersCreativesPatchCall {
+	c := &AdvertisersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.creativeId = creativeId
+	c.creative = creative
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *AdvertisersCreativesPatchCall) UpdateMask(updateMask string) *AdvertisersCreativesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCreativesPatchCall) Fields(s ...googleapi.Field) *AdvertisersCreativesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCreativesPatchCall) Context(ctx context.Context) *AdvertisersCreativesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCreativesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creative)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/creatives/{+creativeId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"creativeId":   strconv.FormatInt(c.creativeId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.creatives.patch" call.
+// Exactly one of *Creative or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Creative.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Creative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing creative.\nReturns the updated creative if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/creatives/{creativesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.advertisers.creatives.patch",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "creativeId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the creative belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "creativeId": {
+	//       "description": "Output only. The unique ID of the creative. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/creatives/{+creativeId}",
+	//   "request": {
+	//     "$ref": "Creative"
+	//   },
+	//   "response": {
+	//     "$ref": "Creative"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.create":
+
+type AdvertisersInsertionOrdersCreateCall struct {
+	s              *Service
+	advertiserId   int64
+	insertionorder *InsertionOrder
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new insertion order.
+// Returns the newly created insertion order if successful.
+func (r *AdvertisersInsertionOrdersService) Create(advertiserId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersCreateCall {
+	c := &AdvertisersInsertionOrdersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionorder = insertionorder
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersCreateCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersCreateCall) Context(ctx context.Context) *AdvertisersInsertionOrdersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.insertionorder)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.create" call.
+// Exactly one of *InsertionOrder or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *InsertionOrder.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersCreateCall) Do(opts ...googleapi.CallOption) (*InsertionOrder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InsertionOrder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new insertion order.\nReturns the newly created insertion order if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.insertionOrders.create",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders",
+	//   "request": {
+	//     "$ref": "InsertionOrder"
+	//   },
+	//   "response": {
+	//     "$ref": "InsertionOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.delete":
+
+type AdvertisersInsertionOrdersDeleteCall struct {
+	s                *Service
+	advertiserId     int64
+	insertionOrderId int64
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Delete: Deletes an insertion order.
+// Returns error code `NOT_FOUND` if the insertion order does not
+// exist.
+// The insertion order should be archived first, i.e. set
+// entity_status to `ENTITY_STATUS_ARCHIVED`,
+// to be able to delete it.
+func (r *AdvertisersInsertionOrdersService) Delete(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersDeleteCall {
+	c := &AdvertisersInsertionOrdersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersDeleteCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersDeleteCall) Context(ctx context.Context) *AdvertisersInsertionOrdersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersInsertionOrdersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an insertion order.\nReturns error code `NOT_FOUND` if the insertion order does not exist.\nThe insertion order should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`,\nto be able to delete it.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.insertionOrders.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser this insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "The ID of the insertion order we need to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.get":
+
+type AdvertisersInsertionOrdersGetCall struct {
+	s                *Service
+	advertiserId     int64
+	insertionOrderId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets an insertion order.
+// Returns error code `NOT_FOUND` if the insertion order does not exist.
+func (r *AdvertisersInsertionOrdersService) Get(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersGetCall {
+	c := &AdvertisersInsertionOrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersGetCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInsertionOrdersGetCall) IfNoneMatch(entityTag string) *AdvertisersInsertionOrdersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersGetCall) Context(ctx context.Context) *AdvertisersInsertionOrdersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.get" call.
+// Exactly one of *InsertionOrder or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *InsertionOrder.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersGetCall) Do(opts ...googleapi.CallOption) (*InsertionOrder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InsertionOrder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an insertion order.\nReturns error code `NOT_FOUND` if the insertion order does not exist.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.insertionOrders.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}",
+	//   "response": {
+	//     "$ref": "InsertionOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.list":
+
+type AdvertisersInsertionOrdersListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists insertion orders in an advertiser.
+//
+// The order is defined by the order_by
+// parameter.
+// If a filter by
+// entity_status is not specified, insertion
+// orders with `ENTITY_STATUS_ARCHIVED` will not be included in the
+// results.
+func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *AdvertisersInsertionOrdersListCall {
+	c := &AdvertisersInsertionOrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// insertion order properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `campaignId`
+//     - `entityStatus`
+//
+// Examples:
+//
+// * All insertion orders under a campaign: `campaignId="1234"
+// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion
+// orders
+// under an advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE"
+// OR
+// entityStatus="ENTITY_STATUS_PAUSED")`
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersInsertionOrdersListCall) Filter(filter string) *AdvertisersInsertionOrdersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * "displayName" (default)
+// * "entityStatus"
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *AdvertisersInsertionOrdersListCall) OrderBy(orderBy string) *AdvertisersInsertionOrdersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *AdvertisersInsertionOrdersListCall) PageSize(pageSize int64) *AdvertisersInsertionOrdersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token returned
+// from the previous call to `ListInsertionOrders` method. If not
+// specified,
+// the first page of results will be returned.
+func (c *AdvertisersInsertionOrdersListCall) PageToken(pageToken string) *AdvertisersInsertionOrdersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersListCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInsertionOrdersListCall) IfNoneMatch(entityTag string) *AdvertisersInsertionOrdersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersListCall) Context(ctx context.Context) *AdvertisersInsertionOrdersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.list" call.
+// Exactly one of *ListInsertionOrdersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListInsertionOrdersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*ListInsertionOrdersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInsertionOrdersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists insertion orders in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, insertion\norders with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.insertionOrders.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to list insertion orders for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by insertion order properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `entityStatus`\n\nExamples:\n\n* All insertion orders under a campaign: `campaignId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders\nunder an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* \"displayName\" (default)\n* \"entityStatus\"\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned\nfrom the previous call to `ListInsertionOrders` method. If not specified,\nthe first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders",
+	//   "response": {
+	//     "$ref": "ListInsertionOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersInsertionOrdersListCall) Pages(ctx context.Context, f func(*ListInsertionOrdersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.insertionOrders.patch":
+
+type AdvertisersInsertionOrdersPatchCall struct {
+	s                *Service
+	advertiserId     int64
+	insertionOrderId int64
+	insertionorder   *InsertionOrder
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates an existing insertion order.
+// Returns the updated insertion order if successful.
+func (r *AdvertisersInsertionOrdersService) Patch(advertiserId int64, insertionOrderId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersPatchCall {
+	c := &AdvertisersInsertionOrdersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	c.insertionorder = insertionorder
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *AdvertisersInsertionOrdersPatchCall) UpdateMask(updateMask string) *AdvertisersInsertionOrdersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersPatchCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersPatchCall) Context(ctx context.Context) *AdvertisersInsertionOrdersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.insertionorder)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.patch" call.
+// Exactly one of *InsertionOrder or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *InsertionOrder.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (*InsertionOrder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InsertionOrder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing insertion order.\nReturns the updated insertion order if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.advertisers.insertionOrders.patch",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Output only. The unique ID of the insertion order. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}",
+	//   "request": {
+	//     "$ref": "InsertionOrder"
+	//   },
+	//   "response": {
+	//     "$ref": "InsertionOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions":
+
+type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
+	s                                               *Service
+	advertiserId                                    int64
+	lineItemId                                      int64
+	bulkeditlineitemassignedtargetingoptionsrequest *BulkEditLineItemAssignedTargetingOptionsRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// BulkEditLineItemAssignedTargetingOptions: Bulk edits targeting
+// options under a single line item.
+// The operation will delete the assigned targeting options provided
+// in
+// BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests
+// and
+// then create the assigned targeting options provided
+// in
+// BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .
+func (r *AdvertisersLineItemsService) BulkEditLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64, bulkeditlineitemassignedtargetingoptionsrequest *BulkEditLineItemAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
+	c := &AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.bulkeditlineitemassignedtargetingoptionsrequest = bulkeditlineitemassignedtargetingoptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkeditlineitemassignedtargetingoptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}:bulkEditLineItemAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions" call.
+// Exactly one of *BulkEditLineItemAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkEditLineItemAssignedTargetingOptionsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkEditLineItemAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkEditLineItemAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk edits targeting options under a single line item.\nThe operation will delete the assigned targeting options provided in\nBulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and\nthen create the assigned targeting options provided in\nBulkEditLineItemAssignedTargetingOptionsRequest.create_requests .",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}:bulkEditLineItemAssignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item the assigned targeting option will belong to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}:bulkEditLineItemAssignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "BulkEditLineItemAssignedTargetingOptionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkEditLineItemAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.bulkListLineItemAssignedTargetingOptions":
+
+type AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall struct {
+	s            *Service
+	advertiserId int64
+	lineItemId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BulkListLineItemAssignedTargetingOptions: Lists assigned targeting
+// options of a line item across targeting types.
+func (r *AdvertisersLineItemsService) BulkListLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c := &AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties.
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by the logical operator `OR` on the
+// same
+// field.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `targetingType`
+//     - `inheritance`
+//
+// Examples:
+//
+// * AssignedTargetingOptions of targeting
+// type
+// TARGETING_TYPE_PROXIMITY_LOCATION_LIST or
+// TARGETING_TYPE_CHANNEL
+// `targetingType="TARGETING_TYPE_PROXIMITY_LOCATI
+// ON_LIST" OR
+// targetingType="TARGETING_TYPE_CHANNEL"
+// * AssignedTargetingOptions with inheritance status of NOT_INHERITED
+// or
+//   INHERITED_FROM_PARTNER
+// `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER"
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `targetingType` (default)
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `targetingType desc`.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page
+// size.
+// The size must be an integer between `1` and `5000`. If
+// unspecified,
+// the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
+// invalid
+// value is specified.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that lets
+// the client fetch the next page of results.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call
+// to
+// `BulkListLineItemAssignedTargetingOptions` method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}:bulkListLineItemAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.bulkListLineItemAssignedTargetingOptions" call.
+// Exactly one of *BulkListLineItemAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkListLineItemAssignedTargetingOptionsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkListLineItemAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkListLineItemAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists assigned targeting options of a line item across targeting types.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}:bulkListLineItemAssignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.lineItems.bulkListLineItemAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties.\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR` on the same\nfield.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `targetingType`\n    - `inheritance`\n\nExamples:\n\n* AssignedTargetingOptions of targeting type\nTARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL\n`targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR\ntargetingType=\"TARGETING_TYPE_CHANNEL\"`\n* AssignedTargetingOptions with inheritance status of NOT_INHERITED or\n  INHERITED_FROM_PARTNER\n`inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `targetingType` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`targetingType desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size.\nThe size must be an integer between `1` and `5000`. If unspecified,\nthe default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid\nvalue is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token that lets the client fetch the next page of results.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to\n`BulkListLineItemAssignedTargetingOptions` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}:bulkListLineItemAssignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "BulkListLineItemAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Pages(ctx context.Context, f func(*BulkListLineItemAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.lineItems.create":
+
+type AdvertisersLineItemsCreateCall struct {
+	s            *Service
+	advertiserId int64
+	lineitem     *LineItem
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new line item.
+// Returns the newly created line item if successful.
+func (r *AdvertisersLineItemsService) Create(advertiserId int64, lineitem *LineItem) *AdvertisersLineItemsCreateCall {
+	c := &AdvertisersLineItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineitem = lineitem
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsCreateCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsCreateCall) Context(ctx context.Context) *AdvertisersLineItemsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lineitem)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.create" call.
+// Exactly one of *LineItem or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LineItem.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*LineItem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new line item.\nReturns the newly created line item if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.lineItems.create",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems",
+	//   "request": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "response": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.delete":
+
+type AdvertisersLineItemsDeleteCall struct {
+	s            *Service
+	advertiserId int64
+	lineItemId   int64
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes a line item.
+// Returns error code `NOT_FOUND` if the line item does not exist.
+// The line item should be archived first, i.e. set
+// entity_status to `ENTITY_STATUS_ARCHIVED`, to be
+// able to delete it.
+func (r *AdvertisersLineItemsService) Delete(advertiserId int64, lineItemId int64) *AdvertisersLineItemsDeleteCall {
+	c := &AdvertisersLineItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsDeleteCall) Context(ctx context.Context) *AdvertisersLineItemsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a line item.\nReturns error code `NOT_FOUND` if the line item does not exist.\nThe line item should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, to be\nable to delete it.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.lineItems.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser this line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "The ID of the line item we need to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.get":
+
+type AdvertisersLineItemsGetCall struct {
+	s            *Service
+	advertiserId int64
+	lineItemId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a line item.
+func (r *AdvertisersLineItemsService) Get(advertiserId int64, lineItemId int64) *AdvertisersLineItemsGetCall {
+	c := &AdvertisersLineItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsGetCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLineItemsGetCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsGetCall) Context(ctx context.Context) *AdvertisersLineItemsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.get" call.
+// Exactly one of *LineItem or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LineItem.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsGetCall) Do(opts ...googleapi.CallOption) (*LineItem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a line item.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.lineItems.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}",
+	//   "response": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.list":
+
+type AdvertisersLineItemsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists line items in an advertiser.
+//
+// The order is defined by the order_by
+// parameter.
+// If a filter by
+// entity_status is not specified, line items
+// with
+// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineItemsListCall {
+	c := &AdvertisersLineItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by line
+// item properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `campaignId`
+//     - `insertionOrderId`
+//     - `entityStatus`
+//     - `lineItemType`.
+//
+// Examples:
+//
+// * All line items under an insertion order:
+// `insertionOrderId="1234"
+// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`
+// and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an
+// advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE"
+// OR
+// entityStatus="ENTITY_STATUS_PAUSED")
+// AND
+// lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT"
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineItemsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * "displayName" (default)
+// * "entityStatus"
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *AdvertisersLineItemsListCall) OrderBy(orderBy string) *AdvertisersLineItemsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *AdvertisersLineItemsListCall) PageSize(pageSize int64) *AdvertisersLineItemsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListLineItems` method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersLineItemsListCall) PageToken(pageToken string) *AdvertisersLineItemsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsListCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLineItemsListCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsListCall) Context(ctx context.Context) *AdvertisersLineItemsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.list" call.
+// Exactly one of *ListLineItemsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLineItemsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLineItemsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLineItemsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists line items in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, line items with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.lineItems.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to list line items for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by line item properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `insertionOrderId`\n    - `entityStatus`\n    - `lineItemType`.\n\nExamples:\n\n* All line items under an insertion order: `insertionOrderId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`\nand `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\") AND\nlineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* \"displayName\" (default)\n* \"entityStatus\"\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLineItems` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems",
+	//   "response": {
+	//     "$ref": "ListLineItemsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersLineItemsListCall) Pages(ctx context.Context, f func(*ListLineItemsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.lineItems.patch":
+
+type AdvertisersLineItemsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	lineItemId   int64
+	lineitem     *LineItem
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing line item.
+// Returns the updated line item if successful.
+func (r *AdvertisersLineItemsService) Patch(advertiserId int64, lineItemId int64, lineitem *LineItem) *AdvertisersLineItemsPatchCall {
+	c := &AdvertisersLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.lineitem = lineitem
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *AdvertisersLineItemsPatchCall) UpdateMask(updateMask string) *AdvertisersLineItemsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsPatchCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsPatchCall) Context(ctx context.Context) *AdvertisersLineItemsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lineitem)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.patch" call.
+// Exactly one of *LineItem or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LineItem.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineItem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing line item.\nReturns the updated line item if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.advertisers.lineItems.patch",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Output only. The unique ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Output only. The unique ID of the line item. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}",
+	//   "request": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "response": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create":
+
+type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct {
+	s                       *Service
+	advertiserId            int64
+	lineItemId              int64
+	targetingType           string
+	assignedtargetingoption *AssignedTargetingOption
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Assigns a targeting option to a line item.
+// Returns the assigned targeting option if successful.
+func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, lineItemId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.targetingType = targetingType
+	c.assignedtargetingoption = assignedtargetingoption
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) Context(ctx context.Context) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.assignedtargetingoption)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":    strconv.FormatInt(c.lineItemId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Assigns a targeting option to a line item.\nReturns the assigned targeting option if successful.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item the assigned targeting option will belong to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete":
+
+type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct {
+	s                         *Service
+	advertiserId              int64
+	lineItemId                int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an assigned targeting option from a line item.
+func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) Context(ctx context.Context) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":                strconv.FormatInt(c.lineItemId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an assigned targeting option from a line item.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. The ID of the assigned targeting option to delete.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.get":
+
+type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	advertiserId              int64
+	lineItemId                int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to a line item.
+func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":                strconv.FormatInt(c.lineItemId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to a line item.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this line item that\nidentifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.list":
+
+type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
+	s             *Service
+	advertiserId  int64
+	lineItemId    int64
+	targetingType string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists the targeting options assigned to a line item.
+func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by the logical operator `OR`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `assignedTargetingOptionId`
+//     - `inheritance`
+//
+// Examples:
+//
+// * AssignedTargetingOptions with ID 1 or
+// 2
+// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2"
+// * AssignedTargetingOptions with inheritance status of NOT_INHERITED
+// or
+//   INHERITED_FROM_PARTNER
+// `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER"
+//
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `assignedTargetingOptionId` (default)
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `assignedTargetingOptionId desc`.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to
+// `ListLineItemAssignedTargetingOptions`
+// method. If not specified, the first page of results will be returned.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":    strconv.FormatInt(c.lineItemId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListLineItemAssignedTargetingOptionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListLineItemAssignedTargetingOptionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListLineItemAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLineItemAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to a line item.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `assignedTargetingOptionId`\n    - `inheritance`\n\nExamples:\n\n* AssignedTargetingOptions with ID 1 or 2\n`assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"`\n* AssignedTargetingOptions with inheritance status of NOT_INHERITED or\n  INHERITED_FROM_PARTNER\n`inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `assignedTargetingOptionId` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLineItemAssignedTargetingOptions`\nmethod. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems/{+lineItemId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListLineItemAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListLineItemAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.locationLists.get":
+
+type AdvertisersLocationListsGetCall struct {
+	s              *Service
+	advertiserId   int64
+	locationListId int64
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Get: Gets a location list.
+func (r *AdvertisersLocationListsService) Get(advertiserId int64, locationListId int64) *AdvertisersLocationListsGetCall {
+	c := &AdvertisersLocationListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.locationListId = locationListId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLocationListsGetCall) Fields(s ...googleapi.Field) *AdvertisersLocationListsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLocationListsGetCall) IfNoneMatch(entityTag string) *AdvertisersLocationListsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLocationListsGetCall) Context(ctx context.Context) *AdvertisersLocationListsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLocationListsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/locationLists/{+locationListId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":   strconv.FormatInt(c.advertiserId, 10),
+		"locationListId": strconv.FormatInt(c.locationListId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.locationLists.get" call.
+// Exactly one of *LocationList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LocationList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLocationListsGetCall) Do(opts ...googleapi.CallOption) (*LocationList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LocationList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a location list.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/locationLists/{locationListsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.locationLists.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "locationListId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched location list belongs.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "locationListId": {
+	//       "description": "Required. The ID of the location list to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/locationLists/{+locationListId}",
+	//   "response": {
+	//     "$ref": "LocationList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.locationLists.list":
+
+type AdvertisersLocationListsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists location lists based on a given advertiser id.
+func (r *AdvertisersLocationListsService) List(advertiserId int64) *AdvertisersLocationListsListCall {
+	c := &AdvertisersLocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// location list fields.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `locationType`
+//
+// Examples:
+//
+// * All regional location
+// list:
+// `locationType="TARGETING_LOCATION_TYPE_REGIONAL"
+// * All proximity location
+// list:
+// `locationType="TARGETING_LOCATION_TYPE_PROXIMITY"
+func (c *AdvertisersLocationListsListCall) Filter(filter string) *AdvertisersLocationListsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `locationListId` (default)
+// * `displayName`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *AdvertisersLocationListsListCall) OrderBy(orderBy string) *AdvertisersLocationListsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`.
+// Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT`
+// if an
+// invalid value is specified.
+func (c *AdvertisersLocationListsListCall) PageSize(pageSize int64) *AdvertisersLocationListsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+//
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListLocationLists` method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersLocationListsListCall) PageToken(pageToken string) *AdvertisersLocationListsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLocationListsListCall) Fields(s ...googleapi.Field) *AdvertisersLocationListsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersLocationListsListCall) IfNoneMatch(entityTag string) *AdvertisersLocationListsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLocationListsListCall) Context(ctx context.Context) *AdvertisersLocationListsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLocationListsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/locationLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.locationLists.list" call.
+// Exactly one of *ListLocationListsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationListsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*ListLocationListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists location lists based on a given advertiser id.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/locationLists",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.locationLists.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched location lists belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by location list fields.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `locationType`\n\nExamples:\n\n* All regional location list:\n`locationType=\"TARGETING_LOCATION_TYPE_REGIONAL\"`\n* All proximity location list:\n`locationType=\"TARGETING_LOCATION_TYPE_PROXIMITY\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `locationListId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`.\nDefaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an\ninvalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLocationLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/locationLists",
+	//   "response": {
+	//     "$ref": "ListLocationListsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersLocationListsListCall) Pages(ctx context.Context, f func(*ListLocationListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.negativeKeywordLists.get":
+
+type AdvertisersNegativeKeywordListsGetCall struct {
+	s                     *Service
+	advertiserId          int64
+	negativeKeywordListId int64
+	urlParams_            gensupport.URLParams
+	ifNoneMatch_          string
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Get: Gets a negative keyword list given an advertiser ID and a
+// negative keyword
+// list ID.
+func (r *AdvertisersNegativeKeywordListsService) Get(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsGetCall {
+	c := &AdvertisersNegativeKeywordListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.negativeKeywordListId = negativeKeywordListId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersNegativeKeywordListsGetCall) Fields(s ...googleapi.Field) *AdvertisersNegativeKeywordListsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersNegativeKeywordListsGetCall) IfNoneMatch(entityTag string) *AdvertisersNegativeKeywordListsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersNegativeKeywordListsGetCall) Context(ctx context.Context) *AdvertisersNegativeKeywordListsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersNegativeKeywordListsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/negativeKeywordLists/{+negativeKeywordListId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
+		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.negativeKeywordLists.get" call.
+// Exactly one of *NegativeKeywordList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NegativeKeywordList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersNegativeKeywordListsGetCall) Do(opts ...googleapi.CallOption) (*NegativeKeywordList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NegativeKeywordList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a negative keyword list given an advertiser ID and a negative keyword\nlist ID.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists/{negativeKeywordListsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.negativeKeywordLists.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "negativeKeywordListId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword list\nbelongs.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "negativeKeywordListId": {
+	//       "description": "Required. The ID of the negative keyword list to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/negativeKeywordLists/{+negativeKeywordListId}",
+	//   "response": {
+	//     "$ref": "NegativeKeywordList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.negativeKeywordLists.list":
+
+type AdvertisersNegativeKeywordListsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists negative keyword lists based on a given advertiser id.
+func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *AdvertisersNegativeKeywordListsListCall {
+	c := &AdvertisersNegativeKeywordListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`.
+// Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT`
+// if an
+// invalid value is specified.
+func (c *AdvertisersNegativeKeywordListsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+//
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListNegativeKeywordLists`
+// method.
+// If not specified, the first page of results will be returned.
+func (c *AdvertisersNegativeKeywordListsListCall) PageToken(pageToken string) *AdvertisersNegativeKeywordListsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersNegativeKeywordListsListCall) Fields(s ...googleapi.Field) *AdvertisersNegativeKeywordListsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersNegativeKeywordListsListCall) IfNoneMatch(entityTag string) *AdvertisersNegativeKeywordListsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersNegativeKeywordListsListCall) Context(ctx context.Context) *AdvertisersNegativeKeywordListsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersNegativeKeywordListsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/negativeKeywordLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.negativeKeywordLists.list" call.
+// Exactly one of *ListNegativeKeywordListsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNegativeKeywordListsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOption) (*ListNegativeKeywordListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListNegativeKeywordListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists negative keyword lists based on a given advertiser id.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.negativeKeywordLists.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword lists\nbelong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`.\nDefaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an\ninvalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListNegativeKeywordLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/negativeKeywordLists",
+	//   "response": {
+	//     "$ref": "ListNegativeKeywordListsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersNegativeKeywordListsListCall) Pages(ctx context.Context, f func(*ListNegativeKeywordListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.combinedAudiences.get":
+
+type CombinedAudiencesGetCall struct {
+	s                  *Service
+	combinedAudienceId int64
+	urlParams_         gensupport.URLParams
+	ifNoneMatch_       string
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Get: Gets a combined audience.
+func (r *CombinedAudiencesService) Get(combinedAudienceId int64) *CombinedAudiencesGetCall {
+	c := &CombinedAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.combinedAudienceId = combinedAudienceId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched combined
+// audience.
+func (c *CombinedAudiencesGetCall) AdvertiserId(advertiserId int64) *CombinedAudiencesGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched combined audience.
+func (c *CombinedAudiencesGetCall) PartnerId(partnerId int64) *CombinedAudiencesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CombinedAudiencesGetCall) Fields(s ...googleapi.Field) *CombinedAudiencesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CombinedAudiencesGetCall) IfNoneMatch(entityTag string) *CombinedAudiencesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CombinedAudiencesGetCall) Context(ctx context.Context) *CombinedAudiencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CombinedAudiencesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/combinedAudiences/{+combinedAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"combinedAudienceId": strconv.FormatInt(c.combinedAudienceId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.combinedAudiences.get" call.
+// Exactly one of *CombinedAudience or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CombinedAudience.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CombinedAudiencesGetCall) Do(opts ...googleapi.CallOption) (*CombinedAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CombinedAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a combined audience.",
+	//   "flatPath": "v1/combinedAudiences/{combinedAudiencesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.combinedAudiences.get",
+	//   "parameterOrder": [
+	//     "combinedAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched combined\naudience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "combinedAudienceId": {
+	//       "description": "Required. The ID of the combined audience to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched combined audience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/combinedAudiences/{+combinedAudienceId}",
+	//   "response": {
+	//     "$ref": "CombinedAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.combinedAudiences.list":
+
+type CombinedAudiencesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists combined audiences.
+//
+// The order is defined by the
+// order_by parameter.
+func (r *CombinedAudiencesService) List() *CombinedAudiencesListCall {
+	c := &CombinedAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched combined
+// audiences.
+func (c *CombinedAudiencesListCall) AdvertiserId(advertiserId int64) *CombinedAudiencesListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// combined audience fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for combined audiences currently can only
+// contain at
+// most one restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All combined audiences for which the display name contains
+// "Google":
+// `displayName : "Google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *CombinedAudiencesListCall) Filter(filter string) *CombinedAudiencesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `combinedAudienceId` (default)
+// * `displayName`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *CombinedAudiencesListCall) OrderBy(orderBy string) *CombinedAudiencesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *CombinedAudiencesListCall) PageSize(pageSize int64) *CombinedAudiencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListCombinedAudiences` method.
+// If not specified, the first page of results will be returned.
+func (c *CombinedAudiencesListCall) PageToken(pageToken string) *CombinedAudiencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched combined audiences.
+func (c *CombinedAudiencesListCall) PartnerId(partnerId int64) *CombinedAudiencesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CombinedAudiencesListCall) Fields(s ...googleapi.Field) *CombinedAudiencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CombinedAudiencesListCall) IfNoneMatch(entityTag string) *CombinedAudiencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CombinedAudiencesListCall) Context(ctx context.Context) *CombinedAudiencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CombinedAudiencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/combinedAudiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.combinedAudiences.list" call.
+// Exactly one of *ListCombinedAudiencesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCombinedAudiencesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombinedAudiencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCombinedAudiencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists combined audiences.\n\nThe order is defined by the\norder_by parameter.",
+	//   "flatPath": "v1/combinedAudiences",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.combinedAudiences.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched combined\naudiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by combined audience fields.\n\nSupported syntax:\n\n* Filter expressions for combined audiences currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All combined audiences for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `combinedAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCombinedAudiences` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched combined audiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/combinedAudiences",
+	//   "response": {
+	//     "$ref": "ListCombinedAudiencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CombinedAudiencesListCall) Pages(ctx context.Context, f func(*ListCombinedAudiencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.customLists.get":
+
+type CustomListsGetCall struct {
+	s            *Service
+	customListId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a custom list.
+func (r *CustomListsService) Get(customListId int64) *CustomListsGetCall {
+	c := &CustomListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customListId = customListId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the DV360 advertiser that has access to the fetched custom
+// lists.
+func (c *CustomListsGetCall) AdvertiserId(advertiserId int64) *CustomListsGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomListsGetCall) Fields(s ...googleapi.Field) *CustomListsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomListsGetCall) IfNoneMatch(entityTag string) *CustomListsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomListsGetCall) Context(ctx context.Context) *CustomListsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomListsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customLists/{+customListId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customListId": strconv.FormatInt(c.customListId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.customLists.get" call.
+// Exactly one of *CustomList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomListsGetCall) Do(opts ...googleapi.CallOption) (*CustomList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a custom list.",
+	//   "flatPath": "v1/customLists/{customListsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.customLists.get",
+	//   "parameterOrder": [
+	//     "customListId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom\nlists.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customListId": {
+	//       "description": "Required. The ID of the custom list to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/customLists/{+customListId}",
+	//   "response": {
+	//     "$ref": "CustomList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.customLists.list":
+
+type CustomListsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists custom lists.
+//
+// The order is defined by the order_by
+// parameter.
+func (r *CustomListsService) List() *CustomListsListCall {
+	c := &CustomListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the DV360 advertiser that has access to the fetched custom
+// lists.
+func (c *CustomListsListCall) AdvertiserId(advertiserId int64) *CustomListsListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// custom list fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for custom lists currently can only contain
+// at
+// most one restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All custom lists for which the display name contains
+// "Google":
+// `displayName : "Google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *CustomListsListCall) Filter(filter string) *CustomListsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `customListId` (default)
+// * `displayName`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *CustomListsListCall) OrderBy(orderBy string) *CustomListsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *CustomListsListCall) PageSize(pageSize int64) *CustomListsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListCustomLists` method.
+// If not specified, the first page of results will be returned.
+func (c *CustomListsListCall) PageToken(pageToken string) *CustomListsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomListsListCall) Fields(s ...googleapi.Field) *CustomListsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomListsListCall) IfNoneMatch(entityTag string) *CustomListsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomListsListCall) Context(ctx context.Context) *CustomListsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomListsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customLists")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.customLists.list" call.
+// Exactly one of *ListCustomListsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCustomListsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomListsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCustomListsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists custom lists.\n\nThe order is defined by the order_by\nparameter.",
+	//   "flatPath": "v1/customLists",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.customLists.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom\nlists.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by custom list fields.\n\nSupported syntax:\n\n* Filter expressions for custom lists currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All custom lists for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `customListId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCustomLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/customLists",
+	//   "response": {
+	//     "$ref": "ListCustomListsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomListsListCall) Pages(ctx context.Context, f func(*ListCustomListsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.firstAndThirdPartyAudiences.get":
+
+type FirstAndThirdPartyAudiencesGetCall struct {
+	s                            *Service
+	firstAndThirdPartyAudienceId int64
+	urlParams_                   gensupport.URLParams
+	ifNoneMatch_                 string
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Get: Gets a first and third party audience.
+func (r *FirstAndThirdPartyAudiencesService) Get(firstAndThirdPartyAudienceId int64) *FirstAndThirdPartyAudiencesGetCall {
+	c := &FirstAndThirdPartyAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched first and
+// third party audience.
+func (c *FirstAndThirdPartyAudiencesGetCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched first and
+// third party audience.
+func (c *FirstAndThirdPartyAudiencesGetCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FirstAndThirdPartyAudiencesGetCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FirstAndThirdPartyAudiencesGetCall) IfNoneMatch(entityTag string) *FirstAndThirdPartyAudiencesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FirstAndThirdPartyAudiencesGetCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firstAndThirdPartyAudienceId": strconv.FormatInt(c.firstAndThirdPartyAudienceId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.firstAndThirdPartyAudiences.get" call.
+// Exactly one of *FirstAndThirdPartyAudience or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *FirstAndThirdPartyAudience.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*FirstAndThirdPartyAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &FirstAndThirdPartyAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a first and third party audience.",
+	//   "flatPath": "v1/firstAndThirdPartyAudiences/{firstAndThirdPartyAudiencesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.firstAndThirdPartyAudiences.get",
+	//   "parameterOrder": [
+	//     "firstAndThirdPartyAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched first and\nthird party audience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "firstAndThirdPartyAudienceId": {
+	//       "description": "Required. The ID of the first and third party audience to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched first and\nthird party audience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}",
+	//   "response": {
+	//     "$ref": "FirstAndThirdPartyAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.firstAndThirdPartyAudiences.list":
+
+type FirstAndThirdPartyAudiencesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists first and third party audiences.
+//
+// The order is defined by the
+// order_by parameter.
+func (r *FirstAndThirdPartyAudiencesService) List() *FirstAndThirdPartyAudiencesListCall {
+	c := &FirstAndThirdPartyAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched first and
+// third party audiences.
+func (c *FirstAndThirdPartyAudiencesListCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// first and third party audience fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for first and third party audiences currently
+// can
+// only contain at most one restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All first and third party audiences for which the display name
+// contains
+// "Google": `displayName : "Google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *FirstAndThirdPartyAudiencesListCall) Filter(filter string) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `firstAndThirdPartyAudienceId` (default)
+// * `displayName`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to
+// `ListFirstAndThirdPartyAudiences`
+// method. If not specified, the first page of results will be returned.
+func (c *FirstAndThirdPartyAudiencesListCall) PageToken(pageToken string) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched first and
+// third party audiences.
+func (c *FirstAndThirdPartyAudiencesListCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FirstAndThirdPartyAudiencesListCall) Fields(s ...googleapi.Field) *FirstAndThirdPartyAudiencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FirstAndThirdPartyAudiencesListCall) IfNoneMatch(entityTag string) *FirstAndThirdPartyAudiencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FirstAndThirdPartyAudiencesListCall) Context(ctx context.Context) *FirstAndThirdPartyAudiencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/firstAndThirdPartyAudiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.firstAndThirdPartyAudiences.list" call.
+// Exactly one of *ListFirstAndThirdPartyAudiencesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListFirstAndThirdPartyAudiencesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListFirstAndThirdPartyAudiencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFirstAndThirdPartyAudiencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists first and third party audiences.\n\nThe order is defined by the\norder_by parameter.",
+	//   "flatPath": "v1/firstAndThirdPartyAudiences",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.firstAndThirdPartyAudiences.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched first and\nthird party audiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by first and third party audience fields.\n\nSupported syntax:\n\n* Filter expressions for first and third party audiences currently can\nonly contain at most one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All first and third party audiences for which the display name contains\n\"Google\": `displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `firstAndThirdPartyAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListFirstAndThirdPartyAudiences`\nmethod. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched first and\nthird party audiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/firstAndThirdPartyAudiences",
+	//   "response": {
+	//     "$ref": "ListFirstAndThirdPartyAudiencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FirstAndThirdPartyAudiencesListCall) Pages(ctx context.Context, f func(*ListFirstAndThirdPartyAudiencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.floodlightGroups.get":
+
+type FloodlightGroupsGetCall struct {
+	s                 *Service
+	floodlightGroupId int64
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Get: Gets a Floodlight group.
+func (r *FloodlightGroupsService) Get(floodlightGroupId int64) *FloodlightGroupsGetCall {
+	c := &FloodlightGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The
+// partner context by which the Floodlight group is being accessed.
+func (c *FloodlightGroupsGetCall) PartnerId(partnerId int64) *FloodlightGroupsGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsGetCall) Fields(s ...googleapi.Field) *FloodlightGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FloodlightGroupsGetCall) IfNoneMatch(entityTag string) *FloodlightGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsGetCall) Context(ctx context.Context) *FloodlightGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/floodlightGroups/{+floodlightGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.get" call.
+// Exactly one of *FloodlightGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *FloodlightGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsGetCall) Do(opts ...googleapi.CallOption) (*FloodlightGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &FloodlightGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Floodlight group.",
+	//   "flatPath": "v1/floodlightGroups/{floodlightGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.floodlightGroups.get",
+	//   "parameterOrder": [
+	//     "floodlightGroupId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightGroupId": {
+	//       "description": "Required. The ID of the Floodlight group to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The partner context by which the Floodlight group is being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/floodlightGroups/{+floodlightGroupId}",
+	//   "response": {
+	//     "$ref": "FloodlightGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.floodlightGroups.patch":
+
+type FloodlightGroupsPatchCall struct {
+	s                 *Service
+	floodlightGroupId int64
+	floodlightgroup   *FloodlightGroup
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates an existing Floodlight group.
+// Returns the updated Floodlight group if successful.
+func (r *FloodlightGroupsService) Patch(floodlightGroupId int64, floodlightgroup *FloodlightGroup) *FloodlightGroupsPatchCall {
+	c := &FloodlightGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	c.floodlightgroup = floodlightgroup
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The
+// partner context by which the Floodlight group is being accessed.
+func (c *FloodlightGroupsPatchCall) PartnerId(partnerId int64) *FloodlightGroupsPatchCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *FloodlightGroupsPatchCall) UpdateMask(updateMask string) *FloodlightGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsPatchCall) Fields(s ...googleapi.Field) *FloodlightGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsPatchCall) Context(ctx context.Context) *FloodlightGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.floodlightgroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/floodlightGroups/{floodlightGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.patch" call.
+// Exactly one of *FloodlightGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *FloodlightGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*FloodlightGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &FloodlightGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Floodlight group.\nReturns the updated Floodlight group if successful.",
+	//   "flatPath": "v1/floodlightGroups/{floodlightGroupId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.floodlightGroups.patch",
+	//   "parameterOrder": [
+	//     "floodlightGroupId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightGroupId": {
+	//       "description": "Output only. The unique ID of the Floodlight group. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The partner context by which the Floodlight group is being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/floodlightGroups/{floodlightGroupId}",
+	//   "request": {
+	//     "$ref": "FloodlightGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "FloodlightGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.googleAudiences.get":
+
+type GoogleAudiencesGetCall struct {
+	s                *Service
+	googleAudienceId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets a Google audience.
+func (r *GoogleAudiencesService) Get(googleAudienceId int64) *GoogleAudiencesGetCall {
+	c := &GoogleAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleAudienceId = googleAudienceId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched Google audience.
+func (c *GoogleAudiencesGetCall) AdvertiserId(advertiserId int64) *GoogleAudiencesGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched Google audience.
+func (c *GoogleAudiencesGetCall) PartnerId(partnerId int64) *GoogleAudiencesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GoogleAudiencesGetCall) Fields(s ...googleapi.Field) *GoogleAudiencesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *GoogleAudiencesGetCall) IfNoneMatch(entityTag string) *GoogleAudiencesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GoogleAudiencesGetCall) Context(ctx context.Context) *GoogleAudiencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GoogleAudiencesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/googleAudiences/{+googleAudienceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"googleAudienceId": strconv.FormatInt(c.googleAudienceId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.googleAudiences.get" call.
+// Exactly one of *GoogleAudience or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *GoogleAudience.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *GoogleAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAudience, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAudience{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Google audience.",
+	//   "flatPath": "v1/googleAudiences/{googleAudiencesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.googleAudiences.get",
+	//   "parameterOrder": [
+	//     "googleAudienceId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched Google audience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "googleAudienceId": {
+	//       "description": "Required. The ID of the Google audience to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched Google audience.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/googleAudiences/{+googleAudienceId}",
+	//   "response": {
+	//     "$ref": "GoogleAudience"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.googleAudiences.list":
+
+type GoogleAudiencesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Google audiences.
+//
+// The order is defined by the order_by
+// parameter.
+func (r *GoogleAudiencesService) List() *GoogleAudiencesListCall {
+	c := &GoogleAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the fetched Google audiences.
+func (c *GoogleAudiencesListCall) AdvertiserId(advertiserId int64) *GoogleAudiencesListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// Google audience fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for Google audiences currently can only contain
+// at
+// most one restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All Google audiences for which the display name contains
+// "Google":
+// `displayName : "Google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *GoogleAudiencesListCall) Filter(filter string) *GoogleAudiencesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `googleAudienceId` (default)
+// * `displayName`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *GoogleAudiencesListCall) OrderBy(orderBy string) *GoogleAudiencesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *GoogleAudiencesListCall) PageSize(pageSize int64) *GoogleAudiencesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListGoogleAudiences` method.
+// If not specified, the first page of results will be returned.
+func (c *GoogleAudiencesListCall) PageToken(pageToken string) *GoogleAudiencesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the fetched Google audiences.
+func (c *GoogleAudiencesListCall) PartnerId(partnerId int64) *GoogleAudiencesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GoogleAudiencesListCall) Fields(s ...googleapi.Field) *GoogleAudiencesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *GoogleAudiencesListCall) IfNoneMatch(entityTag string) *GoogleAudiencesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GoogleAudiencesListCall) Context(ctx context.Context) *GoogleAudiencesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GoogleAudiencesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/googleAudiences")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.googleAudiences.list" call.
+// Exactly one of *ListGoogleAudiencesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGoogleAudiencesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleAudiencesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListGoogleAudiencesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Google audiences.\n\nThe order is defined by the order_by\nparameter.",
+	//   "flatPath": "v1/googleAudiences",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.googleAudiences.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the fetched Google audiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by Google audience fields.\n\nSupported syntax:\n\n* Filter expressions for Google audiences currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All Google audiences for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `googleAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListGoogleAudiences` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the fetched Google audiences.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/googleAudiences",
+	//   "response": {
+	//     "$ref": "ListGoogleAudiencesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *GoogleAudiencesListCall) Pages(ctx context.Context, f func(*ListGoogleAudiencesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.inventorySourceGroups.get":
+
+type InventorySourceGroupsGetCall struct {
+	s                      *Service
+	inventorySourceGroupId int64
+	urlParams_             gensupport.URLParams
+	ifNoneMatch_           string
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Get: Gets an inventory source group.
+func (r *InventorySourceGroupsService) Get(inventorySourceGroupId int64) *InventorySourceGroupsGetCall {
+	c := &InventorySourceGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.inventorySourceGroupId = inventorySourceGroupId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the inventory source group.
+//
+// If an inventory source group is partner-owned, only advertisers to
+// which
+// the group is explicitly shared can access the group.
+func (c *InventorySourceGroupsGetCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the inventory source group.
+//
+// A partner cannot access an advertiser-owned inventory source group.
+func (c *InventorySourceGroupsGetCall) PartnerId(partnerId int64) *InventorySourceGroupsGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InventorySourceGroupsGetCall) Fields(s ...googleapi.Field) *InventorySourceGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InventorySourceGroupsGetCall) IfNoneMatch(entityTag string) *InventorySourceGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InventorySourceGroupsGetCall) Context(ctx context.Context) *InventorySourceGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventorySourceGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/inventorySourceGroups/{+inventorySourceGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"inventorySourceGroupId": strconv.FormatInt(c.inventorySourceGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.inventorySourceGroups.get" call.
+// Exactly one of *InventorySourceGroup or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *InventorySourceGroup.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *InventorySourceGroupsGetCall) Do(opts ...googleapi.CallOption) (*InventorySourceGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InventorySourceGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an inventory source group.",
+	//   "flatPath": "v1/inventorySourceGroups/{inventorySourceGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.inventorySourceGroups.get",
+	//   "parameterOrder": [
+	//     "inventorySourceGroupId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the inventory source group.\n\nIf an inventory source group is partner-owned, only advertisers to which\nthe group is explicitly shared can access the group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "inventorySourceGroupId": {
+	//       "description": "Required. The ID of the inventory source group to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the inventory source group.\n\nA partner cannot access an advertiser-owned inventory source group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/inventorySourceGroups/{+inventorySourceGroupId}",
+	//   "response": {
+	//     "$ref": "InventorySourceGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.inventorySourceGroups.list":
+
+type InventorySourceGroupsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists inventory source groups that are accessible to the
+// current user.
+//
+// The order is defined by the
+// order_by parameter.
+func (r *InventorySourceGroupsService) List() *InventorySourceGroupsListCall {
+	c := &InventorySourceGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the inventory source group.
+//
+// If an inventory source group is partner-owned, only advertisers to
+// which
+// the group is explicitly shared can access the group.
+func (c *InventorySourceGroupsListCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// inventory source group properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by the logical operator `OR`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `inventorySourceGroupId`
+//
+// The length of this field should be no more than 500 characters.
+func (c *InventorySourceGroupsListCall) Filter(filter string) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+// * `inventorySourceGroupId`
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name. For
+// example,
+// `displayName desc`.
+func (c *InventorySourceGroupsListCall) OrderBy(orderBy string) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`.
+func (c *InventorySourceGroupsListCall) PageSize(pageSize int64) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListInventorySources` method.
+// If not specified, the first page of results will be returned.
+func (c *InventorySourceGroupsListCall) PageToken(pageToken string) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the inventory source group.
+//
+// A partner cannot access advertiser-owned inventory source groups.
+func (c *InventorySourceGroupsListCall) PartnerId(partnerId int64) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InventorySourceGroupsListCall) Fields(s ...googleapi.Field) *InventorySourceGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InventorySourceGroupsListCall) IfNoneMatch(entityTag string) *InventorySourceGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InventorySourceGroupsListCall) Context(ctx context.Context) *InventorySourceGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventorySourceGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/inventorySourceGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.inventorySourceGroups.list" call.
+// Exactly one of *ListInventorySourceGroupsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListInventorySourceGroupsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListInventorySourceGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInventorySourceGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists inventory source groups that are accessible to the current user.\n\nThe order is defined by the\norder_by parameter.",
+	//   "flatPath": "v1/inventorySourceGroups",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.inventorySourceGroups.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the inventory source group.\n\nIf an inventory source group is partner-owned, only advertisers to which\nthe group is explicitly shared can access the group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by inventory source group properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `inventorySourceGroupId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `inventorySourceGroupId`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListInventorySources` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the inventory source group.\n\nA partner cannot access advertiser-owned inventory source groups.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/inventorySourceGroups",
+	//   "response": {
+	//     "$ref": "ListInventorySourceGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InventorySourceGroupsListCall) Pages(ctx context.Context, f func(*ListInventorySourceGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.inventorySources.get":
+
+type InventorySourcesGetCall struct {
+	s                 *Service
+	inventorySourceId int64
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Get: Gets an inventory source.
+func (r *InventorySourcesService) Get(inventorySourceId int64) *InventorySourcesGetCall {
+	c := &InventorySourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.inventorySourceId = inventorySourceId
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the DV360 partner to which the fetched inventory source
+// is permissioned.
+func (c *InventorySourcesGetCall) PartnerId(partnerId int64) *InventorySourcesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InventorySourcesGetCall) Fields(s ...googleapi.Field) *InventorySourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InventorySourcesGetCall) IfNoneMatch(entityTag string) *InventorySourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InventorySourcesGetCall) Context(ctx context.Context) *InventorySourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventorySourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/inventorySources/{+inventorySourceId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"inventorySourceId": strconv.FormatInt(c.inventorySourceId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.inventorySources.get" call.
+// Exactly one of *InventorySource or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *InventorySource.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *InventorySourcesGetCall) Do(opts ...googleapi.CallOption) (*InventorySource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InventorySource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an inventory source.",
+	//   "flatPath": "v1/inventorySources/{inventorySourcesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.inventorySources.get",
+	//   "parameterOrder": [
+	//     "inventorySourceId"
+	//   ],
+	//   "parameters": {
+	//     "inventorySourceId": {
+	//       "description": "Required. The ID of the inventory source to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the DV360 partner to which the fetched inventory source\nis permissioned.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/inventorySources/{+inventorySourceId}",
+	//   "response": {
+	//     "$ref": "InventorySource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.inventorySources.list":
+
+type InventorySourcesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists inventory sources that are accessible to the current
+// user.
+//
+// The order is defined by the
+// order_by parameter.
+// If a filter by
+// entity_status is not
+// specified, inventory sources with entity status
+// `ENTITY_STATUS_ARCHIVED`
+// will not be included in the results.
+func (r *InventorySourcesService) List() *InventorySourcesListCall {
+	c := &InventorySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that has access to the inventory source.
+func (c *InventorySourcesListCall) AdvertiserId(advertiserId int64) *InventorySourcesListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// inventory source properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `EQUALS (=)`.
+// * Supported fields:
+//     - `status.entityStatus`
+//     - `commitment`
+//     - `deliveryMethod`
+//     - `rateDetails.rateType`
+//     - `exchange`
+//
+// Examples:
+//
+// * All active inventory
+// sources:
+// `status.entityStatus="ENTITY_STATUS_ACTIVE"
+// * Inventory sources belonging to Google Ad Manager or Rubicon
+// exchanges:
+// `exchange="EXCHANGE_GOOGLE_AD_MANAGER" OR
+// exchange="EXCHANGE_RUBICON"
+//
+// The length of this field should be no more than 500 characters.
+func (c *InventorySourcesListCall) Filter(filter string) *InventorySourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name. For
+// example,
+// `displayName desc`.
+func (c *InventorySourcesListCall) OrderBy(orderBy string) *InventorySourcesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`.
+func (c *InventorySourcesListCall) PageSize(pageSize int64) *InventorySourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListInventorySources` method.
+// If not specified, the first page of results will be returned.
+func (c *InventorySourcesListCall) PageToken(pageToken string) *InventorySourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// partner that has access to the inventory source.
+func (c *InventorySourcesListCall) PartnerId(partnerId int64) *InventorySourcesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InventorySourcesListCall) Fields(s ...googleapi.Field) *InventorySourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InventorySourcesListCall) IfNoneMatch(entityTag string) *InventorySourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InventorySourcesListCall) Context(ctx context.Context) *InventorySourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InventorySourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/inventorySources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.inventorySources.list" call.
+// Exactly one of *ListInventorySourcesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListInventorySourcesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInventorySourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInventorySourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists inventory sources that are accessible to the current user.\n\nThe order is defined by the\norder_by parameter.\nIf a filter by\nentity_status is not\nspecified, inventory sources with entity status `ENTITY_STATUS_ARCHIVED`\nwill not be included in the results.",
+	//   "flatPath": "v1/inventorySources",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.inventorySources.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that has access to the inventory source.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by inventory source properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `status.entityStatus`\n    - `commitment`\n    - `deliveryMethod`\n    - `rateDetails.rateType`\n    - `exchange`\n\nExamples:\n\n* All active inventory sources:\n`status.entityStatus=\"ENTITY_STATUS_ACTIVE\"`\n* Inventory sources belonging to Google Ad Manager or Rubicon exchanges:\n`exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListInventorySources` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that has access to the inventory source.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/inventorySources",
+	//   "response": {
+	//     "$ref": "ListInventorySourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InventorySourcesListCall) Pages(ctx context.Context, f func(*ListInventorySourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "displayvideo.media.download":
@@ -734,7 +22136,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -841,6 +22243,440 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 
 }
 
+// method id "displayvideo.partners.channels.get":
+
+type PartnersChannelsGetCall struct {
+	s            *Service
+	partnerId    int64
+	channelId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a channel for a partner or advertiser.
+func (r *PartnersChannelsService) Get(partnerId int64, channelId int64) *PartnersChannelsGetCall {
+	c := &PartnersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.channelId = channelId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that owns the fetched channel.
+func (c *PartnersChannelsGetCall) AdvertiserId(advertiserId int64) *PartnersChannelsGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersChannelsGetCall) Fields(s ...googleapi.Field) *PartnersChannelsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersChannelsGetCall) IfNoneMatch(entityTag string) *PartnersChannelsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersChannelsGetCall) Context(ctx context.Context) *PartnersChannelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersChannelsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/channels/{+channelId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+		"channelId": strconv.FormatInt(c.channelId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.channels.get" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PartnersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Channel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a channel for a partner or advertiser.",
+	//   "flatPath": "v1/partners/{partnersId}/channels/{channelsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.channels.get",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that owns the fetched channel.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "channelId": {
+	//       "description": "Required. The ID of the channel to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that owns the fetched channel.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/channels/{+channelId}",
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.channels.list":
+
+type PartnersChannelsListCall struct {
+	s            *Service
+	partnerId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists channels for a partner or advertiser.
+func (r *PartnersChannelsService) List(partnerId int64) *PartnersChannelsListCall {
+	c := &PartnersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the advertiser that owns the channels.
+func (c *PartnersChannelsListCall) AdvertiserId(advertiserId int64) *PartnersChannelsListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// channel fields.
+//
+// Supported syntax:
+//
+// * Filter expressions for channel currently can only contain at most
+// one
+// * restriction.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be `CONTAINS (:)`.
+// * Supported fields:
+//     - `displayName`
+//
+// Examples:
+//
+// * All channels for which the display name contains
+// "google":
+// `displayName : "google".
+//
+// The length of this field should be no more than 500 characters.
+func (c *PartnersChannelsListCall) Filter(filter string) *PartnersChannelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `displayName` (default)
+// * `channelId`
+//
+// The default sorting order is ascending. To specify descending order
+// for a
+// field, a suffix " desc" should be added to the field name.
+// Example:
+// `displayName desc`.
+func (c *PartnersChannelsListCall) OrderBy(orderBy string) *PartnersChannelsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *PartnersChannelsListCall) PageSize(pageSize int64) *PartnersChannelsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token returned from the
+// previous call to `ListChannels` method. If not specified, the first
+// page
+// of results will be returned.
+func (c *PartnersChannelsListCall) PageToken(pageToken string) *PartnersChannelsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersChannelsListCall) Fields(s ...googleapi.Field) *PartnersChannelsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersChannelsListCall) IfNoneMatch(entityTag string) *PartnersChannelsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersChannelsListCall) Context(ctx context.Context) *PartnersChannelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersChannelsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/channels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.channels.list" call.
+// Exactly one of *ListChannelsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListChannelsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListChannelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists channels for a partner or advertiser.",
+	//   "flatPath": "v1/partners/{partnersId}/channels",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.channels.list",
+	//   "parameterOrder": [
+	//     "partnerId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that owns the channels.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by channel fields.\n\nSupported syntax:\n\n* Filter expressions for channel currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All channels for which the display name contains \"google\":\n`displayName : \"google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `channelId`\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListChannels` method. If not specified, the first page\nof results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that owns the channels.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/channels",
+	//   "response": {
+	//     "$ref": "ListChannelsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.sdfdownloadtasks.create":
 
 type SdfdownloadtasksCreateCall struct {
@@ -903,7 +22739,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1041,7 +22877,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1129,4 +22965,507 @@ func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 	//   ]
 	// }
 
+}
+
+// method id "displayvideo.targetingTypes.targetingOptions.get":
+
+type TargetingTypesTargetingOptionsGetCall struct {
+	s                 *Service
+	targetingType     string
+	targetingOptionId string
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Get: Gets a single targeting option.
+func (r *TargetingTypesTargetingOptionsService) Get(targetingType string, targetingOptionId string) *TargetingTypesTargetingOptionsGetCall {
+	c := &TargetingTypesTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.targetingType = targetingType
+	c.targetingOptionId = targetingOptionId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Required.
+// The Advertiser this request is being made in the context of.
+func (c *TargetingTypesTargetingOptionsGetCall) AdvertiserId(advertiserId int64) *TargetingTypesTargetingOptionsGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTypesTargetingOptionsGetCall) Fields(s ...googleapi.Field) *TargetingTypesTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetingTypesTargetingOptionsGetCall) IfNoneMatch(entityTag string) *TargetingTypesTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTypesTargetingOptionsGetCall) Context(ctx context.Context) *TargetingTypesTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetingTypesTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/targetingTypes/{+targetingType}/targetingOptions/{+targetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"targetingType":     c.targetingType,
+		"targetingOptionId": c.targetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.targetingTypes.targetingOptions.get" call.
+// Exactly one of *TargetingOption or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *TargetingOption.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*TargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option.",
+	//   "flatPath": "v1/targetingTypes/{targetingTypesId}/targetingOptions/{targetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.targetingTypes.targetingOptions.get",
+	//   "parameterOrder": [
+	//     "targetingType",
+	//     "targetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The Advertiser this request is being made in the context of.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingOptionId": {
+	//       "description": "Required. The ID of the of targeting option to retrieve.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. The type of targeting option to retrieve.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/targetingTypes/{+targetingType}/targetingOptions/{+targetingOptionId}",
+	//   "response": {
+	//     "$ref": "TargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.targetingTypes.targetingOptions.list":
+
+type TargetingTypesTargetingOptionsListCall struct {
+	s             *Service
+	targetingType string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists targeting options of a given type.
+func (r *TargetingTypesTargetingOptionsService) List(targetingType string) *TargetingTypesTargetingOptionsListCall {
+	c := &TargetingTypesTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.targetingType = targetingType
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Required.
+// The Advertiser this request is being made in the context of.
+func (c *TargetingTypesTargetingOptionsListCall) AdvertiserId(advertiserId int64) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// targeting option properties.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `OR` logical operators.
+// * A restriction has the form of `{field} {operator} {value}`.
+// * The operator must be "=" (equal sign).
+// * Supported fields:
+//     - `targetingOptionId`
+//
+// The length of this field should be no more than 500 characters.
+func (c *TargetingTypesTargetingOptionsListCall) Filter(filter string) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list.
+// Acceptable values are:
+//
+// * `targetingOptionId` (default)
+//
+// The default sorting order is ascending. To specify descending order
+// for
+// a field, a suffix "desc" should be added to the field name.
+// Example: `targetingOptionId desc`.
+func (c *TargetingTypesTargetingOptionsListCall) OrderBy(orderBy string) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will
+// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
+// value
+// is specified.
+func (c *TargetingTypesTargetingOptionsListCall) PageSize(pageSize int64) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+// Typically, this is the value of
+// next_page_token
+// returned from the previous call to `ListTargetingOptions` method.
+// If not specified, the first page of results will be returned.
+func (c *TargetingTypesTargetingOptionsListCall) PageToken(pageToken string) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetingTypesTargetingOptionsListCall) Fields(s ...googleapi.Field) *TargetingTypesTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetingTypesTargetingOptionsListCall) IfNoneMatch(entityTag string) *TargetingTypesTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TargetingTypesTargetingOptionsListCall) Context(ctx context.Context) *TargetingTypesTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TargetingTypesTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/targetingTypes/{+targetingType}/targetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.targetingTypes.targetingOptions.list" call.
+// Exactly one of *ListTargetingOptionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListTargetingOptionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists targeting options of a given type.",
+	//   "flatPath": "v1/targetingTypes/{targetingTypesId}/targetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.targetingTypes.targetingOptions.list",
+	//   "parameterOrder": [
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The Advertiser this request is being made in the context of.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by targeting option properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `OR` logical operators.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be \"=\" (equal sign).\n* Supported fields:\n    - `targetingOptionId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `targetingOptionId` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name.\nExample: `targetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListTargetingOptions` method.\nIf not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. The type of targeting option to be listed.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/targetingTypes/{+targetingType}/targetingOptions",
+	//   "response": {
+	//     "$ref": "ListTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TargetingTypesTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

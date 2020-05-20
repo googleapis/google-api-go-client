@@ -415,6 +415,34 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
+                },
+                "upgrade": {
+                  "description": "Upgrades Redis instance to the newer Redis version specified in the\nrequest.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:upgrade",
+                  "httpMethod": "POST",
+                  "id": "redis.projects.locations.instances.upgrade",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:upgrade",
+                  "request": {
+                    "$ref": "UpgradeInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             },
@@ -543,7 +571,7 @@
       }
     }
   },
-  "revision": "20200204",
+  "revision": "20200402",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -698,7 +726,7 @@
           "type": "string"
         },
         "connectMode": {
-          "description": "Optional. The connect mode of Redis instance.\nIf not provided, default one will be used.\nCurrent default: DIRECT_PEERING.",
+          "description": "Optional. The network connect mode of the Redis instance.\nIf not provided, the connect mode defaults to DIRECT_PEERING.",
           "enum": [
             "CONNECT_MODE_UNSPECIFIED",
             "DIRECT_PEERING",
@@ -706,8 +734,8 @@
           ],
           "enumDescriptions": [
             "Not set.",
-            "Connect via directly peering with memorystore redis hosted service.",
-            "Connect with google via private service access and share connection\nacross google managed services."
+            "Connect via direct peering to the Memorystore for Redis hosted service.",
+            "Connect your Memorystore for Redis instance using Private Service\nAccess. Private services access provides an IP address range for multiple\nGoogle Cloud services, including Memorystore."
           ],
           "type": "string"
         },
@@ -761,11 +789,11 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Redis configuration parameters, according to\nhttp://redis.io/topics/config. Currently, the only supported parameters\nare:\n\n Redis 3.2 and above:\n\n *   maxmemory-policy\n *   notify-keyspace-events\n\n Redis 4.0 and above:\n\n *   activedefrag\n *   lfu-log-factor\n *   lfu-decay-time",
+          "description": "Optional. Redis configuration parameters, according to\nhttp://redis.io/topics/config. Currently, the only supported parameters\nare:\n\n Redis version 3.2 and newer:\n\n *   maxmemory-policy\n *   notify-keyspace-events\n\n Redis version 4.0 and newer:\n\n *   activedefrag\n *   lfu-decay-time\n *   lfu-log-factor\n *   maxmemory-gb\n\n Redis version 5.0 and newer:\n\n *   stream-node-max-bytes\n *   stream-node-max-entries",
           "type": "object"
         },
         "redisVersion": {
-          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Currently, the\nsupported values are:\n\n *   `REDIS_4_0` for Redis 4.0 compatibility (default)\n *   `REDIS_3_2` for Redis 3.2 compatibility",
+          "description": "Optional. The version of Redis software.\nIf not provided, latest supported version will be used. Currently, the\nsupported values are:\n\n *   `REDIS_3_2` for Redis 3.2 compatibility\n *   `REDIS_4_0` for Redis 4.0 compatibility (default)\n *   `REDIS_5_0` for Redis 5.0 compatibility",
           "type": "string"
         },
         "reservedIpRange": {
@@ -982,6 +1010,17 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpgradeInstanceRequest": {
+      "description": "Request for UpgradeInstance.",
+      "id": "UpgradeInstanceRequest",
+      "properties": {
+        "redisVersion": {
+          "description": "Required. Specifies the target version of Redis software to upgrade to.",
           "type": "string"
         }
       },

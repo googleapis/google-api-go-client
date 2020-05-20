@@ -194,7 +194,7 @@
               "type": "string"
             },
             "maxResults": {
-              "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified \u003ccode\u003emaxResults\u003c/code\u003e.",
+              "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -385,7 +385,7 @@
               "type": "string"
             },
             "maxResults": {
-              "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified \u003ccode\u003emaxResults\u003c/code\u003e.",
+              "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -434,7 +434,7 @@
       }
     }
   },
-  "revision": "20200317",
+  "revision": "20200416",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AchievementConfiguration": {
@@ -478,7 +478,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#achievementConfiguration\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#achievementConfiguration`.",
           "type": "string"
         },
         "published": {
@@ -510,7 +510,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#achievementConfigurationDetail\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#achievementConfigurationDetail`.",
           "type": "string"
         },
         "name": {
@@ -542,7 +542,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring\n\u003ccode\u003egamesConfiguration#achievementConfigurationListResponse\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#achievementConfigurationListResponse`.",
           "type": "string"
         },
         "nextPageToken": {
@@ -638,7 +638,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#imageConfiguration\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#imageConfiguration`.",
           "type": "string"
         },
         "resourceId": {
@@ -665,7 +665,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#leaderboardConfiguration\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#leaderboardConfiguration`.",
           "type": "string"
         },
         "published": {
@@ -711,7 +711,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#leaderboardConfigurationDetail\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#leaderboardConfigurationDetail`.",
           "type": "string"
         },
         "name": {
@@ -742,7 +742,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring\n\u003ccode\u003egamesConfiguration#leaderboardConfigurationListResponse\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring\n`gamesConfiguration#leaderboardConfigurationListResponse`.",
           "type": "string"
         },
         "nextPageToken": {
@@ -757,7 +757,7 @@
       "id": "LocalizedString",
       "properties": {
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#localizedString\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#localizedString`.",
           "type": "string"
         },
         "locale": {
@@ -776,7 +776,7 @@
       "id": "LocalizedStringBundle",
       "properties": {
         "kind": {
-          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring \u003ccode\u003egamesConfiguration#localizedStringBundle\u003c/code\u003e.",
+          "description": "Uniquely identifies the type of this resource. Value is always the fixed\nstring `gamesConfiguration#localizedStringBundle`.",
           "type": "string"
         },
         "translations": {

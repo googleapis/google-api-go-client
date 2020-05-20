@@ -192,6 +192,75 @@ type SpeechService struct {
 	s *Service
 }
 
+// ClassItem: An item of the class.
+type ClassItem struct {
+	// Value: The class item's value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClassItem) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomClass: A set of words or phrases that represents a common
+// concept likely to appear
+// in your audio, for example a list of passenger ship names.
+// CustomClass items
+// can be substituted into placeholders that you set in PhraseSet
+// phrases.
+type CustomClass struct {
+	// CustomClassId: If this custom class is a resource, the
+	// custom_class_id is the resource id
+	// of the CustomClass. Case sensitive.
+	CustomClassId string `json:"customClassId,omitempty"`
+
+	// Items: A collection of class items.
+	Items []*ClassItem `json:"items,omitempty"`
+
+	// Name: The resource name of the custom class.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClassId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClassId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomClass) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomClass
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -245,6 +314,11 @@ type LongRunningRecognizeMetadata struct {
 
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
+
+	// Uri: Output only. The URI of the audio file being transcribed. Empty
+	// if the audio was sent
+	// as byte content.
+	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -419,6 +493,169 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Phrase: A phrases containing words and phrase "hints" so that
+// the speech recognition is more likely to recognize them. This can be
+// used
+// to improve the accuracy for specific words and phrases, for example,
+// if
+// specific commands are typically spoken by the user. This can also be
+// used
+// to add additional words to the vocabulary of the recognizer.
+// See
+// [usage
+// limits](https://cloud.google.com/speech-to-text/quotas#content).
+//
+// List
+//  items can also include pre-built or custom classes containing
+// groups
+// of words that represent common concepts that occur in natural
+// language. For
+// example, rather than providing a phrase hint for every month of
+// the
+// year (e.g. "i was born in january", "i was born in febuary", ...),
+// use the
+// pre-built `$MONTH` class improves the likelihood of correctly
+// transcribing
+// audio that includes months (e.g. "i was born in $month").
+// To refer to pre-built classes, use the class' symbol prepended with
+// `$`
+// e.g. `$MONTH`. To refer to custom classes that were defined inline in
+// the
+// request, set the class's `custom_class_id` to a string unique to all
+// class
+// resources and inline classes. Then use the class' id wrapped in
+// $`{...}`
+// e.g. "${my-months}". To refer to custom classes resources, use the
+// class'
+// id wrapped in `${}` (e.g. `${my-months}`).
+type Phrase struct {
+	// Boost: Hint Boost. Overrides the boost set at the phrase set
+	// level.
+	// Positive value will increase the probability that a specific phrase
+	// will
+	// be recognized over other similar sounding phrases. The higher the
+	// boost,
+	// the higher the chance of false positive recognition as well.
+	// Negative
+	// boost values would correspond to anti-biasing. Anti-biasing is
+	// not
+	// enabled, so negative boost will simply be ignored. Though `boost`
+	// can
+	// accept a wide range of positive values, most use cases are best
+	// served
+	// with values between 0 and 20. We recommend using a binary search
+	// approach
+	// to finding the optimal value for your use case. Speech
+	// recognition
+	// will skip PhraseSets with a boost value of 0.
+	Boost float64 `json:"boost,omitempty"`
+
+	// Value: The phrase itself.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Phrase) MarshalJSON() ([]byte, error) {
+	type NoMethod Phrase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Phrase) UnmarshalJSON(data []byte) error {
+	type NoMethod Phrase
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// PhraseSet: Provides "hints" to the speech recognizer to favor
+// specific words and phrases
+// in the results.
+type PhraseSet struct {
+	// Boost: Hint Boost. Positive value will increase the probability that
+	// a specific
+	// phrase will be recognized over other similar sounding phrases. The
+	// higher
+	// the boost, the higher the chance of false positive recognition as
+	// well.
+	// Negative boost values would correspond to anti-biasing. Anti-biasing
+	// is not
+	// enabled, so negative boost will simply be ignored. Though `boost`
+	// can
+	// accept a wide range of positive values, most use cases are best
+	// served with
+	// values between 0 (exclusive) and 20. We recommend using a binary
+	// search
+	// approach to finding the optimal value for your use case. Speech
+	// recognition
+	// will skip PhraseSets with a boost value of 0.
+	Boost float64 `json:"boost,omitempty"`
+
+	// Name: The resource name of the phrase set.
+	Name string `json:"name,omitempty"`
+
+	// Phrases: A list of word and phrases.
+	Phrases []*Phrase `json:"phrases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Boost") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PhraseSet) MarshalJSON() ([]byte, error) {
+	type NoMethod PhraseSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PhraseSet) UnmarshalJSON(data []byte) error {
+	type NoMethod PhraseSet
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
 // RecognitionAudio: Contains audio data in the encoding specified in
 // the `RecognitionConfig`.
 // Either `content` or `uri` must be supplied. Supplying both or
@@ -474,6 +711,17 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // specifies how to process the
 // request.
 type RecognitionConfig struct {
+	// Adaptation: Speech adaptation configuration improves the accuracy of
+	// speech
+	// recognition. When speech adaptation is set it supersedes
+	// the
+	// `speech_contexts` field. For more information, see the
+	// [speech
+	// adaptation](https://cloud.google.com/speech-to-text/docs/conte
+	// xt-strength)
+	// documentation.
+	Adaptation *SpeechAdaptation `json:"adaptation,omitempty"`
+
 	// AlternativeLanguageCodes: A list of up to 3
 	// additional
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
@@ -542,11 +790,6 @@ type RecognitionConfig struct {
 	// requests in other languages has no effect at all.
 	// The default 'false' value does not add punctuation to result
 	// hypotheses.
-	// Note: This is currently offered as an experimental service,
-	// complimentary
-	// to all users. In the future this may be exclusively available as
-	// a
-	// premium feature.
 	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
 
 	// EnableSeparateRecognitionPerChannel: This needs to be set to `true`
@@ -758,22 +1001,20 @@ type RecognitionConfig struct {
 	// of the specified model.
 	UseEnhanced bool `json:"useEnhanced,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "AlternativeLanguageCodes") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Adaptation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Adaptation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1026,6 +1267,47 @@ type SpeakerDiarizationConfig struct {
 
 func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeakerDiarizationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpeechAdaptation: Speech adaptation configuration.
+type SpeechAdaptation struct {
+	// CustomClasses: A collection of custom classes. To specify the classes
+	// inline, leave the
+	// class' `name` blank and fill in the rest of its fields, giving it a
+	// unique
+	// `custom_class_id`. Refer to the inline defined class in phrase hints
+	// by its
+	// `custom_class_id`.
+	CustomClasses []*CustomClass `json:"customClasses,omitempty"`
+
+	// PhraseSets: A collection of phrase sets. To specify the hints inline,
+	// leave the
+	// phrase set's `name` blank and fill in the rest of its fields.
+	// Any
+	// phrase set can use any custom class.
+	PhraseSets []*PhraseSet `json:"phraseSets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomClasses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomClasses") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeechAdaptation) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeechAdaptation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1423,7 +1705,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1609,7 +1891,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1787,7 +2069,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1968,7 +2250,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2147,7 +2429,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2274,7 +2556,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

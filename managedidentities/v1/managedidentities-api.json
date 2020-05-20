@@ -493,7 +493,7 @@
                       ]
                     },
                     "setIamPolicy": {
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
                       "flatPath": "v1/projects/{projectsId}/locations/global/domains/{domainsId}:setIamPolicy",
                       "httpMethod": "POST",
                       "id": "managedidentities.projects.locations.global.domains.setIamPolicy",
@@ -521,7 +521,7 @@
                       ]
                     },
                     "testIamPermissions": {
-                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                       "flatPath": "v1/projects/{projectsId}/locations/global/domains/{domainsId}:testIamPermissions",
                       "httpMethod": "POST",
                       "id": "managedidentities.projects.locations.global.domains.testIamPermissions",
@@ -708,7 +708,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200415",
   "rootUrl": "https://managedidentities.googleapis.com/",
   "schemas": {
     "AttachTrustRequest": {
@@ -912,6 +912,39 @@
       },
       "type": "object"
     },
+    "GoogleCloudManagedidentitiesV1alpha1OpMetadata": {
+      "description": "Represents the metadata of the long-running operation.",
+      "id": "GoogleCloudManagedidentitiesV1alpha1OpMetadata",
+      "properties": {
+        "apiVersion": {
+          "description": "Output only. API version used to start the operation.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Output only. The time the operation finished running.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "requestedCancellation": {
+          "description": "Output only. Identifies whether the user has requested cancellation\nof the operation. Operations that have successfully been cancelled\nhave Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+          "type": "boolean"
+        },
+        "target": {
+          "description": "Output only. Server-defined resource path for the target of the operation.",
+          "type": "string"
+        },
+        "verb": {
+          "description": "Output only. Name of the verb executed by the operation.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudManagedidentitiesV1beta1OpMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudManagedidentitiesV1beta1OpMetadata",
@@ -946,7 +979,6 @@
       "type": "object"
     },
     "GoogleCloudSaasacceleratorManagementProvidersV1Instance": {
-      "description": "Instance represents the interface for SLM services to actuate the state\nof control plane resources.\n\nExample Instance in JSON, where\n  consumer-project=snapchat,\n  producer-project=cloud-sql:\n\n```json\nInstance:\n{\n  \"name\":\n  \"projects/snapchat/locations/us-east1/instances/prod-instance\",\n  \"create_time\": {\n    \"seconds\": 1526406431,\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"foo\": \"bar\"\n  },\n  \"state\": READY,\n  \"software_versions\": {\n    \"software_update\": \"cloud-sql-09-28-2018\",\n  },\n  \"maintenance_policy_names\": {\n    \"UpdatePolicy\":\n    \"projects/snapchat/locations/us-east1/maintenancePolicies/prod-update-policy\",\n  }\n  \"tenant_project_id\": \"cloud-sql-test-tenant\",\n  \"producer_metadata\": {\n    \"cloud-sql-tier\": \"basic\",\n    \"cloud-sql-instance-size\": \"1G\",\n  },\n  \"provisioned_resources\": [\n    {\n      \"resource-type\": \"compute-instance\",\n      \"resource-url\":\n      \"https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-east1-b/instances/vm-1\",\n    }\n  ],\n  \"maintenance_schedules\": {\n    \"csa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    },\n    \"ncsa_rollout\": {\n       \"start_time\": {\n          \"seconds\": 1526406431,\n       },\n       \"end_time\": {\n          \"seconds\": 1535406431,\n       },\n    }\n  },\n  \"consumer_defined_name\": \"my-sql-instance1\",\n}\n```",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1Instance",
       "properties": {
         "consumerDefinedName": {
@@ -996,13 +1028,6 @@
             "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource"
           },
           "type": "array"
-        },
-        "rolloutMetadata": {
-          "additionalProperties": {
-            "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata"
-          },
-          "description": "The map between RolloutType and the corresponding RolloutMetadata.\nThis is only mutated by rollout service. For actuation implementation,\nthis information is pass-through for Rollout management. Producer shall\nnot modify by itself.\nFor update of a single entry in this map, the update field mask shall\nfollow this sementics: go/advanced-field-masks",
-          "type": "object"
         },
         "slmInstanceTemplate": {
           "description": "Link to the SLM instance template. Only populated when updating SLM\ninstances via SSA's Actuation service adaptor.\nService producers with custom control plane (e.g. Cloud SQL) doesn't\nneed to populate this field. Instead they should use software_versions.",
@@ -1100,31 +1125,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata": {
-      "description": "This message has been deprecated.\nNotificationMetadata is the notification state for an instance.",
-      "id": "GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata",
-      "properties": {
-        "rescheduled": {
-          "description": "Whether the instance update has been rescheduled.",
-          "type": "boolean"
-        },
-        "scheduledEndTime": {
-          "description": "The scheduled end time for the maintenance window during which update\ncan be performed on the instance.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "scheduledStartTime": {
-          "description": "The scheduled start time for the maintenance window during which\nupdate can be performed on the instance.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "targetRelease": {
-          "description": "The target release to be applied to the instance.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource": {
       "description": "Describes provisioned dataplane resources.",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource",
@@ -1135,25 +1135,6 @@
         },
         "resourceUrl": {
           "description": "URL identifying the resource, e.g.\n\"https://www.googleapis.com/compute/v1/projects/...)\".",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata": {
-      "description": "This message has been deprecated.\nRolloutMetadata for an actuation instance. It maps to a single RolloutType.",
-      "id": "GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata",
-      "properties": {
-        "notification": {
-          "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1NotificationMetadata",
-          "description": "Instance level notification metadata."
-        },
-        "releaseName": {
-          "description": "The last Release that has been applied to the instance.",
-          "type": "string"
-        },
-        "rolloutName": {
-          "description": "The last rollout that has been applied to the instance.",
           "type": "string"
         }
       },

@@ -268,7 +268,7 @@
                   "type": "string"
                 },
                 "thumbnailProperties.mimeType": {
-                  "description": "The optional mime type of the thumbnail image.\n\nIf you don't specify the mime type, the default mime type will be PNG.",
+                  "description": "The optional mime type of the thumbnail image.\n\nIf you don't specify the mime type, the mime type defaults to PNG.",
                   "enum": [
                     "PNG"
                   ],
@@ -304,7 +304,7 @@
       }
     }
   },
-  "revision": "20200214",
+  "revision": "20200417",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -2307,7 +2307,7 @@
           "type": "string"
         },
         "masters": {
-          "description": "The slide masters in the presentation. A slide master contains all common\npage elements and the common properties for a set of layouts. They serve\nthree purposes:\n\n- Placeholder shapes on a master contain the default text styles and shape\n  properties of all placeholder shapes on pages that use that master.\n- The master page properties define the common page properties inherited by\n  its layouts.\n- Any other shapes on the master slide will appear on all slides using that\n  master, regardless of their layout.",
+          "description": "The slide masters in the presentation. A slide master contains all common\npage elements and the common properties for a set of layouts. They serve\nthree purposes:\n\n- Placeholder shapes on a master contain the default text styles and shape\n  properties of all placeholder shapes on pages that use that master.\n- The master page properties define the common page properties inherited by\n  its layouts.\n- Any other shapes on the master slide appear on all slides using that\n  master, regardless of their layout.",
           "items": {
             "$ref": "Page"
           },
@@ -2315,7 +2315,7 @@
         },
         "notesMaster": {
           "$ref": "Page",
-          "description": "The notes master in the presentation. It serves three purposes:\n\n- Placeholder shapes on a notes master contain the default text styles and\n  shape properties of all placeholder shapes on notes pages. Specifically,\n  a `SLIDE_IMAGE` placeholder shape contains the slide thumbnail, and a\n  `BODY` placeholder shape contains the speaker notes.\n- The notes master page properties define the common page properties\n  inherited by all notes pages.\n- Any other shapes on the notes master will appear on all notes pages.\n\nThe notes master is read-only."
+          "description": "The notes master in the presentation. It serves three purposes:\n\n- Placeholder shapes on a notes master contain the default text styles and\n  shape properties of all placeholder shapes on notes pages. Specifically,\n  a `SLIDE_IMAGE` placeholder shape contains the slide thumbnail, and a\n  `BODY` placeholder shape contains the speaker notes.\n- The notes master page properties define the common page properties\n  inherited by all notes pages.\n- Any other shapes on the notes master appears on all notes pages.\n\nThe notes master is read-only."
         },
         "pageSize": {
           "$ref": "Size",

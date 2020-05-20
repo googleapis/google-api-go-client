@@ -290,9 +290,42 @@
       }
     }
   },
-  "revision": "20200220",
+  "revision": "20200502",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
+    "ClassItem": {
+      "description": "An item of the class.",
+      "id": "ClassItem",
+      "properties": {
+        "value": {
+          "description": "The class item's value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CustomClass": {
+      "description": "A set of words or phrases that represents a common concept likely to appear\nin your audio, for example a list of passenger ship names. CustomClass items\ncan be substituted into placeholders that you set in PhraseSet phrases.",
+      "id": "CustomClass",
+      "properties": {
+        "customClassId": {
+          "description": "If this custom class is a resource, the custom_class_id is the resource id\nof the CustomClass. Case sensitive.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A collection of class items.",
+          "items": {
+            "$ref": "ClassItem"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The resource name of the custom class.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -328,6 +361,10 @@
         "startTime": {
           "description": "Time when the request was received.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Output only. The URI of the audio file being transcribed. Empty if the audio was sent\nas byte content. ",
           "type": "string"
         }
       },
@@ -397,6 +434,45 @@
       },
       "type": "object"
     },
+    "Phrase": {
+      "description": "A phrases containing words and phrase \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech-to-text/quotas#content).\n\nList items can also include pre-built or custom classes containing groups\nof words that represent common concepts that occur in natural language. For\nexample, rather than providing a phrase hint for every month of the\nyear (e.g. \"i was born in january\", \"i was born in febuary\", ...), use the\npre-built `$MONTH` class improves the likelihood of correctly transcribing\naudio that includes months (e.g. \"i was born in $month\").\nTo refer to pre-built classes, use the class' symbol prepended with `$`\ne.g. `$MONTH`. To refer to custom classes that were defined inline in the\nrequest, set the class's `custom_class_id` to a string unique to all class\nresources and inline classes. Then use the class' id wrapped in $`{...}`\ne.g. \"${my-months}\". To refer to custom classes resources, use the class'\nid wrapped in `${}` (e.g. `${my-months}`).",
+      "id": "Phrase",
+      "properties": {
+        "boost": {
+          "description": "Hint Boost. Overrides the boost set at the phrase set level.\nPositive value will increase the probability that a specific phrase will\nbe recognized over other similar sounding phrases. The higher the boost,\nthe higher the chance of false positive recognition as well. Negative\nboost values would correspond to anti-biasing. Anti-biasing is not\nenabled, so negative boost will simply be ignored. Though `boost` can\naccept a wide range of positive values, most use cases are best served\nwith values between 0 and 20. We recommend using a binary search approach\nto finding the optimal value for your use case. Speech recognition\nwill skip PhraseSets with a boost value of 0.",
+          "format": "float",
+          "type": "number"
+        },
+        "value": {
+          "description": "The phrase itself.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PhraseSet": {
+      "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
+      "id": "PhraseSet",
+      "properties": {
+        "boost": {
+          "description": "Hint Boost. Positive value will increase the probability that a specific\nphrase will be recognized over other similar sounding phrases. The higher\nthe boost, the higher the chance of false positive recognition as well.\nNegative boost values would correspond to anti-biasing. Anti-biasing is not\nenabled, so negative boost will simply be ignored. Though `boost` can\naccept a wide range of positive values, most use cases are best served with\nvalues between 0 (exclusive) and 20. We recommend using a binary search\napproach to finding the optimal value for your use case. Speech recognition\nwill skip PhraseSets with a boost value of 0.",
+          "format": "float",
+          "type": "number"
+        },
+        "name": {
+          "description": "The resource name of the phrase set.",
+          "type": "string"
+        },
+        "phrases": {
+          "description": "A list of word and phrases.",
+          "items": {
+            "$ref": "Phrase"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "RecognitionAudio": {
       "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[content limits](https://cloud.google.com/speech-to-text/quotas#content).",
       "id": "RecognitionAudio",
@@ -417,6 +493,10 @@
       "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
       "id": "RecognitionConfig",
       "properties": {
+        "adaptation": {
+          "$ref": "SpeechAdaptation",
+          "description": "Speech adaptation configuration improves the accuracy of speech\nrecognition. When speech adaptation is set it supersedes the\n`speech_contexts` field. For more information, see the [speech\nadaptation](https://cloud.google.com/speech-to-text/docs/context-strength)\ndocumentation."
+        },
         "alternativeLanguageCodes": {
           "description": "A list of up to 3 additional\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags,\nlisting possible alternative languages of the supplied audio.\nSee [Language\nSupport](https://cloud.google.com/speech-to-text/docs/languages) for a list\nof the currently supported language codes. If alternative languages are\nlisted, recognition result will contain recognition in the most likely\nlanguage detected including the main language_code. The recognition result\nwill include the language tag of the language detected in the audio. Note:\nThis feature is only supported for Voice Command and Voice Search use cases\nand performance may vary for other use cases (e.g., phone call\ntranscription).",
           "items": {
@@ -439,7 +519,7 @@
           "type": "integer"
         },
         "enableAutomaticPunctuation": {
-          "description": "If 'true', adds punctuation to recognition result hypotheses.\nThis feature is only available in select languages. Setting this for\nrequests in other languages has no effect at all.\nThe default 'false' value does not add punctuation to result hypotheses.\nNote: This is currently offered as an experimental service, complimentary\nto all users. In the future this may be exclusively available as a\npremium feature.",
+          "description": "If 'true', adds punctuation to recognition result hypotheses.\nThis feature is only available in select languages. Setting this for\nrequests in other languages has no effect at all.\nThe default 'false' value does not add punctuation to result hypotheses.",
           "type": "boolean"
         },
         "enableSeparateRecognitionPerChannel": {
@@ -682,6 +762,27 @@
           "description": "Output only. Unused.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SpeechAdaptation": {
+      "description": "Speech adaptation configuration.",
+      "id": "SpeechAdaptation",
+      "properties": {
+        "customClasses": {
+          "description": "A collection of custom classes. To specify the classes inline, leave the\nclass' `name` blank and fill in the rest of its fields, giving it a unique\n`custom_class_id`. Refer to the inline defined class in phrase hints by its\n`custom_class_id`.",
+          "items": {
+            "$ref": "CustomClass"
+          },
+          "type": "array"
+        },
+        "phraseSets": {
+          "description": "A collection of phrase sets. To specify the hints inline, leave the\nphrase set's `name` blank and fill in the rest of its fields. Any\nphrase set can use any custom class.",
+          "items": {
+            "$ref": "PhraseSet"
+          },
+          "type": "array"
         }
       },
       "type": "object"

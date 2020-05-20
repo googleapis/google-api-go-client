@@ -418,7 +418,7 @@
       }
     }
   },
-  "revision": "20200210",
+  "revision": "20200414",
   "rootUrl": "https://cloudscheduler.googleapis.com/",
   "schemas": {
     "AppEngineHttpTarget": {
@@ -810,7 +810,7 @@
           "type": "string"
         },
         "maxDoublings": {
-          "description": "The time between retries will double `max_doublings` times.\n\nA job's retry interval starts at\nmin_backoff_duration, then doubles\n`max_doublings` times, then increases linearly, and finally\nretries retries at intervals of\nmax_backoff_duration up to\nretry_count times.\n\nFor example, if min_backoff_duration is\n10s, max_backoff_duration is 300s, and\n`max_doublings` is 3, then the a job will first be retried in 10s. The\nretry interval will double three times, and then increase linearly by\n2^3 * 10s.  Finally, the job will retry at intervals of\nmax_backoff_duration until the job has\nbeen attempted retry_count times. Thus, the\nrequests will retry at 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, ....\n\nThe default value of this field is 5.",
+          "description": "The time between retries will double `max_doublings` times.\n\nA job's retry interval starts at\nmin_backoff_duration, then doubles\n`max_doublings` times, then increases linearly, and finally\nretries at intervals of\nmax_backoff_duration up to\nretry_count times.\n\nFor example, if min_backoff_duration is\n10s, max_backoff_duration is 300s, and\n`max_doublings` is 3, then the a job will first be retried in 10s. The\nretry interval will double three times, and then increase linearly by\n2^3 * 10s.  Finally, the job will retry at intervals of\nmax_backoff_duration until the job has\nbeen attempted retry_count times. Thus, the\nrequests will retry at 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, ....\n\nThe default value of this field is 5.",
           "format": "int32",
           "type": "integer"
         },

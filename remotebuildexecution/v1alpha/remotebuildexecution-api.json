@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20200310",
+  "revision": "20200505",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -986,7 +986,7 @@
           "type": "string"
         },
         "dockerPrepStartTime": {
-          "description": "The timestamp when docker prepartion begins.",
+          "description": "The timestamp when docker preparation begins.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1078,6 +1078,7 @@
             "PERMISSION_DENIED",
             "INTERNAL",
             "ABORTED",
+            "FAILED_PRECONDITION",
             "CLEANUP_ERROR",
             "DOWNLOAD_INPUTS_ERROR",
             "UNKNOWN",
@@ -1102,7 +1103,9 @@
             "DOCKER_UNKNOWN_ERROR",
             "DOCKER_CREATE_COMPUTE_SYSTEM_ERROR",
             "DOCKER_PREPARELAYER_ERROR",
-            "DOCKER_INCOMPATIBLE_OS_ERROR"
+            "DOCKER_INCOMPATIBLE_OS_ERROR",
+            "DOCKER_CREATE_RUNTIME_FILE_NOT_FOUND",
+            "DOCKER_CREATE_RUNTIME_PERMISSION_DENIED"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1112,6 +1115,7 @@
             "The command failed due to permission errors.",
             "The command failed because of some invariants expected by the underlying\nsystem have been broken. This usually indicates a bug wit the system.",
             "The command was aborted.",
+            "The command failed because the system is not in a state required for the\ncommand, e.g. the command inputs cannot be found on the server.",
             "The bot failed to do the cleanup, e.g. unable to delete the command\nworking directory or the command process.",
             "The bot failed to download the inputs.",
             "Unknown error.",
@@ -1136,7 +1140,9 @@
             "The command failed with unknown docker errors.",
             "Docker failed to run containers with CreateComputeSystem error.",
             "Docker failed to run containers with hcsshim::PrepareLayer error.",
-            "Docker incompatible operating system error."
+            "Docker incompatible operating system error.",
+            "Docker failed to create OCI runtime because of file not found.",
+            "Docker failed to create OCI runtime because of permission denied."
           ],
           "type": "string"
         },
@@ -1189,6 +1195,23 @@
         },
         "acceleratorType": {
           "description": "The type of accelerator to attach to each VM, e.g. \"nvidia-tesla-k80\" for\nnVidia Tesla K80.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale": {
+      "description": "Autoscale defines the autoscaling policy of a worker pool.",
+      "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale",
+      "properties": {
+        "maxSize": {
+          "description": "The maximal number of workers. Must be equal to or greater than min_size.",
+          "format": "int64",
+          "type": "string"
+        },
+        "minSize": {
+          "description": "The minimal number of workers. Must be greater than 0.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -1365,16 +1388,20 @@
       "description": "The request used for `UpdateInstance`.",
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest",
       "properties": {
+        "instance": {
+          "$ref": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance",
+          "description": "Specifies the instance to update."
+        },
         "loggingEnabled": {
-          "description": "Whether to enable Stackdriver logging for this instance.",
+          "description": "Deprecated, use instance.logging_enabled instead.\nWhether to enable Stackdriver logging for this instance.",
           "type": "boolean"
         },
         "name": {
-          "description": "Name of the instance to update.\nFormat: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.",
+          "description": "Deprecated, use instance.Name instead.\nName of the instance to update.\nFormat: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.",
           "type": "string"
         },
         "updateMask": {
-          "description": "The fields to update.",
+          "description": "The update mask applies to instance. For the `FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf an empty update_mask is provided, only the non-default valued field in\nthe worker pool field will be updated. Note that in order to update a field\nto the default value (zero, false, empty string) an explicit update_mask\nmust be provided.",
           "format": "google-fieldmask",
           "type": "string"
         }
@@ -1449,6 +1476,14 @@
       "description": "A worker pool resource in the Remote Build Execution API.",
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerPool",
       "properties": {
+        "autoscale": {
+          "$ref": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaAutoscale",
+          "description": "The autoscale policy to apply on a pool."
+        },
+        "channel": {
+          "description": "Channel specifies the release channel of the pool.",
+          "type": "string"
+        },
         "name": {
           "description": "WorkerPool resource name formatted as:\n`projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.\nname should not be populated when creating a worker pool since it is\nprovided in the `poolId` field.",
           "type": "string"
@@ -1478,7 +1513,7 @@
           "description": "Specifies the properties, such as machine type and disk size, used for\ncreating workers in a worker pool."
         },
         "workerCount": {
-          "description": "The desired number of workers in the worker pool. Must be a value between\n0 and 1000.",
+          "description": "The desired number of workers in the worker pool. Must be a value between\n0 and 15000.",
           "format": "int64",
           "type": "string"
         }

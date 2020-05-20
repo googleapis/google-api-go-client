@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/KgHbpPlGO3sdIv5ckISvodWARP8\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/6b9y3bDbjgvkpj1FGVAGd_f0qZM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -115,6 +115,14 @@
           "description": "Creates a query.",
           "httpMethod": "POST",
           "id": "doubleclickbidmanager.queries.createquery",
+          "parameters": {
+            "asynchronous": {
+              "default": "false",
+              "description": "If true, tries to run the query asynchronously. Only applicable when the frequency is ONE_TIME.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
           "path": "query",
           "request": {
             "$ref": "Query"
@@ -204,6 +212,12 @@
             "queryId"
           ],
           "parameters": {
+            "asynchronous": {
+              "default": "false",
+              "description": "If true, tries to run the query asynchronously.",
+              "location": "query",
+              "type": "boolean"
+            },
             "queryId": {
               "description": "Query ID to run.",
               "format": "int64",
@@ -281,7 +295,7 @@
       }
     }
   },
-  "revision": "20200220",
+  "revision": "20200316",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -2566,6 +2580,7 @@
             "LAST_14_DAYS",
             "LAST_30_DAYS",
             "LAST_365_DAYS",
+            "LAST_60_DAYS",
             "LAST_7_DAYS",
             "LAST_90_DAYS",
             "MONTH_TO_DATE",
@@ -2581,6 +2596,7 @@
             "YEAR_TO_DATE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -2912,6 +2928,7 @@
             "LAST_14_DAYS",
             "LAST_30_DAYS",
             "LAST_365_DAYS",
+            "LAST_60_DAYS",
             "LAST_7_DAYS",
             "LAST_90_DAYS",
             "MONTH_TO_DATE",
@@ -2927,6 +2944,7 @@
             "YEAR_TO_DATE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

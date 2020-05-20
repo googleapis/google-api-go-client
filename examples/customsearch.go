@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 
-	customsearch "google.golang.org/api/customsearch/v1"
+	"google.golang.org/api/customsearch/v1"
 	"google.golang.org/api/googleapi/transport"
 )
 
@@ -27,7 +27,7 @@ func customSearchMain() {
 		log.Fatal(err)
 	}
 
-	resp, err := svc.Cse.Siterestrict.List(query).Cx(cx).Do()
+	resp, err := svc.Cse.List(query).Cx(cx).Do()
 	if err != nil {
 		log.Fatal(err)
 	}

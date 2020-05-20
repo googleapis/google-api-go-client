@@ -275,7 +275,7 @@
       }
     }
   },
-  "revision": "20200303",
+  "revision": "20200317",
   "rootUrl": "https://manufacturers.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -407,7 +407,7 @@
           "description": "The release date of the product. For more information, see\nhttps://support.google.com/manufacturers/answer/6124116#release.",
           "type": "string"
         },
-        "richContent": {
+        "richProductContent": {
           "description": "Rich product content. For more information, see\nhttps://support.google.com/manufacturers/answer/9389865",
           "items": {
             "type": "string"

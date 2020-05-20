@@ -333,7 +333,7 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig struct {
-	// UseElapsedTime: True if measurement.elapsed_time is used as the
+	// UseElapsedTime: If true, measurement.elapsed_time is used as the
 	// x-axis of each
 	// Trials Decay Curve. Otherwise, Measurement.steps will be used as
 	// the
@@ -375,13 +375,13 @@ func (s *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig
 // objective
 // values reported by the trial in each measurement.
 type GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig struct {
-	// UseElapsedTime: True if median automated stopping rule applies
-	// on
-	// measurement.use_elapsed_time. it means that elapsed_time field
+	// UseElapsedTime: If true, the median automated stopping rule applies
+	// to
+	// measurement.use_elapsed_time, which means the elapsed_time field
 	// of
-	// latest measurement of current trial is used to compute median
-	// objective
-	// value for each completed trials.
+	// the current trial's
+	// latest measurement is used to compute the median objective
+	// value for each completed trial.
 	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
@@ -869,7 +869,8 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpec) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudMlV1TrialParameter: A message representing a parameter to
-// be tuned.
+// be tuned. Contains the name of
+// the parameter and the suggested value to use for this trial.
 type GoogleCloudMlV1TrialParameter struct {
 	// FloatValue: Must be set if ParameterType is DOUBLE or DISCRETE.
 	FloatValue float64 `json:"floatValue,omitempty"`
@@ -1233,13 +1234,13 @@ func (s *GoogleCloudMlV1__Capability) MarshalJSON() ([]byte, error) {
 // CheckTrialEarlyStoppingState
 // request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata struct {
-	// CreateTime: The time operation was submitted.
+	// CreateTime: The time at which the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Study: The name of the study that the trial belongs to.
 	Study string `json:"study,omitempty"`
 
-	// Trial: The Trial name.
+	// Trial: The trial name.
 	Trial string `json:"trial,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -1277,13 +1278,13 @@ type GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest struct {
 // CheckTrialEarlyStoppingState
 // request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse struct {
-	// EndTime: The time operation processing completed.
+	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
 
 	// ShouldStop: True if the Trial should stop.
 	ShouldStop bool `json:"shouldStop,omitempty"`
 
-	// StartTime: The time operation was started.
+	// StartTime: The time at which the operation was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1319,7 +1320,7 @@ type GoogleCloudMlV1__CompleteTrialRequest struct {
 	// previously reported measurement as the final-measurement
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
-	// InfeasibleReason: Optional. A human readable reason why the Trial was
+	// InfeasibleReason: Optional. A human readable reason why the trial was
 	// infeasible. This should
 	// only be provided if `trial_infeasible` is true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
@@ -1386,12 +1387,13 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 // configuration that can be applied to
 // a resource.
 type GoogleCloudMlV1__EncryptionConfig struct {
-	// KmsKeyName: The Cloud KMS resource identifier of the customer managed
+	// KmsKeyName: The Cloud KMS resource identifier of the customer-managed
 	// encryption key
-	// used to protect a resource, such as a training job. Has the
-	// form:
-	// `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKe
-	// ys/my-key`.
+	// used to protect a resource, such as a training job. It has the
+	// following
+	// format:
+	// `projects/{PROJECT_ID}/locations/{REGION}/keyRings/{
+	// KEY_RING_NAME}/cryptoKeys/{KEY_NAME}`
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
@@ -1454,7 +1456,8 @@ func (s *GoogleCloudMlV1__ExplainRequest) MarshalJSON() ([]byte, error) {
 // integrated gradients and sampled Shapley.
 // [Learn more about
 // feature
-// attributions.](/ml-engine/docs/ai-explanations/overview)
+// attributions.](/ai-platform/prediction/docs/ai-explanations/ov
+// erview)
 type GoogleCloudMlV1__ExplanationConfig struct {
 	// IntegratedGradientsAttribution: Attributes credit by computing the
 	// Aumann-Shapley value taking advantage
@@ -1738,7 +1741,7 @@ func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
 // computing the Aumann-Shapley value taking advantage
 // of the model's fully differentiable structure. Refer to this paper
 // for
-// more details: http://proceedings.mlr.press/v70/sundararajan17a.html
+// more details: https://arxiv.org/abs/1703.01365
 type GoogleCloudMlV1__IntegratedGradientsAttribution struct {
 	// NumIntegralSteps: Number of steps for approximating the path
 	// integral.
@@ -1983,7 +1986,7 @@ func (s *GoogleCloudMlV1__ListModelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudMlV1__ListStudiesResponse struct {
-	// Studies: The Studies associated with the project.
+	// Studies: The studies associated with the project.
 	Studies []*GoogleCloudMlV1__Study `json:"studies,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2151,10 +2154,11 @@ func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__Measurement: A message representing a Measurement.
+// GoogleCloudMlV1__Measurement: A message representing a measurement.
 type GoogleCloudMlV1__Measurement struct {
-	// ElapsedTime: Time that the Trial has been running at the point of
-	// this Measurement.
+	// ElapsedTime: Output only. Time that the trial has been running at the
+	// point of
+	// this measurement.
 	ElapsedTime string `json:"elapsedTime,omitempty"`
 
 	// Metrics: Provides a list of metrics that act as inputs into the
@@ -2275,7 +2279,7 @@ type GoogleCloudMlV1__Model struct {
 
 	// Regions: Optional. The list of regions where the model is going to be
 	// deployed.
-	// Currently only one region per model is supported.
+	// Only one region per model is supported.
 	// Defaults to 'us-central1' if nothing is set.
 	// See the <a href="/ml-engine/docs/tensorflow/regions">available
 	// regions</a>
@@ -2734,15 +2738,51 @@ type GoogleCloudMlV1__ReplicaConfig struct {
 	// used by the replica.
 	// [Learn about restrictions on accelerator configurations
 	// for
-	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
 	// chine-types-with-gpu)
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
+
+	// ContainerArgs: Arguments to the entrypoint command.
+	// The following rules apply for container_command and container_args:
+	// - If you do not supply command or args:
+	//   The defaults defined in the Docker image are used.
+	// - If you supply a command but no args:
+	//   The default EntryPoint and the default Cmd defined in the Docker
+	// image
+	//   are ignored. Your command is run without any arguments.
+	// - If you supply only args:
+	//   The default Entrypoint defined in the Docker image is run with the
+	// args
+	//   that you supplied.
+	// - If you supply a command and args:
+	//   The default Entrypoint and the default Cmd defined in the Docker
+	// image
+	//   are ignored. Your command is run with your args.
+	// It cannot be set if custom container image is
+	// not provided.
+	// Note that this field and [TrainingInput.args] are mutually exclusive,
+	// i.e.,
+	// both cannot be set at the same time.
+	ContainerArgs []string `json:"containerArgs,omitempty"`
+
+	// ContainerCommand: The command with which the replica's custom
+	// container is run.
+	// If provided, it will override default ENTRYPOINT of the docker
+	// image.
+	// If not provided, the docker image's ENTRYPOINT is used.
+	// It cannot be set if custom container image is
+	// not provided.
+	// Note that this field and [TrainingInput.args] are mutually exclusive,
+	// i.e.,
+	// both cannot be set at the same time.
+	ContainerCommand []string `json:"containerCommand,omitempty"`
 
 	// ImageUri: The Docker image to run on the replica. This image must be
 	// in Container
 	// Registry. Learn more about [configuring
 	// custom
-	// containers](/ml-engine/docs/distributed-training-containers).
+	// containers](/ai-platform/training/docs/distributed-training-con
+	// tainers).
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// TpuTfVersion: The AI Platform runtime version that includes a
@@ -2929,9 +2969,9 @@ func (s *GoogleCloudMlV1__SampledShapleyAttribution) MarshalJSON() ([]byte, erro
 type GoogleCloudMlV1__Scheduling struct {
 	// MaxRunningTime: Optional. The maximum job running time, expressed in
 	// seconds. The field can
-	// contain up to nine fractional digits, terminated by `s`. By default
-	// there
-	// is no limit to the running time.
+	// contain up to nine fractional digits, terminated by `s`. If not
+	// specified,
+	// this field defaults to `604800s` (seven days).
 	//
 	// If the training job is still running after this duration, AI
 	// Platform
@@ -2959,6 +2999,8 @@ type GoogleCloudMlV1__Scheduling struct {
 	//   ...
 	// ```
 	MaxRunningTime string `json:"maxRunningTime,omitempty"`
+
+	MaxWaitTime string `json:"maxWaitTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxRunningTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2994,7 +3036,7 @@ type GoogleCloudMlV1__StopTrialRequest struct {
 
 // GoogleCloudMlV1__Study: A message representing a Study.
 type GoogleCloudMlV1__Study struct {
-	// CreateTime: Output only. Time that the study was created.
+	// CreateTime: Output only. Time at which the study was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InactiveReason: Output only. A human readable reason why the Study is
@@ -3064,6 +3106,7 @@ type GoogleCloudMlV1__StudyConfig struct {
 	// unpromising Trials.
 	AutomatedStoppingConfig *GoogleCloudMlV1__AutomatedStoppingConfig `json:"automatedStoppingConfig,omitempty"`
 
+	// Metrics: Metric specs for the study.
 	Metrics []*GoogleCloudMlV1StudyConfigMetricSpec `json:"metrics,omitempty"`
 
 	// Parameters: Required. The set of parameters to tune.
@@ -3175,10 +3218,10 @@ func (s *GoogleCloudMlV1__SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
 // in the response field of a completed
 // google.longrunning.Operation associated with a SuggestTrials request.
 type GoogleCloudMlV1__SuggestTrialsResponse struct {
-	// EndTime: The time operation processing completed.
+	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The time operation was started.
+	// StartTime: The time at which the operation was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// StudyState: The state of the study.
@@ -3192,7 +3235,7 @@ type GoogleCloudMlV1__SuggestTrialsResponse struct {
 	// or max_trial_count is reached.
 	StudyState string `json:"studyState,omitempty"`
 
-	// Trials: A list of Trials.
+	// Trials: A list of trials.
 	Trials []*GoogleCloudMlV1__Trial `json:"trials,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -3228,15 +3271,83 @@ func (s *GoogleCloudMlV1__SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
 // [submitting
 // a training job](/ai-platform/training/docs/training-jobs).
 type GoogleCloudMlV1__TrainingInput struct {
-	// Args: Optional. Command line arguments to pass to the program.
+	// Args: Optional. Command-line arguments passed to the training
+	// application when it
+	// starts. If your job uses a custom container, then the arguments are
+	// passed
+	// to the container's <a class="external"
+	// target="_blank"
+	// href="https://docs.docker.com/engine/reference/builder
+	// /#entrypoint">
+	// `ENTRYPOINT`</a> command.
 	Args []string `json:"args,omitempty"`
 
-	// EncryptionConfig: Custom encryption key options for a training job.
-	// If this is set,
-	// then all resources created by the training job will be encrypted with
+	// EncryptionConfig: Optional. Options for using customer-managed
+	// encryption keys (CMEK) to
+	// protect resources created by a training job, instead of using
+	// Google's
+	// default encryption. If this is set, then all resources created by
 	// the
-	// provided encryption key.
+	// training job will be encrypted with the customer-managed encryption
+	// key
+	// that you specify.
+	//
+	// [Learn how and when to use CMEK with AI
+	// Platform
+	// Training](/ai-platform/training/docs/cmek).
 	EncryptionConfig *GoogleCloudMlV1__EncryptionConfig `json:"encryptionConfig,omitempty"`
+
+	// EvaluatorConfig: Optional. The configuration for evaluators.
+	//
+	// You should only set `evaluatorConfig.acceleratorConfig`
+	// if
+	// `evaluatorType` is set to a Compute Engine machine type. [Learn
+	// about restrictions on accelerator configurations
+	// for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
+	// chine-types-with-gpu)
+	//
+	// Set `evaluatorConfig.imageUri` only if you build a custom image
+	// for
+	// your evaluator. If `evaluatorConfig.imageUri` has not been
+	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
+	// more about [configuring
+	// custom
+	// containers](/ai-platform/training/docs/distributed-training-con
+	// tainers).
+	EvaluatorConfig *GoogleCloudMlV1__ReplicaConfig `json:"evaluatorConfig,omitempty"`
+
+	// EvaluatorCount: Optional. The number of evaluator replicas to use for
+	// the training job.
+	// Each replica in the cluster will be of the type specified
+	// in
+	// `evaluator_type`.
+	//
+	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
+	// you
+	// set this value, you must also set `evaluator_type`.
+	//
+	// The default value is zero.
+	EvaluatorCount int64 `json:"evaluatorCount,omitempty,string"`
+
+	// EvaluatorType: Optional. Specifies the type of virtual machine to use
+	// for your training
+	// job's evaluator nodes.
+	//
+	// The supported values are the same as those described in the entry
+	// for
+	// `masterType`.
+	//
+	// This value must be consistent with the category of machine type
+	// that
+	// `masterType` uses. In other words, both must be Compute Engine
+	// machine
+	// types or both must be legacy machine types.
+	//
+	// This value must be present when `scaleTier` is set to `CUSTOM`
+	// and
+	// `evaluatorCount` is greater than zero.
+	EvaluatorType string `json:"evaluatorType,omitempty"`
 
 	// Hyperparameters: Optional. The set of Hyperparameters to tune.
 	Hyperparameters *GoogleCloudMlV1__HyperparameterSpec `json:"hyperparameters,omitempty"`
@@ -3259,7 +3370,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// accelerator
 	// configurations
 	// for
-	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
 	// chine-types-with-gpu)
 	//
 	// Set `masterConfig.imageUri` only if you build a custom image. Only
@@ -3268,7 +3379,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// more
 	// about [configuring
 	// custom
-	// containers](/ml-engine/docs/distributed-training-containers).
+	// containers](/ai-platform/training/docs/distributed-training-con
+	// tainers).
 	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
@@ -3335,6 +3447,25 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// a_custom_tpu_machine).
 	MasterType string `json:"masterType,omitempty"`
 
+	// Network: Optional. The full name of the Google Compute
+	// Engine
+	// [network](/compute/docs/networks-and-firewalls#networks) to which the
+	// Job
+	// is peered. For example, projects/12345/global/networks/myVPC. Format
+	// is of
+	// the form projects/{project}/global/networks/{network}. Where
+	// {project} is a
+	// project number, as in '12345', and {network} is network
+	// name.".
+	//
+	// Private services access must already be configured for the network.
+	// If left
+	// unspecified, the Job is not peered with any network. Learn more
+	// -
+	// Connecting Job to user network over private
+	// IP.
+	Network string `json:"network,omitempty"`
+
 	// PackageUris: Required. The Google Cloud Storage location of the
 	// packages with
 	// the training program and any additional dependencies.
@@ -3346,21 +3477,22 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// You should only set `parameterServerConfig.acceleratorConfig`
 	// if
-	// `parameterServerConfigType` is set to a Compute Engine machine type.
+	// `parameterServerType` is set to a Compute Engine machine type.
 	// [Learn
 	// about restrictions on accelerator configurations
 	// for
-	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
 	// chine-types-with-gpu)
 	//
 	// Set `parameterServerConfig.imageUri` only if you build a custom image
 	// for
 	// your parameter server. If `parameterServerConfig.imageUri` has not
 	// been
-	// set, AI Platform uses the value of `masterConfig.imageUri`.
-	// Learn more about [configuring
+	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
+	// more about [configuring
 	// custom
-	// containers](/ml-engine/docs/distributed-training-containers).
+	// containers](/ai-platform/training/docs/distributed-training-con
+	// tainers).
 	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
@@ -3369,7 +3501,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// in
 	// `parameter_server_type`.
 	//
-	// This value can only be used when `scale_tier` is set to `CUSTOM`.If
+	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
 	// you
 	// set this value, you must also set `parameter_server_type`.
 	//
@@ -3450,7 +3582,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// servers.
 	//   "BASIC_GPU" - A single worker instance [with
 	// a
-	// GPU](/ml-engine/docs/tensorflow/using-gpus).
+	// GPU](/ai-platform/training/docs/using-gpus).
 	//   "BASIC_TPU" - A single worker instance with a
 	// [Cloud TPU](/ml-engine/docs/tensorflow/using-tpus).
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
@@ -3492,11 +3624,18 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// Scheduling: Optional. Scheduling options for a training job.
 	Scheduling *GoogleCloudMlV1__Scheduling `json:"scheduling,omitempty"`
 
-	// UseChiefInTfConfig: Optional. Use 'chief' instead of 'master' in
-	// TF_CONFIG when Custom
-	// Container is used and evaluator is not specified.
+	// UseChiefInTfConfig: Optional. Use `chief` instead of `master` in the
+	// `TF_CONFIG` environment
+	// variable when training with a custom container. Defaults to `false`.
+	// [Learn
+	// more about
+	// this
+	// field.](/ai-platform/training/docs/distributed-training-details#c
+	// hief-versus-master)
 	//
-	// Defaults to false.
+	// This field has no effect for training jobs that don't use a
+	// custom
+	// container.
 	UseChiefInTfConfig bool `json:"useChiefInTfConfig,omitempty"`
 
 	// WorkerConfig: Optional. The configuration for workers.
@@ -3507,17 +3646,17 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// accelerator
 	// configurations
 	// for
-	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
 	// chine-types-with-gpu)
 	//
 	// Set `workerConfig.imageUri` only if you build a custom image for
 	// your
 	// worker. If `workerConfig.imageUri` has not been set, AI Platform
 	// uses
-	// the value of `masterConfig.imageUri`. Learn more about
-	// [configuring
+	// the value of `masterConfig.imageUri`. Learn more about [configuring
 	// custom
-	// containers](/ml-engine/docs/distributed-training-containers).
+	// containers](/ai-platform/training/docs/distributed-training-con
+	// tainers).
 	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
@@ -3656,21 +3795,22 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudMlV1__Trial: A message representing a Trial.
+// GoogleCloudMlV1__Trial: A message representing a trial.
 type GoogleCloudMlV1__Trial struct {
 	// ClientId: Output only. The identifier of the client that originally
 	// requested this trial.
 	ClientId string `json:"clientId,omitempty"`
 
-	// EndTime: Output only. Time the Trial's status changed to COMPLETED.
+	// EndTime: Output only. Time at which the trial's status changed to
+	// COMPLETED.
 	EndTime string `json:"endTime,omitempty"`
 
-	// FinalMeasurement: The final Measurement containing the objective
+	// FinalMeasurement: The final measurement containing the objective
 	// value.
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
 	// InfeasibleReason: Output only. A human readable string describing why
-	// the Trial is
+	// the trial is
 	// infeasible. This should only be set if trial_infeasible is true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
 
@@ -3683,29 +3823,29 @@ type GoogleCloudMlV1__Trial struct {
 	// Name: Output only. Name of the trial assigned by the service.
 	Name string `json:"name,omitempty"`
 
-	// Parameters: The parameters of the Trial.
+	// Parameters: The parameters of the trial.
 	Parameters []*GoogleCloudMlV1TrialParameter `json:"parameters,omitempty"`
 
-	// StartTime: Output only. Time the Trial was started.
+	// StartTime: Output only. Time at which the trial was started.
 	StartTime string `json:"startTime,omitempty"`
 
 	// State: The detailed state of a trial.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The trial state is unspecified.
-	//   "REQUESTED" - Indicates that a specific Trial has been requested,
+	//   "REQUESTED" - Indicates that a specific trial has been requested,
 	// but it has not yet
 	// been suggested by the service.
-	//   "ACTIVE" - Indicates that the Trial has been suggested.
-	//   "COMPLETED" - Indicates that the Trial is done, and either has a
+	//   "ACTIVE" - Indicates that the trial has been suggested.
+	//   "COMPLETED" - Indicates that the trial is done, and either has a
 	// final_measurement
 	// set, or is marked as trial_infeasible.
-	//   "STOPPING" - Indicates that the Trial should stop according to the
+	//   "STOPPING" - Indicates that the trial should stop according to the
 	// service.
 	State string `json:"state,omitempty"`
 
-	// TrialInfeasible: Output only. True if the parameters in this trial
-	// should not be attempted again.
+	// TrialInfeasible: Output only. If true, the parameters in this trial
+	// are not attempted again.
 	TrialInfeasible bool `json:"trialInfeasible,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4312,11 +4452,23 @@ func (s *GoogleIamV1__AuditLogConfig) MarshalJSON() ([]byte, error) {
 // GoogleIamV1__Binding: Associates `members` with a `role`.
 type GoogleIamV1__Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *GoogleType__Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -4428,13 +4580,18 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // user-created
 // custom role.
 //
-// Optionally, a `binding` can specify a `condition`, which is a
-// logical
-// expression that allows access to a resource only if the expression
-// evaluates
-// to `true`. A condition can add constraints based on attributes of
-// the
-// request, the resource, or both.
+// For some types of Google Cloud resources, a `binding` can also
+// specify a
+// `condition`, which is a logical expression that allows access to a
+// resource
+// only if the expression evaluates to `true`. A condition can add
+// constraints
+// based on attributes of the request, the resource, or both. To learn
+// which
+// resources support conditions in their IAM policies, see the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 //
 // **JSON example:**
 //
@@ -4452,7 +4609,9 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //         },
 //         {
 //           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
+//           "members": [
+//             "user:eve@example.com"
+//           ],
 //           "condition": {
 //             "title": "expirable access",
 //             "description": "Does not grant access after Sep 2020",
@@ -4551,6 +4710,12 @@ type GoogleIamV1__Policy struct {
 	// If a policy does not include any conditions, operations on that
 	// policy may
 	// specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4596,8 +4761,8 @@ type GoogleIamV1__SetIamPolicyRequest struct {
 	// the fields in the mask will be modified. If no mask is provided,
 	// the
 	// following default mask is used:
-	// paths: "bindings, etag"
-	// This field is only used by Cloud IAM.
+	//
+	// `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -4973,9 +5138,9 @@ type ProjectsExplainCall struct {
 }
 
 // Explain: Performs explanation on the data in the request.
-// AI Platform implements a custom `explain` verb on top of an HTTP
-// POST
-// method.
+//
+// <div>{% dynamic include "/ai-platform/includes/___explain-request"
+// %}</div>
 func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
 	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5010,7 +5175,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5074,7 +5239,7 @@ func (c *ProjectsExplainCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs explanation on the data in the request.\nAI Platform implements a custom `explain` verb on top of an HTTP POST\nmethod.",
+	//   "description": "Performs explanation on the data in the request.\n\n\u003cdiv\u003e{% dynamic include \"/ai-platform/includes/___explain-request\" %}\u003c/div\u003e",
 	//   "flatPath": "v1/projects/{projectsId}:explain",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.explain",
@@ -5165,7 +5330,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5305,7 +5470,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5450,7 +5615,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5590,7 +5755,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5739,7 +5904,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5863,6 +6028,13 @@ func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamP
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
+//
+// To learn which resources support conditions in their IAM policies,
+// see
+// the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/r
+// esource-policies).
 func (c *ProjectsJobsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsJobsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -5905,7 +6077,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5976,7 +6148,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6102,7 +6274,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6307,7 +6479,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6422,8 +6594,8 @@ type ProjectsJobsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6458,7 +6630,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6522,7 +6694,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.jobs.setIamPolicy",
@@ -6567,7 +6739,7 @@ type ProjectsJobsTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -6608,7 +6780,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6673,7 +6845,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.jobs.testIamPermissions",
@@ -6760,7 +6932,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6929,7 +7101,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7113,7 +7285,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7258,7 +7430,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7401,7 +7573,7 @@ func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7544,7 +7716,7 @@ func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7685,7 +7857,7 @@ func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7829,7 +8001,7 @@ func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7931,8 +8103,8 @@ type ProjectsLocationsStudiesTrialsAddMeasurementCall struct {
 }
 
 // AddMeasurement: Adds a measurement of the objective metrics to a
-// Trial. This measurement
-// is assumed to have been taken before the Trial is complete.
+// trial. This measurement
+// is assumed to have been taken before the trial is complete.
 func (r *ProjectsLocationsStudiesTrialsService) AddMeasurement(name string, googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
 	c := &ProjectsLocationsStudiesTrialsAddMeasurementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7967,7 +8139,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header 
 
 func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8031,7 +8203,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a measurement of the objective metrics to a Trial. This measurement\nis assumed to have been taken before the Trial is complete.",
+	//   "description": "Adds a measurement of the objective metrics to a trial. This measurement\nis assumed to have been taken before the trial is complete.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:addMeasurement",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.addMeasurement",
@@ -8072,7 +8244,11 @@ type ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall struct {
 	header_                                              http.Header
 }
 
-// CheckEarlyStoppingState: Checks whether a trial should stop or not.
+// CheckEarlyStoppingState: Checks  whether a trial should stop or not.
+// Returns a
+// long-running operation. When the operation is successful,
+// it will contain a
+// CheckTrialEarlyStoppingStateResponse.
 func (r *ProjectsLocationsStudiesTrialsService) CheckEarlyStoppingState(name string, googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
 	c := &ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8107,7 +8283,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() htt
 
 func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8171,7 +8347,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether a trial should stop or not.",
+	//   "description": "Checks  whether a trial should stop or not. Returns a\nlong-running operation. When the operation is successful,\nit will contain a\nCheckTrialEarlyStoppingStateResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:checkEarlyStoppingState",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.checkEarlyStoppingState",
@@ -8212,7 +8388,7 @@ type ProjectsLocationsStudiesTrialsCompleteCall struct {
 	header_                               http.Header
 }
 
-// Complete: Marks a Trial as complete.
+// Complete: Marks a trial as complete.
 func (r *ProjectsLocationsStudiesTrialsService) Complete(name string, googlecloudmlv1__completetrialrequest *GoogleCloudMlV1__CompleteTrialRequest) *ProjectsLocationsStudiesTrialsCompleteCall {
 	c := &ProjectsLocationsStudiesTrialsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8247,7 +8423,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8311,7 +8487,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks a Trial as complete.",
+	//   "description": "Marks a trial as complete.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:complete",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.complete",
@@ -8320,7 +8496,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The trial name.",
+	//       "description": "Required. The trial name.metat",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/studies/[^/]+/trials/[^/]+$",
 	//       "required": true,
@@ -8352,7 +8528,7 @@ type ProjectsLocationsStudiesTrialsCreateCall struct {
 	header_                http.Header
 }
 
-// Create: Adds a user provided trial to a Study.
+// Create: Adds a user provided trial to a study.
 func (r *ProjectsLocationsStudiesTrialsService) Create(parent string, googlecloudmlv1__trial *GoogleCloudMlV1__Trial) *ProjectsLocationsStudiesTrialsCreateCall {
 	c := &ProjectsLocationsStudiesTrialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8387,7 +8563,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8451,7 +8627,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a user provided trial to a Study.",
+	//   "description": "Adds a user provided trial to a study.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.create",
@@ -8491,7 +8667,7 @@ type ProjectsLocationsStudiesTrialsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Trial.
+// Delete: Deletes a trial.
 func (r *ProjectsLocationsStudiesTrialsService) Delete(name string) *ProjectsLocationsStudiesTrialsDeleteCall {
 	c := &ProjectsLocationsStudiesTrialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8525,7 +8701,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8584,7 +8760,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Trial.",
+	//   "description": "Deletes a trial.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "ml.projects.locations.studies.trials.delete",
@@ -8622,7 +8798,7 @@ type ProjectsLocationsStudiesTrialsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a Trial.
+// Get: Gets a trial.
 func (r *ProjectsLocationsStudiesTrialsService) Get(name string) *ProjectsLocationsStudiesTrialsGetCall {
 	c := &ProjectsLocationsStudiesTrialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8666,7 +8842,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8728,7 +8904,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a Trial.",
+	//   "description": "Gets a trial.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.studies.trials.get",
@@ -8766,7 +8942,7 @@ type ProjectsLocationsStudiesTrialsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the trials associated with a Study.
+// List: Lists the trials associated with a study.
 func (r *ProjectsLocationsStudiesTrialsService) List(parent string) *ProjectsLocationsStudiesTrialsListCall {
 	c := &ProjectsLocationsStudiesTrialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8810,7 +8986,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8873,7 +9049,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the trials associated with a Study.",
+	//   "description": "Lists the trials associated with a study.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.studies.trials.list",
@@ -8946,7 +9122,7 @@ func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9051,9 +9227,12 @@ type ProjectsLocationsStudiesTrialsSuggestCall struct {
 	header_                               http.Header
 }
 
-// Suggest: Returns a long-running operation associated with the
-// generation of trial
-// suggestions.
+// Suggest: Adds one or more trials to a study, with parameter
+// values
+// suggested by AI Platform Optimizer. Returns a long-running
+// operation associated with the generation of trial suggestions.
+// When this long-running operation succeeds, it will contain
+// a SuggestTrialsResponse.
 func (r *ProjectsLocationsStudiesTrialsService) Suggest(parent string, googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest) *ProjectsLocationsStudiesTrialsSuggestCall {
 	c := &ProjectsLocationsStudiesTrialsSuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9088,7 +9267,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9152,7 +9331,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a long-running operation associated with the generation of trial\nsuggestions.",
+	//   "description": "Adds one or more trials to a study, with parameter values\nsuggested by AI Platform Optimizer. Returns a long-running\noperation associated with the generation of trial suggestions.\nWhen this long-running operation succeeds, it will contain\na SuggestTrialsResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.suggest",
@@ -9234,7 +9413,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9377,7 +9556,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9522,7 +9701,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9646,6 +9825,13 @@ func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGet
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
+//
+// To learn which resources support conditions in their IAM policies,
+// see
+// the
+// [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/r
+// esource-policies).
 func (c *ProjectsModelsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsModelsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -9688,7 +9874,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9759,7 +9945,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
+	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9876,7 +10062,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10079,7 +10265,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10194,8 +10380,8 @@ type ProjectsModelsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
+// errors.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10230,7 +10416,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10294,7 +10480,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.setIamPolicy",
@@ -10339,7 +10525,7 @@ type ProjectsModelsTestIamPermissionsCall struct {
 // specified resource.
 // If the resource does not exist, this will return an empty set
 // of
-// permissions, not a NOT_FOUND error.
+// permissions, not a `NOT_FOUND` error.
 //
 // Note: This operation is designed to be used for building
 // permission-aware
@@ -10380,7 +10566,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10445,7 +10631,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.testIamPermissions",
@@ -10534,7 +10720,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10680,7 +10866,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10828,7 +11014,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11012,7 +11198,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11220,7 +11406,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11377,7 +11563,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11532,7 +11718,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11677,7 +11863,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11858,7 +12044,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

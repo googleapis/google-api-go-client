@@ -815,9 +815,10 @@ type CheckError struct {
 	// Subject: Subject to whom this error applies. See the specific code
 	// enum for more
 	// details on this field. For example:
-	//     - “project:<project-id or project-number>”
-	//     - “folder:<folder-id>”
-	//     - “organization:<organization-id>”
+	//
+	// - "project:<project-id or project-number>"
+	// - "folder:<folder-id>"
+	// - "organization:<organization-id>"
 	Subject string `json:"subject,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -953,8 +954,8 @@ type CheckResponse struct {
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
-	// ServiceRolloutId: Unimplemented. The current service rollout id used
-	// to process the request.
+	// ServiceRolloutId: The current service rollout id used to process the
+	// request.
 	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2347,6 +2348,14 @@ type QuotaOperation struct {
 	// AllocateQuotaRequest, this is currently supported only for
 	// whitelisted
 	// services.
+	//   "ADJUST_ONLY" - The operation allocates quota for the amount
+	// specified in the service
+	// configuration or specified using the quota metrics. If the
+	// requested
+	// amount is higher than the available quota, request does not fail
+	// and
+	// remaining quota would become negative (going over the limit)
+	// Not supported for Rate Quota.
 	QuotaMode string `json:"quotaMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
@@ -2575,8 +2584,8 @@ type ReportResponse struct {
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
-	// ServiceRolloutId: Unimplemented. The current service rollout id used
-	// to process the request.
+	// ServiceRolloutId: The current service rollout id used to process the
+	// request.
 	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3352,7 +3361,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3514,7 +3523,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3675,7 +3684,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

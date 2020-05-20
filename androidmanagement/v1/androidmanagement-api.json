@@ -266,7 +266,7 @@
                   "type": "string"
                 },
                 "wipeReasonMessage": {
-                  "description": "Optional short message displayed to the user before wiping the work profile on personal devices. This has no effect on company owned devices. The maximum message length is 200 characters.",
+                  "description": "Optional. A short message displayed to the user before wiping the work profile on personal devices. This has no effect on company owned devices. The maximum message length is 200 characters.",
                   "location": "query",
                   "type": "string"
                 }
@@ -924,7 +924,7 @@
       }
     }
   },
-  "revision": "20200221",
+  "revision": "20200330",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {

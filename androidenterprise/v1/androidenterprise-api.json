@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/IG1fj6800zuIJE6IapkP0SlR3Q8\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/60MUgYNvBkaYyKwPOXrNQN9mD0U\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2556,7 +2556,7 @@
       }
     }
   },
-  "revision": "20200129",
+  "revision": "20200427",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2686,7 +2686,7 @@
       "id": "AppRestrictionsSchema",
       "properties": {
         "kind": {
-          "default": "androidenterprise#appRestrictionsSchema",
+          "description": "Deprecated.",
           "type": "string"
         },
         "restrictions": {
@@ -3714,7 +3714,7 @@
           "type": "string"
         },
         "productPolicy": {
-          "description": "The list of product policies.",
+          "description": "The list of product policies. The productAvailabilityPolicy needs to be set to WHITELIST or ALL for the product policies to be applied.",
           "items": {
             "$ref": "ProductPolicy"
           },
@@ -4145,7 +4145,7 @@
           "type": "string"
         },
         "kind": {
-          "default": "androidenterprise#signupInfo",
+          "description": "Deprecated.",
           "type": "string"
         },
         "url": {

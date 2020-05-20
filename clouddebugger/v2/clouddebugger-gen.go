@@ -251,8 +251,12 @@ func (s *AliasContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Breakpoint: Represents the breakpoint specification, status and
-// results.
+// Breakpoint:
+// ----------------------------------------------------------------------
+// --------
+// ## Breakpoint (the resource)
+//
+// Represents the breakpoint specification, status and results.
 type Breakpoint struct {
 	// Action: Action that the agent should perform when the code at
 	// the
@@ -267,6 +271,11 @@ type Breakpoint struct {
 	// until
 	// deleted or expired.
 	Action string `json:"action,omitempty"`
+
+	// CanaryExpireTime: The deadline for the breakpoint to stay in
+	// CANARY_ACTIVE state. The value
+	// is meaningless when the breakpoint is not in CANARY_ACTIVE state.
+	CanaryExpireTime string `json:"canaryExpireTime,omitempty"`
 
 	// Condition: Condition that triggers the breakpoint.
 	// The condition is a compound boolean expression composed using
@@ -347,6 +356,18 @@ type Breakpoint struct {
 	// represents the most
 	// recently entered function.
 	StackFrames []*StackFrame `json:"stackFrames,omitempty"`
+
+	// State: The current state of the breakpoint.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Breakpoint state UNSPECIFIED.
+	//   "STATE_CANARY_PENDING_AGENTS" - Enabling canary but no agents are
+	// available.
+	//   "STATE_CANARY_ACTIVE" - Enabling canary and successfully assigning
+	// canary agents.
+	//   "STATE_ROLLING_TO_ALL" - Breakpoint rolling out to all agents.
+	//   "STATE_IS_FINAL" - Breakpoint is hit/complete/failed.
+	State string `json:"state,omitempty"`
 
 	// Status: Breakpoint status.
 	//
@@ -538,6 +559,28 @@ type Debuggee struct {
 	// example
 	// `google.com/java-gcp/v1.1`).
 	AgentVersion string `json:"agentVersion,omitempty"`
+
+	// CanaryMode: Used when setting breakpoint canary for this debuggee.
+	//
+	// Possible values:
+	//   "CANARY_MODE_UNSPECIFIED" - CANARY_MODE_UNSPECIFIED is equivalent
+	// to CANARY_MODE_ALWAYS_DISABLED so
+	// that if the debuggee is not configured to use the canary feature,
+	// the
+	// feature will be disabled.
+	//   "CANARY_MODE_ALWAYS_ENABLED" - Always enable breakpoint canary
+	// regardless of the value of breakpoint's
+	// canary option.
+	//   "CANARY_MODE_ALWAYS_DISABLED" - Always disable breakpoint canary
+	// regardless of the value of breakpoint's
+	// canary option.
+	//   "CANARY_MODE_DEFAULT_ENABLED" - Depends on the breakpoint's canary
+	// option. Enable canary by default if
+	// the breakpoint's canary option is not specified.
+	//   "CANARY_MODE_DEFAULT_DISABLED" - Depends on the breakpoint's canary
+	// option. Disable canary by default if
+	// the breakpoint's canary option is not specified.
+	CanaryMode string `json:"canaryMode,omitempty"`
 
 	// Description: Human readable description of the debuggee.
 	// Including a human-readable project name, environment name and
@@ -1017,6 +1060,10 @@ func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
 
 // RegisterDebuggeeResponse: Response for registering a debuggee.
 type RegisterDebuggeeResponse struct {
+	// AgentId: A unique ID generated for the agent.
+	// Each RegisterDebuggee request will generate a new agent ID.
+	AgentId string `json:"agentId,omitempty"`
+
 	// Debuggee: Debuggee resource.
 	// The field `id` is guaranteed to be set (in addition to the echoed
 	// fields).
@@ -1032,7 +1079,7 @@ type RegisterDebuggeeResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Debuggee") to
+	// ForceSendFields is a list of field names (e.g. "AgentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1040,7 +1087,7 @@ type RegisterDebuggeeResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Debuggee") to include in
+	// NullFields is a list of field names (e.g. "AgentId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1267,6 +1314,9 @@ type StatusMessage struct {
 	// related to its expressions.
 	//   "BREAKPOINT_AGE" - Status applies to the breakpoint and is related
 	// to its age.
+	//   "BREAKPOINT_CANARY_FAILED" - Status applies to the breakpoint when
+	// the breakpoint failed to exit the
+	// canary state.
 	//   "VARIABLE_NAME" - Status applies to the entire variable.
 	//   "VARIABLE_VALUE" - Status applies to variable value (variable name
 	// is valid).
@@ -1595,7 +1645,7 @@ func (c *ControllerDebuggeesRegisterCall) Header() http.Header {
 
 func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1715,6 +1765,14 @@ func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *Control
 	return c
 }
 
+// AgentId sets the optional parameter "agentId": Identifies the
+// agent.
+// This is the ID returned in the RegisterDebuggee response.
+func (c *ControllerDebuggeesBreakpointsListCall) AgentId(agentId string) *ControllerDebuggeesBreakpointsListCall {
+	c.urlParams_.Set("agentId", agentId)
+	return c
+}
+
 // SuccessOnTimeout sets the optional parameter "successOnTimeout": If
 // set to `true` (recommended), returns `google.rpc.Code.OK` status
 // and
@@ -1779,7 +1837,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1849,6 +1907,11 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption
 	//     "debuggeeId"
 	//   ],
 	//   "parameters": {
+	//     "agentId": {
+	//       "description": "Identifies the agent.\nThis is the ID returned in the RegisterDebuggee response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "debuggeeId": {
 	//       "description": "Required. Identifies the debuggee.",
 	//       "location": "path",
@@ -1938,7 +2001,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2117,7 +2180,7 @@ func (c *DebuggerDebuggeesListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2264,7 +2327,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2428,7 +2491,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2644,7 +2707,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2786,6 +2849,18 @@ func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint 
 	return c
 }
 
+// CanaryOption sets the optional parameter "canaryOption": The canary
+// option set by the user upon setting breakpoint.
+//
+// Possible values:
+//   "CANARY_OPTION_UNSPECIFIED"
+//   "CANARY_OPTION_TRY_ENABLE"
+//   "CANARY_OPTION_TRY_DISABLE"
+func (c *DebuggerDebuggeesBreakpointsSetCall) CanaryOption(canaryOption string) *DebuggerDebuggeesBreakpointsSetCall {
+	c.urlParams_.Set("canaryOption", canaryOption)
+	return c
+}
+
 // ClientVersion sets the optional parameter "clientVersion": Required.
 // The client version making the call.
 // Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
@@ -2821,7 +2896,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2893,6 +2968,16 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do(opts ...googleapi.CallOption) (
 	//     "debuggeeId"
 	//   ],
 	//   "parameters": {
+	//     "canaryOption": {
+	//       "description": "The canary option set by the user upon setting breakpoint.",
+	//       "enum": [
+	//         "CANARY_OPTION_UNSPECIFIED",
+	//         "CANARY_OPTION_TRY_ENABLE",
+	//         "CANARY_OPTION_TRY_DISABLE"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "clientVersion": {
 	//       "description": "Required. The client version making the call.\nSchema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
 	//       "location": "query",

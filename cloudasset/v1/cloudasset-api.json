@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20200309",
+  "revision": "20200403",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -473,11 +473,11 @@
       "id": "BigQueryDestination",
       "properties": {
         "dataset": {
-          "description": "Required. The BigQuery dataset in format\n\"projects/projectId/datasets/datasetId\", to which the snapshot result\nshould be exported. If this dataset does not exist, the export call returns\nan error.",
+          "description": "Required. The BigQuery dataset in format\n\"projects/projectId/datasets/datasetId\", to which the snapshot result\nshould be exported. If this dataset does not exist, the export call returns\nan INVALID_ARGUMENT error.",
           "type": "string"
         },
         "force": {
-          "description": "If the destination table already exists and this flag is `TRUE`, the\ntable will be overwritten by the contents of assets snapshot. If the flag\nis not set and the destination table already exists, the export call\nreturns an error.",
+          "description": "If the destination table already exists and this flag is `TRUE`, the\ntable will be overwritten by the contents of assets snapshot. If the flag\nis `FALSE` or unset and the destination table already exists, the export\ncall returns an INVALID_ARGUMEMT error.",
           "type": "boolean"
         },
         "table": {
@@ -595,7 +595,7 @@
       "type": "object"
     },
     "Feed": {
-      "description": "An asset feed used to export asset updates to a destinations.\nAn asset feed filter controls what updates are exported.\nThe asset feed must be created within a project, organization, or\nfolder. Supported destinations are:\nCloud Pub/Sub topics.",
+      "description": "An asset feed used to export asset updates to a destinations.\nAn asset feed filter controls what updates are exported.\nThe asset feed must be created within a project, organization, or\nfolder. Supported destinations are:\nPub/Sub topics.",
       "id": "Feed",
       "properties": {
         "assetNames": {
@@ -647,7 +647,7 @@
       "properties": {
         "pubsubDestination": {
           "$ref": "PubsubDestination",
-          "description": "Destination on Cloud Pubsub."
+          "description": "Destination on Pub/Sub."
         }
       },
       "type": "object"
@@ -773,11 +773,6 @@
           "$ref": "GoogleIdentityAccesscontextmanagerV1BasicLevel",
           "description": "A `BasicLevel` composed of `Conditions`."
         },
-        "createTime": {
-          "description": "Output only. Time the `AccessLevel` was created in UTC.",
-          "format": "google-datetime",
-          "type": "string"
-        },
         "custom": {
           "$ref": "GoogleIdentityAccesscontextmanagerV1CustomLevel",
           "description": "A `CustomLevel` written in the Common Expression Language."
@@ -793,11 +788,6 @@
         "title": {
           "description": "Human readable title. Must be unique within the Policy.",
           "type": "string"
-        },
-        "updateTime": {
-          "description": "Output only. Time the `AccessLevel` was updated in UTC.",
-          "format": "google-datetime",
-          "type": "string"
         }
       },
       "type": "object"
@@ -806,11 +796,6 @@
       "description": "`AccessPolicy` is a container for `AccessLevels` (which define the necessary\nattributes to use Google Cloud services) and `ServicePerimeters` (which\ndefine regions of services able to freely pass data within a perimeter). An\naccess policy is globally visible within an organization, and the\nrestrictions it specifies apply to all projects within an organization.",
       "id": "GoogleIdentityAccesscontextmanagerV1AccessPolicy",
       "properties": {
-        "createTime": {
-          "description": "Output only. Time the `AccessPolicy` was created in UTC.",
-          "format": "google-datetime",
-          "type": "string"
-        },
         "etag": {
           "description": "Output only. An opaque identifier for the current version of the\n`AccessPolicy`. This will always be a strongly validated etag, meaning that\ntwo Access Polices will be identical if and only if their etags are\nidentical. Clients should not expect this to be in any specific format.",
           "type": "string"
@@ -825,11 +810,6 @@
         },
         "title": {
           "description": "Required. Human readable title. Does not affect behavior.",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "Output only. Time the `AccessPolicy` was updated in UTC.",
-          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -1020,11 +1000,6 @@
       "description": "`ServicePerimeter` describes a set of Google Cloud resources which can freely\nimport and export data amongst themselves, but not export outside of the\n`ServicePerimeter`. If a request with a source within this `ServicePerimeter`\nhas a target outside of the `ServicePerimeter`, the request will be blocked.\nOtherwise the request is allowed. There are two types of Service Perimeter -\nRegular and Bridge. Regular Service Perimeters cannot overlap, a single\nGoogle Cloud project can only belong to a single regular Service Perimeter.\nService Perimeter Bridges can contain only Google Cloud projects as members,\na single Google Cloud project may belong to multiple Service Perimeter\nBridges.",
       "id": "GoogleIdentityAccesscontextmanagerV1ServicePerimeter",
       "properties": {
-        "createTime": {
-          "description": "Output only. Time the `ServicePerimeter` was created in UTC.",
-          "format": "google-datetime",
-          "type": "string"
-        },
         "description": {
           "description": "Description of the `ServicePerimeter` and its use. Does not affect\nbehavior.",
           "type": "string"
@@ -1055,11 +1030,6 @@
         },
         "title": {
           "description": "Human readable title. Must be unique within the Policy.",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "Output only. Time the `ServicePerimeter` was updated in UTC.",
-          "format": "google-datetime",
           "type": "string"
         },
         "useExplicitDryRunSpec": {
@@ -1214,11 +1184,11 @@
       "type": "object"
     },
     "PubsubDestination": {
-      "description": "A Cloud Pubsub destination.",
+      "description": "A Pub/Sub destination.",
       "id": "PubsubDestination",
       "properties": {
         "topic": {
-          "description": "The name of the Cloud Pub/Sub topic to publish to.\nFor example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
+          "description": "The name of the Pub/Sub topic to publish to.\nFor example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
           "type": "string"
         }
       },

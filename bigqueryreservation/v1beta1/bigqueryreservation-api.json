@@ -372,7 +372,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates an existing capacity commitment.\n\nOnly renewal_plan field can be updated.",
+                  "description": "Updates an existing capacity commitment.\n\nOnly plan and renewal_plan fields can be updated.\nPlan can only be changed to a plan of a longer commitment period.\nAttempting to change to a plan with shorter commitment period will fail\nwith the error code `google.rpc.Code.FAILED_PRECONDITION`.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
                   "httpMethod": "PATCH",
                   "id": "bigqueryreservation.projects.locations.capacityCommitments.patch",
@@ -429,35 +429,6 @@
                   },
                   "response": {
                     "$ref": "SplitCapacityCommitmentResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/bigquery",
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "upgradeCapacityCommitmentPlan": {
-                  "description": "Replaces an existing commitment with a new commitment of a different plan.\nPlan can only be changed to a plan of a longer commitment period. New\ncommitment start is set to a current time. Attempting to change to a plan\nwith shorter commitment period will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
-                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:upgradeCapacityCommitmentPlan",
-                  "httpMethod": "POST",
-                  "id": "bigqueryreservation.projects.locations.capacityCommitments.upgradeCapacityCommitmentPlan",
-                  "parameterOrder": [
-                    "capacityCommitment"
-                  ],
-                  "parameters": {
-                    "capacityCommitment": {
-                      "description": "Required. The resource name e.g.,:\n  projects/myproject/locations/US/capacityCommitments/123",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1beta1/{+capacityCommitment}:upgradeCapacityCommitmentPlan",
-                  "request": {
-                    "$ref": "UpgradeCapacityCommitmentPlanRequest"
-                  },
-                  "response": {
-                    "$ref": "CapacityCommitment"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/bigquery",
@@ -765,7 +736,7 @@
       }
     }
   },
-  "revision": "20200229",
+  "revision": "20200509",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -833,7 +804,7 @@
       "type": "object"
     },
     "CapacityCommitment": {
-      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some committed period of usage. Monthly and\nannual commitments renew by default. Only flex commitments can be removed. In\norder to remove monthly or annual commitments, their plan needs to be changed\nto flex first.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
+      "description": "Capacity commitment is a way to purchase compute capacity for BigQuery jobs\n(in the form of slots) with some committed period of usage. Annual\ncommitments renew by default. Commitments can be removed after their\ncommitment end time passes. In order to remove annual commitment, its plan\nneeds to be changed to monthly or flex first.\n\nA capacity commitment resource exists as a child resource of the admin\nproject.",
       "id": "CapacityCommitment",
       "properties": {
         "commitmentEndTime": {
@@ -854,30 +825,34 @@
           "enum": [
             "COMMITMENT_PLAN_UNSPECIFIED",
             "FLEX",
+            "TRIAL",
             "MONTHLY",
             "ANNUAL"
           ],
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+            "Trial commitments have a committed period of 182 days after becoming\nACTIVE. After that, they are converted to a new commitment based on the\nrenewal_plan. Default renewal_plan for Trial commitment is Flex so that\nit can be deleted right after committed period ends.",
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE. After that, they are not in a committed period anymore and can be\nremoved any time.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE. After that they are converted to a new commitment based on the\nrenewal_plan."
           ],
           "type": "string"
         },
         "renewalPlan": {
-          "description": "The plan this capacity commitment is converted to after commitment_end_time\npasses. Once the plan is changed, committed period is extended according to\ncommitment plan. Only applicable for MONTHLY and ANNUAL commitments.",
+          "description": "The plan this capacity commitment is converted to after commitment_end_time\npasses. Once the plan is changed, committed period is extended according to\ncommitment plan. Only applicable for ANNUAL commitments.",
           "enum": [
             "COMMITMENT_PLAN_UNSPECIFIED",
             "FLEX",
+            "TRIAL",
             "MONTHLY",
             "ANNUAL"
           ],
           "enumDescriptions": [
             "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
+            "Trial commitments have a committed period of 182 days after becoming\nACTIVE. After that, they are converted to a new commitment based on the\nrenewal_plan. Default renewal_plan for Trial commitment is Flex so that\nit can be deleted right after committed period ends.",
+            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE. After that, they are not in a committed period anymore and can be\nremoved any time.",
+            "Annual commitments have a committed period of 365 days after becoming\nACTIVE. After that they are converted to a new commitment based on the\nrenewal_plan."
           ],
           "type": "string"
         },
@@ -900,6 +875,17 @@
             "Once slots are provisioned, capacity commitment becomes active.\nslot_count is added to the parent's slot_capacity.",
             "Capacity commitment is failed to be activated by the backend."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateSlotPoolMetadata": {
+      "description": "The metadata for operation returned from\nReservationService.CreateSlotPool.",
+      "id": "CreateSlotPoolMetadata",
+      "properties": {
+        "slotPool": {
+          "description": "Resource name of the slot pool that is being created. E.g.,\nprojects/myproject/locations/us-central1/reservations/foo/slotPools/123",
           "type": "string"
         }
       },
@@ -1077,29 +1063,6 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "UpgradeCapacityCommitmentPlanRequest": {
-      "description": "The request for ReservationService.UpgradeCapacityCommitmentPlan.",
-      "id": "UpgradeCapacityCommitmentPlanRequest",
-      "properties": {
-        "plan": {
-          "description": "New capacity commitment plan.",
-          "enum": [
-            "COMMITMENT_PLAN_UNSPECIFIED",
-            "FLEX",
-            "MONTHLY",
-            "ANNUAL"
-          ],
-          "enumDescriptions": [
-            "Invalid plan value. Requests with this value will be rejected with\nerror code `google.rpc.Code.INVALID_ARGUMENT`.",
-            "Flex commitments have committed period of 1 minute after becoming ACTIVE.\nAfter that, they are not in a committed period anymore and can be removed\nany time.",
-            "Monthly commitments have a committed period of 30 days after becoming\nACTIVE.",
-            "Annual commitments have a committed period of 365 days after becoming\nACTIVE."
-          ],
           "type": "string"
         }
       },

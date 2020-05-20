@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/LNVDXWhUWjL42z9rVSE1bNdVBAQ\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/wHt23iZe8Ye_ZkSeIpNeFO568Sc\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -112,84 +112,9 @@
           ]
         }
       }
-    },
-    "purchases": {
-      "methods": {
-        "cancel": {
-          "description": "Cancels a user's subscription purchase. The subscription remains valid until its expiration time.",
-          "httpMethod": "POST",
-          "id": "androidpublisher.purchases.cancel",
-          "parameterOrder": [
-            "packageName",
-            "subscriptionId",
-            "token"
-          ],
-          "parameters": {
-            "packageName": {
-              "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "subscriptionId": {
-              "description": "The purchased subscription ID (for example, 'monthly001').",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "token": {
-              "description": "The token provided to the user's device when the subscription was purchased.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel",
-          "scopes": [
-            "https://www.googleapis.com/auth/androidpublisher"
-          ]
-        },
-        "get": {
-          "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
-          "httpMethod": "GET",
-          "id": "androidpublisher.purchases.get",
-          "parameterOrder": [
-            "packageName",
-            "subscriptionId",
-            "token"
-          ],
-          "parameters": {
-            "packageName": {
-              "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "subscriptionId": {
-              "description": "The purchased subscription ID (for example, 'monthly001').",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "token": {
-              "description": "The token provided to the user's device when the subscription was purchased.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{packageName}/subscriptions/{subscriptionId}/purchases/{token}",
-          "response": {
-            "$ref": "SubscriptionPurchase"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidpublisher"
-          ]
-        }
-      }
     }
   },
-  "revision": "20190618",
+  "revision": "20200428",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "InappPurchase": {
@@ -228,32 +153,6 @@
           "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code) \n- Rewarded (i.e. from watching a video ad instead of paying)",
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "SubscriptionPurchase": {
-      "description": "A SubscriptionPurchase resource indicates the status of a user's subscription purchase.",
-      "id": "SubscriptionPurchase",
-      "properties": {
-        "autoRenewing": {
-          "description": "Whether the subscription will automatically be renewed when it reaches its current expiry time.",
-          "type": "boolean"
-        },
-        "initiationTimestampMsec": {
-          "description": "Time at which the subscription was granted, in milliseconds since the Epoch.",
-          "format": "int64",
-          "type": "string"
-        },
-        "kind": {
-          "default": "androidpublisher#subscriptionPurchase",
-          "description": "This kind represents a subscriptionPurchase object in the androidpublisher service.",
-          "type": "string"
-        },
-        "validUntilTimestampMsec": {
-          "description": "Time at which the subscription will expire, in milliseconds since the Epoch.",
-          "format": "int64",
-          "type": "string"
         }
       },
       "type": "object"

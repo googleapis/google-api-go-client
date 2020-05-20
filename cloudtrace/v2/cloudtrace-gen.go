@@ -252,10 +252,9 @@ type Attributes struct {
 	// integer,
 	// or the Boolean values `true` and `false`. For example:
 	//
-	//     "/instance_id": "my-instance"
-	//     "/http/user_agent": ""
-	//     "/http/request_bytes": 300
-	//     "abc.com/myattribute": true
+	//     "/instance_id": { "string_value": { "value": "my-instance" } }
+	//     "/http/request_bytes": { "int_value": 300 }
+	//     "abc.com/myattribute": { "bool_value": false }
 	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
 
 	// DroppedAttributesCount: The number of attributes that were discarded.
@@ -1028,7 +1027,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1172,7 +1171,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

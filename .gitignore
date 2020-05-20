@@ -14,3 +14,6 @@ clientsecret.dat
 *.out
 *.test
 *.exe
+
+.idea/*
+.vscode/*

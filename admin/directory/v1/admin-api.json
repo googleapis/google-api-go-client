@@ -96,7 +96,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"LYADMvHWYH2ul9D6m9UT9gT77YM/NqxQAUkUIvUDCo2pCkVJ3_L6Gh4\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/Q_N7e9cs3A1-s8__TCCHlsbCI_c\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1972,28 +1972,6 @@
             "https://www.googleapis.com/auth/admin.directory.rolemanagement",
             "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
           ]
-        }
-      }
-    },
-    "resolvedAppAccessSettings": {
-      "methods": {
-        "GetSettings": {
-          "description": "Retrieves resolved app access settings of the logged in user.",
-          "httpMethod": "GET",
-          "id": "directory.resolvedAppAccessSettings.GetSettings",
-          "path": "resolvedappaccesssettings",
-          "response": {
-            "$ref": "AppAccessCollections"
-          }
-        },
-        "ListTrustedApps": {
-          "description": "Retrieves the list of apps trusted by the admin of the logged in user.",
-          "httpMethod": "GET",
-          "id": "directory.resolvedAppAccessSettings.ListTrustedApps",
-          "path": "trustedapps",
-          "response": {
-            "$ref": "TrustedApps"
-          }
         }
       }
     },
@@ -4029,7 +4007,7 @@
       }
     }
   },
-  "revision": "20191003",
+  "revision": "20200204",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4079,50 +4057,6 @@
           "default": "admin#directory#aliases",
           "description": "Kind of resource this is.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AppAccessCollections": {
-      "description": "JSON template for App Access Collections Resource object in Directory API.",
-      "id": "AppAccessCollections",
-      "properties": {
-        "blockedApiAccessBuckets": {
-          "description": "List of blocked api access buckets.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "enforceSettingsForAndroidDrive": {
-          "description": "Boolean to indicate whether to enforce app access settings on Android Drive or not.",
-          "type": "boolean"
-        },
-        "errorMessage": {
-          "description": "Error message provided by the Admin that will be shown to the user when an app is blocked.",
-          "type": "string"
-        },
-        "etag": {
-          "description": "ETag of the resource.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "admin#directory#appaccesscollection",
-          "description": "Identifies the resource as an app access collection. Value: admin#directory#appaccesscollection",
-          "type": "string"
-        },
-        "resourceId": {
-          "description": "Unique ID of app access collection. (Readonly)",
-          "format": "int64",
-          "type": "string"
-        },
-        "resourceName": {
-          "description": "Resource name given by the customer while creating/updating. Should be unique under given customer.",
-          "type": "string"
-        },
-        "trustDomainOwnedApps": {
-          "description": "Boolean that indicates whether to trust domain owned apps.",
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -6141,59 +6075,6 @@
           "default": "admin#directory#tokenList",
           "description": "The type of the API resource. This is always admin#directory#tokenList.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TrustedAppId": {
-      "description": "JSON template for Trusted App Ids Resource object in Directory API.",
-      "id": "TrustedAppId",
-      "properties": {
-        "androidPackageName": {
-          "description": "Android package name.",
-          "type": "string"
-        },
-        "certificateHashSHA1": {
-          "description": "SHA1 signature of the app certificate.",
-          "type": "string"
-        },
-        "certificateHashSHA256": {
-          "description": "SHA256 signature of the app certificate.",
-          "type": "string"
-        },
-        "etag": {
-          "type": "string"
-        },
-        "kind": {
-          "default": "admin#directory#trustedappid",
-          "description": "Identifies the resource as a trusted AppId.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TrustedApps": {
-      "description": "JSON template for Trusted Apps response object of a user in Directory API.",
-      "id": "TrustedApps",
-      "properties": {
-        "etag": {
-          "description": "ETag of the resource.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "admin#directory#trustedapplist",
-          "description": "Identifies the resource as trusted apps response.",
-          "type": "string"
-        },
-        "nextPageToken": {
-          "type": "string"
-        },
-        "trustedApps": {
-          "description": "Trusted Apps list.",
-          "items": {
-            "$ref": "TrustedAppId"
-          },
-          "type": "array"
         }
       },
       "type": "object"

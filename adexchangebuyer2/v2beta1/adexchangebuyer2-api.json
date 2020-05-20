@@ -2486,7 +2486,7 @@
       }
     }
   },
-  "revision": "20200219",
+  "revision": "20200506",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2659,6 +2659,10 @@
         "measurableImpressions": {
           "$ref": "MetricValue",
           "description": "The number of bids for which the corresponding impression was measurable\nfor viewability (as defined by Active View)."
+        },
+        "reachedQueries": {
+          "$ref": "MetricValue",
+          "description": "The number of bids that won the auction and also won the mediation\nwaterfall (if any)."
         },
         "rowDimensions": {
           "$ref": "RowDimensions",
@@ -4112,8 +4116,26 @@
           ],
           "type": "string"
         },
+        "format": {
+          "description": "Creative format bidded on or allowed to bid on, can be empty.",
+          "enum": [
+            "FORMAT_UNSPECIFIED",
+            "NATIVE_DISPLAY",
+            "NATIVE_VIDEO",
+            "NON_NATIVE_DISPLAY",
+            "NON_NATIVE_VIDEO"
+          ],
+          "enumDescriptions": [
+            "A placeholder for an undefined format; indicates that no format filter\nwill be applied.",
+            "The ad impression is a native ad, and display (i.e., image) format.",
+            "The ad impression is a native ad, and video format.",
+            "The ad impression is not a native ad, and display (i.e., image) format.",
+            "The ad impression is not a native ad, and video format."
+          ],
+          "type": "string"
+        },
         "formats": {
-          "description": "The list of formats on which to filter; may be empty. The filters\nrepresented by multiple formats are ORed together (i.e., if non-empty,\nresults must match any one of the formats).",
+          "description": "Creative formats bidded on or allowed to bid on, can be empty. Although\nthis field is a list, it can only be populated with a single item. A\nHTTP 400 bad request error will be returned in the response if you specify\nmultiple items.",
           "enumDescriptions": [
             "A placeholder for an undefined format; indicates that no format filter\nwill be applied.",
             "The ad impression is a native ad, and display (i.e., image) format.",
@@ -4945,12 +4967,16 @@
           "enum": [
             "STATUS_UNSPECIFIED",
             "AD_NOT_RENDERED",
-            "INVALID_IMPRESSION"
+            "INVALID_IMPRESSION",
+            "FATAL_VAST_ERROR",
+            "LOST_IN_MEDIATION"
           ],
           "enumDescriptions": [
             "A placeholder for an undefined status.\nThis value will never be returned in responses.",
             "The buyer was not billed because the ad was not rendered by the\npublisher.",
-            "The buyer was not billed because the impression won by the bid was\ndetermined to be invalid."
+            "The buyer was not billed because the impression won by the bid was\ndetermined to be invalid.",
+            "A video impression was served but a fatal error was reported from the\nclient during playback.",
+            "The buyer was not billed because the ad was outplaced in the mediation\nwaterfall."
           ],
           "type": "string"
         }
@@ -5373,7 +5399,7 @@
       "type": "object"
     },
     "PublisherProfile": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the\npublisher unless noted otherwise.",
+      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile\n(https://support.google.com/admanager/answer/6035806?hl=en) in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the\npublisher unless noted otherwise.",
       "id": "PublisherProfile",
       "properties": {
         "audienceDescription": {
@@ -5402,6 +5428,10 @@
         "googlePlusUrl": {
           "description": "URL to publisher's Google+ page.",
           "type": "string"
+        },
+        "isParent": {
+          "description": "Indicates if this profile is the parent profile of the seller. A parent\nprofile represents all the inventory from the seller, as opposed to child\nprofile that is created to brand a portion of inventory. One seller should\nhave only one parent publisher profile, and can have multiple child\nprofiles. Publisher profiles for the same seller will have same value of\nfield google.ads.adexchange.buyer.v2beta1.PublisherProfile.seller.\nSee https://support.google.com/admanager/answer/6035806?hl=en for details.",
+          "type": "boolean"
         },
         "logoUrl": {
           "description": "A Google public URL to the logo for this publisher profile. The logo is\nstored as a PNG, JPG, or GIF image.",

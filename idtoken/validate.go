@@ -17,6 +17,7 @@ import (
 	"math/big"
 	"net/http"
 	"strings"
+	"time"
 
 	htransport "google.golang.org/api/transport/http"
 )
@@ -27,7 +28,11 @@ const (
 	googleSACertsURL  string = "https://www.googleapis.com/oauth2/v3/certs"
 )
 
-var defaultValidator = &Validator{client: newCachingClient(http.DefaultClient)}
+var (
+	defaultValidator = &Validator{client: newCachingClient(http.DefaultClient)}
+	// now aliases time.Now for testing.
+	now = time.Now
+)
 
 // Payload represents a decoded payload of an ID Token.
 type Payload struct {
@@ -127,6 +132,10 @@ func (v *Validator) validate(ctx context.Context, idToken string, audience strin
 
 	if audience != "" && payload.Audience != audience {
 		return nil, fmt.Errorf("idtoken: audience provided does not match aud claim in the JWT")
+	}
+
+	if now().Unix() > payload.Expires {
+		return nil, fmt.Errorf("idtoken: token expired")
 	}
 
 	switch header.Algorithm {

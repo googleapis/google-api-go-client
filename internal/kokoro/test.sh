@@ -13,7 +13,7 @@ set -eo pipefail
 set -x
 
 # cd to project dir on Kokoro instance
-cd git/google_api
+cd github/google-api-go-client
 
 go version
 

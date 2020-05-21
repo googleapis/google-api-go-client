@@ -15,6 +15,8 @@ set -x
 # cd to project dir on Kokoro instance
 cd git/google_api
 
+git rev-parse HEAD
+
 go version
 
 # Set $GOPATH

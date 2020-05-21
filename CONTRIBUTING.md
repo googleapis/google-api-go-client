@@ -14,13 +14,18 @@
 
     `git remote add fork git@github.com:GITHUB_USERNAME/google-api-go-client.git`
 1. Make changes (see [Formatting](#formatting) and [Style](#style)), commit to
-   your fork. Commit messages should follow the
-   [Go project style](https://github.com/golang/go/wiki/CommitMessage) (e.g.
-   `functions: add gophers codelab`).
+   your fork.
+   
+   Commit messages should follow the
+   [Go project style](https://github.com/golang/go/wiki/CommitMessage). For example:
+   ```
+   functions: add gophers codelab
+   ```
 1. Send a pull request with your changes.
-1. A maintainer will review the pull request and make comments. Prefer adding
-   additional commits over ammending and force-pushing since it can be difficult
-   to follow code reviews when the commit history changes.
+1. A maintainer will review the pull request and make comments.
+
+   Prefer adding additional commits over ammending and force-pushing since it can
+   be difficult to follow code reviews when the commit history changes.
 
    Commits will be squashed when they're merged.
 

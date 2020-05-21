@@ -77,6 +77,7 @@ func TestValidateRS256(t *testing.T) {
 			wantErr: true,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			client := &http.Client{
@@ -110,11 +111,39 @@ func TestValidateRS256(t *testing.T) {
 				t.Fatalf("NewValidator(...) = %q, want nil", err)
 			}
 			payload, err := v.Validate(context.Background(), idToken, testAudience)
-			if !tt.wantErr && err != nil {
-				t.Fatalf("Validate(ctx, %s, %s) = %q, want nil", idToken, testAudience, err)
+			if tt.wantErr && err != nil {
+				// Got the error we wanted.
+				return
 			}
-			if !tt.wantErr && payload.Audience != testAudience {
-				t.Fatalf("got %v, want %v", payload.Audience, testAudience)
+			if !tt.wantErr && err != nil {
+				t.Fatalf("Validate(ctx, %s, %s): got err %q, want nil", idToken, testAudience, err)
+			}
+			if tt.wantErr && err == nil {
+				t.Fatalf("Validate(ctx, %s, %s): got nil err, want err", idToken, testAudience)
+			}
+			if tt.wantErr && err != nil {
+				// That's all!
+				return
+			}
+			if payload == nil {
+				t.Fatalf("Got nil payload, err: %v", err)
+			}
+			if payload.Audience != testAudience {
+				t.Fatalf("Validate(ctx, %s, %s): got %v, want %v", idToken, testAudience, payload.Audience, testAudience)
+			}
+			if len(payload.Claims) == 0 {
+				t.Fatalf("Validate(ctx, %s, %s): missing Claims map. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+			}
+			if got, ok := payload.Claims["aud"]; !ok {
+				t.Fatalf("Validate(ctx, %s, %s): missing aud claim. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+			} else {
+				got, ok := got.(string)
+				if !ok {
+					t.Fatalf("Validate(ctx, %s, %s): aud wasn't a string. payload.Claims = %+v", idToken, testAudience, payload.Claims)
+				}
+				if got != testAudience {
+					t.Fatalf("Validate(ctx, %s, %s): Payload[aud] want %v got %v", idToken, testAudience, testAudience, got)
+				}
 			}
 		})
 	}

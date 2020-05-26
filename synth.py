@@ -16,4 +16,4 @@ import subprocess
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
-subprocess.run(['./internal/kokoro/synth.sh'])
+subprocess.run(['./internal/kokoro/synth/synth.sh'])

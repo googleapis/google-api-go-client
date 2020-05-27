@@ -8,26 +8,26 @@ set -e -x
 
 WORKING_BRANCH=synth-update
 
-cd $(dirname $0)/../../..
+# cd $(dirname $0)/../../..
 
-should_create_pr=1
-git checkout -b $WORKING_BRANCH || {
-    # The branch already exists - assume there's an existing PR.
-    unset should_create_pr;
+# should_create_pr=1
+# git checkout -b $WORKING_BRANCH || {
+#     # The branch already exists - assume there's an existing PR.
+#     unset should_create_pr;
 
-    # Reset back to master
-    git checkout $WORKING_BRANCH;
-    git reset --hard origin/master;
-}
+#     # Reset back to master
+#     git checkout $WORKING_BRANCH;
+#     git reset --hard origin/master;
+# }
 
-pushd google-api-go-generator
-make all
-popd
+# pushd google-api-go-generator
+# make all
+# popd
 
-if [[ -z "$(git status --porcelain)"]]; then
-    echo "No changes today; exiting."
-    exit 0;
-fi
+# if [[ -z "$(git status --porcelain)"]; then
+#     echo "No changes today; exiting."
+#     exit 0;
+# fi
 
 echo "Pushing changes"
 

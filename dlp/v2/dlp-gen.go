@@ -1803,9 +1803,7 @@ type GooglePrivacyDlpV2CreateDeidentifyTemplateRequest struct {
 	// DeidentifyTemplate: Required. The DeidentifyTemplate to create.
 	DeidentifyTemplate *GooglePrivacyDlpV2DeidentifyTemplate `json:"deidentifyTemplate,omitempty"`
 
-	// LocationId: The geographic location to store the deidentification
-	// template. Reserved
-	// for future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// TemplateId: The template id can contain uppercase and lowercase
@@ -1855,9 +1853,7 @@ type GooglePrivacyDlpV2CreateDlpJobRequest struct {
 	// characters. Can be empty to allow the system to generate one.
 	JobId string `json:"jobId,omitempty"`
 
-	// LocationId: The geographic location to store and process the job.
-	// Reserved for
-	// future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// RiskJob: Set to choose what metric to calculate.
@@ -1892,9 +1888,7 @@ type GooglePrivacyDlpV2CreateInspectTemplateRequest struct {
 	// InspectTemplate: Required. The InspectTemplate to create.
 	InspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"inspectTemplate,omitempty"`
 
-	// LocationId: The geographic location to store the inspection template.
-	// Reserved for
-	// future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// TemplateId: The template id can contain uppercase and lowercase
@@ -1934,9 +1928,7 @@ type GooglePrivacyDlpV2CreateJobTriggerRequest struct {
 	// JobTrigger: Required. The JobTrigger to create.
 	JobTrigger *GooglePrivacyDlpV2JobTrigger `json:"jobTrigger,omitempty"`
 
-	// LocationId: The geographic location to store the job trigger.
-	// Reserved for
-	// future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// TriggerId: The trigger id can contain uppercase and lowercase
@@ -1975,9 +1967,7 @@ type GooglePrivacyDlpV2CreateStoredInfoTypeRequest struct {
 	// Config: Required. Configuration of the storedInfoType to create.
 	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
 
-	// LocationId: The geographic location to store the stored infoType.
-	// Reserved for
-	// future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// StoredInfoTypeId: The storedInfoType ID can contain uppercase and
@@ -2691,9 +2681,7 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	// Item: The item to de-identify. Will be treated as text.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
 
-	// LocationId: The geographic location to process de-identification.
-	// Reserved for future
-	// extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeidentifyConfig") to
@@ -4612,12 +4600,7 @@ type GooglePrivacyDlpV2InspectContentRequest struct {
 	// Item: The item to inspect.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
 
-	// LocationId: The geographic location to process content inspection.
-	// Reserved for future
-	// extensions.
-	// When inspecting images location is restricted to 'global', 'us',
-	// 'asia',
-	// and 'europe'.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InspectConfig") to
@@ -6955,10 +6938,7 @@ type GooglePrivacyDlpV2RedactImageRequest struct {
 	// InspectConfig: Configuration for the inspector.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
 
-	// LocationId: The geographic location to process the request. Reserved
-	// for future
-	// extensions.
-	// Location is restricted to 'global', 'us', 'asia', and 'europe'.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ByteItem") to
@@ -7087,9 +7067,7 @@ type GooglePrivacyDlpV2ReidentifyContentRequest struct {
 	// Item: The item to re-identify. Will be treated as text.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
 
-	// LocationId: The geographic location to process content
-	// reidentification.  Reserved for
-	// future extensions.
+	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ReidentifyConfig: Configuration for the re-identification of the
@@ -8889,11 +8867,17 @@ func (c *InfoTypesListCall) LanguageCode(languageCode string) *InfoTypesListCall
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location to list info types. Reserved for future
-// extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *InfoTypesListCall) LocationId(locationId string) *InfoTypesListCall {
 	c.urlParams_.Set("locationId", locationId)
+	return c
+}
+
+// Parent sets the optional parameter "parent": The parent resource
+// name, for example locations/{location_id}.
+func (c *InfoTypesListCall) Parent(parent string) *InfoTypesListCall {
+	c.urlParams_.Set("parent", parent)
 	return c
 }
 
@@ -8934,7 +8918,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9011,7 +8995,12 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location to list info types. Reserved for future\nextensions.",
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example locations/{location_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9031,7 +9020,7 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 
 type LocationsInfoTypesListCall struct {
 	s            *Service
-	locationId   string
+	parent       string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -9043,9 +9032,9 @@ type LocationsInfoTypesListCall struct {
 // supports. See https://cloud.google.com/dlp/docs/infotypes-reference
 // to
 // learn more.
-func (r *LocationsInfoTypesService) List(locationId string) *LocationsInfoTypesListCall {
+func (r *LocationsInfoTypesService) List(parent string) *LocationsInfoTypesListCall {
 	c := &LocationsInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.locationId = locationId
+	c.parent = parent
 	return c
 }
 
@@ -9063,6 +9052,13 @@ func (c *LocationsInfoTypesListCall) Filter(filter string) *LocationsInfoTypesLi
 // en-US strings will be returned.
 func (c *LocationsInfoTypesListCall) LanguageCode(languageCode string) *LocationsInfoTypesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *LocationsInfoTypesListCall) LocationId(locationId string) *LocationsInfoTypesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -9103,7 +9099,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9114,7 +9110,7 @@ func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/locations/{locationId}/infoTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/infoTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9122,7 +9118,7 @@ func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, erro
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -9167,11 +9163,11 @@ func (c *LocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	return ret, nil
 	// {
 	//   "description": "Returns a list of the sensitive information types that the DLP API\nsupports. See https://cloud.google.com/dlp/docs/infotypes-reference to\nlearn more.",
-	//   "flatPath": "v2/locations/{locationId}/infoTypes",
+	//   "flatPath": "v2/locations/{locationsId}/infoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.locations.infoTypes.list",
 	//   "parameterOrder": [
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
@@ -9185,13 +9181,19 @@ func (c *LocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location to list info types. Reserved for future\nextensions.",
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example locations/{location_id}.",
 	//       "location": "path",
+	//       "pattern": "^locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/locations/{locationId}/infoTypes",
+	//   "path": "v2/{+parent}/infoTypes",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
 	//   },
@@ -9253,7 +9255,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9395,7 +9397,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9539,7 +9541,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9650,9 +9652,8 @@ func (r *OrganizationsDeidentifyTemplatesService) List(parent string) *Organizat
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where deidentifications templates will be retrieved
-// from. Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -9732,7 +9733,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9805,7 +9806,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where deidentifications templates will be retrieved\nfrom. Use `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9914,7 +9915,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10059,7 +10060,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10200,7 +10201,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10343,7 +10344,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10453,9 +10454,8 @@ func (r *OrganizationsInspectTemplatesService) List(parent string) *Organization
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where inspection templates will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -10535,7 +10535,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10608,7 +10608,7 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where inspection templates will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10716,7 +10716,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10816,7 +10816,6 @@ func (c *OrganizationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption
 type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 	s                                                 *Service
 	parent                                            string
-	locationId                                        string
 	googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest
 	urlParams_                                        gensupport.URLParams
 	ctx_                                              context.Context
@@ -10829,10 +10828,9 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 // See https://cloud.google.com/dlp/docs/creating-templates-deid to
 // learn
 // more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) Create(parent string, locationId string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
+func (r *OrganizationsLocationsDeidentifyTemplatesService) Create(parent string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createdeidentifytemplaterequest = googleprivacydlpv2createdeidentifytemplaterequest
 	return c
 }
@@ -10864,7 +10862,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10877,7 +10875,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt stri
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/deidentifyTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10885,8 +10883,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt stri
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -10931,29 +10928,22 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.\nSee https://cloud.google.com/dlp/docs/creating-templates-deid to learn\nmore.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/deidentifyTemplates",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.deidentifyTemplates.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the deidentification template. Reserved\nfor future extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/deidentifyTemplates",
+	//   "path": "v2/{+parent}/deidentifyTemplates",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
 	//   },
@@ -11014,7 +11004,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11158,7 +11148,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header 
 
 func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11253,7 +11243,6 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.
 type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -11264,10 +11253,16 @@ type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 // See https://cloud.google.com/dlp/docs/creating-templates-deid to
 // learn
 // more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) List(parent string, locationId string) *OrganizationsLocationsDeidentifyTemplatesListCall {
+func (r *OrganizationsLocationsDeidentifyTemplatesService) List(parent string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c := &OrganizationsLocationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationId string) *OrganizationsLocationsDeidentifyTemplatesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -11345,7 +11340,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header
 
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11356,7 +11351,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/deidentifyTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11364,8 +11359,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -11411,18 +11405,16 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi
 	return ret, nil
 	// {
 	//   "description": "Lists DeidentifyTemplates.\nSee https://cloud.google.com/dlp/docs/creating-templates-deid to learn\nmore.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/deidentifyTemplates",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.locations.deidentifyTemplates.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where deidentifications templates will be retrieved\nfrom. Use `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -11444,12 +11436,12 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/deidentifyTemplates",
+	//   "path": "v2/{+parent}/deidentifyTemplates",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
 	//   },
@@ -11530,7 +11522,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Heade
 
 func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11630,7 +11622,6 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Do(opts ...googleap
 type OrganizationsLocationsInspectTemplatesCreateCall struct {
 	s                                              *Service
 	parent                                         string
-	locationId                                     string
 	googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest
 	urlParams_                                     gensupport.URLParams
 	ctx_                                           context.Context
@@ -11642,10 +11633,9 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 // for inspecting content, images, and storage.
 // See https://cloud.google.com/dlp/docs/creating-templates to learn
 // more.
-func (r *OrganizationsLocationsInspectTemplatesService) Create(parent string, locationId string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesCreateCall {
+func (r *OrganizationsLocationsInspectTemplatesService) Create(parent string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesCreateCall {
 	c := &OrganizationsLocationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createinspecttemplaterequest = googleprivacydlpv2createinspecttemplaterequest
 	return c
 }
@@ -11677,7 +11667,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11690,7 +11680,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/inspectTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11698,8 +11688,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string)
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -11744,29 +11733,22 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.
 	return ret, nil
 	// {
 	//   "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.\nSee https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/inspectTemplates",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.inspectTemplates.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the inspection template. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/inspectTemplates",
+	//   "path": "v2/{+parent}/inspectTemplates",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
 	//   },
@@ -11826,7 +11808,7 @@ func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11969,7 +11951,7 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12064,7 +12046,6 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Do(opts ...googleapi.Cal
 type OrganizationsLocationsInspectTemplatesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -12074,10 +12055,16 @@ type OrganizationsLocationsInspectTemplatesListCall struct {
 // List: Lists InspectTemplates.
 // See https://cloud.google.com/dlp/docs/creating-templates to learn
 // more.
-func (r *OrganizationsLocationsInspectTemplatesService) List(parent string, locationId string) *OrganizationsLocationsInspectTemplatesListCall {
+func (r *OrganizationsLocationsInspectTemplatesService) List(parent string) *OrganizationsLocationsInspectTemplatesListCall {
 	c := &OrganizationsLocationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId string) *OrganizationsLocationsInspectTemplatesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -12155,7 +12142,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12166,7 +12153,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/inspectTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12174,8 +12161,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -12221,18 +12207,16 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.Ca
 	return ret, nil
 	// {
 	//   "description": "Lists InspectTemplates.\nSee https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/inspectTemplates",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.locations.inspectTemplates.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where inspection templates will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -12254,12 +12238,12 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.Ca
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/inspectTemplates",
+	//   "path": "v2/{+parent}/inspectTemplates",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
 	//   },
@@ -12339,7 +12323,7 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12439,7 +12423,6 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Do(opts ...googleapi.C
 type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 	s                                             *Service
 	parent                                        string
-	locationId                                    string
 	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
 	urlParams_                                    gensupport.URLParams
 	ctx_                                          context.Context
@@ -12451,10 +12434,9 @@ type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 // See https://cloud.google.com/dlp/docs/creating-stored-infotypes
 // to
 // learn more.
-func (r *OrganizationsLocationsStoredInfoTypesService) Create(parent string, locationId string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesCreateCall {
+func (r *OrganizationsLocationsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesCreateCall {
 	c := &OrganizationsLocationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
 	return c
 }
@@ -12486,7 +12468,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12499,7 +12481,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/storedInfoTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -12507,8 +12489,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -12552,29 +12533,22 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Do(opts ...googleapi.C
 	return ret, nil
 	// {
 	//   "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/storedInfoTypes",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.storedInfoTypes.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the stored infoType. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/storedInfoTypes",
+	//   "path": "v2/{+parent}/storedInfoTypes",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
 	//   },
@@ -12635,7 +12609,7 @@ func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12779,7 +12753,7 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12873,7 +12847,6 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Do(opts ...googleapi.Call
 type OrganizationsLocationsStoredInfoTypesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -12884,10 +12857,16 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 // See https://cloud.google.com/dlp/docs/creating-stored-infotypes
 // to
 // learn more.
-func (r *OrganizationsLocationsStoredInfoTypesService) List(parent string, locationId string) *OrganizationsLocationsStoredInfoTypesListCall {
+func (r *OrganizationsLocationsStoredInfoTypesService) List(parent string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c := &OrganizationsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId string) *OrganizationsLocationsStoredInfoTypesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -12967,7 +12946,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12978,7 +12957,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/storedInfoTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12986,8 +12965,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -13033,18 +13011,16 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	return ret, nil
 	// {
 	//   "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationId}/storedInfoTypes",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.locations.storedInfoTypes.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where stored infoTypes will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -13066,12 +13042,12 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/storedInfoTypes",
+	//   "path": "v2/{+parent}/storedInfoTypes",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
 	//   },
@@ -13154,7 +13130,7 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13298,7 +13274,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13439,7 +13415,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13583,7 +13559,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13693,9 +13669,8 @@ func (r *OrganizationsStoredInfoTypesService) List(parent string) *Organizations
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where stored infoTypes will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -13777,7 +13752,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13850,7 +13825,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where stored infoTypes will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13961,7 +13936,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14112,7 +14087,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14266,7 +14241,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14413,7 +14388,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14560,7 +14535,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14702,7 +14677,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14846,7 +14821,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14957,9 +14932,8 @@ func (r *ProjectsDeidentifyTemplatesService) List(parent string) *ProjectsDeiden
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where deidentifications templates will be retrieved
-// from. Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -15039,7 +15013,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15112,7 +15086,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where deidentifications templates will be retrieved\nfrom. Use `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15221,7 +15195,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15370,7 +15344,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15521,7 +15495,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15667,7 +15641,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15812,7 +15786,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15961,9 +15935,8 @@ func (c *ProjectsDlpJobsListCall) Filter(filter string) *ProjectsDlpJobsListCall
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where jobs will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobsListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -16053,7 +16026,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16130,7 +16103,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location where jobs will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16257,7 +16230,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16402,7 +16375,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16543,7 +16516,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16686,7 +16659,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16796,9 +16769,8 @@ func (r *ProjectsInspectTemplatesService) List(parent string) *ProjectsInspectTe
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where inspection templates will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -16878,7 +16850,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16951,7 +16923,7 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where inspection templates will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17059,7 +17031,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17202,7 +17174,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17346,7 +17318,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17486,7 +17458,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17629,7 +17601,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17772,9 +17744,8 @@ func (c *ProjectsJobTriggersListCall) Filter(filter string) *ProjectsJobTriggers
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where job triggers will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -17857,7 +17828,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17935,7 +17906,7 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location where job triggers will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18043,7 +18014,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18142,7 +18113,6 @@ func (c *ProjectsJobTriggersPatchCall) Do(opts ...googleapi.CallOption) (*Google
 type ProjectsLocationsContentDeidentifyCall struct {
 	s                                          *Service
 	parent                                     string
-	locationId                                 string
 	googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest
 	urlParams_                                 gensupport.URLParams
 	ctx_                                       context.Context
@@ -18161,10 +18131,9 @@ type ProjectsLocationsContentDeidentifyCall struct {
 // system will automatically choose what detectors to run. By default
 // this may
 // be all types, but may change over time as detectors are updated.
-func (r *ProjectsLocationsContentService) Deidentify(parent string, locationId string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsLocationsContentDeidentifyCall {
+func (r *ProjectsLocationsContentService) Deidentify(parent string, googleprivacydlpv2deidentifycontentrequest *GooglePrivacyDlpV2DeidentifyContentRequest) *ProjectsLocationsContentDeidentifyCall {
 	c := &ProjectsLocationsContentDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2deidentifycontentrequest = googleprivacydlpv2deidentifycontentrequest
 	return c
 }
@@ -18196,7 +18165,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18209,7 +18178,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/content:deidentify")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/content:deidentify")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -18217,8 +18186,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Re
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18264,29 +18232,22 @@ func (c *ProjectsLocationsContentDeidentifyCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "De-identifies potentially sensitive info from a ContentItem.\nThis method has limits on input size and output size.\nSee https://cloud.google.com/dlp/docs/deidentify-sensitive-data to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/content:deidentify",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/content:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.content.deidentify",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to process de-identification. Reserved for future\nextensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/content:deidentify",
+	//   "path": "v2/{+parent}/content:deidentify",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2DeidentifyContentRequest"
 	//   },
@@ -18305,7 +18266,6 @@ func (c *ProjectsLocationsContentDeidentifyCall) Do(opts ...googleapi.CallOption
 type ProjectsLocationsContentInspectCall struct {
 	s                                       *Service
 	parent                                  string
-	locationId                              string
 	googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest
 	urlParams_                              gensupport.URLParams
 	ctx_                                    context.Context
@@ -18325,10 +18285,9 @@ type ProjectsLocationsContentInspectCall struct {
 // For how to guides, see
 // https://cloud.google.com/dlp/docs/inspecting-images
 // and https://cloud.google.com/dlp/docs/inspecting-text,
-func (r *ProjectsLocationsContentService) Inspect(parent string, locationId string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsLocationsContentInspectCall {
+func (r *ProjectsLocationsContentService) Inspect(parent string, googleprivacydlpv2inspectcontentrequest *GooglePrivacyDlpV2InspectContentRequest) *ProjectsLocationsContentInspectCall {
 	c := &ProjectsLocationsContentInspectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2inspectcontentrequest = googleprivacydlpv2inspectcontentrequest
 	return c
 }
@@ -18360,7 +18319,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18373,7 +18332,7 @@ func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Respo
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/content:inspect")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/content:inspect")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -18381,8 +18340,7 @@ func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Respo
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18428,29 +18386,22 @@ func (c *ProjectsLocationsContentInspectCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Finds potentially sensitive info in content.\nThis method has limits on input size, processing time, and output size.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nFor how to guides, see https://cloud.google.com/dlp/docs/inspecting-images\nand https://cloud.google.com/dlp/docs/inspecting-text,",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/content:inspect",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/content:inspect",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.content.inspect",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to process content inspection. Reserved for future\nextensions.\nWhen inspecting images location is restricted to 'global', 'us', 'asia',\nand 'europe'.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/content:inspect",
+	//   "path": "v2/{+parent}/content:inspect",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2InspectContentRequest"
 	//   },
@@ -18469,7 +18420,6 @@ func (c *ProjectsLocationsContentInspectCall) Do(opts ...googleapi.CallOption) (
 type ProjectsLocationsContentReidentifyCall struct {
 	s                                          *Service
 	parent                                     string
-	locationId                                 string
 	googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest
 	urlParams_                                 gensupport.URLParams
 	ctx_                                       context.Context
@@ -18482,10 +18432,9 @@ type ProjectsLocationsContentReidentifyCall struct {
 // https://cloud.google.com/dlp/docs/pseudonymization#
 // re-identification_in_free_text_code_example
 // to learn more.
-func (r *ProjectsLocationsContentService) Reidentify(parent string, locationId string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsLocationsContentReidentifyCall {
+func (r *ProjectsLocationsContentService) Reidentify(parent string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsLocationsContentReidentifyCall {
 	c := &ProjectsLocationsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2reidentifycontentrequest = googleprivacydlpv2reidentifycontentrequest
 	return c
 }
@@ -18517,7 +18466,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18530,7 +18479,7 @@ func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/content:reidentify")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/content:reidentify")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -18538,8 +18487,7 @@ func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Re
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18585,29 +18533,22 @@ func (c *ProjectsLocationsContentReidentifyCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Re-identifies content that has been de-identified.\nSee\nhttps://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example\nto learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/content:reidentify",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/content:reidentify",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.content.reidentify",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to process content reidentification.  Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/content:reidentify",
+	//   "path": "v2/{+parent}/content:reidentify",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2ReidentifyContentRequest"
 	//   },
@@ -18626,7 +18567,6 @@ func (c *ProjectsLocationsContentReidentifyCall) Do(opts ...googleapi.CallOption
 type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 	s                                                 *Service
 	parent                                            string
-	locationId                                        string
 	googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest
 	urlParams_                                        gensupport.URLParams
 	ctx_                                              context.Context
@@ -18639,10 +18579,9 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 // See https://cloud.google.com/dlp/docs/creating-templates-deid to
 // learn
 // more.
-func (r *ProjectsLocationsDeidentifyTemplatesService) Create(parent string, locationId string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *ProjectsLocationsDeidentifyTemplatesCreateCall {
+func (r *ProjectsLocationsDeidentifyTemplatesService) Create(parent string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *ProjectsLocationsDeidentifyTemplatesCreateCall {
 	c := &ProjectsLocationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createdeidentifytemplaterequest = googleprivacydlpv2createdeidentifytemplaterequest
 	return c
 }
@@ -18674,7 +18613,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18687,7 +18626,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/deidentifyTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -18695,8 +18634,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18741,29 +18679,22 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.Ca
 	return ret, nil
 	// {
 	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.\nSee https://cloud.google.com/dlp/docs/creating-templates-deid to learn\nmore.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/deidentifyTemplates",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.deidentifyTemplates.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the deidentification template. Reserved\nfor future extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/deidentifyTemplates",
+	//   "path": "v2/{+parent}/deidentifyTemplates",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
 	//   },
@@ -18824,7 +18755,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18968,7 +18899,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19063,7 +18994,6 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallO
 type ProjectsLocationsDeidentifyTemplatesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -19074,10 +19004,16 @@ type ProjectsLocationsDeidentifyTemplatesListCall struct {
 // See https://cloud.google.com/dlp/docs/creating-templates-deid to
 // learn
 // more.
-func (r *ProjectsLocationsDeidentifyTemplatesService) List(parent string, locationId string) *ProjectsLocationsDeidentifyTemplatesListCall {
+func (r *ProjectsLocationsDeidentifyTemplatesService) List(parent string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c := &ProjectsLocationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *ProjectsLocationsDeidentifyTemplatesListCall) LocationId(locationId string) *ProjectsLocationsDeidentifyTemplatesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -19155,7 +19091,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19166,7 +19102,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*h
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/deidentifyTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -19174,8 +19110,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -19221,18 +19156,16 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	return ret, nil
 	// {
 	//   "description": "Lists DeidentifyTemplates.\nSee https://cloud.google.com/dlp/docs/creating-templates-deid to learn\nmore.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/deidentifyTemplates",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.deidentifyTemplates.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where deidentifications templates will be retrieved\nfrom. Use `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -19254,12 +19187,12 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/deidentifyTemplates",
+	//   "path": "v2/{+parent}/deidentifyTemplates",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
 	//   },
@@ -19340,7 +19273,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19489,7 +19422,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19588,7 +19521,6 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Do(opts ...googleapi.CallOption) (*
 type ProjectsLocationsDlpJobsCreateCall struct {
 	s                                     *Service
 	parent                                string
-	locationId                            string
 	googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest
 	urlParams_                            gensupport.URLParams
 	ctx_                                  context.Context
@@ -19607,10 +19539,9 @@ type ProjectsLocationsDlpJobsCreateCall struct {
 // system will automatically choose what detectors to run. By default
 // this may
 // be all types, but may change over time as detectors are updated.
-func (r *ProjectsLocationsDlpJobsService) Create(parent string, locationId string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsLocationsDlpJobsCreateCall {
+func (r *ProjectsLocationsDlpJobsService) Create(parent string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsLocationsDlpJobsCreateCall {
 	c := &ProjectsLocationsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createdlpjobrequest = googleprivacydlpv2createdlpjobrequest
 	return c
 }
@@ -19642,7 +19573,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19655,7 +19586,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Respon
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/dlpJobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/dlpJobs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -19663,8 +19594,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Respon
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -19708,29 +19638,22 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Creates a new job to inspect storage or calculate risk metrics.\nSee https://cloud.google.com/dlp/docs/inspecting-storage and\nhttps://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in inspect jobs, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/dlpJobs",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.dlpJobs.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store and process the job. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/dlpJobs",
+	//   "path": "v2/{+parent}/dlpJobs",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateDlpJobRequest"
 	//   },
@@ -19796,7 +19719,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19935,7 +19858,7 @@ func (c *ProjectsLocationsDlpJobsFinishCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsFinishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20088,7 +20011,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20231,7 +20154,7 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20331,7 +20254,6 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Do(opts ...googleapi.CallOpt
 type ProjectsLocationsDlpJobsListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -20344,10 +20266,9 @@ type ProjectsLocationsDlpJobsListCall struct {
 // and
 // https://cloud.google.com/dlp/docs/compute-risk-analysis to learn
 // more.
-func (r *ProjectsLocationsDlpJobsService) List(parent string, locationId string) *ProjectsLocationsDlpJobsListCall {
+func (r *ProjectsLocationsDlpJobsService) List(parent string) *ProjectsLocationsDlpJobsListCall {
 	c := &ProjectsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	return c
 }
 
@@ -20385,6 +20306,13 @@ func (r *ProjectsLocationsDlpJobsService) List(parent string, locationId string)
 // The length of this field should be no more than 500 characters.
 func (c *ProjectsLocationsDlpJobsListCall) Filter(filter string) *ProjectsLocationsDlpJobsListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *ProjectsLocationsDlpJobsListCall) LocationId(locationId string) *ProjectsLocationsDlpJobsListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -20472,7 +20400,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20483,7 +20411,7 @@ func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/dlpJobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/dlpJobs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -20491,8 +20419,7 @@ func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -20537,12 +20464,11 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	return ret, nil
 	// {
 	//   "description": "Lists DlpJobs that match the specified filter in the request.\nSee https://cloud.google.com/dlp/docs/inspecting-storage and\nhttps://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/dlpJobs",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.dlpJobs.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
@@ -20551,9 +20477,8 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location where jobs will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -20575,7 +20500,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -20590,7 +20515,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/dlpJobs",
+	//   "path": "v2/{+parent}/dlpJobs",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListDlpJobsResponse"
 	//   },
@@ -20627,7 +20552,6 @@ func (c *ProjectsLocationsDlpJobsListCall) Pages(ctx context.Context, f func(*Go
 type ProjectsLocationsImageRedactCall struct {
 	s                                    *Service
 	parent                               string
-	locationId                           string
 	googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest
 	urlParams_                           gensupport.URLParams
 	ctx_                                 context.Context
@@ -20646,10 +20570,9 @@ type ProjectsLocationsImageRedactCall struct {
 // system will automatically choose what detectors to run. By default
 // this may
 // be all types, but may change over time as detectors are updated.
-func (r *ProjectsLocationsImageService) Redact(parent string, locationId string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsLocationsImageRedactCall {
+func (r *ProjectsLocationsImageService) Redact(parent string, googleprivacydlpv2redactimagerequest *GooglePrivacyDlpV2RedactImageRequest) *ProjectsLocationsImageRedactCall {
 	c := &ProjectsLocationsImageRedactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2redactimagerequest = googleprivacydlpv2redactimagerequest
 	return c
 }
@@ -20681,7 +20604,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20694,7 +20617,7 @@ func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/image:redact")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/image:redact")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -20702,8 +20625,7 @@ func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -20748,29 +20670,22 @@ func (c *ProjectsLocationsImageRedactCall) Do(opts ...googleapi.CallOption) (*Go
 	return ret, nil
 	// {
 	//   "description": "Redacts potentially sensitive info from an image.\nThis method has limits on input size, processing time, and output size.\nSee https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/image:redact",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/image:redact",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.image.redact",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to process the request. Reserved for future\nextensions.\nLocation is restricted to 'global', 'us', 'asia', and 'europe'.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/image:redact",
+	//   "path": "v2/{+parent}/image:redact",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2RedactImageRequest"
 	//   },
@@ -20789,7 +20704,6 @@ func (c *ProjectsLocationsImageRedactCall) Do(opts ...googleapi.CallOption) (*Go
 type ProjectsLocationsInspectTemplatesCreateCall struct {
 	s                                              *Service
 	parent                                         string
-	locationId                                     string
 	googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest
 	urlParams_                                     gensupport.URLParams
 	ctx_                                           context.Context
@@ -20801,10 +20715,9 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 // for inspecting content, images, and storage.
 // See https://cloud.google.com/dlp/docs/creating-templates to learn
 // more.
-func (r *ProjectsLocationsInspectTemplatesService) Create(parent string, locationId string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *ProjectsLocationsInspectTemplatesCreateCall {
+func (r *ProjectsLocationsInspectTemplatesService) Create(parent string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *ProjectsLocationsInspectTemplatesCreateCall {
 	c := &ProjectsLocationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createinspecttemplaterequest = googleprivacydlpv2createinspecttemplaterequest
 	return c
 }
@@ -20836,7 +20749,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20849,7 +20762,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*ht
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/inspectTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -20857,8 +20770,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*ht
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -20903,29 +20815,22 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallO
 	return ret, nil
 	// {
 	//   "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.\nSee https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/inspectTemplates",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.inspectTemplates.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the inspection template. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/inspectTemplates",
+	//   "path": "v2/{+parent}/inspectTemplates",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
 	//   },
@@ -20985,7 +20890,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21128,7 +21033,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21223,7 +21128,6 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Do(opts ...googleapi.CallOpti
 type ProjectsLocationsInspectTemplatesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -21233,10 +21137,16 @@ type ProjectsLocationsInspectTemplatesListCall struct {
 // List: Lists InspectTemplates.
 // See https://cloud.google.com/dlp/docs/creating-templates to learn
 // more.
-func (r *ProjectsLocationsInspectTemplatesService) List(parent string, locationId string) *ProjectsLocationsInspectTemplatesListCall {
+func (r *ProjectsLocationsInspectTemplatesService) List(parent string) *ProjectsLocationsInspectTemplatesListCall {
 	c := &ProjectsLocationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *ProjectsLocationsInspectTemplatesListCall) LocationId(locationId string) *ProjectsLocationsInspectTemplatesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -21314,7 +21224,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21325,7 +21235,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/inspectTemplates")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -21333,8 +21243,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -21380,18 +21289,16 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	return ret, nil
 	// {
 	//   "description": "Lists InspectTemplates.\nSee https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/inspectTemplates",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.inspectTemplates.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where inspection templates will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -21413,12 +21320,12 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/inspectTemplates",
+	//   "path": "v2/{+parent}/inspectTemplates",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
 	//   },
@@ -21498,7 +21405,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21641,7 +21548,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21740,7 +21647,6 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Do(opts ...googleapi.CallOpti
 type ProjectsLocationsJobTriggersCreateCall struct {
 	s                                         *Service
 	parent                                    string
-	locationId                                string
 	googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest
 	urlParams_                                gensupport.URLParams
 	ctx_                                      context.Context
@@ -21752,10 +21658,9 @@ type ProjectsLocationsJobTriggersCreateCall struct {
 // sensitive information on a set schedule.
 // See https://cloud.google.com/dlp/docs/creating-job-triggers to learn
 // more.
-func (r *ProjectsLocationsJobTriggersService) Create(parent string, locationId string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsLocationsJobTriggersCreateCall {
+func (r *ProjectsLocationsJobTriggersService) Create(parent string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *ProjectsLocationsJobTriggersCreateCall {
 	c := &ProjectsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createjobtriggerrequest = googleprivacydlpv2createjobtriggerrequest
 	return c
 }
@@ -21787,7 +21692,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21800,7 +21705,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/jobTriggers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobTriggers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -21808,8 +21713,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Re
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -21853,29 +21757,22 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Creates a job trigger to run DLP actions such as scanning storage for\nsensitive information on a set schedule.\nSee https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/jobTriggers",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobTriggers",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.jobTriggers.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the job trigger. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/jobTriggers",
+	//   "path": "v2/{+parent}/jobTriggers",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateJobTriggerRequest"
 	//   },
@@ -21935,7 +21832,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22078,7 +21975,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22222,7 +22119,7 @@ func (c *ProjectsLocationsJobTriggersHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22322,7 +22219,6 @@ func (c *ProjectsLocationsJobTriggersHybridInspectCall) Do(opts ...googleapi.Cal
 type ProjectsLocationsJobTriggersListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -22332,10 +22228,9 @@ type ProjectsLocationsJobTriggersListCall struct {
 // List: Lists job triggers.
 // See https://cloud.google.com/dlp/docs/creating-job-triggers to learn
 // more.
-func (r *ProjectsLocationsJobTriggersService) List(parent string, locationId string) *ProjectsLocationsJobTriggersListCall {
+func (r *ProjectsLocationsJobTriggersService) List(parent string) *ProjectsLocationsJobTriggersListCall {
 	c := &ProjectsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	return c
 }
 
@@ -22370,6 +22265,13 @@ func (r *ProjectsLocationsJobTriggersService) List(parent string, locationId str
 // The length of this field should be no more than 500 characters.
 func (c *ProjectsLocationsJobTriggersListCall) Filter(filter string) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *ProjectsLocationsJobTriggersListCall) LocationId(locationId string) *ProjectsLocationsJobTriggersListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -22450,7 +22352,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22461,7 +22363,7 @@ func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/jobTriggers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobTriggers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -22469,8 +22371,7 @@ func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Resp
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -22516,12 +22417,11 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Lists job triggers.\nSee https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/jobTriggers",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobTriggers",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.jobTriggers.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
@@ -22530,9 +22430,8 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "locationId": {
-	//       "description": "The geographic location where job triggers will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -22554,12 +22453,12 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example `projects/my-project-id`.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/jobTriggers",
+	//   "path": "v2/{+parent}/jobTriggers",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListJobTriggersResponse"
 	//   },
@@ -22639,7 +22538,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22738,7 +22637,6 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Do(opts ...googleapi.CallOption)
 type ProjectsLocationsStoredInfoTypesCreateCall struct {
 	s                                             *Service
 	parent                                        string
-	locationId                                    string
 	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
 	urlParams_                                    gensupport.URLParams
 	ctx_                                          context.Context
@@ -22750,10 +22648,9 @@ type ProjectsLocationsStoredInfoTypesCreateCall struct {
 // See https://cloud.google.com/dlp/docs/creating-stored-infotypes
 // to
 // learn more.
-func (r *ProjectsLocationsStoredInfoTypesService) Create(parent string, locationId string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsLocationsStoredInfoTypesCreateCall {
+func (r *ProjectsLocationsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsLocationsStoredInfoTypesCreateCall {
 	c := &ProjectsLocationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
 	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
 	return c
 }
@@ -22785,7 +22682,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22798,7 +22695,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*htt
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/storedInfoTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -22806,8 +22703,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*htt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -22851,29 +22747,22 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOp
 	return ret, nil
 	// {
 	//   "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/storedInfoTypes",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/storedInfoTypes",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.storedInfoTypes.create",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationId": {
-	//       "description": "The geographic location to store the stored infoType. Reserved for\nfuture extensions.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/storedInfoTypes",
+	//   "path": "v2/{+parent}/storedInfoTypes",
 	//   "request": {
 	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
 	//   },
@@ -22934,7 +22823,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23078,7 +22967,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23172,7 +23061,6 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOptio
 type ProjectsLocationsStoredInfoTypesListCall struct {
 	s            *Service
 	parent       string
-	locationId   string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -23183,10 +23071,16 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 // See https://cloud.google.com/dlp/docs/creating-stored-infotypes
 // to
 // learn more.
-func (r *ProjectsLocationsStoredInfoTypesService) List(parent string, locationId string) *ProjectsLocationsStoredInfoTypesListCall {
+func (r *ProjectsLocationsStoredInfoTypesService) List(parent string) *ProjectsLocationsStoredInfoTypesListCall {
 	c := &ProjectsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationId = locationId
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *ProjectsLocationsStoredInfoTypesListCall) LocationId(locationId string) *ProjectsLocationsStoredInfoTypesListCall {
+	c.urlParams_.Set("locationId", locationId)
 	return c
 }
 
@@ -23266,7 +23160,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23277,7 +23171,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/locations/{locationId}/storedInfoTypes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -23285,8 +23179,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":     c.parent,
-		"locationId": c.locationId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -23332,18 +23225,16 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 	// {
 	//   "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
-	//   "flatPath": "v2/projects/{projectsId}/locations/{locationId}/storedInfoTypes",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/storedInfoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.locations.storedInfoTypes.list",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where stored infoTypes will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
-	//       "location": "path",
-	//       "required": true,
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
@@ -23365,12 +23256,12 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//     "parent": {
 	//       "description": "Required. The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/{+parent}/locations/{locationId}/storedInfoTypes",
+	//   "path": "v2/{+parent}/storedInfoTypes",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
 	//   },
@@ -23453,7 +23344,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23597,7 +23488,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23738,7 +23629,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23882,7 +23773,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23992,9 +23883,8 @@ func (r *ProjectsStoredInfoTypesService) List(parent string) *ProjectsStoredInfo
 	return c
 }
 
-// LocationId sets the optional parameter "locationId": The geographic
-// location where stored infoTypes will be retrieved from.
-// Use `-` for all locations. Reserved for future extensions.
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
 func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("locationId", locationId)
 	return c
@@ -24076,7 +23966,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24149,7 +24039,7 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "locationId": {
-	//       "description": "The geographic location where stored infoTypes will be retrieved from.\nUse `-` for all locations. Reserved for future extensions.",
+	//       "description": "Deprecated. This field has no effect.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24260,7 +24150,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

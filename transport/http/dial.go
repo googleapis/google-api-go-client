@@ -162,7 +162,6 @@ func (t *parameterTransport) RoundTrip(req *http.Request) (*http.Response, error
 // Set at init time by dial_appengine.go. If nil, we're not on App Engine.
 var appengineUrlfetchHook func(context.Context) http.RoundTripper
 
-
 // defaultBaseTransport returns the base HTTP transport.
 // On App Engine, this is urlfetch.Transport.
 // Otherwise, use a default transport, taking most defaults from
@@ -206,7 +205,6 @@ func fallbackBaseTransport() *http.Transport {
 		ExpectContinueTimeout: 1 * time.Second,
 	}
 }
-
 
 func addOCTransport(trans http.RoundTripper, settings *internal.DialSettings) http.RoundTripper {
 	if settings.TelemetryDisabled {

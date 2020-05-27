@@ -176,6 +176,9 @@ func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source) htt
 	// which is increased due to reported performance issues under load in the GCS
 	// client. Transport.Clone is only available in Go 1.13 and up.
 	trans := clonedTransport(http.DefaultTransport)
+	if trans == nil {
+		trans = fallbackBaseTransport()
+	}
 	trans.MaxIdleConnsPerHost = 100
 
 	if clientCertSource != nil {

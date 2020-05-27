@@ -121,10 +121,6 @@ func TestValidateRS256(t *testing.T) {
 			if tt.wantErr && err == nil {
 				t.Fatalf("Validate(ctx, %s, %s): got nil err, want err", idToken, testAudience)
 			}
-			if tt.wantErr && err != nil {
-				// That's all!
-				return
-			}
 			if payload == nil {
 				t.Fatalf("Got nil payload, err: %v", err)
 			}

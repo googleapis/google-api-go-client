@@ -10,7 +10,7 @@ WORKING_BRANCH=synth-update
 
 # cd $(dirname $0)/../../..
 
-# should_create_pr=1
+should_create_pr=1
 # git checkout -b $WORKING_BRANCH || {
 #     # The branch already exists - assume there's an existing PR.
 #     unset should_create_pr;

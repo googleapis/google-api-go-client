@@ -282,9 +282,11 @@ func (j *jwt) parsedPayload() (*Payload, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = json.Unmarshal(dp, &p)
-	if err != nil {
+	if err := json.Unmarshal(dp, &p); err != nil {
 		return nil, fmt.Errorf("idtoken: unable to unmarshal JWT payload: %v", err)
+	}
+	if err := json.Unmarshal(dp, &p.Claims); err != nil {
+		return nil, fmt.Errorf("idtoken: unable to unmarshal JWT payload claims: %v", err)
 	}
 	return &p, nil
 }

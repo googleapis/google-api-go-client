@@ -24,7 +24,7 @@ pushd google-api-go-generator
 make all
 popd
 
-if [ -z "$(git status --porcelain)"]; then
+if [[ -z "$(git status --porcelain)" ]]; then
     echo "No changes today; exiting."
     exit 0;
 fi
@@ -40,4 +40,3 @@ if [ "$should_create_pr" ]; then
     echo "Creating PR."
     go run ./sendpr -title "$commit_message"
 fi
-

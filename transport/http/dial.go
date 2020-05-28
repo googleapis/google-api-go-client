@@ -200,7 +200,7 @@ var fallback struct {
 // http.DefaultTransport has been reassigned something that's not a
 // *http.Transport.
 func fallbackBaseTransport() *http.Transport {
-	fallback.Do(func () {
+	fallback.Do(func() {
 		fallback.Transport = &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
 			DialContext: (&net.Dialer{

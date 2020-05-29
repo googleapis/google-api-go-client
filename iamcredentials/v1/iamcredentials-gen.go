@@ -380,11 +380,36 @@ func (s *SignBlobRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SignBlobResponse struct {
-	// KeyId: The ID of the key used to sign the blob.
+	// KeyId: The ID of the key used to sign the blob. The key used for
+	// signing will
+	// remain valid for at least 12 hours after the blob is signed. To
+	// verify the
+	// signature, you can retrieve the public key in several formats from
+	// the
+	// following endpoints:
+	//
+	// - RSA public key wrapped in an X.509 v3
+	// certificate:
+	// `https://www.googleapis.com/service_accounts/v1/metadata/
+	// x509/{ACCOUNT_EMAIL}`
+	// - Raw key in JSON
+	// format:
+	// `https://www.googleapis.com/service_accounts/v1/metadata/raw/{
+	// ACCOUNT_EMAIL}`
+	// - JSON Web Key
+	// (JWK):
+	// `https://www.googleapis.com/service_accounts/v1/metadata/jwk/{A
+	// CCOUNT_EMAIL}`
 	KeyId string `json:"keyId,omitempty"`
 
 	// SignedBlob: The signature for the blob. Does not include the original
 	// blob.
+	//
+	// After the key pair referenced by the `key_id` response field
+	// expires,
+	// Google no longer exposes the public key that can be used to verify
+	// the
+	// blob. As a result, the receiver can no longer verify the signature.
 	SignedBlob string `json:"signedBlob,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -468,7 +493,26 @@ func (s *SignJwtRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SignJwtResponse struct {
-	// KeyId: The ID of the key used to sign the JWT.
+	// KeyId: The ID of the key used to sign the JWT. The key used for
+	// signing will
+	// remain valid for at least 12 hours after the JWT is signed. To verify
+	// the
+	// signature, you can retrieve the public key in several formats from
+	// the
+	// following endpoints:
+	//
+	// - RSA public key wrapped in an X.509 v3
+	// certificate:
+	// `https://www.googleapis.com/service_accounts/v1/metadata/
+	// x509/{ACCOUNT_EMAIL}`
+	// - Raw key in JSON
+	// format:
+	// `https://www.googleapis.com/service_accounts/v1/metadata/raw/{
+	// ACCOUNT_EMAIL}`
+	// - JSON Web Key
+	// (JWK):
+	// `https://www.googleapis.com/service_accounts/v1/metadata/jwk/{A
+	// CCOUNT_EMAIL}`
 	KeyId string `json:"keyId,omitempty"`
 
 	// SignedJwt: The signed JWT. Contains the automatically generated
@@ -476,6 +520,12 @@ type SignJwtResponse struct {
 	// client-supplied payload; and the signature, which is generated using
 	// the
 	// key referenced by the `kid` field in the header.
+	//
+	// After the key pair referenced by the `key_id` response field
+	// expires,
+	// Google no longer exposes the public key that can be used to verify
+	// the JWT.
+	// As a result, the receiver can no longer verify the signature.
 	SignedJwt string `json:"signedJwt,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -552,7 +602,7 @@ func (c *ProjectsServiceAccountsGenerateAccessTokenCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGenerateAccessTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -693,7 +743,7 @@ func (c *ProjectsServiceAccountsGenerateIdTokenCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsGenerateIdTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -834,7 +884,7 @@ func (c *ProjectsServiceAccountsSignBlobCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignBlobCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -975,7 +1025,7 @@ func (c *ProjectsServiceAccountsSignJwtCall) Header() http.Header {
 
 func (c *ProjectsServiceAccountsSignJwtCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

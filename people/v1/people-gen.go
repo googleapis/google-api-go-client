@@ -160,7 +160,9 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.ContactGroups = NewContactGroupsService(s)
+	s.OtherContacts = NewOtherContactsService(s)
 	s.People = NewPeopleService(s)
+	s.V1 = NewV1Service(s)
 	return s, nil
 }
 
@@ -171,7 +173,11 @@ type Service struct {
 
 	ContactGroups *ContactGroupsService
 
+	OtherContacts *OtherContactsService
+
 	People *PeopleService
+
+	V1 *V1Service
 }
 
 func (s *Service) userAgent() string {
@@ -202,6 +208,15 @@ type ContactGroupsMembersService struct {
 	s *Service
 }
 
+func NewOtherContactsService(s *Service) *OtherContactsService {
+	rs := &OtherContactsService{s: s}
+	return rs
+}
+
+type OtherContactsService struct {
+	s *Service
+}
+
 func NewPeopleService(s *Service) *PeopleService {
 	rs := &PeopleService{s: s}
 	rs.Connections = NewPeopleConnectionsService(s)
@@ -220,6 +235,15 @@ func NewPeopleConnectionsService(s *Service) *PeopleConnectionsService {
 }
 
 type PeopleConnectionsService struct {
+	s *Service
+}
+
+func NewV1Service(s *Service) *V1Service {
+	rs := &V1Service{s: s}
+	return rs
+}
+
+type V1Service struct {
 	s *Service
 }
 
@@ -665,6 +689,74 @@ type ContactGroupResponse struct {
 
 func (s *ContactGroupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactGroupResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyOtherContactToMyContactsGroupRequest: A request to copy an other
+// contact to my contacts group.
+type CopyOtherContactToMyContactsGroupRequest struct {
+	// CopyMask: Required. A field mask to restrict which fields are copied
+	// into the new contact.
+	// Valid values are:
+	//
+	// * emailAddresses
+	// * names
+	// * phoneNumbers
+	CopyMask string `json:"copyMask,omitempty"`
+
+	// ReadMask: Optional. A field mask to restrict which fields on the
+	// person are returned. Multiple
+	// fields can be specified by separating them with commas. Defaults to
+	// empty
+	// if not set, which will skip the post mutate get. Valid values are:
+	//
+	// * addresses
+	// * ageRanges
+	// * biographies
+	// * birthdays
+	// * coverPhotos
+	// * emailAddresses
+	// * events
+	// * genders
+	// * imClients
+	// * interests
+	// * locales
+	// * memberships
+	// * metadata
+	// * names
+	// * nicknames
+	// * occupations
+	// * organizations
+	// * phoneNumbers
+	// * photos
+	// * relations
+	// * residences
+	// * sipAddresses
+	// * skills
+	// * urls
+	// * userDefined
+	ReadMask string `json:"readMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CopyMask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CopyMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyOtherContactToMyContactsGroupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyOtherContactToMyContactsGroupRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1281,6 +1373,55 @@ type ListContactGroupsResponse struct {
 
 func (s *ListContactGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContactGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListOtherContactsResponse: The response to a request for the
+// authenticated user's other contacts.
+type ListOtherContactsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page.
+	// If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: A token, which can be sent as `sync_token` to retrieve
+	// changes since the
+	// last request. Request must set `request_sync_token` to return the
+	// sync
+	// token.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
+
+	// OtherContacts: The list of other contacts returned as Person
+	// resources. Other contacts
+	// support a limited subset of supported fields.
+	// See
+	// ListOtherContactsRequest.request_mask for more detailed information.
+	OtherContacts []*Person `json:"otherContacts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOtherContactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOtherContactsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2402,6 +2543,9 @@ type Source struct {
 	// [https://contact.google.com/](https://contact.google.com/){id},
 	// where
 	// {id} is the source id.
+	//   "OTHER_CONTACT" - [Google contact](https://contacts.google.com).
+	// You can view these kinds
+	// of contacts under the 'Other contacts' tab.
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. **Only populated in
@@ -2800,7 +2944,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2934,7 +3078,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3068,7 +3212,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3224,7 +3368,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3403,7 +3547,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3566,7 +3710,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3713,7 +3857,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3808,6 +3952,147 @@ func (c *ContactGroupsMembersModifyCall) Do(opts ...googleapi.CallOption) (*Modi
 
 }
 
+// method id "people.otherContacts.copyOtherContactToMyContactsGroup":
+
+type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
+	s                                        *Service
+	resourceName                             string
+	copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// CopyOtherContactToMyContactsGroup: Copies an other contact to a new
+// contact in the user's MY_CONTACTS group
+func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
+	c := &OtherContactsCopyOtherContactToMyContactsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resourceName = resourceName
+	c.copyothercontacttomycontactsgrouprequest = copyothercontacttomycontactsgrouprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Fields(s ...googleapi.Field) *OtherContactsCopyOtherContactToMyContactsGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Context(ctx context.Context) *OtherContactsCopyOtherContactToMyContactsGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copyothercontacttomycontactsgrouprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}:copyOtherContactToMyContactsGroup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resourceName": c.resourceName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.otherContacts.copyOtherContactToMyContactsGroup" call.
+// Exactly one of *Person or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Person.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleapi.CallOption) (*Person, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Person{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Copies an other contact to a new contact in the user's MY_CONTACTS group",
+	//   "flatPath": "v1/otherContacts/{otherContactsId}:copyOtherContactToMyContactsGroup",
+	//   "httpMethod": "POST",
+	//   "id": "people.otherContacts.copyOtherContactToMyContactsGroup",
+	//   "parameterOrder": [
+	//     "resourceName"
+	//   ],
+	//   "parameters": {
+	//     "resourceName": {
+	//       "description": "Required. The resource name of the other contact to copy.",
+	//       "location": "path",
+	//       "pattern": "^otherContacts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resourceName}:copyOtherContactToMyContactsGroup",
+	//   "request": {
+	//     "$ref": "CopyOtherContactToMyContactsGroupRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Person"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/contacts"
+	//   ]
+	// }
+
+}
+
 // method id "people.people.createContact":
 
 type PeopleCreateContactCall struct {
@@ -3853,7 +4138,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3979,7 +4264,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4145,7 +4430,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4343,7 +4628,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4579,7 +4864,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4780,7 +5065,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4926,7 +5211,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5031,9 +5316,7 @@ type PeopleConnectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Provides a list of the authenticated user's contacts merged
-// with any
-// connected profiles.
+// List: Provides a list of the authenticated user's contacts.
 //
 // The request throws a 400 error if 'personFields' is not specified.
 func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
@@ -5189,7 +5472,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200518")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5251,7 +5534,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	}
 	return ret, nil
 	// {
-	//   "description": "Provides a list of the authenticated user's contacts merged with any\nconnected profiles.\n\nThe request throws a 400 error if 'personFields' is not specified.",
+	//   "description": "Provides a list of the authenticated user's contacts.\n\nThe request throws a 400 error if 'personFields' is not specified.",
 	//   "flatPath": "v1/people/{peopleId}/connections",
 	//   "httpMethod": "GET",
 	//   "id": "people.people.connections.list",
@@ -5327,6 +5610,232 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *PeopleConnectionsListCall) Pages(ctx context.Context, f func(*ListConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "people.otherContacts":
+
+type V1OtherContactsCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// OtherContacts: List all other contacts, that is contacts that are not
+// in a contact group.
+// Other contacts are typically auto created contacts from interactions.
+func (r *V1Service) OtherContacts() *V1OtherContactsCall {
+	c := &V1OtherContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of other
+// contacts to include in the response. Valid values are
+// between 1 and 1000, inclusive. Defaults to 100 if not set or set to
+// 0.
+func (c *V1OtherContactsCall) PageSize(pageSize int64) *V1OtherContactsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListOtherContacts` call.
+// Provide this to retrieve the subsequent page.
+//
+// When paginating, all other parameters provided to
+// `ListOtherContacts`
+// must match the call that provided the page token.
+func (c *V1OtherContactsCall) PageToken(pageToken string) *V1OtherContactsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. A field
+// mask to restrict which fields on each person are returned.
+// Multiple
+// fields can be specified by separating them with commas. Valid values
+// are:
+//
+// * emailAddresses
+// * names
+// * phoneNumbers
+func (c *V1OtherContactsCall) ReadMask(readMask string) *V1OtherContactsCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// RequestSyncToken sets the optional parameter "requestSyncToken":
+// Whether the response should include `next_sync_token`, which can be
+// used to
+// get all changes since the last request. For subsequent sync requests
+// use
+// the `sync_token` param instead. Initial sync requests that
+// specify
+// `request_sync_token` have an additional rate limit.
+func (c *V1OtherContactsCall) RequestSyncToken(requestSyncToken bool) *V1OtherContactsCall {
+	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": A sync token,
+// received from a previous `ListOtherContacts` call.
+// Provide this to retrieve only the resources changed since the last
+// request.
+// Sync requests that specify `sync_token` have an additional rate
+// limit.
+//
+// When syncing, all other parameters provided to
+// `ListOtherContacts`
+// must match the call that provided the sync token.
+func (c *V1OtherContactsCall) SyncToken(syncToken string) *V1OtherContactsCall {
+	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1OtherContactsCall) Fields(s ...googleapi.Field) *V1OtherContactsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1OtherContactsCall) Context(ctx context.Context) *V1OtherContactsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1OtherContactsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1OtherContactsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/otherContacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.otherContacts" call.
+// Exactly one of *ListOtherContactsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOtherContactsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1OtherContactsCall) Do(opts ...googleapi.CallOption) (*ListOtherContactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListOtherContactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all other contacts, that is contacts that are not in a contact group.\nOther contacts are typically auto created contacts from interactions.",
+	//   "flatPath": "v1/otherContacts",
+	//   "httpMethod": "POST",
+	//   "id": "people.otherContacts",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The number of other contacts to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Valid values are:\n\n* emailAddresses\n* names\n* phoneNumbers",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestSyncToken": {
+	//       "description": "Optional. Whether the response should include `next_sync_token`, which can be used to\nget all changes since the last request. For subsequent sync requests use\nthe `sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "syncToken": {
+	//       "description": "Optional. A sync token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve only the resources changed since the last request.\nSync requests that specify `sync_token` have an additional rate limit.\n\nWhen syncing, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the sync token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/otherContacts",
+	//   "response": {
+	//     "$ref": "ListOtherContactsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1OtherContactsCall) Pages(ctx context.Context, f func(*ListOtherContactsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

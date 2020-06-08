@@ -6,22 +6,15 @@ package main
 
 // deprecatedPkgs is a map that contains packages that should be
 // deprecated in favor of another package.
-type deprecatedPkgs map[string]apiReplacement
+type deprecatedPkgs map[string]string
 
 func (d deprecatedPkgs) Get(name, version string) string {
-	ar, ok := d[name]
+	v, ok := d[name]
 	if !ok {
-		return ""
+		// try lookup of a specific name-version
+		return d[name+":"+version]
 	}
-	if len(ar.versions) == 0 {
-		return ar.replacementPkg
-	}
-	for _, v := range ar.versions {
-		if v == version {
-			return ar.replacementPkg
-		}
-	}
-	return ""
+	return v
 }
 
 // replacementPackage is a map from an API package name to the
@@ -29,79 +22,26 @@ func (d deprecatedPkgs) Get(name, version string) string {
 // in this map, its package doc comment will note that it is deprecated
 // and point to the replacement.
 // TODO(jba): consider automating this by looking at the structure of the gocloud repo.
-var replacementPackage deprecatedPkgs = map[string]apiReplacement{
-	"bigquery": {
-		replacementPkg: "cloud.google.com/go/bigquery",
-	},
-	"cloudkms": {
-		replacementPkg: "cloud.google.com/go/kms/apiv1",
-	},
-	"cloudtasks": {
-		replacementPkg: "cloud.google.com/go/cloudtasks/apiv2beta2",
-	},
-	"dataproc": {
-		replacementPkg: "cloud.google.com/go/dataproc/apiv1",
-	},
-	"datastore": {
-		replacementPkg: "cloud.google.com/go/datastore",
-	},
-	"dialogflow": {
-		replacementPkg: "cloud.google.com/go/dialogflow/apiv2",
-	},
-	"dlp": {
-		replacementPkg: "cloud.google.com/go/dlp/apiv2",
-	},
-	"firestore": {
-		replacementPkg: "cloud.google.com/go/firestore",
-	},
-	"language": {
-		replacementPkg: "cloud.google.com/go/language/apiv1",
-	},
-	"logging": {
-		replacementPkg: "cloud.google.com/go/logging",
-	},
-	"monitoring": {
-		replacementPkg: "cloud.google.com/go/monitoring/apiv3",
-		versions:       []string{"v3"},
-	},
-	"oslogin": {
-		replacementPkg: "cloud.google.com/go/oslogin/apiv1",
-	},
-	"pubsub": {
-		replacementPkg: "cloud.google.com/go/pubsub",
-	},
-	"redis": {
-		replacementPkg: "cloud.google.com/go/redis/apiv1",
-	},
-	"spanner": {
-		replacementPkg: "cloud.google.com/go/spanner",
-	},
-	"speech": {
-		replacementPkg: "cloud.google.com/go/speech/apiv1",
-	},
-	"texttospeech": {
-		replacementPkg: "cloud.google.com/go/texttospeech/apiv1",
-	},
-	"translate": {
-		replacementPkg: "cloud.google.com/go/translate",
-	},
-	"videointelligence": {
-		replacementPkg: "cloud.google.com/go/videointelligence/apiv1",
-	},
-	"vision": {
-		replacementPkg: "cloud.google.com/go/vision/apiv1",
-	},
-	"storage": {
-		replacementPkg: "cloud.google.com/go/storage",
-	},
-}
-
-//
-type apiReplacement struct {
-	// replacementPkg is a reference to a package that should be used instead.
-	replacementPkg string
-	// versions is a slice of API versions for which the replacementPkg should
-	// be used. A zero length slice means the replacement should take place for
-	// all versions.
-	versions []string
+var replacementPackage deprecatedPkgs = map[string]string{
+	"bigquery":          "cloud.google.com/go/bigquery",
+	"cloudkms":          "cloud.google.com/go/kms/apiv1",
+	"cloudtasks":        "cloud.google.com/go/cloudtasks/apiv2beta2",
+	"dataproc":          "cloud.google.com/go/dataproc/apiv1",
+	"datastore":         "cloud.google.com/go/datastore",
+	"dialogflow":        "cloud.google.com/go/dialogflow/apiv2",
+	"dlp":               "cloud.google.com/go/dlp/apiv2",
+	"firestore":         "cloud.google.com/go/firestore",
+	"language":          "cloud.google.com/go/language/apiv1",
+	"logging":           "cloud.google.com/go/logging",
+	"monitoring:v3":     "cloud.google.com/go/monitoring/apiv3",
+	"oslogin":           "cloud.google.com/go/oslogin/apiv1",
+	"pubsub":            "cloud.google.com/go/pubsub",
+	"redis":             "cloud.google.com/go/redis/apiv1",
+	"spanner":           "cloud.google.com/go/spanner",
+	"speech":            "cloud.google.com/go/speech/apiv1",
+	"texttospeech":      "cloud.google.com/go/texttospeech/apiv1",
+	"translate":         "cloud.google.com/go/translate",
+	"videointelligence": "cloud.google.com/go/videointelligence/apiv1",
+	"vision":            "cloud.google.com/go/vision/apiv1",
+	"storage":           "cloud.google.com/go/storage",
 }

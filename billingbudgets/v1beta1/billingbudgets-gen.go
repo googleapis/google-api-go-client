@@ -367,6 +367,15 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// threshold calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
+	// Labels: Optional. A single label and value pair specifying that usage
+	// from only this set of
+	// labeled resources should be included in the budget. Currently,
+	// multiple
+	// entries or multiple values per entry are not allowed. If omitted,
+	// the
+	// report will include all labeled and unlabeled usage.
+	Labels map[string][]interface{} `json:"labels,omitempty"`
+
 	// Projects: Optional. A set of projects of the form
 	// `projects/{project}`,
 	// specifying that usage from only this set of projects should
@@ -389,6 +398,18 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// API:
 	// https://cloud.google.com/billing/v1/how-tos/catalog-api.
 	Services []string `json:"services,omitempty"`
+
+	// Subaccounts: Optional. A set of subaccounts of the form
+	// `billingAccounts/{account_id}`, specifying
+	// that usage from only this set of subaccounts should be included in
+	// the
+	// budget. If a subaccount is set to the name of the master account,
+	// usage
+	// from the master account will be included. If omitted, the report
+	// will
+	// include usage from the master account and all subaccounts, if they
+	// exist.
+	Subaccounts []string `json:"subaccounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreditTypesTreatment") to unconditionally include in API requests.
@@ -686,7 +707,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -825,7 +846,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -974,7 +995,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1145,7 +1166,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1320,7 +1341,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

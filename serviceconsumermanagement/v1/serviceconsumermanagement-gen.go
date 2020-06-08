@@ -838,54 +838,6 @@ type BackendRule struct {
 	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
-	// RenameTo: Unimplemented. Do not use.
-	//
-	// The new name the selected proto elements should be renamed to.
-	//
-	// The package, the service and the method can all be renamed.
-	// The backend server should implement the renamed proto. However,
-	// clients
-	// should call the original method, and ESF routes the traffic to the
-	// renamed
-	// method.
-	//
-	// HTTP clients should call the URL mapped to the original method.
-	// gRPC and Stubby clients should call the original method with package
-	// name.
-	//
-	// For legacy reasons, ESF allows Stubby clients to call with the
-	// short name (without the package name). However, for API
-	// Versioning(or
-	// multiple methods mapped to the same short name), all Stubby clients
-	// must
-	// call the method's full name with the package name, otherwise the
-	// first one
-	// (selector) wins.
-	//
-	// If this `rename_to` is specified with a trailing `*`, the `selector`
-	// must
-	// be specified with a trailing `*` as well. The all element short
-	// names
-	// matched by the `*` in the selector will be kept in the
-	// `rename_to`.
-	//
-	// For example,
-	//     rename_rules:
-	//     - selector: |-
-	//         google.example.library.v1.*
-	//       rename_to: google.example.library.*
-	//
-	// The selector matches `google.example.library.v1.Library.CreateShelf`
-	// and
-	// `google.example.library.v1.Library.CreateBook`, they will be renamed
-	// to
-	// `google.example.library.Library.CreateShelf`
-	// and
-	// `google.example.library.Library.CreateBook`. It essentially renames
-	// the
-	// proto package name section of the matched proto service and methods.
-	RenameTo string `json:"renameTo,omitempty"`
-
 	// Selector: Selects the methods to which this rule applies.
 	//
 	// Refer to selector for syntax details.
@@ -5264,6 +5216,127 @@ func (s *V1Beta1ImportProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// V1Beta1ImportProducerQuotaPoliciesResponse: Response message for
+// ImportProducerQuotaPolicies
+type V1Beta1ImportProducerQuotaPoliciesResponse struct {
+	// Policies: The policies that were created from the imported data.
+	Policies []*V1Beta1ProducerQuotaPolicy `json:"policies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Policies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Policies") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ImportProducerQuotaPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ImportProducerQuotaPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1ProducerQuotaPolicy: Quota policy created by service producer.
+type V1Beta1ProducerQuotaPolicy struct {
+	// Container: The cloud resource container at which the quota policy is
+	// created. The
+	// format is {container_type}/{container_number}
+	Container string `json:"container,omitempty"`
+
+	// Dimensions:
+	// If this map is nonempty, then this policy applies only to specific
+	// values
+	// for dimensions defined in the limit unit.
+	//
+	// For example, an policy on a limit with the unit
+	// 1/{project}/{region}
+	// could contain an entry with the key "region" and the value
+	// "us-east-1";
+	// the policy is only applied to quota consumed in that region.
+	//
+	// This map has the following restrictions:
+	//
+	// *   Keys that are not defined in the limit's unit are not valid
+	// keys.
+	//     Any string appearing in {brackets} in the unit (besides {project}
+	// or
+	//     {user}) is a defined key.
+	// *   "project" is not a valid key; the project is already specified
+	// in
+	//     the parent resource name.
+	// *   "user" is not a valid key; the API does not support quota
+	// polcies
+	//     that apply only to a specific user.
+	// *   If "region" appears as a key, its value must be a valid Cloud
+	// region.
+	// *   If "zone" appears as a key, its value must be a valid Cloud
+	// zone.
+	// *   If any valid key other than "region" or "zone" appears in the
+	// map, then
+	//     all valid keys other than "region" or "zone" must also appear in
+	// the
+	//     map.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// Metric: The name of the metric to which this policy applies.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
+	// Name: The resource name of the producer policy.
+	// An example name would
+	// be:
+	// `services/compute.googleapis.com/organizations/123/consumerQuotaMe
+	// trics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/produce
+	// rQuotaPolicies/4a3f2c1d`
+	Name string `json:"name,omitempty"`
+
+	// PolicyValue: The quota policy value.
+	// Can be any nonnegative integer, or -1 (unlimited quota).
+	PolicyValue int64 `json:"policyValue,omitempty,string"`
+
+	// Unit: The limit unit of the limit to which this policy applies.
+	//
+	// An example unit would be:
+	// `1/{project}/{region}`
+	// Note that `{project}` and `{region}` are not placeholders in this
+	// example;
+	// the literal characters `{` and `}` occur in the string.
+	Unit string `json:"unit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Container") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Container") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ProducerQuotaPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ProducerQuotaPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // V1Beta1QuotaOverride: A quota override
 type V1Beta1QuotaOverride struct {
 	// Dimensions:
@@ -5711,7 +5784,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5855,7 +5928,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6000,7 +6073,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6181,7 +6254,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6412,7 +6485,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6592,7 +6665,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6758,7 +6831,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6915,7 +6988,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7061,7 +7134,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7203,7 +7276,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7350,7 +7423,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7531,7 +7604,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7716,7 +7789,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7865,7 +7938,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

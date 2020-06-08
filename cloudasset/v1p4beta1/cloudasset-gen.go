@@ -235,11 +235,23 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
-	// current
-	// binding. Different bindings, including their conditions, are
-	// examined
-	// independently.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the
+	// current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to
+	// the current request. However, a different role binding might grant
+	// the same
+	// role to one or more of the members in this binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see
+	// the
+	// [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/r
+	// esource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1670,7 +1682,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1869,7 +1881,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -221,6 +221,34 @@ type AsymmetricDecryptRequest struct {
 	// key using OAEP.
 	Ciphertext string `json:"ciphertext,omitempty"`
 
+	// CiphertextCrc32c: Optional. An optional CRC32C checksum of the
+	// AsymmetricDecryptRequest.ciphertext.
+	// If specified, KeyManagementService will verify the integrity of
+	// the
+	// received AsymmetricDecryptRequest.ciphertext using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(AsymmetricDecryptRequest.ciphertext) is equal
+	// to
+	// AsymmetricDecryptRequest.ciphertext_crc32c, and if so, perform
+	// a
+	// limited number of retries. A persistent mismatch may indicate an
+	// issue in
+	// your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Ciphertext") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -250,6 +278,50 @@ type AsymmetricDecryptResponse struct {
 	// Plaintext: The decrypted data originally encrypted with the matching
 	// public key.
 	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned
+	// AsymmetricDecryptResponse.plaintext. An integrity check
+	// of
+	// AsymmetricDecryptResponse.plaintext can be performed by computing
+	// the
+	// CRC32C checksum of AsymmetricDecryptResponse.plaintext and
+	// comparing
+	// your results to this field. Discard the response in case of
+	// non-matching
+	// checksum values, and perform a limited number of retries. A
+	// persistent
+	// mismatch may indicate an issue in your computation of the CRC32C
+	// checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
+
+	// VerifiedCiphertextCrc32c: Integrity verification field. A flag
+	// indicating whether
+	// AsymmetricDecryptRequest.ciphertext_crc32c was received
+	// by
+	// KeyManagementService and used for the integrity verification of
+	// the
+	// ciphertext. A false value of this
+	// field indicates either that
+	// AsymmetricDecryptRequest.ciphertext_crc32c
+	// was left unset or that it was not delivered to KeyManagementService.
+	// If
+	// you've set AsymmetricDecryptRequest.ciphertext_crc32c but this field
+	// is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	//
+	// NOTE: This field is in Beta.
+	VerifiedCiphertextCrc32c bool `json:"verifiedCiphertextCrc32c,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -288,6 +360,34 @@ type AsymmetricSignRequest struct {
 	// algorithm.
 	Digest *Digest `json:"digest,omitempty"`
 
+	// DigestCrc32c: Optional. An optional CRC32C checksum of the
+	// AsymmetricSignRequest.digest. If
+	// specified, KeyManagementService will verify the integrity of
+	// the
+	// received AsymmetricSignRequest.digest using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(AsymmetricSignRequest.digest) is equal
+	// to
+	// AsymmetricSignRequest.digest_crc32c, and if so, perform a
+	// limited
+	// number of retries. A persistent mismatch may indicate an issue in
+	// your
+	// computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	DigestCrc32c int64 `json:"digestCrc32c,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -314,14 +414,65 @@ func (s *AsymmetricSignRequest) MarshalJSON() ([]byte, error) {
 // AsymmetricSignResponse: Response message for
 // KeyManagementService.AsymmetricSign.
 type AsymmetricSignResponse struct {
+	// Name: The resource name of the CryptoKeyVersion used for signing.
+	// Check
+	// this field to verify that the intended resource was used for
+	// signing.
+	//
+	// NOTE: This field is in Beta.
+	Name string `json:"name,omitempty"`
+
 	// Signature: The created signature.
 	Signature string `json:"signature,omitempty"`
+
+	// SignatureCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned
+	// AsymmetricSignResponse.signature. An integrity check
+	// of
+	// AsymmetricSignResponse.signature can be performed by computing
+	// the
+	// CRC32C checksum of AsymmetricSignResponse.signature and comparing
+	// your
+	// results to this field. Discard the response in case of
+	// non-matching
+	// checksum values, and perform a limited number of retries. A
+	// persistent
+	// mismatch may indicate an issue in your computation of the CRC32C
+	// checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	SignatureCrc32c int64 `json:"signatureCrc32c,omitempty,string"`
+
+	// VerifiedDigestCrc32c: Integrity verification field. A flag indicating
+	// whether
+	// AsymmetricSignRequest.digest_crc32c was received
+	// by
+	// KeyManagementService and used for the integrity verification of
+	// the
+	// digest. A false value of this field
+	// indicates either that AsymmetricSignRequest.digest_crc32c was
+	// left
+	// unset or that it was not delivered to KeyManagementService. If
+	// you've
+	// set AsymmetricSignRequest.digest_crc32c but this field is still
+	// false,
+	// discard the response and perform a limited number of retries.
+	//
+	// NOTE: This field is in Beta.
+	VerifiedDigestCrc32c bool `json:"verifiedDigestCrc32c,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Signature") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -329,8 +480,8 @@ type AsymmetricSignResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Signature") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1014,10 +1165,68 @@ type DecryptRequest struct {
 	// EncryptRequest.additional_authenticated_data.
 	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
 
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the
+	// DecryptRequest.additional_authenticated_data. If
+	// specified,
+	// KeyManagementService will verify the integrity of the
+	// received
+	// DecryptRequest.additional_authenticated_data using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(DecryptRequest.additional_authenticated_data) is equal
+	// to
+	// DecryptRequest.additional_authenticated_data_crc32c, and if so,
+	// perform
+	// a limited number of retries. A persistent mismatch may indicate an
+	// issue in
+	// your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
 	// Ciphertext: Required. The encrypted data originally returned
 	// in
 	// EncryptResponse.ciphertext.
 	Ciphertext string `json:"ciphertext,omitempty"`
+
+	// CiphertextCrc32c: Optional. An optional CRC32C checksum of the
+	// DecryptRequest.ciphertext. If
+	// specified, KeyManagementService will verify the integrity of
+	// the
+	// received DecryptRequest.ciphertext using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(DecryptRequest.ciphertext) is equal
+	// to
+	// DecryptRequest.ciphertext_crc32c, and if so, perform a limited
+	// number
+	// of retries. A persistent mismatch may indicate an issue in your
+	// computation
+	// of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalAuthenticatedData") to unconditionally include in API
@@ -1049,6 +1258,34 @@ type DecryptResponse struct {
 	// Plaintext: The decrypted data originally supplied in
 	// EncryptRequest.plaintext.
 	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned
+	// DecryptResponse.plaintext. An integrity check
+	// of
+	// DecryptResponse.plaintext can be performed by computing the
+	// CRC32C
+	// checksum of DecryptResponse.plaintext and comparing your results
+	// to
+	// this field. Discard the response in case of non-matching checksum
+	// values,
+	// and perform a limited number of retries. A persistent mismatch may
+	// indicate
+	// an issue in your computation of the CRC32C checksum. Note: receiving
+	// this
+	// response message indicates that KeyManagementService is able
+	// to
+	// successfully decrypt the ciphertext.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1131,6 +1368,36 @@ type EncryptRequest struct {
 	// 8KiB.
 	AdditionalAuthenticatedData string `json:"additionalAuthenticatedData,omitempty"`
 
+	// AdditionalAuthenticatedDataCrc32c: Optional. An optional CRC32C
+	// checksum of the
+	// EncryptRequest.additional_authenticated_data. If
+	// specified,
+	// KeyManagementService will verify the integrity of the
+	// received
+	// EncryptRequest.additional_authenticated_data using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(EncryptRequest.additional_authenticated_data) is equal
+	// to
+	// EncryptRequest.additional_authenticated_data_crc32c, and if so,
+	// perform
+	// a limited number of retries. A persistent mismatch may indicate an
+	// issue in
+	// your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	AdditionalAuthenticatedDataCrc32c int64 `json:"additionalAuthenticatedDataCrc32c,omitempty,string"`
+
 	// Plaintext: Required. The data to encrypt. Must be no larger than
 	// 64KiB.
 	//
@@ -1142,6 +1409,34 @@ type EncryptRequest struct {
 	// than
 	// 8KiB.
 	Plaintext string `json:"plaintext,omitempty"`
+
+	// PlaintextCrc32c: Optional. An optional CRC32C checksum of the
+	// EncryptRequest.plaintext. If
+	// specified, KeyManagementService will verify the integrity of
+	// the
+	// received EncryptRequest.plaintext using this
+	// checksum.
+	// KeyManagementService will report an error if the checksum
+	// verification
+	// fails. If you receive a checksum error, your client should verify
+	// that
+	// CRC32C(EncryptRequest.plaintext) is equal
+	// to
+	// EncryptRequest.plaintext_crc32c, and if so, perform a limited number
+	// of
+	// retries. A persistent mismatch may indicate an issue in your
+	// computation of
+	// the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	PlaintextCrc32c int64 `json:"plaintextCrc32c,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalAuthenticatedData") to unconditionally include in API
@@ -1173,11 +1468,74 @@ type EncryptResponse struct {
 	// Ciphertext: The encrypted data.
 	Ciphertext string `json:"ciphertext,omitempty"`
 
+	// CiphertextCrc32c: Integrity verification field. A CRC32C checksum of
+	// the returned
+	// EncryptResponse.ciphertext. An integrity check
+	// of
+	// EncryptResponse.ciphertext can be performed by computing the
+	// CRC32C
+	// checksum of EncryptResponse.ciphertext and comparing your results
+	// to
+	// this field. Discard the response in case of non-matching checksum
+	// values,
+	// and perform a limited number of retries. A persistent mismatch may
+	// indicate
+	// an issue in your computation of the CRC32C checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	CiphertextCrc32c int64 `json:"ciphertextCrc32c,omitempty,string"`
+
 	// Name: The resource name of the CryptoKeyVersion used in encryption.
 	// Check
 	// this field to verify that the intended resource was used for
 	// encryption.
 	Name string `json:"name,omitempty"`
+
+	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
+	// field. A flag indicating
+	// whether
+	// EncryptRequest.additional_authenticated_data_crc32c was received
+	// by
+	// KeyManagementService and used for the integrity verification of
+	// the
+	// AAD. A false value of this
+	// field indicates either
+	// that
+	// EncryptRequest.additional_authenticated_data_crc32c was left unset
+	// or
+	// that it was not delivered to KeyManagementService. If you've
+	// set
+	// EncryptRequest.additional_authenticated_data_crc32c but this field
+	// is
+	// still false, discard the response and perform a limited number of
+	// retries.
+	//
+	// NOTE: This field is in Beta.
+	VerifiedAdditionalAuthenticatedDataCrc32c bool `json:"verifiedAdditionalAuthenticatedDataCrc32c,omitempty"`
+
+	// VerifiedPlaintextCrc32c: Integrity verification field. A flag
+	// indicating whether
+	// EncryptRequest.plaintext_crc32c was received by
+	// KeyManagementService and used for the integrity verification of
+	// the
+	// plaintext. A false value of this field
+	// indicates either that EncryptRequest.plaintext_crc32c was left unset
+	// or
+	// that it was not delivered to KeyManagementService. If you've
+	// set
+	// EncryptRequest.plaintext_crc32c but this field is still false,
+	// discard
+	// the response and perform a limited number of retries.
+	//
+	// NOTE: This field is in Beta.
+	VerifiedPlaintextCrc32c bool `json:"verifiedPlaintextCrc32c,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2197,6 +2555,12 @@ type PublicKey struct {
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
 
+	// Name: The name of the CryptoKeyVersion public key.
+	// Provided here for verification.
+	//
+	// NOTE: This field is in Beta.
+	Name string `json:"name,omitempty"`
+
 	// Pem: The public key, encoded in PEM format. For more information, see
 	// the
 	// [RFC 7468](https://tools.ietf.org/html/rfc7468) sections for
@@ -2207,6 +2571,29 @@ type PublicKey struct {
 	// Info]
 	// (https://tools.ietf.org/html/rfc7468#section-13).
 	Pem string `json:"pem,omitempty"`
+
+	// PemCrc32c: Integrity verification field. A CRC32C checksum of the
+	// returned
+	// PublicKey.pem. An integrity check of PublicKey.pem can be
+	// performed
+	// by computing the CRC32C checksum of PublicKey.pem and
+	// comparing your results to this field. Discard the response in case
+	// of
+	// non-matching checksum values, and perform a limited number of
+	// retries. A
+	// persistent mismatch may indicate an issue in your computation of the
+	// CRC32C
+	// checksum.
+	// Note: This field is defined as int64 for reasons of compatibility
+	// across
+	// different languages. However, it is a non-negative integer, which
+	// will
+	// never exceed 2^32-1, and can be safely downconverted to uint32 in
+	// languages
+	// that support this type.
+	//
+	// NOTE: This field is in Beta.
+	PemCrc32c int64 `json:"pemCrc32c,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2476,7 +2863,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2643,7 +3030,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2824,7 +3211,7 @@ func (c *ProjectsLocationsKeyRingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2979,7 +3366,7 @@ func (c *ProjectsLocationsKeyRingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3152,7 +3539,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3349,7 +3736,7 @@ func (c *ProjectsLocationsKeyRingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3532,7 +3919,7 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3683,7 +4070,7 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3848,7 +4235,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4001,7 +4388,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4145,7 +4532,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4296,7 +4683,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4469,7 +4856,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4678,7 +5065,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4872,7 +5259,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5024,7 +5411,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5175,7 +5562,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5319,7 +5706,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5464,7 +5851,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCa
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5609,7 +5996,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall)
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5754,7 +6141,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5907,7 +6294,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6057,7 +6444,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6206,7 +6593,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) H
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6348,7 +6735,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6556,7 +6943,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Header() 
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6757,7 +7144,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Header()
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,7 +7298,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7063,7 +7450,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7218,7 +7605,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7391,7 +7778,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7588,7 +7975,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7771,7 +8158,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7922,7 +8309,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

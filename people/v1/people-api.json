@@ -726,7 +726,7 @@
       }
     }
   },
-  "revision": "20200603",
+  "revision": "20200604",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1455,6 +1455,10 @@
         },
         "phoneticMiddleName": {
           "description": "The middle name(s) spelled as they sound.",
+          "type": "string"
+        },
+        "unstructuredName": {
+          "description": "The free form name value.",
           "type": "string"
         }
       },

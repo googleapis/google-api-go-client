@@ -1424,9 +1424,6 @@ type Endpoint struct {
 	// allowed to proceed.
 	AllowCors bool `json:"allowCors,omitempty"`
 
-	// Features: The list of features enabled on this endpoint.
-	Features []string `json:"features,omitempty"`
-
 	// Name: The canonical name of this endpoint.
 	Name string `json:"name,omitempty"`
 
@@ -4557,6 +4554,9 @@ type V1Beta1ConsumerQuotaMetric struct {
 	// future.
 	Name string `json:"name,omitempty"`
 
+	// Unit: The units in which the metric value is reported.
+	Unit string `json:"unit,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -5472,7 +5472,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5629,7 +5629,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5777,7 +5777,7 @@ func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) Header() http.
 
 func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5963,7 +5963,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6163,7 +6163,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6334,7 +6334,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6491,7 +6491,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6652,7 +6652,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6842,7 +6842,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

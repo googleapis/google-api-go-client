@@ -7206,8 +7206,8 @@ type GoogleCloudVideointelligenceV1p3beta1StreamingAnnotateVideoResponse struct 
 	// AnnotationResults: Streaming annotation results.
 	AnnotationResults *GoogleCloudVideointelligenceV1p3beta1StreamingVideoAnnotationResults `json:"annotationResults,omitempty"`
 
-	// AnnotationResultsUri: Google Cloud Storage(GCS) URI that stores
-	// annotation results of one
+	// AnnotationResultsUri: Google Cloud Storage URI that stores annotation
+	// results of one
 	// streaming session in JSON format.
 	// It is the annotation_result_storage_directory
 	// from the request followed by '/cloud_project_number-session_id'.
@@ -7982,7 +7982,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

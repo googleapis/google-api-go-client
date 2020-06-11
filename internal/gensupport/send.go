@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 )
 
 // Hook is the type of a function that is called once before each HTTP request
@@ -64,14 +65,53 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 	if client == nil {
 		client = http.DefaultClient
 	}
-	resp, err := client.Do(req.WithContext(ctx))
-	// If we got an error, and the context has been canceled,
-	// the context's error is probably more useful.
-	if err != nil {
+
+	var resp *http.Response
+	var err error
+
+	// Loop to retry the request, up to the deadline.
+	var pause time.Duration
+	bo := backoff()
+	quitAfter := time.After(retryDeadline)
+
+	for {
 		select {
 		case <-ctx.Done():
-			err = ctx.Err()
-		default:
+			// If we got an error, and the context has been canceled,
+			// the context's error is probably more useful.
+			if err == nil {
+				err = ctx.Err()
+			}
+			return resp, err
+		case <-time.After(pause):
+		case <-quitAfter:
+			return resp, err
+		}
+
+		resp, err = client.Do(req.WithContext(ctx))
+
+		var status int
+		if resp != nil {
+			status = resp.StatusCode
+		}
+
+		// Check if we should retry the request.
+		if !shouldRetry(status, err) {
+			break
+		} else {
+			// If we have a retryable error but can't get a new copy of the body, we
+			// also must refrain from retrying (this happens in the case where the
+			// input is unbuffered).
+			var errBody error
+			req.Body, errBody = req.GetBody()
+			if errBody != nil {
+				break
+			}
+		}
+
+		pause = bo.Pause()
+		if resp != nil && resp.Body != nil {
+			resp.Body.Close()
 		}
 	}
 	return resp, err

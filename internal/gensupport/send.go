@@ -95,18 +95,16 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 			status = resp.StatusCode
 		}
 
-		// Check if we should retry the request.
-		if !shouldRetry(status, err) {
+		// Check if we can retry the request. A retry can only be done if the error
+		// is retryable and the request body can be re-created using GetBody (this
+		// will not be possible if the body was unbuffered).
+		if req.GetBody == nil || !shouldRetry(status, err) {
 			break
-		} else {
-			// If we have a retryable error but can't get a new copy of the body, we
-			// also must refrain from retrying (this happens in the case where the
-			// input is unbuffered).
-			var errBody error
-			req.Body, errBody = req.GetBody()
-			if errBody != nil {
-				break
-			}
+		}
+		var errBody error
+		req.Body, errBody = req.GetBody()
+		if errBody != nil {
+			break
 		}
 
 		pause = bo.Pause()

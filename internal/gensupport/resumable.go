@@ -37,11 +37,6 @@ const (
 	// should be retried.
 	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
 	statusTooManyRequests = 429
-
-	// statusRequestTimeout is returned by the storage API if the request times
-	// out on the server side. The request should be retried.
-	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
-	statusRequestTimeout = 408
 )
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
@@ -238,7 +233,7 @@ func shouldRetry(status int, err error) bool {
 	if 500 <= status && status <= 599 {
 		return true
 	}
-	if status == statusTooManyRequests || status == statusRequestTimeout {
+	if status == statusTooManyRequests {
 		return true
 	}
 	if err == io.ErrUnexpectedEOF {

@@ -11,6 +11,7 @@ import (
 	"io"
 	"net/http"
 	"sync"
+	"syscall"
 	"time"
 
 	gax "github.com/googleapis/gax-go/v2"
@@ -36,6 +37,11 @@ const (
 	// should be retried.
 	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
 	statusTooManyRequests = 429
+
+	// statusRequestTimeout is returned by the storage API if the request times
+	// out on the server side. The request should be retried.
+	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
+	statusRequestTimeout = 408
 )
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
@@ -160,21 +166,6 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context) (*http.Response, e
 // rx is private to the auto-generated API code.
 // Exactly one of resp or err will be nil.  If resp is non-nil, the caller must call resp.Body.Close.
 func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err error) {
-	var shouldRetry = func(status int, err error) bool {
-		if 500 <= status && status <= 599 {
-			return true
-		}
-		if status == statusTooManyRequests {
-			return true
-		}
-		if err == io.ErrUnexpectedEOF {
-			return true
-		}
-		if err, ok := err.(interface{ Temporary() bool }); ok {
-			return err.Temporary()
-		}
-		return false
-	}
 
 	// There are a couple of cases where it's possible for err and resp to both
 	// be non-nil. However, we expose a simpler contract to our callers: exactly
@@ -238,4 +229,32 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 
 		return prepareReturn(resp, err)
 	}
+}
+
+// shouldRetry indicates whether an error is retryable for the purposes of this
+// package, following guidance from
+// https://cloud.google.com/storage/docs/exponential-backoff .
+func shouldRetry(status int, err error) bool {
+	if 500 <= status && status <= 599 {
+		return true
+	}
+	if status == statusTooManyRequests || status == statusRequestTimeout {
+		return true
+	}
+	if err == io.ErrUnexpectedEOF {
+		return true
+	}
+	// Transient network errors should be retried.
+	if se, ok := err.(syscall.Errno); ok {
+		return se == syscall.ECONNRESET || se == syscall.ECONNREFUSED
+	}
+	// If Go 1.13 error unwrapping is available, use this to examine wrapped
+	// errors.
+	if err, ok := err.(interface{Unwrap() error}); ok {
+		return shouldRetry(status, err.Unwrap())
+	}
+	if err, ok := err.(interface{ Temporary() bool }); ok {
+		return err.Temporary()
+	}
+	return false
 }

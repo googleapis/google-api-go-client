@@ -280,15 +280,15 @@ func (s *AsyncOptions) MarshalJSON() ([]byte, error) {
 //
 // { "audit_configs": [ { "service": "allServices" "audit_log_configs":
 // [ { "log_type": "DATA_READ", "exempted_members": [
-// "user:foo@gmail.com" ] }, { "log_type": "DATA_WRITE", }, {
+// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE", }, {
 // "log_type": "ADMIN_READ", } ] }, { "service":
-// "fooservice.googleapis.com" "audit_log_configs": [ { "log_type":
+// "sampleservice.googleapis.com" "audit_log_configs": [ { "log_type":
 // "DATA_READ", }, { "log_type": "DATA_WRITE", "exempted_members": [
-// "user:bar@gmail.com" ] } ] } ] }
+// "user:aliya@example.com" ] } ] } ] }
 //
-// For fooservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ
-// logging, and bar@gmail.com from DATA_WRITE logging.
+// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
+// ADMIN_READ logging. It also exempts jose@example.com from DATA_READ
+// logging, and aliya@example.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -329,16 +329,18 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 // permissions. Example:
 //
 // { "audit_log_configs": [ { "log_type": "DATA_READ",
-// "exempted_members": [ "user:foo@gmail.com" ] }, { "log_type":
+// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
 // "DATA_WRITE", } ] }
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
-// foo@gmail.com from DATA_READ logging.
+// jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
 	// for this type of permission. Follows the same format of
 	// [Binding.members][].
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
+
+	IgnoreChildExemptions bool `json:"ignoreChildExemptions,omitempty"`
 
 	// LogType: The log type that this config enables.
 	LogType string `json:"logType,omitempty"`
@@ -428,10 +430,20 @@ func (s *BasicAuth) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding. NOTE: an unsatisfied condition will not allow user access
-	// via current binding. Different bindings, including their conditions,
-	// are examined independently.
+	// Condition: The condition that is associated with this binding.
+	//
+	// If the condition evaluates to `true`, then this binding applies to
+	// the current request.
+	//
+	// If the condition evaluates to `false`, then this binding does not
+	// apply to the current request. However, a different role binding might
+	// grant the same role to one or more of the members in this
+	// binding.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -445,7 +457,7 @@ type Binding struct {
 	// account.
 	//
 	// * `user:{emailid}`: An email address that represents a specific
-	// Google account. For example, `alice@gmail.com` .
+	// Google account. For example, `alice@example.com` .
 	//
 	//
 	//
@@ -456,9 +468,29 @@ type Binding struct {
 	// * `group:{emailid}`: An email address that represents a Google group.
 	// For example, `admins@example.com`.
 	//
+	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding.
+	//
+	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding.
+	//
+	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a Google group that has been recently
+	// deleted. For example, `admins@example.com?uid=123456789012345678901`.
+	// If the group is recovered, this value reverts to `group:{emailid}`
+	// and the recovered group retains the role in the binding.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	//
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the users of that domain. For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
@@ -540,13 +572,13 @@ type CompositeType struct {
 	// Labels: Map of labels; provided by the client when the resource is
 	// created or updated. Specifically: Label keys must be between 1 and 63
 	// characters long and must conform to the following regular expression:
-	// [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63
+	// `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63
 	// characters long and must conform to the regular expression
-	// ([a-z]([-a-z0-9]*[a-z0-9])?)?
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*CompositeTypeLabelEntry `json:"labels,omitempty"`
 
 	// Name: Name of the composite type, must follow the expression:
-	// [a-z]([-a-z0-9_.]{0,61}[a-z0-9])?.
+	// `[a-z]([-a-z0-9_.]{0,61}[a-z0-9])?`.
 	Name string `json:"name,omitempty"`
 
 	// Operation: Output only. The Operation that most recently ran, or is
@@ -669,11 +701,7 @@ type Condition struct {
 	// and uses the IAM system for access control.
 	Sys string `json:"sys,omitempty"`
 
-	// Value: DEPRECATED. Use 'values' instead.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
+	// Values: The objects of the condition.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Iam") to
@@ -810,15 +838,15 @@ type Deployment struct {
 	Description string `json:"description,omitempty"`
 
 	// Fingerprint: Provides a fingerprint to use in requests to modify a
-	// deployment, such as update(), stop(), and cancelPreview() requests. A
-	// fingerprint is a randomly generated value that must be provided with
-	// update(), stop(), and cancelPreview() requests to perform optimistic
-	// locking. This ensures optimistic concurrency so that only one request
-	// happens at a time.
+	// deployment, such as `update()`, `stop()`, and `cancelPreview()`
+	// requests. A fingerprint is a randomly generated value that must be
+	// provided with `update()`, `stop()`, and `cancelPreview()` requests to
+	// perform optimistic locking. This ensures optimistic concurrency so
+	// that only one request happens at a time.
 	//
 	// The fingerprint is initially generated by Deployment Manager and
 	// changes after every request to modify data. To get the latest
-	// fingerprint value, perform a get() request to a deployment.
+	// fingerprint value, perform a `get()` request to a deployment.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	Id uint64 `json:"id,omitempty,string"`
@@ -829,19 +857,20 @@ type Deployment struct {
 	// Labels: Map of labels; provided by the client when the resource is
 	// created or updated. Specifically: Label keys must be between 1 and 63
 	// characters long and must conform to the following regular expression:
-	// [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63
+	// `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63
 	// characters long and must conform to the regular expression
-	// ([a-z]([-a-z0-9]*[a-z0-9])?)?
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*DeploymentLabelEntry `json:"labels,omitempty"`
 
 	// Manifest: Output only. URL of the manifest representing the last
-	// manifest that was successfully deployed.
+	// manifest that was successfully deployed. If no manifest has been
+	// successfully deployed, this field will be absent.
 	Manifest string `json:"manifest,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
 	// RFC1035. Specifically, the name must be 1-63 characters long and
-	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
 	// the first character must be a lowercase letter, and all following
 	// characters must be a dash, lowercase letter, or digit, except the
 	// last character, which cannot be a dash.
@@ -851,9 +880,9 @@ type Deployment struct {
 	// currently running, on this deployment.
 	Operation *Operation `json:"operation,omitempty"`
 
-	// Outputs: Output only. Map of outputs from the last manifest that
+	// Outputs: Output only. List of outputs from the last manifest that
 	// deployed successfully.
-	Outputs []*DeploymentOutputsEntry `json:"outputs,omitempty"`
+	Outputs []*DeploymentOutputEntry `json:"outputs,omitempty"`
 
 	// SelfLink: Output only. Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -925,9 +954,12 @@ func (s *DeploymentLabelEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type DeploymentOutputsEntry struct {
+// DeploymentOutputEntry: Output object for Deployments
+type DeploymentOutputEntry struct {
+	// Key: Key of the output
 	Key string `json:"key,omitempty"`
 
+	// Value: Value of the label
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -947,8 +979,8 @@ type DeploymentOutputsEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeploymentOutputsEntry) MarshalJSON() ([]byte, error) {
-	type NoMethod DeploymentOutputsEntry
+func (s *DeploymentOutputEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod DeploymentOutputEntry
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -965,9 +997,9 @@ type DeploymentUpdate struct {
 	// Labels: Output only. Map of labels; provided by the client when the
 	// resource is created or updated. Specifically: Label keys must be
 	// between 1 and 63 characters long and must conform to the following
-	// regular expression: [a-z]([-a-z0-9]*[a-z0-9])? Label values must be
+	// regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be
 	// between 0 and 63 characters long and must conform to the regular
-	// expression ([a-z]([-a-z0-9]*[a-z0-9])?)?
+	// expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*DeploymentUpdateLabelEntry `json:"labels,omitempty"`
 
 	// Manifest: Output only. URL of the manifest representing the update
@@ -1026,17 +1058,17 @@ func (s *DeploymentUpdateLabelEntry) MarshalJSON() ([]byte, error) {
 }
 
 type DeploymentsCancelPreviewRequest struct {
-	// Fingerprint: Specifies a fingerprint for cancelPreview() requests. A
-	// fingerprint is a randomly generated value that must be provided in
-	// cancelPreview() requests to perform optimistic locking. This ensures
-	// optimistic concurrency so that the deployment does not have
+	// Fingerprint: Specifies a fingerprint for `cancelPreview()` requests.
+	// A fingerprint is a randomly generated value that must be provided in
+	// `cancelPreview()` requests to perform optimistic locking. This
+	// ensures optimistic concurrency so that the deployment does not have
 	// conflicting requests (e.g. if someone attempts to make a new update
 	// request while another user attempts to cancel a preview, this would
 	// prevent one of the requests).
 	//
 	// The fingerprint is initially generated by Deployment Manager and
 	// changes after every request to modify a deployment. To get the latest
-	// fingerprint value, perform a get() request on the deployment.
+	// fingerprint value, perform a `get()` request on the deployment.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
@@ -1101,9 +1133,9 @@ func (s *DeploymentsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type DeploymentsStopRequest struct {
-	// Fingerprint: Specifies a fingerprint for stop() requests. A
+	// Fingerprint: Specifies a fingerprint for `stop()` requests. A
 	// fingerprint is a randomly generated value that must be provided in
-	// stop() requests to perform optimistic locking. This ensures
+	// `stop()` requests to perform optimistic locking. This ensures
 	// optimistic concurrency so that the deployment does not have
 	// conflicting requests (e.g. if someone attempts to make a new update
 	// request while another user attempts to stop an ongoing update
@@ -1111,7 +1143,7 @@ type DeploymentsStopRequest struct {
 	//
 	// The fingerprint is initially generated by Deployment Manager and
 	// changes after every request to modify a deployment. To get the latest
-	// fingerprint value, perform a get() request on the deployment.
+	// fingerprint value, perform a `get()` request on the deployment.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
@@ -1168,29 +1200,53 @@ func (s *Diagnostic) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Expr: Represents an expression text. Example:
+// Expr: Represents a textual expression in the Common Expression
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec.
 //
-// title: "User account presence" description: "Determines whether the
-// request has a user account" expression: "size(request.user) > 0"
+// Example (Comparison):
+//
+// title: "Summary size limit" description: "Determines if a summary is
+// less than 100 chars" expression: "document.summary.size() <
+// 100"
+//
+// Example (Equality):
+//
+// title: "Requestor is owner" description: "Determines if requestor is
+// the document owner" expression: "document.owner ==
+// request.auth.claims.email"
+//
+// Example (Logic):
+//
+// title: "Public documents" description: "Determine whether the
+// document should be publicly visible" expression: "document.type !=
+// 'private' && document.type != 'internal'"
+//
+// Example (Data Manipulation):
+//
+// title: "Notification string" description: "Create a notification
+// string with a timestamp." expression: "'New message received at ' +
+// string(document.create_time)"
+//
+// The exact variables and functions that may be referenced within an
+// expression are determined by the service that evaluates it. See the
+// service documentation for additional information.
 type Expr struct {
-	// Description: An optional description of the expression. This is a
+	// Description: Optional. Description of the expression. This is a
 	// longer text which describes the expression, e.g. when hovered over it
 	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
 	// Expression Language syntax.
-	//
-	// The application context of the containing message determines which
-	// well-known feature set of CEL is supported.
 	Expression string `json:"expression,omitempty"`
 
-	// Location: An optional string indicating the location of the
-	// expression for error reporting, e.g. a file name and a position in
-	// the file.
+	// Location: Optional. String indicating the location of the expression
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
-	// Title: An optional title for the expression, i.e. a short string
+	// Title: Optional. Title for the expression, i.e. a short string
 	// describing its purpose. This can be used e.g. in UIs which allow to
 	// enter the expression.
 	Title string `json:"title,omitempty"`
@@ -1414,19 +1470,19 @@ func (s *LogConfigCloudAuditOptions) MarshalJSON() ([]byte, error) {
 //
 // Examples: counter { metric: "/debug_access_count" field:
 // "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
+// /iam/policy/debug_access_count {iam_principal=[value of
 // IAMContext.principal]}
-//
-// At this time we do not support multiple field names (though this may
-// be supported in the future).
 type LogConfigCounterOptions struct {
+	// CustomFields: Custom fields.
+	CustomFields []*LogConfigCounterOptionsCustomField `json:"customFields,omitempty"`
+
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
 
 	// Metric: The metric to update.
 	Metric string `json:"metric,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Field") to
+	// ForceSendFields is a list of field names (e.g. "CustomFields") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1434,10 +1490,10 @@ type LogConfigCounterOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Field") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CustomFields") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1449,17 +1505,43 @@ func (s *LogConfigCounterOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LogConfigCounterOptionsCustomField: Custom fields. These can be used
+// to create a counter with arbitrary field/value pairs. See:
+// go/rpcsp-custom-fields.
+type LogConfigCounterOptionsCustomField struct {
+	// Name: Name is the field name.
+	Name string `json:"name,omitempty"`
+
+	// Value: Value is the field value. It is important that in contrast to
+	// the CounterOptions.field, the value here is a constant that is not
+	// derived from the IAMContext.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogConfigCounterOptionsCustomField) MarshalJSON() ([]byte, error) {
+	type NoMethod LogConfigCounterOptionsCustomField
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LogConfigDataAccessOptions: Write a Data Access (Gin) log
 type LogConfigDataAccessOptions struct {
-	// LogMode: Whether Gin logging should happen in a fail-closed manner at
-	// the caller. This is relevant only in the LocalIAM implementation, for
-	// now.
-	//
-	// NOTE: Logging to Gin in a fail-closed manner is currently unsupported
-	// while work is being done to satisfy the requirements of go/345.
-	// Currently, setting LOG_FAIL_CLOSED mode will have no effect, but
-	// still exists because there is active work being done to support it
-	// (b/115874152).
 	LogMode string `json:"logMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogMode") to
@@ -1623,11 +1705,30 @@ func (s *MethodMap) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Operation: An Operation resource, used to manage asynchronous API
-// requests. (== resource_for v1.globalOperations ==) (== resource_for
-// beta.globalOperations ==) (== resource_for v1.regionOperations ==)
-// (== resource_for beta.regionOperations ==) (== resource_for
-// v1.zoneOperations ==) (== resource_for beta.zoneOperations ==)
+// Operation: Represents an Operation resource.
+//
+// Google Compute Engine has three Operation resources:
+//
+// *
+// [Global](/compute/docs/reference/rest/{$api_version}/globalOperations)
+//  *
+// [Regional](/compute/docs/reference/rest/{$api_version}/regionOperation
+// s) *
+// [Zonal](/compute/docs/reference/rest/{$api_version}/zoneOperations)
+//
+// Y
+// ou can use an operation resource to manage asynchronous API requests.
+// For more information, read Handling API responses.
+//
+// Operations can be global, regional or zonal.
+// - For global operations, use the `globalOperations` resource.
+// - For regional operations, use the `regionOperations` resource.
+// - For zonal operations, use the `zonalOperations` resource.
+//
+// For more information, read  Global, Regional, and Zonal Resources.
+// (== resource_for {$api_version}.globalOperations ==) (== resource_for
+// {$api_version}.regionOperations ==) (== resource_for
+// {$api_version}.zoneOperations ==)
 type Operation struct {
 	// ClientOperationId: [Output Only] The value of `requestId` if you
 	// provided it in the request. Not present otherwise.
@@ -1649,15 +1750,16 @@ type Operation struct {
 	Error *OperationError `json:"error,omitempty"`
 
 	// HttpErrorMessage: [Output Only] If the operation fails, this field
-	// contains the HTTP error message that was returned, such as NOT FOUND.
+	// contains the HTTP error message that was returned, such as `NOT
+	// FOUND`.
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
 
 	// HttpErrorStatusCode: [Output Only] If the operation fails, this field
 	// contains the HTTP error status code that was returned. For example, a
-	// 404 means the resource was not found.
+	// `404` means the resource was not found.
 	HttpErrorStatusCode int64 `json:"httpErrorStatusCode,omitempty"`
 
-	// Id: [Output Only] The unique identifier for the resource. This
+	// Id: [Output Only] The unique identifier for the operation. This
 	// identifier is defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
 
@@ -1665,15 +1767,15 @@ type Operation struct {
 	// This value is in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always compute#operation
+	// Kind: [Output Only] Type of the resource. Always `compute#operation`
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: [Output Only] Name of the resource.
+	// Name: [Output Only] Name of the operation.
 	Name string `json:"name,omitempty"`
 
-	// OperationType: [Output Only] The type of operation, such as insert,
-	// update, or delete, and so on.
+	// OperationType: [Output Only] The type of operation, such as `insert`,
+	// `update`, or `delete`, and so on.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: [Output Only] An optional progress indicator that ranges
@@ -1684,20 +1786,22 @@ type Operation struct {
 	Progress int64 `json:"progress,omitempty"`
 
 	// Region: [Output Only] The URL of the region where the operation
-	// resides. Only available when performing regional operations. You must
-	// specify this field as part of the HTTP request URL. It is not
-	// settable as a field in the request body.
+	// resides. Only applicable when performing regional operations.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// SelfLinkWithId: [Output Only] Server-defined URL for this resource
+	// with the resource id.
+	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 
 	// StartTime: [Output Only] The time that this operation was started by
 	// the server. This value is in RFC3339 text format.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Status: [Output Only] The status of the operation, which can be one
-	// of the following: PENDING, RUNNING, or DONE.
+	// of the following: `PENDING`, `RUNNING`, or `DONE`.
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output Only] An optional textual description of the
@@ -1714,7 +1818,7 @@ type Operation struct {
 	TargetLink string `json:"targetLink,omitempty"`
 
 	// User: [Output Only] User who requested the operation, for example:
-	// user@example.com.
+	// `user@example.com`.
 	User string `json:"user,omitempty"`
 
 	// Warnings: [Output Only] If warning messages are generated during
@@ -1722,9 +1826,7 @@ type Operation struct {
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
 	// Zone: [Output Only] The URL of the zone where the operation resides.
-	// Only available when performing per-zone operations. You must specify
-	// this field as part of the HTTP request URL. It is not settable as a
-	// field in the request body.
+	// Only applicable when performing per-zone operations.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1973,45 +2075,60 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Policy: Defines an Identity and Access Management (IAM) policy. It is
-// used to specify access control policies for Cloud Platform
-// resources.
+// Policy: An Identity and Access Management (IAM) policy, which
+// specifies access controls for Google Cloud resources.
 //
 //
 //
-// A `Policy` consists of a list of `bindings`. A `binding` binds a list
-// of `members` to a `role`, where the members can be user accounts,
-// Google groups, Google domains, and service accounts. A `role` is a
-// named list of permissions defined by IAM.
+// A `Policy` is a collection of `bindings`. A `binding` binds one or
+// more `members` to a single `role`. Members can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role.
 //
-// **JSON Example**
+// For some types of Google Cloud resources, a `binding` can also
+// specify a `condition`, which is a logical expression that allows
+// access to a resource only if the expression evaluates to `true`. A
+// condition can add constraints based on attributes of the request, the
+// resource, or both. To learn which resources support conditions in
+// their IAM policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 //
-// { "bindings": [ { "role": "roles/owner", "members": [
-// "user:mike@example.com", "group:admins@example.com",
+// **JSON example:**
+//
+// { "bindings": [ { "role": "roles/resourcemanager.organizationAdmin",
+// "members": [ "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
-// "serviceAccount:my-other-app@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/viewer", "members": ["user:sean@example.com"] } ]
-// }
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 }
 //
-// **YAML Example**
+// **YAML example:**
 //
 // bindings: - members: - user:mike@example.com -
 // group:admins@example.com - domain:google.com -
-// serviceAccount:my-other-app@appspot.gserviceaccount.com role:
-// roles/owner - members: - user:sean@example.com role:
-// roles/viewer
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3
 //
-//
-//
-// For a description of IAM and its features, see the [IAM developer's
-// guide](https://cloud.google.com/iam/docs).
+// For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. `bindings` with
-	// no members will result in an error.
+	// Bindings: Associates a list of `members` to a `role`. Optionally, may
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -2023,8 +2140,10 @@ type Policy struct {
 	// request to `setIamPolicy` to ensure that their change will be applied
 	// to the same version of the policy.
 	//
-	// If no `etag` is provided in the call to `setIamPolicy`, then the
-	// existing policy is overwritten blindly.
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field whenever you call `setIamPolicy`. If you omit this field, then
+	// IAM allows you to overwrite a version `3` policy with a version `1`
+	// policy, and all of the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
 	IamOwned bool `json:"iamOwned,omitempty"`
@@ -2039,7 +2158,32 @@ type Policy struct {
 	// denied.
 	Rules []*Rule `json:"rules,omitempty"`
 
-	// Version: Deprecated.
+	// Version: Specifies the format of the policy.
+	//
+	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
+	// value are rejected.
+	//
+	// Any operation that affects conditional role bindings must specify
+	// version `3`. This requirement applies to the following operations:
+	//
+	// * Getting a policy that includes a conditional role binding * Adding
+	// a conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions
+	//
+	// **Important:** If you use IAM Conditions, you must include the `etag`
+	// field whenever you call `setIamPolicy`. If you omit this field, then
+	// IAM allows you to overwrite a version `3` policy with a version `1`
+	// policy, and all of the conditions in the version `3` policy are
+	// lost.
+	//
+	// If a policy does not include any conditions, operations on that
+	// policy may specify any valid version or leave the field unset.
+	//
+	// To learn which resources support conditions in their IAM policies,
+	// see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2148,7 +2292,7 @@ type Resource struct {
 	RuntimePolicies []string `json:"runtimePolicies,omitempty"`
 
 	// Type: Output only. The type of the resource, for example
-	// compute.v1.instance, or cloudfunctions.v1beta1.function.
+	// `compute.v1.instance`, or `cloudfunctions.v1beta1.function`.
 	Type string `json:"type,omitempty"`
 
 	// Update: Output only. If Deployment Manager is currently updating or
@@ -2313,8 +2457,8 @@ type ResourceUpdate struct {
 	// with reference values expanded. Returned as serialized YAML.
 	FinalProperties string `json:"finalProperties,omitempty"`
 
-	// Intent: Output only. The intent of the resource: PREVIEW, UPDATE, or
-	// CANCEL.
+	// Intent: Output only. The intent of the resource: `PREVIEW`, `UPDATE`,
+	// or `CANCEL`.
 	Intent string `json:"intent,omitempty"`
 
 	// Manifest: Output only. URL of the manifest representing the update
@@ -2772,9 +2916,9 @@ type Type struct {
 	// Labels: Map of labels; provided by the client when the resource is
 	// created or updated. Specifically: Label keys must be between 1 and 63
 	// characters long and must conform to the following regular expression:
-	// [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63
+	// `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63
 	// characters long and must conform to the regular expression
-	// ([a-z]([-a-z0-9]*[a-z0-9])?)?
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*TypeLabelEntry `json:"labels,omitempty"`
 
 	// Name: Name of the type.
@@ -2826,7 +2970,7 @@ type TypeInfo struct {
 	DocumentationLink string `json:"documentationLink,omitempty"`
 
 	// Kind: Output only. Type of the output. Always
-	// deploymentManager#TypeInfo for TypeInfo.
+	// `deploymentManager#TypeInfo` for TypeInfo.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The base type or composite type name.
@@ -2940,6 +3084,15 @@ type TypeProvider struct {
 	// Credential: Credential used when interacting with this type.
 	Credential *Credential `json:"credential,omitempty"`
 
+	// CustomCertificateAuthorityRoots: List of up to 2 custom certificate
+	// authority roots to use for TLS authentication when making calls on
+	// behalf of this type provider. If set, TLS authentication will
+	// exclusively use these roots instead of relying on publicly trusted
+	// certificate authorities when validating TLS certificate authenticity.
+	// The certificates must be in base64-encoded PEM format. The maximum
+	// size of each certificate must not exceed 10KB.
+	CustomCertificateAuthorityRoots []string `json:"customCertificateAuthorityRoots,omitempty"`
+
 	// Description: An optional textual description of the resource;
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
@@ -2957,15 +3110,15 @@ type TypeProvider struct {
 	// Labels: Map of labels; provided by the client when the resource is
 	// created or updated. Specifically: Label keys must be between 1 and 63
 	// characters long and must conform to the following regular expression:
-	// [a-z]([-a-z0-9]*[a-z0-9])? Label values must be between 0 and 63
+	// `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63
 	// characters long and must conform to the regular expression
-	// ([a-z]([-a-z0-9]*[a-z0-9])?)?
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*TypeProviderLabelEntry `json:"labels,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
 	// is created. The name must be 1-63 characters long, and comply with
 	// RFC1035. Specifically, the name must be 1-63 characters long and
-	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
 	// the first character must be a lowercase letter, and all following
 	// characters must be a dash, lowercase letter, or digit, except the
 	// last character, which cannot be a dash.
@@ -3227,7 +3380,7 @@ func (c *CompositeTypesDeleteCall) Header() http.Header {
 
 func (c *CompositeTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3379,7 +3532,7 @@ func (c *CompositeTypesGetCall) Header() http.Header {
 
 func (c *CompositeTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3525,7 +3678,7 @@ func (c *CompositeTypesInsertCall) Header() http.Header {
 
 func (c *CompositeTypesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3641,24 +3794,25 @@ func (r *CompositeTypesService) List(project string) *CompositeTypesListCall {
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *CompositeTypesListCall) Filter(filter string) *CompositeTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3666,10 +3820,10 @@ func (c *CompositeTypesListCall) Filter(filter string) *CompositeTypesListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *CompositeTypesListCall) MaxResults(maxResults int64) *CompositeTypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -3680,12 +3834,13 @@ func (c *CompositeTypesListCall) MaxResults(maxResults int64) *CompositeTypesLis
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *CompositeTypesListCall) OrderBy(orderBy string) *CompositeTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -3693,10 +3848,19 @@ func (c *CompositeTypesListCall) OrderBy(orderBy string) *CompositeTypesListCall
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *CompositeTypesListCall) PageToken(pageToken string) *CompositeTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *CompositeTypesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *CompositeTypesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -3737,7 +3901,7 @@ func (c *CompositeTypesListCall) Header() http.Header {
 
 func (c *CompositeTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,25 +3971,25 @@ func (c *CompositeTypesListCall) Do(opts ...googleapi.CallOption) (*CompositeTyp
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3835,6 +3999,11 @@ func (c *CompositeTypesListCall) Do(opts ...googleapi.CallOption) (*CompositeTyp
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/compositeTypes",
@@ -3884,8 +4053,7 @@ type CompositeTypesPatchCall struct {
 	header_       http.Header
 }
 
-// Patch: Updates a composite type. This method supports patch
-// semantics.
+// Patch: Patches a composite type.
 func (r *CompositeTypesService) Patch(project string, compositeType string, compositetype *CompositeType) *CompositeTypesPatchCall {
 	c := &CompositeTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3921,7 +4089,7 @@ func (c *CompositeTypesPatchCall) Header() http.Header {
 
 func (c *CompositeTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3986,7 +4154,7 @@ func (c *CompositeTypesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a composite type. This method supports patch semantics.",
+	//   "description": "Patches a composite type.",
 	//   "httpMethod": "PATCH",
 	//   "id": "deploymentmanager.compositeTypes.patch",
 	//   "parameterOrder": [
@@ -4072,7 +4240,7 @@ func (c *CompositeTypesUpdateCall) Header() http.Header {
 
 func (c *CompositeTypesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4224,7 +4392,7 @@ func (c *DeploymentsCancelPreviewCall) Header() http.Header {
 
 func (c *DeploymentsCancelPreviewCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4385,7 +4553,7 @@ func (c *DeploymentsDeleteCall) Header() http.Header {
 
 func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4550,7 +4718,7 @@ func (c *DeploymentsGetCall) Header() http.Header {
 
 func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4671,6 +4839,13 @@ func (r *DeploymentsService) GetIamPolicy(project string, resource string) *Depl
 	return c
 }
 
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "optionsRequestedPolicyVersion": Requested IAM Policy version.
+func (c *DeploymentsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *DeploymentsGetIamPolicyCall {
+	c.urlParams_.Set("optionsRequestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4708,7 +4883,7 @@ func (c *DeploymentsGetIamPolicyCall) Header() http.Header {
 
 func (c *DeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4779,6 +4954,12 @@ func (c *DeploymentsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//     "resource"
 	//   ],
 	//   "parameters": {
+	//     "optionsRequestedPolicyVersion": {
+	//       "description": "Requested IAM Policy version.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",
 	//       "location": "path",
@@ -4842,8 +5023,8 @@ func (c *DeploymentsInsertCall) CreatePolicy(createPolicy string) *DeploymentsIn
 // creates a deployment and creates "shell" resources but does not
 // actually instantiate these resources. This allows you to preview what
 // your deployment looks like. After previewing a deployment, you can
-// deploy your resources by making a request with the update() method or
-// you can use the cancelPreview() method to cancel the preview
+// deploy your resources by making a request with the `update()` method
+// or you can use the `cancelPreview()` method to cancel the preview
 // altogether. Note that the deployment will still exist after you
 // cancel the preview and you must separately delete this deployment if
 // you want to remove it.
@@ -4879,7 +5060,7 @@ func (c *DeploymentsInsertCall) Header() http.Header {
 
 func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4967,7 +5148,7 @@ func (c *DeploymentsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//       "type": "string"
 	//     },
 	//     "preview": {
-	//       "description": "If set to true, creates a deployment and creates \"shell\" resources but does not actually instantiate these resources. This allows you to preview what your deployment looks like. After previewing a deployment, you can deploy your resources by making a request with the update() method or you can use the cancelPreview() method to cancel the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
+	//       "description": "If set to true, creates a deployment and creates \"shell\" resources but does not actually instantiate these resources. This allows you to preview what your deployment looks like. After previewing a deployment, you can deploy your resources by making a request with the `update()` method or you can use the `cancelPreview()` method to cancel the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5016,24 +5197,25 @@ func (r *DeploymentsService) List(project string) *DeploymentsListCall {
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *DeploymentsListCall) Filter(filter string) *DeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5041,10 +5223,10 @@ func (c *DeploymentsListCall) Filter(filter string) *DeploymentsListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -5055,12 +5237,13 @@ func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall 
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *DeploymentsListCall) OrderBy(orderBy string) *DeploymentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -5068,10 +5251,19 @@ func (c *DeploymentsListCall) OrderBy(orderBy string) *DeploymentsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *DeploymentsListCall) PageToken(pageToken string) *DeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *DeploymentsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *DeploymentsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -5112,7 +5304,7 @@ func (c *DeploymentsListCall) Header() http.Header {
 
 func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5182,25 +5374,25 @@ func (c *DeploymentsListCall) Do(opts ...googleapi.CallOption) (*DeploymentsList
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5210,6 +5402,11 @@ func (c *DeploymentsListCall) Do(opts ...googleapi.CallOption) (*DeploymentsList
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/deployments",
@@ -5259,8 +5456,8 @@ type DeploymentsPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Updates a deployment and all of the resources described by the
-// deployment manifest. This method supports patch semantics.
+// Patch: Patches a deployment and all of the resources described by the
+// deployment manifest.
 func (r *DeploymentsService) Patch(project string, deployment string, deployment2 *Deployment) *DeploymentsPatchCall {
 	c := &DeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5297,10 +5494,10 @@ func (c *DeploymentsPatchCall) DeletePolicy(deletePolicy string) *DeploymentsPat
 // but does not actually alter or instantiate these resources. This
 // allows you to preview what your deployment will look like. You can
 // use this intent to preview how an update would affect your
-// deployment. You must provide a target.config with a configuration if
-// this is set to true. After previewing a deployment, you can deploy
-// your resources by making a request with the update() or you can
-// cancelPreview() to remove the preview altogether. Note that the
+// deployment. You must provide a `target.config` with a configuration
+// if this is set to true. After previewing a deployment, you can deploy
+// your resources by making a request with the `update()` or you can
+// `cancelPreview()` to remove the preview altogether. Note that the
 // deployment will still exist after you cancel the preview and you must
 // separately delete this deployment if you want to remove it.
 func (c *DeploymentsPatchCall) Preview(preview bool) *DeploymentsPatchCall {
@@ -5335,7 +5532,7 @@ func (c *DeploymentsPatchCall) Header() http.Header {
 
 func (c *DeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5400,7 +5597,7 @@ func (c *DeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a deployment and all of the resources described by the deployment manifest. This method supports patch semantics.",
+	//   "description": "Patches a deployment and all of the resources described by the deployment manifest.",
 	//   "httpMethod": "PATCH",
 	//   "id": "deploymentmanager.deployments.patch",
 	//   "parameterOrder": [
@@ -5447,7 +5644,7 @@ func (c *DeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//     },
 	//     "preview": {
 	//       "default": "false",
-	//       "description": "If set to true, updates the deployment and creates and updates the \"shell\" resources but does not actually alter or instantiate these resources. This allows you to preview what your deployment will look like. You can use this intent to preview how an update would affect your deployment. You must provide a target.config with a configuration if this is set to true. After previewing a deployment, you can deploy your resources by making a request with the update() or you can cancelPreview() to remove the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
+	//       "description": "If set to true, updates the deployment and creates and updates the \"shell\" resources but does not actually alter or instantiate these resources. This allows you to preview what your deployment will look like. You can use this intent to preview how an update would affect your deployment. You must provide a `target.config` with a configuration if this is set to true. After previewing a deployment, you can deploy your resources by making a request with the `update()` or you can `cancelPreview()` to remove the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5523,7 +5720,7 @@ func (c *DeploymentsSetIamPolicyCall) Header() http.Header {
 
 func (c *DeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5676,7 +5873,7 @@ func (c *DeploymentsStopCall) Header() http.Header {
 
 func (c *DeploymentsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5828,7 +6025,7 @@ func (c *DeploymentsTestIamPermissionsCall) Header() http.Header {
 
 func (c *DeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5981,10 +6178,10 @@ func (c *DeploymentsUpdateCall) DeletePolicy(deletePolicy string) *DeploymentsUp
 // but does not actually alter or instantiate these resources. This
 // allows you to preview what your deployment will look like. You can
 // use this intent to preview how an update would affect your
-// deployment. You must provide a target.config with a configuration if
-// this is set to true. After previewing a deployment, you can deploy
-// your resources by making a request with the update() or you can
-// cancelPreview() to remove the preview altogether. Note that the
+// deployment. You must provide a `target.config` with a configuration
+// if this is set to true. After previewing a deployment, you can deploy
+// your resources by making a request with the `update()` or you can
+// `cancelPreview()` to remove the preview altogether. Note that the
 // deployment will still exist after you cancel the preview and you must
 // separately delete this deployment if you want to remove it.
 func (c *DeploymentsUpdateCall) Preview(preview bool) *DeploymentsUpdateCall {
@@ -6019,7 +6216,7 @@ func (c *DeploymentsUpdateCall) Header() http.Header {
 
 func (c *DeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6131,7 +6328,7 @@ func (c *DeploymentsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//     },
 	//     "preview": {
 	//       "default": "false",
-	//       "description": "If set to true, updates the deployment and creates and updates the \"shell\" resources but does not actually alter or instantiate these resources. This allows you to preview what your deployment will look like. You can use this intent to preview how an update would affect your deployment. You must provide a target.config with a configuration if this is set to true. After previewing a deployment, you can deploy your resources by making a request with the update() or you can cancelPreview() to remove the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
+	//       "description": "If set to true, updates the deployment and creates and updates the \"shell\" resources but does not actually alter or instantiate these resources. This allows you to preview what your deployment will look like. You can use this intent to preview how an update would affect your deployment. You must provide a `target.config` with a configuration if this is set to true. After previewing a deployment, you can deploy your resources by making a request with the `update()` or you can `cancelPreview()` to remove the preview altogether. Note that the deployment will still exist after you cancel the preview and you must separately delete this deployment if you want to remove it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6217,7 +6414,7 @@ func (c *ManifestsGetCall) Header() http.Header {
 
 func (c *ManifestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6350,24 +6547,25 @@ func (r *ManifestsService) List(project string, deployment string) *ManifestsLis
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *ManifestsListCall) Filter(filter string) *ManifestsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6375,10 +6573,10 @@ func (c *ManifestsListCall) Filter(filter string) *ManifestsListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6389,12 +6587,13 @@ func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *ManifestsListCall) OrderBy(orderBy string) *ManifestsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -6402,10 +6601,19 @@ func (c *ManifestsListCall) OrderBy(orderBy string) *ManifestsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *ManifestsListCall) PageToken(pageToken string) *ManifestsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *ManifestsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ManifestsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -6446,7 +6654,7 @@ func (c *ManifestsListCall) Header() http.Header {
 
 func (c *ManifestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6525,25 +6733,25 @@ func (c *ManifestsListCall) Do(opts ...googleapi.CallOption) (*ManifestsListResp
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6553,6 +6761,11 @@ func (c *ManifestsListCall) Do(opts ...googleapi.CallOption) (*ManifestsListResp
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/deployments/{deployment}/manifests",
@@ -6647,7 +6860,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6768,24 +6981,25 @@ func (r *OperationsService) List(project string) *OperationsListCall {
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6793,10 +7007,10 @@ func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6807,12 +7021,13 @@ func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *OperationsListCall) OrderBy(orderBy string) *OperationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -6820,10 +7035,19 @@ func (c *OperationsListCall) OrderBy(orderBy string) *OperationsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *OperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -6864,7 +7088,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6934,25 +7158,25 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*OperationsListRe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6962,6 +7186,11 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*OperationsListRe
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/operations",
@@ -7058,7 +7287,7 @@ func (c *ResourcesGetCall) Header() http.Header {
 
 func (c *ResourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7190,24 +7419,25 @@ func (r *ResourcesService) List(project string, deployment string) *ResourcesLis
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *ResourcesListCall) Filter(filter string) *ResourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7215,10 +7445,10 @@ func (c *ResourcesListCall) Filter(filter string) *ResourcesListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -7229,12 +7459,13 @@ func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *ResourcesListCall) OrderBy(orderBy string) *ResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -7242,10 +7473,19 @@ func (c *ResourcesListCall) OrderBy(orderBy string) *ResourcesListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *ResourcesListCall) PageToken(pageToken string) *ResourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *ResourcesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ResourcesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -7286,7 +7526,7 @@ func (c *ResourcesListCall) Header() http.Header {
 
 func (c *ResourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7365,25 +7605,25 @@ func (c *ResourcesListCall) Do(opts ...googleapi.CallOption) (*ResourcesListResp
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7393,6 +7633,11 @@ func (c *ResourcesListCall) Do(opts ...googleapi.CallOption) (*ResourcesListResp
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/deployments/{deployment}/resources",
@@ -7476,7 +7721,7 @@ func (c *TypeProvidersDeleteCall) Header() http.Header {
 
 func (c *TypeProvidersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7628,7 +7873,7 @@ func (c *TypeProvidersGetCall) Header() http.Header {
 
 func (c *TypeProvidersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7787,7 +8032,7 @@ func (c *TypeProvidersGetTypeCall) Header() http.Header {
 
 func (c *TypeProvidersGetTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7941,7 +8186,7 @@ func (c *TypeProvidersInsertCall) Header() http.Header {
 
 func (c *TypeProvidersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8057,24 +8302,25 @@ func (r *TypeProvidersService) List(project string) *TypeProvidersListCall {
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *TypeProvidersListCall) Filter(filter string) *TypeProvidersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8082,10 +8328,10 @@ func (c *TypeProvidersListCall) Filter(filter string) *TypeProvidersListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *TypeProvidersListCall) MaxResults(maxResults int64) *TypeProvidersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8096,12 +8342,13 @@ func (c *TypeProvidersListCall) MaxResults(maxResults int64) *TypeProvidersListC
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *TypeProvidersListCall) OrderBy(orderBy string) *TypeProvidersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -8109,10 +8356,19 @@ func (c *TypeProvidersListCall) OrderBy(orderBy string) *TypeProvidersListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *TypeProvidersListCall) PageToken(pageToken string) *TypeProvidersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *TypeProvidersListCall) ReturnPartialSuccess(returnPartialSuccess bool) *TypeProvidersListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -8153,7 +8409,7 @@ func (c *TypeProvidersListCall) Header() http.Header {
 
 func (c *TypeProvidersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8223,25 +8479,25 @@ func (c *TypeProvidersListCall) Do(opts ...googleapi.CallOption) (*TypeProviders
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8251,6 +8507,11 @@ func (c *TypeProvidersListCall) Do(opts ...googleapi.CallOption) (*TypeProviders
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/typeProviders",
@@ -8312,24 +8573,25 @@ func (r *TypeProvidersService) ListTypes(project string, typeProvider string) *T
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *TypeProvidersListTypesCall) Filter(filter string) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8337,10 +8599,10 @@ func (c *TypeProvidersListTypesCall) Filter(filter string) *TypeProvidersListTyp
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *TypeProvidersListTypesCall) MaxResults(maxResults int64) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -8351,12 +8613,13 @@ func (c *TypeProvidersListTypesCall) MaxResults(maxResults int64) *TypeProviders
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *TypeProvidersListTypesCall) OrderBy(orderBy string) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -8364,10 +8627,19 @@ func (c *TypeProvidersListTypesCall) OrderBy(orderBy string) *TypeProvidersListT
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *TypeProvidersListTypesCall) PageToken(pageToken string) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *TypeProvidersListTypesCall) ReturnPartialSuccess(returnPartialSuccess bool) *TypeProvidersListTypesCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -8408,7 +8680,7 @@ func (c *TypeProvidersListTypesCall) Header() http.Header {
 
 func (c *TypeProvidersListTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8480,25 +8752,25 @@ func (c *TypeProvidersListTypesCall) Do(opts ...googleapi.CallOption) (*TypeProv
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8508,6 +8780,11 @@ func (c *TypeProvidersListTypesCall) Do(opts ...googleapi.CallOption) (*TypeProv
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "typeProvider": {
 	//       "description": "The name of the type provider for this request.",
@@ -8564,7 +8841,7 @@ type TypeProvidersPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates a type provider. This method supports patch semantics.
+// Patch: Patches a type provider.
 func (r *TypeProvidersService) Patch(project string, typeProvider string, typeprovider *TypeProvider) *TypeProvidersPatchCall {
 	c := &TypeProvidersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8600,7 +8877,7 @@ func (c *TypeProvidersPatchCall) Header() http.Header {
 
 func (c *TypeProvidersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8665,7 +8942,7 @@ func (c *TypeProvidersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a type provider. This method supports patch semantics.",
+	//   "description": "Patches a type provider.",
 	//   "httpMethod": "PATCH",
 	//   "id": "deploymentmanager.typeProviders.patch",
 	//   "parameterOrder": [
@@ -8751,7 +9028,7 @@ func (c *TypeProvidersUpdateCall) Header() http.Header {
 
 func (c *TypeProvidersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8854,147 +9131,6 @@ func (c *TypeProvidersUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, 
 
 }
 
-// method id "deploymentmanager.types.delete":
-
-type TypesDeleteCall struct {
-	s          *Service
-	project    string
-	type_      string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a type and all of the resources in the type.
-func (r *TypesService) Delete(project string, type_ string) *TypesDeleteCall {
-	c := &TypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.type_ = type_
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *TypesDeleteCall) Fields(s ...googleapi.Field) *TypesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *TypesDeleteCall) Context(ctx context.Context) *TypesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *TypesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *TypesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/types/{type}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-		"type":    c.type_,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deploymentmanager.types.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *TypesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a type and all of the resources in the type.",
-	//   "httpMethod": "DELETE",
-	//   "id": "deploymentmanager.types.delete",
-	//   "parameterOrder": [
-	//     "project",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "type": {
-	//       "description": "The name of the type for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/global/types/{type}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/ndev.cloudman"
-	//   ]
-	// }
-
-}
-
 // method id "deploymentmanager.types.get":
 
 type TypesGetCall struct {
@@ -9052,7 +9188,7 @@ func (c *TypesGetCall) Header() http.Header {
 
 func (c *TypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9152,146 +9288,6 @@ func (c *TypesGetCall) Do(opts ...googleapi.CallOption) (*Type, error) {
 
 }
 
-// method id "deploymentmanager.types.insert":
-
-type TypesInsertCall struct {
-	s          *Service
-	project    string
-	type_      *Type
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Insert: Creates a type.
-func (r *TypesService) Insert(project string, type_ *Type) *TypesInsertCall {
-	c := &TypesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.type_ = type_
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *TypesInsertCall) Fields(s ...googleapi.Field) *TypesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *TypesInsertCall) Context(ctx context.Context) *TypesInsertCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *TypesInsertCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *TypesInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.type_)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/types")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deploymentmanager.types.insert" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *TypesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a type.",
-	//   "httpMethod": "POST",
-	//   "id": "deploymentmanager.types.insert",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/global/types",
-	//   "request": {
-	//     "$ref": "Type"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/ndev.cloudman"
-	//   ]
-	// }
-
-}
-
 // method id "deploymentmanager.types.list":
 
 type TypesListCall struct {
@@ -9314,24 +9310,25 @@ func (r *TypesService) List(project string) *TypesListCall {
 // filters resources listed in the response. The expression must specify
 // the field name, a comparison operator, and the value that you want to
 // use for filtering. The value must be a string, a number, or a
-// boolean. The comparison operator must be either =, !=, >, or <.
+// boolean. The comparison operator must be either `=`, `!=`, `>`, or
+// `<`.
 //
 // For example, if you are filtering Compute Engine instances, you can
-// exclude instances named example-instance by specifying name !=
-// example-instance.
+// exclude instances named `example-instance` by specifying `name !=
+// example-instance`.
 //
 // You can also filter nested fields. For example, you could specify
-// scheduling.automaticRestart = false to include instances only if they
-// are not scheduled for automatic restarts. You can use filtering on
-// nested fields to filter based on resource labels.
+// `scheduling.automaticRestart = false` to include instances only if
+// they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based on resource labels.
 //
 // To filter on multiple expressions, provide each separate expression
-// within parentheses. For example, (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake"). By default, each expression is an
-// AND expression. However, you can include AND and OR expressions
-// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
-// true).
+// within parentheses. For example: ``` (scheduling.automaticRestart =
+// true) (cpuPlatform = "Intel Skylake") ``` By default, each expression
+// is an `AND` expression. However, you can include `AND` and `OR`
+// expressions explicitly. For example: ``` (cpuPlatform = "Intel
+// Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true) ```
 func (c *TypesListCall) Filter(filter string) *TypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9339,10 +9336,10 @@ func (c *TypesListCall) Filter(filter string) *TypesListCall {
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results per page that should be returned. If the number of
-// available results is larger than maxResults, Compute Engine returns a
-// nextPageToken that can be used to get the next page of results in
-// subsequent list requests. Acceptable values are 0 to 500, inclusive.
-// (Default: 500)
+// available results is larger than `maxResults`, Compute Engine returns
+// a `nextPageToken` that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are `0` to `500`,
+// inclusive. (Default: `500`)
 func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -9353,12 +9350,13 @@ func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
 // order based on the resource name.
 //
 // You can also sort results in descending order based on the creation
-// timestamp using orderBy="creationTimestamp desc". This sorts results
-// based on the creationTimestamp field in reverse chronological order
-// (newest result first). Use this to sort resources like operations so
-// that the newest operation is returned first.
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in reverse
+// chronological order (newest result first). Use this to sort resources
+// like operations so that the newest operation is returned
+// first.
 //
-// Currently, only sorting by name or creationTimestamp desc is
+// Currently, only sorting by `name` or `creationTimestamp desc` is
 // supported.
 func (c *TypesListCall) OrderBy(orderBy string) *TypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -9366,10 +9364,19 @@ func (c *TypesListCall) OrderBy(orderBy string) *TypesListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set pageToken to the nextPageToken returned by a
+// token to use. Set `pageToken` to the `nextPageToken` returned by a
 // previous list request to get the next page of results.
 func (c *TypesListCall) PageToken(pageToken string) *TypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter
+// "returnPartialSuccess": Opt-in for partial success behavior which
+// provides partial results in case of failure. The default value is
+// false and the logic is the same as today.
+func (c *TypesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *TypesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
 	return c
 }
 
@@ -9410,7 +9417,7 @@ func (c *TypesListCall) Header() http.Header {
 
 func (c *TypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9480,25 +9487,25 @@ func (c *TypesListCall) Do(opts ...googleapi.CallOption) (*TypesListResponse, er
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "500",
-	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
-	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9508,6 +9515,11 @@ func (c *TypesListCall) Do(opts ...googleapi.CallOption) (*TypesListResponse, er
 	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "returnPartialSuccess": {
+	//       "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "{project}/global/types",
@@ -9543,306 +9555,4 @@ func (c *TypesListCall) Pages(ctx context.Context, f func(*TypesListResponse) er
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "deploymentmanager.types.patch":
-
-type TypesPatchCall struct {
-	s          *Service
-	project    string
-	type_      string
-	type_2     *Type
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Patch: Updates a type. This method supports patch semantics.
-func (r *TypesService) Patch(project string, type_ string, type_2 *Type) *TypesPatchCall {
-	c := &TypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.type_ = type_
-	c.type_2 = type_2
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *TypesPatchCall) Fields(s ...googleapi.Field) *TypesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *TypesPatchCall) Context(ctx context.Context) *TypesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *TypesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *TypesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.type_2)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/types/{type}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-		"type":    c.type_,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deploymentmanager.types.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *TypesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a type. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "deploymentmanager.types.patch",
-	//   "parameterOrder": [
-	//     "project",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "type": {
-	//       "description": "The name of the type for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/global/types/{type}",
-	//   "request": {
-	//     "$ref": "Type"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/ndev.cloudman"
-	//   ]
-	// }
-
-}
-
-// method id "deploymentmanager.types.update":
-
-type TypesUpdateCall struct {
-	s          *Service
-	project    string
-	type_      string
-	type_2     *Type
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Update: Updates a type.
-func (r *TypesService) Update(project string, type_ string, type_2 *Type) *TypesUpdateCall {
-	c := &TypesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.type_ = type_
-	c.type_2 = type_2
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *TypesUpdateCall) Fields(s ...googleapi.Field) *TypesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *TypesUpdateCall) Context(ctx context.Context) *TypesUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *TypesUpdateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *TypesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.type_2)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/types/{type}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-		"type":    c.type_,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deploymentmanager.types.update" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *TypesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a type.",
-	//   "httpMethod": "PUT",
-	//   "id": "deploymentmanager.types.update",
-	//   "parameterOrder": [
-	//     "project",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The project ID for this request.",
-	//       "location": "path",
-	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "type": {
-	//       "description": "The name of the type for this request.",
-	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{project}/global/types/{type}",
-	//   "request": {
-	//     "$ref": "Type"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/ndev.cloudman"
-	//   ]
-	// }
-
 }

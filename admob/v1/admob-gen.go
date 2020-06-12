@@ -288,8 +288,8 @@ func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 //       "header": {
 //         "date_range": {
 //           "start_date": {"year": 2018, "month": 9, "day": 1},
-//           "end_date": {"year": 2018, "month": 9, "day": 30}
-//         }
+//           "end_date": {"year": 2018, "month": 9, "day": 1}
+//         },
 //         "localization_settings": {
 //           "currency_code": "USD",
 //           "language_code": "en-US"
@@ -395,8 +395,8 @@ func (s *GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
 //       "header": {
 //         "dateRange": {
 //           "startDate": {"year": 2018, "month": 9, "day": 1},
-//           "endDate": {"year": 2018, "month": 9, "day": 30}
-//         }
+//           "endDate": {"year": 2018, "month": 9, "day": 1}
+//         },
 //         "localizationSettings": {
 //           "currencyCode": "USD",
 //           "languageCode": "en-US"
@@ -417,9 +417,8 @@ func (s *GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
 //         }
 //       }
 //     },
-//     ...
 //     {
-//       "footer": {"matchingRowCount": 5}
+//       "footer": {"matchingRowCount": 1}
 //     }]
 type GenerateNetworkReportResponse struct {
 	// Footer: Additional information about the generated report, such as
@@ -1784,7 +1783,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1942,7 +1941,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2096,7 +2095,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2235,7 +2234,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

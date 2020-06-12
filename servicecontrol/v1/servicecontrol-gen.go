@@ -512,10 +512,11 @@ type Auth struct {
 	// of
 	// the following pieces of information:
 	//
-	// *  The services intended to receive the credential such as
-	//    ["pubsub.googleapis.com", "storage.googleapis.com"]
+	// *  The services intended to receive the credential. For example,
+	//    ["https://pubsub.googleapis.com/",
+	// "https://storage.googleapis.com/"].
 	// *  A set of service-based scopes. For example,
-	//    ["https://www.googleapis.com/auth/cloud-platform"]
+	//    ["https://www.googleapis.com/auth/cloud-platform"].
 	// *  The client id of an app, such as the Firebase project id for JWTs
 	//    from Firebase Auth.
 	//
@@ -3361,7 +3362,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3523,7 +3524,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3684,7 +3685,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200601")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

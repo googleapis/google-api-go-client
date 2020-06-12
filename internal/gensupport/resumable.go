@@ -250,7 +250,7 @@ func shouldRetry(status int, err error) bool {
 	}
 	// If Go 1.13 error unwrapping is available, use this to examine wrapped
 	// errors.
-	if err, ok := err.(interface{Unwrap() error}); ok {
+	if err, ok := err.(interface{ Unwrap() error }); ok {
 		return shouldRetry(status, err.Unwrap())
 	}
 	if err, ok := err.(interface{ Temporary() bool }); ok {

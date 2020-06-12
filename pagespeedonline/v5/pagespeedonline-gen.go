@@ -663,6 +663,10 @@ type PagespeedApiLoadingExperienceV5 struct {
 	// Metrics: The map of <metrics, data>.
 	Metrics map[string]UserPageLoadMetricV5 `json:"metrics,omitempty"`
 
+	// OriginFallback: True if the result is an origin fallback from a page,
+	// false otherwise.
+	OriginFallback bool `json:"origin_fallback,omitempty"`
+
 	// OverallCategory: The human readable speed "category" of the id.
 	OverallCategory string `json:"overall_category,omitempty"`
 
@@ -1152,7 +1156,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200605")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

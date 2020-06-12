@@ -16,28 +16,28 @@ func TestDeprecatedPkgs(t *testing.T) {
 	}{
 		{
 			name:      "replacement found",
-			dp:        map[string]string{"foo:v1": "example.com/foo"},
+			dp:        deprecatedPkgs{"foo:v1": "example.com/foo"},
 			inName:    "foo",
 			inVersion: "v1",
 			want:      "example.com/foo",
 		},
 		{
 			name:      "replacemet found with no versions specified",
-			dp:        map[string]string{"foo": "example.com/foo"},
+			dp:        deprecatedPkgs{"foo": "example.com/foo"},
 			inName:    "foo",
 			inVersion: "v1",
 			want:      "example.com/foo",
 		},
 		{
 			name:      "no replacement found, package not in map",
-			dp:        map[string]string{"foo": "example.com/foo"},
+			dp:        deprecatedPkgs{"foo": "example.com/foo"},
 			inName:    "bar",
 			inVersion: "v1",
 			want:      "",
 		},
 		{
 			name:      "no replacement found, version mismatch",
-			dp:        map[string]string{"foo:v1": "example.com/foo"},
+			dp:        deprecatedPkgs{"foo:v1": "example.com/foo"},
 			inName:    "foo",
 			inVersion: "v2",
 			want:      "",

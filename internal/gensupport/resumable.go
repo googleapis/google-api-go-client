@@ -243,13 +243,15 @@ func shouldRetry(status int, err error) bool {
 	if se, ok := err.(syscall.Errno); ok {
 		return se == syscall.ECONNRESET || se == syscall.ECONNREFUSED
 	}
+	if err, ok := err.(interface{ Temporary() bool }); ok {
+		if err.Temporary() {
+			return true
+		}
+	}
 	// If Go 1.13 error unwrapping is available, use this to examine wrapped
 	// errors.
 	if err, ok := err.(interface{ Unwrap() error }); ok {
 		return shouldRetry(status, err.Unwrap())
-	}
-	if err, ok := err.(interface{ Temporary() bool }); ok {
-		return err.Temporary()
 	}
 	return false
 }

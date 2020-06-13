@@ -744,6 +744,9 @@ type CopyOtherContactToMyContactsGroupRequest struct {
 	// PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns
 	// SourceType.CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" -
+	// Returns
+	// SourceType.DOMAIN_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CopyMask") to
@@ -1104,6 +1107,37 @@ func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FileAs: The name that should be used to sort the person in a list.
+type FileAs struct {
+	// Metadata: Metadata about the file-as.
+	Metadata *FieldMetadata `json:"metadata,omitempty"`
+
+	// Value: The file-as value
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileAs) MarshalJSON() ([]byte, error) {
+	type NoMethod FileAs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Gender: A person's gender.
 type Gender struct {
 	// AddressMeAs: The type of pronouns that should be used to address the
@@ -1381,6 +1415,51 @@ type ListContactGroupsResponse struct {
 
 func (s *ListContactGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContactGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDirectoryPeopleResponse: The response to a request for the
+// authenticated user's domain directory.
+type ListDirectoryPeopleResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page.
+	// If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NextSyncToken: A token, which can be sent as `sync_token` to retrieve
+	// changes since the
+	// last request. Request must set `request_sync_token` to return the
+	// sync
+	// token.
+	NextSyncToken string `json:"nextSyncToken,omitempty"`
+
+	// People: The list of people in the domain directory.
+	People []*Person `json:"people,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDirectoryPeopleResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1875,6 +1954,9 @@ type Person struct {
 
 	// Events: The person's events.
 	Events []*Event `json:"events,omitempty"`
+
+	// FileAses: The person's file-ases.
+	FileAses []*FileAs `json:"fileAses,omitempty"`
 
 	// Genders: The person's genders.
 	Genders []*Gender `json:"genders,omitempty"`
@@ -2432,6 +2514,49 @@ func (s *Residence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchDirectoryPeopleResponse: The response to a request for people
+// in the authenticated user's domain
+// directory that match the specified query.
+type SearchDirectoryPeopleResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page.
+	// If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// People: The list of people in the domain directory that match the
+	// query.
+	People []*Person `json:"people,omitempty"`
+
+	// TotalSize: The total number of items in the list without pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchDirectoryPeopleResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SipAddress: A person's SIP address. Session Initial Protocol
 // addresses are used for VoIP
 // communications to make voice or video calls over the internet.
@@ -2557,6 +2682,9 @@ type Source struct {
 	//   "OTHER_CONTACT" - [Google contact](https://contacts.google.com).
 	// You can view these kinds
 	// of contacts under the 'Other contacts' tab.
+	//   "DOMAIN_CONTACT" - [G Suite shared
+	// domain
+	// contact](https://support.google.com/a/answer/9281635).
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. **Only populated in
@@ -2759,6 +2887,9 @@ type UpdateContactPhotoRequest struct {
 	// PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns
 	// SourceType.CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" -
+	// Returns
+	// SourceType.DOMAIN_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PersonFields") to
@@ -2974,7 +3105,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3108,7 +3239,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3242,7 +3373,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3398,7 +3529,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3577,7 +3708,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3740,7 +3871,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3887,7 +4018,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4029,7 +4160,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4241,7 +4372,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4428,6 +4559,7 @@ func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreat
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleCreateContactCall) Sources(sources ...string) *PeopleCreateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -4460,7 +4592,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4538,7 +4670,8 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4604,7 +4737,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4753,6 +4886,7 @@ func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *People
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleDeleteContactPhotoCall) Sources(sources ...string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -4785,7 +4919,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4870,7 +5004,8 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4969,6 +5104,7 @@ func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) 
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleGetCall) Sources(sources ...string) *PeopleGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -5011,7 +5147,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5105,7 +5241,8 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -5233,6 +5370,7 @@ func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGe
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleGetBatchGetCall) Sources(sources ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -5275,7 +5413,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5363,7 +5501,8 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -5389,6 +5528,598 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   ]
 	// }
 
+}
+
+// method id "people.people.listDirectoryPeople":
+
+type PeopleListDirectoryPeopleCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListDirectoryPeople: Provides a list of domain profiles and domain
+// contacts in the authenticated
+// user's domain directory.
+func (r *PeopleService) ListDirectoryPeople() *PeopleListDirectoryPeopleCall {
+	c := &PeopleListDirectoryPeopleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// MergeSources sets the optional parameter "mergeSources": Additional
+// data to merge into the directory sources if they are
+// connected
+// through verified join keys such as email addresses or phone numbers.
+//
+// Possible values:
+//   "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED"
+//   "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
+func (c *PeopleListDirectoryPeopleCall) MergeSources(mergeSources ...string) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.SetMulti("mergeSources", append([]string{}, mergeSources...))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of people
+// to include in the response. Valid values are
+// between 1 and 1000, inclusive. Defaults to 100 if not set or set to
+// 0.
+func (c *PeopleListDirectoryPeopleCall) PageSize(pageSize int64) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDirectoryPeople` call.
+// Provide this to retrieve the subsequent page.
+//
+// When paginating, all other parameters provided to
+// `ListDirectoryPeople`
+// must match the call that provided the page token.
+func (c *PeopleListDirectoryPeopleCall) PageToken(pageToken string) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. A field
+// mask to restrict which fields on each person are returned.
+// Multiple
+// fields can be specified by separating them with commas. Valid values
+// are:
+//
+// * addresses
+// * ageRanges
+// * biographies
+// * birthdays
+// * coverPhotos
+// * emailAddresses
+// * events
+// * genders
+// * imClients
+// * interests
+// * locales
+// * memberships
+// * metadata
+// * names
+// * nicknames
+// * occupations
+// * organizations
+// * phoneNumbers
+// * photos
+// * relations
+// * residences
+// * sipAddresses
+// * skills
+// * urls
+// * userDefined
+func (c *PeopleListDirectoryPeopleCall) ReadMask(readMask string) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// RequestSyncToken sets the optional parameter "requestSyncToken":
+// Whether the response should include `next_sync_token`, which can be
+// used to
+// get all changes since the last request. For subsequent sync requests
+// use
+// the `sync_token` param instead.
+func (c *PeopleListDirectoryPeopleCall) RequestSyncToken(requestSyncToken bool) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
+	return c
+}
+
+// Sources sets the optional parameter "sources": Required. Directory
+// sources to return.
+//
+// Possible values:
+//   "DIRECTORY_SOURCE_TYPE_UNSPECIFIED"
+//   "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT"
+//   "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+func (c *PeopleListDirectoryPeopleCall) Sources(sources ...string) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
+	return c
+}
+
+// SyncToken sets the optional parameter "syncToken": A sync token,
+// received from a previous `ListDirectoryPeople` call.
+// Provide this to retrieve only the resources changed since the last
+// request.
+//
+// When syncing, all other parameters provided to
+// `ListDirectoryPeople`
+// must match the call that provided the sync token.
+func (c *PeopleListDirectoryPeopleCall) SyncToken(syncToken string) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleListDirectoryPeopleCall) Fields(s ...googleapi.Field) *PeopleListDirectoryPeopleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PeopleListDirectoryPeopleCall) IfNoneMatch(entityTag string) *PeopleListDirectoryPeopleCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleListDirectoryPeopleCall) Context(ctx context.Context) *PeopleListDirectoryPeopleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:listDirectoryPeople")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.listDirectoryPeople" call.
+// Exactly one of *ListDirectoryPeopleResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDirectoryPeopleResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListDirectoryPeopleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListDirectoryPeopleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated\nuser's domain directory.",
+	//   "flatPath": "v1/people:listDirectoryPeople",
+	//   "httpMethod": "GET",
+	//   "id": "people.people.listDirectoryPeople",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "mergeSources": {
+	//       "description": "Optional. Additional data to merge into the directory sources if they are connected\nthrough verified join keys such as email addresses or phone numbers.",
+	//       "enum": [
+	//         "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED",
+	//         "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The number of people to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListDirectoryPeople` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListDirectoryPeople`\nmust match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestSyncToken": {
+	//       "description": "Optional. Whether the response should include `next_sync_token`, which can be used to\nget all changes since the last request. For subsequent sync requests use\nthe `sync_token` param instead.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "sources": {
+	//       "description": "Required. Directory sources to return.",
+	//       "enum": [
+	//         "DIRECTORY_SOURCE_TYPE_UNSPECIFIED",
+	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT",
+	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "syncToken": {
+	//       "description": "Optional. A sync token, received from a previous `ListDirectoryPeople` call.\nProvide this to retrieve only the resources changed since the last request.\n\nWhen syncing, all other parameters provided to `ListDirectoryPeople`\nmust match the call that provided the sync token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/people:listDirectoryPeople",
+	//   "response": {
+	//     "$ref": "ListDirectoryPeopleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/directory.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PeopleListDirectoryPeopleCall) Pages(ctx context.Context, f func(*ListDirectoryPeopleResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "people.people.searchDirectoryPeople":
+
+type PeopleSearchDirectoryPeopleCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// SearchDirectoryPeople: Provides a list of domain profiles and domain
+// contacts in the authenticated
+// user's domain directory that match the search query.
+func (r *PeopleService) SearchDirectoryPeople() *PeopleSearchDirectoryPeopleCall {
+	c := &PeopleSearchDirectoryPeopleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// MergeSources sets the optional parameter "mergeSources": Additional
+// data to merge into the directory sources if they are
+// connected
+// through verified join keys such as email addresses or phone numbers.
+//
+// Possible values:
+//   "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED"
+//   "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
+func (c *PeopleSearchDirectoryPeopleCall) MergeSources(mergeSources ...string) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.SetMulti("mergeSources", append([]string{}, mergeSources...))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of people
+// to include in the response. Valid values are
+// between 1 and 500, inclusive. Defaults to 100 if not set or set to 0.
+func (c *PeopleSearchDirectoryPeopleCall) PageSize(pageSize int64) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `SearchDirectoryPeople` call.
+// Provide this to retrieve the subsequent page.
+//
+// When paginating, all other parameters provided to
+// `SearchDirectoryPeople`
+// must match the call that provided the page token.
+func (c *PeopleSearchDirectoryPeopleCall) PageToken(pageToken string) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Query sets the optional parameter "query": Required. Prefix query
+// that matches fields in the person. Does NOT use the
+// read_mask for determining what fields to match.
+func (c *PeopleSearchDirectoryPeopleCall) Query(query string) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.Set("query", query)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. A field
+// mask to restrict which fields on each person are returned.
+// Multiple
+// fields can be specified by separating them with commas. Valid values
+// are:
+//
+// * addresses
+// * ageRanges
+// * biographies
+// * birthdays
+// * coverPhotos
+// * emailAddresses
+// * events
+// * genders
+// * imClients
+// * interests
+// * locales
+// * memberships
+// * metadata
+// * names
+// * nicknames
+// * occupations
+// * organizations
+// * phoneNumbers
+// * photos
+// * relations
+// * residences
+// * sipAddresses
+// * skills
+// * urls
+// * userDefined
+func (c *PeopleSearchDirectoryPeopleCall) ReadMask(readMask string) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Sources sets the optional parameter "sources": Required. Directory
+// sources to return.
+//
+// Possible values:
+//   "DIRECTORY_SOURCE_TYPE_UNSPECIFIED"
+//   "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT"
+//   "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+func (c *PeopleSearchDirectoryPeopleCall) Sources(sources ...string) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PeopleSearchDirectoryPeopleCall) Fields(s ...googleapi.Field) *PeopleSearchDirectoryPeopleCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PeopleSearchDirectoryPeopleCall) IfNoneMatch(entityTag string) *PeopleSearchDirectoryPeopleCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PeopleSearchDirectoryPeopleCall) Context(ctx context.Context) *PeopleSearchDirectoryPeopleCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:searchDirectoryPeople")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "people.people.searchDirectoryPeople" call.
+// Exactly one of *SearchDirectoryPeopleResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SearchDirectoryPeopleResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*SearchDirectoryPeopleResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchDirectoryPeopleResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated\nuser's domain directory that match the search query.",
+	//   "flatPath": "v1/people:searchDirectoryPeople",
+	//   "httpMethod": "GET",
+	//   "id": "people.people.searchDirectoryPeople",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "mergeSources": {
+	//       "description": "Optional. Additional data to merge into the directory sources if they are connected\nthrough verified join keys such as email addresses or phone numbers.",
+	//       "enum": [
+	//         "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED",
+	//         "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The number of people to include in the response. Valid values are\nbetween 1 and 500, inclusive. Defaults to 100 if not set or set to 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `SearchDirectoryPeople` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `SearchDirectoryPeople`\nmust match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "query": {
+	//       "description": "Required. Prefix query that matches fields in the person. Does NOT use the\nread_mask for determining what fields to match.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sources": {
+	//       "description": "Required. Directory sources to return.",
+	//       "enum": [
+	//         "DIRECTORY_SOURCE_TYPE_UNSPECIFIED",
+	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT",
+	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/people:searchDirectoryPeople",
+	//   "response": {
+	//     "$ref": "SearchDirectoryPeopleResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/directory.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PeopleSearchDirectoryPeopleCall) Pages(ctx context.Context, f func(*SearchDirectoryPeopleResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "people.people.updateContact":
@@ -5475,6 +6206,7 @@ func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdat
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleUpdateContactCall) Sources(sources ...string) *PeopleUpdateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -5538,7 +6270,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5628,7 +6360,8 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -5701,7 +6434,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5923,6 +6656,7 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 //   "READ_SOURCE_TYPE_UNSPECIFIED"
 //   "READ_SOURCE_TYPE_PROFILE"
 //   "READ_SOURCE_TYPE_CONTACT"
+//   "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 func (c *PeopleConnectionsListCall) Sources(sources ...string) *PeopleConnectionsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -5979,7 +6713,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6100,7 +6834,8 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT"
+	//         "READ_SOURCE_TYPE_CONTACT",
+	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

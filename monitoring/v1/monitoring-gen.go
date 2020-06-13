@@ -1348,6 +1348,48 @@ func (s *SparkChartView) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StatisticalTimeSeriesFilter: A filter that ranks streams based on
+// their statistical relation to other streams in a request. Note: This
+// field is deprecated and completely ignored by the API.
+type StatisticalTimeSeriesFilter struct {
+	// NumTimeSeries: How many time series to output.
+	NumTimeSeries int64 `json:"numTimeSeries,omitempty"`
+
+	// RankingMethod: rankingMethod is applied to a set of time series, and
+	// then the produced value for each individual time series is used to
+	// compare a given time series to others. These are methods that cannot
+	// be applied stream-by-stream, but rather require the full context of a
+	// request to evaluate time series.
+	//
+	// Possible values:
+	//   "METHOD_UNSPECIFIED" - Not allowed in well-formed requests.
+	//   "METHOD_CLUSTER_OUTLIER" - Compute the outlier score of each
+	// stream.
+	RankingMethod string `json:"rankingMethod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumTimeSeries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumTimeSeries") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatisticalTimeSeriesFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod StatisticalTimeSeriesFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Text: A widget that displays textual content.
 type Text struct {
 	// Content: The text content to be displayed.
@@ -1474,6 +1516,10 @@ type TimeSeriesFilter struct {
 	// applied.
 	SecondaryAggregation *Aggregation `json:"secondaryAggregation,omitempty"`
 
+	// StatisticalTimeSeriesFilter: Statistics based time series filter.
+	// Note: This field is deprecated and completely ignored by the API.
+	StatisticalTimeSeriesFilter *StatisticalTimeSeriesFilter `json:"statisticalTimeSeriesFilter,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Aggregation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1514,6 +1560,10 @@ type TimeSeriesFilterRatio struct {
 	// SecondaryAggregation: Apply a second aggregation after the ratio is
 	// computed.
 	SecondaryAggregation *Aggregation `json:"secondaryAggregation,omitempty"`
+
+	// StatisticalTimeSeriesFilter: Statistics based time series filter.
+	// Note: This field is deprecated and completely ignored by the API.
+	StatisticalTimeSeriesFilter *StatisticalTimeSeriesFilter `json:"statisticalTimeSeriesFilter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Denominator") to
 	// unconditionally include in API requests. By default, fields with
@@ -1768,7 +1818,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1911,7 +1961,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2057,7 +2107,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2223,7 +2273,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2445,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

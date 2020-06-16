@@ -2793,6 +2793,22 @@ func (s *Method) MarshalJSON() ([]byte, error) {
 // deleting or altering it stops data collection and makes the metric
 // type's
 // existing data unusable.
+//
+// The following are specific rules for service defined Monitoring
+// metric
+// descriptors:
+//
+// * `type`, `metric_kind`, `value_type`, `description`,
+// `display_name`,
+//   `launch_stage` fields are all required. The `unit` field must be
+// specified
+//   if the `value_type` is any of DOUBLE, INT64, DISTRIBUTION.
+// * Maximum of default 500 metric descriptors per service is allowed.
+// * Maximum of default 10 labels per metric descriptor is allowed.
+//
+// The default maximum limit can be overridden. Please
+// follow
+// https://cloud.google.com/monitoring/quotas
 type MetricDescriptor struct {
 	// Description: A detailed description of the metric, which can be used
 	// in documentation.
@@ -2809,7 +2825,16 @@ type MetricDescriptor struct {
 
 	// Labels: The set of labels that can be used to describe a
 	// specific
-	// instance of this metric type. For example,
+	// instance of this metric type.
+	//
+	// The label key name must follow:
+	//
+	// * Only upper and lower-case letters, digits and underscores (_) are
+	//   allowed.
+	// * Label name must start with a letter or digit.
+	// * The maximum length of a label name is 100 characters.
+	//
+	// For example,
 	// the
 	// `appengine.googleapis.com/http/server/response_latencies` metric
 	// type has a label for the HTTP response code, `response_code`, so
@@ -2908,11 +2933,31 @@ type MetricDescriptor struct {
 
 	// Type: The metric type, including its DNS name prefix. The type is
 	// not
-	// URL-encoded.  All user-defined metric types have the DNS
+	// URL-encoded.
+	//
+	// All service defined metrics must be prefixed with the service name,
+	// in the
+	// format of `{service name}/{relative metric name}`, such
+	// as
+	// `cloudsql.googleapis.com/database/cpu/utilization`. The relative
+	// metric
+	// name must follow:
+	//
+	// * Only upper and lower-case letters, digits, '/' and underscores '_'
+	// are
+	//   allowed.
+	// * The maximum number of characters allowed for the
+	// relative_metric_name is
+	//   100.
+	//
+	// All user-defined metric types have the DNS
 	// name
-	// `custom.googleapis.com` or `external.googleapis.com`.  Metric types
-	// should
-	// use a natural hierarchical grouping. For example:
+	// `custom.googleapis.com`, `external.googleapis.com`,
+	// or
+	// `logging.googleapis.com/user/`.
+	//
+	// Metric types should use a natural hierarchical grouping. For
+	// example:
 	//
 	//     "custom.googleapis.com/invoice/paid/amount"
 	//     "external.googleapis.com/prometheus/up"
@@ -3356,11 +3401,29 @@ func (s *Mixin) MarshalJSON() ([]byte, error) {
 // and
 // "zone" to identify particular VM instances.
 //
-// Different APIs can support different monitored resource types. APIs
-// generally
-// provide a `list` method that returns the monitored resource
-// descriptors used
-// by the API.
+// Different services can support different monitored resource
+// types.
+//
+// The following are specific rules to service defined monitored
+// resources for
+// Monitoring and Logging:
+//
+// * The `type`, `display_name`, `description`, `labels` and
+// `launch_stage`
+//   fields are all required.
+// * The first label of the monitored resource descriptor must be
+//   `resource_container`. There are legacy monitored resource
+// descritptors
+//   start with `project_id`.
+// * It must include a `location` label. * Maximum of default 5 service
+// defined monitored resource descriptors
+//   is allowed per service.
+// * Maximum of default 10 labels per monitored resource is
+// allowed.
+//
+// The default maximum limit can be overridden. Please
+// follow
+// https://cloud.google.com/monitoring/quotas
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might
@@ -3377,9 +3440,16 @@ type MonitoredResourceDescriptor struct {
 
 	// Labels: Required. A set of labels used to describe instances of this
 	// monitored
-	// resource type. For example, an individual Google Cloud SQL database
-	// is
-	// identified by values for the labels "database_id" and "zone".
+	// resource type.
+	// The label key name must follow:
+	//
+	// * Only upper and lower-case letters, digits and underscores (_) are
+	//   allowed.
+	// * Label name must start with a letter or digit.
+	// * The maximum length of a label name is 100 characters.
+	//
+	// For example, an individual Google Cloud SQL database is
+	// identified by values for the labels `database_id` and `location`.
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// LaunchStage: Optional. The launch stage of the monitored resource
@@ -3452,10 +3522,8 @@ type MonitoredResourceDescriptor struct {
 	// resource name format "monitoredResourceDescriptors/{type}".
 	Name string `json:"name,omitempty"`
 
-	// Type: Required. The monitored resource type. For example, the
-	// type
-	// "cloudsql_database" represents databases in Google Cloud SQL.
-	// The maximum length of this value is 256 characters.
+	// Type: Note there are legacy service monitored resources not following
+	// this rule.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -3491,44 +3559,59 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 // sent
 // to both producer and consumer projects, whereas
 // the
-// `library.googleapis.com/book/overdue_count` metric is only sent to
+// `library.googleapis.com/book/num_overdue` metric is only sent to
 // the
 // consumer project.
 //
 //     monitored_resources:
-//     - type: library.googleapis.com/branch
+//     - type: library.googleapis.com/Branch
+//       display_name: "Library Branch"
+//       description: "A branch of a library."
+//       launch_stage: GA
 //       labels:
-//       - key: /city
-//         description: The city where the library branch is located
-// in.
-//       - key: /name
-//         description: The name of the branch.
+//       - key: resource_container
+//         description: "The Cloud container (ie. project id) for the
+// Branch."
+//       - key: location
+//         description: "The location of the library branch."
+//       - key: branch_id
+//         description: "The id of the branch."
 //     metrics:
 //     - name: library.googleapis.com/book/returned_count
+//       display_name: "Books Returned"
+//       description: "The count of books that have been returned."
+//       launch_stage: GA
 //       metric_kind: DELTA
 //       value_type: INT64
+//       unit: "1"
 //       labels:
-//       - key: /customer_id
-//     - name: library.googleapis.com/book/overdue_count
+//       - key: customer_id
+//         description: "The id of the customer."
+//     - name: library.googleapis.com/book/num_overdue
+//       display_name: "Books Overdue"
+//       description: "The current number of overdue books."
+//       launch_stage: GA
 //       metric_kind: GAUGE
 //       value_type: INT64
+//       unit: "1"
 //       labels:
-//       - key: /customer_id
+//       - key: customer_id
+//         description: "The id of the customer."
 //     monitoring:
 //       producer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
+//       - monitored_resource: library.googleapis.com/Branch
 //         metrics:
 //         - library.googleapis.com/book/returned_count
 //       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
+//       - monitored_resource: library.googleapis.com/Branch
 //         metrics:
 //         - library.googleapis.com/book/returned_count
-//         - library.googleapis.com/book/overdue_count
+//         - library.googleapis.com/book/num_overdue
 type Monitoring struct {
 	// ConsumerDestinations: Monitoring configurations for sending metrics
 	// to the consumer project.
-	// There can be multiple consumer destinations. A monitored resouce type
-	// may
+	// There can be multiple consumer destinations. A monitored resource
+	// type may
 	// appear in multiple monitoring destinations if different aggregations
 	// are
 	// needed for different sets of metrics associated with that
@@ -3540,8 +3623,8 @@ type Monitoring struct {
 
 	// ProducerDestinations: Monitoring configurations for sending metrics
 	// to the producer project.
-	// There can be multiple producer destinations. A monitored resouce type
-	// may
+	// There can be multiple producer destinations. A monitored resource
+	// type may
 	// appear in multiple monitoring destinations if different aggregations
 	// are
 	// needed for different sets of metrics associated with that
@@ -3874,6 +3957,8 @@ type PolicyBinding struct {
 	//   - 'roles/container.hostServiceAgentUser' applied on the shared VPC
 	// host
 	//     project
+	//   - 'roles/compute.securityAdmin' applied on the shared VPC host
+	// project
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Member") to
@@ -5086,7 +5171,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5238,7 +5323,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5390,7 +5475,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5551,7 +5636,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5719,7 +5804,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5888,7 +5973,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

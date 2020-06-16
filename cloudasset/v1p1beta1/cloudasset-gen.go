@@ -173,7 +173,7 @@ type ResourcesService struct {
 //     {
 //       "audit_configs": [
 //         {
-//           "service": "allServices"
+//           "service": "allServices",
 //           "audit_log_configs": [
 //             {
 //               "log_type": "DATA_READ",
@@ -182,18 +182,18 @@ type ResourcesService struct {
 //               ]
 //             },
 //             {
-//               "log_type": "DATA_WRITE",
+//               "log_type": "DATA_WRITE"
 //             },
 //             {
-//               "log_type": "ADMIN_READ",
+//               "log_type": "ADMIN_READ"
 //             }
 //           ]
 //         },
 //         {
-//           "service": "sampleservice.googleapis.com"
+//           "service": "sampleservice.googleapis.com",
 //           "audit_log_configs": [
 //             {
-//               "log_type": "DATA_READ",
+//               "log_type": "DATA_READ"
 //             },
 //             {
 //               "log_type": "DATA_WRITE",
@@ -260,7 +260,7 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 //           ]
 //         },
 //         {
-//           "log_type": "DATA_WRITE",
+//           "log_type": "DATA_WRITE"
 //         }
 //       ]
 //     }
@@ -983,16 +983,17 @@ type IamPoliciesSearchAllCall struct {
 	header_      http.Header
 }
 
-// SearchAll: Searches all the IAM policies under a given accessible CRM
-// scope
+// SearchAll: Searches all the IAM policies within a given accessible
+// CRM scope
 // (project/folder/organization). This RPC gives callers
-// especially admins the ability to search all the IAM policies under a
+// especially
+// administrators the ability to search all the IAM policies within a
 // scope,
-// even if they don't have .getIamPolicy permission of all the IAM
+// even if they don't have `.getIamPolicy` permission of all the IAM
 // policies.
-// Callers should have cloud.assets.SearchAllIamPolicies permission on
+// Callers should have `cloud.assets.SearchAllIamPolicies` permission on
 // the
-// requested scope, otherwise it will be rejected.
+// requested scope, otherwise the request will be rejected.
 func (r *IamPoliciesService) SearchAll(scope string) *IamPoliciesSearchAllCall {
 	c := &IamPoliciesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -1023,9 +1024,9 @@ func (c *IamPoliciesSearchAllCall) PageToken(pageToken string) *IamPoliciesSearc
 	return c
 }
 
-// Query sets the optional parameter "query": The query
-// statement.
+// Query sets the optional parameter "query": The query statement.
 // Examples:
+//
 // * "policy:myuser@mydomain.com"
 // * "policy:(myuser@mydomain.com viewer)"
 func (c *IamPoliciesSearchAllCall) Query(query string) *IamPoliciesSearchAllCall {
@@ -1070,7 +1071,7 @@ func (c *IamPoliciesSearchAllCall) Header() http.Header {
 
 func (c *IamPoliciesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1132,7 +1133,7 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the IAM policies under a given accessible CRM scope\n(project/folder/organization). This RPC gives callers\nespecially admins the ability to search all the IAM policies under a scope,\neven if they don't have .getIamPolicy permission of all the IAM policies.\nCallers should have cloud.assets.SearchAllIamPolicies permission on the\nrequested scope, otherwise it will be rejected.",
+	//   "description": "Searches all the IAM policies within a given accessible CRM scope\n(project/folder/organization). This RPC gives callers especially\nadministrators the ability to search all the IAM policies within a scope,\neven if they don't have `.getIamPolicy` permission of all the IAM policies.\nCallers should have `cloud.assets.SearchAllIamPolicies` permission on the\nrequested scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/iamPolicies:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.iamPolicies.searchAll",
@@ -1152,12 +1153,12 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement.\nExamples:\n* \"policy:myuser@mydomain.com\"\n* \"policy:(myuser@mydomain.com viewer)\"",
+	//       "description": "Optional. The query statement. Examples:\n\n* \"policy:myuser@mydomain.com\"\n* \"policy:(myuser@mydomain.com viewer)\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1207,16 +1208,17 @@ type ResourcesSearchAllCall struct {
 	header_      http.Header
 }
 
-// SearchAll: Searches all the resources under a given accessible CRM
+// SearchAll: Searches all the resources within a given accessible CRM
 // scope
 // (project/folder/organization). This RPC gives callers
-// especially admins the ability to search all the resources under a
+// especially
+// administrators the ability to search all the resources within a
+// scope, even
+// if they don't have `.get` permission of all the resources. Callers
+// should
+// have `cloud.assets.SearchAllResources` permission on the requested
 // scope,
-// even if they don't have .get permission of all the resources.
-// Callers
-// should have cloud.assets.SearchAllResources permission on the
-// requested
-// scope, otherwise it will be rejected.
+// otherwise the request will be rejected.
 func (r *ResourcesService) SearchAll(scope string) *ResourcesSearchAllCall {
 	c := &ResourcesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -1233,11 +1235,11 @@ func (c *ResourcesSearchAllCall) AssetTypes(assetTypes ...string) *ResourcesSear
 
 // OrderBy sets the optional parameter "orderBy": A comma separated list
 // of fields specifying the sorting order of the
-// results. The default order is ascending. Add " desc" after the field
+// results. The default order is ascending. Add ` DESC` after the field
 // name
 // to indicate descending order. Redundant space characters are ignored.
 // For
-// example, "  foo ,  bar  desc  ".
+// example, `  location DESC ,  name  `.
 func (c *ResourcesSearchAllCall) OrderBy(orderBy string) *ResourcesSearchAllCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1310,7 +1312,7 @@ func (c *ResourcesSearchAllCall) Header() http.Header {
 
 func (c *ResourcesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1372,7 +1374,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the resources under a given accessible CRM scope\n(project/folder/organization). This RPC gives callers\nespecially admins the ability to search all the resources under a scope,\neven if they don't have .get permission of all the resources. Callers\nshould have cloud.assets.SearchAllResources permission on the requested\nscope, otherwise it will be rejected.",
+	//   "description": "Searches all the resources within a given accessible CRM scope\n(project/folder/organization). This RPC gives callers especially\nadministrators the ability to search all the resources within a scope, even\nif they don't have `.get` permission of all the resources. Callers should\nhave `cloud.assets.SearchAllResources` permission on the requested scope,\notherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/resources:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.resources.searchAll",
@@ -1387,7 +1389,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. A comma separated list of fields specifying the sorting order of the\nresults. The default order is ascending. Add \" desc\" after the field name\nto indicate descending order. Redundant space characters are ignored. For\nexample, \"  foo ,  bar  desc  \".",
+	//       "description": "Optional. A comma separated list of fields specifying the sorting order of the\nresults. The default order is ascending. Add ` DESC` after the field name\nto indicate descending order. Redundant space characters are ignored. For\nexample, `  location DESC ,  name  `.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1408,7 +1410,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources\nwithin the `scope`. The allowed value must be:\n\n* Organization number (such as \"organizations/123\")\n* Folder number(such as \"folders/1234\")\n* Project number (such as \"projects/12345\")\n* Project id (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

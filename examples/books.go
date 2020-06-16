@@ -13,7 +13,6 @@ import (
 	"strings"
 
 	books "google.golang.org/api/books/v1"
-	"google.golang.org/api/googleapi"
 )
 
 func init() {
@@ -54,18 +53,11 @@ func booksMain(client *http.Client, argv []string) {
 			log.Fatalf("Unable to retrieve mylibrary bookshelf volumes: %v", err)
 		}
 		for _, v := range vol.Items {
-			var info struct {
-				Text  bool `json:"text"`
-				Image bool `json:"image"`
-			}
-			// Parse the additional fields, but ignore errors, as the information is not critical.
-			googleapi.ConvertVariant(v.VolumeInfo.ReadingModes.(map[string]interface{}), &info)
 			var s []string
-			if info.Text {
-				s = append(s, "text")
-			}
-			if info.Image {
+			if v.VolumeInfo.ReadingModes.Image {
 				s = append(s, "image")
+			} else {
+				s = append(s, "text")
 			}
 			extra := fmt.Sprintf("; formats: %v", s)
 			if v.VolumeInfo.ImageLinks != nil {

@@ -69,10 +69,9 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 	var resp *http.Response
 	var err error
 
-	// Loop to retry the request, up to the deadline.
+	// Loop to retry the request, up to the context deadline.
 	var pause time.Duration
 	bo := backoff()
-	quitAfter := time.After(retryDeadline)
 
 	for {
 		select {
@@ -84,8 +83,6 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 			}
 			return resp, err
 		case <-time.After(pause):
-		case <-quitAfter:
-			return resp, err
 		}
 
 		resp, err = client.Do(req.WithContext(ctx))

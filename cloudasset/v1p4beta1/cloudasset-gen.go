@@ -926,8 +926,10 @@ type GoogleCloudAssetV1p4beta1Resource struct {
 	// AnalysisState: The analysis state of this resource node.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
-	// FullResourceName: The [full resource
-	// name](https://aip.dev/122#full-resource-names).
+	// FullResourceName: The [full
+	// resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-
+	// name-format)
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -1037,7 +1039,18 @@ type IamPolicyAnalysisQuery struct {
 	// and IAM policies within
 	// the parent will be analyzed. This can only be an organization number
 	// (such
-	// as "organizations/123") or a folder number (such as "folders/123").
+	// as "organizations/123") or a folder number (such as
+	// "folders/123").
+	//
+	// To know how to get organization id, visit
+	// [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managi
+	// ng-organization#retrieving_your_organization_id).
+	//
+	// To know how to get folder id, visit
+	// [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managi
+	// ng-folders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceSelector: Optional. Specifies a resource for analysis.
@@ -1078,8 +1091,11 @@ type IamPolicyAnalysisResult struct {
 	// request.
 	AccessControlLists []*GoogleCloudAssetV1p4beta1AccessControlList `json:"accessControlLists,omitempty"`
 
-	// AttachedResourceFullName: The full name of the resource to which the
-	// iam_binding policy attaches.
+	// AttachedResourceFullName: The [full
+	// resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-
+	// name-format)
+	// of the resource to which the iam_binding policy attaches.
 	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
 
 	// FullyExplored: Represents whether all nodes in the transitive closure
@@ -1131,6 +1147,19 @@ type IdentitySelector struct {
 	// policy
 	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding
 	// ).
+	//
+	// The examples of supported forms
+	// are:
+	// "user:mike@example.com",
+	// "group:admins@example.com",
+	// "domain:goog
+	// le.com",
+	// "serviceAccount:my-project-id@appspot.gserviceaccount.com".
+	//
+	//
+	// Notice that wildcard characters (such as * and ?) are not
+	// supported.
+	// You must give a specific identity.
 	Identity string `json:"identity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Identity") to
@@ -1357,15 +1386,18 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 // policies, which may be set
 // directly on the resource, or on ancestors such as organizations,
 // folders or
-// projects. At least one of ResourceSelector, IdentitySelector
-// or
-// AccessSelector must be specified in a request.
+// projects. Either ResourceSelector or IdentitySelector must
+// be
+// specified in a request.
 type ResourceSelector struct {
 	// FullResourceName: Required. The [full
 	// resource
-	// name](https://cloud.google.com/apis/design/resource_names#ful
-	// l_resource_name)
-	// .
+	// name](https://cloud.google.com/asset-inventory/docs/resource-
+	// name-format)
+	// of a resource of [supported
+	// resource
+	// types](https://cloud.google.com/asset-inventory/docs/supporte
+	// d-asset-types#analyzable_asset_types).
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -1486,6 +1518,19 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysi
 // policy
 // binding](https://cloud.google.com/iam/reference/rest/v1/Binding
 // ).
+//
+// The examples of supported forms
+// are:
+// "user:mike@example.com",
+// "group:admins@example.com",
+// "domain:goog
+// le.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com".
+//
+//
+// Notice that wildcard characters (such as * and ?) are not
+// supported.
+// You must give a specific identity.
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(analysisQueryIdentitySelectorIdentity string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.identitySelector.identity", analysisQueryIdentitySelectorIdentity)
 	return c
@@ -1495,9 +1540,12 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(an
 // parameter "analysisQuery.resourceSelector.fullResourceName":
 // Required. The [full
 // resource
-// name](https://cloud.google.com/apis/design/resource_names#ful
-// l_resource_name)
-// .
+// name](https://cloud.google.com/asset-inventory/docs/resource-
+// name-format)
+// of a resource of [supported
+// resource
+// types](https://cloud.google.com/asset-inventory/docs/supporte
+// d-asset-types#analyzable_asset_types).
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c
@@ -1510,7 +1558,8 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourc
 // expensive
 // operation, because many derived queries will be executed. We
 // highly
-// recommend you use ExportIamPolicyAnalysis rpc instead.
+// recommend you use AssetService.ExportIamPolicyAnalysis rpc
+// instead.
 //
 // For example, if the request analyzes for which resources user A
 // has
@@ -1682,7 +1731,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1765,17 +1814,17 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
-	//       "description": "Required. The identity appear in the form of members in\n[IAM policy\nbinding](https://cloud.google.com/iam/reference/rest/v1/Binding).",
+	//       "description": "Required. The identity appear in the form of members in\n[IAM policy\nbinding](https://cloud.google.com/iam/reference/rest/v1/Binding).\n\nThe examples of supported forms are:\n\"user:mike@example.com\",\n\"group:admins@example.com\",\n\"domain:google.com\",\n\"serviceAccount:my-project-id@appspot.gserviceaccount.com\".\n\nNotice that wildcard characters (such as * and ?) are not supported.\nYou must give a specific identity.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.resourceSelector.fullResourceName": {
-	//       "description": "Required. The [full resource\nname](https://cloud.google.com/apis/design/resource_names#full_resource_name)\n.",
+	//       "description": "Required. The [full resource\nname](https://cloud.google.com/asset-inventory/docs/resource-name-format)\nof a resource of [supported resource\ntypes](https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "options.analyzeServiceAccountImpersonation": {
-	//       "description": "Optional. If true, the response will include access analysis from identities to\nresources via service account impersonation. This is a very expensive\noperation, because many derived queries will be executed. We highly\nrecommend you use ExportIamPolicyAnalysis rpc instead.\n\nFor example, if the request analyzes for which resources user A has\npermission P, and there's an IAM policy states user A has\niam.serviceAccounts.getAccessToken permission to a service account SA,\nand there's another IAM policy states service account SA has permission P\nto a GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nAnother example, if the request analyzes for who has\npermission P to a GCP folder F, and there's an IAM policy states user A\nhas iam.serviceAccounts.actAs permission to a service account SA, and\nthere's another IAM policy states service account SA has permission P to\nthe GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nDefault is false.",
+	//       "description": "Optional. If true, the response will include access analysis from identities to\nresources via service account impersonation. This is a very expensive\noperation, because many derived queries will be executed. We highly\nrecommend you use AssetService.ExportIamPolicyAnalysis rpc instead.\n\nFor example, if the request analyzes for which resources user A has\npermission P, and there's an IAM policy states user A has\niam.serviceAccounts.getAccessToken permission to a service account SA,\nand there's another IAM policy states service account SA has permission P\nto a GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nAnother example, if the request analyzes for who has\npermission P to a GCP folder F, and there's an IAM policy states user A\nhas iam.serviceAccounts.actAs permission to a service account SA, and\nthere's another IAM policy states service account SA has permission P to\nthe GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nDefault is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1811,7 +1860,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").\n\nTo know how to get organization id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).\n\nTo know how to get folder id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1881,7 +1930,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1954,7 +2003,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").\n\nTo know how to get organization id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).\n\nTo know how to get folder id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

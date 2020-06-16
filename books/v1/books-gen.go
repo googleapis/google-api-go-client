@@ -6,7 +6,7 @@
 
 // Package books provides access to the Books API.
 //
-// For product documentation, see: https://developers.google.com/books/docs/v1/getting_started
+// For product documentation, see: https://code.google.com/apis/books/docs/v1/getting_started.html
 //
 // Creating a client
 //
@@ -74,7 +74,7 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "books:v1"
 const apiName = "books"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/books/v1/"
+const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -432,13 +432,13 @@ type VolumesUseruploadedService struct {
 
 type Annotation struct {
 	// AfterSelectedText: Anchor text after excerpt. For requests, if the
-	// user bookmarked a screen that has no flowing text on it, then this
-	// field should be empty.
+	// user bookmarked a screen
+	// that has no flowing text on it, then this field should be empty.
 	AfterSelectedText string `json:"afterSelectedText,omitempty"`
 
 	// BeforeSelectedText: Anchor text before excerpt. For requests, if the
-	// user bookmarked a screen that has no flowing text on it, then this
-	// field should be empty.
+	// user bookmarked a screen
+	// that has no flowing text on it, then this field should be empty.
 	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
 
 	// ClientVersionRanges: Selection ranges sent from the client.
@@ -603,15 +603,18 @@ func (s *AnnotationCurrentVersionRanges) MarshalJSON() ([]byte, error) {
 
 type AnnotationLayerSummary struct {
 	// AllowedCharacterCount: Maximum allowed characters on this layer,
-	// especially for the "copy" layer.
+	// especially for the "copy"
+	// layer.
 	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
 
 	// LimitType: Type of limitation on this layer. "limited" or "unlimited"
-	// for the "copy" layer.
+	// for the "copy"
+	// layer.
 	LimitType string `json:"limitType,omitempty"`
 
 	// RemainingCharacterCount: Remaining allowed characters on this layer,
-	// especially for the "copy" layer.
+	// especially for the "copy"
+	// layer.
 	RemainingCharacterCount int64 `json:"remainingCharacterCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -639,62 +642,6 @@ func (s *AnnotationLayerSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type Annotationdata struct {
-	// AnnotationType: The type of annotation this data is for.
-	AnnotationType string `json:"annotationType,omitempty"`
-
-	Data interface{} `json:"data,omitempty"`
-
-	// EncodedData: Base64 encoded data for this annotation data.
-	EncodedData string `json:"encoded_data,omitempty"`
-
-	// Id: Unique id for this annotation data.
-	Id string `json:"id,omitempty"`
-
-	// Kind: Resource Type
-	Kind string `json:"kind,omitempty"`
-
-	// LayerId: The Layer id for this data. *
-	LayerId string `json:"layerId,omitempty"`
-
-	// SelfLink: URL for this resource. *
-	SelfLink string `json:"selfLink,omitempty"`
-
-	// Updated: Timestamp for the last time this data was updated. (RFC 3339
-	// UTC date-time format).
-	Updated string `json:"updated,omitempty"`
-
-	// VolumeId: The volume id for this data. *
-	VolumeId string `json:"volumeId,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Annotationdata) MarshalJSON() ([]byte, error) {
-	type NoMethod Annotationdata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type Annotations struct {
 	// Items: A list of annotations.
 	Items []*Annotation `json:"items,omitempty"`
@@ -703,12 +650,13 @@ type Annotations struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present if this request does not have more results.
+	// This will not be present
+	// if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: Total number of annotations found. This may be greater
-	// than the number of notes returned in this response if results have
-	// been paginated.
+	// than the number of
+	// notes returned in this response if results have been paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -808,13 +756,14 @@ func (s *AnnotationsSummaryLayers) MarshalJSON() ([]byte, error) {
 
 type Annotationsdata struct {
 	// Items: A list of Annotation Data.
-	Items []*Annotationdata `json:"items,omitempty"`
+	Items []*GeoAnnotationdata `json:"items,omitempty"`
 
 	// Kind: Resource type
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present if this request does not have more results.
+	// This will not be present
+	// if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: The total number of volume annotations found.
@@ -919,43 +868,6 @@ func (s *BooksCloudloadingResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type BooksSubscriptionReleaseInfo struct {
-	// AmountInMicros: Amount in micros of the specified currency code.
-	AmountInMicros int64 `json:"amountInMicros,omitempty,string"`
-
-	// CurrencyCode: Currency code of the amount.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// ReleaseNumber: The release number of this issue/volume/book.
-	ReleaseNumber string `json:"releaseNumber,omitempty"`
-
-	// ReleaseTimestampUs: The release date.
-	ReleaseTimestampUs int64 `json:"releaseTimestampUs,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AmountInMicros") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BooksSubscriptionReleaseInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod BooksSubscriptionReleaseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type BooksVolumesRecommendedRateResponse struct {
 	ConsistencyToken string `json:"consistency_token,omitempty"`
 
@@ -992,7 +904,8 @@ type Bookshelf struct {
 	Access string `json:"access,omitempty"`
 
 	// Created: Created time for this bookshelf (formatted UTC timestamp
-	// with millisecond resolution).
+	// with millisecond
+	// resolution).
 	Created string `json:"created,omitempty"`
 
 	// Description: Description of this bookshelf.
@@ -1011,14 +924,16 @@ type Bookshelf struct {
 	Title string `json:"title,omitempty"`
 
 	// Updated: Last modified time of this bookshelf (formatted UTC
-	// timestamp with millisecond resolution).
+	// timestamp with
+	// millisecond resolution).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeCount: Number of volumes in this bookshelf.
 	VolumeCount int64 `json:"volumeCount,omitempty"`
 
 	// VolumesLastUpdated: Last time a volume was added or removed from this
-	// bookshelf (formatted UTC timestamp with millisecond resolution).
+	// bookshelf (formatted UTC
+	// timestamp with millisecond resolution).
 	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1175,7 +1090,8 @@ type ConcurrentAccessRestriction struct {
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
 
-	// Source: Client app identifier for verification. Download access and
+	// Source: Client app identifier for verification. Download access
+	// and
 	// client-validation only.
 	Source string `json:"source,omitempty"`
 
@@ -1204,6 +1120,67 @@ type ConcurrentAccessRestriction struct {
 
 func (s *ConcurrentAccessRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod ConcurrentAccessRestriction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DictionaryAnnotationdata struct {
+	// AnnotationType: The type of annotation this data is for.
+	AnnotationType string `json:"annotationType,omitempty"`
+
+	// Data: JSON encoded data for this dictionary annotation data.
+	// Emitted with name 'data' in JSON output. Either this or geo_data
+	// will
+	// be populated.
+	Data *Dictlayerdata `json:"data,omitempty"`
+
+	// EncodedData: Base64 encoded data for this annotation data.
+	EncodedData string `json:"encodedData,omitempty"`
+
+	// Id: Unique id for this annotation data.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
+
+	// LayerId: The Layer id for this data. *
+	LayerId string `json:"layerId,omitempty"`
+
+	// SelfLink: URL for this resource. *
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this data was updated. (RFC 3339
+	// UTC date-time
+	// format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DictionaryAnnotationdata) MarshalJSON() ([]byte, error) {
+	type NoMethod DictionaryAnnotationdata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1240,7 +1217,8 @@ func (s *Dictlayerdata) MarshalJSON() ([]byte, error) {
 
 type DictlayerdataCommon struct {
 	// Title: The display title and localized canonical name to use when
-	// searching for this entity on Google search.
+	// searching for
+	// this entity on Google search.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Title") to
@@ -1333,7 +1311,8 @@ type DictlayerdataDictWords struct {
 	Senses []*DictlayerdataDictWordsSenses `json:"senses,omitempty"`
 
 	// Source: The words with different meanings but not related words, e.g.
-	// "go" (game) and "go" (verb).
+	// "go"
+	// (game) and "go" (verb).
 	Source *DictlayerdataDictWordsSource `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Derivatives") to
@@ -1708,7 +1687,8 @@ func (s *DictlayerdataDictWordsSensesSynonymsSource) MarshalJSON() ([]byte, erro
 }
 
 // DictlayerdataDictWordsSource: The words with different meanings but
-// not related words, e.g. "go" (game) and "go" (verb).
+// not related words, e.g. "go"
+// (game) and "go" (verb).
 type DictlayerdataDictWordsSource struct {
 	Attribution string `json:"attribution,omitempty"`
 
@@ -1852,8 +1832,8 @@ type DownloadAccessRestriction struct {
 	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
 
 	// DownloadsAcquired: If restricted, the number of content download
-	// licenses already acquired (including the requesting client, if
-	// licensed).
+	// licenses already acquired
+	// (including the requesting client, if licensed).
 	DownloadsAcquired int64 `json:"downloadsAcquired,omitempty"`
 
 	// JustAcquired: If deviceAllowed, whether access was just acquired with
@@ -1864,7 +1844,8 @@ type DownloadAccessRestriction struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MaxDownloadDevices: If restricted, the maximum number of content
-	// download licenses for this volume.
+	// download licenses for this
+	// volume.
 	MaxDownloadDevices int64 `json:"maxDownloadDevices,omitempty"`
 
 	// Message: Error/warning message.
@@ -1874,9 +1855,11 @@ type DownloadAccessRestriction struct {
 	// client-validation only.
 	Nonce string `json:"nonce,omitempty"`
 
-	// ReasonCode: Error/warning reason code. Additional codes may be added
-	// in the future. 0 OK 100 ACCESS_DENIED_PUBLISHER_LIMIT 101
-	// ACCESS_DENIED_LIMIT 200 WARNING_USED_LAST_ACCESS
+	// ReasonCode: Error/warning reason code.  Additional codes may be added
+	// in the future. 0
+	// OK 100   ACCESS_DENIED_PUBLISHER_LIMIT 101   ACCESS_DENIED_LIMIT
+	// 200
+	// WARNING_USED_LAST_ACCESS
 	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// Restricted: Whether this volume has any download access restrictions.
@@ -1885,7 +1868,8 @@ type DownloadAccessRestriction struct {
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
 
-	// Source: Client app identifier for verification. Download access and
+	// Source: Client app identifier for verification. Download access
+	// and
 	// client-validation only.
 	Source string `json:"source,omitempty"`
 
@@ -1948,6 +1932,24 @@ func (s *DownloadAccesses) MarshalJSON() ([]byte, error) {
 	type NoMethod DownloadAccesses
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated
+// empty messages in your APIs. A typical example is to use it as the
+// request
+// or the response type of an API method. For instance:
+//
+//     service Foo {
+//       rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty);
+//     }
+//
+// The JSON representation for `Empty` is empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 type FamilyInfo struct {
@@ -2026,6 +2028,63 @@ func (s *FamilyInfoMembership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GeoAnnotationdata struct {
+	// AnnotationType: The type of annotation this data is for.
+	AnnotationType string `json:"annotationType,omitempty"`
+
+	// Data: JSON encoded data for this geo annotation data.
+	// Emitted with name 'data' in JSON output. Either this or dict_data
+	// will
+	// be populated.
+	Data *Geolayerdata `json:"data,omitempty"`
+
+	// EncodedData: Base64 encoded data for this annotation data.
+	EncodedData string `json:"encodedData,omitempty"`
+
+	// Id: Unique id for this annotation data.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Resource Type
+	Kind string `json:"kind,omitempty"`
+
+	// LayerId: The Layer id for this data. *
+	LayerId string `json:"layerId,omitempty"`
+
+	// SelfLink: URL for this resource. *
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Updated: Timestamp for the last time this data was updated. (RFC 3339
+	// UTC date-time
+	// format).
+	Updated string `json:"updated,omitempty"`
+
+	// VolumeId: The volume id for this data. *
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnnotationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeoAnnotationdata) MarshalJSON() ([]byte, error) {
+	type NoMethod GeoAnnotationdata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Geolayerdata struct {
 	Common *GeolayerdataCommon `json:"common,omitempty"`
 
@@ -2071,7 +2130,8 @@ type GeolayerdataCommon struct {
 	SnippetUrl string `json:"snippetUrl,omitempty"`
 
 	// Title: The display title and localized canonical name to use when
-	// searching for this entity on Google search.
+	// searching for
+	// this entity on Google search.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Lang") to
@@ -2099,11 +2159,13 @@ func (s *GeolayerdataCommon) MarshalJSON() ([]byte, error) {
 
 type GeolayerdataGeo struct {
 	// Boundary: The boundary of the location as a set of loops containing
-	// pairs of latitude, longitude coordinates.
-	Boundary [][]*GeolayerdataGeoBoundaryItem `json:"boundary,omitempty"`
+	// pairs of
+	// latitude, longitude coordinates.
+	Boundary []string `json:"boundary,omitempty"`
 
 	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
-	// RESTRICTED, NEVER
+	// RESTRICTED,
+	// NEVER
 	CachePolicy string `json:"cachePolicy,omitempty"`
 
 	// CountryCode: The country code of the location.
@@ -2116,17 +2178,23 @@ type GeolayerdataGeo struct {
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// MapType: The type of map that should be used for this location. EX:
-	// HYBRID, ROADMAP, SATELLITE, TERRAIN
+	// HYBRID,
+	// ROADMAP, SATELLITE, TERRAIN
 	MapType string `json:"mapType,omitempty"`
 
 	// Viewport: The viewport for showing this location. This is a latitude,
-	// longitude rectangle.
+	// longitude
+	// rectangle.
 	Viewport *GeolayerdataGeoViewport `json:"viewport,omitempty"`
 
 	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
-	// lowest zoom level, in which the entire world can be seen on one map)
-	// to 21+ (down to individual buildings). See:
-	// https://developers.google.com/maps/documentation/staticmaps/#Zoomlevels
+	// lowest zoom
+	// level, in which the entire world can be seen on one map) to 21+ (down
+	// to
+	// individual buildings). See:
+	// https:
+	// //developers.google.com/maps/documentation/staticmaps/#Zoomleve
+	// ls
 	Zoom int64 `json:"zoom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Boundary") to
@@ -2168,36 +2236,9 @@ func (s *GeolayerdataGeo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type GeolayerdataGeoBoundaryItem struct {
-	Latitude int64 `json:"latitude,omitempty"`
-
-	Longitude int64 `json:"longitude,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Latitude") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Latitude") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GeolayerdataGeoBoundaryItem) MarshalJSON() ([]byte, error) {
-	type NoMethod GeolayerdataGeoBoundaryItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GeolayerdataGeoViewport: The viewport for showing this location. This
-// is a latitude, longitude rectangle.
+// is a latitude, longitude
+// rectangle.
 type GeolayerdataGeoViewport struct {
 	Hi *GeolayerdataGeoViewportHi `json:"hi,omitempty"`
 
@@ -2384,13 +2425,15 @@ type Layersummary struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time an item in this layer was
-	// updated. (RFC 3339 UTC date-time format).
+	// updated. (RFC 3339
+	// UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeAnnotationsVersion: The current version of this layer's volume
-	// annotations. Note that this version applies only to the data in the
-	// books.layers.volumeAnnotations.* responses. The actual annotation
-	// data is versioned separately.
+	// annotations. Note that this
+	// version applies only to the data in the
+	// books.layers.volumeAnnotations.*
+	// responses. The actual annotation data is versioned separately.
 	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
 
 	// VolumeId: The volume id this resource is for.
@@ -2673,7 +2716,8 @@ type ReadingPosition struct {
 	PdfPosition string `json:"pdfPosition,omitempty"`
 
 	// Updated: Timestamp when this reading position was last updated
-	// (formatted UTC timestamp with millisecond resolution).
+	// (formatted UTC
+	// timestamp with millisecond resolution).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: Volume id associated with this reading position.
@@ -2707,7 +2751,7 @@ func (s *ReadingPosition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type RequestAccess struct {
+type RequestAccessData struct {
 	// ConcurrentAccess: A concurrent access response.
 	ConcurrentAccess *ConcurrentAccessRestriction `json:"concurrentAccess,omitempty"`
 
@@ -2739,8 +2783,8 @@ type RequestAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestAccess) MarshalJSON() ([]byte, error) {
-	type NoMethod RequestAccess
+func (s *RequestAccessData) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestAccessData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2763,18 +2807,21 @@ type Review struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Rating: Star rating for this review. Possible values are ONE, TWO,
-	// THREE, FOUR, FIVE or NOT_RATED.
+	// THREE, FOUR,
+	// FIVE or NOT_RATED.
 	Rating string `json:"rating,omitempty"`
 
 	// Source: Information regarding the source of this review, when the
-	// review is not from a Google Books user.
+	// review is not
+	// from a Google Books user.
 	Source *ReviewSource `json:"source,omitempty"`
 
 	// Title: Title for this review.
 	Title string `json:"title,omitempty"`
 
 	// Type: Source type for this review. Possible values are EDITORIAL,
-	// WEB_USER or GOOGLE_USER.
+	// WEB_USER or
+	// GOOGLE_USER.
 	Type string `json:"type,omitempty"`
 
 	// VolumeId: Volume that this review is for.
@@ -2832,7 +2879,8 @@ func (s *ReviewAuthor) MarshalJSON() ([]byte, error) {
 }
 
 // ReviewSource: Information regarding the source of this review, when
-// the review is not from a Google Books user.
+// the review is not
+// from a Google Books user.
 type ReviewSource struct {
 	// Description: Name of the source.
 	Description string `json:"description,omitempty"`
@@ -2945,35 +2993,28 @@ func (s *SeriesSeries) MarshalJSON() ([]byte, error) {
 }
 
 type SeriesSeriesSeriesSubscriptionReleaseInfo struct {
-	// CancellationTimestampUs: Cancellation date of the series subscription
-	// (or when it ends).
-	CancellationTimestampUs int64 `json:"cancellationTimestampUs,omitempty,string"`
+	CancelTime string `json:"cancelTime,omitempty"`
 
-	// CurrentReleaseInfo: Release information for the last release.
-	CurrentReleaseInfo *BooksSubscriptionReleaseInfo `json:"currentReleaseInfo,omitempty"`
+	CurrentReleaseInfo *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo `json:"currentReleaseInfo,omitempty"`
 
-	// NextReleaseInfo: Release information for the next release.
-	NextReleaseInfo *BooksSubscriptionReleaseInfo `json:"nextReleaseInfo,omitempty"`
+	NextReleaseInfo *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo `json:"nextReleaseInfo,omitempty"`
 
-	// SeriesSubscriptionType: series subscription type.
 	SeriesSubscriptionType string `json:"seriesSubscriptionType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CancellationTimestampUs") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CancellationTimestampUs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2981,6 +3022,100 @@ func (s *SeriesSeriesSeriesSubscriptionReleaseInfo) MarshalJSON() ([]byte, error
 	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	ReleaseNumber string `json:"releaseNumber,omitempty"`
+
+	ReleaseTime string `json:"releaseTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmountInMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoCurrentReleaseInfo
+	var s1 struct {
+		AmountInMicros gensupport.JSONFloat64 `json:"amountInMicros"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AmountInMicros = float64(s1.AmountInMicros)
+	return nil
+}
+
+type SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo struct {
+	AmountInMicros float64 `json:"amountInMicros,omitempty"`
+
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	ReleaseNumber string `json:"releaseNumber,omitempty"`
+
+	ReleaseTime string `json:"releaseTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountInMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmountInMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod SeriesSeriesSeriesSubscriptionReleaseInfoNextReleaseInfo
+	var s1 struct {
+		AmountInMicros gensupport.JSONFloat64 `json:"amountInMicros"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AmountInMicros = float64(s1.AmountInMicros)
+	return nil
 }
 
 type Seriesmembership struct {
@@ -3252,12 +3387,15 @@ func (s *UsersettingsNotificationRewardExpirations) MarshalJSON() ([]byte, error
 
 type Volume struct {
 	// AccessInfo: Any information about a volume related to reading or
-	// obtaining that volume text. This information can depend on country
-	// (books may be public domain in one country but not in another, e.g.).
+	// obtaining that volume
+	// text. This information can depend on country (books may be public
+	// domain in
+	// one country but not in another, e.g.).
 	AccessInfo *VolumeAccessInfo `json:"accessInfo,omitempty"`
 
 	// Etag: Opaque identifier for a specific version of a volume resource.
-	// (In LITE projection)
+	// (In LITE
+	// projection)
 	Etag string `json:"etag,omitempty"`
 
 	// Id: Unique identifier for a volume. (In LITE projection.)
@@ -3274,9 +3412,12 @@ type Volume struct {
 	RecommendedInfo *VolumeRecommendedInfo `json:"recommendedInfo,omitempty"`
 
 	// SaleInfo: Any information about a volume related to the eBookstore
-	// and/or purchaseability. This information can depend on the country
-	// where the request originates from (i.e. books may not be for sale in
-	// certain countries).
+	// and/or
+	// purchaseability. This information can depend on the country where
+	// the
+	// request originates from (i.e. books may not be for sale in
+	// certain
+	// countries).
 	SaleInfo *VolumeSaleInfo `json:"saleInfo,omitempty"`
 
 	// SearchInfo: Search result information related to this volume.
@@ -3286,7 +3427,8 @@ type Volume struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// UserInfo: User specific information related to this volume. (e.g.
-	// page this user last read or whether they purchased this book)
+	// page this user last
+	// read or whether they purchased this book)
 	UserInfo *VolumeUserInfo `json:"userInfo,omitempty"`
 
 	// VolumeInfo: General volume information.
@@ -3320,17 +3462,21 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeAccessInfo: Any information about a volume related to reading
-// or obtaining that volume text. This information can depend on country
-// (books may be public domain in one country but not in another, e.g.).
+// or obtaining that volume
+// text. This information can depend on country (books may be public
+// domain in
+// one country but not in another, e.g.).
 type VolumeAccessInfo struct {
 	// AccessViewStatus: Combines the access and viewability of this volume
-	// into a single status field for this user. Values can be
-	// FULL_PURCHASED, FULL_PUBLIC_DOMAIN, SAMPLE or NONE. (In LITE
-	// projection.)
+	// into a single status
+	// field for this user. Values can be FULL_PURCHASED,
+	// FULL_PUBLIC_DOMAIN,
+	// SAMPLE or NONE. (In LITE projection.)
 	AccessViewStatus string `json:"accessViewStatus,omitempty"`
 
 	// Country: The two-letter ISO_3166-1 country code for which this access
-	// information is valid. (In LITE projection.)
+	// information
+	// is valid. (In LITE projection.)
 	Country string `json:"country,omitempty"`
 
 	// DownloadAccess: Information about a volume's download license access
@@ -3338,21 +3484,23 @@ type VolumeAccessInfo struct {
 	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
 
 	// DriveImportedContentLink: URL to the Google Drive viewer if this
-	// volume is uploaded by the user by selecting the file from Google
-	// Drive.
+	// volume is uploaded by the user by
+	// selecting the file from Google Drive.
 	DriveImportedContentLink string `json:"driveImportedContentLink,omitempty"`
 
 	// Embeddable: Whether this volume can be embedded in a viewport using
-	// the Embedded Viewer API.
+	// the Embedded
+	// Viewer API.
 	Embeddable bool `json:"embeddable,omitempty"`
 
 	// Epub: Information about epub content. (In LITE projection.)
 	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
 
 	// ExplicitOfflineLicenseManagement: Whether this volume requires that
-	// the client explicitly request offline download license rather than
-	// have it done automatically when loading the content, if the client
-	// supports it.
+	// the client explicitly request offline
+	// download license rather than have it done automatically when loading
+	// the
+	// content, if the client supports it.
 	ExplicitOfflineLicenseManagement bool `json:"explicitOfflineLicenseManagement,omitempty"`
 
 	// Pdf: Information about pdf content. (In LITE projection.)
@@ -3367,24 +3515,31 @@ type VolumeAccessInfo struct {
 	QuoteSharingAllowed bool `json:"quoteSharingAllowed,omitempty"`
 
 	// TextToSpeechPermission: Whether text-to-speech is permitted for this
-	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
-	// NOT_ALLOWED.
+	// volume. Values can be
+	// ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or NOT_ALLOWED.
 	TextToSpeechPermission string `json:"textToSpeechPermission,omitempty"`
 
 	// ViewOrderUrl: For ordered but not yet processed orders, we give a URL
-	// that can be used to go to the appropriate Google Wallet page.
+	// that can be used
+	// to go to the appropriate Google Wallet page.
 	ViewOrderUrl string `json:"viewOrderUrl,omitempty"`
 
 	// Viewability: The read access of a volume. Possible values are
-	// PARTIAL, ALL_PAGES, NO_PAGES or UNKNOWN. This value depends on the
-	// country listed above. A value of PARTIAL means that the publisher has
-	// allowed some portion of the volume to be viewed publicly, without
-	// purchase. This can apply to eBooks as well as non-eBooks. Public
-	// domain books will always have a value of ALL_PAGES.
+	// PARTIAL, ALL_PAGES,
+	// NO_PAGES or UNKNOWN. This value depends on the country listed above.
+	// A
+	// value of PARTIAL means that the publisher has allowed some portion of
+	// the
+	// volume to be viewed publicly, without purchase. This can apply to
+	// eBooks
+	// as well as non-eBooks. Public domain books will always have a value
+	// of
+	// ALL_PAGES.
 	Viewability string `json:"viewability,omitempty"`
 
 	// WebReaderLink: URL to read this volume on the Google Books site. Link
-	// will not allow users to read non-viewable volumes.
+	// will not allow
+	// users to read non-viewable volumes.
 	WebReaderLink string `json:"webReaderLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessViewStatus") to
@@ -3422,7 +3577,8 @@ type VolumeAccessInfoEpub struct {
 	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a flowing text epub available either as public domain
-	// or for purchase. (In LITE projection.)
+	// or for
+	// purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
@@ -3459,7 +3615,8 @@ type VolumeAccessInfoPdf struct {
 	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a scanned image pdf available either as public domain
-	// or for purchase. (In LITE projection.)
+	// or for
+	// purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
@@ -3520,9 +3677,12 @@ type VolumeLayerInfoLayers struct {
 	LayerId string `json:"layerId,omitempty"`
 
 	// VolumeAnnotationsVersion: The current version of this layer's volume
-	// annotations. Note that this version applies only to the data in the
+	// annotations. Note that this
+	// version applies only to the data in
+	// the
 	// books.layers.volumeAnnotations.* responses. The actual annotation
-	// data is versioned separately.
+	// data
+	// is versioned separately.
 	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LayerId") to
@@ -3578,20 +3738,26 @@ func (s *VolumeRecommendedInfo) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeSaleInfo: Any information about a volume related to the
-// eBookstore and/or purchaseability. This information can depend on the
-// country where the request originates from (i.e. books may not be for
-// sale in certain countries).
+// eBookstore and/or
+// purchaseability. This information can depend on the country where
+// the
+// request originates from (i.e. books may not be for sale in
+// certain
+// countries).
 type VolumeSaleInfo struct {
 	// BuyLink: URL to purchase this volume on the Google Books site. (In
-	// LITE projection)
+	// LITE
+	// projection)
 	BuyLink string `json:"buyLink,omitempty"`
 
 	// Country: The two-letter ISO_3166-1 country code for which this sale
-	// information is valid. (In LITE projection.)
+	// information is
+	// valid. (In LITE projection.)
 	Country string `json:"country,omitempty"`
 
 	// IsEbook: Whether or not this volume is an eBook (can be added to the
-	// My eBooks shelf).
+	// My eBooks
+	// shelf).
 	IsEbook bool `json:"isEbook,omitempty"`
 
 	// ListPrice: Suggested retail price. (In LITE projection.)
@@ -3604,14 +3770,19 @@ type VolumeSaleInfo struct {
 	OnSaleDate string `json:"onSaleDate,omitempty"`
 
 	// RetailPrice: The actual selling price of the book. This is the same
-	// as the suggested retail or list price unless there are offers or
-	// discounts on this volume. (In LITE projection.)
+	// as the suggested
+	// retail or list price unless there are offers or discounts on this
+	// volume.
+	// (In LITE projection.)
 	RetailPrice *VolumeSaleInfoRetailPrice `json:"retailPrice,omitempty"`
 
 	// Saleability: Whether or not this book is available for sale or
-	// offered for free in the Google eBookstore for the country listed
-	// above. Possible values are FOR_SALE, FOR_RENTAL_ONLY,
-	// FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE, or FOR_PREORDER.
+	// offered for free in the
+	// Google eBookstore for the country listed above. Possible values
+	// are
+	// FOR_SALE, FOR_RENTAL_ONLY, FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE,
+	// or
+	// FOR_PREORDER.
 	Saleability string `json:"saleability,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuyLink") to
@@ -3859,8 +4030,10 @@ func (s *VolumeSaleInfoOffersRetailPrice) UnmarshalJSON(data []byte) error {
 }
 
 // VolumeSaleInfoRetailPrice: The actual selling price of the book. This
-// is the same as the suggested retail or list price unless there are
-// offers or discounts on this volume. (In LITE projection.)
+// is the same as the suggested
+// retail or list price unless there are offers or discounts on this
+// volume.
+// (In LITE projection.)
 type VolumeSaleInfoRetailPrice struct {
 	// Amount: Amount in the currency listed below. (In LITE projection.)
 	Amount float64 `json:"amount,omitempty"`
@@ -3935,11 +4108,14 @@ func (s *VolumeSearchInfo) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeUserInfo: User specific information related to this volume.
-// (e.g. page this user last read or whether they purchased this book)
+// (e.g. page this user last
+// read or whether they purchased this book)
 type VolumeUserInfo struct {
 	// AcquiredTime: Timestamp when this volume was acquired by the user.
-	// (RFC 3339 UTC date-time format) Acquiring includes purchase, user
-	// upload, receiving family sharing, etc.
+	// (RFC 3339 UTC
+	// date-time format) Acquiring includes purchase, user upload,
+	// receiving
+	// family sharing, etc.
 	AcquiredTime string `json:"acquiredTime,omitempty"`
 
 	// AcquisitionType: How this volume was acquired.
@@ -3973,18 +4149,21 @@ type VolumeUserInfo struct {
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
 
 	// IsPreordered: Whether or not this volume was pre-ordered by the
-	// authenticated user making the request. (In LITE projection.)
+	// authenticated user
+	// making the request. (In LITE projection.)
 	IsPreordered bool `json:"isPreordered,omitempty"`
 
 	// IsPurchased: Whether or not this volume was purchased by the
-	// authenticated user making the request. (In LITE projection.)
+	// authenticated user making
+	// the request. (In LITE projection.)
 	IsPurchased bool `json:"isPurchased,omitempty"`
 
 	// IsUploaded: Whether or not this volume was user uploaded.
 	IsUploaded bool `json:"isUploaded,omitempty"`
 
 	// ReadingPosition: The user's current reading position in the volume,
-	// if one is available. (In LITE projection.)
+	// if one is available.
+	// (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
 
 	// RentalPeriod: Period during this book is/was a valid rental.
@@ -3997,8 +4176,10 @@ type VolumeUserInfo struct {
 	Review *Review `json:"review,omitempty"`
 
 	// Updated: Timestamp when this volume was last modified by a user
-	// action, such as a reading position update, volume purchase or writing
-	// a review. (RFC 3339 UTC date-time format).
+	// action, such as a
+	// reading position update, volume purchase or writing a review. (RFC
+	// 3339
+	// UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
@@ -4068,13 +4249,15 @@ type VolumeUserInfoFamilySharing struct {
 	FamilyRole string `json:"familyRole,omitempty"`
 
 	// IsSharingAllowed: Whether or not this volume can be shared with the
-	// family by the user. This includes sharing eligibility of both the
-	// volume and the user. If the value is true, the user can initiate a
-	// family sharing action.
+	// family by the user.
+	// This includes sharing eligibility of both the volume and the user.
+	// If
+	// the value is true, the user can initiate a family sharing action.
 	IsSharingAllowed bool `json:"isSharingAllowed,omitempty"`
 
 	// IsSharingDisabledByFop: Whether or not sharing this volume is
-	// temporarily disabled due to issues with the Family Wallet.
+	// temporarily disabled due to
+	// issues with the Family Wallet.
 	IsSharingDisabledByFop bool `json:"isSharingDisabledByFop,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FamilyRole") to
@@ -4163,7 +4346,8 @@ type VolumeVolumeInfo struct {
 	AllowAnonLogging bool `json:"allowAnonLogging,omitempty"`
 
 	// Authors: The names of the authors and/or editors for this volume. (In
-	// LITE projection)
+	// LITE
+	// projection)
 	Authors []string `json:"authors,omitempty"`
 
 	// AverageRating: The mean review rating for this volume. (min = 1.0,
@@ -4182,35 +4366,41 @@ type VolumeVolumeInfo struct {
 	ComicsContent bool `json:"comicsContent,omitempty"`
 
 	// ContentVersion: An identifier for the version of the volume content
-	// (text & images). (In LITE projection)
+	// (text & images). (In
+	// LITE projection)
 	ContentVersion string `json:"contentVersion,omitempty"`
 
 	// Description: A synopsis of the volume. The text of the description is
-	// formatted in HTML and includes simple formatting elements, such as b,
-	// i, and br tags. (In LITE projection.)
+	// formatted in
+	// HTML and includes simple formatting elements, such as b, i, and br
+	// tags.
+	// (In LITE projection.)
 	Description string `json:"description,omitempty"`
 
 	// Dimensions: Physical dimensions of this volume.
 	Dimensions *VolumeVolumeInfoDimensions `json:"dimensions,omitempty"`
 
 	// ImageLinks: A list of image links for all the sizes that are
-	// available. (In LITE projection.)
+	// available. (In LITE
+	// projection.)
 	ImageLinks *VolumeVolumeInfoImageLinks `json:"imageLinks,omitempty"`
 
 	// IndustryIdentifiers: Industry standard identifiers for this volume.
 	IndustryIdentifiers []*VolumeVolumeInfoIndustryIdentifiers `json:"industryIdentifiers,omitempty"`
 
 	// InfoLink: URL to view information about this volume on the Google
-	// Books site. (In LITE projection)
+	// Books site. (In
+	// LITE projection)
 	InfoLink string `json:"infoLink,omitempty"`
 
 	// Language: Best language for this volume (based on content). It is the
-	// two-letter ISO 639-1 code such as 'fr', 'en', etc.
+	// two-letter
+	// ISO 639-1 code such as 'fr', 'en', etc.
 	Language string `json:"language,omitempty"`
 
 	// MainCategory: The main category to which this volume belongs. It will
-	// be the category from the categories list returned below that has the
-	// highest weight.
+	// be the category
+	// from the categories list returned below that has the highest weight.
 	MainCategory string `json:"mainCategory,omitempty"`
 
 	MaturityRating string `json:"maturityRating,omitempty"`
@@ -4243,7 +4433,7 @@ type VolumeVolumeInfo struct {
 	RatingsCount int64 `json:"ratingsCount,omitempty"`
 
 	// ReadingModes: The reading modes available for this volume.
-	ReadingModes interface{} `json:"readingModes,omitempty"`
+	ReadingModes *VolumeVolumeInfoReadingModes `json:"readingModes,omitempty"`
 
 	// SamplePageCount: Total number of sample pages as per publisher
 	// metadata.
@@ -4330,10 +4520,12 @@ func (s *VolumeVolumeInfoDimensions) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeVolumeInfoImageLinks: A list of image links for all the sizes
-// that are available. (In LITE projection.)
+// that are available. (In LITE
+// projection.)
 type VolumeVolumeInfoImageLinks struct {
 	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
-	// (In LITE projection)
+	// (In LITE
+	// projection)
 	ExtraLarge string `json:"extraLarge,omitempty"`
 
 	// Large: Image link for large size (width of ~800 pixels). (In LITE
@@ -4349,11 +4541,13 @@ type VolumeVolumeInfoImageLinks struct {
 	Small string `json:"small,omitempty"`
 
 	// SmallThumbnail: Image link for small thumbnail size (width of ~80
-	// pixels). (In LITE projection)
+	// pixels). (In LITE
+	// projection)
 	SmallThumbnail string `json:"smallThumbnail,omitempty"`
 
 	// Thumbnail: Image link for thumbnail size (width of ~128 pixels). (In
-	// LITE projection)
+	// LITE
+	// projection)
 	Thumbnail string `json:"thumbnail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExtraLarge") to
@@ -4445,6 +4639,36 @@ func (s *VolumeVolumeInfoPanelizationSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VolumeVolumeInfoReadingModes: The reading modes available for this
+// volume.
+type VolumeVolumeInfoReadingModes struct {
+	Image bool `json:"image,omitempty"`
+
+	Text bool `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VolumeVolumeInfoReadingModes) MarshalJSON() ([]byte, error) {
+	type NoMethod VolumeVolumeInfoReadingModes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Volume2 struct {
 	// Items: A list of volumes.
 	Items []*Volume `json:"items,omitempty"`
@@ -4519,7 +4743,8 @@ type Volumeannotation struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time this anntoation was updated.
-	// (RFC 3339 UTC date-time format).
+	// (RFC 3339 UTC
+	// date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: The Volume this annotation is for.
@@ -4601,16 +4826,19 @@ type Volumeannotations struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present if this request does not have more results.
+	// This will not be present
+	// if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// Version: The version string for all of the volume annotations in this
-	// layer (not just the ones in this response). Note: the version string
+	// layer (not
+	// just the ones in this response). Note: the version string
 	// doesn't apply to the annotation data, just the information in this
-	// response (e.g. the location of annotations in the book).
+	// response
+	// (e.g. the location of annotations in the book).
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4648,8 +4876,8 @@ type Volumes struct {
 	Kind string `json:"kind,omitempty"`
 
 	// TotalItems: Total number of volumes found. This might be greater than
-	// the number of volumes returned in this response if results have been
-	// paginated.
+	// the number of
+	// volumes returned in this response if results have been paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4681,8 +4909,9 @@ func (s *Volumes) MarshalJSON() ([]byte, error) {
 
 type Volumeseriesinfo struct {
 	// BookDisplayNumber: The display number string. This should be used
-	// only for display purposes and the actual sequence should be inferred
-	// from the below orderNumber.
+	// only for display purposes
+	// and the actual sequence should be inferred from the below
+	// orderNumber.
 	BookDisplayNumber string `json:"bookDisplayNumber,omitempty"`
 
 	// Kind: Resource type.
@@ -4726,7 +4955,8 @@ type VolumeseriesinfoVolumeSeries struct {
 	OrderNumber int64 `json:"orderNumber,omitempty"`
 
 	// SeriesBookType: The book type in the context of series. Examples -
-	// Single Issue, Collection Edition, etc.
+	// Single Issue,
+	// Collection Edition, etc.
 	SeriesBookType string `json:"seriesBookType,omitempty"`
 
 	// SeriesId: The series id.
@@ -4849,7 +5079,7 @@ func (c *BookshelvesGetCall) Header() http.Header {
 
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4860,7 +5090,7 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves/{shelf}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4913,6 +5143,7 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 	return ret, nil
 	// {
 	//   "description": "Retrieves metadata for a specific bookshelf for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves/{shelf}",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.get",
 	//   "parameterOrder": [
@@ -4938,7 +5169,7 @@ func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves/{shelf}",
+	//   "path": "books/v1/users/{userId}/bookshelves/{shelf}",
 	//   "response": {
 	//     "$ref": "Bookshelf"
 	//   },
@@ -5011,7 +5242,7 @@ func (c *BookshelvesListCall) Header() http.Header {
 
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5022,7 +5253,7 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5074,6 +5305,7 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of public bookshelves for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.list",
 	//   "parameterOrder": [
@@ -5092,7 +5324,7 @@ func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves",
+	//   "path": "books/v1/users/{userId}/bookshelves",
 	//   "response": {
 	//     "$ref": "Bookshelves"
 	//   },
@@ -5189,7 +5421,7 @@ func (c *BookshelvesVolumesListCall) Header() http.Header {
 
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5200,7 +5432,7 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/users/{userId}/bookshelves/{shelf}/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5253,6 +5485,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	return ret, nil
 	// {
 	//   "description": "Retrieves volumes in a specific bookshelf for the specified user.",
+	//   "flatPath": "books/v1/users/{userId}/bookshelves/{shelf}/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.bookshelves.volumes.list",
 	//   "parameterOrder": [
@@ -5264,7 +5497,6 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "shelf": {
@@ -5287,7 +5519,6 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "description": "Index of the first element to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "userId": {
@@ -5297,7 +5528,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "users/{userId}/bookshelves/{shelf}/volumes",
+	//   "path": "books/v1/users/{userId}/bookshelves/{shelf}/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -5317,7 +5548,7 @@ type CloudloadingAddBookCall struct {
 	header_    http.Header
 }
 
-// AddBook:
+// AddBook: Add a user-upload volume and triggers processing.
 func (r *CloudloadingService) AddBook() *CloudloadingAddBookCall {
 	c := &CloudloadingAddBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5345,6 +5576,7 @@ func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
 }
 
 // UploadClientToken sets the optional parameter "upload_client_token":
+// Scotty upload token.
 func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
 	c.urlParams_.Set("upload_client_token", uploadClientToken)
 	return c
@@ -5377,7 +5609,7 @@ func (c *CloudloadingAddBookCall) Header() http.Header {
 
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5385,7 +5617,7 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/addBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/addBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5433,9 +5665,11 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Add a user-upload volume and triggers processing.",
+	//   "flatPath": "books/v1/cloudloading/addBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.addBook",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "drive_document_id": {
 	//       "description": "A drive document id. The upload_client_token must not be set.",
@@ -5453,11 +5687,12 @@ func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudl
 	//       "type": "string"
 	//     },
 	//     "upload_client_token": {
+	//       "description": "Scotty upload token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "cloudloading/addBook",
+	//   "path": "books/v1/cloudloading/addBook",
 	//   "response": {
 	//     "$ref": "BooksCloudloadingResource"
 	//   },
@@ -5478,8 +5713,14 @@ type CloudloadingDeleteBookCall struct {
 }
 
 // DeleteBook: Remove the book and its contents
-func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
+func (r *CloudloadingService) DeleteBook() *CloudloadingDeleteBookCall {
 	c := &CloudloadingDeleteBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": The id of the book
+// to be removed.
+func (c *CloudloadingDeleteBookCall) VolumeId(volumeId string) *CloudloadingDeleteBookCall {
 	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
@@ -5511,7 +5752,7 @@ func (c *CloudloadingDeleteBookCall) Header() http.Header {
 
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5519,7 +5760,7 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/deleteBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/deleteBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5530,33 +5771,59 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "books.cloudloading.deleteBook" call.
-func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Remove the book and its contents",
+	//   "flatPath": "books/v1/cloudloading/deleteBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.deleteBook",
-	//   "parameterOrder": [
-	//     "volumeId"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "volumeId": {
 	//       "description": "The id of the book to be removed.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "cloudloading/deleteBook",
+	//   "path": "books/v1/cloudloading/deleteBook",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -5574,7 +5841,7 @@ type CloudloadingUpdateBookCall struct {
 	header_                   http.Header
 }
 
-// UpdateBook:
+// UpdateBook: Updates a user-upload volume.
 func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudloadingResource) *CloudloadingUpdateBookCall {
 	c := &CloudloadingUpdateBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bookscloudloadingresource = bookscloudloadingresource
@@ -5608,7 +5875,7 @@ func (c *CloudloadingUpdateBookCall) Header() http.Header {
 
 func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5621,7 +5888,7 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/updateBook")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/cloudloading/updateBook")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5669,10 +5936,13 @@ func (c *CloudloadingUpdateBookCall) Do(opts ...googleapi.CallOption) (*BooksClo
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Updates a user-upload volume.",
+	//   "flatPath": "books/v1/cloudloading/updateBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.updateBook",
-	//   "path": "cloudloading/updateBook",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "books/v1/cloudloading/updateBook",
 	//   "request": {
 	//     "$ref": "BooksCloudloadingResource"
 	//   },
@@ -5698,8 +5968,14 @@ type DictionaryListOfflineMetadataCall struct {
 
 // ListOfflineMetadata: Returns a list of offline dictionary metadata
 // available
-func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
+func (r *DictionaryService) ListOfflineMetadata() *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Cpksver sets the optional parameter "cpksver": The device/version ID
+// from which to request the data.
+func (c *DictionaryListOfflineMetadataCall) Cpksver(cpksver string) *DictionaryListOfflineMetadataCall {
 	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
@@ -5741,7 +6017,7 @@ func (c *DictionaryListOfflineMetadataCall) Header() http.Header {
 
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,7 +6028,7 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "dictionary/listOfflineMetadata")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/dictionary/listOfflineMetadata")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5801,20 +6077,18 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 	return ret, nil
 	// {
 	//   "description": "Returns a list of offline dictionary metadata available",
+	//   "flatPath": "books/v1/dictionary/listOfflineMetadata",
 	//   "httpMethod": "GET",
 	//   "id": "books.dictionary.listOfflineMetadata",
-	//   "parameterOrder": [
-	//     "cpksver"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to request the data.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "dictionary/listOfflineMetadata",
+	//   "path": "books/v1/dictionary/listOfflineMetadata",
 	//   "response": {
 	//     "$ref": "Metadata"
 	//   },
@@ -5886,7 +6160,7 @@ func (c *FamilysharingGetFamilyInfoCall) Header() http.Header {
 
 func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5897,7 +6171,7 @@ func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/getFamilyInfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/getFamilyInfo")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5946,8 +6220,10 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 	return ret, nil
 	// {
 	//   "description": "Gets information regarding the family that the user is part of.",
+	//   "flatPath": "books/v1/familysharing/getFamilyInfo",
 	//   "httpMethod": "GET",
 	//   "id": "books.familysharing.getFamilyInfo",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
@@ -5955,7 +6231,7 @@ func (c *FamilysharingGetFamilyInfoCall) Do(opts ...googleapi.CallOption) (*Fami
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/getFamilyInfo",
+	//   "path": "books/v1/familysharing/getFamilyInfo",
 	//   "response": {
 	//     "$ref": "FamilyInfo"
 	//   },
@@ -5976,7 +6252,8 @@ type FamilysharingShareCall struct {
 }
 
 // Share: Initiates sharing of the content with the user's family. Empty
-// response indicates success.
+// response
+// indicates success.
 func (r *FamilysharingService) Share() *FamilysharingShareCall {
 	c := &FamilysharingShareCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6028,7 +6305,7 @@ func (c *FamilysharingShareCall) Header() http.Header {
 
 func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6036,7 +6313,7 @@ func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/share")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/share")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6047,21 +6324,48 @@ func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.familysharing.share" call.
-func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Initiates sharing of the content with the user's family. Empty response indicates success.",
+	//   "description": "Initiates sharing of the content with the user's family. Empty response\nindicates success.",
+	//   "flatPath": "books/v1/familysharing/share",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.share",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "docId": {
 	//       "description": "The docid to share.",
@@ -6079,7 +6383,10 @@ func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/share",
+	//   "path": "books/v1/familysharing/share",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -6097,7 +6404,8 @@ type FamilysharingUnshareCall struct {
 }
 
 // Unshare: Initiates revoking content that has already been shared with
-// the user's family. Empty response indicates success.
+// the user's
+// family. Empty response indicates success.
 func (r *FamilysharingService) Unshare() *FamilysharingUnshareCall {
 	c := &FamilysharingUnshareCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6150,7 +6458,7 @@ func (c *FamilysharingUnshareCall) Header() http.Header {
 
 func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6158,7 +6466,7 @@ func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "familysharing/unshare")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/familysharing/unshare")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6169,21 +6477,48 @@ func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "books.familysharing.unshare" call.
-func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Initiates revoking content that has already been shared with the user's family. Empty response indicates success.",
+	//   "description": "Initiates revoking content that has already been shared with the user's\nfamily. Empty response indicates success.",
+	//   "flatPath": "books/v1/familysharing/unshare",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.unshare",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "docId": {
 	//       "description": "The docid to unshare.",
@@ -6201,7 +6536,10 @@ func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "familysharing/unshare",
+	//   "path": "books/v1/familysharing/unshare",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -6280,7 +6618,7 @@ func (c *LayersGetCall) Header() http.Header {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,7 +6629,7 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layersummary/{summaryId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6344,6 +6682,7 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 	return ret, nil
 	// {
 	//   "description": "Gets the layer summary for a volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layersummary/{summaryId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.get",
 	//   "parameterOrder": [
@@ -6374,7 +6713,7 @@ func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layersummary/{summaryId}",
+	//   "path": "books/v1/volumes/{volumeId}/layersummary/{summaryId}",
 	//   "response": {
 	//     "$ref": "Layersummary"
 	//   },
@@ -6468,7 +6807,7 @@ func (c *LayersListCall) Header() http.Header {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6479,7 +6818,7 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layersummary")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6531,6 +6870,7 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	return ret, nil
 	// {
 	//   "description": "List the layer summaries for a volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layersummary",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.list",
 	//   "parameterOrder": [
@@ -6546,8 +6886,6 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "200",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -6567,7 +6905,7 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layersummary",
+	//   "path": "books/v1/volumes/{volumeId}/layersummary",
 	//   "response": {
 	//     "$ref": "Layersummaries"
 	//   },
@@ -6592,12 +6930,11 @@ type LayersAnnotationDataGetCall struct {
 }
 
 // Get: Gets the annotation data.
-func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
+func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string) *LayersAnnotationDataGetCall {
 	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
 	c.annotationDataId = annotationDataId
-	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
@@ -6609,16 +6946,24 @@ func (c *LayersAnnotationDataGetCall) AllowWebDefinitions(allowWebDefinitions bo
 	return c
 }
 
+// ContentVersion sets the optional parameter "contentVersion": The
+// content version for the volume you are trying to retrieve.
+func (c *LayersAnnotationDataGetCall) ContentVersion(contentVersion string) *LayersAnnotationDataGetCall {
+	c.urlParams_.Set("contentVersion", contentVersion)
+	return c
+}
+
 // H sets the optional parameter "h": The requested pixel height for any
-// images. If height is provided width must also be provided.
+// images. If height is provided width must
+// also be provided.
 func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
-// 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1
+// country code. Ex: 'en_US'.
 func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -6639,7 +6984,8 @@ func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDat
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
-// images. If width is provided height must also be provided.
+// images. If width is provided height must
+// also be provided.
 func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
@@ -6682,7 +7028,7 @@ func (c *LayersAnnotationDataGetCall) Header() http.Header {
 
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +7039,7 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6709,13 +7055,13 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "books.layers.annotationData.get" call.
-// Exactly one of *Annotationdata or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Annotationdata.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *DictionaryAnnotationdata or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DictionaryAnnotationdata.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotationdata, error) {
+func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*DictionaryAnnotationdata, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6734,7 +7080,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Annotationdata{
+	ret := &DictionaryAnnotationdata{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6747,13 +7093,13 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	return ret, nil
 	// {
 	//   "description": "Gets the annotation data.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.annotationData.get",
 	//   "parameterOrder": [
 	//     "volumeId",
 	//     "layerId",
-	//     "annotationDataId",
-	//     "contentVersion"
+	//     "annotationDataId"
 	//   ],
 	//   "parameters": {
 	//     "allowWebDefinitions": {
@@ -6770,11 +7116,10 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	//     "contentVersion": {
 	//       "description": "The content version for the volume you are trying to retrieve.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "h": {
-	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
+	//       "description": "The requested pixel height for any images. If height is provided width must\nalso be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6786,7 +7131,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6794,7 +7139,6 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	//       "description": "The requested scale for the image.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "source": {
@@ -6809,15 +7153,15 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotat
 	//       "type": "string"
 	//     },
 	//     "w": {
-	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
+	//       "description": "The requested pixel width for any images. If width is provided height must\nalso be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}",
 	//   "response": {
-	//     "$ref": "Annotationdata"
+	//     "$ref": "DictionaryAnnotationdata"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -6839,32 +7183,40 @@ type LayersAnnotationDataListCall struct {
 }
 
 // List: Gets the annotation data for a volume and layer.
-func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
+func (r *LayersAnnotationDataService) List(volumeId string, layerId string) *LayersAnnotationDataListCall {
 	c := &LayersAnnotationDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
-	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
-// this is set.
+// this
+// is set.
 func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId ...string) *LayersAnnotationDataListCall {
 	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
 	return c
 }
 
+// ContentVersion sets the optional parameter "contentVersion": The
+// content version for the requested volume.
+func (c *LayersAnnotationDataListCall) ContentVersion(contentVersion string) *LayersAnnotationDataListCall {
+	c.urlParams_.Set("contentVersion", contentVersion)
+	return c
+}
+
 // H sets the optional parameter "h": The requested pixel height for any
-// images. If height is provided width must also be provided.
+// images. If height is provided width must
+// also be provided.
 func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
-// 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1
+// country code. Ex: 'en_US'.
 func (c *LayersAnnotationDataListCall) Locale(locale string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -6899,7 +7251,8 @@ func (c *LayersAnnotationDataListCall) Source(source string) *LayersAnnotationDa
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this timestamp
+// timestamp to restrict to items updated prior to this
+// timestamp
 // (exclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -6907,7 +7260,8 @@ func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnno
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this timestamp
+// timestamp to restrict to items updated since this
+// timestamp
 // (inclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -6915,7 +7269,8 @@ func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnno
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
-// images. If width is provided height must also be provided.
+// images. If width is provided height must
+// also be provided.
 func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
@@ -6958,7 +7313,7 @@ func (c *LayersAnnotationDataListCall) Header() http.Header {
 
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6969,7 +7324,7 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/data")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7022,16 +7377,16 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	return ret, nil
 	// {
 	//   "description": "Gets the annotation data for a volume and layer.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/data",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.annotationData.list",
 	//   "parameterOrder": [
 	//     "volumeId",
-	//     "layerId",
-	//     "contentVersion"
+	//     "layerId"
 	//   ],
 	//   "parameters": {
 	//     "annotationDataId": {
-	//       "description": "The list of Annotation Data Ids to retrieve. Pagination is ignored if this is set.",
+	//       "description": "The list of Annotation Data Ids to retrieve. Pagination is ignored if this\nis set.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -7039,11 +7394,10 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "h": {
-	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
+	//       "description": "The requested pixel height for any images. If height is provided width must\nalso be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7055,7 +7409,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7063,8 +7417,6 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "200",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -7076,7 +7428,6 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "The requested scale for the image.",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "source": {
@@ -7085,12 +7436,12 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7101,13 +7452,13 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "w": {
-	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
+	//       "description": "The requested pixel width for any images. If width is provided height must\nalso be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/data",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/data",
 	//   "response": {
 	//     "$ref": "Annotationsdata"
 	//   },
@@ -7162,8 +7513,8 @@ func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, an
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
-// 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1
+// country code. Ex: 'en_US'.
 func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnnotationsGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -7213,7 +7564,7 @@ func (c *LayersVolumeAnnotationsGetCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7224,7 +7575,7 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7278,6 +7629,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	return ret, nil
 	// {
 	//   "description": "Gets the volume annotation.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.volumeAnnotations.get",
 	//   "parameterOrder": [
@@ -7299,7 +7651,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7315,7 +7667,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}",
 	//   "response": {
 	//     "$ref": "Volumeannotation"
 	//   },
@@ -7339,10 +7691,16 @@ type LayersVolumeAnnotationsListCall struct {
 }
 
 // List: Gets the volume annotations for a volume and layer.
-func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
+func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string) *LayersVolumeAnnotationsListCall {
 	c := &LayersVolumeAnnotationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
+	return c
+}
+
+// ContentVersion sets the optional parameter "contentVersion": The
+// content version for the requested volume.
+func (c *LayersVolumeAnnotationsListCall) ContentVersion(contentVersion string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
@@ -7362,8 +7720,8 @@ func (c *LayersVolumeAnnotationsListCall) EndPosition(endPosition string) *Layer
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
-// 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1
+// country code. Ex: 'en_US'.
 func (c *LayersVolumeAnnotationsListCall) Locale(locale string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -7384,8 +7742,8 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
-// return deleted annotations. updatedMin must be in the request to use
-// this. Defaults to false.
+// return deleted annotations. updatedMin must be in the
+// request to use this. Defaults to false.
 func (c *LayersVolumeAnnotationsListCall) ShowDeleted(showDeleted bool) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -7413,7 +7771,8 @@ func (c *LayersVolumeAnnotationsListCall) StartPosition(startPosition string) *L
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this timestamp
+// timestamp to restrict to items updated prior to this
+// timestamp
 // (exclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -7421,7 +7780,8 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersV
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this timestamp
+// timestamp to restrict to items updated since this
+// timestamp
 // (inclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -7473,7 +7833,7 @@ func (c *LayersVolumeAnnotationsListCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7484,7 +7844,7 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/layers/{layerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7537,18 +7897,17 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	return ret, nil
 	// {
 	//   "description": "Gets the volume annotations for a volume and layer.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/layers/{layerId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.layers.volumeAnnotations.list",
 	//   "parameterOrder": [
 	//     "volumeId",
-	//     "layerId",
-	//     "contentVersion"
+	//     "layerId"
 	//   ],
 	//   "parameters": {
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "endOffset": {
@@ -7568,7 +7927,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7576,8 +7935,6 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "200",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -7586,7 +7943,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the\nrequest to use this. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7606,12 +7963,12 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7627,7 +7984,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/layers/{layerId}",
+	//   "path": "books/v1/volumes/{volumeId}/layers/{layerId}",
 	//   "response": {
 	//     "$ref": "Volumeannotations"
 	//   },
@@ -7675,6 +8032,13 @@ func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
 	return c
 }
 
+// Country sets the optional parameter "country": Unused. Added only to
+// workaround TEX mandatory request template requirement
+func (c *MyconfigGetUserSettingsCall) Country(country string) *MyconfigGetUserSettingsCall {
+	c.urlParams_.Set("country", country)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7712,7 +8076,7 @@ func (c *MyconfigGetUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7723,7 +8087,7 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/getUserSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/getUserSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7772,9 +8136,18 @@ func (c *MyconfigGetUserSettingsCall) Do(opts ...googleapi.CallOption) (*Userset
 	return ret, nil
 	// {
 	//   "description": "Gets the current settings for the user.",
+	//   "flatPath": "books/v1/myconfig/getUserSettings",
 	//   "httpMethod": "GET",
 	//   "id": "books.myconfig.getUserSettings",
-	//   "path": "myconfig/getUserSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "country": {
+	//       "description": "Unused. Added only to workaround TEX mandatory request template requirement",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "books/v1/myconfig/getUserSettings",
 	//   "response": {
 	//     "$ref": "Usersettings"
 	//   },
@@ -7795,9 +8168,14 @@ type MyconfigReleaseDownloadAccessCall struct {
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
-func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksver string) *MyconfigReleaseDownloadAccessCall {
+func (r *MyconfigService) ReleaseDownloadAccess() *MyconfigReleaseDownloadAccessCall {
 	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
+	return c
+}
+
+// Cpksver sets the optional parameter "cpksver": The device/version ID
+// from which to release the restriction.
+func (c *MyconfigReleaseDownloadAccessCall) Cpksver(cpksver string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
@@ -7813,6 +8191,13 @@ func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigRelea
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeIds sets the optional parameter "volumeIds": The volume(s) to
+// release restrictions for.
+func (c *MyconfigReleaseDownloadAccessCall) VolumeIds(volumeIds ...string) *MyconfigReleaseDownloadAccessCall {
+	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
 
@@ -7843,7 +8228,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Header() http.Header {
 
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7851,7 +8236,7 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/releaseDownloadAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/releaseDownloadAccess")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -7900,17 +8285,14 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	return ret, nil
 	// {
 	//   "description": "Release downloaded content access restriction.",
+	//   "flatPath": "books/v1/myconfig/releaseDownloadAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.releaseDownloadAccess",
-	//   "parameterOrder": [
-	//     "volumeIds",
-	//     "cpksver"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to release the restriction.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "locale": {
@@ -7927,11 +8309,10 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	//       "description": "The volume(s) to release restrictions for.",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/releaseDownloadAccess",
+	//   "path": "books/v1/myconfig/releaseDownloadAccess",
 	//   "response": {
 	//     "$ref": "DownloadAccesses"
 	//   },
@@ -7952,22 +8333,27 @@ type MyconfigRequestAccessCall struct {
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
-func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce string, cpksver string) *MyconfigRequestAccessCall {
+func (r *MyconfigService) RequestAccess() *MyconfigRequestAccessCall {
 	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("source", source)
-	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("nonce", nonce)
+	return c
+}
+
+// Cpksver sets the optional parameter "cpksver": The device/version ID
+// from which to request the restrictions.
+func (c *MyconfigRequestAccessCall) Cpksver(cpksver string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
 
 // LicenseTypes sets the optional parameter "licenseTypes": The type of
-// access license to request. If not specified, the default is BOTH.
+// access license to request. If not specified, the default is
+// BOTH.
 //
 // Possible values:
-//   "BOTH" - Both concurrent and download licenses.
-//   "CONCURRENT" - Concurrent access license.
-//   "DOWNLOAD" - Offline download access license.
+//   "LICENSE_TYPES_UNDEFINED"
+//   "BOTH"
+//   "CONCURRENT"
+//   "DOWNLOAD"
 func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("licenseTypes", licenseTypes)
 	return c
@@ -7977,6 +8363,26 @@ func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigR
 // codes for message localization, i.e. en_US.
 func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// Nonce sets the optional parameter "nonce": The client nonce value.
+func (c *MyconfigRequestAccessCall) Nonce(nonce string) *MyconfigRequestAccessCall {
+	c.urlParams_.Set("nonce", nonce)
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MyconfigRequestAccessCall) Source(source string) *MyconfigRequestAccessCall {
+	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": The volume to
+// request concurrent/download restrictions for.
+func (c *MyconfigRequestAccessCall) VolumeId(volumeId string) *MyconfigRequestAccessCall {
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -8007,7 +8413,7 @@ func (c *MyconfigRequestAccessCall) Header() http.Header {
 
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8015,7 +8421,7 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/requestAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/requestAccess")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8026,13 +8432,13 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "books.myconfig.requestAccess" call.
-// Exactly one of *RequestAccess or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *RequestAccess.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *RequestAccessData or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RequestAccessData.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAccess, error) {
+func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAccessData, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8051,7 +8457,7 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &RequestAccess{
+	ret := &RequestAccessData{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -8064,32 +8470,23 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	return ret, nil
 	// {
 	//   "description": "Request concurrent and download access restrictions.",
+	//   "flatPath": "books/v1/myconfig/requestAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.requestAccess",
-	//   "parameterOrder": [
-	//     "source",
-	//     "volumeId",
-	//     "nonce",
-	//     "cpksver"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to request the restrictions.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "licenseTypes": {
-	//       "description": "The type of access license to request. If not specified, the default is BOTH.",
+	//       "description": "The type of access license to request. If not specified, the default is\nBOTH.",
 	//       "enum": [
+	//         "LICENSE_TYPES_UNDEFINED",
 	//         "BOTH",
 	//         "CONCURRENT",
 	//         "DOWNLOAD"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Both concurrent and download licenses.",
-	//         "Concurrent access license.",
-	//         "Offline download access license."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8102,25 +8499,22 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//     "nonce": {
 	//       "description": "The client nonce value.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
 	//       "description": "The volume to request concurrent/download restrictions for.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/requestAccess",
+	//   "path": "books/v1/myconfig/requestAccess",
 	//   "response": {
-	//     "$ref": "RequestAccess"
+	//     "$ref": "RequestAccessData"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
@@ -8139,11 +8533,16 @@ type MyconfigSyncVolumeLicensesCall struct {
 }
 
 // SyncVolumeLicenses: Request downloaded content access for specified
-// volumes on the My eBooks shelf.
-func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksver string) *MyconfigSyncVolumeLicensesCall {
+// volumes on the My eBooks
+// shelf.
+func (r *MyconfigService) SyncVolumeLicenses() *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("source", source)
-	c.urlParams_.Set("nonce", nonce)
+	return c
+}
+
+// Cpksver sets the optional parameter "cpksver": The device/version ID
+// from which to release the restriction.
+func (c *MyconfigSyncVolumeLicensesCall) Cpksver(cpksver string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
@@ -8152,7 +8551,8 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 // supported by the client, i.e., 'RENTALS'
 //
 // Possible values:
-//   "RENTALS" - Client supports rentals.
+//   "FEATURES_UNDEFINED"
+//   "RENTALS"
 func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
@@ -8173,10 +8573,23 @@ func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolu
 	return c
 }
 
+// Nonce sets the optional parameter "nonce": The client nonce value.
+func (c *MyconfigSyncVolumeLicensesCall) Nonce(nonce string) *MyconfigSyncVolumeLicensesCall {
+	c.urlParams_.Set("nonce", nonce)
+	return c
+}
+
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MyconfigSyncVolumeLicensesCall) Source(source string) *MyconfigSyncVolumeLicensesCall {
+	c.urlParams_.Set("source", source)
 	return c
 }
 
@@ -8214,7 +8627,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Header() http.Header {
 
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8222,7 +8635,7 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/syncVolumeLicenses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/syncVolumeLicenses")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8270,28 +8683,22 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	}
 	return ret, nil
 	// {
-	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
+	//   "description": "Request downloaded content access for specified volumes on the My eBooks\nshelf.",
+	//   "flatPath": "books/v1/myconfig/syncVolumeLicenses",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.syncVolumeLicenses",
-	//   "parameterOrder": [
-	//     "source",
-	//     "nonce",
-	//     "cpksver"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to release the restriction.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "features": {
 	//       "description": "List of features supported by the client, i.e., 'RENTALS'",
 	//       "enum": [
+	//         "FEATURES_UNDEFINED",
 	//         "RENTALS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Client supports rentals."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -8310,7 +8717,6 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//     "nonce": {
 	//       "description": "The client nonce value.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "showPreorders": {
@@ -8321,7 +8727,6 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeIds": {
@@ -8331,7 +8736,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "myconfig/syncVolumeLicenses",
+	//   "path": "books/v1/myconfig/syncVolumeLicenses",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -8353,8 +8758,10 @@ type MyconfigUpdateUserSettingsCall struct {
 }
 
 // UpdateUserSettings: Sets the settings for the user. If a sub-object
-// is specified, it will overwrite the existing sub-object stored in the
-// server. Unspecified sub-objects will retain the existing value.
+// is specified, it will
+// overwrite the existing sub-object stored in the server.
+// Unspecified
+// sub-objects will retain the existing value.
 func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *MyconfigUpdateUserSettingsCall {
 	c := &MyconfigUpdateUserSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.usersettings = usersettings
@@ -8388,7 +8795,7 @@ func (c *MyconfigUpdateUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8401,7 +8808,7 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/updateUserSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/myconfig/updateUserSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8449,10 +8856,13 @@ func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*User
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.",
+	//   "description": "Sets the settings for the user. If a sub-object is specified, it will\noverwrite the existing sub-object stored in the server. Unspecified\nsub-objects will retain the existing value.",
+	//   "flatPath": "books/v1/myconfig/updateUserSettings",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.updateUserSettings",
-	//   "path": "myconfig/updateUserSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "books/v1/myconfig/updateUserSettings",
 	//   "request": {
 	//     "$ref": "Usersettings"
 	//   },
@@ -8517,7 +8927,7 @@ func (c *MylibraryAnnotationsDeleteCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8525,7 +8935,7 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -8539,19 +8949,45 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "books.mylibrary.annotations.delete" call.
-func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Deletes an annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "books.mylibrary.annotations.delete",
 	//   "parameterOrder": [
@@ -8570,7 +9006,10 @@ func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "path": "books/v1/mylibrary/annotations/{annotationId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -8611,7 +9050,8 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 
 // ShowOnlySummaryInResponse sets the optional parameter
 // "showOnlySummaryInResponse": Requests that only the summary of the
-// specified layer be provided in the response.
+// specified layer be provided in the
+// response.
 func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySummaryInResponse bool) *MylibraryAnnotationsInsertCall {
 	c.urlParams_.Set("showOnlySummaryInResponse", fmt.Sprint(showOnlySummaryInResponse))
 	return c
@@ -8651,7 +9091,7 @@ func (c *MylibraryAnnotationsInsertCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8664,7 +9104,7 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -8713,8 +9153,10 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	return ret, nil
 	// {
 	//   "description": "Inserts a new annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.insert",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "annotationId": {
 	//       "description": "The ID for the annotation to insert.",
@@ -8727,7 +9169,7 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     },
 	//     "showOnlySummaryInResponse": {
-	//       "description": "Requests that only the summary of the specified layer be provided in the response.",
+	//       "description": "Requests that only the summary of the specified layer be provided in the\nresponse.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8737,7 +9179,7 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations",
+	//   "path": "books/v1/mylibrary/annotations",
 	//   "request": {
 	//     "$ref": "Annotation"
 	//   },
@@ -8803,8 +9245,8 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
-// return deleted annotations. updatedMin must be in the request to use
-// this. Defaults to false.
+// return deleted annotations. updatedMin must be in the
+// request to use this. Defaults to false.
 func (c *MylibraryAnnotationsListCall) ShowDeleted(showDeleted bool) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -8818,7 +9260,8 @@ func (c *MylibraryAnnotationsListCall) Source(source string) *MylibraryAnnotatio
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this timestamp
+// timestamp to restrict to items updated prior to this
+// timestamp
 // (exclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -8826,7 +9269,8 @@ func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryA
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this timestamp
+// timestamp to restrict to items updated since this
+// timestamp
 // (inclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -8877,7 +9321,7 @@ func (c *MylibraryAnnotationsListCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8888,7 +9332,7 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8937,8 +9381,10 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of annotations, possibly filtered.",
+	//   "flatPath": "books/v1/mylibrary/annotations",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.annotations.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
@@ -8960,8 +9406,6 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "40",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -8970,7 +9414,7 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the\nrequest to use this. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8980,12 +9424,12 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8995,7 +9439,7 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations",
+	//   "path": "books/v1/mylibrary/annotations",
 	//   "response": {
 	//     "$ref": "Annotations"
 	//   },
@@ -9037,9 +9481,21 @@ type MylibraryAnnotationsSummaryCall struct {
 }
 
 // Summary: Gets the summary of specified layers.
-func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
+func (r *MylibraryAnnotationsService) Summary() *MylibraryAnnotationsSummaryCall {
 	c := &MylibraryAnnotationsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// LayerIds sets the optional parameter "layerIds": Array of layer IDs
+// to get the summary for.
+func (c *MylibraryAnnotationsSummaryCall) LayerIds(layerIds ...string) *MylibraryAnnotationsSummaryCall {
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": Volume id to get the
+// summary for.
+func (c *MylibraryAnnotationsSummaryCall) VolumeId(volumeId string) *MylibraryAnnotationsSummaryCall {
 	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
@@ -9071,7 +9527,7 @@ func (c *MylibraryAnnotationsSummaryCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9079,7 +9535,7 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/summary")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/summary")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9128,28 +9584,24 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	return ret, nil
 	// {
 	//   "description": "Gets the summary of specified layers.",
+	//   "flatPath": "books/v1/mylibrary/annotations/summary",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.summary",
-	//   "parameterOrder": [
-	//     "layerIds",
-	//     "volumeId"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "layerIds": {
 	//       "description": "Array of layer IDs to get the summary for.",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
 	//       "description": "Volume id to get the summary for.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/summary",
+	//   "path": "books/v1/mylibrary/annotations/summary",
 	//   "response": {
 	//     "$ref": "AnnotationsSummary"
 	//   },
@@ -9213,7 +9665,7 @@ func (c *MylibraryAnnotationsUpdateCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9226,7 +9678,7 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/annotations/{annotationId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -9278,6 +9730,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 	return ret, nil
 	// {
 	//   "description": "Updates an existing annotation.",
+	//   "flatPath": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "httpMethod": "PUT",
 	//   "id": "books.mylibrary.annotations.update",
 	//   "parameterOrder": [
@@ -9296,7 +9749,7 @@ func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/annotations/{annotationId}",
+	//   "path": "books/v1/mylibrary/annotations/{annotationId}",
 	//   "request": {
 	//     "$ref": "Annotation"
 	//   },
@@ -9321,10 +9774,9 @@ type MylibraryBookshelvesAddVolumeCall struct {
 }
 
 // AddVolume: Adds a volume to a bookshelf.
-func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
+func (r *MylibraryBookshelvesService) AddVolume(shelf string) *MylibraryBookshelvesAddVolumeCall {
 	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -9332,9 +9784,10 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 // book is added to the library.
 //
 // Possible values:
-//   "IOS_PREX" - Volumes added from the PREX flow on iOS.
-//   "IOS_SEARCH" - Volumes added from the Search flow on iOS.
-//   "ONBOARDING" - Volumes added from the Onboarding flow.
+//   "REASON_UNDEFINED"
+//   "IOS_PREX"
+//   "IOS_SEARCH"
+//   "ONBOARDING"
 func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -9344,6 +9797,12 @@ func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBook
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": ID of volume to add.
+func (c *MylibraryBookshelvesAddVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesAddVolumeCall {
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -9374,7 +9833,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9382,7 +9841,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/addVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9396,37 +9855,58 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "books.mylibrary.bookshelves.addVolume" call.
-func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Adds a volume to a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/addVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.addVolume",
 	//   "parameterOrder": [
-	//     "shelf",
-	//     "volumeId"
+	//     "shelf"
 	//   ],
 	//   "parameters": {
 	//     "reason": {
 	//       "description": "The reason for which the book is added to the library.",
 	//       "enum": [
+	//         "REASON_UNDEFINED",
 	//         "IOS_PREX",
 	//         "IOS_SEARCH",
 	//         "ONBOARDING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Volumes added from the PREX flow on iOS.",
-	//         "Volumes added from the Search flow on iOS.",
-	//         "Volumes added from the Onboarding flow."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -9445,11 +9925,13 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) err
 	//     "volumeId": {
 	//       "description": "ID of volume to add.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/addVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/addVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -9508,7 +9990,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9516,7 +9998,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9530,19 +10012,45 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.clearVolumes" call.
-func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Clears all volumes from a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.clearVolumes",
 	//   "parameterOrder": [
@@ -9561,7 +10069,10 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/clearVolumes",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/clearVolumes",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -9581,7 +10092,8 @@ type MylibraryBookshelvesGetCall struct {
 }
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
-// authenticated user.
+// authenticated
+// user.
 func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
 	c := &MylibraryBookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -9632,7 +10144,7 @@ func (c *MylibraryBookshelvesGetCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9643,7 +10155,7 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9694,7 +10206,8 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
+	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated\nuser.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.get",
 	//   "parameterOrder": [
@@ -9713,7 +10226,7 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}",
 	//   "response": {
 	//     "$ref": "Bookshelf"
 	//   },
@@ -9785,7 +10298,7 @@ func (c *MylibraryBookshelvesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9796,7 +10309,7 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9845,8 +10358,10 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of bookshelves belonging to the authenticated user.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
@@ -9854,7 +10369,7 @@ func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Booksh
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves",
+	//   "path": "books/v1/mylibrary/bookshelves",
 	//   "response": {
 	//     "$ref": "Bookshelves"
 	//   },
@@ -9876,11 +10391,9 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
-func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
+func (r *MylibraryBookshelvesService) MoveVolume(shelf string) *MylibraryBookshelvesMoveVolumeCall {
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
 }
 
@@ -9888,6 +10401,21 @@ func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, 
 // originator of this request.
 func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": ID of volume to
+// move.
+func (c *MylibraryBookshelvesMoveVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesMoveVolumeCall {
+	c.urlParams_.Set("volumeId", volumeId)
+	return c
+}
+
+// VolumePosition sets the optional parameter "volumePosition": Position
+// on shelf to move the item (0 puts the item before the current
+// first item, 1 puts it between the first and the second and so on.)
+func (c *MylibraryBookshelvesMoveVolumeCall) VolumePosition(volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
+	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
 }
 
@@ -9918,7 +10446,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9926,7 +10454,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/moveVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -9940,25 +10468,49 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "books.mylibrary.bookshelves.moveVolume" call.
-func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Moves a volume within a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/moveVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.moveVolume",
 	//   "parameterOrder": [
-	//     "shelf",
-	//     "volumeId",
-	//     "volumePosition"
+	//     "shelf"
 	//   ],
 	//   "parameters": {
 	//     "shelf": {
@@ -9975,18 +10527,19 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) er
 	//     "volumeId": {
 	//       "description": "ID of volume to move.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumePosition": {
-	//       "description": "Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)",
+	//       "description": "Position on shelf to move the item (0 puts the item before the current\nfirst item, 1 puts it between the first and the second and so on.)",
 	//       "format": "int32",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/moveVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/moveVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10005,10 +10558,9 @@ type MylibraryBookshelvesRemoveVolumeCall struct {
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
-func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
+func (r *MylibraryBookshelvesService) RemoveVolume(shelf string) *MylibraryBookshelvesRemoveVolumeCall {
 	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -10016,7 +10568,8 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 // book is removed from the library.
 //
 // Possible values:
-//   "ONBOARDING" - Samples removed from the Onboarding flow.
+//   "REASON_UNDEFINED"
+//   "ONBOARDING"
 func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -10026,6 +10579,13 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryB
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": ID of volume to
+// remove.
+func (c *MylibraryBookshelvesRemoveVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -10056,7 +10616,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10064,7 +10624,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/removeVolume")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10078,33 +10638,56 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.removeVolume" call.
-func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Removes a volume from a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/removeVolume",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.removeVolume",
 	//   "parameterOrder": [
-	//     "shelf",
-	//     "volumeId"
+	//     "shelf"
 	//   ],
 	//   "parameters": {
 	//     "reason": {
 	//       "description": "The reason for which the book is removed from the library.",
 	//       "enum": [
+	//         "REASON_UNDEFINED",
 	//         "ONBOARDING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Samples removed from the Onboarding flow."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10123,11 +10706,13 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//     "volumeId": {
 	//       "description": "ID of volume to remove.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/removeVolume",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/removeVolume",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10171,8 +10756,9 @@ func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *Myli
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL"
+//   "LITE"
 func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10243,7 +10829,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10254,7 +10840,7 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/bookshelves/{shelf}/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10306,6 +10892,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Gets volume information for volumes on a bookshelf.",
+	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.volumes.list",
 	//   "parameterOrder": [
@@ -10321,18 +10908,14 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes all volume data.",
-	//         "Includes a subset of fields in volumeInfo and accessInfo."
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10362,11 +10945,10 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Index of the first element to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "mylibrary/bookshelves/{shelf}/volumes",
+	//   "path": "books/v1/mylibrary/bookshelves/{shelf}/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -10446,7 +11028,7 @@ func (c *MylibraryReadingpositionsGetCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10457,7 +11039,7 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/readingpositions/{volumeId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10509,6 +11091,7 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 	return ret, nil
 	// {
 	//   "description": "Retrieves my reading position information for a volume.",
+	//   "flatPath": "books/v1/mylibrary/readingpositions/{volumeId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.readingpositions.get",
 	//   "parameterOrder": [
@@ -10532,7 +11115,7 @@ func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*Re
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/readingpositions/{volumeId}",
+	//   "path": "books/v1/mylibrary/readingpositions/{volumeId}",
 	//   "response": {
 	//     "$ref": "ReadingPosition"
 	//   },
@@ -10554,11 +11137,9 @@ type MylibraryReadingpositionsSetPositionCall struct {
 }
 
 // SetPosition: Sets my reading position information for a volume.
-func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestamp string, position string) *MylibraryReadingpositionsSetPositionCall {
+func (r *MylibraryReadingpositionsService) SetPosition(volumeId string) *MylibraryReadingpositionsSetPositionCall {
 	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
-	c.urlParams_.Set("timestamp", timestamp)
-	c.urlParams_.Set("position", position)
 	return c
 }
 
@@ -10566,12 +11147,13 @@ func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestam
 // reading position to be set.
 //
 // Possible values:
-//   "bookmark" - User chose bookmark within volume.
-//   "chapter" - User selected chapter from list.
-//   "next-page" - Next page event.
-//   "prev-page" - Previous page event.
-//   "scroll" - User navigated to page.
-//   "search" - User chose search results within volume.
+//   "ACTION_UNDEFINED"
+//   "bookmark"
+//   "chapter"
+//   "next-page"
+//   "prev-page"
+//   "scroll"
+//   "search"
 func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -10591,10 +11173,24 @@ func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie str
 	return c
 }
 
+// Position sets the optional parameter "position": Position string for
+// the new volume reading position.
+func (c *MylibraryReadingpositionsSetPositionCall) Position(position string) *MylibraryReadingpositionsSetPositionCall {
+	c.urlParams_.Set("position", position)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// Timestamp sets the optional parameter "timestamp": RFC 3339 UTC
+// format timestamp associated with this reading position.
+func (c *MylibraryReadingpositionsSetPositionCall) Timestamp(timestamp string) *MylibraryReadingpositionsSetPositionCall {
+	c.urlParams_.Set("timestamp", timestamp)
 	return c
 }
 
@@ -10625,7 +11221,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10633,7 +11229,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/mylibrary/readingpositions/{volumeId}/setPosition")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10647,44 +11243,61 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "books.mylibrary.readingpositions.setPosition" call.
-func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Sets my reading position information for a volume.",
+	//   "flatPath": "books/v1/mylibrary/readingpositions/{volumeId}/setPosition",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.readingpositions.setPosition",
 	//   "parameterOrder": [
-	//     "volumeId",
-	//     "timestamp",
-	//     "position"
+	//     "volumeId"
 	//   ],
 	//   "parameters": {
 	//     "action": {
 	//       "description": "Action that caused this reading position to be set.",
 	//       "enum": [
+	//         "ACTION_UNDEFINED",
 	//         "bookmark",
 	//         "chapter",
 	//         "next-page",
 	//         "prev-page",
 	//         "scroll",
 	//         "search"
-	//       ],
-	//       "enumDescriptions": [
-	//         "User chose bookmark within volume.",
-	//         "User selected chapter from list.",
-	//         "Next page event.",
-	//         "Previous page event.",
-	//         "User navigated to page.",
-	//         "User chose search results within volume."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10702,7 +11315,6 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//     "position": {
 	//       "description": "Position string for the new volume reading position.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -10713,7 +11325,6 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//     "timestamp": {
 	//       "description": "RFC 3339 UTC format timestamp associated with this reading position.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
@@ -10723,7 +11334,10 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "mylibrary/readingpositions/{volumeId}/setPosition",
+	//   "path": "books/v1/mylibrary/readingpositions/{volumeId}/setPosition",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -10742,17 +11356,23 @@ type NotificationGetCall struct {
 }
 
 // Get: Returns notification details for a given notification id.
-func (r *NotificationService) Get(notificationId string) *NotificationGetCall {
+func (r *NotificationService) Get() *NotificationGetCall {
 	c := &NotificationGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("notification_id", notificationId)
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// notification title and body.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating notification title and body.
 func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
 	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// NotificationId sets the optional parameter "notification_id": String
+// to identify the notification.
+func (c *NotificationGetCall) NotificationId(notificationId string) *NotificationGetCall {
+	c.urlParams_.Set("notification_id", notificationId)
 	return c
 }
 
@@ -10800,7 +11420,7 @@ func (c *NotificationGetCall) Header() http.Header {
 
 func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10811,7 +11431,7 @@ func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "notification/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/notification/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10860,21 +11480,19 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	return ret, nil
 	// {
 	//   "description": "Returns notification details for a given notification id.",
+	//   "flatPath": "books/v1/notification/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.notification.get",
-	//   "parameterOrder": [
-	//     "notification_id"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating notification title and body.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating notification title and body.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "notification_id": {
 	//       "description": "String to identify the notification.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -10883,7 +11501,7 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "notification/get",
+	//   "path": "books/v1/notification/get",
 	//   "response": {
 	//     "$ref": "Notification"
 	//   },
@@ -10954,7 +11572,7 @@ func (c *OnboardingListCategoriesCall) Header() http.Header {
 
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10965,7 +11583,7 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategories")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/onboarding/listCategories")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11014,8 +11632,10 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 	return ret, nil
 	// {
 	//   "description": "List categories for onboarding experience.",
+	//   "flatPath": "books/v1/onboarding/listCategories",
 	//   "httpMethod": "GET",
 	//   "id": "books.onboarding.listCategories",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Default is en-US if unset.",
@@ -11023,7 +11643,7 @@ func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Catego
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "onboarding/listCategories",
+	//   "path": "books/v1/onboarding/listCategories",
 	//   "response": {
 	//     "$ref": "Category"
 	//   },
@@ -11067,12 +11687,13 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned volumes. Books with a higher maturity rating are filtered
-// out.
+// returned volumes. Books with a
+// higher maturity rating are filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE"
+//   "not-mature"
 func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11129,7 +11750,7 @@ func (c *OnboardingListCategoryVolumesCall) Header() http.Header {
 
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11140,7 +11761,7 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategoryVolumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/onboarding/listCategoryVolumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11189,8 +11810,10 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	return ret, nil
 	// {
 	//   "description": "List available volumes under categories for onboarding experience.",
+	//   "flatPath": "books/v1/onboarding/listCategoryVolumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.onboarding.listCategoryVolumes",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "categoryId": {
 	//       "description": "List of category ids requested.",
@@ -11204,14 +11827,11 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a\nhigher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Show books which are rated mature or lower.",
-	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -11228,7 +11848,7 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "onboarding/listCategoryVolumes",
+	//   "path": "books/v1/onboarding/listCategoryVolumes",
 	//   "response": {
 	//     "$ref": "Volume2"
 	//   },
@@ -11277,8 +11897,8 @@ func (r *PersonalizedstreamService) Get() *PersonalizedstreamGetCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating recommendations.
 func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -11286,12 +11906,13 @@ func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGet
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with a higher maturity rating are
-// filtered out.
+// returned recommendations. Books with
+// a higher maturity rating are filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE"
+//   "not-mature"
 func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11341,7 +11962,7 @@ func (c *PersonalizedstreamGetCall) Header() http.Header {
 
 func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11352,7 +11973,7 @@ func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "personalizedstream/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/personalizedstream/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11401,23 +12022,22 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	return ret, nil
 	// {
 	//   "description": "Returns a stream of personalized book clusters",
+	//   "flatPath": "books/v1/personalizedstream/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.personalizedstream.get",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Show books which are rated mature or lower.",
-	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -11428,7 +12048,7 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "personalizedstream/get",
+	//   "path": "books/v1/personalizedstream/get",
 	//   "response": {
 	//     "$ref": "Discoveryclusters"
 	//   },
@@ -11448,7 +12068,7 @@ type PromoofferAcceptCall struct {
 	header_    http.Header
 }
 
-// Accept:
+// Accept: Accepts the promo offer.
 func (r *PromoofferService) Accept() *PromoofferAcceptCall {
 	c := &PromoofferAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11531,7 +12151,7 @@ func (c *PromoofferAcceptCall) Header() http.Header {
 
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11539,7 +12159,7 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/accept")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/accept")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11550,21 +12170,48 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.accept" call.
-func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Accepts the promo offer.",
+	//   "flatPath": "books/v1/promooffer/accept",
 	//   "httpMethod": "POST",
 	//   "id": "books.promooffer.accept",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11606,7 +12253,10 @@ func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/accept",
+	//   "path": "books/v1/promooffer/accept",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -11623,7 +12273,7 @@ type PromoofferDismissCall struct {
 	header_    http.Header
 }
 
-// Dismiss:
+// Dismiss: Marks the promo offer as dismissed.
 func (r *PromoofferService) Dismiss() *PromoofferDismissCall {
 	c := &PromoofferDismissCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -11699,7 +12349,7 @@ func (c *PromoofferDismissCall) Header() http.Header {
 
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11707,7 +12357,7 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/dismiss")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/dismiss")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11718,21 +12368,48 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.dismiss" call.
-func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Marks the promo offer as dismissed.",
+	//   "flatPath": "books/v1/promooffer/dismiss",
 	//   "httpMethod": "POST",
 	//   "id": "books.promooffer.dismiss",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11770,7 +12447,10 @@ func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/dismiss",
+	//   "path": "books/v1/promooffer/dismiss",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"
 	//   ]
@@ -11868,7 +12548,7 @@ func (c *PromoofferGetCall) Header() http.Header {
 
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11879,7 +12559,7 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/promooffer/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11928,8 +12608,10 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns a list of promo offers available to the user",
+	//   "flatPath": "books/v1/promooffer/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.promooffer.get",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "androidId": {
 	//       "description": "device android_id",
@@ -11962,7 +12644,7 @@ func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "promooffer/get",
+	//   "path": "books/v1/promooffer/get",
 	//   "response": {
 	//     "$ref": "Offers"
 	//   },
@@ -11984,8 +12666,14 @@ type SeriesGetCall struct {
 }
 
 // Get: Returns Series metadata for the given series ids.
-func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
+func (r *SeriesService) Get() *SeriesGetCall {
 	c := &SeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// SeriesId sets the optional parameter "series_id": String that
+// identifies the series
+func (c *SeriesGetCall) SeriesId(seriesId ...string) *SeriesGetCall {
 	c.urlParams_.SetMulti("series_id", append([]string{}, seriesId...))
 	return c
 }
@@ -12027,7 +12715,7 @@ func (c *SeriesGetCall) Header() http.Header {
 
 func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12038,7 +12726,7 @@ func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "series/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/series/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12087,21 +12775,19 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns Series metadata for the given series ids.",
+	//   "flatPath": "books/v1/series/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.get",
-	//   "parameterOrder": [
-	//     "series_id"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "series_id": {
 	//       "description": "String that identifies the series",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "series/get",
+	//   "path": "books/v1/series/get",
 	//   "response": {
 	//     "$ref": "Series"
 	//   },
@@ -12123,9 +12809,8 @@ type SeriesMembershipGetCall struct {
 }
 
 // Get: Returns Series membership data given the series id.
-func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall {
+func (r *SeriesMembershipService) Get() *SeriesMembershipGetCall {
 	c := &SeriesMembershipGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("series_id", seriesId)
 	return c
 }
 
@@ -12140,6 +12825,13 @@ func (c *SeriesMembershipGetCall) PageSize(pageSize int64) *SeriesMembershipGetC
 // nextToken from the previous page.
 func (c *SeriesMembershipGetCall) PageToken(pageToken string) *SeriesMembershipGetCall {
 	c.urlParams_.Set("page_token", pageToken)
+	return c
+}
+
+// SeriesId sets the optional parameter "series_id": String that
+// identifies the series
+func (c *SeriesMembershipGetCall) SeriesId(seriesId string) *SeriesMembershipGetCall {
+	c.urlParams_.Set("series_id", seriesId)
 	return c
 }
 
@@ -12180,7 +12872,7 @@ func (c *SeriesMembershipGetCall) Header() http.Header {
 
 func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12191,7 +12883,7 @@ func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "series/membership/get")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/series/membership/get")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12240,11 +12932,10 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	return ret, nil
 	// {
 	//   "description": "Returns Series membership data given the series id.",
+	//   "flatPath": "books/v1/series/membership/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.membership.get",
-	//   "parameterOrder": [
-	//     "series_id"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "page_size": {
 	//       "description": "Number of maximum results per page to be included in the response.",
@@ -12260,11 +12951,10 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	//     "series_id": {
 	//       "description": "String that identifies the series",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "series/membership/get",
+	//   "path": "books/v1/series/membership/get",
 	//   "response": {
 	//     "$ref": "Seriesmembership"
 	//   },
@@ -12319,14 +13009,15 @@ func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL"
+//   "LITE"
 func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
 }
 
-// Source sets the optional parameter "source": String to identify the
+// Source sets the optional parameter "source": string  to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	c.urlParams_.Set("source", source)
@@ -12377,7 +13068,7 @@ func (c *VolumesGetCall) Header() http.Header {
 
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12388,7 +13079,7 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12440,6 +13131,7 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets volume information for a single volume.",
+	//   "flatPath": "books/v1/volumes/{volumeId}",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.get",
 	//   "parameterOrder": [
@@ -12464,18 +13156,15 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes all volume data.",
-	//         "Includes a subset of fields in volumeInfo and accessInfo."
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source": {
-	//       "description": "String to identify the originator of this request.",
+	//       "description": "string  to identify the originator of this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12490,7 +13179,7 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}",
+	//   "path": "books/v1/volumes/{volumeId}",
 	//   "response": {
 	//     "$ref": "Volume"
 	//   },
@@ -12512,9 +13201,8 @@ type VolumesListCall struct {
 }
 
 // List: Performs a book search.
-func (r *VolumesService) List(q string) *VolumesListCall {
+func (r *VolumesService) List() *VolumesListCall {
 	c := &VolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("q", q)
 	return c
 }
 
@@ -12522,7 +13210,8 @@ func (r *VolumesService) List(q string) *VolumesListCall {
 // by download availability.
 //
 // Possible values:
-//   "epub" - All volumes with epub.
+//   "DOWNLOAD_UNDEFINED"
+//   "EPUB"
 func (c *VolumesListCall) Download(download string) *VolumesListCall {
 	c.urlParams_.Set("download", download)
 	return c
@@ -12531,11 +13220,12 @@ func (c *VolumesListCall) Download(download string) *VolumesListCall {
 // Filter sets the optional parameter "filter": Filter search results.
 //
 // Possible values:
-//   "ebooks" - All Google eBooks.
-//   "free-ebooks" - Google eBook with full volume text viewability.
-//   "full" - Public can view entire volume text.
-//   "paid-ebooks" - Google eBook with a price.
-//   "partial" - Public able to see parts of text.
+//   "FILTER_UNDEFINED"
+//   "ebooks"
+//   "free-ebooks"
+//   "full"
+//   "paid-ebooks"
+//   "partial"
 func (c *VolumesListCall) Filter(filter string) *VolumesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -12552,8 +13242,9 @@ func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
 // Restrict search to this user's library.
 //
 // Possible values:
-//   "my-library" - Restrict to the user's library, any shelf.
-//   "no-restrict" - Do not restrict based on user's library.
+//   "LIBRARY_RESTRICT_UNDEFINED"
+//   "my-library"
+//   "no-restrict"
 func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
 	c.urlParams_.Set("libraryRestrict", libraryRestrict)
 	return c
@@ -12561,12 +13252,13 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with a higher maturity rating are
-// filtered out.
+// returned recommendations. Books with
+// a higher maturity rating are filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE"
+//   "not-mature"
 func (c *VolumesListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -12582,8 +13274,9 @@ func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results.
 //
 // Possible values:
-//   "newest" - Most recently published.
-//   "relevance" - Relevance to search terms.
+//   "ORDER_BY_UNDEFINED"
+//   "newest"
+//   "relevance"
 func (c *VolumesListCall) OrderBy(orderBy string) *VolumesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -12600,9 +13293,10 @@ func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
 // or magazines.
 //
 // Possible values:
-//   "all" - All volume content types.
-//   "books" - Just books.
-//   "magazines" - Just magazines.
+//   "PRINT_TYPE_UNDEFINED"
+//   "ALL"
+//   "BOOKS"
+//   "MAGAZINES"
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 	c.urlParams_.Set("printType", printType)
 	return c
@@ -12612,10 +13306,17 @@ func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//   "full" - Includes all volume data.
-//   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL"
+//   "LITE"
 func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	c.urlParams_.Set("projection", projection)
+	return c
+}
+
+// Q sets the optional parameter "q": Full-text search query string.
+func (c *VolumesListCall) Q(q string) *VolumesListCall {
+	c.urlParams_.Set("q", q)
 	return c
 }
 
@@ -12677,7 +13378,7 @@ func (c *VolumesListCall) Header() http.Header {
 
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12688,7 +13389,7 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12737,19 +13438,16 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	return ret, nil
 	// {
 	//   "description": "Performs a book search.",
+	//   "flatPath": "books/v1/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.list",
-	//   "parameterOrder": [
-	//     "q"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "download": {
 	//       "description": "Restrict to volumes by download availability.",
 	//       "enum": [
-	//         "epub"
-	//       ],
-	//       "enumDescriptions": [
-	//         "All volumes with epub."
+	//         "DOWNLOAD_UNDEFINED",
+	//         "EPUB"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12757,18 +13455,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "filter": {
 	//       "description": "Filter search results.",
 	//       "enum": [
+	//         "FILTER_UNDEFINED",
 	//         "ebooks",
 	//         "free-ebooks",
 	//         "full",
 	//         "paid-ebooks",
 	//         "partial"
-	//       ],
-	//       "enumDescriptions": [
-	//         "All Google eBooks.",
-	//         "Google eBook with full volume text viewability.",
-	//         "Public can view entire volume text.",
-	//         "Google eBook with a price.",
-	//         "Public able to see parts of text."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12781,25 +13473,19 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "libraryRestrict": {
 	//       "description": "Restrict search to this user's library.",
 	//       "enum": [
+	//         "LIBRARY_RESTRICT_UNDEFINED",
 	//         "my-library",
 	//         "no-restrict"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Restrict to the user's library, any shelf.",
-	//         "Do not restrict based on user's library."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Show books which are rated mature or lower.",
-	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12808,19 +13494,14 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "40",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
 	//       "description": "Sort search results.",
 	//       "enum": [
+	//         "ORDER_BY_UNDEFINED",
 	//         "newest",
 	//         "relevance"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Most recently published.",
-	//         "Relevance to search terms."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12833,14 +13514,10 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "printType": {
 	//       "description": "Restrict to books or magazines.",
 	//       "enum": [
-	//         "all",
-	//         "books",
-	//         "magazines"
-	//       ],
-	//       "enumDescriptions": [
-	//         "All volume content types.",
-	//         "Just books.",
-	//         "Just magazines."
+	//         "PRINT_TYPE_UNDEFINED",
+	//         "ALL",
+	//         "BOOKS",
+	//         "MAGAZINES"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12848,12 +13525,9 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "projection": {
 	//       "description": "Restrict information returned to a set of selected fields.",
 	//       "enum": [
-	//         "full",
-	//         "lite"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Includes all volume data.",
-	//         "Includes a subset of fields in volumeInfo and accessInfo."
+	//         "PROJECTION_UNDEFINED",
+	//         "FULL",
+	//         "LITE"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12861,7 +13535,6 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "q": {
 	//       "description": "Full-text search query string.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "showPreorders": {
@@ -12878,11 +13551,10 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes",
+	//   "path": "books/v1/volumes",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -12915,17 +13587,18 @@ func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListC
 // type.
 //
 // Possible values:
-//   "end-of-sample" - Recommendations for display end-of-sample.
-//   "end-of-volume" - Recommendations for display end-of-volume.
-//   "related-for-play" - Related volumes for Play Store.
+//   "ASSOCIATION_UNDEFINED"
+//   "end-of-sample"
+//   "end-of-volume"
+//   "related-for-play"
 func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("association", association)
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating recommendations.
 func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -12933,12 +13606,13 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with a higher maturity rating are
-// filtered out.
+// returned recommendations. Books with
+// a higher maturity rating are filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE"
+//   "not-mature"
 func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -12988,7 +13662,7 @@ func (c *VolumesAssociatedListCall) Header() http.Header {
 
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12999,7 +13673,7 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/{volumeId}/associated")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13051,6 +13725,7 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	return ret, nil
 	// {
 	//   "description": "Return a list of associated books.",
+	//   "flatPath": "books/v1/volumes/{volumeId}/associated",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.associated.list",
 	//   "parameterOrder": [
@@ -13060,32 +13735,25 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//     "association": {
 	//       "description": "Association type.",
 	//       "enum": [
+	//         "ASSOCIATION_UNDEFINED",
 	//         "end-of-sample",
 	//         "end-of-volume",
 	//         "related-for-play"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Recommendations for display end-of-sample.",
-	//         "Recommendations for display end-of-volume.",
-	//         "Related volumes for Play Store."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Show books which are rated mature or lower.",
-	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13102,7 +13770,7 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/{volumeId}/associated",
+	//   "path": "books/v1/volumes/{volumeId}/associated",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13133,14 +13801,15 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 // book was acquired
 //
 // Possible values:
-//   "FAMILY_SHARED" - Books acquired via Family Sharing
-//   "PREORDERED" - Preordered books (not yet available)
-//   "PREVIOUSLY_RENTED" - User-rented books past their expiration time
-//   "PUBLIC_DOMAIN" - Public domain books
-//   "PURCHASED" - Purchased books
-//   "RENTED" - User-rented books
-//   "SAMPLE" - Sample books
-//   "UPLOADED" - User uploaded books
+//   "ACQUIRE_METHOD_UNDEFINED"
+//   "FAMILY_SHARED"
+//   "PREORDERED"
+//   "PREVIOUSLY_RENTED"
+//   "PUBLIC_DOMAIN"
+//   "PURCHASED"
+//   "RENTED"
+//   "SAMPLE"
+//   "UPLOADED"
 func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
@@ -13154,8 +13823,8 @@ func (c *VolumesMybooksListCall) Country(country string) *VolumesMybooksListCall
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex:'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex:'en_US'. Used for
+// generating recommendations.
 func (c *VolumesMybooksListCall) Locale(locale string) *VolumesMybooksListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -13169,13 +13838,15 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 }
 
 // ProcessingState sets the optional parameter "processingState": The
-// processing state of the user uploaded volumes to be returned.
+// processing state of the user uploaded volumes to be
+// returned.
 // Applicable only if the UPLOADED is specified in the acquireMethod.
 //
 // Possible values:
-//   "COMPLETED_FAILED" - The volume processing hase failed.
-//   "COMPLETED_SUCCESS" - The volume processing was completed.
-//   "RUNNING" - The volume processing is not completed.
+//   "PROCESSING_STATE_UNDEFINED"
+//   "COMPLETED_FAILED"
+//   "COMPLETED_SUCCESS"
+//   "RUNNING"
 func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -13232,7 +13903,7 @@ func (c *VolumesMybooksListCall) Header() http.Header {
 
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13243,7 +13914,7 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/mybooks")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/mybooks")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13292,12 +13963,15 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	return ret, nil
 	// {
 	//   "description": "Return a list of books in My Library.",
+	//   "flatPath": "books/v1/volumes/mybooks",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.mybooks.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "acquireMethod": {
 	//       "description": "How the book was acquired",
 	//       "enum": [
+	//         "ACQUIRE_METHOD_UNDEFINED",
 	//         "FAMILY_SHARED",
 	//         "PREORDERED",
 	//         "PREVIOUSLY_RENTED",
@@ -13306,16 +13980,6 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//         "RENTED",
 	//         "SAMPLE",
 	//         "UPLOADED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Books acquired via Family Sharing",
-	//         "Preordered books (not yet available)",
-	//         "User-rented books past their expiration time",
-	//         "Public domain books",
-	//         "Purchased books",
-	//         "User-rented books",
-	//         "Sample books",
-	//         "User uploaded books"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -13327,7 +13991,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13335,21 +13999,15 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "processingState": {
-	//       "description": "The processing state of the user uploaded volumes to be returned. Applicable only if the UPLOADED is specified in the acquireMethod.",
+	//       "description": "The processing state of the user uploaded volumes to be returned.\nApplicable only if the UPLOADED is specified in the acquireMethod.",
 	//       "enum": [
+	//         "PROCESSING_STATE_UNDEFINED",
 	//         "COMPLETED_FAILED",
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The volume processing hase failed.",
-	//         "The volume processing was completed.",
-	//         "The volume processing is not completed."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -13364,11 +14022,10 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "volumes/mybooks",
+	//   "path": "books/v1/volumes/mybooks",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13396,8 +14053,8 @@ func (r *VolumesRecommendedService) List() *VolumesRecommendedListCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating recommendations.
 func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -13405,12 +14062,13 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with a higher maturity rating are
-// filtered out.
+// returned recommendations. Books with
+// a higher maturity rating are filtered out.
 //
 // Possible values:
-//   "mature" - Show books which are rated mature or lower.
-//   "not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE"
+//   "not-mature"
 func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13460,7 +14118,7 @@ func (c *VolumesRecommendedListCall) Header() http.Header {
 
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13471,7 +14129,7 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/recommended")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13520,23 +14178,22 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	return ret, nil
 	// {
 	//   "description": "Return a list of recommended books for the current user.",
+	//   "flatPath": "books/v1/volumes/recommended",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.recommended.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
 	//       "enum": [
-	//         "mature",
+	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
+	//         "MATURE",
 	//         "not-mature"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Show books which are rated mature or lower.",
-	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13547,7 +14204,7 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/recommended",
+	//   "path": "books/v1/volumes/recommended",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },
@@ -13568,18 +14225,28 @@ type VolumesRecommendedRateCall struct {
 }
 
 // Rate: Rate a recommended book for the current user.
-func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
+func (r *VolumesRecommendedService) Rate() *VolumesRecommendedRateCall {
 	c := &VolumesRecommendedRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("rating", rating)
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating recommendations.
 func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// Rating sets the optional parameter "rating": Rating to be given to
+// the volume.
+//
+// Possible values:
+//   "RATING_UNDEFINED"
+//   "HAVE_IT"
+//   "NOT_INTERESTED"
+func (c *VolumesRecommendedRateCall) Rating(rating string) *VolumesRecommendedRateCall {
+	c.urlParams_.Set("rating", rating)
 	return c
 }
 
@@ -13587,6 +14254,13 @@ func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRa
 // originator of this request.
 func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": ID of the source
+// volume.
+func (c *VolumesRecommendedRateCall) VolumeId(volumeId string) *VolumesRecommendedRateCall {
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -13617,7 +14291,7 @@ func (c *VolumesRecommendedRateCall) Header() http.Header {
 
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13625,7 +14299,7 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended/rate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/recommended/rate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -13675,30 +14349,24 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	return ret, nil
 	// {
 	//   "description": "Rate a recommended book for the current user.",
+	//   "flatPath": "books/v1/volumes/recommended/rate",
 	//   "httpMethod": "POST",
 	//   "id": "books.volumes.recommended.rate",
-	//   "parameterOrder": [
-	//     "rating",
-	//     "volumeId"
-	//   ],
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "rating": {
 	//       "description": "Rating to be given to the volume.",
 	//       "enum": [
+	//         "RATING_UNDEFINED",
 	//         "HAVE_IT",
 	//         "NOT_INTERESTED"
 	//       ],
-	//       "enumDescriptions": [
-	//         "Rating indicating a dismissal due to ownership.",
-	//         "Rating indicating a negative dismissal of a volume."
-	//       ],
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -13709,11 +14377,10 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//     "volumeId": {
 	//       "description": "ID of the source volume.",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/recommended/rate",
+	//   "path": "books/v1/volumes/recommended/rate",
 	//   "response": {
 	//     "$ref": "BooksVolumesRecommendedRateResponse"
 	//   },
@@ -13741,8 +14408,8 @@ func (r *VolumesUseruploadedService) List() *VolumesUseruploadedListCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
-// recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for
+// generating recommendations.
 func (c *VolumesUseruploadedListCall) Locale(locale string) *VolumesUseruploadedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -13759,9 +14426,10 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 // processing state of the user uploaded volumes to be returned.
 //
 // Possible values:
-//   "COMPLETED_FAILED" - The volume processing hase failed.
-//   "COMPLETED_SUCCESS" - The volume processing was completed.
-//   "RUNNING" - The volume processing is not completed.
+//   "PROCESSING_STATE_UNDEFINED"
+//   "COMPLETED_FAILED"
+//   "COMPLETED_SUCCESS"
+//   "RUNNING"
 func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -13782,7 +14450,8 @@ func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseru
 }
 
 // VolumeId sets the optional parameter "volumeId": The ids of the
-// volumes to be returned. If not specified all that match the
+// volumes to be returned. If not specified all that match
+// the
 // processingState are returned.
 func (c *VolumesUseruploadedListCall) VolumeId(volumeId ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("volumeId", append([]string{}, volumeId...))
@@ -13826,7 +14495,7 @@ func (c *VolumesUseruploadedListCall) Header() http.Header {
 
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13837,7 +14506,7 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/useruploaded")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "books/v1/volumes/useruploaded")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13886,11 +14555,13 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	return ret, nil
 	// {
 	//   "description": "Return a list of books uploaded by the current user.",
+	//   "flatPath": "books/v1/volumes/useruploaded",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.useruploaded.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13898,21 +14569,15 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "maximum": "40",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "processingState": {
 	//       "description": "The processing state of the user uploaded volumes to be returned.",
 	//       "enum": [
+	//         "PROCESSING_STATE_UNDEFINED",
 	//         "COMPLETED_FAILED",
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The volume processing hase failed.",
-	//         "The volume processing was completed.",
-	//         "The volume processing is not completed."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -13927,17 +14592,16 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
-	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "volumeId": {
-	//       "description": "The ids of the volumes to be returned. If not specified all that match the processingState are returned.",
+	//       "description": "The ids of the volumes to be returned. If not specified all that match the\nprocessingState are returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "volumes/useruploaded",
+	//   "path": "books/v1/volumes/useruploaded",
 	//   "response": {
 	//     "$ref": "Volumes"
 	//   },

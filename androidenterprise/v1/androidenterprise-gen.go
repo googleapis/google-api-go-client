@@ -74,7 +74,7 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "androidenterprise:v1"
 const apiName = "androidenterprise"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/androidenterprise/v1/"
+const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -323,7 +323,8 @@ type WebappsService struct {
 }
 
 // Administrator: This represents an enterprise admin who can manage the
-// enterprise in the managed Google Play store.
+// enterprise
+// in the managed Google Play store.
 type Administrator struct {
 	// Email: The admin's email address.
 	Email string `json:"email,omitempty"`
@@ -354,8 +355,6 @@ func (s *Administrator) MarshalJSON() ([]byte, error) {
 // AdministratorWebToken: A token authorizing an admin to access an
 // iframe.
 type AdministratorWebToken struct {
-	Kind string `json:"kind,omitempty"`
-
 	// Token: An opaque token to be passed to the Play front-end to generate
 	// an iframe.
 	Token string `json:"token,omitempty"`
@@ -364,7 +363,7 @@ type AdministratorWebToken struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Token") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -372,7 +371,7 @@ type AdministratorWebToken struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "Token") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -388,21 +387,27 @@ func (s *AdministratorWebToken) MarshalJSON() ([]byte, error) {
 }
 
 // AdministratorWebTokenSpec: Specification for a token used to generate
-// iframes. The token specifies what data the admin is allowed to modify
-// and the URI the iframe is allowed to communiate with.
+// iframes. The token specifies
+// what data the admin is allowed to modify and the URI the iframe
+// is
+// allowed to communiate with.
 type AdministratorWebTokenSpec struct {
-	Kind string `json:"kind,omitempty"`
-
 	// ManagedConfigurations: Options for displaying the Managed
 	// Configuration page.
 	ManagedConfigurations *AdministratorWebTokenSpecManagedConfigurations `json:"managedConfigurations,omitempty"`
 
 	// Parent: The URI of the parent frame hosting the iframe. To prevent
-	// XSS, the iframe may not be hosted at other URIs. This URI must be
-	// https. Use whitespaces to separate multiple parent URIs.
+	// XSS, the iframe
+	// may not be hosted at other URIs. This URI must be https.
+	// Use whitespaces to separate multiple parent URIs.
 	Parent string `json:"parent,omitempty"`
 
-	// Permission: Deprecated. Use PlaySearch.approveApps.
+	// Permission: Deprecated. Use <code>PlaySearch.approveApps</code>.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown permission.
+	//   "APPROVE_APPS" - Permission to approve and unapprove apps.
+	//   "MANAGE_MCM" - Permission to manage app restrictions.
 	Permission []string `json:"permission,omitempty"`
 
 	// PlaySearch: Options for displaying the managed Play Search apps page.
@@ -417,20 +422,22 @@ type AdministratorWebTokenSpec struct {
 	// WebApps: Options for displaying the Web Apps page.
 	WebApps *AdministratorWebTokenSpecWebApps `json:"webApps,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedConfigurations") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ManagedConfigurations") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -469,8 +476,11 @@ func (s *AdministratorWebTokenSpecManagedConfigurations) MarshalJSON() ([]byte, 
 }
 
 type AdministratorWebTokenSpecPlaySearch struct {
-	// ApproveApps: Allow access to the iframe in approve mode. Default is
-	// false.
+	// ApproveApps: Allow access to the iframe in
+	// <a
+	// href="https://developers.google.com/android/work/play/emm-api/manag
+	// ed-play-iframe#render">approve
+	// mode</a>. Default is false.
 	ApproveApps bool `json:"approveApps,omitempty"`
 
 	// Enabled: Whether the managed Play Search apps page is displayed.
@@ -583,7 +593,8 @@ func (s *AdministratorWebTokenSpecWebApps) MarshalJSON() ([]byte, error) {
 }
 
 // AppRestrictionsSchema: Represents the list of app restrictions
-// available to be pre-configured for the product.
+// available to be pre-configured for
+// the product.
 type AppRestrictionsSchema struct {
 	// Kind: Deprecated.
 	Kind string `json:"kind,omitempty"`
@@ -619,13 +630,15 @@ func (s *AppRestrictionsSchema) MarshalJSON() ([]byte, error) {
 }
 
 // AppRestrictionsSchemaChangeEvent: An event generated when a new app
-// version is uploaded to Google Play and its app restrictions schema
-// changed. To fetch the app restrictions schema for an app, use
+// version is uploaded to Google Play and its
+// app restrictions schema changed.
+// To fetch the app restrictions schema for an app,
+// use
 // Products.getAppRestrictionsSchema on the EMM API.
 type AppRestrictionsSchemaChangeEvent struct {
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// for which the app restriction schema changed. This field will always
-	// be present.
+	// for which the
+	// app restriction schema changed. This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -652,38 +665,64 @@ func (s *AppRestrictionsSchemaChangeEvent) MarshalJSON() ([]byte, error) {
 }
 
 // AppRestrictionsSchemaRestriction: A restriction in the App
-// Restriction Schema represents a piece of configuration that may be
-// pre-applied.
+// Restriction Schema represents a piece of
+// configuration that may be pre-applied.
 type AppRestrictionsSchemaRestriction struct {
-	// DefaultValue: The default value of the restriction. bundle and
-	// bundleArray restrictions never have a default value.
+	// DefaultValue: The default value of the restriction.
+	// <code>bundle</code> and
+	// <code>bundleArray</code> restrictions never have a default value.
 	DefaultValue *AppRestrictionsSchemaRestrictionRestrictionValue `json:"defaultValue,omitempty"`
 
 	// Description: A longer description of the restriction, giving more
-	// detail of what it affects.
+	// detail of what it
+	// affects.
 	Description string `json:"description,omitempty"`
 
-	// Entry: For choice or multiselect restrictions, the list of possible
-	// entries' human-readable names.
+	// Entry: For <code>choice</code> or <code>multiselect</code>
+	// restrictions, the list
+	// of possible entries' human-readable names.
 	Entry []string `json:"entry,omitempty"`
 
-	// EntryValue: For choice or multiselect restrictions, the list of
-	// possible entries' machine-readable values. These values should be
-	// used in the configuration, either as a single string value for a
-	// choice restriction or in a stringArray for a multiselect restriction.
+	// EntryValue: For <code>choice</code> or <code>multiselect</code>
+	// restrictions, the list
+	// of possible entries' machine-readable values. These values should be
+	// used
+	// in the configuration, either as a single <code>string</code> value
+	// for a
+	// <code>choice</code> restriction or in a <code>stringArray</code> for
+	// a
+	// <code>multiselect</code> restriction.
 	EntryValue []string `json:"entryValue,omitempty"`
 
 	// Key: The unique key that the product uses to identify the
-	// restriction, e.g. "com.google.android.gm.fieldname".
+	// restriction,
+	// e.g. "com.google.android.gm.fieldname".
 	Key string `json:"key,omitempty"`
 
-	// NestedRestriction: For bundle or bundleArray restrictions, the list
-	// of nested restrictions. A bundle restriction is always nested within
-	// a bundleArray restriction, and a bundleArray restriction is at most
-	// two levels deep.
+	// NestedRestriction: For <code>bundle</code> or
+	// <code>bundleArray</code> restrictions, the list
+	// of nested restrictions. A <code>bundle</code> restriction is always
+	// nested
+	// within a <code>bundleArray</code> restriction, and
+	// a
+	// <code>bundleArray</code> restriction is at most two levels deep.
 	NestedRestriction []*AppRestrictionsSchemaRestriction `json:"nestedRestriction,omitempty"`
 
 	// RestrictionType: The type of the restriction.
+	//
+	// Possible values:
+	//   "BOOL" - A restriction of boolean type.
+	//   "STRING" - A restriction of string type.
+	//   "INTEGER" - A restriction of integer type.
+	//   "CHOICE" - A choice of one item from a set.
+	//   "MULTISELECT" - A choice of multiple items from a set.
+	//   "HIDDEN" - A hidden restriction of string type (the default value
+	// can be used
+	// to pass along information that cannot be modified, such as a
+	// version
+	// code).
+	//   "BUNDLE" - [M+ devices only] A bundle of restrictions
+	//   "BUNDLE_ARRAY" - [M+ devices only] An array of restriction bundles
 	RestrictionType string `json:"restrictionType,omitempty"`
 
 	// Title: The name of the restriction.
@@ -716,6 +755,20 @@ func (s *AppRestrictionsSchemaRestriction) MarshalJSON() ([]byte, error) {
 // the restriction.
 type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 	// Type: The type of the value being provided.
+	//
+	// Possible values:
+	//   "BOOL" - A restriction of boolean type.
+	//   "STRING" - A restriction of string type.
+	//   "INTEGER" - A restriction of integer type.
+	//   "CHOICE" - A choice of one item from a set.
+	//   "MULTISELECT" - A choice of multiple items from a set.
+	//   "HIDDEN" - A hidden restriction of string type (the default value
+	// can be used
+	// to pass along information that cannot be modified, such as a
+	// version
+	// code).
+	//   "BUNDLE" - [M+ devices only] A bundle of restrictions
+	//   "BUNDLE_ARRAY" - [M+ devices only] An array of restriction bundles
 	Type string `json:"type,omitempty"`
 
 	// ValueBool: The boolean value - this will only be present if type is
@@ -727,11 +780,13 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 	ValueInteger int64 `json:"valueInteger,omitempty"`
 
 	// ValueMultiselect: The list of string values - this will only be
-	// present if type is multiselect.
+	// present if type is
+	// multiselect.
 	ValueMultiselect []string `json:"valueMultiselect,omitempty"`
 
 	// ValueString: The string value - this will be present for types
-	// string, choice and hidden.
+	// string, choice and
+	// hidden.
 	ValueString string `json:"valueString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -759,12 +814,12 @@ func (s *AppRestrictionsSchemaRestrictionRestrictionValue) MarshalJSON() ([]byte
 
 // AppState: List of states set by the app.
 type AppState struct {
-	// KeyedAppState: List of keyed app states. This field will always be
-	// present.
+	// KeyedAppState: List of keyed app states.
+	// This field will always be present.
 	KeyedAppState []*KeyedAppState `json:"keyedAppState,omitempty"`
 
-	// PackageName: The package name of the app. This field will always be
-	// present.
+	// PackageName: The package name of the app.
+	// This field will always be present.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KeyedAppState") to
@@ -791,13 +846,16 @@ func (s *AppState) MarshalJSON() ([]byte, error) {
 }
 
 // AppUpdateEvent: An event generated when a new version of an app is
-// uploaded to Google Play. Notifications are sent for new public
-// versions only: alpha, beta, or canary versions do not generate this
-// event. To fetch up-to-date version history for an app, use
-// Products.Get on the EMM API.
+// uploaded to Google Play.
+// Notifications are sent for new public versions only: alpha, beta, or
+// canary
+// versions do not generate this event. To fetch up-to-date version
+// history for
+// an app, use Products.Get on the EMM API.
 type AppUpdateEvent struct {
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// that was updated. This field will always be present.
+	// that was updated.
+	// This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -828,20 +886,31 @@ type AppVersion struct {
 	// IsProduction: True if this version is a production APK.
 	IsProduction bool `json:"isProduction,omitempty"`
 
-	// Track: Deprecated, use trackId instead.
+	// Track: Deprecated, use <code>trackId</code> instead.
+	//
+	// Possible values:
+	//   "APP_TRACK_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "BETA"
+	//   "ALPHA"
 	Track string `json:"track,omitempty"`
 
-	// TrackId: Track ids that the app version is published in. Replaces the
-	// track field (deprecated), but doesn't include the production track
-	// (see isProduction instead).
+	// TrackId: Track ids that the app version is published in. Replaces
+	// the
+	// <code>track</code> field (deprecated), but doesn't include the
+	// production
+	// track (see <code>isProduction</code> instead).
 	TrackId []string `json:"trackId,omitempty"`
 
 	// VersionCode: Unique increasing identifier for the app version.
 	VersionCode int64 `json:"versionCode,omitempty"`
 
 	// VersionString: The string used in the Play store by the app developer
-	// to identify the version. The string is not necessarily unique or
-	// localized (for example, the string could be "1.4").
+	// to identify
+	// the version.
+	// The string is not necessarily unique or localized (for example, the
+	// string
+	// could be "1.4").
 	VersionString string `json:"versionString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsProduction") to
@@ -870,10 +939,9 @@ func (s *AppVersion) MarshalJSON() ([]byte, error) {
 // ApprovalUrlInfo: Information on an approval URL.
 type ApprovalUrlInfo struct {
 	// ApprovalUrl: A URL that displays a product's permissions and that can
-	// also be used to approve the product with the Products.approve call.
+	// also be used to
+	// approve the product with the <code>Products.approve</code> call.
 	ApprovalUrl string `json:"approvalUrl,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalUrl") to
 	// unconditionally include in API requests. By default, fields with
@@ -899,21 +967,21 @@ func (s *ApprovalUrlInfo) MarshalJSON() ([]byte, error) {
 }
 
 // AuthenticationToken: An AuthenticationToken is used by the EMM's
-// device policy client on a device to provision the given EMM-managed
-// user on that device.
+// device policy client on a device
+// to provision the given EMM-managed user on that device.
 type AuthenticationToken struct {
-	Kind string `json:"kind,omitempty"`
-
 	// Token: The authentication token to be passed to the device policy
-	// client on the device where it can be used to provision the account
-	// for which this token was generated.
+	// client on the
+	// device where it can be used to provision the account for which this
+	// token
+	// was generated.
 	Token string `json:"token,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Token") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -921,7 +989,7 @@ type AuthenticationToken struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "Token") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -937,16 +1005,33 @@ func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
 }
 
 // AutoInstallConstraint: The auto-install constraint. Defines a set of
-// restrictions for installation. At least one of the fields must be
-// set.
+// restrictions for installation.
+// At least one of the fields must be set.
 type AutoInstallConstraint struct {
 	// ChargingStateConstraint: Charging state constraint.
+	//
+	// Possible values:
+	//   "CHARGING_STATE_CONSTRAINT_UNSPECIFIED"
+	//   "CHARGING_NOT_REQUIRED" - Device doesn't have to be charging.
+	//   "CHARGING_REQUIRED" - Device has to be charging.
 	ChargingStateConstraint string `json:"chargingStateConstraint,omitempty"`
 
 	// DeviceIdleStateConstraint: Device idle state constraint.
+	//
+	// Possible values:
+	//   "DEVICE_IDLE_STATE_CONSTRAINT_UNSPECIFIED"
+	//   "DEVICE_IDLE_NOT_REQUIRED" - Device doesn't have to be idle, app
+	// can be installed while the user is
+	// interacting with the device.
+	//   "DEVICE_IDLE_REQUIRED" - Device has to be idle.
 	DeviceIdleStateConstraint string `json:"deviceIdleStateConstraint,omitempty"`
 
 	// NetworkTypeConstraint: Network type constraint.
+	//
+	// Possible values:
+	//   "NETWORK_TYPE_CONSTRAINT_UNSPECIFIED"
+	//   "ANY_NETWORK" - Any active networks (Wi-Fi, cellular, etc.).
+	//   "UNMETERED_NETWORK" - Any unmetered network (e.g. Wi-FI).
 	NetworkTypeConstraint string `json:"networkTypeConstraint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -976,22 +1061,40 @@ func (s *AutoInstallConstraint) MarshalJSON() ([]byte, error) {
 
 type AutoInstallPolicy struct {
 	// AutoInstallConstraint: The constraints for auto-installing the app.
-	// You can specify a maximum of one constraint.
+	// You can specify a maximum of
+	// one constraint.
 	AutoInstallConstraint []*AutoInstallConstraint `json:"autoInstallConstraint,omitempty"`
 
 	// AutoInstallMode: The auto-install mode. If unset defaults to
 	// "doNotAutoInstall".
+	//
+	// Possible values:
+	//   "AUTO_INSTALL_MODE_UNSPECIFIED"
+	//   "DO_NOT_AUTO_INSTALL" - The product is not installed automatically,
+	// the user needs to install it
+	// from the Play Store.
+	//   "AUTO_INSTALL_ONCE" - The product is automatically installed once,
+	// if the user uninstalls the
+	// product it will not be installed again.
+	//   "FORCE_AUTO_INSTALL" - The product is automatically installed, if
+	// the user uninstalls the
+	// product it will be installed again. On managed devices the DPC
+	// should
+	// block uninstall.
 	AutoInstallMode string `json:"autoInstallMode,omitempty"`
 
 	// AutoInstallPriority: The priority of the install, as an unsigned
-	// integer. A lower number means higher priority.
+	// integer. A lower number means
+	// higher priority.
 	AutoInstallPriority int64 `json:"autoInstallPriority,omitempty"`
 
 	// MinimumVersionCode: The minimum version of the app. If a lower
-	// version of the app is installed, then the app will be auto-updated
-	// according to the auto-install constraints, instead of waiting for the
-	// regular auto-update. You can set a minimum version code for at most
-	// 20 apps per device.
+	// version of the app is installed,
+	// then the app will be auto-updated according to the
+	// auto-install
+	// constraints, instead of waiting for the regular auto-update. You can
+	// set a
+	// minimum version code for at most 20 apps per device.
 	MinimumVersionCode int64 `json:"minimumVersionCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1020,20 +1123,20 @@ func (s *AutoInstallPolicy) MarshalJSON() ([]byte, error) {
 }
 
 // ConfigurationVariables: A configuration variables resource contains
-// the managed configuration settings ID to be applied to a single user,
-// as well as the variable set that is attributed to the user. The
-// variable set will be used to replace placeholders in the managed
-// configuration settings.
+// the managed configuration
+// settings ID to be applied to a single user, as well as the variable
+// set that
+// is attributed to the user. The variable set will be used to
+// replace
+// placeholders in the managed configuration settings.
 type ConfigurationVariables struct {
-	Kind string `json:"kind,omitempty"`
-
 	// McmId: The ID of the managed configurations settings.
 	McmId string `json:"mcmId,omitempty"`
 
 	// VariableSet: The variable set that is attributed to the user.
 	VariableSet []*VariableSet `json:"variableSet,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "McmId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1041,7 +1144,7 @@ type ConfigurationVariables struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "McmId") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1057,28 +1160,45 @@ func (s *ConfigurationVariables) MarshalJSON() ([]byte, error) {
 }
 
 // Device: A Devices resource represents a mobile device managed by the
-// EMM and belonging to a specific enterprise user.
+// EMM and
+// belonging to a specific enterprise user.
 type Device struct {
 	// AndroidId: The Google Play Services Android ID for the device encoded
-	// as a lowercase hex string. For example, "123456789abcdef0".
+	// as
+	// a lowercase hex string. For
+	// example,
+	// <code>&quot;123456789abcdef0&quot;</code>.
 	AndroidId string `json:"androidId,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// ManagementType: Identifies the extent to which the device is
-	// controlled by a managed Google Play EMM in various deployment
-	// configurations.
-	//
+	// controlled by a managed
+	// Google Play EMM in various deployment configurations.
+	// <br><br>
 	// Possible values include:
-	// - "managedDevice", a device that has the EMM's device policy
-	// controller (DPC) as the device owner.
-	// - "managedProfile", a device that has a profile managed by the DPC
-	// (DPC is profile owner) in addition to a separate, personal profile
-	// that is unavailable to the DPC.
-	// - "containerApp", no longer used (deprecated).
-	// - "unmanagedProfile", a device that has been allowed (by the domain's
-	// admin, using the Admin Console to enable the privilege) to use
-	// managed Google Play, but the profile is itself not owned by a DPC.
+	// <ul><li>"<code>managedDevice</code>", a device that has the EMM's
+	// device
+	// policy controller (DPC) as the device
+	// owner.</li>
+	// <li>"<code>managedProfile</code>", a device that has a profile
+	// managed
+	// by the DPC (DPC is profile owner) in addition to a separate,
+	// personal
+	// profile that is unavailable to the
+	// DPC.</li>
+	// <li>"<code>containerApp</code>", no longer used
+	// (deprecated).</li>
+	// <li>"<code>unmanagedProfile</code>", a device that has been allowed
+	// (by the
+	// domain's admin, using the Admin Console to enable the privilege) to
+	// use
+	// managed Google Play, but the profile is itself
+	// not owned by a DPC.</li></ul>
+	//
+	// Possible values:
+	//   "MANAGED_DEVICE"
+	//   "MANAGED_PROFILE"
+	//   "CONTAINER_APP"
+	//   "UNMANAGED_PROFILE"
 	ManagementType string `json:"managementType,omitempty"`
 
 	// Policy: The policy enforced on the device.
@@ -1115,15 +1235,18 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceReport: Device report updated with the latest app states for
-// managed apps on the device.
+// managed apps on the
+// device.
 type DeviceReport struct {
 	// AppState: List of app states set by managed apps on the device. App
-	// states are defined by the app's developers. This field will always be
-	// present.
+	// states are
+	// defined by the app's developers.
+	// This field will always be present.
 	AppState []*AppState `json:"appState,omitempty"`
 
 	// LastUpdatedTimestampMillis: The timestamp of the last report update
-	// in milliseconds since epoch. This field will always be present.
+	// in milliseconds since epoch.
+	// This field will always be present.
 	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "AppState") to
@@ -1152,15 +1275,16 @@ func (s *DeviceReport) MarshalJSON() ([]byte, error) {
 // DeviceReportUpdateEvent: An event generated when an updated device
 // report is available.
 type DeviceReportUpdateEvent struct {
-	// DeviceId: The Android ID of the device. This field will always be
-	// present.
+	// DeviceId: The Android ID of the device.
+	// This field will always be present.
 	DeviceId string `json:"deviceId,omitempty"`
 
-	// Report: The device report updated with the latest app states. This
-	// field will always be present.
+	// Report: The device report updated with the latest app states.
+	// This field will always be present.
 	Report *DeviceReport `json:"report,omitempty"`
 
-	// UserId: The ID of the user. This field will always be present.
+	// UserId: The ID of the user.
+	// This field will always be present.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
@@ -1187,16 +1311,20 @@ func (s *DeviceReportUpdateEvent) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceState: The state of a user's device, as accessed by the
-// getState and setState methods on device resources.
+// getState and setState
+// methods on device resources.
 type DeviceState struct {
 	// AccountState: The state of the Google account on the device.
-	// "enabled" indicates that the Google account on the device can be used
-	// to access Google services (including Google Play), while "disabled"
-	// means that it cannot. A new device is initially in the "disabled"
-	// state.
+	// "enabled" indicates that
+	// the Google account on the device can be used to access Google
+	// services
+	// (including Google Play), while "disabled" means that it cannot.
+	// A new device is initially in the "disabled" state.
+	//
+	// Possible values:
+	//   "ENABLED"
+	//   "DISABLED"
 	AccountState string `json:"accountState,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1225,14 +1353,9 @@ func (s *DeviceState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DevicesListResponse: The device resources for the user.
 type DevicesListResponse struct {
 	// Device: A managed device.
 	Device []*Device `json:"device,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#devicesListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1262,27 +1385,42 @@ func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Enterprise: An Enterprises resource represents the binding between an
-// EMM and a specific organization. That binding can be instantiated in
-// one of two different ways using this API as follows:
-// - For Google managed domain customers, the process involves using
-// Enterprises.enroll and Enterprises.setAccount (in conjunction with
-// artifacts obtained from the Admin console and the Google API Console)
-// and submitted to the EMM through a more-or-less manual process.
-// - For managed Google Play Accounts customers, the process involves
-// using Enterprises.generateSignupUrl and Enterprises.completeSignup in
-// conjunction with the managed Google Play sign-up UI (Google-provided
-// mechanism) to create the binding without manual steps. As an EMM, you
-// can support either or both approaches in your EMM console. See Create
-// an Enterprise for details.
+// EMM and a
+// specific organization. That binding can be instantiated in one of
+// two
+// different ways using this API as follows:
+// <ul><li>For Google managed domain customers, the process involves
+// using
+// <code>Enterprises.enroll</code> and
+// <code>Enterprises.setAccount</code> (in
+// conjunction with artifacts obtained from the Admin console and the
+// Google
+// API Console) and submitted to the EMM through a more-or-less
+// manual
+// process.</li>
+// <li>For managed Google Play Accounts customers, the process involves
+// using
+// <code>Enterprises.generateSignupUrl</code>
+// and
+// <code>Enterprises.completeSignup</code> in conjunction with the
+// managed
+// Google Play sign-up UI (Google-provided mechanism) to create the
+// binding
+// without manual steps.</li></ul> As an EMM, you can support either or
+// both
+// approaches in your EMM console. See
+// <a
+// href="/android/work/play/emm-api/create-enterprise">Create an
+// Enterprise</a>
+// for details.
 type Enterprise struct {
 	// Administrator: Admins of the enterprise. This is only supported for
-	// enterprises created via the EMM-initiated flow.
+	// enterprises
+	// created via the EMM-initiated flow.
 	Administrator []*Administrator `json:"administrator,omitempty"`
 
 	// Id: The unique ID for the enterprise.
 	Id string `json:"id,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the enterprise, for example, "Example, Inc".
 	Name string `json:"name,omitempty"`
@@ -1319,12 +1457,11 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 }
 
 // EnterpriseAccount: A service account that can be used to authenticate
-// as the enterprise to API calls that require such authentication.
+// as the enterprise to
+// API calls that require such authentication.
 type EnterpriseAccount struct {
 	// AccountEmail: The email address of the service account.
 	AccountEmail string `json:"accountEmail,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1353,14 +1490,9 @@ func (s *EnterpriseAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnterprisesListResponse: The matching enterprise resources.
 type EnterprisesListResponse struct {
 	// Enterprise: An enterprise.
 	Enterprise []*Enterprise `json:"enterprise,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#enterprisesListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1395,7 +1527,8 @@ type EnterprisesSendTestPushNotificationResponse struct {
 	MessageId string `json:"messageId,omitempty"`
 
 	// TopicName: The name of the Cloud Pub/Sub topic to which notifications
-	// for this enterprise's enrolled account will be sent.
+	// for this
+	// enterprise's enrolled account will be sent.
 	TopicName string `json:"topicName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1426,49 +1559,68 @@ func (s *EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, err
 }
 
 // Entitlement: The presence of an Entitlements resource indicates that
-// a user has the right to use a particular app. Entitlements are user
-// specific, not device specific. This allows a user with an entitlement
-// to an app to install the app on all their devices. It's also possible
-// for a user to hold an entitlement to an app without installing the
-// app on any device.
+// a user has the right
+// to use a particular app. Entitlements are user specific, not device
+// specific.
+// This allows a user with an entitlement to an app to install the app
+// on all
+// their devices. It's also possible for a user to hold an entitlement
+// to an app
+// without installing the app on any device.
 //
 // The API can be used to create an entitlement. As an option, you can
-// also use the API to trigger the installation of an app on all a
-// user's managed devices at the same time the entitlement is
-// created.
+// also use
+// the API to trigger the installation of an app on all a user's managed
+// devices
+// at the same time the entitlement is created.
 //
 // If the app is free, creating the entitlement also creates a group
-// license for that app. For paid apps, creating the entitlement
-// consumes one license, and that license remains consumed until the
-// entitlement is removed. If the enterprise hasn't purchased enough
-// licenses, then no entitlement is created and the installation fails.
-// An entitlement is also not created for an app if the app requires
-// permissions that the enterprise hasn't accepted.
+// license
+// for that app. For paid apps, creating the entitlement consumes one
+// license,
+// and that license remains consumed until the entitlement is removed.
+// If the
+// enterprise hasn't purchased enough licenses, then no entitlement is
+// created
+// and the installation fails. An entitlement is also not created for an
+// app if
+// the app requires permissions that the enterprise hasn't accepted.
 //
 // If an entitlement is deleted, the app may be uninstalled from a
-// user's device. As a best practice, uninstall the app by calling
-// Installs.delete() before deleting the entitlement.
+// user's
+// device. As a best practice, uninstall the app by calling
+// <a class="method-link"
+// method="androidenterprise.installs.delete">
+// Installs.delete()</a> before deleting the entitlement.
 //
 // Entitlements for apps that a user pays for on an unmanaged profile
-// have "userPurchase" as the entitlement reason. These entitlements
-// cannot be removed via the API.
+// have
+// <code class="">"userPurchase"</code> as the entitlement reason.
+// These
+// entitlements cannot be removed via the API.
 type Entitlement struct {
-	Kind string `json:"kind,omitempty"`
-
 	// ProductId: The ID of the product that the entitlement is for. For
-	// example, "app:com.google.android.gm".
+	// example,
+	// <code>&quot;app:com.google.android.gm&quot;</code>.
 	ProductId string `json:"productId,omitempty"`
 
-	// Reason: The reason for the entitlement. For example, "free" for free
-	// apps. This property is temporary: it will be replaced by the
-	// acquisition kind field of group licenses.
+	// Reason: The reason for the entitlement. For example, <code
+	// class="">"free"</code>
+	// for free apps. This property is temporary: it will be replaced by the
+	// <code
+	// class="">acquisition kind</code> field of group licenses.
+	//
+	// Possible values:
+	//   "FREE"
+	//   "GROUP_LICENSE"
+	//   "USER_PURCHASE"
 	Reason string `json:"reason,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1476,8 +1628,8 @@ type Entitlement struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ProductId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1491,16 +1643,12 @@ func (s *Entitlement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EntitlementsListResponse: The entitlement resources for the user.
 type EntitlementsListResponse struct {
-	// Entitlement: An entitlement of a user to a product (e.g. an app). For
-	// example, a free app that they have installed, or a paid app that they
+	// Entitlement: An entitlement of a user to a product (e.g. an app).
+	// For example, a free app that they have installed, or a paid app that
+	// they
 	// have been allocated a license to.
 	Entitlement []*Entitlement `json:"entitlement,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#entitlementsListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1530,66 +1678,112 @@ func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GroupLicense: Group license objects allow you to keep track of
-// licenses (called entitlements) for both free and paid apps. For a
-// free app, a group license is created when an enterprise admin first
-// approves the product in Google Play or when the first entitlement for
-// the product is created for a user via the API. For a paid app, a
-// group license object is only created when an enterprise admin
+// licenses (called
+// <a
+// href="/android/work/play/emm-api/v1/entitlements">entitlements</a>)
+// fo
+// r both free and paid apps. For a free app, a group license is created
+// when
+// an enterprise admin first approves the product in Google Play or when
+// the
+// first entitlement for the product is created for a user via the API.
+// For a
+// paid app, a group license object is only created when an enterprise
+// admin
 // purchases the product in Google Play for the first time.
 //
-// Use the API to query group licenses. A Grouplicenses resource
+// Use the API to query group licenses. A <code>Grouplicenses</code>
+// resource
 // includes the total number of licenses purchased (paid apps only) and
-// the total number of licenses currently in use. In other words, the
-// total number of Entitlements that exist for the product.
+// the
+// total number of licenses currently in use. In other words, the total
+// number
+// of <code>Entitlements</code> that exist for the product.
 //
 // Only one group license object is created per product and group
-// license objects are never deleted. If a product is unapproved, its
-// group license remains. This allows enterprise admins to keep track of
-// any remaining entitlements for the product.
+// license
+// objects are never deleted. If a product is unapproved, its group
+// license
+// remains. This allows enterprise admins to keep track of any
+// remaining
+// entitlements for the product.
 type GroupLicense struct {
-	// AcquisitionKind: How this group license was acquired. "bulkPurchase"
+	// AcquisitionKind: How this group license was acquired.
+	// <code>&quot;bulkPurchase&quot;</code>
 	// means that this Grouplicenses resource was created because the
-	// enterprise purchased licenses for this product; otherwise, the value
-	// is "free" (for free products).
+	// enterprise
+	// purchased licenses for this product; otherwise, the value
+	// is
+	// <code>&quot;free&quot;</code> (for free products).
+	//
+	// Possible values:
+	//   "FREE"
+	//   "BULK_PURCHASE"
 	AcquisitionKind string `json:"acquisitionKind,omitempty"`
 
 	// Approval: Whether the product to which this group license relates is
-	// currently approved by the enterprise. Products are approved when a
-	// group license is first created, but this approval may be revoked by
-	// an enterprise admin via Google Play. Unapproved products will not be
-	// visible to end users in collections, and new entitlements to them
-	// should not normally be created.
+	// currently
+	// approved by the enterprise. Products are approved when a group
+	// license is
+	// first created, but this approval may be revoked by an enterprise
+	// admin via
+	// Google Play. Unapproved products will not be visible to end users
+	// in
+	// collections, and new entitlements to them should not normally be
+	// created.
+	//
+	// Possible values:
+	//   "APPROVED"
+	//   "UNAPPROVED"
 	Approval string `json:"approval,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// NumProvisioned: The total number of provisioned licenses for this
-	// product. Returned by read operations, but ignored in write
-	// operations.
+	// product.
+	// Returned by read operations, but ignored in write operations.
 	NumProvisioned int64 `json:"numProvisioned,omitempty"`
 
 	// NumPurchased: The number of purchased licenses (possibly in multiple
-	// purchases). If this field is omitted, then there is no limit on the
-	// number of licenses that can be provisioned (for example, if the
-	// acquisition kind is "free").
+	// purchases).
+	// If this field is omitted, then there is no limit on the number of
+	// licenses
+	// that can be provisioned (for example, if the acquisition kind
+	// is
+	// <code>&quot;free&quot;</code>).
 	NumPurchased int64 `json:"numPurchased,omitempty"`
 
 	// Permissions: The permission approval status of the product. This
-	// field is only set if the product is approved. Possible states are:
-	// - "currentApproved", the current set of permissions is approved, but
-	// additional permissions will require the administrator to reapprove
-	// the product (If the product was approved without specifying the
-	// approved permissions setting, then this is the default behavior.),
-	// - "needsReapproval", the product has unapproved permissions. No
-	// additional product licenses can be assigned until the product is
-	// reapproved,
-	// - "allCurrentAndFutureApproved", the current permissions are approved
-	// and any future permission updates will be automatically approved
-	// without administrator review.
+	// field
+	// is only set if the product is approved. Possible states
+	// are:<ul>
+	// <li>"<code>currentApproved</code>", the current set
+	// of permissions is approved, but additional permissions will require
+	// the
+	// administrator to reapprove the product (If the product was
+	// approved
+	// without specifying the approved permissions setting, then this is
+	// the
+	// default behavior.),</li>
+	// <li>"<code>needsReapproval</code>", the product has unapproved
+	// permissions.
+	// No additional product licenses can be assigned until the product
+	// is
+	// reapproved,</li>
+	// <li>"<code>allCurrentAndFutureApproved</code>",
+	// th
+	// e current permissions are approved and any future permission
+	// updates
+	// will be automatically approved without administrator
+	// review.</li></ul>
+	//
+	// Possible values:
+	//   "CURRENT_APPROVED"
+	//   "NEEDS_REAPPROVAL"
+	//   "ALL_CURRENT_AND_FUTURE_APPROVED"
 	Permissions string `json:"permissions,omitempty"`
 
 	// ProductId: The ID of the product that the license is for. For
-	// example, "app:com.google.android.gm".
+	// example,
+	// <code>&quot;app:com.google.android.gm&quot;</code>.
 	ProductId string `json:"productId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1620,13 +1814,7 @@ func (s *GroupLicense) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GroupLicenseUsersListResponse: The user resources for the group
-// license.
 type GroupLicenseUsersListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#groupLicenseUsersListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// User: A user of an enterprise.
 	User []*User `json:"user,omitempty"`
 
@@ -1634,7 +1822,7 @@ type GroupLicenseUsersListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "User") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1642,7 +1830,7 @@ type GroupLicenseUsersListResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "User") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1657,16 +1845,10 @@ func (s *GroupLicenseUsersListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GroupLicensesListResponse: The grouplicense resources for the
-// enterprise.
 type GroupLicensesListResponse struct {
 	// GroupLicense: A group license for a product approved for use in the
 	// enterprise.
 	GroupLicense []*GroupLicense `json:"groupLicense,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#groupLicensesListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1696,48 +1878,73 @@ func (s *GroupLicensesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Install: The existence of an Installs resource indicates that an app
-// is installed on a particular device (or that an install is
+// is
+// installed on a particular device (or that an install is
 // pending).
 //
-// The API can be used to create an install resource using the update
+// The API can be used to create an install resource using the
+// <a class="method-link"
+// method="androidenterprise.installs.update">update</a>
 // method. This triggers the actual install of the app on the device. If
-// the user does not already have an entitlement for the app, then an
-// attempt is made to create one. If this fails (for example, because
-// the app is not free and there is no available license), then the
-// creation of the install fails.
+// the
+// user does not already have an entitlement for the app, then an
+// attempt is
+// made to create one. If this fails (for example, because the app is
+// not free
+// and there is no available license), then the creation of the install
+// fails.
 //
 // The API can also be used to update an installed app. If
-// the update method is used on an existing install, then the app will
-// be updated to the latest available version.
+// the&nbsp;<a class="method-link"
+// method="androidenterprise.installs.update"
+// style="font-style: normal; font-size: 14px; font-family: Roboto,
+// sans-serif;
+// line-height: 22.3999996185303px;">update</a>&nbsp;method is
+// used on an existing install, then the app will be updated to the
+// latest
+// available version.
 //
 // Note that it is not possible to force the installation of a specific
-// version of an app: the version code is read-only.
+// version
+// of an app: the version code is read-only.
 //
 // If a user installs an app themselves (as permitted by the
-// enterprise), then again an install resource and possibly an
-// entitlement resource are automatically created.
+// enterprise), then
+// again an install resource and possibly an entitlement resource
+// are
+// automatically created.
 //
 // The API can also be used to delete an install resource, which
-// triggers the removal of the app from the device. Note that deleting
-// an install does not automatically remove the corresponding
-// entitlement, even if there are no remaining installs. The install
-// resource will also be deleted if the user uninstalls the app
-// themselves.
+// triggers the
+// removal of the app from the device. Note that deleting an install
+// does not
+// automatically remove the corresponding entitlement, even if there are
+// no
+// remaining installs. The install resource will also be deleted if the
+// user
+// uninstalls the app themselves.
 type Install struct {
-	// InstallState: Install state. The state "installPending" means that an
-	// install request has recently been made and download to the device is
-	// in progress. The state "installed" means that the app has been
-	// installed. This field is read-only.
+	// InstallState: Install state. The state
+	// <code>&quot;installPending&quot;</code>
+	// means that an install request has recently been made and download to
+	// the
+	// device is in progress. The state
+	// <code>&quot;installed&quot;</code>
+	// means that the app has been installed. This field is read-only.
+	//
+	// Possible values:
+	//   "INSTALLED"
+	//   "INSTALL_PENDING"
 	InstallState string `json:"installState,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// ProductId: The ID of the product that the install is for. For
-	// example, "app:com.google.android.gm".
+	// example,
+	// <code>&quot;app:com.google.android.gm&quot;</code>.
 	ProductId string `json:"productId,omitempty"`
 
 	// VersionCode: The version of the installed product. Guaranteed to be
-	// set only if the install state is "installed".
+	// set only if the
+	// install state is <code>&quot;installed&quot;</code>.
 	VersionCode int64 `json:"versionCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1770,23 +1977,32 @@ func (s *Install) MarshalJSON() ([]byte, error) {
 // InstallFailureEvent: An event generated when an app installation
 // failed on a device
 type InstallFailureEvent struct {
-	// DeviceId: The Android ID of the device. This field will always be
-	// present.
+	// DeviceId: The Android ID of the device.
+	// This field will always be present.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// FailureDetails: Additional details on the failure if applicable.
 	FailureDetails string `json:"failureDetails,omitempty"`
 
-	// FailureReason: The reason for the installation failure. This field
-	// will always be present.
+	// FailureReason: The reason for the installation failure.
+	// This field will always be present.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Used whenever no better reason for failure can be
+	// provided.
+	//   "TIMEOUT" - Used when the installation timed out. This can cover a
+	// number of
+	// situations, for example when the device did not have connectivity
+	// at any point during the retry period, or if the device is OOM.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// for which the install failure event occured. This field will always
-	// be present.
+	// for which the
+	// install failure event occured. This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
-	// UserId: The ID of the user. This field will always be present.
+	// UserId: The ID of the user.
+	// This field will always be present.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
@@ -1812,16 +2028,13 @@ func (s *InstallFailureEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InstallsListResponse: The install resources for the device.
 type InstallsListResponse struct {
-	// Install: An installation of an app for a user on a specific device.
-	// The existence of an install implies that the user must have an
+	// Install: An installation of an app for a user on a specific
+	// device.
+	// The existence of an install implies that the user must have
+	// an
 	// entitlement to the app.
 	Install []*Install `json:"install,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#installsListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1851,30 +2064,43 @@ func (s *InstallsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // KeyedAppState: Represents a keyed app state containing a key,
-// timestamp, severity level, optional description, and optional data.
+// timestamp, severity level,
+// optional description, and optional data.
 type KeyedAppState struct {
 	// Data: Additional field intended for machine-readable data. For
-	// example, a number or JSON object. To prevent XSS, we recommend
-	// removing any HTML from the data before displaying it.
+	// example, a number
+	// or JSON object. To prevent XSS, we recommend removing any HTML from
+	// the
+	// data before displaying it.
 	Data string `json:"data,omitempty"`
 
 	// Key: Key indicating what the app is providing a state for. The
-	// content of the key is set by the app's developer. To prevent XSS, we
-	// recommend removing any HTML from the key before displaying it. This
-	// field will always be present.
+	// content of the
+	// key is set by the app's developer. To prevent XSS, we recommend
+	// removing
+	// any HTML from the key before displaying it.
+	// This field will always be present.
 	Key string `json:"key,omitempty"`
 
 	// Message: Free-form, human-readable message describing the app state.
-	// For example, an error message. To prevent XSS, we recommend removing
-	// any HTML from the message before displaying it.
+	// For example,
+	// an error message. To prevent XSS, we recommend removing any HTML from
+	// the
+	// message before displaying it.
 	Message string `json:"message,omitempty"`
 
-	// Severity: Severity of the app state. This field will always be
-	// present.
+	// Severity: Severity of the app state.
+	// This field will always be present.
+	//
+	// Possible values:
+	//   "SEVERITY_UNKNOWN"
+	//   "SEVERITY_INFO"
+	//   "SEVERITY_ERROR"
 	Severity string `json:"severity,omitempty"`
 
 	// StateTimestampMillis: Timestamp of when the app set the state in
-	// milliseconds since epoch. This field will always be present.
+	// milliseconds since epoch.
+	// This field will always be present.
 	StateTimestampMillis int64 `json:"stateTimestampMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -1932,15 +2158,19 @@ func (s *LocalizedText) MarshalJSON() ([]byte, error) {
 }
 
 // MaintenanceWindow: Maintenance window for managed Google Play
-// Accounts. This allows Play store to update the apps on the foreground
-// in the designated window.
+// Accounts.
+// This allows Play store to update the apps on the foreground in the
+// designated
+// window.
 type MaintenanceWindow struct {
 	// DurationMs: Duration of the maintenance window, in milliseconds. The
-	// duration must be between 30 minutes and 24 hours (inclusive).
+	// duration must be
+	// between 30 minutes and 24 hours (inclusive).
 	DurationMs int64 `json:"durationMs,omitempty,string"`
 
 	// StartTimeAfterMidnightMs: Start time of the maintenance window, in
-	// milliseconds after midnight on the device. Windows can span midnight.
+	// milliseconds after midnight on the
+	// device. Windows can span midnight.
 	StartTimeAfterMidnightMs int64 `json:"startTimeAfterMidnightMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationMs") to
@@ -1967,13 +2197,14 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 }
 
 // ManagedConfiguration: A managed configuration resource contains the
-// set of managed properties defined by the app developer in the app's
-// managed configurations schema, as well as any configuration variables
-// defined for the user.
+// set of managed properties
+// defined by the app developer in the app's managed configurations
+// schema,
+// as well as any configuration variables defined for the user.
 type ManagedConfiguration struct {
 	// ConfigurationVariables: Contains the ID of the managed configuration
-	// profile and the set of configuration variables (if any) defined for
-	// the user.
+	// profile and the set of
+	// configuration variables (if any) defined for the user.
 	ConfigurationVariables *ConfigurationVariables `json:"configurationVariables,omitempty"`
 
 	// Kind: Deprecated.
@@ -1984,7 +2215,8 @@ type ManagedConfiguration struct {
 	ManagedProperty []*ManagedProperty `json:"managedProperty,omitempty"`
 
 	// ProductId: The ID of the product that the managed configuration is
-	// for, e.g. "app:com.google.android.gm".
+	// for, e.g.
+	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2016,14 +2248,7 @@ func (s *ManagedConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ManagedConfigurationsForDeviceListResponse: The managed configuration
-// resources for the device.
 type ManagedConfigurationsForDeviceListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string
-	// "androidenterprise#managedConfigurationsForDeviceListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// ManagedConfigurationForDevice: A managed configuration for an app on
 	// a specific device.
 	ManagedConfigurationForDevice []*ManagedConfiguration `json:"managedConfigurationForDevice,omitempty"`
@@ -2032,20 +2257,22 @@ type ManagedConfigurationsForDeviceListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedConfigurationForDevice") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ManagedConfigurationForDevice") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2055,13 +2282,7 @@ func (s *ManagedConfigurationsForDeviceListResponse) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ManagedConfigurationsForUserListResponse: The managed configuration
-// resources for the user.
 type ManagedConfigurationsForUserListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#managedConfigurationsForUserListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// ManagedConfigurationForUser: A managed configuration for an app for a
 	// specific user.
 	ManagedConfigurationForUser []*ManagedConfiguration `json:"managedConfigurationForUser,omitempty"`
@@ -2070,20 +2291,22 @@ type ManagedConfigurationsForUserListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedConfigurationForUser") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ManagedConfigurationForUser") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2094,15 +2317,15 @@ func (s *ManagedConfigurationsForUserListResponse) MarshalJSON() ([]byte, error)
 }
 
 // ManagedConfigurationsSettings: A managed configurations settings
-// resource contains the set of managed properties that have been
-// configured for an Android app to be applied to a set of users. The
-// app's developer would have defined configurable properties in the
-// managed configurations schema.
+// resource contains the set of
+// managed properties that have been configured for an Android app to be
+// applied
+// to a set of users. The app's developer would have
+// defined configurable properties in the managed configurations schema.
 type ManagedConfigurationsSettings struct {
-	Kind string `json:"kind,omitempty"`
-
 	// LastUpdatedTimestampMillis: The last updated time of the managed
-	// configuration settings in milliseconds since 1970-01-01T00:00:00Z.
+	// configuration settings in
+	// milliseconds since 1970-01-01T00:00:00Z.
 	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
 
 	// McmId: The ID of the managed configurations settings.
@@ -2111,20 +2334,22 @@ type ManagedConfigurationsSettings struct {
 	// Name: The name of the managed configurations settings.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "LastUpdatedTimestampMillis") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "LastUpdatedTimestampMillis") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2134,35 +2359,32 @@ func (s *ManagedConfigurationsSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ManagedConfigurationsSettingsListResponse: The managed configurations
-// settings for a product.
 type ManagedConfigurationsSettingsListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#managedConfigurationsSettingsListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// ManagedConfigurationsSettings: A managed configurations settings for
-	// an app that may be assigned to a group of users in an enterprise.
+	// an app that may be assigned to a
+	// group of users in an enterprise.
 	ManagedConfigurationsSettings []*ManagedConfigurationsSettings `json:"managedConfigurationsSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ManagedConfigurationsSettings") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ManagedConfigurationsSettings") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2173,36 +2395,44 @@ func (s *ManagedConfigurationsSettingsListResponse) MarshalJSON() ([]byte, error
 }
 
 // ManagedProperty: A managed property of a managed configuration. The
-// property must match one of the properties in the app restrictions
-// schema of the product. Exactly one of the value fields must be
-// populated, and it must match the property's type in the app
-// restrictions schema.
+// property must match one of
+// the properties in the app restrictions schema of the product. Exactly
+// one of
+// the value fields must be populated, and it must match the property's
+// type in
+// the app restrictions schema.
 type ManagedProperty struct {
 	// Key: The unique key that identifies the property.
 	Key string `json:"key,omitempty"`
 
 	// ValueBool: The boolean value - this will only be present if type of
-	// the property is bool.
+	// the property is
+	// bool.
 	ValueBool bool `json:"valueBool,omitempty"`
 
 	// ValueBundle: The bundle of managed properties - this will only be
-	// present if type of the property is bundle.
+	// present if type of the
+	// property is bundle.
 	ValueBundle *ManagedPropertyBundle `json:"valueBundle,omitempty"`
 
 	// ValueBundleArray: The list of bundles of properties - this will only
-	// be present if type of the property is bundle_array.
+	// be present if type of
+	// the property is bundle_array.
 	ValueBundleArray []*ManagedPropertyBundle `json:"valueBundleArray,omitempty"`
 
 	// ValueInteger: The integer value - this will only be present if type
-	// of the property is integer.
+	// of the property is
+	// integer.
 	ValueInteger int64 `json:"valueInteger,omitempty"`
 
 	// ValueString: The string value - this will only be present if type of
-	// the property is string, choice or hidden.
+	// the property is
+	// string, choice or hidden.
 	ValueString string `json:"valueString,omitempty"`
 
 	// ValueStringArray: The list of string values - this will only be
-	// present if type of the property is multiselect.
+	// present if type of the
+	// property is multiselect.
 	ValueStringArray []string `json:"valueStringArray,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -2260,23 +2490,31 @@ func (s *ManagedPropertyBundle) MarshalJSON() ([]byte, error) {
 // NewDeviceEvent: An event generated when a new device is ready to be
 // managed.
 type NewDeviceEvent struct {
-	// DeviceId: The Android ID of the device. This field will always be
-	// present.
+	// DeviceId: The Android ID of the device.
+	// This field will always be present.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// DpcPackageName: Policy app on the device.
 	DpcPackageName string `json:"dpcPackageName,omitempty"`
 
 	// ManagementType: Identifies the extent to which the device is
-	// controlled by an Android EMM in various deployment
-	// configurations.
-	//
+	// controlled by an Android
+	// EMM in various deployment configurations. <br><br>
 	// Possible values include:
-	// - "managedDevice", a device where the DPC is set as device owner,
-	// - "managedProfile", a device where the DPC is set as profile owner.
+	// <ul><li>"<code>managedDevice</code>", a device where the DPC is set
+	// as
+	// device owner,</li>
+	// <li>"<code>managedProfile</code>", a device where the DPC is set as
+	// profile
+	// owner.</li></ul>
+	//
+	// Possible values:
+	//   "MANAGED_DEVICE"
+	//   "MANAGED_PROFILE"
 	ManagementType string `json:"managementType,omitempty"`
 
-	// UserId: The ID of the user. This field will always be present.
+	// UserId: The ID of the user.
+	// This field will always be present.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
@@ -2306,18 +2544,23 @@ func (s *NewDeviceEvent) MarshalJSON() ([]byte, error) {
 // added to an app.
 type NewPermissionsEvent struct {
 	// ApprovedPermissions: The set of permissions that the enterprise admin
-	// has already approved for this application. Use Permissions.Get on the
-	// EMM API to retrieve details about these permissions.
+	// has already approved for
+	// this application.
+	// Use Permissions.Get on the EMM API to retrieve details about
+	// these
+	// permissions.
 	ApprovedPermissions []string `json:"approvedPermissions,omitempty"`
 
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// for which new permissions were added. This field will always be
-	// present.
+	// for which new
+	// permissions were added. This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// RequestedPermissions: The set of permissions that the app is
-	// currently requesting. Use Permissions.Get on the EMM API to retrieve
-	// details about these permissions.
+	// currently requesting.
+	// Use Permissions.Get on the EMM API to retrieve details about
+	// these
+	// permissions.
 	RequestedPermissions []string `json:"requestedPermissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApprovedPermissions")
@@ -2357,7 +2600,8 @@ type Notification struct {
 	DeviceReportUpdateEvent *DeviceReportUpdateEvent `json:"deviceReportUpdateEvent,omitempty"`
 
 	// EnterpriseId: The ID of the enterprise for which the notification is
-	// sent. This will always be present.
+	// sent.
+	// This will always be present.
 	EnterpriseId string `json:"enterpriseId,omitempty"`
 
 	// InstallFailureEvent: Notifications about an app installation failure.
@@ -2370,6 +2614,22 @@ type Notification struct {
 	NewPermissionsEvent *NewPermissionsEvent `json:"newPermissionsEvent,omitempty"`
 
 	// NotificationType: Type of the notification.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "TEST_NOTIFICATION" - A test push notification.
+	//   "PRODUCT_APPROVAL" - Notification about change to a product's
+	// approval status.
+	//   "INSTALL_FAILURE" - Notification about an app installation failure.
+	//   "APP_UPDATE" - Notification about app update.
+	//   "NEW_PERMISSIONS" - Notification about new app permissions.
+	//   "APP_RESTRICIONS_SCHEMA_CHANGE" - Notification about new app
+	// restrictions schema change.
+	//   "PRODUCT_AVAILABILITY_CHANGE" - Notification about product
+	// availability change.
+	//   "NEW_DEVICE" - Notification about a new device.
+	//   "DEVICE_REPORT_UPDATE" - Notification about an updated device
+	// report.
 	NotificationType string `json:"notificationType,omitempty"`
 
 	// ProductApprovalEvent: Notifications about changes to a product's
@@ -2380,8 +2640,10 @@ type Notification struct {
 	// availability changes.
 	ProductAvailabilityChangeEvent *ProductAvailabilityChangeEvent `json:"productAvailabilityChangeEvent,omitempty"`
 
-	// TimestampMillis: The time when the notification was published in
-	// milliseconds since 1970-01-01T00:00:00Z. This will always be present.
+	// TimestampMillis: The time when the notification was published
+	// in
+	// milliseconds since 1970-01-01T00:00:00Z.
+	// This will always be present.
 	TimestampMillis int64 `json:"timestampMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2410,25 +2672,26 @@ func (s *Notification) MarshalJSON() ([]byte, error) {
 }
 
 // NotificationSet: A resource returned by the PullNotificationSet API,
-// which contains a collection of notifications for enterprises
-// associated with the service account authenticated for the request.
+// which contains
+// a collection of notifications for enterprises associated with the
+// service
+// account authenticated for the request.
 type NotificationSet struct {
-	Kind string `json:"kind,omitempty"`
-
 	// Notification: The notifications received, or empty if no
 	// notifications are present.
 	Notification []*Notification `json:"notification,omitempty"`
 
 	// NotificationSetId: The notification set ID, required to mark the
-	// notification as received with the Enterprises.AcknowledgeNotification
-	// API. This will be omitted if no notifications are present.
+	// notification as
+	// received with the Enterprises.AcknowledgeNotification API.
+	// This will be omitted if no notifications are present.
 	NotificationSetId string `json:"notificationSetId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Notification") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2436,10 +2699,10 @@ type NotificationSet struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Notification") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2451,11 +2714,21 @@ func (s *NotificationSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PageInfo: Information about the current page.
+//
+// List operations that supports paging return only one "page" of
+// results. This
+// protocol buffer message describes the page that has been returned.
 type PageInfo struct {
+	// ResultPerPage: Maximum number of results returned in one page.
+	// ! The number of results included in the API response.
 	ResultPerPage int64 `json:"resultPerPage,omitempty"`
 
+	// StartIndex: Index of the first result returned in the current page.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
+	// TotalResults: Total number of results available on the backend
+	// ! The total number of results in the result set.
 	TotalResults int64 `json:"totalResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResultPerPage") to
@@ -2482,20 +2755,25 @@ func (s *PageInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Permission: A Permissions resource represents some extra capability,
-// to be granted to an Android app, which requires explicit consent. An
-// enterprise admin must consent to these permissions on behalf of their
-// users before an entitlement for the app can be created.
+// to be granted to an
+// Android app, which requires explicit consent. An enterprise admin
+// must
+// consent to these permissions on behalf of their users before
+// an
+// entitlement for the app can be created.
 //
-// The permissions collection is read-only. The information provided for
-// each permission (localized name and description) is intended to be
-// used in the MDM user interface when obtaining consent from the
+// The permissions collection is read-only. The information provided
+// for
+// each permission (localized name and description) is intended to
+// be
+// used in the MDM user interface when obtaining consent from
+// the
 // enterprise.
 type Permission struct {
 	// Description: A longer description of the Permissions resource, giving
-	// more details of what it affects.
+	// more details of
+	// what it affects.
 	Description string `json:"description,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the permission.
 	Name string `json:"name,omitempty"`
@@ -2533,33 +2811,70 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 // Policy: The device policy for a given managed device.
 type Policy struct {
 	// AutoUpdatePolicy: The auto-update policy for apps installed on the
-	// device. "choiceToTheUser" allows the device's user to configure the
-	// app update policy. "always" enables auto updates. "never" disables
-	// auto updates. "wifiOnly" enables auto updates only when the device is
-	// connected to wifi.
+	// device. "choiceToTheUser"
+	// allows the device's user to configure the app update policy.
+	// "always"
+	// enables auto updates. "never" disables auto updates. "wifiOnly"
+	// enables
+	// auto updates only when the device is connected to wifi.
+	//
+	// Possible values:
+	//   "AUTO_UPDATE_POLICY_UNSPECIFIED" - The auto update policy is not
+	// set.
+	//   "CHOICE_TO_THE_USER" - The user can control auto-updates.
+	//   "NEVER" - Apps are never auto-updated.
+	//   "WIFI_ONLY" - Apps are auto-updated over WiFi only.
+	//   "ALWAYS" - Apps are auto-updated at any time. Data charges may
+	// apply.
 	AutoUpdatePolicy string `json:"autoUpdatePolicy,omitempty"`
 
 	// DeviceReportPolicy: Whether the device reports app states to the EMM.
-	// The default value is "deviceReportDisabled".
+	// The default value is
+	// "deviceReportDisabled".
+	//
+	// Possible values:
+	//   "DEVICE_REPORT_POLICY_UNSPECIFIED" - The device report policy is
+	// not set.
+	//   "DEVICE_REPORT_DISABLED" - Device reports are disabled.
+	//   "DEVICE_REPORT_ENABLED" - Device reports are enabled.
 	DeviceReportPolicy string `json:"deviceReportPolicy,omitempty"`
 
 	// MaintenanceWindow: The maintenance window defining when apps running
-	// in the foreground should be updated.
+	// in the foreground should
+	// be updated.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// ProductAvailabilityPolicy: The availability granted to the device for
-	// the specified products. "all" gives the device access to all
-	// products, regardless of approval status. "all" does not enable
-	// automatic visibility of "alpha" or "beta" tracks. "whitelist" grants
-	// the device access the products specified in productPolicy[]. Only
-	// products that are approved or products that were previously approved
-	// (products with revoked approval) by the enterprise can be
-	// whitelisted. If no value is provided, the availability set at the
-	// user level is applied by default.
+	// the specified products. "all"
+	// gives the device access to all products, regardless of approval
+	// status.
+	// "all" does not enable automatic visibility of "alpha" or "beta"
+	// tracks.
+	// "whitelist" grants the device access the products specified
+	// in
+	// productPolicy[]. Only products that are approved or products that
+	// were
+	// previously approved (products with revoked approval) by the
+	// enterprise can
+	// be whitelisted. If no value is provided, the availability set at the
+	// user
+	// level is applied by default.
+	//
+	// Possible values:
+	//   "PRODUCT_AVAILABILITY_POLICY_UNSPECIFIED" - Unspecified, applies
+	// the user available product set by default.
+	//   "WHITELIST" - The approved products with product availability set
+	// to AVAILABLE
+	// in the product policy are available.
+	//   "ALL" - All products are available except those explicitly marked
+	// as
+	// unavailable in the product availability policy.
 	ProductAvailabilityPolicy string `json:"productAvailabilityPolicy,omitempty"`
 
 	// ProductPolicy: The list of product policies. The
-	// productAvailabilityPolicy needs to be set to WHITELIST or ALL for the
+	// <code>productAvailabilityPolicy</code>
+	// needs to be set to <code>WHITELIST</code> or <code>ALL</code> for
+	// the
 	// product policies to be applied.
 	ProductPolicy []*ProductPolicy `json:"productPolicy,omitempty"`
 
@@ -2588,12 +2903,17 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // Product: A Products resource represents an app in the Google Play
-// store that is available to at least some users in the enterprise.
-// (Some apps are restricted to a single enterprise, and no information
-// about them is made available outside that enterprise.)
+// store that is
+// available to at least some users in the enterprise. (Some apps are
+// restricted
+// to a single enterprise, and no information about them is made
+// available
+// outside that enterprise.)
 //
-// The information provided for each product (localized name, icon, link
-// to the full Google Play details page) is intended to allow a basic
+// The information provided for each product (localized name, icon,
+// link
+// to the full Google Play details page) is intended to allow a
+// basic
 // representation of the product within an EMM user interface.
 type Product struct {
 	// AppTracks: The tracks visible to the enterprise.
@@ -2609,13 +2929,26 @@ type Product struct {
 	// AvailableCountries: The countries which this app is available in.
 	AvailableCountries []string `json:"availableCountries,omitempty"`
 
-	// AvailableTracks: Deprecated, use appTracks instead.
+	// AvailableTracks: Deprecated, use <code>appTracks</code> instead.
+	//
+	// Possible values:
+	//   "APP_TRACK_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "BETA"
+	//   "ALPHA"
 	AvailableTracks []string `json:"availableTracks,omitempty"`
 
 	// Category: The app category (e.g. RACING, SOCIAL, etc.)
 	Category string `json:"category,omitempty"`
 
 	// ContentRating: The content rating for this app.
+	//
+	// Possible values:
+	//   "RATING_UNKNOWN"
+	//   "ALL"
+	//   "PRE_TEEN"
+	//   "TEEN"
+	//   "MATURE"
 	ContentRating string `json:"contentRating,omitempty"`
 
 	// Description: The localized promotional description, if available.
@@ -2625,26 +2958,41 @@ type Product struct {
 	// product.
 	DetailsUrl string `json:"detailsUrl,omitempty"`
 
-	// DistributionChannel: How and to whom the package is made available.
-	// The value publicGoogleHosted means that the package is available
-	// through the Play store and not restricted to a specific enterprise.
-	// The value privateGoogleHosted means that the package is a private app
-	// (restricted to an enterprise) but hosted by Google. The value
-	// privateSelfHosted means that the package is a private app (restricted
-	// to an enterprise) and is privately hosted.
+	// DistributionChannel: How and to whom the package is made
+	// available.
+	// The value <code>publicGoogleHosted</code> means that the package
+	// is
+	// available through the Play store and not restricted to a
+	// specific
+	// enterprise. The value <code>privateGoogleHosted</code> means that
+	// the
+	// package is a private app (restricted to an enterprise) but hosted
+	// by
+	// Google. The value <code>privateSelfHosted</code> means that the
+	// package is
+	// a private app (restricted to an enterprise) and is privately hosted.
+	//
+	// Possible values:
+	//   "PUBLIC_GOOGLE_HOSTED"
+	//   "PRIVATE_GOOGLE_HOSTED"
+	//   "PRIVATE_SELF_HOSTED"
 	DistributionChannel string `json:"distributionChannel,omitempty"`
 
 	// Features: Noteworthy features (if any) of this product.
+	//
+	// Possible values:
+	//   "FEATURE_UNKNOWN"
+	//   "VPN_APP" - The app is a VPN.
 	Features []string `json:"features,omitempty"`
 
 	// IconUrl: A link to an image that can be used as an icon for the
-	// product. This image is suitable for use at up to 512px x 512px.
+	// product.
+	// This image is suitable for use at up to 512px x 512px.
 	IconUrl string `json:"iconUrl,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// LastUpdatedTimestampMillis: The approximate time (within 7 days) the
-	// app was last published, expressed in milliseconds since epoch.
+	// app was last published, expressed
+	// in milliseconds since epoch.
 	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
 
 	// MinAndroidSdkVersion: The minimum Android SDK necessary to run the
@@ -2654,14 +3002,27 @@ type Product struct {
 	// Permissions: A list of permissions required by the app.
 	Permissions []*ProductPermission `json:"permissions,omitempty"`
 
-	// ProductId: A string of the form app:<package name>. For example,
-	// app:com.google.android.gm represents the Gmail app.
+	// ProductId: A string of the form <code><em>app:&lt;package
+	// name&gt;</em></code>. For
+	// example, <code>app:com.google.android.gm</code> represents the Gmail
+	// app.
 	ProductId string `json:"productId,omitempty"`
 
 	// ProductPricing: Whether this product is free, free with in-app
-	// purchases, or paid. If the pricing is unknown, this means the product
-	// is not generally available anymore (even though it might still be
-	// available to people who own it).
+	// purchases, or paid.
+	// If the pricing is unknown, this means the product is not
+	// generally
+	// available anymore (even though it might still be available to
+	// people who own it).
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown pricing, used to denote an approved product
+	// that is not
+	// generally available.
+	//   "FREE" - The product is free.
+	//   "FREE_WITH_IN_APP_PURCHASE" - The product is free, but offers
+	// in-app purchases.
+	//   "PAID" - The product is paid.
 	ProductPricing string `json:"productPricing,omitempty"`
 
 	// RecentChanges: A description of the recent changes made to the app.
@@ -2677,15 +3038,16 @@ type Product struct {
 	SigningCertificate *ProductSigningCertificate `json:"signingCertificate,omitempty"`
 
 	// SmallIconUrl: A link to a smaller image that can be used as an icon
-	// for the product. This image is suitable for use at up to 128px x
-	// 128px.
+	// for the product.
+	// This image is suitable for use at up to 128px x 128px.
 	SmallIconUrl string `json:"smallIconUrl,omitempty"`
 
 	// Title: The name of the product.
 	Title string `json:"title,omitempty"`
 
 	// WorkDetailsUrl: A link to the managed Google Play details page for
-	// the product, for use by an Enterprise admin.
+	// the product,
+	// for use by an Enterprise admin.
 	WorkDetailsUrl string `json:"workDetailsUrl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2718,13 +3080,18 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 // ProductApprovalEvent: An event generated when a product's approval
 // status is changed.
 type ProductApprovalEvent struct {
-	// Approved: Whether the product was approved or unapproved. This field
-	// will always be present.
+	// Approved: Whether the product was approved or unapproved.
+	// This field will always be present.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Conveys no information.
+	//   "APPROVED" - The product was approved.
+	//   "UNAPPROVED" - The product was unapproved.
 	Approved string `json:"approved,omitempty"`
 
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// for which the approval status has changed. This field will always be
-	// present.
+	// for which the
+	// approval status has changed. This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Approved") to
@@ -2753,13 +3120,20 @@ func (s *ProductApprovalEvent) MarshalJSON() ([]byte, error) {
 // ProductAvailabilityChangeEvent: An event generated whenever a
 // product's availability changes.
 type ProductAvailabilityChangeEvent struct {
-	// AvailabilityStatus: The new state of the product. This field will
-	// always be present.
+	// AvailabilityStatus: The new state of the product.
+	// This field will always be present.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Conveys no information.
+	//   "AVAILABLE" - The previously unavailable product is again available
+	// on Google Play.
+	//   "REMOVED" - The product was removed from Google Play.
+	//   "UNPUBLISHED" - The product was unpublished by the developer.
 	AvailabilityStatus string `json:"availabilityStatus,omitempty"`
 
 	// ProductId: The id of the product (e.g. "app:com.google.android.gm")
-	// for which the product availability changed. This field will always be
-	// present.
+	// for which the
+	// product availability changed. This field will always be present.
 	ProductId string `json:"productId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AvailabilityStatus")
@@ -2787,16 +3161,25 @@ func (s *ProductAvailabilityChangeEvent) MarshalJSON() ([]byte, error) {
 }
 
 // ProductPermission: A product permissions resource represents the set
-// of permissions required by a specific app and whether or not they
-// have been accepted by an enterprise admin.
+// of permissions
+// required by a specific app and whether or not they have been
+// accepted
+// by an enterprise admin.
 //
 // The API can be used to read the set of permissions, and also to
-// update the set to indicate that permissions have been accepted.
+// update
+// the set to indicate that permissions have been accepted.
 type ProductPermission struct {
 	// PermissionId: An opaque string uniquely identifying the permission.
 	PermissionId string `json:"permissionId,omitempty"`
 
 	// State: Whether the permission has been accepted or not.
+	//
+	// Possible values:
+	//   "REQUIRED" - The permission is required by the app but has not yet
+	// been accepted by
+	// the enterprise.
+	//   "ACCEPTED" - The permission has been accepted by the enterprise.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PermissionId") to
@@ -2823,14 +3206,14 @@ func (s *ProductPermission) MarshalJSON() ([]byte, error) {
 }
 
 // ProductPermissions: Information about the permissions required by a
-// specific app and whether they have been accepted by the enterprise.
+// specific app and
+// whether they have been accepted by the enterprise.
 type ProductPermissions struct {
-	Kind string `json:"kind,omitempty"`
-
 	// Permission: The permissions required by the app.
 	Permission []*ProductPermission `json:"permission,omitempty"`
 
-	// ProductId: The ID of the app that the permissions relate to, e.g.
+	// ProductId: The ID of the app that the permissions relate to,
+	// e.g.
 	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`
 
@@ -2838,7 +3221,7 @@ type ProductPermissions struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Permission") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2846,8 +3229,8 @@ type ProductPermissions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Permission") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2869,16 +3252,25 @@ type ProductPolicy struct {
 	// ManagedConfiguration: The managed configuration for the product.
 	ManagedConfiguration *ManagedConfiguration `json:"managedConfiguration,omitempty"`
 
-	// ProductId: The ID of the product. For example,
-	// "app:com.google.android.gm".
+	// ProductId: The ID of the product. For
+	// example,
+	// <code>&quot;app:com.google.android.gm&quot;</code>.
 	ProductId string `json:"productId,omitempty"`
 
 	// TrackIds: Grants the device visibility to the specified product
-	// release track(s), identified by trackIds. The list of release tracks
-	// of a product can be obtained by calling Products.Get.
+	// release track(s),
+	// identified by <code>trackIds</code>. The list of release tracks of
+	// a
+	// product can be obtained by calling Products.Get.
 	TrackIds []string `json:"trackIds,omitempty"`
 
-	// Tracks: Deprecated. Use trackIds instead.
+	// Tracks: Deprecated. Use <code>trackIds</code> instead.
+	//
+	// Possible values:
+	//   "APP_TRACK_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "BETA"
+	//   "ALPHA"
 	Tracks []string `json:"tracks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoInstallPolicy")
@@ -2907,39 +3299,63 @@ func (s *ProductPolicy) MarshalJSON() ([]byte, error) {
 
 // ProductSet: A set of products.
 type ProductSet struct {
-	Kind string `json:"kind,omitempty"`
-
 	// ProductId: The list of product IDs making up the set of products.
 	ProductId []string `json:"productId,omitempty"`
 
 	// ProductSetBehavior: The interpretation of this product set. "unknown"
-	// should never be sent and is ignored if received. "whitelist" means
-	// that the user is entitled to access the product set. "includeAll"
-	// means that all products are accessible, including products that are
-	// approved, products with revoked approval, and products that have
-	// never been approved. "allApproved" means that the user is entitled to
-	// access all products that are approved for the enterprise. If the
-	// value is "allApproved" or "includeAll", the productId field is
-	// ignored. If no value is provided, it is interpreted as "whitelist"
-	// for backwards compatibility. Further "allApproved" or "includeAll"
-	// does not enable automatic visibility of "alpha" or "beta" tracks for
-	// Android app. Use ProductVisibility to enable "alpha" or "beta" tracks
-	// per user.
+	// should never be sent and
+	// is ignored if received. "whitelist" means that the user is entitled
+	// to
+	// access the product set. "includeAll" means that all products
+	// are
+	// accessible, including products that are approved, products with
+	// revoked
+	// approval, and products that have never been approved. "allApproved"
+	// means
+	// that the user is entitled to access all products that are approved
+	// for the
+	// enterprise. If the value is "allApproved" or "includeAll", the
+	// productId
+	// field is ignored. If no value is provided, it is interpreted
+	// as
+	// "whitelist" for backwards compatibility.
+	// Further "allApproved" or "includeAll" does not enable
+	// automatic
+	// visibility of "alpha" or "beta" tracks for Android app.
+	// Use
+	// ProductVisibility to enable "alpha" or "beta" tracks per user.
+	//
+	// Possible values:
+	//   "UNKNOWN" - This value should never be sent and ignored if
+	// received.
+	//   "WHITELIST" - This product set constitutes a whitelist.
+	//   "INCLUDE_ALL" - This product set represents all products.
+	// For Android app it represents only "production" track.
+	// (The value of the productId field is therefore ignored).
+	//   "ALL_APPROVED" - This product set represents all approved
+	// products.
+	// For Android app it represents only "production" track.
+	// (The value of the product_id field is therefore ignored).
 	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
 
 	// ProductVisibility: Additional list of product IDs making up the
-	// product set. Unlike the productID array, in this list It's possible
-	// to specify which tracks (alpha, beta, production) of a product are
-	// visible to the user. See ProductVisibility and its fields for more
-	// information. Specifying the same product ID both here and in the
-	// productId array is not allowed and it will result in an error.
+	// product set.
+	// Unlike the productID array, in this list It's possible to
+	// specify
+	// which tracks (alpha, beta, production) of a product are visible to
+	// the
+	// user. See ProductVisibility and its fields for more information.
+	// Specifying
+	// the same product ID both here and in the productId array is not
+	// allowed and
+	// it will result in an error.
 	ProductVisibility []*ProductVisibility `json:"productVisibility,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2947,8 +3363,8 @@ type ProductSet struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ProductId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2964,8 +3380,10 @@ func (s *ProductSet) MarshalJSON() ([]byte, error) {
 
 type ProductSigningCertificate struct {
 	// CertificateHashSha1: The base64 urlsafe encoded SHA1 hash of the
-	// certificate. (This field is deprecated in favor of SHA2-256. It
-	// should not be used and may be removed at any time.)
+	// certificate. (This field is
+	// deprecated in favor of SHA2-256. It should not be used and may
+	// be
+	// removed at any time.)
 	CertificateHashSha1 string `json:"certificateHashSha1,omitempty"`
 
 	// CertificateHashSha256: The base64 urlsafe encoded SHA2-256 hash of
@@ -2998,15 +3416,22 @@ func (s *ProductSigningCertificate) MarshalJSON() ([]byte, error) {
 
 // ProductVisibility: A product to be made visible to a user.
 type ProductVisibility struct {
-	// ProductId: The product ID to make visible to the user. Required for
-	// each item in the productVisibility list.
+	// ProductId: The product ID to make visible to the user.
+	// Required for each item in the productVisibility list.
 	ProductId string `json:"productId,omitempty"`
 
 	// TrackIds: Grants the user visibility to the specified product
-	// track(s), identified by trackIds.
+	// track(s), identified by
+	// <code>trackIds</code>.
 	TrackIds []string `json:"trackIds,omitempty"`
 
-	// Tracks: Deprecated. Use trackIds instead.
+	// Tracks: Deprecated. Use <code>trackIds</code> instead.
+	//
+	// Possible values:
+	//   "APP_TRACK_UNSPECIFIED"
+	//   "PRODUCTION"
+	//   "BETA"
+	//   "ALPHA"
 	Tracks []string `json:"tracks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -3034,19 +3459,40 @@ func (s *ProductVisibility) MarshalJSON() ([]byte, error) {
 
 type ProductsApproveRequest struct {
 	// ApprovalUrlInfo: The approval URL that was shown to the user. Only
-	// the permissions shown to the user with that URL will be accepted,
-	// which may not be the product's entire set of permissions. For
-	// example, the URL may only display new permissions from an update
-	// after the product was approved, or not include new permissions if the
-	// product was updated since the URL was generated.
+	// the permissions shown
+	// to the user with that URL will be accepted, which may not be
+	// the product's entire set of permissions. For example, the URL may
+	// only
+	// display new permissions from an update after the product was
+	// approved,
+	// or not include new permissions if the product was updated since the
+	// URL
+	// was generated.
 	ApprovalUrlInfo *ApprovalUrlInfo `json:"approvalUrlInfo,omitempty"`
 
 	// ApprovedPermissions: Sets how new permission requests for the product
-	// are handled. "allPermissions" automatically approves all current and
-	// future permissions for the product. "currentPermissionsOnly" approves
-	// the current set of permissions for the product, but any future
-	// permissions added through updates will require manual reapproval. If
-	// not specified, only the current set of permissions will be approved.
+	// are handled.
+	// "allPermissions" automatically approves all current and
+	// future
+	// permissions for the product. "currentPermissionsOnly" approves
+	// the
+	// current set of permissions for the product, but any future
+	// permissions
+	// added through updates will require manual reapproval. If not
+	// specified,
+	// only the current set of permissions will be approved.
+	//
+	// Possible values:
+	//   "CURRENT_PERMISSIONS_ONLY" - Approve only the permissions the
+	// product requires at approval time.
+	// If an update requires additional permissions, the app will not be
+	// updated
+	// on devices associated with enterprise users until the
+	// additional
+	// permissions are approved.
+	//   "ALL_PERMISSIONS" - All current and future permissions the app
+	// requires are automatically
+	// approved.
 	ApprovedPermissions string `json:"approvedPermissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalUrlInfo") to
@@ -3075,14 +3521,22 @@ func (s *ProductsApproveRequest) MarshalJSON() ([]byte, error) {
 
 type ProductsGenerateApprovalUrlResponse struct {
 	// Url: A URL that can be rendered in an iframe to display the
-	// permissions (if any) of a product. This URL can be used to approve
-	// the product only once and only within 24 hours of being generated,
-	// using the Products.approve call. If the product is currently
-	// unapproved and has no permissions, this URL will point to an empty
-	// page. If the product is currently approved, a URL will only be
-	// generated if that product has added permissions since it was last
-	// approved, and the URL will only display those new permissions that
-	// have not yet been accepted.
+	// permissions (if
+	// any) of a product.
+	// This URL can be used to approve the product only once and only within
+	// 24
+	// hours of being generated, using the <code>Products.approve</code>
+	// call.
+	// If the product is currently unapproved and has no permissions,
+	// this
+	// URL will point to an empty page.
+	// If the product is currently approved, a URL will only be generated
+	// if
+	// that product has added permissions since it was last approved, and
+	// the
+	// URL will only display those new permissions that have not yet
+	// been
+	// accepted.
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3112,17 +3566,13 @@ func (s *ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ProductsListResponse: The matching products.
 type ProductsListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#productsListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// PageInfo: General pagination information.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
 	// Product: Information about a product (e.g. an app) in the Google Play
-	// store, for display to an enterprise admin.
+	// store, for
+	// display to an enterprise admin.
 	Product []*Product `json:"product,omitempty"`
 
 	// TokenPagination: Pagination information for token pagination.
@@ -3132,7 +3582,7 @@ type ProductsListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "PageInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3140,8 +3590,8 @@ type ProductsListResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "PageInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3156,16 +3606,16 @@ func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceAccount: A service account identity, including the name and
-// credentials that can be used to authenticate as the service account.
+// credentials that can be
+// used to authenticate as the service account.
 type ServiceAccount struct {
 	// Key: Credentials that can be used to authenticate as this
 	// ServiceAccount.
 	Key *ServiceAccountKey `json:"key,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// Name: The account name of the service account, in the form of an
-	// email address. Assigned by the server.
+	// email address.
+	// Assigned by the server.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3199,23 +3649,35 @@ func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 // service account.
 type ServiceAccountKey struct {
 	// Data: The body of the private key credentials file, in string format.
-	// This is only populated when the ServiceAccountKey is created, and is
-	// not stored by Google.
+	// This
+	// is only populated when the ServiceAccountKey is created, and is not
+	// stored
+	// by Google.
 	Data string `json:"data,omitempty"`
 
-	// Id: An opaque, unique identifier for this ServiceAccountKey. Assigned
-	// by the server.
+	// Id: An opaque, unique identifier for this ServiceAccountKey.
+	// Assigned by the server.
 	Id string `json:"id,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// PublicData: Public key data for the credentials file. This is an
-	// X.509 cert. If you are using the googleCredentials key type, this is
-	// identical to the cert that can be retrieved by using the X.509 cert
-	// url inside of the credentials file.
+	// X.509 cert. If you are
+	// using the <code>googleCredentials</code> key type, this is identical
+	// to the
+	// cert that can be retrieved by using the X.509 cert url inside of
+	// the
+	// credentials file.
 	PublicData string `json:"publicData,omitempty"`
 
 	// Type: The file format of the generated key data.
+	//
+	// Possible values:
+	//   "GOOGLE_CREDENTIALS" - Google Credentials File format.
+	//   "PKCS12" - PKCS12 format. The password for the PKCS12 file is
+	// 'notasecret'.
+	// For more information, see https://tools.ietf.org/html/rfc7292.
+	// The data for keys of this type are base64 encoded according to RFC
+	// 4648
+	// Section 4. See http://tools.ietf.org/html/rfc4648#section-4.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3278,18 +3740,19 @@ func (s *ServiceAccountKeysListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SignupInfo: A resource returned by the GenerateSignupUrl API, which
-// contains the Signup URL and Completion Token.
+// contains the
+// Signup URL and Completion Token.
 type SignupInfo struct {
 	// CompletionToken: An opaque token that will be required, along with
-	// the Enterprise Token, for obtaining the enterprise resource from
-	// CompleteSignup.
+	// the Enterprise Token,
+	// for obtaining the enterprise resource from CompleteSignup.
 	CompletionToken string `json:"completionToken,omitempty"`
 
 	// Kind: Deprecated.
 	Kind string `json:"kind,omitempty"`
 
-	// Url: A URL under which the Admin can sign up for an enterprise. The
-	// page pointed to cannot be rendered in an iframe.
+	// Url: A URL under which the Admin can sign up for an enterprise.
+	// The page pointed to cannot be rendered in an iframe.
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3321,32 +3784,39 @@ func (s *SignupInfo) MarshalJSON() ([]byte, error) {
 }
 
 // StoreCluster: Definition of a managed Google Play store cluster, a
-// list of products displayed as part of a store page.
+// list of products
+// displayed as part of a store page.
 type StoreCluster struct {
 	// Id: Unique ID of this cluster. Assigned by the server. Immutable once
 	// assigned.
 	Id string `json:"id,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
-	// Name: Ordered list of localized strings giving the name of this page.
-	// The text displayed is the one that best matches the user locale, or
-	// the first entry if there is no good match. There needs to be at least
-	// one entry.
+	// Name: Ordered list of localized strings giving the name of this
+	// page.
+	// The text displayed is the one that best matches the user locale,
+	// or the first entry if there is no good match. There needs to be
+	// at least one entry.
 	Name []*LocalizedText `json:"name,omitempty"`
 
 	// OrderInPage: String (US-ASCII only) used to determine order of this
-	// cluster within the parent page's elements. Page elements are sorted
-	// in lexicographic order of this field. Duplicated values are allowed,
-	// but ordering between elements with duplicate order is undefined.
+	// cluster within the
+	// parent page's elements. Page elements are sorted in lexicographic
+	// order
+	// of this field.
+	// Duplicated values are allowed, but ordering between elements
+	// with
+	// duplicate order is undefined.
 	//
-	// The value of this field is never visible to a user, it is used solely
-	// for the purpose of defining an ordering. Maximum length is 256
+	// The value of this field is never visible to a user, it is used
+	// solely
+	// for the purpose of defining an ordering. Maximum length is
+	// 256
 	// characters.
 	OrderInPage string `json:"orderInPage,omitempty"`
 
 	// ProductId: List of products in the order they are displayed in the
-	// cluster. There should not be duplicates within a cluster.
+	// cluster. There
+	// should not be duplicates within a cluster.
 	ProductId []string `json:"productId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3377,23 +3847,30 @@ func (s *StoreCluster) MarshalJSON() ([]byte, error) {
 }
 
 // StoreLayout: General setting for the managed Google Play store
-// layout, currently only specifying the page to display the first time
+// layout,
+// currently only specifying the page to display the first time
 // the store is opened.
 type StoreLayout struct {
 	// HomepageId: The ID of the store page to be used as the homepage. The
-	// homepage is the first page shown in the managed Google Play
-	// Store.
+	// homepage is the
+	// first page shown in the managed Google Play Store.
 	//
-	// Not specifying a homepage is equivalent to setting the store layout
+	// Not specifying a homepage is equivalent to setting the store
+	// layout
 	// type to "basic".
 	HomepageId string `json:"homepageId,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// StoreLayoutType: The store layout type. By default, this value is set
-	// to "basic" if the homepageId field is not set, and to "custom"
-	// otherwise. If set to "basic", the layout will consist of all approved
-	// apps that have been whitelisted for the user.
+	// to "basic"
+	// if the homepageId field is not set, and to "custom" otherwise.
+	// If set to "basic", the layout will consist of all approved apps
+	// that
+	// have been whitelisted for the user.
+	//
+	// Possible values:
+	//   "UNKNOWN"
+	//   "BASIC"
+	//   "CUSTOM"
 	StoreLayoutType string `json:"storeLayoutType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3423,15 +3900,9 @@ func (s *StoreLayout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StoreLayoutClustersListResponse: The store page resources for the
-// enterprise.
 type StoreLayoutClustersListResponse struct {
 	// Cluster: A store cluster of an enterprise.
 	Cluster []*StoreCluster `json:"cluster,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#storeLayoutClustersListResponse".
-	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3460,13 +3931,7 @@ func (s *StoreLayoutClustersListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StoreLayoutPagesListResponse: The store page resources for the
-// enterprise.
 type StoreLayoutPagesListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#storeLayoutPagesListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// Page: A store page of an enterprise.
 	Page []*StorePage `json:"page,omitempty"`
 
@@ -3474,7 +3939,7 @@ type StoreLayoutPagesListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Page") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3482,7 +3947,7 @@ type StoreLayoutPagesListResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "Page") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3498,28 +3963,29 @@ func (s *StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // StorePage: Definition of a managed Google Play store page, made of a
-// localized name and links to other pages. A page also contains
-// clusters defined as a subcollection.
+// localized name
+// and links to other pages. A page also contains clusters defined
+// as a subcollection.
 type StorePage struct {
 	// Id: Unique ID of this page. Assigned by the server. Immutable once
 	// assigned.
 	Id string `json:"id,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
 	// Link: Ordered list of pages a user should be able to reach from this
-	// page. The list can't include this page. It is recommended that the
-	// basic pages are created first, before adding the links between
-	// pages.
+	// page.
+	// The list can't include this page.
+	// It is recommended that the basic pages are created first,
+	// before adding the links between pages.
 	//
 	// The API doesn't verify that the pages exist or the pages are
 	// reachable.
 	Link []string `json:"link,omitempty"`
 
-	// Name: Ordered list of localized strings giving the name of this page.
-	// The text displayed is the one that best matches the user locale, or
-	// the first entry if there is no good match. There needs to be at least
-	// one entry.
+	// Name: Ordered list of localized strings giving the name of this
+	// page.
+	// The text displayed is the one that best matches the user locale,
+	// or the first entry if there is no good match. There needs to be
+	// at least one entry.
 	Name []*LocalizedText `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3549,7 +4015,28 @@ func (s *StorePage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TokenPagination: Pagination information returned by a List operation
+// when token pagination
+// is enabled.
+//
+// List operations that supports paging return only one "page" of
+// results. This
+// protocol buffer message describes the page that has been
+// returned.
+//
+// When using token pagination, clients should use the next/previous
+// token
+// to get another page of the result. The presence or absence of
+// next/previous
+// token indicates whether a next/previous page is available and
+// provides a
+// mean of accessing this page. ListRequest.page_token should be set to
+// either
+// next_page_token or previous_page_token to access another page.
 type TokenPagination struct {
+	// NextPageToken: Tokens to pass to the standard list field
+	// 'page_token'. Whenever available,
+	// tokens are preferred over manipulating start_index.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	PreviousPageToken string `json:"previousPageToken,omitempty"`
@@ -3580,12 +4067,15 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 // TrackInfo: Id to name association of a track.
 type TrackInfo struct {
 	// TrackAlias: A modifiable name for a track. This is the visible name
-	// in the play developer console.
+	// in the play
+	// developer console.
 	TrackAlias string `json:"trackAlias,omitempty"`
 
 	// TrackId: Unmodifiable, unique track identifier. This identifier is
-	// the releaseTrackId in the url of the play developer console page that
-	// displays the track information.
+	// the
+	// releaseTrackId in the url of the play developer console page that
+	// displays
+	// the track information.
 	TrackId string `json:"trackId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TrackAlias") to
@@ -3612,50 +4102,80 @@ func (s *TrackInfo) MarshalJSON() ([]byte, error) {
 }
 
 // User: A Users resource represents an account associated with an
-// enterprise. The account may be specific to a device or to an
-// individual user (who can then use the account across multiple
-// devices). The account may provide access to managed Google Play only,
-// or to other Google services, depending on the identity model:
-// - The Google managed domain identity model requires synchronization
-// to Google account sources (via primaryEmail).
-// - The managed Google Play Accounts identity model provides a dynamic
-// means for enterprises to create user or device accounts as needed.
-// These accounts provide access to managed Google Play.
+// enterprise. The
+// account may be specific to a device or to an individual user (who can
+// then
+// use the account across multiple devices). The account may provide
+// access to
+// managed Google Play only, or to other Google services, depending on
+// the
+// identity model:
+// <ul><li>The Google managed domain identity model requires
+// synchronization to
+// Google account sources (via <code>primaryEmail</code>).</li>
+// <li>The managed Google Play Accounts identity model provides a
+// dynamic means
+// for enterprises to create user or device accounts as needed. These
+// accounts
+// provide access to managed Google Play.</li>
+// </ul>
 type User struct {
 	// AccountIdentifier: A unique identifier you create for this user, such
-	// as "user342" or "asset#44418". Do not use personally identifiable
-	// information (PII) for this property. Must always be set for
-	// EMM-managed users. Not set for Google-managed users.
+	// as "user342" or
+	// "asset#44418". Do not use personally identifiable information (PII)
+	// for
+	// this property. Must always be set for EMM-managed users.
+	// Not set for Google-managed users.
 	AccountIdentifier string `json:"accountIdentifier,omitempty"`
 
 	// AccountType: The type of account that this user represents. A
-	// userAccount can be installed on multiple devices, but a deviceAccount
-	// is specific to a single device. An EMM-managed user (emmManaged) can
-	// be either type (userAccount, deviceAccount), but a Google-managed
-	// user (googleManaged) is always a userAccount.
+	// <code>userAccount</code>
+	// can be installed on multiple devices, but a
+	// <code>deviceAccount</code> is
+	// specific to a single device. An EMM-managed user
+	// (<code>emmManaged</code>)
+	// can be either type (<code>userAccount</code>,
+	// <code>deviceAccount</code>),
+	// but a Google-managed user (<code>googleManaged</code>) is always
+	// a
+	// <code>userAccount</code>.
+	//
+	// Possible values:
+	//   "DEVICE_ACCOUNT"
+	//   "USER_ACCOUNT"
 	AccountType string `json:"accountType,omitempty"`
 
 	// DisplayName: The name that will appear in user interfaces. Setting
-	// this property is optional when creating EMM-managed users. If you do
-	// set this property, use something generic about the organization (such
-	// as "Example, Inc.") or your name (as EMM). Not used for
-	// Google-managed user accounts.
+	// this property is
+	// optional when creating EMM-managed users. If you do set this
+	// property,
+	// use something generic about the organization (such as "Example,
+	// Inc.") or
+	// your name (as EMM).
+	// Not used for Google-managed user accounts.
+	// @mutable androidenterprise.users.update
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Id: The unique ID for the user.
 	Id string `json:"id,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
-	// ManagementType: The entity that manages the user. With googleManaged
-	// users, the source of truth is Google so EMMs have to make sure a
-	// Google Account exists for the user. With emmManaged users, the EMM is
-	// in charge.
+	// ManagementType: The entity that manages the user.  With
+	// <code>googleManaged</code> users,
+	// the source of truth is Google so EMMs have to make sure a Google
+	// Account
+	// exists for the user.  With <code>emmManaged</code> users, the
+	// EMM is in charge.
+	//
+	// Possible values:
+	//   "GOOGLE_MANAGED"
+	//   "EMM_MANAGED"
 	ManagementType string `json:"managementType,omitempty"`
 
 	// PrimaryEmail: The user's primary email address, for example,
-	// "jsmith@example.com". Will always be set for Google managed users and
-	// not set for EMM managed users.
+	// "jsmith@example.com".
+	// Will always be set for Google managed users and not set for EMM
+	// managed
+	// users.
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3686,12 +4206,7 @@ func (s *User) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UsersListResponse: The matching user resources.
 type UsersListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#usersListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// User: A user of an enterprise.
 	User []*User `json:"user,omitempty"`
 
@@ -3699,7 +4214,7 @@ type UsersListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "User") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3707,7 +4222,7 @@ type UsersListResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "User") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3723,20 +4238,20 @@ func (s *UsersListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // VariableSet: A variable set is a key-value pair of EMM-provided
-// placeholders and its corresponding value, which is attributed to a
-// user. For example, $FIRSTNAME could be a placeholder, and its value
-// could be Alice. Placeholders should start with a '$' sign and should
-// be alphanumeric only.
+// placeholders and
+// its corresponding value, which is attributed to a user. For
+// example,
+// $FIRSTNAME could be a placeholder, and its value could be Alice.
+// Placeholders
+// should start with a '$' sign and should be alphanumeric only.
 type VariableSet struct {
-	Kind string `json:"kind,omitempty"`
-
 	// Placeholder: The placeholder string; defined by EMM.
 	Placeholder string `json:"placeholder,omitempty"`
 
 	// UserValue: The value of the placeholder, specific to the user.
 	UserValue string `json:"userValue,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Placeholder") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3744,10 +4259,10 @@ type VariableSet struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Placeholder") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3760,27 +4275,53 @@ func (s *VariableSet) MarshalJSON() ([]byte, error) {
 }
 
 // WebApp: A WebApps resource represents a web app created for an
-// enterprise. Web apps are published to managed Google Play and can be
-// distributed like other Android apps. On a user's device, a web app
-// opens its specified URL.
+// enterprise. Web apps
+// are published to managed Google Play and can be distributed like
+// other
+// Android apps. On a user's device, a web app opens its specified URL.
 type WebApp struct {
-	// DisplayMode: The display mode of the web app.
-	//
+	// DisplayMode: The display mode of the web app. <br><br>
 	// Possible values include:
-	// - "minimalUi", the device's status bar, navigation bar, the app's
-	// URL, and a refresh button are visible when the app is open. For HTTP
-	// URLs, you can only select this option.
-	// - "standalone", the device's status bar and navigation bar are
-	// visible when the app is open.
-	// - "fullScreen", the app opens in full screen mode, hiding the
-	// device's status and navigation bars. All browser UI elements, page
+	// <ul><li>"<code>minimalUi</code>", the device's status bar, navigation
+	// bar,
+	// the app's URL, and a refresh button are visible when the app is open.
+	// For
+	// HTTP URLs, you can only select this
+	// option.
+	// <li>"<code>standalone</code>", the device's status bar and
+	// navigation
+	// bar are visible when the app is open.
+	// <li>"<code>fullScreen</code>", the app opens in full screen mode,
+	// hiding
+	// the device's status and navigation bars.  All browser UI elements,
+	// page
 	// URL, system status bar and back button are not visible, and the web
-	// app takes up the entirety of the available display area.
+	// app
+	// takes up the entirety of the available display area.
+	// </ul>
+	//
+	// Possible values:
+	//   "DISPLAY_MODE_UNSPECIFIED"
+	//   "MINIMAL_UI" - Opens the web app with a minimal set of browser UI
+	// elements for
+	// controlling navigation and viewing the page URL.
+	//   "STANDALONE" - Opens the web app to look and feel like a standalone
+	// native application.
+	// The browser UI elements and page URL are not visible, however the
+	// system
+	// status bar and back button are visible.
+	//   "FULL_SCREEN" - Opens the web app in full screen without any
+	// visible controls. The
+	// browser UI elements, page URL, system status bar and back button are
+	// not
+	// visible, and the web app takes up the entirety of the available
+	// display
+	// area.
 	DisplayMode string `json:"displayMode,omitempty"`
 
 	// Icons: A list of icons representing this website. If absent, a
-	// default icon (for create) or the current icon (for update) will be
-	// used.
+	// default icon (for
+	// create) or the current icon (for update) will be used.
 	Icons []*WebAppIcon `json:"icons,omitempty"`
 
 	// IsPublished: A flag whether the app has been published to the Play
@@ -3788,24 +4329,33 @@ type WebApp struct {
 	IsPublished bool `json:"isPublished,omitempty"`
 
 	// StartUrl: The start URL, i.e. the URL that should load when the user
-	// opens the application.
+	// opens the
+	// application.
 	StartUrl string `json:"startUrl,omitempty"`
 
 	// Title: The title of the web app as displayed to the user (e.g.,
-	// amongst a list of other applications, or as a label for an icon).
+	// amongst a list of
+	// other applications, or as a label for an icon).
 	Title string `json:"title,omitempty"`
 
 	// VersionCode: The current version of the app.
 	//
-	//
-	// Note that the version can automatically increase during the lifetime
-	// of the web app, while Google does internal housekeeping to keep the
-	// web app up-to-date.
+	// <p>Note that the version can automatically increase during the
+	// lifetime of
+	// the web app, while Google does internal housekeeping to keep the web
+	// app
+	// up-to-date.
 	VersionCode int64 `json:"versionCode,omitempty,string"`
 
-	// WebAppId: The ID of the application. A string of the form
-	// "app:<package name>" where the package name always starts with the
-	// prefix "com.google.enterprise.webapp." followed by a random id.
+	// WebAppId: The ID of the application.  A string of the
+	// form
+	// <code>&quot;app:&lt;package name&gt;&quot;</code> where the package
+	// name
+	// always starts with the
+	// prefix
+	// <code>&quot;com.google.enterprise.webapp.&quot;</code> followed by
+	// a
+	// random id.
 	WebAppId string `json:"webAppId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3838,11 +4388,14 @@ func (s *WebApp) MarshalJSON() ([]byte, error) {
 // WebAppIcon: Icon for a web app.
 type WebAppIcon struct {
 	// ImageData: The actual bytes of the image in a base64url encoded
-	// string (c.f. RFC4648, section 5 "Base 64 Encoding with URL and
-	// Filename Safe Alphabet").
-	// - The image type can be png or jpg.
-	// - The image should ideally be square.
-	// - The image should ideally have a size of 512x512.
+	// string (c.f. RFC4648,
+	// section 5 "Base 64 Encoding with URL and Filename Safe
+	// Alphabet").
+	// <ul>
+	// <li>The image type can be png or jpg.
+	// <li>The image should ideally be square.
+	// <li>The image should ideally have a size of 512x512.
+	// </ul>
 	ImageData string `json:"imageData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageData") to
@@ -3868,12 +4421,7 @@ func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WebAppsListResponse: The web app details for an enterprise.
 type WebAppsListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "androidenterprise#webAppsListResponse".
-	Kind string `json:"kind,omitempty"`
-
 	// WebApp: The manifest describing a web app.
 	WebApp []*WebApp `json:"webApp,omitempty"`
 
@@ -3881,7 +4429,7 @@ type WebAppsListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "WebApp") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3889,7 +4437,7 @@ type WebAppsListResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// NullFields is a list of field names (e.g. "WebApp") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3917,8 +4465,13 @@ type DevicesForceReportUploadCall struct {
 }
 
 // ForceReportUpload: Uploads a report containing any changes in app
-// states on the device since the last report was generated. You can
-// call this method up to 3 times every 24 hours for a given device.
+// states on the device since
+// the last report was generated. You can call this method up to 3 times
+// every
+// 24 hours for a given device.
+// If you exceed the quota, then the Google Play EMM API returns
+// <code>HTTP
+// 429 Too Many Requests</code>.
 func (r *DevicesService) ForceReportUpload(enterpriseId string, userId string, deviceId string) *DevicesForceReportUploadCall {
 	c := &DevicesForceReportUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -3954,7 +4507,7 @@ func (c *DevicesForceReportUploadCall) Header() http.Header {
 
 func (c *DevicesForceReportUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3962,7 +4515,7 @@ func (c *DevicesForceReportUploadCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3990,7 +4543,8 @@ func (c *DevicesForceReportUploadCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Uploads a report containing any changes in app states on the device since the last report was generated. You can call this method up to 3 times every 24 hours for a given device.",
+	//   "description": "Uploads a report containing any changes in app states on the device since\nthe last report was generated. You can call this method up to 3 times every\n24 hours for a given device.\nIf you exceed the quota, then the Google Play EMM API returns \u003ccode\u003eHTTP\n429 Too Many Requests\u003c/code\u003e.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.devices.forceReportUpload",
 	//   "parameterOrder": [
@@ -4018,7 +4572,7 @@ func (c *DevicesForceReportUploadCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/forceReportUpload",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -4085,7 +4639,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4096,7 +4650,7 @@ func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4150,6 +4704,7 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves the details of a device.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.devices.get",
 	//   "parameterOrder": [
@@ -4177,7 +4732,7 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
 	//   "response": {
 	//     "$ref": "Device"
 	//   },
@@ -4202,11 +4757,15 @@ type DevicesGetStateCall struct {
 }
 
 // GetState: Retrieves whether a device's access to Google services is
-// enabled or disabled. The device state takes effect only if enforcing
-// EMM policies on Android devices is enabled in the Google Admin
-// Console. Otherwise, the device state is ignored and all devices are
-// allowed access to Google services. This is only supported for
-// Google-managed users.
+// enabled or
+// disabled.
+// The device state takes effect only if enforcing EMM policies on
+// Android
+// devices is enabled in the Google Admin Console.
+// Otherwise, the device state is ignored and all devices are allowed
+// access
+// to Google services.
+// This is only supported for Google-managed users.
 func (r *DevicesService) GetState(enterpriseId string, userId string, deviceId string) *DevicesGetStateCall {
 	c := &DevicesGetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4252,7 +4811,7 @@ func (c *DevicesGetStateCall) Header() http.Header {
 
 func (c *DevicesGetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4263,7 +4822,7 @@ func (c *DevicesGetStateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4316,7 +4875,8 @@ func (c *DevicesGetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves whether a device's access to Google services is enabled or disabled. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services. This is only supported for Google-managed users.",
+	//   "description": "Retrieves whether a device's access to Google services is enabled or\ndisabled.\nThe device state takes effect only if enforcing EMM policies on Android\ndevices is enabled in the Google Admin Console.\nOtherwise, the device state is ignored and all devices are allowed access\nto Google services.\nThis is only supported for Google-managed users.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.devices.getState",
 	//   "parameterOrder": [
@@ -4344,7 +4904,7 @@ func (c *DevicesGetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
 	//   "response": {
 	//     "$ref": "DeviceState"
 	//   },
@@ -4412,7 +4972,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4423,7 +4983,7 @@ func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -4476,6 +5036,7 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*DevicesListResponse
 	return ret, nil
 	// {
 	//   "description": "Retrieves the IDs of all of a user's devices.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.devices.list",
 	//   "parameterOrder": [
@@ -4496,7 +5057,7 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*DevicesListResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices",
 	//   "response": {
 	//     "$ref": "DevicesListResponse"
 	//   },
@@ -4521,11 +5082,14 @@ type DevicesSetStateCall struct {
 }
 
 // SetState: Sets whether a device's access to Google services is
-// enabled or disabled. The device state takes effect only if enforcing
-// EMM policies on Android devices is enabled in the Google Admin
-// Console. Otherwise, the device state is ignored and all devices are
-// allowed access to Google services. This is only supported for
-// Google-managed users.
+// enabled or disabled.
+// The device state takes effect only if enforcing EMM policies on
+// Android
+// devices is enabled in the Google Admin Console.
+// Otherwise, the device state is ignored and all devices are allowed
+// access
+// to Google services.
+// This is only supported for Google-managed users.
 func (r *DevicesService) SetState(enterpriseId string, userId string, deviceId string, devicestate *DeviceState) *DevicesSetStateCall {
 	c := &DevicesSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -4562,7 +5126,7 @@ func (c *DevicesSetStateCall) Header() http.Header {
 
 func (c *DevicesSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4575,7 +5139,7 @@ func (c *DevicesSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -4628,7 +5192,8 @@ func (c *DevicesSetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets whether a device's access to Google services is enabled or disabled. The device state takes effect only if enforcing EMM policies on Android devices is enabled in the Google Admin Console. Otherwise, the device state is ignored and all devices are allowed access to Google services. This is only supported for Google-managed users.",
+	//   "description": "Sets whether a device's access to Google services is enabled or disabled.\nThe device state takes effect only if enforcing EMM policies on Android\ndevices is enabled in the Google Admin Console.\nOtherwise, the device state is ignored and all devices are allowed access\nto Google services.\nThis is only supported for Google-managed users.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.devices.setState",
 	//   "parameterOrder": [
@@ -4656,7 +5221,7 @@ func (c *DevicesSetStateCall) Do(opts ...googleapi.CallOption) (*DeviceState, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/state",
 	//   "request": {
 	//     "$ref": "DeviceState"
 	//   },
@@ -4694,11 +5259,12 @@ func (r *DevicesService) Update(enterpriseId string, userId string, deviceId str
 }
 
 // UpdateMask sets the optional parameter "updateMask": Mask that
-// identifies which fields to update. If not set, all modifiable fields
-// will be modified.
+// identifies which fields to update. If not set, all modifiable
+// fields will be modified.
 //
-// When set in a query parameter, this field should be specified as
-// updateMask=<field1>,<field2>,...
+// When set in a query parameter, this field should be specified
+// as
+// <code>updateMask=&lt;field1&gt;,&lt;field2&gt;,...</code>
 func (c *DevicesUpdateCall) UpdateMask(updateMask string) *DevicesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4731,7 +5297,7 @@ func (c *DevicesUpdateCall) Header() http.Header {
 
 func (c *DevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4744,7 +5310,7 @@ func (c *DevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -4798,6 +5364,7 @@ func (c *DevicesUpdateCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates the device policy",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.devices.update",
 	//   "parameterOrder": [
@@ -4819,7 +5386,7 @@ func (c *DevicesUpdateCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies which fields to update. If not set, all modifiable fields will be modified.\n\nWhen set in a query parameter, this field should be specified as updateMask=\u003cfield1\u003e,\u003cfield2\u003e,...",
+	//       "description": "Mask that identifies which fields to update. If not set, all modifiable\nfields will be modified.\n\nWhen set in a query parameter, this field should be specified as\n\u003ccode\u003eupdateMask=\u0026lt;field1\u0026gt;,\u0026lt;field2\u0026gt;,...\u003c/code\u003e",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4830,7 +5397,7 @@ func (c *DevicesUpdateCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}",
 	//   "request": {
 	//     "$ref": "Device"
 	//   },
@@ -4854,8 +5421,10 @@ type EnterprisesAcknowledgeNotificationSetCall struct {
 }
 
 // AcknowledgeNotificationSet: Acknowledges notifications that were
-// received from Enterprises.PullNotificationSet to prevent subsequent
-// calls from returning the same notifications.
+// received from
+// Enterprises.PullNotificationSet to prevent subsequent calls from
+// returning
+// the same notifications.
 func (r *EnterprisesService) AcknowledgeNotificationSet() *EnterprisesAcknowledgeNotificationSetCall {
 	c := &EnterprisesAcknowledgeNotificationSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4863,7 +5432,8 @@ func (r *EnterprisesService) AcknowledgeNotificationSet() *EnterprisesAcknowledg
 
 // NotificationSetId sets the optional parameter "notificationSetId":
 // The notification set ID as returned by
-// Enterprises.PullNotificationSet. This must be provided.
+// Enterprises.PullNotificationSet.
+// This must be provided.
 func (c *EnterprisesAcknowledgeNotificationSetCall) NotificationSetId(notificationSetId string) *EnterprisesAcknowledgeNotificationSetCall {
 	c.urlParams_.Set("notificationSetId", notificationSetId)
 	return c
@@ -4896,7 +5466,7 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) Header() http.Header {
 
 func (c *EnterprisesAcknowledgeNotificationSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4904,7 +5474,7 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) doRequest(alt string) (*http
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/acknowledgeNotificationSet")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/acknowledgeNotificationSet")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -4927,17 +5497,19 @@ func (c *EnterprisesAcknowledgeNotificationSetCall) Do(opts ...googleapi.CallOpt
 	}
 	return nil
 	// {
-	//   "description": "Acknowledges notifications that were received from Enterprises.PullNotificationSet to prevent subsequent calls from returning the same notifications.",
+	//   "description": "Acknowledges notifications that were received from\nEnterprises.PullNotificationSet to prevent subsequent calls from returning\nthe same notifications.",
+	//   "flatPath": "androidenterprise/v1/enterprises/acknowledgeNotificationSet",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.acknowledgeNotificationSet",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "notificationSetId": {
-	//       "description": "The notification set ID as returned by Enterprises.PullNotificationSet. This must be provided.",
+	//       "description": "The notification set ID as returned by Enterprises.PullNotificationSet.\nThis must be provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/acknowledgeNotificationSet",
+	//   "path": "androidenterprise/v1/enterprises/acknowledgeNotificationSet",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -4955,8 +5527,11 @@ type EnterprisesCompleteSignupCall struct {
 }
 
 // CompleteSignup: Completes the signup flow, by specifying the
-// Completion token and Enterprise token. This request must not be
-// called multiple times for a given Enterprise Token.
+// Completion token and
+// Enterprise token.
+// This request must not be called multiple times for a given
+// Enterprise
+// Token.
 func (r *EnterprisesService) CompleteSignup() *EnterprisesCompleteSignupCall {
 	c := &EnterprisesCompleteSignupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5003,7 +5578,7 @@ func (c *EnterprisesCompleteSignupCall) Header() http.Header {
 
 func (c *EnterprisesCompleteSignupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5011,7 +5586,7 @@ func (c *EnterprisesCompleteSignupCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/completeSignup")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/completeSignup")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5059,9 +5634,11 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 	}
 	return ret, nil
 	// {
-	//   "description": "Completes the signup flow, by specifying the Completion token and Enterprise token. This request must not be called multiple times for a given Enterprise Token.",
+	//   "description": "Completes the signup flow, by specifying the Completion token and\nEnterprise token.\nThis request must not be called multiple times for a given Enterprise\nToken.",
+	//   "flatPath": "androidenterprise/v1/enterprises/completeSignup",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.completeSignup",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "completionToken": {
 	//       "description": "The Completion token initially returned by GenerateSignupUrl.",
@@ -5074,7 +5651,7 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/completeSignup",
+	//   "path": "androidenterprise/v1/enterprises/completeSignup",
 	//   "response": {
 	//     "$ref": "Enterprise"
 	//   },
@@ -5097,10 +5674,12 @@ type EnterprisesCreateWebTokenCall struct {
 }
 
 // CreateWebToken: Returns a unique token to access an embeddable UI. To
-// generate a web UI, pass the generated token into the managed Google
-// Play javascript API. Each token may only be used to start one UI
-// session. See the javascript API documentation for further
-// information.
+// generate a
+// web UI, pass the generated token into the managed Google Play
+// javascript
+// API. Each token may only be used to start one UI session. See
+// the
+// javascript API documentation for further information.
 func (r *EnterprisesService) CreateWebToken(enterpriseId string, administratorwebtokenspec *AdministratorWebTokenSpec) *EnterprisesCreateWebTokenCall {
 	c := &EnterprisesCreateWebTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5135,7 +5714,7 @@ func (c *EnterprisesCreateWebTokenCall) Header() http.Header {
 
 func (c *EnterprisesCreateWebTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5148,7 +5727,7 @@ func (c *EnterprisesCreateWebTokenCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/createWebToken")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/createWebToken")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5199,7 +5778,8 @@ func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*Admin
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the managed Google Play javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+	//   "description": "Returns a unique token to access an embeddable UI. To generate a\nweb UI, pass the generated token into the managed Google Play javascript\nAPI. Each token may only be used to start one UI session. See the\njavascript API documentation for further information.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/createWebToken",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.createWebToken",
 	//   "parameterOrder": [
@@ -5213,7 +5793,7 @@ func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*Admin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/createWebToken",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/createWebToken",
 	//   "request": {
 	//     "$ref": "AdministratorWebTokenSpec"
 	//   },
@@ -5272,7 +5852,7 @@ func (c *EnterprisesEnrollCall) Header() http.Header {
 
 func (c *EnterprisesEnrollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5285,7 +5865,7 @@ func (c *EnterprisesEnrollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/enroll")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/enroll")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5334,6 +5914,7 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	return ret, nil
 	// {
 	//   "description": "Enrolls an enterprise with the calling EMM.",
+	//   "flatPath": "androidenterprise/v1/enterprises/enroll",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.enroll",
 	//   "parameterOrder": [
@@ -5341,13 +5922,13 @@ func (c *EnterprisesEnrollCall) Do(opts ...googleapi.CallOption) (*Enterprise, e
 	//   ],
 	//   "parameters": {
 	//     "token": {
-	//       "description": "The token provided by the enterprise to register the EMM.",
+	//       "description": "Required. The token provided by the enterprise to register the EMM.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/enroll",
+	//   "path": "androidenterprise/v1/enterprises/enroll",
 	//   "request": {
 	//     "$ref": "Enterprise"
 	//   },
@@ -5377,15 +5958,20 @@ func (r *EnterprisesService) GenerateSignupUrl() *EnterprisesGenerateSignupUrlCa
 }
 
 // CallbackUrl sets the optional parameter "callbackUrl": The callback
-// URL to which the Admin will be redirected after successfully creating
-// an enterprise. Before redirecting there the system will add a single
-// query parameter to this URL named "enterpriseToken" which will
+// URL to which the Admin will be redirected after successfully
+// creating an enterprise. Before redirecting there the system will add
+// a
+// single query parameter to this URL named "enterpriseToken" which
+// will
 // contain an opaque token to be used for the CompleteSignup
-// request.
+// request.<br>
 // Beware that this means that the URL will be parsed, the parameter
-// added and then a new URL formatted, i.e. there may be some minor
-// formatting changes and, more importantly, the URL must be well-formed
-// so that it can be parsed.
+// added
+// and then a new URL formatted, i.e. there may be some minor
+// formatting
+// changes and, more importantly, the URL must be well-formed so that it
+// can
+// be parsed.
 func (c *EnterprisesGenerateSignupUrlCall) CallbackUrl(callbackUrl string) *EnterprisesGenerateSignupUrlCall {
 	c.urlParams_.Set("callbackUrl", callbackUrl)
 	return c
@@ -5418,7 +6004,7 @@ func (c *EnterprisesGenerateSignupUrlCall) Header() http.Header {
 
 func (c *EnterprisesGenerateSignupUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5426,7 +6012,7 @@ func (c *EnterprisesGenerateSignupUrlCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/signupUrl")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/signupUrl")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5475,16 +6061,18 @@ func (c *EnterprisesGenerateSignupUrlCall) Do(opts ...googleapi.CallOption) (*Si
 	return ret, nil
 	// {
 	//   "description": "Generates a sign-up URL.",
+	//   "flatPath": "androidenterprise/v1/enterprises/signupUrl",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.generateSignupUrl",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "callbackUrl": {
-	//       "description": "The callback URL to which the Admin will be redirected after successfully creating an enterprise. Before redirecting there the system will add a single query parameter to this URL named \"enterpriseToken\" which will contain an opaque token to be used for the CompleteSignup request.\nBeware that this means that the URL will be parsed, the parameter added and then a new URL formatted, i.e. there may be some minor formatting changes and, more importantly, the URL must be well-formed so that it can be parsed.",
+	//       "description": "The callback URL to which the Admin will be redirected after successfully\ncreating an enterprise. Before redirecting there the system will add a\nsingle query parameter to this URL named \"enterpriseToken\" which will\ncontain an opaque token to be used for the CompleteSignup request.\u003cbr\u003e\nBeware that this means that the URL will be parsed, the parameter added\nand then a new URL formatted, i.e. there may be some minor formatting\nchanges and, more importantly, the URL must be well-formed so that it can\nbe parsed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/signupUrl",
+	//   "path": "androidenterprise/v1/enterprises/signupUrl",
 	//   "response": {
 	//     "$ref": "SignupInfo"
 	//   },
@@ -5550,7 +6138,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5561,7 +6149,7 @@ func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5613,6 +6201,7 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 	return ret, nil
 	// {
 	//   "description": "Retrieves the name and domain of an enterprise.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.get",
 	//   "parameterOrder": [
@@ -5626,7 +6215,7 @@ func (c *EnterprisesGetCall) Do(opts ...googleapi.CallOption) (*Enterprise, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}",
 	//   "response": {
 	//     "$ref": "Enterprise"
 	//   },
@@ -5649,21 +6238,28 @@ type EnterprisesGetServiceAccountCall struct {
 }
 
 // GetServiceAccount: Returns a service account and credentials. The
-// service account can be bound to the enterprise by calling setAccount.
-// The service account is unique to this enterprise and EMM, and will be
-// deleted if the enterprise is unbound. The credentials contain private
-// key data and are not stored server-side.
-//
-// This method can only be called after calling Enterprises.Enroll or
-// Enterprises.CompleteSignup, and before Enterprises.SetAccount; at
-// other times it will return an error.
-//
-// Subsequent calls after the first will generate a new, unique set of
+// service account
+// can be bound to the enterprise by calling setAccount. The service
+// account
+// is unique to this enterprise and EMM, and will be deleted if the
+// enterprise
+// is unbound. The credentials contain private key data and are not
+// stored
+// server-side.
+// <br> <br>
+// This method can only be called after calling
+// Enterprises.Enroll or Enterprises.CompleteSignup, and
+// before
+// Enterprises.SetAccount; at other times it will return an error.
+// <br> <br>
+// Subsequent calls after the first will generate a new, unique set
+// of
 // credentials, and invalidate the previously generated
 // credentials.
-//
+// <br> <br>
 // Once the service account is bound to the enterprise, it can be
-// managed using the serviceAccountKeys resource.
+// managed
+// using the serviceAccountKeys resource.
 func (r *EnterprisesService) GetServiceAccount(enterpriseId string) *EnterprisesGetServiceAccountCall {
 	c := &EnterprisesGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5674,8 +6270,8 @@ func (r *EnterprisesService) GetServiceAccount(enterpriseId string) *Enterprises
 // to return with the service account. Required.
 //
 // Possible values:
-//   "googleCredentials"
-//   "pkcs12"
+//   "GOOGLE_CREDENTIALS"
+//   "PKCS12"
 func (c *EnterprisesGetServiceAccountCall) KeyType(keyType string) *EnterprisesGetServiceAccountCall {
 	c.urlParams_.Set("keyType", keyType)
 	return c
@@ -5718,7 +6314,7 @@ func (c *EnterprisesGetServiceAccountCall) Header() http.Header {
 
 func (c *EnterprisesGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5729,7 +6325,7 @@ func (c *EnterprisesGetServiceAccountCall) doRequest(alt string) (*http.Response
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccount")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccount")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5780,7 +6376,8 @@ func (c *EnterprisesGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Se
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a service account and credentials. The service account can be bound to the enterprise by calling setAccount. The service account is unique to this enterprise and EMM, and will be deleted if the enterprise is unbound. The credentials contain private key data and are not stored server-side.\n\nThis method can only be called after calling Enterprises.Enroll or Enterprises.CompleteSignup, and before Enterprises.SetAccount; at other times it will return an error.\n\nSubsequent calls after the first will generate a new, unique set of credentials, and invalidate the previously generated credentials.\n\nOnce the service account is bound to the enterprise, it can be managed using the serviceAccountKeys resource.",
+	//   "description": "Returns a service account and credentials. The service account\ncan be bound to the enterprise by calling setAccount. The service account\nis unique to this enterprise and EMM, and will be deleted if the enterprise\nis unbound. The credentials contain private key data and are not stored\nserver-side.\n\u003cbr\u003e \u003cbr\u003e\nThis method can only be called after calling\nEnterprises.Enroll or Enterprises.CompleteSignup, and before\nEnterprises.SetAccount; at other times it will return an error.\n\u003cbr\u003e \u003cbr\u003e\nSubsequent calls after the first will generate a new, unique set of\ncredentials, and invalidate the previously generated credentials.\n\u003cbr\u003e \u003cbr\u003e\nOnce the service account is bound to the enterprise, it can be managed\nusing the serviceAccountKeys resource.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccount",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.getServiceAccount",
 	//   "parameterOrder": [
@@ -5796,18 +6393,14 @@ func (c *EnterprisesGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*Se
 	//     "keyType": {
 	//       "description": "The type of credential to return with the service account. Required.",
 	//       "enum": [
-	//         "googleCredentials",
-	//         "pkcs12"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         ""
+	//         "GOOGLE_CREDENTIALS",
+	//         "PKCS12"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/serviceAccount",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccount",
 	//   "response": {
 	//     "$ref": "ServiceAccount"
 	//   },
@@ -5830,8 +6423,10 @@ type EnterprisesGetStoreLayoutCall struct {
 }
 
 // GetStoreLayout: Returns the store layout for the enterprise. If the
-// store layout has not been set, returns "basic" as the store layout
-// type and no homepage.
+// store layout
+// has not been set, returns "basic" as the store layout type and
+// no
+// homepage.
 func (r *EnterprisesService) GetStoreLayout(enterpriseId string) *EnterprisesGetStoreLayoutCall {
 	c := &EnterprisesGetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -5875,7 +6470,7 @@ func (c *EnterprisesGetStoreLayoutCall) Header() http.Header {
 
 func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5886,7 +6481,7 @@ func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -5937,7 +6532,8 @@ func (c *EnterprisesGetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the store layout for the enterprise. If the store layout has not been set, returns \"basic\" as the store layout type and no homepage.",
+	//   "description": "Returns the store layout for the enterprise. If the store layout\nhas not been set, returns \"basic\" as the store layout type and no\nhomepage.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.getStoreLayout",
 	//   "parameterOrder": [
@@ -5951,7 +6547,7 @@ func (c *EnterprisesGetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout",
 	//   "response": {
 	//     "$ref": "StoreLayout"
 	//   },
@@ -5972,10 +6568,13 @@ type EnterprisesListCall struct {
 	header_      http.Header
 }
 
-// List: Looks up an enterprise by domain name. This is only supported
-// for enterprises created via the Google-initiated creation flow.
-// Lookup of the id is not needed for enterprises created via the
-// EMM-initiated flow since the EMM learns the enterprise ID in the
+// List: Looks up an enterprise by domain name.
+// This is only supported for enterprises created via the
+// Google-initiated
+// creation flow.  Lookup of the id is not needed for enterprises
+// created via
+// the EMM-initiated flow since the EMM learns the enterprise ID in
+// the
 // callback specified in the Enterprises.generateSignupUrl call.
 func (r *EnterprisesService) List(domain string) *EnterprisesListCall {
 	c := &EnterprisesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6020,7 +6619,7 @@ func (c *EnterprisesListCall) Header() http.Header {
 
 func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6031,7 +6630,7 @@ func (c *EnterprisesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -6079,7 +6678,8 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*EnterprisesList
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up an enterprise by domain name. This is only supported for enterprises created via the Google-initiated creation flow. Lookup of the id is not needed for enterprises created via the EMM-initiated flow since the EMM learns the enterprise ID in the callback specified in the Enterprises.generateSignupUrl call.",
+	//   "description": "Looks up an enterprise by domain name.\nThis is only supported for enterprises created via the Google-initiated\ncreation flow.  Lookup of the id is not needed for enterprises created via\nthe EMM-initiated flow since the EMM learns the enterprise ID in the\ncallback specified in the Enterprises.generateSignupUrl call.",
+	//   "flatPath": "androidenterprise/v1/enterprises",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.enterprises.list",
 	//   "parameterOrder": [
@@ -6087,13 +6687,13 @@ func (c *EnterprisesListCall) Do(opts ...googleapi.CallOption) (*EnterprisesList
 	//   ],
 	//   "parameters": {
 	//     "domain": {
-	//       "description": "The exact primary domain name of the enterprise to look up.",
+	//       "description": "Required. The exact primary domain name of the enterprise to look up.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises",
+	//   "path": "androidenterprise/v1/enterprises",
 	//   "response": {
 	//     "$ref": "EnterprisesListResponse"
 	//   },
@@ -6114,23 +6714,37 @@ type EnterprisesPullNotificationSetCall struct {
 }
 
 // PullNotificationSet: Pulls and returns a notification set for the
-// enterprises associated with the service account authenticated for the
-// request. The notification set may be empty if no notification are
-// pending.
+// enterprises associated with
+// the service account authenticated for the request. The notification
+// set may
+// be empty if no notification are pending.
+// <br>
 // A notification set returned needs to be acknowledged within 20
-// seconds by calling Enterprises.AcknowledgeNotificationSet, unless the
+// seconds
+// by calling Enterprises.AcknowledgeNotificationSet, unless
+// the
 // notification set is empty.
-// Notifications that are not acknowledged within the 20 seconds will
+// <br>
+// Notifications that are not acknowledged within the 20 seconds
+// will
 // eventually be included again in the response to another
-// PullNotificationSet request, and those that are never acknowledged
-// will ultimately be deleted according to the Google Cloud Platform
-// Pub/Sub system policy.
-// Multiple requests might be performed concurrently to retrieve
+// PullNotificationSet
+// request, and those that are never acknowledged will ultimately be
+// deleted
+// according to the Google Cloud Platform Pub/Sub system
+// policy.
+// <br>
+// Multiple requests might be performed concurrently to
+// retrieve
 // notifications, in which case the pending notifications (if any) will
-// be split among each caller, if any are pending.
+// be
+// split among each caller, if any are pending.
+// <br>
 // If no notifications are present, an empty notification list is
-// returned. Subsequent requests may return more notifications once they
-// become available.
+// returned.
+// Subsequent requests may return more notifications once they
+// become
+// available.
 func (r *EnterprisesService) PullNotificationSet() *EnterprisesPullNotificationSetCall {
 	c := &EnterprisesPullNotificationSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6138,18 +6752,25 @@ func (r *EnterprisesService) PullNotificationSet() *EnterprisesPullNotificationS
 
 // RequestMode sets the optional parameter "requestMode": The request
 // mode for pulling notifications.
-// Specifying waitForNotifications will cause the request to block and
-// wait until one or more notifications are present, or return an empty
-// notification list if no notifications are present after some
+// <br>
+// Specifying <code>waitForNotifications</code> will cause the request
+// to
+// block and wait until one or more notifications are present, or return
+// an
+// empty notification list if no notifications are present after some
 // time.
-// Speciying returnImmediately will cause the request to immediately
-// return the pending notifications, or an empty list if no
+// <br>
+// Speciying <code>returnImmediately</code> will cause the request
+// to
+// immediately return the pending notifications, or an empty list if
+// no
 // notifications are present.
-// If omitted, defaults to waitForNotifications.
+// <br>
+// If omitted, defaults to <code>waitForNotifications</code>.
 //
 // Possible values:
-//   "returnImmediately"
-//   "waitForNotifications"
+//   "WAIT_FOR_NOTIFICATIONS"
+//   "RETURN_IMMEDIATELY"
 func (c *EnterprisesPullNotificationSetCall) RequestMode(requestMode string) *EnterprisesPullNotificationSetCall {
 	c.urlParams_.Set("requestMode", requestMode)
 	return c
@@ -6182,7 +6803,7 @@ func (c *EnterprisesPullNotificationSetCall) Header() http.Header {
 
 func (c *EnterprisesPullNotificationSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6190,7 +6811,7 @@ func (c *EnterprisesPullNotificationSetCall) doRequest(alt string) (*http.Respon
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/pullNotificationSet")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/pullNotificationSet")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6238,25 +6859,23 @@ func (c *EnterprisesPullNotificationSetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls and returns a notification set for the enterprises associated with the service account authenticated for the request. The notification set may be empty if no notification are pending.\nA notification set returned needs to be acknowledged within 20 seconds by calling Enterprises.AcknowledgeNotificationSet, unless the notification set is empty.\nNotifications that are not acknowledged within the 20 seconds will eventually be included again in the response to another PullNotificationSet request, and those that are never acknowledged will ultimately be deleted according to the Google Cloud Platform Pub/Sub system policy.\nMultiple requests might be performed concurrently to retrieve notifications, in which case the pending notifications (if any) will be split among each caller, if any are pending.\nIf no notifications are present, an empty notification list is returned. Subsequent requests may return more notifications once they become available.",
+	//   "description": "Pulls and returns a notification set for the enterprises associated with\nthe service account authenticated for the request. The notification set may\nbe empty if no notification are pending.\n\u003cbr\u003e\nA notification set returned needs to be acknowledged within 20 seconds\nby calling Enterprises.AcknowledgeNotificationSet, unless the\nnotification set is empty.\n\u003cbr\u003e\nNotifications that are not acknowledged within the 20 seconds will\neventually be included again in the response to another PullNotificationSet\nrequest, and those that are never acknowledged will ultimately be deleted\naccording to the Google Cloud Platform Pub/Sub system policy.\n\u003cbr\u003e\nMultiple requests might be performed concurrently to retrieve\nnotifications, in which case the pending notifications (if any) will be\nsplit among each caller, if any are pending.\n\u003cbr\u003e\nIf no notifications are present, an empty notification list is returned.\nSubsequent requests may return more notifications once they become\navailable.",
+	//   "flatPath": "androidenterprise/v1/enterprises/pullNotificationSet",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.pullNotificationSet",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "requestMode": {
-	//       "description": "The request mode for pulling notifications.\nSpecifying waitForNotifications will cause the request to block and wait until one or more notifications are present, or return an empty notification list if no notifications are present after some time.\nSpeciying returnImmediately will cause the request to immediately return the pending notifications, or an empty list if no notifications are present.\nIf omitted, defaults to waitForNotifications.",
+	//       "description": "The request mode for pulling notifications.\n\u003cbr\u003e\nSpecifying \u003ccode\u003ewaitForNotifications\u003c/code\u003e will cause the request to\nblock and wait until one or more notifications are present, or return an\nempty notification list if no notifications are present after some time.\n\u003cbr\u003e\nSpeciying \u003ccode\u003ereturnImmediately\u003c/code\u003e will cause the request to\nimmediately return the pending notifications, or an empty list if no\nnotifications are present.\n\u003cbr\u003e\nIf omitted, defaults to \u003ccode\u003ewaitForNotifications\u003c/code\u003e.",
 	//       "enum": [
-	//         "returnImmediately",
-	//         "waitForNotifications"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         ""
+	//         "WAIT_FOR_NOTIFICATIONS",
+	//         "RETURN_IMMEDIATELY"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/pullNotificationSet",
+	//   "path": "androidenterprise/v1/enterprises/pullNotificationSet",
 	//   "response": {
 	//     "$ref": "NotificationSet"
 	//   },
@@ -6278,8 +6897,8 @@ type EnterprisesSendTestPushNotificationCall struct {
 }
 
 // SendTestPushNotification: Sends a test notification to validate the
-// EMM integration with the Google Cloud Pub/Sub service for this
-// enterprise.
+// EMM integration with
+// the Google Cloud Pub/Sub service for this enterprise.
 func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
 	c := &EnterprisesSendTestPushNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6313,7 +6932,7 @@ func (c *EnterprisesSendTestPushNotificationCall) Header() http.Header {
 
 func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6321,7 +6940,7 @@ func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.R
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/sendTestPushNotification")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/sendTestPushNotification")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6374,7 +6993,8 @@ func (c *EnterprisesSendTestPushNotificationCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a test notification to validate the EMM integration with the Google Cloud Pub/Sub service for this enterprise.",
+	//   "description": "Sends a test notification to validate the EMM integration with\nthe Google Cloud Pub/Sub service for this enterprise.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/sendTestPushNotification",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.sendTestPushNotification",
 	//   "parameterOrder": [
@@ -6388,7 +7008,7 @@ func (c *EnterprisesSendTestPushNotificationCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/sendTestPushNotification",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/sendTestPushNotification",
 	//   "response": {
 	//     "$ref": "EnterprisesSendTestPushNotificationResponse"
 	//   },
@@ -6411,7 +7031,8 @@ type EnterprisesSetAccountCall struct {
 }
 
 // SetAccount: Sets the account that will be used to authenticate to the
-// API as the enterprise.
+// API as the
+// enterprise.
 func (r *EnterprisesService) SetAccount(enterpriseId string, enterpriseaccount *EnterpriseAccount) *EnterprisesSetAccountCall {
 	c := &EnterprisesSetAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6446,7 +7067,7 @@ func (c *EnterprisesSetAccountCall) Header() http.Header {
 
 func (c *EnterprisesSetAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6459,7 +7080,7 @@ func (c *EnterprisesSetAccountCall) doRequest(alt string) (*http.Response, error
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/account")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/account")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -6510,7 +7131,8 @@ func (c *EnterprisesSetAccountCall) Do(opts ...googleapi.CallOption) (*Enterpris
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the account that will be used to authenticate to the API as the enterprise.",
+	//   "description": "Sets the account that will be used to authenticate to the API as the\nenterprise.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/account",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.enterprises.setAccount",
 	//   "parameterOrder": [
@@ -6524,7 +7146,7 @@ func (c *EnterprisesSetAccountCall) Do(opts ...googleapi.CallOption) (*Enterpris
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/account",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/account",
 	//   "request": {
 	//     "$ref": "EnterpriseAccount"
 	//   },
@@ -6550,13 +7172,21 @@ type EnterprisesSetStoreLayoutCall struct {
 }
 
 // SetStoreLayout: Sets the store layout for the enterprise. By default,
-// storeLayoutType is set to "basic" and the basic store layout is
-// enabled. The basic layout only contains apps approved by the admin,
-// and that have been added to the available product set for a user
-// (using the  setAvailableProductSet call). Apps on the page are sorted
-// in order of their product ID value. If you create a custom store
-// layout (by setting storeLayoutType = "custom" and setting a
-// homepage), the basic store layout is disabled.
+// storeLayoutType
+// is set to "basic" and the basic store layout is enabled. The
+// basic
+// layout only contains apps approved by the admin, and that have
+// been added to the available product set for a user (using the
+// <a
+// href="/android/work/play/emm-api/v1/users/setAvailableProductSet">
+// set
+// AvailableProductSet</a> call). Apps on the page are sorted in order
+// of
+// their product ID value. If you create a custom store layout (by
+// setting
+// storeLayoutType = "custom" and setting a homepage), the basic
+// store
+// layout is disabled.
 func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
 	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -6591,7 +7221,7 @@ func (c *EnterprisesSetStoreLayoutCall) Header() http.Header {
 
 func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6604,7 +7234,7 @@ func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -6655,7 +7285,8 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the store layout for the enterprise. By default, storeLayoutType is set to \"basic\" and the basic store layout is enabled. The basic layout only contains apps approved by the admin, and that have been added to the available product set for a user (using the  setAvailableProductSet call). Apps on the page are sorted in order of their product ID value. If you create a custom store layout (by setting storeLayoutType = \"custom\" and setting a homepage), the basic store layout is disabled.",
+	//   "description": "Sets the store layout for the enterprise. By default, storeLayoutType\nis set to \"basic\" and the basic store layout is enabled. The basic\nlayout only contains apps approved by the admin, and that have\nbeen added to the available product set for a user (using the\n\u003ca href=\"/android/work/play/emm-api/v1/users/setAvailableProductSet\"\u003e\nsetAvailableProductSet\u003c/a\u003e call). Apps on the page are sorted in order of\ntheir product ID value. If you create a custom store layout (by setting\nstoreLayoutType = \"custom\" and setting a homepage), the basic store\nlayout is disabled.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.enterprises.setStoreLayout",
 	//   "parameterOrder": [
@@ -6669,7 +7300,7 @@ func (c *EnterprisesSetStoreLayoutCall) Do(opts ...googleapi.CallOption) (*Store
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout",
 	//   "request": {
 	//     "$ref": "StoreLayout"
 	//   },
@@ -6727,7 +7358,7 @@ func (c *EnterprisesUnenrollCall) Header() http.Header {
 
 func (c *EnterprisesUnenrollCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6735,7 +7366,7 @@ func (c *EnterprisesUnenrollCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/unenroll")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/unenroll")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6762,6 +7393,7 @@ func (c *EnterprisesUnenrollCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Unenrolls an enterprise from the calling EMM.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/unenroll",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.unenroll",
 	//   "parameterOrder": [
@@ -6775,7 +7407,7 @@ func (c *EnterprisesUnenrollCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/unenroll",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/unenroll",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -6831,7 +7463,7 @@ func (c *EntitlementsDeleteCall) Header() http.Header {
 
 func (c *EntitlementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6839,7 +7471,7 @@ func (c *EntitlementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -6868,6 +7500,7 @@ func (c *EntitlementsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Removes an entitlement to an app for a user.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.entitlements.delete",
 	//   "parameterOrder": [
@@ -6895,7 +7528,7 @@ func (c *EntitlementsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -6962,7 +7595,7 @@ func (c *EntitlementsGetCall) Header() http.Header {
 
 func (c *EntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6973,7 +7606,7 @@ func (c *EntitlementsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7027,6 +7660,7 @@ func (c *EntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of an entitlement.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.entitlements.get",
 	//   "parameterOrder": [
@@ -7054,7 +7688,7 @@ func (c *EntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "response": {
 	//     "$ref": "Entitlement"
 	//   },
@@ -7123,7 +7757,7 @@ func (c *EntitlementsListCall) Header() http.Header {
 
 func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7134,7 +7768,7 @@ func (c *EntitlementsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/entitlements")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7187,6 +7821,7 @@ func (c *EntitlementsListCall) Do(opts ...googleapi.CallOption) (*EntitlementsLi
 	return ret, nil
 	// {
 	//   "description": "Lists all entitlements for the specified user. Only the ID is set.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.entitlements.list",
 	//   "parameterOrder": [
@@ -7207,7 +7842,7 @@ func (c *EntitlementsListCall) Do(opts ...googleapi.CallOption) (*EntitlementsLi
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/entitlements",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements",
 	//   "response": {
 	//     "$ref": "EntitlementsListResponse"
 	//   },
@@ -7242,10 +7877,12 @@ func (r *EntitlementsService) Update(enterpriseId string, userId string, entitle
 }
 
 // Install sets the optional parameter "install": Set to true to also
-// install the product on all the user's devices where possible. Failure
-// to install on one or more devices will not prevent this operation
-// from returning successfully, as long as the entitlement was
-// successfully assigned to the user.
+// install the product on all the user's devices where
+// possible. Failure to install on one or more devices will not
+// prevent
+// this operation from returning successfully, as long as the
+// entitlement
+// was successfully assigned to the user.
 func (c *EntitlementsUpdateCall) Install(install bool) *EntitlementsUpdateCall {
 	c.urlParams_.Set("install", fmt.Sprint(install))
 	return c
@@ -7278,7 +7915,7 @@ func (c *EntitlementsUpdateCall) Header() http.Header {
 
 func (c *EntitlementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7291,7 +7928,7 @@ func (c *EntitlementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -7345,6 +7982,7 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 	return ret, nil
 	// {
 	//   "description": "Adds or updates an entitlement to an app for a user.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.entitlements.update",
 	//   "parameterOrder": [
@@ -7366,7 +8004,7 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 	//       "type": "string"
 	//     },
 	//     "install": {
-	//       "description": "Set to true to also install the product on all the user's devices where possible. Failure to install on one or more devices will not prevent this operation from returning successfully, as long as the entitlement was successfully assigned to the user.",
+	//       "description": "Set to true to also install the product on all the user's devices where\npossible. Failure to install on one or more devices will not prevent\nthis operation from returning successfully, as long as the entitlement\nwas successfully assigned to the user.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7377,7 +8015,7 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "request": {
 	//     "$ref": "Entitlement"
 	//   },
@@ -7449,7 +8087,7 @@ func (c *GrouplicensesGetCall) Header() http.Header {
 
 func (c *GrouplicensesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7460,7 +8098,7 @@ func (c *GrouplicensesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7513,6 +8151,7 @@ func (c *GrouplicensesGetCall) Do(opts ...googleapi.CallOption) (*GroupLicense, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of an enterprise's group license for a product.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenses.get",
 	//   "parameterOrder": [
@@ -7527,13 +8166,13 @@ func (c *GrouplicensesGetCall) Do(opts ...googleapi.CallOption) (*GroupLicense, 
 	//       "type": "string"
 	//     },
 	//     "groupLicenseId": {
-	//       "description": "The ID of the product the group license is for, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the product the group license is for, e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}",
 	//   "response": {
 	//     "$ref": "GroupLicense"
 	//   },
@@ -7600,7 +8239,7 @@ func (c *GrouplicensesListCall) Header() http.Header {
 
 func (c *GrouplicensesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7611,7 +8250,7 @@ func (c *GrouplicensesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/groupLicenses")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7663,6 +8302,7 @@ func (c *GrouplicensesListCall) Do(opts ...googleapi.CallOption) (*GroupLicenses
 	return ret, nil
 	// {
 	//   "description": "Retrieves IDs of all products for which the enterprise has a group license.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenses.list",
 	//   "parameterOrder": [
@@ -7676,7 +8316,7 @@ func (c *GrouplicensesListCall) Do(opts ...googleapi.CallOption) (*GroupLicenses
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/groupLicenses",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses",
 	//   "response": {
 	//     "$ref": "GroupLicensesListResponse"
 	//   },
@@ -7700,7 +8340,8 @@ type GrouplicenseusersListCall struct {
 }
 
 // List: Retrieves the IDs of the users who have been granted
-// entitlements under the license.
+// entitlements
+// under the license.
 func (r *GrouplicenseusersService) List(enterpriseId string, groupLicenseId string) *GrouplicenseusersListCall {
 	c := &GrouplicenseusersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7745,7 +8386,7 @@ func (c *GrouplicenseusersListCall) Header() http.Header {
 
 func (c *GrouplicenseusersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7756,7 +8397,7 @@ func (c *GrouplicenseusersListCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -7808,7 +8449,8 @@ func (c *GrouplicenseusersListCall) Do(opts ...googleapi.CallOption) (*GroupLice
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the IDs of the users who have been granted entitlements under the license.",
+	//   "description": "Retrieves the IDs of the users who have been granted entitlements\nunder the license.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenseusers.list",
 	//   "parameterOrder": [
@@ -7823,13 +8465,13 @@ func (c *GrouplicenseusersListCall) Do(opts ...googleapi.CallOption) (*GroupLice
 	//       "type": "string"
 	//     },
 	//     "groupLicenseId": {
-	//       "description": "The ID of the product the group license is for, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the product the group license is for, e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users",
 	//   "response": {
 	//     "$ref": "GroupLicenseUsersListResponse"
 	//   },
@@ -7853,9 +8495,11 @@ type InstallsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Requests to remove an app from a device. A call to get or
-// list will still show the app as installed on the device until it is
-// actually removed.
+// Delete: Requests to remove an app from a device. A call to
+// <code>get</code> or
+// <code>list</code> will still show the app as installed on the device
+// until
+// it is actually removed.
 func (r *InstallsService) Delete(enterpriseId string, userId string, deviceId string, installId string) *InstallsDeleteCall {
 	c := &InstallsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -7892,7 +8536,7 @@ func (c *InstallsDeleteCall) Header() http.Header {
 
 func (c *InstallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7900,7 +8544,7 @@ func (c *InstallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -7929,7 +8573,8 @@ func (c *InstallsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Requests to remove an app from a device. A call to get or list will still show the app as installed on the device until it is actually removed.",
+	//   "description": "Requests to remove an app from a device. A call to \u003ccode\u003eget\u003c/code\u003e or\n\u003ccode\u003elist\u003c/code\u003e will still show the app as installed on the device until\nit is actually removed.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.installs.delete",
 	//   "parameterOrder": [
@@ -7952,7 +8597,7 @@ func (c *InstallsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "installId": {
-	//       "description": "The ID of the product represented by the install, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the product represented by the install, e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7964,7 +8609,7 @@ func (c *InstallsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -8033,7 +8678,7 @@ func (c *InstallsGetCall) Header() http.Header {
 
 func (c *InstallsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8044,7 +8689,7 @@ func (c *InstallsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8099,6 +8744,7 @@ func (c *InstallsGetCall) Do(opts ...googleapi.CallOption) (*Install, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of an installation of an app on a device.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.installs.get",
 	//   "parameterOrder": [
@@ -8121,7 +8767,7 @@ func (c *InstallsGetCall) Do(opts ...googleapi.CallOption) (*Install, error) {
 	//       "type": "string"
 	//     },
 	//     "installId": {
-	//       "description": "The ID of the product represented by the install, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the product represented by the install, e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8133,7 +8779,7 @@ func (c *InstallsGetCall) Do(opts ...googleapi.CallOption) (*Install, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "response": {
 	//     "$ref": "Install"
 	//   },
@@ -8204,7 +8850,7 @@ func (c *InstallsListCall) Header() http.Header {
 
 func (c *InstallsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8215,7 +8861,7 @@ func (c *InstallsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8269,6 +8915,7 @@ func (c *InstallsListCall) Do(opts ...googleapi.CallOption) (*InstallsListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves the details of all apps installed on the specified device.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.installs.list",
 	//   "parameterOrder": [
@@ -8296,7 +8943,7 @@ func (c *InstallsListCall) Do(opts ...googleapi.CallOption) (*InstallsListRespon
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs",
 	//   "response": {
 	//     "$ref": "InstallsListResponse"
 	//   },
@@ -8322,8 +8969,10 @@ type InstallsUpdateCall struct {
 }
 
 // Update: Requests to install the latest version of an app to a device.
-// If the app is already installed, then it is updated to the latest
-// version if necessary.
+// If the app
+// is already installed, then it is updated to the latest version
+// if
+// necessary.
 func (r *InstallsService) Update(enterpriseId string, userId string, deviceId string, installId string, install *Install) *InstallsUpdateCall {
 	c := &InstallsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8361,7 +9010,7 @@ func (c *InstallsUpdateCall) Header() http.Header {
 
 func (c *InstallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8374,7 +9023,7 @@ func (c *InstallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -8428,7 +9077,8 @@ func (c *InstallsUpdateCall) Do(opts ...googleapi.CallOption) (*Install, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Requests to install the latest version of an app to a device. If the app is already installed, then it is updated to the latest version if necessary.",
+	//   "description": "Requests to install the latest version of an app to a device. If the app\nis already installed, then it is updated to the latest version if\nnecessary.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.installs.update",
 	//   "parameterOrder": [
@@ -8451,7 +9101,7 @@ func (c *InstallsUpdateCall) Do(opts ...googleapi.CallOption) (*Install, error) 
 	//       "type": "string"
 	//     },
 	//     "installId": {
-	//       "description": "The ID of the product represented by the install, e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the product represented by the install, e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8463,7 +9113,7 @@ func (c *InstallsUpdateCall) Do(opts ...googleapi.CallOption) (*Install, error) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/installs/{installId}",
 	//   "request": {
 	//     "$ref": "Install"
 	//   },
@@ -8491,7 +9141,8 @@ type ManagedconfigurationsfordeviceDeleteCall struct {
 }
 
 // Delete: Removes a per-device managed configuration for an app for the
-// specified device.
+// specified
+// device.
 func (r *ManagedconfigurationsfordeviceService) Delete(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string) *ManagedconfigurationsfordeviceDeleteCall {
 	c := &ManagedconfigurationsfordeviceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8528,7 +9179,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Header() http.Header {
 
 func (c *ManagedconfigurationsfordeviceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8536,7 +9187,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) doRequest(alt string) (*http.
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -8565,7 +9216,8 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Do(opts ...googleapi.CallOpti
 	}
 	return nil
 	// {
-	//   "description": "Removes a per-device managed configuration for an app for the specified device.",
+	//   "description": "Removes a per-device managed configuration for an app for the specified\ndevice.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.managedconfigurationsfordevice.delete",
 	//   "parameterOrder": [
@@ -8588,7 +9240,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForDeviceId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8600,7 +9252,7 @@ func (c *ManagedconfigurationsfordeviceDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -8669,7 +9321,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) Header() http.Header {
 
 func (c *ManagedconfigurationsfordeviceGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8680,7 +9332,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8735,6 +9387,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of a per-device managed configuration.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.managedconfigurationsfordevice.get",
 	//   "parameterOrder": [
@@ -8757,7 +9410,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForDeviceId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8769,7 +9422,7 @@ func (c *ManagedconfigurationsfordeviceGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "response": {
 	//     "$ref": "ManagedConfiguration"
 	//   },
@@ -8794,7 +9447,8 @@ type ManagedconfigurationsfordeviceListCall struct {
 }
 
 // List: Lists all the per-device managed configurations for the
-// specified device. Only the ID is set.
+// specified device.
+// Only the ID is set.
 func (r *ManagedconfigurationsfordeviceService) List(enterpriseId string, userId string, deviceId string) *ManagedconfigurationsfordeviceListCall {
 	c := &ManagedconfigurationsfordeviceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8840,7 +9494,7 @@ func (c *ManagedconfigurationsfordeviceListCall) Header() http.Header {
 
 func (c *ManagedconfigurationsfordeviceListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8851,7 +9505,7 @@ func (c *ManagedconfigurationsfordeviceListCall) doRequest(alt string) (*http.Re
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -8906,7 +9560,8 @@ func (c *ManagedconfigurationsfordeviceListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the per-device managed configurations for the specified device. Only the ID is set.",
+	//   "description": "Lists all the per-device managed configurations for the specified device.\nOnly the ID is set.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.managedconfigurationsfordevice.list",
 	//   "parameterOrder": [
@@ -8934,7 +9589,7 @@ func (c *ManagedconfigurationsfordeviceListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice",
 	//   "response": {
 	//     "$ref": "ManagedConfigurationsForDeviceListResponse"
 	//   },
@@ -8960,7 +9615,8 @@ type ManagedconfigurationsfordeviceUpdateCall struct {
 }
 
 // Update: Adds or updates a per-device managed configuration for an app
-// for the specified device.
+// for the
+// specified device.
 func (r *ManagedconfigurationsfordeviceService) Update(enterpriseId string, userId string, deviceId string, managedConfigurationForDeviceId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsfordeviceUpdateCall {
 	c := &ManagedconfigurationsfordeviceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8998,7 +9654,7 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Header() http.Header {
 
 func (c *ManagedconfigurationsfordeviceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9011,7 +9667,7 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) doRequest(alt string) (*http.
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -9065,7 +9721,8 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds or updates a per-device managed configuration for an app for the specified device.",
+	//   "description": "Adds or updates a per-device managed configuration for an app for the\nspecified device.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.managedconfigurationsfordevice.update",
 	//   "parameterOrder": [
@@ -9088,7 +9745,7 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForDeviceId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9100,7 +9757,7 @@ func (c *ManagedconfigurationsfordeviceUpdateCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/devices/{deviceId}/managedConfigurationsForDevice/{managedConfigurationForDeviceId}",
 	//   "request": {
 	//     "$ref": "ManagedConfiguration"
 	//   },
@@ -9163,7 +9820,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) Header() http.Header {
 
 func (c *ManagedconfigurationsforuserDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9171,7 +9828,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) doRequest(alt string) (*http.Re
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -9200,6 +9857,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) Do(opts ...googleapi.CallOption
 	return nil
 	// {
 	//   "description": "Removes a per-user managed configuration for an app for the specified user.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.managedconfigurationsforuser.delete",
 	//   "parameterOrder": [
@@ -9215,7 +9873,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForUserId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9227,7 +9885,7 @@ func (c *ManagedconfigurationsforuserDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -9249,7 +9907,8 @@ type ManagedconfigurationsforuserGetCall struct {
 }
 
 // Get: Retrieves details of a per-user managed configuration for an app
-// for the specified user.
+// for the
+// specified user.
 func (r *ManagedconfigurationsforuserService) Get(enterpriseId string, userId string, managedConfigurationForUserId string) *ManagedconfigurationsforuserGetCall {
 	c := &ManagedconfigurationsforuserGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9295,7 +9954,7 @@ func (c *ManagedconfigurationsforuserGetCall) Header() http.Header {
 
 func (c *ManagedconfigurationsforuserGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9306,7 +9965,7 @@ func (c *ManagedconfigurationsforuserGetCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9359,7 +10018,8 @@ func (c *ManagedconfigurationsforuserGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves details of a per-user managed configuration for an app for the specified user.",
+	//   "description": "Retrieves details of a per-user managed configuration for an app for the\nspecified user.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.managedconfigurationsforuser.get",
 	//   "parameterOrder": [
@@ -9375,7 +10035,7 @@ func (c *ManagedconfigurationsforuserGetCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForUserId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9387,7 +10047,7 @@ func (c *ManagedconfigurationsforuserGetCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "response": {
 	//     "$ref": "ManagedConfiguration"
 	//   },
@@ -9411,7 +10071,8 @@ type ManagedconfigurationsforuserListCall struct {
 }
 
 // List: Lists all the per-user managed configurations for the specified
-// user. Only the ID is set.
+// user. Only
+// the ID is set.
 func (r *ManagedconfigurationsforuserService) List(enterpriseId string, userId string) *ManagedconfigurationsforuserListCall {
 	c := &ManagedconfigurationsforuserListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9456,7 +10117,7 @@ func (c *ManagedconfigurationsforuserListCall) Header() http.Header {
 
 func (c *ManagedconfigurationsforuserListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9467,7 +10128,7 @@ func (c *ManagedconfigurationsforuserListCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9521,7 +10182,8 @@ func (c *ManagedconfigurationsforuserListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the per-user managed configurations for the specified user. Only the ID is set.",
+	//   "description": "Lists all the per-user managed configurations for the specified user. Only\nthe ID is set.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.managedconfigurationsforuser.list",
 	//   "parameterOrder": [
@@ -9542,7 +10204,7 @@ func (c *ManagedconfigurationsforuserListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser",
 	//   "response": {
 	//     "$ref": "ManagedConfigurationsForUserListResponse"
 	//   },
@@ -9567,11 +10229,22 @@ type ManagedconfigurationsforuserUpdateCall struct {
 }
 
 // Update: Adds or updates the managed configuration settings for an app
-// for the specified user. If you support the Managed configurations
-// iframe, you can apply managed configurations to a user by specifying
-// an mcmId and its associated configuration variables (if any) in the
-// request. Alternatively, all EMMs can apply managed configurations by
-// passing a list of managed properties.
+// for the
+// specified user.
+// If you support the
+// <a
+// href="https://developers.google.com/android/work/play/emm-api/manag
+// ed-configurations-iframe">Managed
+// configurations iframe</a>,
+// you can apply managed configurations to a user by specifying
+// an
+// <code>mcmId</code>
+// and its associated configuration variables (if any) in the
+// request.
+// Alternatively,
+// all EMMs can apply managed configurations by passing a list of
+// managed
+// properties.
 func (r *ManagedconfigurationsforuserService) Update(enterpriseId string, userId string, managedConfigurationForUserId string, managedconfiguration *ManagedConfiguration) *ManagedconfigurationsforuserUpdateCall {
 	c := &ManagedconfigurationsforuserUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -9608,7 +10281,7 @@ func (c *ManagedconfigurationsforuserUpdateCall) Header() http.Header {
 
 func (c *ManagedconfigurationsforuserUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9621,7 +10294,7 @@ func (c *ManagedconfigurationsforuserUpdateCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -9674,7 +10347,8 @@ func (c *ManagedconfigurationsforuserUpdateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds or updates the managed configuration settings for an app for the specified user. If you support the Managed configurations iframe, you can apply managed configurations to a user by specifying an mcmId and its associated configuration variables (if any) in the request. Alternatively, all EMMs can apply managed configurations by passing a list of managed properties.",
+	//   "description": "Adds or updates the managed configuration settings for an app for the\nspecified user.\nIf you support the \u003ca\nhref=\"https://developers.google.com/android/work/play/emm-api/managed-configurations-iframe\"\u003eManaged\nconfigurations iframe\u003c/a\u003e,\nyou can apply managed configurations to a user by specifying an\n\u003ccode\u003emcmId\u003c/code\u003e\nand its associated configuration variables (if any) in the request.\nAlternatively,\nall EMMs can apply managed configurations by passing a list of managed\nproperties.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.managedconfigurationsforuser.update",
 	//   "parameterOrder": [
@@ -9690,7 +10364,7 @@ func (c *ManagedconfigurationsforuserUpdateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "managedConfigurationForUserId": {
-	//       "description": "The ID of the managed configuration (a product ID), e.g. \"app:com.google.android.gm\".",
+	//       "description": "The ID of the managed configuration (a product ID), e.g.\n\"app:com.google.android.gm\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -9702,7 +10376,7 @@ func (c *ManagedconfigurationsforuserUpdateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
 	//   "request": {
 	//     "$ref": "ManagedConfiguration"
 	//   },
@@ -9774,7 +10448,7 @@ func (c *ManagedconfigurationssettingsListCall) Header() http.Header {
 
 func (c *ManagedconfigurationssettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9785,7 +10459,7 @@ func (c *ManagedconfigurationssettingsListCall) doRequest(alt string) (*http.Res
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9840,6 +10514,7 @@ func (c *ManagedconfigurationssettingsListCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 	// {
 	//   "description": "Lists all the managed configurations settings for the specified app.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.managedconfigurationssettings.list",
 	//   "parameterOrder": [
@@ -9854,13 +10529,13 @@ func (c *ManagedconfigurationssettingsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The ID of the product for which the managed configurations settings applies to.",
+	//       "description": "The ID of the product for which the managed configurations settings applies\nto.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings",
 	//   "response": {
 	//     "$ref": "ManagedConfigurationsSettingsListResponse"
 	//   },
@@ -9883,7 +10558,8 @@ type PermissionsGetCall struct {
 }
 
 // Get: Retrieves details of an Android app permission for display to an
-// enterprise admin.
+// enterprise
+// admin.
 func (r *PermissionsService) Get(permissionId string) *PermissionsGetCall {
 	c := &PermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.permissionId = permissionId
@@ -9934,7 +10610,7 @@ func (c *PermissionsGetCall) Header() http.Header {
 
 func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9945,7 +10621,7 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "permissions/{permissionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/permissions/{permissionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -9996,7 +10672,8 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves details of an Android app permission for display to an enterprise admin.",
+	//   "description": "Retrieves details of an Android app permission for display to an enterprise\nadmin.",
+	//   "flatPath": "androidenterprise/v1/permissions/{permissionId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.permissions.get",
 	//   "parameterOrder": [
@@ -10015,7 +10692,7 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "permissions/{permissionId}",
+	//   "path": "androidenterprise/v1/permissions/{permissionId}",
 	//   "response": {
 	//     "$ref": "Permission"
 	//   },
@@ -10038,13 +10715,17 @@ type ProductsApproveCall struct {
 	header_                http.Header
 }
 
-// Approve: Approves the specified product and the relevant app
-// permissions, if any. The maximum number of products that you can
-// approve per enterprise customer is 1,000.
-//
-// To learn how to use managed Google Play to design and create a store
-// layout to display approved products to your users, see Store Layout
-// Design.
+// Approve: <p>Approves the specified product and the relevant app
+// permissions, if any.
+// The maximum number of products that you can approve per enterprise
+// customer
+// is 1,000.</p>
+// <p>To learn how to use managed Google Play to design and create a
+// store
+// layout to display approved products to your users,
+// see <a href="/android/work/play/emm-api/store-layout">Store
+// Layout
+// Design</a>.</p>
 func (r *ProductsService) Approve(enterpriseId string, productId string, productsapproverequest *ProductsApproveRequest) *ProductsApproveCall {
 	c := &ProductsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10080,7 +10761,7 @@ func (c *ProductsApproveCall) Header() http.Header {
 
 func (c *ProductsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10093,7 +10774,7 @@ func (c *ProductsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/approve")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/approve")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10120,7 +10801,8 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000.\n\nTo learn how to use managed Google Play to design and create a store layout to display approved products to your users, see Store Layout Design.",
+	//   "description": "\u003cp\u003eApproves the specified product and the relevant app permissions, if any.\nThe maximum number of products that you can approve per enterprise customer\nis 1,000.\u003c/p\u003e\n\u003cp\u003eTo learn how to use managed Google Play to design and create a store\nlayout to display approved products to your users,\nsee \u003ca href=\"/android/work/play/emm-api/store-layout\"\u003eStore Layout\nDesign\u003c/a\u003e.\u003c/p\u003e",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/approve",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.approve",
 	//   "parameterOrder": [
@@ -10141,7 +10823,7 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/approve",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/approve",
 	//   "request": {
 	//     "$ref": "ProductsApproveRequest"
 	//   },
@@ -10164,16 +10846,21 @@ type ProductsGenerateApprovalUrlCall struct {
 }
 
 // GenerateApprovalUrl: Generates a URL that can be rendered in an
-// iframe to display the permissions (if any) of a product. An
-// enterprise admin must view these permissions and accept them on
-// behalf of their organization in order to approve that
-// product.
-//
-// Admins should accept the displayed permissions by interacting with a
-// separate UI element in the EMM console, which in turn should trigger
-// the use of this URL as the approvalUrlInfo.approvalUrl property in a
-// Products.approve call to approve the product. This URL can only be
-// used to display permissions for up to 1 day.
+// iframe to display the
+// permissions (if any) of a product. An enterprise admin must view
+// these
+// permissions and accept them on behalf of their organization in order
+// to
+// approve that product. <br><br>
+// Admins should accept the displayed permissions by
+// interacting with a separate UI element in the EMM console, which in
+// turn
+// should trigger the use of this URL as
+// the
+// <code>approvalUrlInfo.approvalUrl</code> property in
+// a
+// <code>Products.approve</code> call to approve the product.
+// This URL can only be used to display permissions for up to 1 day.
 func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId string) *ProductsGenerateApprovalUrlCall {
 	c := &ProductsGenerateApprovalUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10182,8 +10869,8 @@ func (r *ProductsService) GenerateApprovalUrl(enterpriseId string, productId str
 }
 
 // LanguageCode sets the optional parameter "languageCode": The BCP 47
-// language code used for permission names and descriptions in the
-// returned iframe, for instance "en-US".
+// language code used for permission names and descriptions in
+// the returned iframe, for instance "en-US".
 func (c *ProductsGenerateApprovalUrlCall) LanguageCode(languageCode string) *ProductsGenerateApprovalUrlCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -10216,7 +10903,7 @@ func (c *ProductsGenerateApprovalUrlCall) Header() http.Header {
 
 func (c *ProductsGenerateApprovalUrlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10224,7 +10911,7 @@ func (c *ProductsGenerateApprovalUrlCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10277,7 +10964,8 @@ func (c *ProductsGenerateApprovalUrlCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a URL that can be rendered in an iframe to display the permissions (if any) of a product. An enterprise admin must view these permissions and accept them on behalf of their organization in order to approve that product.\n\nAdmins should accept the displayed permissions by interacting with a separate UI element in the EMM console, which in turn should trigger the use of this URL as the approvalUrlInfo.approvalUrl property in a Products.approve call to approve the product. This URL can only be used to display permissions for up to 1 day.",
+	//   "description": "Generates a URL that can be rendered in an iframe to display the\npermissions (if any) of a product. An enterprise admin must view these\npermissions and accept them on behalf of their organization in order to\napprove that product. \u003cbr\u003e\u003cbr\u003e\nAdmins should accept the displayed permissions by\ninteracting with a separate UI element in the EMM console, which in turn\nshould trigger the use of this URL as the\n\u003ccode\u003eapprovalUrlInfo.approvalUrl\u003c/code\u003e property in a\n\u003ccode\u003eProducts.approve\u003c/code\u003e call to approve the product.\nThis URL can only be used to display permissions for up to 1 day.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.generateApprovalUrl",
 	//   "parameterOrder": [
@@ -10292,7 +10980,7 @@ func (c *ProductsGenerateApprovalUrlCall) Do(opts ...googleapi.CallOption) (*Pro
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "The BCP 47 language code used for permission names and descriptions in the returned iframe, for instance \"en-US\".",
+	//       "description": "The BCP 47 language code used for permission names and descriptions in\nthe returned iframe, for instance \"en-US\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10303,7 +10991,7 @@ func (c *ProductsGenerateApprovalUrlCall) Do(opts ...googleapi.CallOption) (*Pro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
 	//   "response": {
 	//     "$ref": "ProductsGenerateApprovalUrlResponse"
 	//   },
@@ -10379,7 +11067,7 @@ func (c *ProductsGetCall) Header() http.Header {
 
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10390,7 +11078,7 @@ func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10443,6 +11131,7 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of a product for display to an enterprise admin.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.get",
 	//   "parameterOrder": [
@@ -10468,7 +11157,7 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}",
 	//   "response": {
 	//     "$ref": "Product"
 	//   },
@@ -10492,12 +11181,19 @@ type ProductsGetAppRestrictionsSchemaCall struct {
 }
 
 // GetAppRestrictionsSchema: Retrieves the schema that defines the
-// configurable properties for this product. All products have a schema,
-// but this schema may be empty if no managed configurations have been
-// defined. This schema can be used to populate a UI that allows an
-// admin to configure the product. To apply a managed configuration
-// based on the schema obtained using this API, see Managed
-// Configurations through Play.
+// configurable properties for this
+// product. All products have a schema, but this schema may be empty if
+// no
+// managed configurations have been defined. This schema can be used
+// to
+// populate a UI that allows an admin to configure the product.
+// To apply a managed configuration based on the schema obtained using
+// this
+// API, see
+// <a
+// href="/android/work/play/emm-api/managed-configurations">Managed
+// Confi
+// gurations through Play</a>.
 func (r *ProductsService) GetAppRestrictionsSchema(enterpriseId string, productId string) *ProductsGetAppRestrictionsSchemaCall {
 	c := &ProductsGetAppRestrictionsSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10549,7 +11245,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Header() http.Header {
 
 func (c *ProductsGetAppRestrictionsSchemaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10560,7 +11256,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10612,7 +11308,8 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the schema that defines the configurable properties for this product. All products have a schema, but this schema may be empty if no managed configurations have been defined. This schema can be used to populate a UI that allows an admin to configure the product. To apply a managed configuration based on the schema obtained using this API, see Managed Configurations through Play.",
+	//   "description": "Retrieves the schema that defines the configurable properties for this\nproduct. All products have a schema, but this schema may be empty if no\nmanaged configurations have been defined. This schema can be used to\npopulate a UI that allows an admin to configure the product.\nTo apply a managed configuration based on the schema obtained using this\nAPI, see\n\u003ca href=\"/android/work/play/emm-api/managed-configurations\"\u003eManaged\nConfigurations through Play\u003c/a\u003e.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.getAppRestrictionsSchema",
 	//   "parameterOrder": [
@@ -10638,7 +11335,7 @@ func (c *ProductsGetAppRestrictionsSchemaCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/appRestrictionsSchema",
 	//   "response": {
 	//     "$ref": "AppRestrictionsSchema"
 	//   },
@@ -10707,7 +11404,7 @@ func (c *ProductsGetPermissionsCall) Header() http.Header {
 
 func (c *ProductsGetPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10718,7 +11415,7 @@ func (c *ProductsGetPermissionsCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/permissions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/permissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10771,6 +11468,7 @@ func (c *ProductsGetPermissionsCall) Do(opts ...googleapi.CallOption) (*ProductP
 	return ret, nil
 	// {
 	//   "description": "Retrieves the Android app permissions required by this app.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/permissions",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.getPermissions",
 	//   "parameterOrder": [
@@ -10791,7 +11489,7 @@ func (c *ProductsGetPermissionsCall) Do(opts ...googleapi.CallOption) (*ProductP
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/permissions",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/permissions",
 	//   "response": {
 	//     "$ref": "ProductPermissions"
 	//   },
@@ -10814,7 +11512,8 @@ type ProductsListCall struct {
 }
 
 // List: Finds approved products that match a query, or all approved
-// products if there is no query.
+// products
+// if there is no query.
 func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -10822,44 +11521,48 @@ func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
 }
 
 // Approved sets the optional parameter "approved": Specifies whether to
-// search among all products (false) or among only products that have
-// been approved (true). Only "true" is supported, and should be
-// specified.
+// search among all products (false) or among
+// only products that have been approved (true). Only "true"
+// is
+// supported, and should be specified.
 func (c *ProductsListCall) Approved(approved bool) *ProductsListCall {
 	c.urlParams_.Set("approved", fmt.Sprint(approved))
 	return c
 }
 
 // Language sets the optional parameter "language": The BCP47 tag for
-// the user's preferred language (e.g. "en-US", "de"). Results are
-// returned in the language best matching the preferred language.
+// the user's preferred language (e.g. "en-US", "de").
+// Results are returned in the language best matching the
+// preferred
+// language.
 func (c *ProductsListCall) Language(language string) *ProductsListCall {
 	c.urlParams_.Set("language", language)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Specifies the
-// maximum number of products that can be returned per request. If not
-// specified, uses a default value of 100, which is also the maximum
-// retrievable within a single response.
+// MaxResults sets the optional parameter "maxResults": Defines how many
+// results the list operation should return.
+// The default number depends on the resource collection.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // Query sets the optional parameter "query": The search query as typed
-// in the Google Play store search box. If omitted, all approved apps
-// will be returned (using the pagination parameters), including apps
-// that are not available in the store (e.g. unpublished apps).
+// in the Google Play store search box.
+// If omitted, all approved apps will be returned (using the
+// pagination
+// parameters), including apps that are not available in the store
+// (e.g. unpublished apps).
 func (c *ProductsListCall) Query(query string) *ProductsListCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// Token sets the optional parameter "token": A pagination token is
-// contained in a request's response when there are more products. The
-// token can be used in a subsequent request to obtain more products,
-// and so forth. This parameter cannot be used in the initial request.
+// Token sets the optional parameter "token": Defines the token of the
+// page to return, usually taken from
+// TokenPagination.
+// This can only be used if token paging is enabled.
 func (c *ProductsListCall) Token(token string) *ProductsListCall {
 	c.urlParams_.Set("token", token)
 	return c
@@ -10902,7 +11605,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10913,7 +11616,7 @@ func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10964,7 +11667,8 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds approved products that match a query, or all approved products if there is no query.",
+	//   "description": "Finds approved products that match a query, or all approved products\nif there is no query.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.list",
 	//   "parameterOrder": [
@@ -10972,7 +11676,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//   ],
 	//   "parameters": {
 	//     "approved": {
-	//       "description": "Specifies whether to search among all products (false) or among only products that have been approved (true). Only \"true\" is supported, and should be specified.",
+	//       "description": "Specifies whether to search among all products (false) or among\nonly products that have been approved (true). Only \"true\" is\nsupported, and should be specified.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10983,28 +11687,28 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\"). Results are returned in the language best matching the preferred language.",
+	//       "description": "The BCP47 tag for the user's preferred language (e.g. \"en-US\", \"de\").\nResults are returned in the language best matching the preferred\nlanguage.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Specifies the maximum number of products that can be returned per request. If not specified, uses a default value of 100, which is also the maximum retrievable within a single response.",
+	//       "description": "Defines how many results the list operation should return.\nThe default number depends on the resource collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "query": {
-	//       "description": "The search query as typed in the Google Play store search box. If omitted, all approved apps will be returned (using the pagination parameters), including apps that are not available in the store (e.g. unpublished apps).",
+	//       "description": "The search query as typed in the Google Play store search box.\nIf omitted, all approved apps will be returned (using the pagination\nparameters), including apps that are not available in the store\n(e.g. unpublished apps).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "A pagination token is contained in a request's response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
+	//       "description": "Defines the token of the page to return, usually taken from\nTokenPagination.\nThis can only be used if token paging is enabled.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products",
 	//   "response": {
 	//     "$ref": "ProductsListResponse"
 	//   },
@@ -11062,7 +11766,7 @@ func (c *ProductsUnapproveCall) Header() http.Header {
 
 func (c *ProductsUnapproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11070,7 +11774,7 @@ func (c *ProductsUnapproveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/products/{productId}/unapprove")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/unapprove")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11098,6 +11802,7 @@ func (c *ProductsUnapproveCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Unapproves the specified product (and the relevant app permissions, if any)",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/unapprove",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.unapprove",
 	//   "parameterOrder": [
@@ -11118,7 +11823,7 @@ func (c *ProductsUnapproveCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/products/{productId}/unapprove",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/unapprove",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -11138,10 +11843,12 @@ type ServiceaccountkeysDeleteCall struct {
 }
 
 // Delete: Removes and invalidates the specified credentials for the
-// service account associated with this enterprise. The calling service
-// account must have been retrieved by calling
-// Enterprises.GetServiceAccount and must have been set as the
-// enterprise service account by calling Enterprises.SetAccount.
+// service account
+// associated with this enterprise. The calling service account must
+// have been
+// retrieved by calling Enterprises.GetServiceAccount and must have been
+// set
+// as the enterprise service account by calling Enterprises.SetAccount.
 func (r *ServiceaccountkeysService) Delete(enterpriseId string, keyId string) *ServiceaccountkeysDeleteCall {
 	c := &ServiceaccountkeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11176,7 +11883,7 @@ func (c *ServiceaccountkeysDeleteCall) Header() http.Header {
 
 func (c *ServiceaccountkeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11184,7 +11891,7 @@ func (c *ServiceaccountkeysDeleteCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys/{keyId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys/{keyId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -11211,7 +11918,8 @@ func (c *ServiceaccountkeysDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Removes and invalidates the specified credentials for the service account associated with this enterprise. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.",
+	//   "description": "Removes and invalidates the specified credentials for the service account\nassociated with this enterprise. The calling service account must have been\nretrieved by calling Enterprises.GetServiceAccount and must have been set\nas the enterprise service account by calling Enterprises.SetAccount.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys/{keyId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.serviceaccountkeys.delete",
 	//   "parameterOrder": [
@@ -11232,7 +11940,7 @@ func (c *ServiceaccountkeysDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys/{keyId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys/{keyId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -11252,12 +11960,14 @@ type ServiceaccountkeysInsertCall struct {
 }
 
 // Insert: Generates new credentials for the service account associated
-// with this enterprise. The calling service account must have been
-// retrieved by calling Enterprises.GetServiceAccount and must have been
-// set as the enterprise service account by calling
-// Enterprises.SetAccount.
-//
-// Only the type of the key should be populated in the resource to be
+// with this
+// enterprise. The calling service account must have been retrieved by
+// calling
+// Enterprises.GetServiceAccount and must have been set as the
+// enterprise
+// service account by calling Enterprises.SetAccount. <br><br>
+// Only the type of the key should be populated in the resource to
+// be
 // inserted.
 func (r *ServiceaccountkeysService) Insert(enterpriseId string, serviceaccountkey *ServiceAccountKey) *ServiceaccountkeysInsertCall {
 	c := &ServiceaccountkeysInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11293,7 +12003,7 @@ func (c *ServiceaccountkeysInsertCall) Header() http.Header {
 
 func (c *ServiceaccountkeysInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11306,7 +12016,7 @@ func (c *ServiceaccountkeysInsertCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11357,7 +12067,8 @@ func (c *ServiceaccountkeysInsertCall) Do(opts ...googleapi.CallOption) (*Servic
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates new credentials for the service account associated with this enterprise. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.\n\nOnly the type of the key should be populated in the resource to be inserted.",
+	//   "description": "Generates new credentials for the service account associated with this\nenterprise. The calling service account must have been retrieved by calling\nEnterprises.GetServiceAccount and must have been set as the enterprise\nservice account by calling Enterprises.SetAccount. \u003cbr\u003e\u003cbr\u003e\nOnly the type of the key should be populated in the resource to be\ninserted.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.serviceaccountkeys.insert",
 	//   "parameterOrder": [
@@ -11371,7 +12082,7 @@ func (c *ServiceaccountkeysInsertCall) Do(opts ...googleapi.CallOption) (*Servic
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys",
 	//   "request": {
 	//     "$ref": "ServiceAccountKey"
 	//   },
@@ -11397,10 +12108,14 @@ type ServiceaccountkeysListCall struct {
 }
 
 // List: Lists all active credentials for the service account associated
-// with this enterprise. Only the ID and key type are returned. The
-// calling service account must have been retrieved by calling
-// Enterprises.GetServiceAccount and must have been set as the
-// enterprise service account by calling Enterprises.SetAccount.
+// with this
+// enterprise. Only the ID and key type are returned. The calling
+// service
+// account must have been retrieved by calling
+// Enterprises.GetServiceAccount
+// and must have been set as the enterprise service account by
+// calling
+// Enterprises.SetAccount.
 func (r *ServiceaccountkeysService) List(enterpriseId string) *ServiceaccountkeysListCall {
 	c := &ServiceaccountkeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -11444,7 +12159,7 @@ func (c *ServiceaccountkeysListCall) Header() http.Header {
 
 func (c *ServiceaccountkeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11455,7 +12170,7 @@ func (c *ServiceaccountkeysListCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/serviceAccountKeys")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11506,7 +12221,8 @@ func (c *ServiceaccountkeysListCall) Do(opts ...googleapi.CallOption) (*ServiceA
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all active credentials for the service account associated with this enterprise. Only the ID and key type are returned. The calling service account must have been retrieved by calling Enterprises.GetServiceAccount and must have been set as the enterprise service account by calling Enterprises.SetAccount.",
+	//   "description": "Lists all active credentials for the service account associated with this\nenterprise. Only the ID and key type are returned. The calling service\naccount must have been retrieved by calling Enterprises.GetServiceAccount\nand must have been set as the enterprise service account by calling\nEnterprises.SetAccount.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.serviceaccountkeys.list",
 	//   "parameterOrder": [
@@ -11520,7 +12236,7 @@ func (c *ServiceaccountkeysListCall) Do(opts ...googleapi.CallOption) (*ServiceA
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/serviceAccountKeys",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/serviceAccountKeys",
 	//   "response": {
 	//     "$ref": "ServiceAccountKeysListResponse"
 	//   },
@@ -11579,7 +12295,7 @@ func (c *StorelayoutclustersDeleteCall) Header() http.Header {
 
 func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11587,7 +12303,7 @@ func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -11616,6 +12332,7 @@ func (c *StorelayoutclustersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a cluster.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.storelayoutclusters.delete",
 	//   "parameterOrder": [
@@ -11643,7 +12360,7 @@ func (c *StorelayoutclustersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -11710,7 +12427,7 @@ func (c *StorelayoutclustersGetCall) Header() http.Header {
 
 func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11721,7 +12438,7 @@ func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11775,6 +12492,7 @@ func (c *StorelayoutclustersGetCall) Do(opts ...googleapi.CallOption) (*StoreClu
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of a cluster.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.storelayoutclusters.get",
 	//   "parameterOrder": [
@@ -11802,7 +12520,7 @@ func (c *StorelayoutclustersGetCall) Do(opts ...googleapi.CallOption) (*StoreClu
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "response": {
 	//     "$ref": "StoreCluster"
 	//   },
@@ -11861,7 +12579,7 @@ func (c *StorelayoutclustersInsertCall) Header() http.Header {
 
 func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11874,7 +12592,7 @@ func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11927,6 +12645,7 @@ func (c *StorelayoutclustersInsertCall) Do(opts ...googleapi.CallOption) (*Store
 	return ret, nil
 	// {
 	//   "description": "Inserts a new cluster in a page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.storelayoutclusters.insert",
 	//   "parameterOrder": [
@@ -11947,7 +12666,7 @@ func (c *StorelayoutclustersInsertCall) Do(opts ...googleapi.CallOption) (*Store
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
 	//   "request": {
 	//     "$ref": "StoreCluster"
 	//   },
@@ -12018,7 +12737,7 @@ func (c *StorelayoutclustersListCall) Header() http.Header {
 
 func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12029,7 +12748,7 @@ func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12082,6 +12801,7 @@ func (c *StorelayoutclustersListCall) Do(opts ...googleapi.CallOption) (*StoreLa
 	return ret, nil
 	// {
 	//   "description": "Retrieves the details of all clusters on the specified page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.storelayoutclusters.list",
 	//   "parameterOrder": [
@@ -12102,7 +12822,7 @@ func (c *StorelayoutclustersListCall) Do(opts ...googleapi.CallOption) (*StoreLa
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
 	//   "response": {
 	//     "$ref": "StoreLayoutClustersListResponse"
 	//   },
@@ -12163,7 +12883,7 @@ func (c *StorelayoutclustersUpdateCall) Header() http.Header {
 
 func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12176,7 +12896,7 @@ func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, e
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -12230,6 +12950,7 @@ func (c *StorelayoutclustersUpdateCall) Do(opts ...googleapi.CallOption) (*Store
 	return ret, nil
 	// {
 	//   "description": "Updates a cluster.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.storelayoutclusters.update",
 	//   "parameterOrder": [
@@ -12257,7 +12978,7 @@ func (c *StorelayoutclustersUpdateCall) Do(opts ...googleapi.CallOption) (*Store
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
 	//   "request": {
 	//     "$ref": "StoreCluster"
 	//   },
@@ -12317,7 +13038,7 @@ func (c *StorelayoutpagesDeleteCall) Header() http.Header {
 
 func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12325,7 +13046,7 @@ func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -12353,6 +13074,7 @@ func (c *StorelayoutpagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a store page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.storelayoutpages.delete",
 	//   "parameterOrder": [
@@ -12373,7 +13095,7 @@ func (c *StorelayoutpagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -12438,7 +13160,7 @@ func (c *StorelayoutpagesGetCall) Header() http.Header {
 
 func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12449,7 +13171,7 @@ func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12502,6 +13224,7 @@ func (c *StorelayoutpagesGetCall) Do(opts ...googleapi.CallOption) (*StorePage, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves details of a store page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.storelayoutpages.get",
 	//   "parameterOrder": [
@@ -12522,7 +13245,7 @@ func (c *StorelayoutpagesGetCall) Do(opts ...googleapi.CallOption) (*StorePage, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "response": {
 	//     "$ref": "StorePage"
 	//   },
@@ -12579,7 +13302,7 @@ func (c *StorelayoutpagesInsertCall) Header() http.Header {
 
 func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12592,7 +13315,7 @@ func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -12644,6 +13367,7 @@ func (c *StorelayoutpagesInsertCall) Do(opts ...googleapi.CallOption) (*StorePag
 	return ret, nil
 	// {
 	//   "description": "Inserts a new store page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.storelayoutpages.insert",
 	//   "parameterOrder": [
@@ -12657,7 +13381,7 @@ func (c *StorelayoutpagesInsertCall) Do(opts ...googleapi.CallOption) (*StorePag
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages",
 	//   "request": {
 	//     "$ref": "StorePage"
 	//   },
@@ -12726,7 +13450,7 @@ func (c *StorelayoutpagesListCall) Header() http.Header {
 
 func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12737,7 +13461,7 @@ func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12789,6 +13513,7 @@ func (c *StorelayoutpagesListCall) Do(opts ...googleapi.CallOption) (*StoreLayou
 	return ret, nil
 	// {
 	//   "description": "Retrieves the details of all pages in the store.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.storelayoutpages.list",
 	//   "parameterOrder": [
@@ -12802,7 +13527,7 @@ func (c *StorelayoutpagesListCall) Do(opts ...googleapi.CallOption) (*StoreLayou
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages",
 	//   "response": {
 	//     "$ref": "StoreLayoutPagesListResponse"
 	//   },
@@ -12861,7 +13586,7 @@ func (c *StorelayoutpagesUpdateCall) Header() http.Header {
 
 func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12874,7 +13599,7 @@ func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -12927,6 +13652,7 @@ func (c *StorelayoutpagesUpdateCall) Do(opts ...googleapi.CallOption) (*StorePag
 	return ret, nil
 	// {
 	//   "description": "Updates the content of a store page.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.storelayoutpages.update",
 	//   "parameterOrder": [
@@ -12947,7 +13673,7 @@ func (c *StorelayoutpagesUpdateCall) Do(opts ...googleapi.CallOption) (*StorePag
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
 	//   "request": {
 	//     "$ref": "StorePage"
 	//   },
@@ -13007,7 +13733,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13015,7 +13741,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -13043,6 +13769,7 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deleted an EMM-managed user.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.users.delete",
 	//   "parameterOrder": [
@@ -13063,7 +13790,7 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -13083,9 +13810,10 @@ type UsersGenerateAuthenticationTokenCall struct {
 }
 
 // GenerateAuthenticationToken: Generates an authentication token which
-// the device policy client can use to provision the given EMM-managed
-// user account on a device. The generated token is single-use and
-// expires after a few minutes.
+// the device policy client can use to
+// provision the given EMM-managed user account on a device.
+// The generated token is single-use and expires after a few
+// minutes.
 //
 // You can provision a maximum of 10 devices per user.
 //
@@ -13124,7 +13852,7 @@ func (c *UsersGenerateAuthenticationTokenCall) Header() http.Header {
 
 func (c *UsersGenerateAuthenticationTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13132,7 +13860,7 @@ func (c *UsersGenerateAuthenticationTokenCall) doRequest(alt string) (*http.Resp
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/authenticationToken")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/authenticationToken")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -13184,7 +13912,8 @@ func (c *UsersGenerateAuthenticationTokenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nYou can provision a maximum of 10 devices per user.\n\nThis call only works with EMM-managed accounts.",
+	//   "description": "Generates an authentication token which the device policy client can use to\nprovision the given EMM-managed user account on a device.\nThe generated token is single-use and expires after a few minutes.\n\nYou can provision a maximum of 10 devices per user.\n\nThis call only works with EMM-managed accounts.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/authenticationToken",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.generateAuthenticationToken",
 	//   "parameterOrder": [
@@ -13205,7 +13934,7 @@ func (c *UsersGenerateAuthenticationTokenCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/authenticationToken",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/authenticationToken",
 	//   "response": {
 	//     "$ref": "AuthenticationToken"
 	//   },
@@ -13273,7 +14002,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13284,7 +14013,7 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13337,6 +14066,7 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a user's details.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.get",
 	//   "parameterOrder": [
@@ -13357,7 +14087,7 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "response": {
 	//     "$ref": "User"
 	//   },
@@ -13426,7 +14156,7 @@ func (c *UsersGetAvailableProductSetCall) Header() http.Header {
 
 func (c *UsersGetAvailableProductSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13437,7 +14167,7 @@ func (c *UsersGetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/availableProductSet")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13490,6 +14220,7 @@ func (c *UsersGetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	return ret, nil
 	// {
 	//   "description": "Retrieves the set of products a user is entitled to access.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.getAvailableProductSet",
 	//   "parameterOrder": [
@@ -13510,7 +14241,7 @@ func (c *UsersGetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/availableProductSet",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "response": {
 	//     "$ref": "ProductSet"
 	//   },
@@ -13534,11 +14265,16 @@ type UsersInsertCall struct {
 
 // Insert: Creates a new EMM-managed user.
 //
-// The Users resource passed in the body of the request should include
-// an accountIdentifier and an accountType.
-// If a corresponding user already exists with the same account
-// identifier, the user will be updated with the resource. In this case
-// only the displayName field can be changed.
+// The <a href="/android/work/play/emm-api/v1/users.html">Users</a>
+// resource
+// passed in the body of the request should include
+// an
+// <code>accountIdentifier</code> and an <code>accountType</code>.
+// <p>If a corresponding user already exists with the same account
+// identifier,
+// the user will be updated with the resource. In this case only
+// the
+// <code>displayName</code> field can be changed.
 func (r *UsersService) Insert(enterpriseId string, user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13573,7 +14309,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13586,7 +14322,7 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -13637,7 +14373,8 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new EMM-managed user.\n\nThe Users resource passed in the body of the request should include an accountIdentifier and an accountType.\nIf a corresponding user already exists with the same account identifier, the user will be updated with the resource. In this case only the displayName field can be changed.",
+	//   "description": "Creates a new EMM-managed user.\n\nThe \u003ca href=\"/android/work/play/emm-api/v1/users.html\"\u003eUsers\u003c/a\u003e resource\npassed in the body of the request should include an\n\u003ccode\u003eaccountIdentifier\u003c/code\u003e and an \u003ccode\u003eaccountType\u003c/code\u003e.\n\u003cp\u003eIf a corresponding user already exists with the same account identifier,\nthe user will be updated with the resource. In this case only the\n\u003ccode\u003edisplayName\u003c/code\u003e field can be changed.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.insert",
 	//   "parameterOrder": [
@@ -13651,7 +14388,7 @@ func (c *UsersInsertCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users",
 	//   "request": {
 	//     "$ref": "User"
 	//   },
@@ -13676,9 +14413,11 @@ type UsersListCall struct {
 	header_      http.Header
 }
 
-// List: Looks up a user by primary email address. This is only
-// supported for Google-managed users. Lookup of the id is not needed
-// for EMM-managed users because the id is already returned in the
+// List: Looks up a user by primary email address.
+// This is only supported for Google-managed users.  Lookup of the id is
+// not
+// needed for EMM-managed users because the id is already returned in
+// the
 // result of the Users.insert call.
 func (r *UsersService) List(enterpriseId string, email string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13724,7 +14463,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13735,7 +14474,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13786,7 +14525,8 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a user by primary email address. This is only supported for Google-managed users. Lookup of the id is not needed for EMM-managed users because the id is already returned in the result of the Users.insert call.",
+	//   "description": "Looks up a user by primary email address.\nThis is only supported for Google-managed users.  Lookup of the id is not\nneeded for EMM-managed users because the id is already returned in the\nresult of the Users.insert call.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.list",
 	//   "parameterOrder": [
@@ -13795,7 +14535,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	//   ],
 	//   "parameters": {
 	//     "email": {
-	//       "description": "The exact primary email address of the user to look up.",
+	//       "description": "Required. The exact primary email address of the user to look up.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -13807,7 +14547,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*UsersListResponse, er
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users",
 	//   "response": {
 	//     "$ref": "UsersListResponse"
 	//   },
@@ -13830,8 +14570,10 @@ type UsersRevokeDeviceAccessCall struct {
 }
 
 // RevokeDeviceAccess: Revokes access to all devices currently
-// provisioned to the user. The user will no longer be able to use the
-// managed Play store on any of their managed devices.
+// provisioned to the user. The user
+// will no longer be able to use the managed Play store on any of
+// their
+// managed devices.
 //
 // This call only works with EMM-managed accounts.
 func (r *UsersService) RevokeDeviceAccess(enterpriseId string, userId string) *UsersRevokeDeviceAccessCall {
@@ -13868,7 +14610,7 @@ func (c *UsersRevokeDeviceAccessCall) Header() http.Header {
 
 func (c *UsersRevokeDeviceAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13876,7 +14618,7 @@ func (c *UsersRevokeDeviceAccessCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/deviceAccess")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/deviceAccess")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -13903,7 +14645,8 @@ func (c *UsersRevokeDeviceAccessCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Revokes access to all devices currently provisioned to the user. The user will no longer be able to use the managed Play store on any of their managed devices.\n\nThis call only works with EMM-managed accounts.",
+	//   "description": "Revokes access to all devices currently provisioned to the user. The user\nwill no longer be able to use the managed Play store on any of their\nmanaged devices.\n\nThis call only works with EMM-managed accounts.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/deviceAccess",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.users.revokeDeviceAccess",
 	//   "parameterOrder": [
@@ -13924,7 +14667,7 @@ func (c *UsersRevokeDeviceAccessCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/deviceAccess",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/deviceAccess",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -13945,9 +14688,13 @@ type UsersSetAvailableProductSetCall struct {
 }
 
 // SetAvailableProductSet: Modifies the set of products that a user is
-// entitled to access (referred to as whitelisted products). Only
-// products that are approved or products that were previously approved
-// (products with revoked approval) can be whitelisted.
+// entitled to access (referred to
+// as <em>whitelisted</em> products). Only products that are
+// <a
+// href="/android/work/play/emm-api/v1/products/approve">approved</a>
+// or products that were previously approved (products with revoked
+// approval)
+// can be whitelisted.
 func (r *UsersService) SetAvailableProductSet(enterpriseId string, userId string, productset *ProductSet) *UsersSetAvailableProductSetCall {
 	c := &UsersSetAvailableProductSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -13983,7 +14730,7 @@ func (c *UsersSetAvailableProductSetCall) Header() http.Header {
 
 func (c *UsersSetAvailableProductSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13996,7 +14743,7 @@ func (c *UsersSetAvailableProductSetCall) doRequest(alt string) (*http.Response,
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}/availableProductSet")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -14048,7 +14795,8 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the set of products that a user is entitled to access (referred to as whitelisted products). Only products that are approved or products that were previously approved (products with revoked approval) can be whitelisted.",
+	//   "description": "Modifies the set of products that a user is entitled to access (referred to\nas \u003cem\u003ewhitelisted\u003c/em\u003e products). Only products that are\n\u003ca href=\"/android/work/play/emm-api/v1/products/approve\"\u003eapproved\u003c/a\u003e\nor products that were previously approved (products with revoked approval)\ncan be whitelisted.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.users.setAvailableProductSet",
 	//   "parameterOrder": [
@@ -14069,7 +14817,7 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}/availableProductSet",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "request": {
 	//     "$ref": "ProductSet"
 	//   },
@@ -14097,10 +14845,15 @@ type UsersUpdateCall struct {
 
 // Update: Updates the details of an EMM-managed user.
 //
-// Can be used with EMM-managed users only (not Google managed users).
-// Pass the new details in the Users resource in the request body. Only
-// the displayName field can be changed. Other fields must either be
-// unset or have the currently active value.
+// Can be used with EMM-managed users only (not Google managed
+// users).
+// Pass the new details in the
+// <a href="/android/work/play/emm-api/v1/users.html">Users</a>
+// resource in the request body. Only the <code>displayName</code>
+// field
+// can be changed. Other fields must either be unset or have
+// the
+// currently active value.
 func (r *UsersService) Update(enterpriseId string, userId string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -14136,7 +14889,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14149,7 +14902,7 @@ func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/users/{userId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -14201,7 +14954,8 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the details of an EMM-managed user.\n\nCan be used with EMM-managed users only (not Google managed users). Pass the new details in the Users resource in the request body. Only the displayName field can be changed. Other fields must either be unset or have the currently active value.",
+	//   "description": "Updates the details of an EMM-managed user.\n\nCan be used with EMM-managed users only (not Google managed users).\nPass the new details in the\n\u003ca href=\"/android/work/play/emm-api/v1/users.html\"\u003eUsers\u003c/a\u003e\nresource in the request body. Only the \u003ccode\u003edisplayName\u003c/code\u003e field\ncan be changed. Other fields must either be unset or have the\ncurrently active value.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.users.update",
 	//   "parameterOrder": [
@@ -14222,7 +14976,7 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/users/{userId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}",
 	//   "request": {
 	//     "$ref": "User"
 	//   },
@@ -14282,7 +15036,7 @@ func (c *WebappsDeleteCall) Header() http.Header {
 
 func (c *WebappsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14290,7 +15044,7 @@ func (c *WebappsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -14318,6 +15072,7 @@ func (c *WebappsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing web app.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.webapps.delete",
 	//   "parameterOrder": [
@@ -14338,7 +15093,7 @@ func (c *WebappsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
 	//   ]
@@ -14403,7 +15158,7 @@ func (c *WebappsGetCall) Header() http.Header {
 
 func (c *WebappsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14414,7 +15169,7 @@ func (c *WebappsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -14467,6 +15222,7 @@ func (c *WebappsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets an existing web app.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.webapps.get",
 	//   "parameterOrder": [
@@ -14487,7 +15243,7 @@ func (c *WebappsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "response": {
 	//     "$ref": "WebApp"
 	//   },
@@ -14544,7 +15300,7 @@ func (c *WebappsInsertCall) Header() http.Header {
 
 func (c *WebappsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14557,7 +15313,7 @@ func (c *WebappsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/webApps")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -14609,6 +15365,7 @@ func (c *WebappsInsertCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	return ret, nil
 	// {
 	//   "description": "Creates a new web app for the enterprise.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/webApps",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.webapps.insert",
 	//   "parameterOrder": [
@@ -14622,7 +15379,7 @@ func (c *WebappsInsertCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/webApps",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/webApps",
 	//   "request": {
 	//     "$ref": "WebApp"
 	//   },
@@ -14691,7 +15448,7 @@ func (c *WebappsListCall) Header() http.Header {
 
 func (c *WebappsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14702,7 +15459,7 @@ func (c *WebappsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/webApps")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -14754,6 +15511,7 @@ func (c *WebappsListCall) Do(opts ...googleapi.CallOption) (*WebAppsListResponse
 	return ret, nil
 	// {
 	//   "description": "Retrieves the details of all web apps for a given enterprise.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/webApps",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.webapps.list",
 	//   "parameterOrder": [
@@ -14767,7 +15525,7 @@ func (c *WebappsListCall) Do(opts ...googleapi.CallOption) (*WebAppsListResponse
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/webApps",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/webApps",
 	//   "response": {
 	//     "$ref": "WebAppsListResponse"
 	//   },
@@ -14826,7 +15584,7 @@ func (c *WebappsUpdateCall) Header() http.Header {
 
 func (c *WebappsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200609")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14839,7 +15597,7 @@ func (c *WebappsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -14892,6 +15650,7 @@ func (c *WebappsUpdateCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing web app.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.webapps.update",
 	//   "parameterOrder": [
@@ -14912,7 +15671,7 @@ func (c *WebappsUpdateCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/webApps/{webAppId}",
 	//   "request": {
 	//     "$ref": "WebApp"
 	//   },

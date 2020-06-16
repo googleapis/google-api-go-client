@@ -49,7 +49,7 @@ func youtubeMain(client *http.Client, argv []string) {
 	// The API returns a 400 Bad Request response if tags is an empty string.
 	upload.Snippet.Tags = []string{"test", "upload", "api"}
 
-	call := service.Videos.Insert("snippet,status", upload)
+	call := service.Videos.Insert([]string{"snippet", "status"}, upload)
 
 	file, err := os.Open(filename)
 	if err != nil {

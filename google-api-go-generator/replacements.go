@@ -4,12 +4,25 @@
 
 package main
 
+// deprecatedPkgs is a map that contains packages that should be
+// deprecated in favor of another package.
+type deprecatedPkgs map[string]string
+
+func (d deprecatedPkgs) Get(name, version string) string {
+	v, ok := d[name]
+	if !ok {
+		// try lookup of a specific name-version
+		return d[name+":"+version]
+	}
+	return v
+}
+
 // replacementPackage is a map from an API package name to the
 // import path of the package that replaces it. If an API appears
 // in this map, its package doc comment will note that it is deprecated
 // and point to the replacement.
 // TODO(jba): consider automating this by looking at the structure of the gocloud repo.
-var replacementPackage = map[string]string{
+var replacementPackage deprecatedPkgs = map[string]string{
 	"bigquery":          "cloud.google.com/go/bigquery",
 	"cloudkms":          "cloud.google.com/go/kms/apiv1",
 	"cloudtasks":        "cloud.google.com/go/cloudtasks/apiv2beta2",
@@ -20,7 +33,7 @@ var replacementPackage = map[string]string{
 	"firestore":         "cloud.google.com/go/firestore",
 	"language":          "cloud.google.com/go/language/apiv1",
 	"logging":           "cloud.google.com/go/logging",
-	"monitoring":        "cloud.google.com/go/monitoring/apiv3",
+	"monitoring:v3":     "cloud.google.com/go/monitoring/apiv3",
 	"oslogin":           "cloud.google.com/go/oslogin/apiv1",
 	"pubsub":            "cloud.google.com/go/pubsub",
 	"redis":             "cloud.google.com/go/redis/apiv1",

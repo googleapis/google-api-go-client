@@ -11,7 +11,6 @@ import (
 	"io"
 	"net/http"
 	"sync"
-	"syscall"
 	"time"
 
 	gax "github.com/googleapis/gax-go/v2"
@@ -29,6 +28,8 @@ var (
 	backoff       = func() Backoff {
 		return &gax.Backoff{Initial: 100 * time.Millisecond}
 	}
+	// isRetryable is a platform-specific hook, specified in retryable_linux.go
+	syscallRetryable func(error) bool = func(err error) bool { return false }
 )
 
 const (
@@ -240,8 +241,8 @@ func shouldRetry(status int, err error) bool {
 		return true
 	}
 	// Transient network errors should be retried.
-	if se, ok := err.(syscall.Errno); ok {
-		return se == syscall.ECONNRESET || se == syscall.ECONNREFUSED
+	if syscallRetryable(err) {
+		return true
 	}
 	if err, ok := err.(interface{ Temporary() bool }); ok {
 		if err.Temporary() {

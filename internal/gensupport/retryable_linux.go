@@ -4,7 +4,6 @@
 
 // +build linux
 
-
 package gensupport
 
 import "syscall"

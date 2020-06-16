@@ -371,6 +371,46 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts"
           ]
+        },
+        "list": {
+          "description": "List all other contacts, that is contacts that are not in a contact group.\nOther contacts are typically auto created contacts from interactions.",
+          "flatPath": "v1/otherContacts",
+          "httpMethod": "GET",
+          "id": "people.otherContacts.list",
+          "parameterOrder": [],
+          "parameters": {
+            "pageSize": {
+              "description": "Optional. The number of other contacts to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Optional. A page token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the page token.",
+              "location": "query",
+              "type": "string"
+            },
+            "readMask": {
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Valid values are:\n\n* emailAddresses\n* names\n* phoneNumbers",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            },
+            "requestSyncToken": {
+              "description": "Optional. Whether the response should include `next_sync_token`, which can be used to\nget all changes since the last request. For subsequent sync requests use\nthe `sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "syncToken": {
+              "description": "Optional. A sync token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve only the resources changed since the last request.\nSync requests that specify `sync_token` have an additional rate limit.\n\nWhen syncing, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the sync token.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/otherContacts",
+          "response": {
+            "$ref": "ListOtherContactsResponse"
+          }
         }
       }
     },
@@ -382,7 +422,25 @@
           "httpMethod": "POST",
           "id": "people.people.createContact",
           "parameterOrder": [],
-          "parameters": {},
+          "parameters": {
+            "personFields": {
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Defaults to all\nfields if not set. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT and\nReadSourceType.PROFILE if not\nset.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT"
+              ],
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            }
+          },
           "path": "v1/people:createContact",
           "request": {
             "$ref": "Person"
@@ -440,6 +498,17 @@
               "pattern": "^people/[^/]+$",
               "required": true,
               "type": "string"
+            },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT and\nReadSourceType.PROFILE if not\nset.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT"
+              ],
+              "location": "query",
+              "repeated": true,
+              "type": "string"
             }
           },
           "path": "v1/{+resourceName}:deleteContactPhoto",
@@ -476,6 +545,17 @@
               "location": "path",
               "pattern": "^people/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.PROFILE\nand\nReadSourceType.CONTACT\nif not set.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT"
+              ],
+              "location": "query",
+              "repeated": true,
               "type": "string"
             }
           },
@@ -521,6 +601,17 @@
               "location": "query",
               "repeated": true,
               "type": "string"
+            },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT\nand\nReadSourceType.PROFILE\nif not set.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT"
+              ],
+              "location": "query",
+              "repeated": true,
+              "type": "string"
             }
           },
           "path": "v1/people:batchGet",
@@ -550,11 +641,28 @@
             "resourceName"
           ],
           "parameters": {
+            "personFields": {
+              "description": "Optional. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Defaults to all\nfields if not set. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            },
             "resourceName": {
               "description": "The resource name for the person, assigned by the server. An ASCII string\nwith a max length of 27 characters, in the form of\n`people/{person_id}`.",
               "location": "path",
               "pattern": "^people/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "sources": {
+              "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT and\nReadSourceType.PROFILE if not\nset.",
+              "enum": [
+                "READ_SOURCE_TYPE_UNSPECIFIED",
+                "READ_SOURCE_TYPE_PROFILE",
+                "READ_SOURCE_TYPE_CONTACT"
+              ],
+              "location": "query",
+              "repeated": true,
               "type": "string"
             },
             "updatePersonFields": {
@@ -662,6 +770,17 @@
                   "location": "query",
                   "type": "string"
                 },
+                "sources": {
+                  "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT\nand\nReadSourceType.PROFILE if not\nset.",
+                  "enum": [
+                    "READ_SOURCE_TYPE_UNSPECIFIED",
+                    "READ_SOURCE_TYPE_PROFILE",
+                    "READ_SOURCE_TYPE_CONTACT"
+                  ],
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                },
                 "syncToken": {
                   "description": "Optional. A sync token, received from a previous `ListConnections` call.\nProvide this to retrieve only the resources changed since the last request.\nSync requests that specify `sync_token` have an additional rate limit.\n\nWhen syncing, all other parameters provided to `ListConnections`\nmust match the call that provided the sync token.",
                   "location": "query",
@@ -680,53 +799,9 @@
           }
         }
       }
-    },
-    "v1": {
-      "methods": {
-        "otherContacts": {
-          "description": "List all other contacts, that is contacts that are not in a contact group.\nOther contacts are typically auto created contacts from interactions.",
-          "flatPath": "v1/otherContacts",
-          "httpMethod": "POST",
-          "id": "people.otherContacts",
-          "parameterOrder": [],
-          "parameters": {
-            "pageSize": {
-              "description": "Optional. The number of other contacts to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
-              "format": "int32",
-              "location": "query",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "Optional. A page token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the page token.",
-              "location": "query",
-              "type": "string"
-            },
-            "readMask": {
-              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple\nfields can be specified by separating them with commas. Valid values are:\n\n* emailAddresses\n* names\n* phoneNumbers",
-              "format": "google-fieldmask",
-              "location": "query",
-              "type": "string"
-            },
-            "requestSyncToken": {
-              "description": "Optional. Whether the response should include `next_sync_token`, which can be used to\nget all changes since the last request. For subsequent sync requests use\nthe `sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
-              "location": "query",
-              "type": "boolean"
-            },
-            "syncToken": {
-              "description": "Optional. A sync token, received from a previous `ListOtherContacts` call.\nProvide this to retrieve only the resources changed since the last request.\nSync requests that specify `sync_token` have an additional rate limit.\n\nWhen syncing, all other parameters provided to `ListOtherContacts`\nmust match the call that provided the sync token.",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "v1/otherContacts",
-          "response": {
-            "$ref": "ListOtherContactsResponse"
-          }
-        }
-      }
     }
   },
-  "revision": "20200604",
+  "revision": "20200606",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1001,9 +1076,26 @@
           "type": "string"
         },
         "readMask": {
-          "description": "Optional. A field mask to restrict which fields on the person are returned. Multiple\nfields can be specified by separating them with commas. Defaults to empty\nif not set, which will skip the post mutate get. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
+          "description": "Optional. A field mask to restrict which fields on the person are returned. Multiple\nfields can be specified by separating them with commas. Defaults to the\ncopy mask with metadata and membership fields if not set. Valid values are:\n\n* addresses\n* ageRanges\n* biographies\n* birthdays\n* coverPhotos\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* metadata\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* photos\n* relations\n* residences\n* sipAddresses\n* skills\n* urls\n* userDefined",
           "format": "google-fieldmask",
           "type": "string"
+        },
+        "sources": {
+          "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT and\nReadSourceType.PROFILE if not\nset.",
+          "enumDescriptions": [
+            "Unspecified.",
+            "Returns\nSourceType.ACCOUNT,\nSourceType.DOMAIN_PROFILE,\nand\nSourceType.PROFILE.",
+            "Returns\nSourceType.CONTACT."
+          ],
+          "items": {
+            "enum": [
+              "READ_SOURCE_TYPE_UNSPECIFIED",
+              "READ_SOURCE_TYPE_PROFILE",
+              "READ_SOURCE_TYPE_CONTACT"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2194,6 +2286,23 @@
           "description": "Required. Raw photo bytes",
           "format": "byte",
           "type": "string"
+        },
+        "sources": {
+          "description": "Optional. A mask of what source types to return. Defaults to\nReadSourceType.CONTACT and\nReadSourceType.PROFILE if not\nset.",
+          "enumDescriptions": [
+            "Unspecified.",
+            "Returns\nSourceType.ACCOUNT,\nSourceType.DOMAIN_PROFILE,\nand\nSourceType.PROFILE.",
+            "Returns\nSourceType.CONTACT."
+          ],
+          "items": {
+            "enum": [
+              "READ_SOURCE_TYPE_UNSPECIFIED",
+              "READ_SOURCE_TYPE_PROFILE",
+              "READ_SOURCE_TYPE_CONTACT"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

@@ -78,12 +78,12 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 	return resp, err
 }
 
-// SendAndRetryRequest sends a single HTTP request using the given client,
+// SendRequestWithRetry sends a single HTTP request using the given client,
 // with retries if a retryable error is returned.
 // If ctx is non-nil, it calls all hooks, then sends the request with
 // req.WithContext, then calls any functions returned by the hooks in
 // reverse order.
-func SendAndRetryRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
+func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling
 	// done by the default http.Transport. See https://github.com/google/google-api-go-client/issues/219.
 	if _, ok := req.Header["Accept-Encoding"]; ok {

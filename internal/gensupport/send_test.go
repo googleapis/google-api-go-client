@@ -20,11 +20,11 @@ func TestSendRequest(t *testing.T) {
 	}
 }
 
-func TestSendAndRetryRequest(t *testing.T) {
+func TestSendRequestWithRetry(t *testing.T) {
 	// Setting Accept-Encoding should give an error immediately.
 	req, _ := http.NewRequest("GET", "url", nil)
 	req.Header.Set("Accept-Encoding", "")
-	_, err := SendAndRetryRequest(context.Background(), nil, req)
+	_, err := SendRequestWithRetry(context.Background(), nil, req)
 	if err == nil {
 		t.Error("got nil, want error")
 	}

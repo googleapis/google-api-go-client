@@ -2062,7 +2062,7 @@ func (meth *Method) generateCode() {
 		pn(`})`)
 	}
 	if meth.supportsMediaUpload() {
-		pn("return gensupport.SendAndRetryRequest(c.ctx_, c.s.client, req)")
+		pn("return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req)")
 	} else {
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	}

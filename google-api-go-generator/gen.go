@@ -2061,8 +2061,11 @@ func (meth *Method) generateCode() {
 		}
 		pn(`})`)
 	}
-
-	pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+	if meth.supportsMediaUpload() {
+		pn("return gensupport.SendAndRetryRequest(c.ctx_, c.s.client, req)")
+	} else {
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+	}
 	pn("}")
 
 	if meth.supportsMediaDownload() {

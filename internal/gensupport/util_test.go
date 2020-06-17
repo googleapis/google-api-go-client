@@ -36,3 +36,8 @@ func (bo *NoPauseBackoff) Pause() time.Duration { return 0 }
 type PauseOneSecond struct{}
 
 func (bo *PauseOneSecond) Pause() time.Duration { return time.Second }
+
+// PauseForeverBackoff implements backoff with infinite 1h pauses.
+type PauseForeverBackoff struct{}
+
+func (bo *PauseForeverBackoff) Pause() time.Duration { return time.Hour }

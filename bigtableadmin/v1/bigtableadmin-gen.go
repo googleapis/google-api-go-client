@@ -124,8 +124,8 @@ func (s *Service) userAgent() string {
 // of serving all Tables in the parent
 // Instance.
 type Cluster struct {
-	// DefaultStorageType: (`CreationOnly`)
-	// The type of storage used by this cluster to serve its
+	// DefaultStorageType: Immutable. The type of storage used by this
+	// cluster to serve its
 	// parent instance's tables, unless explicitly overridden.
 	//
 	// Possible values:
@@ -135,9 +135,8 @@ type Cluster struct {
 	//   "HDD" - Magnetic drive (HDD) storage should be used.
 	DefaultStorageType string `json:"defaultStorageType,omitempty"`
 
-	// Location: (`CreationOnly`)
-	// The location where this cluster's nodes and storage reside. For
-	// best
+	// Location: Immutable. The location where this cluster's nodes and
+	// storage reside. For best
 	// performance, clients should be located as close as possible to
 	// this
 	// cluster. Currently only zones are supported, so values should be of
@@ -145,8 +144,7 @@ type Cluster struct {
 	// form `projects/{project}/locations/{zone}`.
 	Location string `json:"location,omitempty"`
 
-	// Name: Required. (`OutputOnly`)
-	// The unique name of the cluster. Values are of the
+	// Name: The unique name of the cluster. Values are of the
 	// form
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
@@ -156,8 +154,7 @@ type Cluster struct {
 	// throughput and more consistent performance.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
-	// State: (`OutputOnly`)
-	// The current state of the cluster.
+	// State: Output only. The current state of the cluster.
 	//
 	// Possible values:
 	//   "STATE_NOT_KNOWN" - The state of the cluster could not be
@@ -418,14 +415,12 @@ type Instance struct {
 	// * Keys and values must both be under 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. (`OutputOnly`)
-	// The unique name of the instance. Values are of the
+	// Name: The unique name of the instance. Values are of the
 	// form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
 	Name string `json:"name,omitempty"`
 
-	// State: (`OutputOnly`)
-	// The current state of the instance.
+	// State: Output only. The current state of the instance.
 	//
 	// Possible values:
 	//   "STATE_NOT_KNOWN" - The state of the instance could not be

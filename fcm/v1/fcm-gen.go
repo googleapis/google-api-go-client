@@ -706,6 +706,12 @@ func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 // sRGB color
 // space.
 //
+// Note: when color equality needs to be decided, implementations,
+// unless
+// documented otherwise, will treat two colors to be equal if all their
+// red,
+// green, blue and alpha values each differ by at most 1e-5.
+//
 // Example (Java):
 //
 //      import com.google.type.Color;
@@ -1255,7 +1261,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

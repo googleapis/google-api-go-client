@@ -68,15 +68,17 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internaloption.WithDefaultMTLSEndpoint
 
 const apiId = "additionalpropsobjs:v1"
 const apiName = "additionalpropsobjs"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/apis"
+const mtlsBasePath = "https://www.googleapis.com/discovery/v1/apis"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath), internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

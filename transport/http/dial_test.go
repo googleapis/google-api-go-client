@@ -9,7 +9,6 @@ import (
 
 	"crypto/tls"
 
-	"github.com/google/go-cmp/cmp"
 	"google.golang.org/api/internal"
 )
 
@@ -109,29 +108,5 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 		if tc.Want != got {
 			t.Errorf("getEndpoint(%q, %q): got %v; want %v", tc.UserEndpoint, tc.DefaultEndpoint, got, tc.Want)
 		}
-	}
-}
-
-func TestGenerateDefaultMtlsEndpoint(t *testing.T) {
-	mtlsEndpoint := generateDefaultMtlsEndpoint("pubsub.googleapis.com")
-	wantMtlsEndpoint := "pubsub.mtls.googleapis.com"
-	if !cmp.Equal(mtlsEndpoint, wantMtlsEndpoint) {
-		t.Error(cmp.Diff(wantMtlsEndpoint, wantMtlsEndpoint))
-	}
-}
-
-func TestGenerateDefaultMtlsEndpointSandbox(t *testing.T) {
-	mtlsEndpoint := generateDefaultMtlsEndpoint("staging-pubsub.sandbox.googleapis.com")
-	wantMtlsEndpoint := "staging-pubsub.mtls.sandbox.googleapis.com"
-	if !cmp.Equal(mtlsEndpoint, wantMtlsEndpoint) {
-		t.Error(cmp.Diff(wantMtlsEndpoint, wantMtlsEndpoint))
-	}
-}
-
-func TestGenerateDefaultMtlsEndpointUnsupported(t *testing.T) {
-	mtlsEndpoint := generateDefaultMtlsEndpoint("unsupported.google.com")
-	wantMtlsEndpoint := "unsupported.google.com"
-	if !cmp.Equal(mtlsEndpoint, wantMtlsEndpoint) {
-		t.Error(cmp.Diff(wantMtlsEndpoint, wantMtlsEndpoint))
 	}
 }

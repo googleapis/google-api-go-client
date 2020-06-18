@@ -495,6 +495,19 @@ func (a *API) apiBaseURL() string {
 	return resolveRelative(base, rel)
 }
 
+func (a *API) mtlsApiBaseURL() string {
+	var base, rel string
+	switch {
+	case *baseURL != "":
+		base, rel = *baseURL, a.doc.BasePath
+	case a.doc.MTLSRootURL != "":
+		base, rel = a.doc.MTLSRootURL, a.doc.ServicePath
+	default:
+		base, rel = *apisURL, a.doc.BasePath
+	}
+	return resolveRelative(base, rel)
+}
+
 func (a *API) needsDataWrapper() bool {
 	for _, feature := range a.doc.Features {
 		if feature == "dataWrapper" {
@@ -714,11 +727,13 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
+	pn("var _ = internaloption.WithDefaultMTLSEndpoint")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)
 	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
+	pn("const mtlsBasePath = %q", a.mtlsApiBaseURL())
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()
@@ -740,7 +755,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("// NOTE: prepend, so we don't override user-specified scopes.")
 		pn("opts = append([]option.ClientOption{scopesOption}, opts...)")
 	}
-	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath))")
+	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath), internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")

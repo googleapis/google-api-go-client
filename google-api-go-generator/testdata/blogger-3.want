@@ -74,11 +74,13 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internaloption.WithDefaultMTLSEndpoint
 
 const apiId = "blogger:v3"
 const apiName = "blogger"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/blogger/v3/"
+const mtlsBasePath = "https://www.googleapis.com/blogger/v3/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -97,7 +99,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
-	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath), internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

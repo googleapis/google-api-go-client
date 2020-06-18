@@ -354,7 +354,7 @@
               ],
               "parameters": {
                 "groupName": {
-                  "description": "Required. The group resource name. Written as\n\u003ccode\u003eprojects/\u003cvar\u003eprojectID\u003c/var\u003e/groups/\u003cvar\u003egroup_name\u003c/var\u003e\u003c/code\u003e.\nCall\n\u003ca href=\"/error-reporting/reference/rest/v1beta1/projects.groupStats/list\"\u003e\n\u003ccode\u003egroupStats.list\u003c/code\u003e\u003c/a\u003e to return a list of groups belonging to\nthis project.\n\nExample: \u003ccode\u003eprojects/my-project-123/groups/my-group\u003c/code\u003e",
+                  "description": "Required. The group resource name. Written as\n`projects/{projectID}/groups/{group_name}`. Call\n[`groupStats.list`](https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)\nto return a list of groups belonging to this project.\n\nExample: `projects/my-project-123/groups/my-group`",
                   "location": "path",
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
@@ -402,7 +402,7 @@
       }
     }
   },
-  "revision": "20200226",
+  "revision": "20200610",
   "rootUrl": "https://clouderrorreporting.googleapis.com/",
   "schemas": {
     "DeleteEventsResponse": {
@@ -726,7 +726,7 @@
       "id": "TrackingIssue",
       "properties": {
         "url": {
-          "description": "A URL pointing to a related entry in an issue tracking system.\nExample: https://github.com/user/project/issues/4",
+          "description": "A URL pointing to a related entry in an issue tracking system.\nExample: `https://github.com/user/project/issues/4`",
           "type": "string"
         }
       },

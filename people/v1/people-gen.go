@@ -681,8 +681,8 @@ func (s *ContactGroupResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CopyOtherContactToMyContactsGroupRequest: A request to copy an other
-// contact to my contacts group.
+// CopyOtherContactToMyContactsGroupRequest: A request to copy an "Other
+// contact" to my contacts group.
 type CopyOtherContactToMyContactsGroupRequest struct {
 	// CopyMask: Required. A field mask to restrict which fields are copied
 	// into the new contact.
@@ -1465,7 +1465,7 @@ func (s *ListDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListOtherContactsResponse: The response to a request for the
-// authenticated user's other contacts.
+// authenticated user's "Other contacts".
 type ListOtherContactsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page.
@@ -1479,9 +1479,9 @@ type ListOtherContactsResponse struct {
 	// token.
 	NextSyncToken string `json:"nextSyncToken,omitempty"`
 
-	// OtherContacts: The list of other contacts returned as Person
-	// resources. Other contacts
-	// support a limited subset of supported fields.
+	// OtherContacts: The list of "Other contacts" returned as Person
+	// resources. "Other contacts"
+	// support a limited subset of fields.
 	// See
 	// ListOtherContactsRequest.request_mask for more detailed information.
 	OtherContacts []*Person `json:"otherContacts,omitempty"`
@@ -2679,11 +2679,10 @@ type Source struct {
 	// [https://contact.google.com/](https://contact.google.com/){id},
 	// where
 	// {id} is the source id.
-	//   "OTHER_CONTACT" - [Google contact](https://contacts.google.com).
-	// You can view these kinds
-	// of contacts under the 'Other contacts' tab.
-	//   "DOMAIN_CONTACT" - [G Suite shared
-	// domain
+	//   "OTHER_CONTACT" - [Google "Other
+	// contact"](https://contacts.google.com/other).
+	//   "DOMAIN_CONTACT" - [G Suite domain
+	// shared
 	// contact](https://support.google.com/a/answer/9281635).
 	Type string `json:"type,omitempty"`
 
@@ -3105,7 +3104,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3239,7 +3238,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3373,7 +3372,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3529,7 +3528,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3708,7 +3707,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3871,7 +3870,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4018,7 +4017,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4124,8 +4123,8 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 	header_                                  http.Header
 }
 
-// CopyOtherContactToMyContactsGroup: Copies an other contact to a new
-// contact in the user's MY_CONTACTS group
+// CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
+// contact in the user's "myContacts" group
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c := &OtherContactsCopyOtherContactToMyContactsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4160,7 +4159,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4224,7 +4223,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Copies an other contact to a new contact in the user's MY_CONTACTS group",
+	//   "description": "Copies an \"Other contact\" to a new contact in the user's \"myContacts\" group",
 	//   "flatPath": "v1/otherContacts/{otherContactsId}:copyOtherContactToMyContactsGroup",
 	//   "httpMethod": "POST",
 	//   "id": "people.otherContacts.copyOtherContactToMyContactsGroup",
@@ -4233,7 +4232,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Required. The resource name of the other contact to copy.",
+	//       "description": "Required. The resource name of the \"Other contact\" to copy.",
 	//       "location": "path",
 	//       "pattern": "^otherContacts/[^/]+$",
 	//       "required": true,
@@ -4264,16 +4263,18 @@ type OtherContactsListCall struct {
 	header_      http.Header
 }
 
-// List: List all other contacts, that is contacts that are not in a
-// contact group.
-// Other contacts are typically auto created contacts from interactions.
+// List: List all "Other contacts", that is contacts that are not in a
+// contact
+// group. "Other contacts" are typically auto created contacts
+// from
+// interactions.
 func (r *OtherContactsService) List() *OtherContactsListCall {
 	c := &OtherContactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of other
-// contacts to include in the response. Valid values are
+// PageSize sets the optional parameter "pageSize": The number of "Other
+// contacts" to include in the response. Valid values are
 // between 1 and 1000, inclusive. Defaults to 100 if not set or set to
 // 0.
 func (c *OtherContactsListCall) PageSize(pageSize int64) *OtherContactsListCall {
@@ -4372,7 +4373,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4431,14 +4432,14 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	}
 	return ret, nil
 	// {
-	//   "description": "List all other contacts, that is contacts that are not in a contact group.\nOther contacts are typically auto created contacts from interactions.",
+	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact\ngroup. \"Other contacts\" are typically auto created contacts from\ninteractions.",
 	//   "flatPath": "v1/otherContacts",
 	//   "httpMethod": "GET",
 	//   "id": "people.otherContacts.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The number of other contacts to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
+	//       "description": "Optional. The number of \"Other contacts\" to include in the response. Valid values are\nbetween 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4592,7 +4593,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4737,7 +4738,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4919,7 +4920,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5147,7 +5148,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5413,7 +5414,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5691,7 +5692,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5981,7 +5982,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6270,7 +6271,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6434,7 +6435,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6713,7 +6714,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

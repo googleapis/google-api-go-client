@@ -74,7 +74,7 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "groupsmigration:v1"
 const apiName = "groupsmigration"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/groups/v1/groups/"
+const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -261,7 +261,7 @@ func (c *ArchiveInsertCall) Header() http.Header {
 
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200610")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -269,7 +269,7 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupId}/archive")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "groups/v1/groups/{groupId}/archive")
 	if c.mediaInfo_ != nil {
 		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/groups/v1/groups/{groupId}/archive")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
@@ -349,18 +349,15 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new mail into the archive of the Google group.",
+	//   "flatPath": "groups/v1/groups/{groupId}/archive",
 	//   "httpMethod": "POST",
 	//   "id": "groupsmigration.archive.insert",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "message/rfc822"
 	//     ],
-	//     "maxSize": "25MB",
+	//     "maxSize": "26214400",
 	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/groups/v1/groups/{groupId}/archive"
-	//       },
 	//       "simple": {
 	//         "multipart": true,
 	//         "path": "/upload/groups/v1/groups/{groupId}/archive"
@@ -378,7 +375,7 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "{groupId}/archive",
+	//   "path": "groups/v1/groups/{groupId}/archive",
 	//   "response": {
 	//     "$ref": "Groups"
 	//   },

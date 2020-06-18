@@ -948,7 +948,7 @@
       }
     }
   },
-  "revision": "20200605",
+  "revision": "20200612",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1411,6 +1411,10 @@
             "NPM package format.",
             "APT package format."
           ],
+          "type": "string"
+        },
+        "kmsKeyName": {
+          "description": "The Cloud KMS resource name of the customer managed encryption key that’s\nused to encrypt the contents of the Repository. Has the form:\n`projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`.\nThis value may not be changed after the Repository has been created.",
           "type": "string"
         },
         "labels": {

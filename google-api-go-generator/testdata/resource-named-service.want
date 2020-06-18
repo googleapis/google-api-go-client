@@ -76,7 +76,7 @@ const apiId = "appengine:v1"
 const apiName = "appengine"
 const apiVersion = "v1"
 const basePath = "https://appengine.googleapis.com/"
-const mtlsBasePath = "https://www.googleapis.com/discovery/v1/apis"
+const mtlsBasePath = "https://appengine.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

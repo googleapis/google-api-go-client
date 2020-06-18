@@ -76,7 +76,7 @@ const apiId = "ml:v1"
 const apiName = "ml"
 const apiVersion = "v1"
 const basePath = "https://ml.googleapis.com/"
-const mtlsBasePath = "https://www.googleapis.com/discovery/v1/apis"
+const mtlsBasePath = "https://ml.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

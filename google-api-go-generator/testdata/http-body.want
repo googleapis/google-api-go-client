@@ -76,7 +76,7 @@ const apiId = "healthcare:v1beta1"
 const apiName = "healthcare"
 const apiVersion = "v1beta1"
 const basePath = "https://healthcare.googleapis.com/"
-const mtlsBasePath = "https://www.googleapis.com/discovery/v1/apis"
+const mtlsBasePath = "https://healthcare.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

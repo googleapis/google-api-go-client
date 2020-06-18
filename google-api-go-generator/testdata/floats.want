@@ -76,7 +76,7 @@ const apiId = "X:v1"
 const apiName = "X"
 const apiVersion = "v1"
 const basePath = "https://appengine.googleapis.com/"
-const mtlsBasePath = "https://www.googleapis.com/discovery/v1/apis"
+const mtlsBasePath = "https://appengine.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

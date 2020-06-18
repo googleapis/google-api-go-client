@@ -80,7 +80,7 @@ const apiId = "blogger:v3"
 const apiName = "blogger"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/blogger/v3/"
-const mtlsBasePath = "https://www.googleapis.com/blogger/v3/"
+const mtlsBasePath = "https://www.mtls.googleapis.com/blogger/v3/"
 
 // OAuth2 scopes used by this API.
 const (

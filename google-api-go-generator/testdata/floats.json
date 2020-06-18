@@ -9,6 +9,7 @@
  "baseUrl": "https://appengine.googleapis.com/",
  "basePath": "",
  "rootUrl": "https://appengine.googleapis.com/",
+ "mtlsRootUrl": "https://appengine.mtls.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
  "schemas": {  

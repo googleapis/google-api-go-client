@@ -1466,8 +1466,9 @@ type ProjectInfo struct {
 
 	// Project: The resource name of the GCP `Project` to which Firebase
 	// resources can be
-	// added, in the format:
-	// <br><code>projects/<var>projectId</var></code>
+	// added, in the
+	// format:
+	// <br><code>projects/<var>PROJECT_NUMBER</var></code>
 	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1591,8 +1592,8 @@ type ShaCertificate struct {
 
 	// Name: The fully qualified resource name of the `sha-key`, in the
 	// format:
-	// <br><code>projects/<var>projectId</var>/androidApps/<var>appId
-	// </var>/sha/<var>shaId</var></code>
+	// <br><code>projects/<var>PROJECT_NUMBER</var>/androidApps/<var>
+	// APP_ID</var>/sha/<var>SHA_ID</var></code>
 	Name string `json:"name,omitempty"`
 
 	// ShaHash: The certificate hash for the App.
@@ -1758,14 +1759,14 @@ type StreamMapping struct {
 	// with the
 	// Google Analytics data stream, in the
 	// format:
-	// <br><code>projects/<var>projectId</var>/androidApps/<var>appId
-	// </var></code>
+	// <br><code>projects/<var>PROJECT_NUMBER</var>/androidApps/<var>
+	// APP_ID</var></code>
 	// or
-	// <code>projects/<var>projectId</var>/iosApps/<var>appI
-	// d</var></code>
+	// <code>projects/<var>PROJECT_NUMBER</var>/iosApp
+	// s/<var>APP_ID</var></code>
 	// or
-	// <code>projects/<var>projectId</var>/webApps/<var>app
-	// Id</var></code>
+	// <code>projects/<var>PROJECT_NUMBER</var>
+	// /webApps/<var>APP_ID</var></code>
 	App string `json:"app,omitempty"`
 
 	// MeasurementId: Applicable for Firebase Web Apps only.<br>
@@ -2092,7 +2093,7 @@ func (c *AvailableProjectsListCall) Header() http.Header {
 
 func (c *AvailableProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2263,7 +2264,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2377,7 +2378,7 @@ type ProjectsAddFirebaseCall struct {
 // a
 // `FirebaseProject` uses underlying GCP identifiers (most
 // importantly,
-// the `projectId`) as its own for easy interop with GCP
+// the `PROJECT_NUMBER`) as its own for easy interop with GCP
 // APIs.
 // <br>
 // <br>The result of this call is an
@@ -2450,7 +2451,7 @@ func (c *ProjectsAddFirebaseCall) Header() http.Header {
 
 func (c *ProjectsAddFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2514,7 +2515,7 @@ func (c *ProjectsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds Firebase resources to the specified existing\n[Google Cloud Platform (GCP) `Project`]\n(https://cloud.google.com/resource-manager/reference/rest/v1/projects).\n\u003cbr\u003e\n\u003cbr\u003eSince a FirebaseProject is actually also a GCP `Project`, a\n`FirebaseProject` uses underlying GCP identifiers (most importantly,\nthe `projectId`) as its own for easy interop with GCP APIs.\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations).\nPoll the `Operation` to track the provisioning process by calling\nGetOperation until\n[`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`. When\n`done` is `true`, the `Operation` has either succeeded or failed. If the\n`Operation` succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) is set to\na FirebaseProject; if the `Operation` failed, its\n[`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to a\ngoogle.rpc.Status. The `Operation` is automatically deleted after\ncompletion, so there is no need to call\nDeleteOperation.\n\u003cbr\u003e\n\u003cbr\u003eThis method does not modify any billing account information on the\nunderlying GCP `Project`.\n\u003cbr\u003e\n\u003cbr\u003eTo call `AddFirebase`, a project member or service account must have\nthe following permissions (the IAM roles of Editor and Owner contain these\npermissions):\n`firebase.projects.update`, `resourcemanager.projects.get`,\n`serviceusage.services.enable`, and `serviceusage.services.get`.",
+	//   "description": "Adds Firebase resources to the specified existing\n[Google Cloud Platform (GCP) `Project`]\n(https://cloud.google.com/resource-manager/reference/rest/v1/projects).\n\u003cbr\u003e\n\u003cbr\u003eSince a FirebaseProject is actually also a GCP `Project`, a\n`FirebaseProject` uses underlying GCP identifiers (most importantly,\nthe `PROJECT_NUMBER`) as its own for easy interop with GCP APIs.\n\u003cbr\u003e\n\u003cbr\u003eThe result of this call is an [`Operation`](../../v1beta1/operations).\nPoll the `Operation` to track the provisioning process by calling\nGetOperation until\n[`done`](../../v1beta1/operations#Operation.FIELDS.done) is `true`. When\n`done` is `true`, the `Operation` has either succeeded or failed. If the\n`Operation` succeeded, its\n[`response`](../../v1beta1/operations#Operation.FIELDS.response) is set to\na FirebaseProject; if the `Operation` failed, its\n[`error`](../../v1beta1/operations#Operation.FIELDS.error) is set to a\ngoogle.rpc.Status. The `Operation` is automatically deleted after\ncompletion, so there is no need to call\nDeleteOperation.\n\u003cbr\u003e\n\u003cbr\u003eThis method does not modify any billing account information on the\nunderlying GCP `Project`.\n\u003cbr\u003e\n\u003cbr\u003eTo call `AddFirebase`, a project member or service account must have\nthe following permissions (the IAM roles of Editor and Owner contain these\npermissions):\n`firebase.projects.update`, `resourcemanager.projects.get`,\n`serviceusage.services.enable`, and `serviceusage.services.get`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}:addFirebase",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.addFirebase",
@@ -2523,7 +2524,7 @@ func (c *ProjectsAddFirebaseCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "The resource name of the GCP `Project` to which Firebase resources will be\nadded, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e\nAfter calling `AddFirebase`, the\n[`projectId`](https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_id)\nof the GCP `Project` is also the `projectId` of the FirebaseProject.",
+	//       "description": "The resource name of the GCP `Project` to which Firebase resources will be\nadded, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e\nAfter calling `AddFirebase`, the\n[`project_id`](https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_id)\nof the GCP `Project` is also the `project_id` of the FirebaseProject.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2673,7 +2674,7 @@ func (c *ProjectsAddGoogleAnalyticsCall) Header() http.Header {
 
 func (c *ProjectsAddGoogleAnalyticsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2746,7 +2747,7 @@ func (c *ProjectsAddGoogleAnalyticsCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent `FirebaseProject` to link to an existing Google Analytics\naccount, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent `FirebaseProject` to link to an existing Google Analytics\naccount, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2824,7 +2825,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2895,7 +2896,7 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*FirebaseProject, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the Project, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the Project, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2978,7 +2979,7 @@ func (c *ProjectsGetAdminSdkConfigCall) Header() http.Header {
 
 func (c *ProjectsGetAdminSdkConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3049,7 +3050,7 @@ func (c *ProjectsGetAdminSdkConfigCall) Do(opts ...googleapi.CallOption) (*Admin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the Project, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/adminSdkConfig\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the Project, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/adminSdkConfig\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/adminSdkConfig$",
 	//       "required": true,
@@ -3131,7 +3132,7 @@ func (c *ProjectsGetAnalyticsDetailsCall) Header() http.Header {
 
 func (c *ProjectsGetAnalyticsDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3202,7 +3203,7 @@ func (c *ProjectsGetAnalyticsDetailsCall) Do(opts ...googleapi.CallOption) (*Ana
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/analyticsDetails\u003c/code\u003e",
+	//       "description": "The fully qualified resource name, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/analyticsDetails\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/analyticsDetails$",
 	//       "required": true,
@@ -3317,7 +3318,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3491,7 +3492,7 @@ func (c *ProjectsPatchCall) Header() http.Header {
 
 func (c *ProjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3664,7 +3665,7 @@ func (c *ProjectsRemoveAnalyticsCall) Header() http.Header {
 
 func (c *ProjectsRemoveAnalyticsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3737,7 +3738,7 @@ func (c *ProjectsRemoveAnalyticsCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent `FirebaseProject` to unlink from its Google Analytics account,\nin the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent `FirebaseProject` to unlink from its Google Analytics account,\nin the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3844,7 +3845,7 @@ func (c *ProjectsSearchAppsCall) Header() http.Header {
 
 func (c *ProjectsSearchAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3926,7 +3927,7 @@ func (c *ProjectsSearchAppsCall) Do(opts ...googleapi.CallOption) (*SearchFireba
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4020,7 +4021,7 @@ func (c *ProjectsAndroidAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4093,7 +4094,7 @@ func (c *ProjectsAndroidAppsCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4170,7 +4171,7 @@ func (c *ProjectsAndroidAppsGetCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4241,7 +4242,7 @@ func (c *ProjectsAndroidAppsGetCall) Do(opts ...googleapi.CallOption) (*AndroidA
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+$",
 	//       "required": true,
@@ -4319,7 +4320,7 @@ func (c *ProjectsAndroidAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4390,7 +4391,7 @@ func (c *ProjectsAndroidAppsGetConfigCall) Do(opts ...googleapi.CallOption) (*An
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+/config$",
 	//       "required": true,
@@ -4493,7 +4494,7 @@ func (c *ProjectsAndroidAppsListCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4575,7 +4576,7 @@ func (c *ProjectsAndroidAppsListCall) Do(opts ...googleapi.CallOption) (*ListAnd
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4640,8 +4641,8 @@ func (r *ProjectsAndroidAppsService) Patch(name string, androidapp *AndroidApp) 
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
 // fields to update.
-// <br>Note that the fields `name`, `appId`, `projectId`, and
-// `packageName`
+// <br>Note that the fields `name`, `app_id`, `project_id`, and
+// `package_name`
 // are all immutable.
 func (c *ProjectsAndroidAppsPatchCall) UpdateMask(updateMask string) *ProjectsAndroidAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -4675,7 +4676,7 @@ func (c *ProjectsAndroidAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4755,7 +4756,7 @@ func (c *ProjectsAndroidAppsPatchCall) Do(opts ...googleapi.CallOption) (*Androi
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update.\n\u003cbr\u003eNote that the fields `name`, `appId`, `projectId`, and `packageName`\nare all immutable.",
+	//       "description": "Specifies which fields to update.\n\u003cbr\u003eNote that the fields `name`, `app_id`, `project_id`, and `package_name`\nare all immutable.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4822,7 +4823,7 @@ func (c *ProjectsAndroidAppsShaCreateCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4895,7 +4896,7 @@ func (c *ProjectsAndroidAppsShaCreateCall) Do(opts ...googleapi.CallOption) (*Sh
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent App to which a SHA certificate will be added, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent App to which a SHA certificate will be added, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+$",
 	//       "required": true,
@@ -4961,7 +4962,7 @@ func (c *ProjectsAndroidAppsShaDeleteCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5029,7 +5030,7 @@ func (c *ProjectsAndroidAppsShaDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the `sha-key`, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e/sha/\u003cvar\u003eshaId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eYou can obtain the full name from the response of\n[`ListShaCertificates`](../projects.androidApps.sha/list) or the original\n[`CreateShaCertificate`](../projects.androidApps.sha/create).",
+	//       "description": "The fully qualified resource name of the `sha-key`, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e/sha/\u003cvar\u003eSHA_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eYou can obtain the full name from the response of\n[`ListShaCertificates`](../projects.androidApps.sha/list) or the original\n[`CreateShaCertificate`](../projects.androidApps.sha/create).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+/sha/[^/]+$",
 	//       "required": true,
@@ -5105,7 +5106,7 @@ func (c *ProjectsAndroidAppsShaListCall) Header() http.Header {
 
 func (c *ProjectsAndroidAppsShaListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5176,7 +5177,7 @@ func (c *ProjectsAndroidAppsShaListCall) Do(opts ...googleapi.CallOption) (*List
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent App for which to list SHA certificates, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent App for which to list SHA certificates, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/androidApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/androidApps/[^/]+$",
 	//       "required": true,
@@ -5233,10 +5234,9 @@ type ProjectsAvailableLocationsListCall struct {
 // possible
 // GCP resource locations. To list all GCP resource locations
 // (regardless of
-// any restrictions), call the endpoint without specifying a `projectId`
-// (that
-// is,
-// `/v1beta1/{parent=projects/-}/listAvailableLocations`).
+// any restrictions), call the endpoint without specifying a
+// `PROJECT_NUMBER`
+// (that is, `/v1beta1/{parent=projects/-}/listAvailableLocations`).
 // <br>
 // <br>To call `ListAvailableLocations` with a specified project, a
 // member
@@ -5308,7 +5308,7 @@ func (c *ProjectsAvailableLocationsListCall) Header() http.Header {
 
 func (c *ProjectsAvailableLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5370,7 +5370,7 @@ func (c *ProjectsAvailableLocationsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of valid Google Cloud Platform (GCP) resource locations for\nthe specified Project (including a FirebaseProject).\n\u003cbr\u003e\n\u003cbr\u003eOne of these locations can be selected as the Project's [_default_ GCP\nresource location](https://firebase.google.com/docs/projects/locations),\nwhich is the geographical location where project resources, such as Cloud\nFirestore, will be provisioned by default. However, if the default GCP\nresource location has already been set for the Project, then this setting\ncannot be changed.\n\u003cbr\u003e\n\u003cbr\u003eThis call checks for any possible\n[location\nrestrictions](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations)\nfor the specified Project and, thus, might return a subset of all possible\nGCP resource locations. To list all GCP resource locations (regardless of\nany restrictions), call the endpoint without specifying a `projectId` (that\nis, `/v1beta1/{parent=projects/-}/listAvailableLocations`).\n\u003cbr\u003e\n\u003cbr\u003eTo call `ListAvailableLocations` with a specified project, a member\nmust be at minimum a Viewer of the project. Calls without a specified\nproject do not require any specific project permissions.",
+	//   "description": "Returns a list of valid Google Cloud Platform (GCP) resource locations for\nthe specified Project (including a FirebaseProject).\n\u003cbr\u003e\n\u003cbr\u003eOne of these locations can be selected as the Project's [_default_ GCP\nresource location](https://firebase.google.com/docs/projects/locations),\nwhich is the geographical location where project resources, such as Cloud\nFirestore, will be provisioned by default. However, if the default GCP\nresource location has already been set for the Project, then this setting\ncannot be changed.\n\u003cbr\u003e\n\u003cbr\u003eThis call checks for any possible\n[location\nrestrictions](https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations)\nfor the specified Project and, thus, might return a subset of all possible\nGCP resource locations. To list all GCP resource locations (regardless of\nany restrictions), call the endpoint without specifying a `PROJECT_NUMBER`\n(that is, `/v1beta1/{parent=projects/-}/listAvailableLocations`). \u003cbr\u003e\n\u003cbr\u003eTo call `ListAvailableLocations` with a specified project, a member\nmust be at minimum a Viewer of the project. Calls without a specified\nproject do not require any specific project permissions.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/availableLocations",
 	//   "httpMethod": "GET",
 	//   "id": "firebase.projects.availableLocations.list",
@@ -5390,7 +5390,7 @@ func (c *ProjectsAvailableLocationsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The Project for which to list GCP resource locations, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eIf no project is specified (that is, `projects/-`), the returned list\ndoes not take into account org-specific or project-specific location\nrestrictions.",
+	//       "description": "The Project for which to list GCP resource locations, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eIf no project is specified (that is, `projects/-`), the returned list\ndoes not take into account org-specific or project-specific location\nrestrictions.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5540,7 +5540,7 @@ func (c *ProjectsDefaultLocationFinalizeCall) Header() http.Header {
 
 func (c *ProjectsDefaultLocationFinalizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5613,7 +5613,7 @@ func (c *ProjectsDefaultLocationFinalizeCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The resource name of the Project for which the default GCP resource\nlocation will be set, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The resource name of the Project for which the default GCP resource\nlocation will be set, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5687,7 +5687,7 @@ func (c *ProjectsIosAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsIosAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5760,7 +5760,7 @@ func (c *ProjectsIosAppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5837,7 +5837,7 @@ func (c *ProjectsIosAppsGetCall) Header() http.Header {
 
 func (c *ProjectsIosAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5908,7 +5908,7 @@ func (c *ProjectsIosAppsGetCall) Do(opts ...googleapi.CallOption) (*IosApp, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the App, in the format:\n\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/iosApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/iosApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the App, in the format:\n\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/iosApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/iosApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iosApps/[^/]+$",
 	//       "required": true,
@@ -5985,7 +5985,7 @@ func (c *ProjectsIosAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsIosAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6056,7 +6056,7 @@ func (c *ProjectsIosAppsGetConfigCall) Do(opts ...googleapi.CallOption) (*IosApp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/iosApps/\u003cvar\u003eappId\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/iosApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/iosApps/\u003cvar\u003eAPP_ID\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/iosApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/iosApps/[^/]+/config$",
 	//       "required": true,
@@ -6159,7 +6159,7 @@ func (c *ProjectsIosAppsListCall) Header() http.Header {
 
 func (c *ProjectsIosAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6241,7 +6241,7 @@ func (c *ProjectsIosAppsListCall) Do(opts ...googleapi.CallOption) (*ListIosApps
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6341,7 +6341,7 @@ func (c *ProjectsIosAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsIosAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6494,7 +6494,7 @@ func (c *ProjectsWebAppsCreateCall) Header() http.Header {
 
 func (c *ProjectsWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6567,7 +6567,7 @@ func (c *ProjectsWebAppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project in which to create an App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6644,7 +6644,7 @@ func (c *ProjectsWebAppsGetCall) Header() http.Header {
 
 func (c *ProjectsWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6715,7 +6715,7 @@ func (c *ProjectsWebAppsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified resource name of the App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/webApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/webApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The fully qualified resource name of the App, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/webApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/webApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/webApps/[^/]+$",
 	//       "required": true,
@@ -6792,7 +6792,7 @@ func (c *ProjectsWebAppsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsWebAppsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6863,7 +6863,7 @@ func (c *ProjectsWebAppsGetConfigCall) Do(opts ...googleapi.CallOption) (*WebApp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e/webApps/\u003cvar\u003eappId\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eappId\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/webApps/\u003cvar\u003eappId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The resource name of the App configuration to download, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e/webApps/\u003cvar\u003eAPP_ID\u003c/var\u003e/config\u003c/code\u003e\n\u003cbr\u003eAs an \u003cvar\u003eAPP_ID\u003c/var\u003e is a unique identifier, the Unique Resource\nfrom Sub-Collection access pattern may be used here, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/-/webApps/\u003cvar\u003eAPP_ID\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/webApps/[^/]+/config$",
 	//       "required": true,
@@ -6966,7 +6966,7 @@ func (c *ProjectsWebAppsListCall) Header() http.Header {
 
 func (c *ProjectsWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7048,7 +7048,7 @@ func (c *ProjectsWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebApps
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003eprojectId\u003c/var\u003e\u003c/code\u003e",
+	//       "description": "The parent Project for which to list Apps, in the format:\n\u003cbr\u003e\u003ccode\u003eprojects/\u003cvar\u003ePROJECT_NUMBER\u003c/var\u003e\u003c/code\u003e",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7148,7 +7148,7 @@ func (c *ProjectsWebAppsPatchCall) Header() http.Header {
 
 func (c *ProjectsWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200616")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

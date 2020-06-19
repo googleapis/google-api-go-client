@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/Tw7d5qByrzQGrI9D9LwLH04Iq4A\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/_8-8sx80SnU-RNZjVI3xU75ZBn0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -7055,6 +7055,11 @@
               "required": true,
               "type": "string"
             },
+            "returnPartialSuccess": {
+              "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+              "location": "query",
+              "type": "boolean"
+            },
             "zone": {
               "description": "The name of the zone where the managed instance group is located.",
               "location": "path",
@@ -13233,6 +13238,651 @@
         }
       }
     },
+    "networkFirewallPolicies": {
+      "methods": {
+        "addAssociation": {
+          "description": "Inserts an association for the specified firewall policy.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.addAssociation",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "replaceExistingAssociation": {
+              "description": "Indicates whether or not to replace it if an association of the attachment already exists. This is false by default, in which case an error will be returned if an association already exists.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/addAssociation",
+          "request": {
+            "$ref": "FirewallPolicyAssociation"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "addRule": {
+          "description": "Inserts a rule into a firewall policy.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.addRule",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/addRule",
+          "request": {
+            "$ref": "FirewallPolicyRule"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "cloneRules": {
+          "description": "Copies rules to the specified firewall policy.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.cloneRules",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "(firewallPolicies/)?[0-9]{0,20}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "sourceFirewallPolicy": {
+              "description": "The firewall policy from which to copy rules.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/cloneRules",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "delete": {
+          "description": "Deletes the specified policy.",
+          "httpMethod": "DELETE",
+          "id": "compute.networkFirewallPolicies.delete",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified network firewall policy.",
+          "httpMethod": "GET",
+          "id": "compute.networkFirewallPolicies.get",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to get.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}",
+          "response": {
+            "$ref": "FirewallPolicy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getAssociation": {
+          "description": "Gets an association with the specified name.",
+          "httpMethod": "GET",
+          "id": "compute.networkFirewallPolicies.getAssociation",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to which the queried rule belongs.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "description": "The name of the association to get from the firewall policy.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/getAssociation",
+          "response": {
+            "$ref": "FirewallPolicyAssociation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.networkFirewallPolicies.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "optionsRequestedPolicyVersion": {
+              "description": "Requested IAM Policy version.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getRule": {
+          "description": "Gets a rule of the specified priority.",
+          "httpMethod": "GET",
+          "id": "compute.networkFirewallPolicies.getRule",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to which the queried rule belongs.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "priority": {
+              "description": "The priority of the rule to get from the firewall policy.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/getRule",
+          "response": {
+            "$ref": "FirewallPolicyRule"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a new policy in the specified project using the data included in the request.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.insert",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies",
+          "request": {
+            "$ref": "FirewallPolicy"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Lists all the policies that have been configured for the specified project.",
+          "httpMethod": "GET",
+          "id": "compute.networkFirewallPolicies.list",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either `=`, `!=`, `\u003e`, or `\u003c`.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named `example-instance` by specifying `name != example-instance`.\n\nYou can also filter nested fields. For example, you could specify `scheduling.automaticRestart = false` to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\") ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true) ```",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than `maxResults`, Compute Engine returns a `nextPageToken` that can be used to get the next page of results in subsequent list requests. Acceptable values are `0` to `500`, inclusive. (Default: `500`)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using `orderBy=\"creationTimestamp desc\"`. This sorts results based on the `creationTimestamp` field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by `name` or `creationTimestamp desc` is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set `pageToken` to the `nextPageToken` returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "returnPartialSuccess": {
+              "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "{project}/global/firewallPolicies",
+          "response": {
+            "$ref": "FirewallPolicyList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "patch": {
+          "description": "Patches the specified policy with the data included in the request.",
+          "httpMethod": "PATCH",
+          "id": "compute.networkFirewallPolicies.patch",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}",
+          "request": {
+            "$ref": "FirewallPolicy"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "patchRule": {
+          "description": "Patches a rule of the specified priority.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.patchRule",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "priority": {
+              "description": "The priority of the rule to patch.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/patchRule",
+          "request": {
+            "$ref": "FirewallPolicyRule"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "removeAssociation": {
+          "description": "Removes an association for the specified firewall policy.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.removeAssociation",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "name": {
+              "description": "Name for the attachment that will be removed.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/removeAssociation",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "removeRule": {
+          "description": "Deletes a rule of the specified priority.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.removeRule",
+          "parameterOrder": [
+            "project",
+            "firewallPolicy"
+          ],
+          "parameters": {
+            "firewallPolicy": {
+              "description": "Name of the firewall policy to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "priority": {
+              "description": "The priority of the rule to remove from the firewall policy.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{firewallPolicy}/removeRule",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "GlobalSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.networkFirewallPolicies.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/firewallPolicies/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
     "networks": {
       "methods": {
         "addPeering": {
@@ -16201,6 +16851,11 @@
               "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
               "required": true,
               "type": "string"
+            },
+            "returnPartialSuccess": {
+              "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/getXpnResources",
@@ -16249,6 +16904,11 @@
               "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
               "required": true,
               "type": "string"
+            },
+            "returnPartialSuccess": {
+              "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/listXpnHosts",
@@ -20221,6 +20881,11 @@
               "location": "path",
               "required": true,
               "type": "string"
+            },
+            "returnPartialSuccess": {
+              "description": "Opt-in for partial success behavior which provides partial results in case of failure. The default value is false and the logic is the same as today.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/regions/{region}/instanceGroupManagers/{instanceGroupManager}/listManagedInstances",
@@ -31696,7 +32361,7 @@
       }
     }
   },
-  "revision": "20200515",
+  "revision": "20200526",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -32691,7 +33356,7 @@
       "type": "object"
     },
     "AllocationSpecificSKUAllocationReservedInstanceProperties": {
-      "description": "Properties of the SKU instances being reserved.",
+      "description": "Properties of the SKU instances being reserved. Next ID: 9",
       "id": "AllocationSpecificSKUAllocationReservedInstanceProperties",
       "properties": {
         "guestAccelerators": {
@@ -32724,6 +33389,18 @@
           "description": "Specifies the number of hours after reservation creation where instances using the reservation won't be scheduled for maintenance.",
           "format": "int32",
           "type": "integer"
+        },
+        "maintenanceInterval": {
+          "description": "Specifies whether this VM may be a stable fleet VM. Setting this to \"Periodic\" designates this VM as a Stable Fleet VM.\n\nSee go/stable-fleet-ug for more details.",
+          "enum": [
+            "AS_NEEDED",
+            "PERIODIC"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         },
         "minCpuPlatform": {
           "description": "Minimum cpu platform the reservation.",
@@ -33985,7 +34662,7 @@
       "type": "object"
     },
     "BackendService": {
-      "description": "Represents a Backend Service resource.\n\nA backend service contains configuration values for Google Cloud Platform load balancing services.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
+      "description": "Represents a Backend Service resource.\n\nA backend service defines how Google Cloud load balancers distribute traffic. The backend service configuration contains a set of values, such as the protocol used to connect to backends, various distribution and session settings, health checks, and timeouts. These settings provide fine-grained control over how your load balancer behaves. Most of the settings have default values that allow for easy configuration if you need to get started quickly.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
       "id": "BackendService",
       "properties": {
         "affinityCookieTtlSec": {
@@ -37709,6 +38386,322 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicy": {
+      "description": "Represents a Firewall Policy resource. (== resource_for {$api_version}.firewallPolicies ==)",
+      "id": "FirewallPolicy",
+      "properties": {
+        "associations": {
+          "description": "A list of associations that belong to this firewall policy.",
+          "items": {
+            "$ref": "FirewallPolicyAssociation"
+          },
+          "type": "array"
+        },
+        "creationTimestamp": {
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "User-provided name of the Organization firewall plicy. The name should be unique in the organization in which the firewall policy is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "fingerprint": {
+          "description": "Specifies a fingerprint for this resource, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata, otherwise the request will fail with error 412 conditionNotMet.\n\nTo see the latest fingerprint, make get() request to the firewall policy.",
+          "format": "byte",
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#firewallPolicy",
+          "description": "[Output only] Type of the resource. Always compute#firewallPolicyfor firewall policies",
+          "type": "string"
+        },
+        "name": {
+          "description": "[Output Only] Name of the resource. It is a numeric ID allocated by GCP which uniquely identifies the Firewall Policy.",
+          "type": "string"
+        },
+        "parent": {
+          "description": "[Output Only] The parent of the firewall policy.",
+          "type": "string"
+        },
+        "ruleTupleCount": {
+          "description": "[Output Only] Total count of all firewall policy rule tuples. A firewall policy can not exceed a set number of tuples.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "rules": {
+          "description": "A list of rules that belong to this policy. There must always be a default rule (rule with priority 2147483647 and match \"*\"). If no rules are provided when creating a firewall policy, a default rule with action \"allow\" will be added.",
+          "items": {
+            "$ref": "FirewallPolicyRule"
+          },
+          "type": "array"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicyAssociation": {
+      "id": "FirewallPolicyAssociation",
+      "properties": {
+        "attachmentTarget": {
+          "description": "The target that the firewall policy is attached to.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "[Output Only] The display name of the firewall policy of the association.",
+          "type": "string"
+        },
+        "firewallPolicyId": {
+          "description": "[Output Only] The firewall policy ID of the association.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name for an association.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicyList": {
+      "id": "FirewallPolicyList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of FirewallPolicy resources.",
+          "items": {
+            "$ref": "FirewallPolicy"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#firewallPolicyList",
+          "description": "[Output Only] Type of resource. Always compute#firewallPolicyList for listsof FirewallPolicies",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "PARTIAL_SUCCESS",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicyRule": {
+      "description": "Represents a rule that describes one or more match conditions along with the action to be taken when traffic matches this condition (allow or deny).",
+      "id": "FirewallPolicyRule",
+      "properties": {
+        "action": {
+          "description": "The Action to perform when the client connection triggers the rule. Can currently be either \"allow\" or \"deny()\" where valid values for status are 403, 404, and 502.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "direction": {
+          "description": "The direction in which this rule applies.",
+          "enum": [
+            "DIRECTION_UNSPECIFIED",
+            "EGRESS",
+            "INGRESS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "enableLogging": {
+          "description": "Denotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on \"goto_next\" rules.",
+          "type": "boolean"
+        },
+        "kind": {
+          "default": "compute#firewallPolicyRule",
+          "description": "[Output only] Type of the resource. Always compute#firewallPolicyRule for firewall policy rules",
+          "type": "string"
+        },
+        "match": {
+          "$ref": "FirewallPolicyRuleMatcher",
+          "description": "A match condition that incoming traffic is evaluated against. If it evaluates to true, the corresponding ?action? is enforced."
+        },
+        "preview": {
+          "description": "If set to true, the specified action is not enforced.",
+          "type": "boolean"
+        },
+        "priority": {
+          "description": "An integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "ruleTupleCount": {
+          "description": "[Output Only] Calculation of the complexity of a single firewall policy rule.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "targetResources": {
+          "description": "A list of network resource URLs to which this rule applies. This field allows you to control which network?s VMs get this rule. If this field is left blank, all VMs within the organization will receive the rule.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "targetServiceAccounts": {
+          "description": "A list of service accounts indicating the sets of instances that are applied with this rule.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicyRuleMatcher": {
+      "description": "Represents a match condition that incoming traffic is evaluated against. Exactly one field must be specified.",
+      "id": "FirewallPolicyRuleMatcher",
+      "properties": {
+        "destIpRanges": {
+          "description": "CIDR IP address range.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "layer4Configs": {
+          "description": "Pairs of IP protocols and ports that the rule should match.",
+          "items": {
+            "$ref": "FirewallPolicyRuleMatcherLayer4Config"
+          },
+          "type": "array"
+        },
+        "srcIpRanges": {
+          "description": "CIDR IP address range.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "FirewallPolicyRuleMatcherLayer4Config": {
+      "id": "FirewallPolicyRuleMatcherLayer4Config",
+      "properties": {
+        "ipProtocol": {
+          "description": "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number.",
+          "type": "string"
+        },
+        "ports": {
+          "description": "An optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and [\"12345-12349\"].",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -41929,6 +42922,20 @@
         "isStateful": {
           "description": "[Output Only] A bit indicating whether the managed instance group has stateful configuration, that is, if you have configured any items in a stateful policy or in per-instance configs. The group might report that it has no stateful config even when there is still some preserved state on a managed instance, for example, if you have deleted all PICs but not yet applied those deletions. This field is deprecated in favor of has_stateful_config.",
           "type": "boolean"
+        },
+        "perInstanceConfigs": {
+          "$ref": "InstanceGroupManagerStatusStatefulPerInstanceConfigs",
+          "description": "[Output Only] Status of per-instance configs on the instance."
+        }
+      },
+      "type": "object"
+    },
+    "InstanceGroupManagerStatusStatefulPerInstanceConfigs": {
+      "id": "InstanceGroupManagerStatusStatefulPerInstanceConfigs",
+      "properties": {
+        "allEffective": {
+          "description": "A bit indicating if all of the group's per-instance configs (listed in the output of a listPerInstanceConfigs API call) have status EFFECTIVE or there are no per-instance-configs.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -45877,7 +46884,7 @@
           "type": "string"
         },
         "storageLocations": {
-          "description": "GCS bucket storage location of the machine image (regional or multi-regional).",
+          "description": "The regional or multi-regional Cloud Storage bucket location where the machine image is stored.",
           "items": {
             "type": "string"
           },
@@ -46773,6 +47780,10 @@
         },
         "description": {
           "description": "An optional description of this resource. Provide this field when you create the resource.",
+          "type": "string"
+        },
+        "firewallPolicy": {
+          "description": "[Output Only] URL of the firewall policy the network is associated with.",
           "type": "string"
         },
         "gatewayIPv4": {
@@ -50959,6 +51970,26 @@
         "preservedState": {
           "$ref": "PreservedState",
           "description": "The intended preserved state for the given instance. Does not contain preserved state generated from a stateful policy."
+        },
+        "status": {
+          "description": "The status of applying this per-instance config on the corresponding managed instance.",
+          "enum": [
+            "APPLYING",
+            "DELETING",
+            "EFFECTIVE",
+            "NONE",
+            "UNAPPLIED",
+            "UNAPPLIED_DELETION"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -52087,6 +53118,7 @@
         "metric": {
           "description": "[Output Only] Name of the quota metric.",
           "enum": [
+            "A2_CPUS",
             "AFFINITY_GROUPS",
             "ALIASES_PER_NETWORK_GLOBAL",
             "AMD_S9300_GPUS",
@@ -52095,6 +53127,7 @@
             "BACKEND_SERVICES",
             "C2_CPUS",
             "COMMITMENTS",
+            "COMMITTED_A2_CPUS",
             "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
             "COMMITTED_LICENSES",
@@ -52197,6 +53230,8 @@
             "XPN_SERVICE_PROJECTS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -56472,7 +57507,7 @@
       "type": "object"
     },
     "Scheduling": {
-      "description": "Sets the scheduling options for an Instance. NextID: 11",
+      "description": "Sets the scheduling options for an Instance. NextID: 12",
       "id": "Scheduling",
       "properties": {
         "automaticRestart": {
@@ -57061,7 +58096,7 @@
       "id": "SecuritySettings",
       "properties": {
         "authentication": {
-          "description": "A URL referring to a networksecurity.Authentication resource that describes how clients should authenticate with this service's backends. If left blank, communications between services are not encrypted (i.e., the TLS policy is set to OPEN). When sending traffic to this service's backends, the OriginationTls setting of Authentication.TransportAuthentication is applied. Refer to the Authentication and Authentication.TransportAuthentication.OriginationTls resources for additional details. authentication only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use clientTlsPolicy instead.",
           "type": "string"
         },
         "authenticationPolicy": {
@@ -57072,12 +58107,16 @@
           "$ref": "AuthorizationConfig",
           "description": "[Deprecated] Authorization config defines the Role Based Access Control (RBAC) config. Authorization config defines the Role Based Access Control (RBAC) config."
         },
+        "clientTlsPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.ClientTlsPolicy resource that describes how clients should authenticate with this service's backends.\nclientTlsPolicy only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.\nIf left blank, communications are not encrypted.",
+          "type": "string"
+        },
         "clientTlsSettings": {
           "$ref": "ClientTlsSettings",
           "description": "[Deprecated] TLS Settings for the backend service."
         },
         "subjectAltNames": {
-          "description": "Optional. A list of subject alternate names to verify the subject identity (SAN) in the certificate presented by the server, to authorize the SAN list as identities to run the service represented by this BackendService. If specified, the client will verify that the server certificate's subject alt name matches one of the specified values. Only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "Optional. A list of Subject Alternative Names (SANs) that the client verifies during a mutual TLS handshake with an server/endpoint for this BackendService. When the server presents its X.509 certificate to the client, the client inspects the certificate's subjectAltName field. If the field contains one of the specified values, the communication continues. Otherwise, it fails. This additional check enables the client to verify that the server is authorized to run the requested service.\nNote that the contents of the server certificate's subjectAltName field are configured by the Public Key Infrastructure which provisions server identities.\nOnly applies to a global BackendService with loadBalancingScheme set to INTERNAL_SELF_MANAGED. Only applies when BackendService has an attached clientTlsPolicy with clientCertificate (mTLS mode).",
           "items": {
             "type": "string"
           },
@@ -57908,7 +58947,7 @@
       "type": "object"
     },
     "SslCertificate": {
-      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates and SSL certificates quotas and limits. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
+      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates, SSL certificates quotas and limits, and  Troubleshooting SSL certificates. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
       "id": "SslCertificate",
       "properties": {
         "certificate": {
@@ -60133,11 +61172,15 @@
       "id": "TargetHttpsProxy",
       "properties": {
         "authentication": {
-          "description": "A URL referring to a networksecurity.Authentication resource that describes how the proxy should authenticate inbound traffic. If left blank, communications between services are not encrypted (i.e., the TLS policy is set to OPEN). When terminating inbound traffic to this proxy, the TerminationTls setting of Authentication.TransportAuthentication is applied.\nRefer to the Authentication and Authentication.TransportAuthentication.TerminationTls resources for additional details.\nauthentication only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use serverTlsPolicy instead.",
           "type": "string"
         },
         "authorization": {
-          "description": "A URL referring to a networksecurity.Authorization resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.\nRefer to the Authorization resource for additional details.\nauthorization only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use authorizationPolicy instead.",
+          "type": "string"
+        },
+        "authorizationPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.\nRefer to the AuthorizationPolicy resource for additional details.\nauthorizationPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
           "type": "string"
         },
         "certificateMap": {
@@ -60195,6 +61238,10 @@
         },
         "selfLinkWithId": {
           "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
+        "serverTlsPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic.\nserverTlsPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.\nIf left blank, communications are not encrypted.",
           "type": "string"
         },
         "sslCertificates": {

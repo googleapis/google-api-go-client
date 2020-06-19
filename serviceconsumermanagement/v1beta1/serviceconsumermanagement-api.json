@@ -437,7 +437,7 @@
       }
     }
   },
-  "revision": "20200615",
+  "revision": "20200617",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2357,6 +2357,10 @@
       "description": "A quota override",
       "id": "V1Beta1QuotaOverride",
       "properties": {
+        "adminOverrideAncestor": {
+          "description": "The resource name of the ancestor that requested the override. For example:\n\"organizations/12345\" or \"folders/67890\".\nUsed by admin overrides only.",
+          "type": "string"
+        },
         "dimensions": {
           "additionalProperties": {
             "type": "string"

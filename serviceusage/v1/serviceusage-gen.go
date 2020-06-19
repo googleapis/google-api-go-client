@@ -1416,6 +1416,21 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 // DisableServiceRequest: Request message for the `DisableService`
 // method.
 type DisableServiceRequest struct {
+	// CheckIfServiceHasUsage: Defines the behavior for checking service
+	// usage when disabling a service.
+	//
+	// Possible values:
+	//   "CHECK_IF_SERVICE_HAS_USAGE_UNSPECIFIED" - When unset, the default
+	// behavior is used, which is SKIP.
+	//   "SKIP" - If set, skip checking service usage when disabling a
+	// service.
+	//   "CHECK" - If set, service usage is checked when disabling the
+	// service. If a
+	// service, or its dependents, has usage in the last 30 days, the
+	// request
+	// returns a FAILED_PRECONDITION error.
+	CheckIfServiceHasUsage string `json:"checkIfServiceHasUsage,omitempty"`
+
 	// DisableDependentServices: Indicates if services that are enabled and
 	// which depend on this service
 	// should also be disabled. If not set, an error will be generated if
@@ -1428,15 +1443,15 @@ type DisableServiceRequest struct {
 	DisableDependentServices bool `json:"disableDependentServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "DisableDependentServices") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
+	// "CheckIfServiceHasUsage") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisableDependentServices")
+	// NullFields is a list of field names (e.g. "CheckIfServiceHasUsage")
 	// to include in API requests with the JSON null value. By default,
 	// fields with empty values are omitted from API requests. However, any
 	// field with an empty value appearing in NullFields will be sent to the
@@ -4923,6 +4938,12 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 
 // QuotaOverride: A quota override
 type QuotaOverride struct {
+	// AdminOverrideAncestor: The resource name of the ancestor that
+	// requested the override. For example:
+	// "organizations/12345" or "folders/67890".
+	// Used by admin overrides only.
+	AdminOverrideAncestor string `json:"adminOverrideAncestor,omitempty"`
+
 	// Dimensions: If this map is nonempty, then this override applies only
 	// to specific values
 	// for dimensions defined in the limit unit.
@@ -4995,20 +5016,22 @@ type QuotaOverride struct {
 	// the literal characters `{` and `}` occur in the string.
 	Unit string `json:"unit,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdminOverrideAncestor") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdminOverrideAncestor") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5572,7 +5595,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5717,7 +5740,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5863,7 +5886,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6050,7 +6073,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6220,7 +6243,7 @@ func (c *ServicesBatchEnableCall) Header() http.Header {
 
 func (c *ServicesBatchEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6386,7 +6409,7 @@ func (c *ServicesBatchGetCall) Header() http.Header {
 
 func (c *ServicesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6538,7 +6561,7 @@ func (c *ServicesDisableCall) Header() http.Header {
 
 func (c *ServicesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6679,7 +6702,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6830,7 +6853,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7011,7 +7034,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200618")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

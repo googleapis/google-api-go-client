@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/MNcrndeYTaDX4ARVTRYYFFDtyD0\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/C5Vinq5lhnSSPN75ObdfC_DX-V4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -27461,7 +27461,7 @@
       }
     }
   },
-  "revision": "20200515",
+  "revision": "20200526",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -28404,7 +28404,7 @@
       "type": "object"
     },
     "AllocationSpecificSKUAllocationReservedInstanceProperties": {
-      "description": "Properties of the SKU instances being reserved.",
+      "description": "Properties of the SKU instances being reserved. Next ID: 9",
       "id": "AllocationSpecificSKUAllocationReservedInstanceProperties",
       "properties": {
         "guestAccelerators": {
@@ -28423,6 +28423,18 @@
         },
         "machineType": {
           "description": "Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.",
+          "type": "string"
+        },
+        "maintenanceInterval": {
+          "description": "Specifies whether this VM may be a stable fleet VM. Setting this to \"Periodic\" designates this VM as a Stable Fleet VM.\n\nSee go/stable-fleet-ug for more details.",
+          "enum": [
+            "AS_NEEDED",
+            "PERIODIC"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
           "type": "string"
         },
         "minCpuPlatform": {
@@ -29549,7 +29561,7 @@
       "type": "object"
     },
     "BackendService": {
-      "description": "Represents a Backend Service resource.\n\nA backend service contains configuration values for Google Cloud Platform load balancing services.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
+      "description": "Represents a Backend Service resource.\n\nA backend service defines how Google Cloud load balancers distribute traffic. The backend service configuration contains a set of values, such as the protocol used to connect to backends, various distribution and session settings, health checks, and timeouts. These settings provide fine-grained control over how your load balancer behaves. Most of the settings have default values that allow for easy configuration if you need to get started quickly.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
       "id": "BackendService",
       "properties": {
         "affinityCookieTtlSec": {
@@ -36751,6 +36763,20 @@
         "isStateful": {
           "description": "[Output Only] A bit indicating whether the managed instance group has stateful configuration, that is, if you have configured any items in a stateful policy or in per-instance configs. The group might report that it has no stateful config even when there is still some preserved state on a managed instance, for example, if you have deleted all PICs but not yet applied those deletions. This field is deprecated in favor of has_stateful_config.",
           "type": "boolean"
+        },
+        "perInstanceConfigs": {
+          "$ref": "InstanceGroupManagerStatusStatefulPerInstanceConfigs",
+          "description": "[Output Only] Status of per-instance configs on the instance."
+        }
+      },
+      "type": "object"
+    },
+    "InstanceGroupManagerStatusStatefulPerInstanceConfigs": {
+      "id": "InstanceGroupManagerStatusStatefulPerInstanceConfigs",
+      "properties": {
+        "allEffective": {
+          "description": "A bit indicating if all of the group's per-instance configs (listed in the output of a listPerInstanceConfigs API call) have status EFFECTIVE or there are no per-instance-configs.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -40196,7 +40222,7 @@
           "type": "string"
         },
         "storageLocations": {
-          "description": "GCS bucket storage location of the machine image (regional or multi-regional).",
+          "description": "The regional or multi-regional Cloud Storage bucket location where the machine image is stored.",
           "items": {
             "type": "string"
           },
@@ -44911,6 +44937,26 @@
         "preservedState": {
           "$ref": "PreservedState",
           "description": "The intended preserved state for the given instance. Does not contain preserved state generated from a stateful policy."
+        },
+        "status": {
+          "description": "The status of applying this per-instance config on the corresponding managed instance.",
+          "enum": [
+            "APPLYING",
+            "DELETING",
+            "EFFECTIVE",
+            "NONE",
+            "UNAPPLIED",
+            "UNAPPLIED_DELETION"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -45190,12 +45236,14 @@
         "metric": {
           "description": "[Output Only] Name of the quota metric.",
           "enum": [
+            "A2_CPUS",
             "AFFINITY_GROUPS",
             "AUTOSCALERS",
             "BACKEND_BUCKETS",
             "BACKEND_SERVICES",
             "C2_CPUS",
             "COMMITMENTS",
+            "COMMITTED_A2_CPUS",
             "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
             "COMMITTED_LICENSES",
@@ -45289,6 +45337,8 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -49219,7 +49269,7 @@
       "type": "object"
     },
     "Scheduling": {
-      "description": "Sets the scheduling options for an Instance. NextID: 11",
+      "description": "Sets the scheduling options for an Instance. NextID: 12",
       "id": "Scheduling",
       "properties": {
         "automaticRestart": {
@@ -49700,11 +49750,15 @@
       "id": "SecuritySettings",
       "properties": {
         "authentication": {
-          "description": "A URL referring to a networksecurity.Authentication resource that describes how clients should authenticate with this service's backends. If left blank, communications between services are not encrypted (i.e., the TLS policy is set to OPEN). When sending traffic to this service's backends, the OriginationTls setting of Authentication.TransportAuthentication is applied. Refer to the Authentication and Authentication.TransportAuthentication.OriginationTls resources for additional details. authentication only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use clientTlsPolicy instead.",
+          "type": "string"
+        },
+        "clientTlsPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.ClientTlsPolicy resource that describes how clients should authenticate with this service's backends.\nclientTlsPolicy only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.\nIf left blank, communications are not encrypted.",
           "type": "string"
         },
         "subjectAltNames": {
-          "description": "Optional. A list of subject alternate names to verify the subject identity (SAN) in the certificate presented by the server, to authorize the SAN list as identities to run the service represented by this BackendService. If specified, the client will verify that the server certificate's subject alt name matches one of the specified values. Only applies to a global BackendService with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "Optional. A list of Subject Alternative Names (SANs) that the client verifies during a mutual TLS handshake with an server/endpoint for this BackendService. When the server presents its X.509 certificate to the client, the client inspects the certificate's subjectAltName field. If the field contains one of the specified values, the communication continues. Otherwise, it fails. This additional check enables the client to verify that the server is authorized to run the requested service.\nNote that the contents of the server certificate's subjectAltName field are configured by the Public Key Infrastructure which provisions server identities.\nOnly applies to a global BackendService with loadBalancingScheme set to INTERNAL_SELF_MANAGED. Only applies when BackendService has an attached clientTlsPolicy with clientCertificate (mTLS mode).",
           "items": {
             "type": "string"
           },
@@ -50278,7 +50332,7 @@
       "type": "object"
     },
     "SslCertificate": {
-      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates and SSL certificates quotas and limits. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
+      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates, SSL certificates quotas and limits, and  Troubleshooting SSL certificates. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
       "id": "SslCertificate",
       "properties": {
         "certificate": {
@@ -52209,11 +52263,15 @@
       "id": "TargetHttpsProxy",
       "properties": {
         "authentication": {
-          "description": "A URL referring to a networksecurity.Authentication resource that describes how the proxy should authenticate inbound traffic. If left blank, communications between services are not encrypted (i.e., the TLS policy is set to OPEN). When terminating inbound traffic to this proxy, the TerminationTls setting of Authentication.TransportAuthentication is applied.\nRefer to the Authentication and Authentication.TransportAuthentication.TerminationTls resources for additional details.\nauthentication only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use serverTlsPolicy instead.",
           "type": "string"
         },
         "authorization": {
-          "description": "A URL referring to a networksecurity.Authorization resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.\nRefer to the Authorization resource for additional details.\nauthorization only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
+          "description": "[Deprecated] Use authorizationPolicy instead.",
+          "type": "string"
+        },
+        "authorizationPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.AuthorizationPolicy resource that describes how the proxy should authorize inbound traffic. If left blank, access will not be restricted by an authorization policy.\nRefer to the AuthorizationPolicy resource for additional details.\nauthorizationPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.",
           "type": "string"
         },
         "creationTimestamp": {
@@ -52263,6 +52321,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "serverTlsPolicy": {
+          "description": "Optional. A URL referring to a networksecurity.ServerTlsPolicy resource that describes how the proxy should authenticate inbound traffic.\nserverTlsPolicy only applies to a global TargetHttpsProxy attached to globalForwardingRules with the loadBalancingScheme set to INTERNAL_SELF_MANAGED.\nIf left blank, communications are not encrypted.",
           "type": "string"
         },
         "sslCertificates": {

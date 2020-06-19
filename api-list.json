@@ -1501,22 +1501,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "customsearch:v1",
-      "name": "customsearch",
-      "version": "v1",
-      "title": "CustomSearch API",
-      "description": "Searches over a website or collection of websites",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/customsearch/v1/rest",
-      "discoveryLink": "./apis/customsearch/v1/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/custom-search/v1/using_rest",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "datacatalog:v1beta1",
       "name": "datacatalog",
       "version": "v1beta1",

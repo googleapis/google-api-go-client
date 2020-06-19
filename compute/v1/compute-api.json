@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/1qThsnp409WPlAMDctY9ILp8CKs\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/c0uOdP5UJUKv2J7kExbE7SD9w28\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -23387,7 +23387,7 @@
       }
     }
   },
-  "revision": "20200515",
+  "revision": "20200526",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -24316,7 +24316,7 @@
       "type": "object"
     },
     "AllocationSpecificSKUAllocationReservedInstanceProperties": {
-      "description": "Properties of the SKU instances being reserved.",
+      "description": "Properties of the SKU instances being reserved. Next ID: 9",
       "id": "AllocationSpecificSKUAllocationReservedInstanceProperties",
       "properties": {
         "guestAccelerators": {
@@ -24335,6 +24335,18 @@
         },
         "machineType": {
           "description": "Specifies type of machine (name only) which has fixed number of vCPUs and fixed amount of memory. This also includes specifying custom machine type following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.",
+          "type": "string"
+        },
+        "maintenanceInterval": {
+          "description": "Specifies whether this VM may be a stable fleet VM. Setting this to \"Periodic\" designates this VM as a Stable Fleet VM.\n\nSee go/stable-fleet-ug for more details.",
+          "enum": [
+            "AS_NEEDED",
+            "PERIODIC"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
           "type": "string"
         },
         "minCpuPlatform": {
@@ -25426,7 +25438,7 @@
       "type": "object"
     },
     "BackendService": {
-      "description": "Represents a Backend Service resource.\n\nA backend service contains configuration values for Google Cloud Platform load balancing services.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
+      "description": "Represents a Backend Service resource.\n\nA backend service defines how Google Cloud load balancers distribute traffic. The backend service configuration contains a set of values, such as the protocol used to connect to backends, various distribution and session settings, health checks, and timeouts. These settings provide fine-grained control over how your load balancer behaves. Most of the settings have default values that allow for easy configuration if you need to get started quickly.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
       "id": "BackendService",
       "properties": {
         "affinityCookieTtlSec": {
@@ -39487,12 +39499,14 @@
         "metric": {
           "description": "[Output Only] Name of the quota metric.",
           "enum": [
+            "A2_CPUS",
             "AFFINITY_GROUPS",
             "AUTOSCALERS",
             "BACKEND_BUCKETS",
             "BACKEND_SERVICES",
             "C2_CPUS",
             "COMMITMENTS",
+            "COMMITTED_A2_CPUS",
             "COMMITTED_C2_CPUS",
             "COMMITTED_CPUS",
             "COMMITTED_LICENSES",
@@ -39585,6 +39599,8 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -43167,7 +43183,7 @@
       "type": "object"
     },
     "Scheduling": {
-      "description": "Sets the scheduling options for an Instance. NextID: 11",
+      "description": "Sets the scheduling options for an Instance. NextID: 12",
       "id": "Scheduling",
       "properties": {
         "automaticRestart": {
@@ -43891,7 +43907,7 @@
       "type": "object"
     },
     "SslCertificate": {
-      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates and SSL certificates quotas and limits. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
+      "description": "Represents an SSL Certificate resource.\n\nGoogle Compute Engine has two SSL Certificate resources:\n\n* [Global](/compute/docs/reference/rest/{$api_version}/sslCertificates) * [Regional](/compute/docs/reference/rest/{$api_version}/regionSslCertificates)\n\n\n\nThe sslCertificates are used by:  \n- external HTTPS load balancers \n- SSL proxy load balancers  \n\nThe regionSslCertificates are used by internal HTTPS load balancers.\n\nOptionally, certificate file contents that you upload can contain a set of up to five PEM-encoded certificates. The API call creates an object (sslCertificate) that holds this data. You can use SSL keys and certificates to secure connections to a load balancer. For more information, read  Creating and using SSL certificates, SSL certificates quotas and limits, and  Troubleshooting SSL certificates. (== resource_for {$api_version}.sslCertificates ==) (== resource_for {$api_version}.regionSslCertificates ==)",
       "id": "SslCertificate",
       "properties": {
         "certificate": {

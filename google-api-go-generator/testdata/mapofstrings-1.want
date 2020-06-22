@@ -73,7 +73,6 @@ const apiId = "additionalprops:v1"
 const apiName = "additionalprops"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/apis"
-const mtlsBasePath = ""
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

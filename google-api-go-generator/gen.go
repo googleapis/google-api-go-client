@@ -726,7 +726,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiName = %q", a.doc.Name)
 	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
-	pn("const mtlsBasePath = %q", a.mtlsAPIBaseURL())
+	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
+		pn("const mtlsBasePath = %q", mtlsBase)
+	}
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()

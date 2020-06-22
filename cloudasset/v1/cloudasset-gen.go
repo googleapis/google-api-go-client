@@ -174,10 +174,24 @@ type V1Service struct {
 // ocs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
 // Google
-// Kubernetes Engine clusters and objects), or a Cloud IAM policy.
+// Kubernetes Engine clusters and objects), or a policy (e.g. Cloud IAM
+// policy).
+// See [Supported
+// asset
+// types](https://cloud.google.com/asset-inventory/docs/supported-a
+// sset-types)
+// for more information.
 type Asset struct {
+	// AccessLevel: Please also refer to the [access level
+	// user
+	// guide](https://cloud.google.com/access-context-manager/docs/overv
+	// iew#access-levels).
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
+	// AccessPolicy: Please also refer to the [access policy
+	// user
+	// guide](https://cloud.google.com/access-context-manager/docs/overv
+	// iew#access-policies).
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
 	// Ancestors: The ancestry path of an asset in Google Cloud
@@ -248,6 +262,10 @@ type Asset struct {
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
+	// ServicePerimeter: Please also refer to the [service perimeter
+	// user
+	// guide](https://cloud.google.com/vpc-service-controls/docs/overvie
+	// w).
 	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
 
 	// UpdateTime: The last update timestamp of an asset. update_time is
@@ -1162,7 +1180,7 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	// InheritFromParent: Determines the inheritance behavior for this
 	// `Policy`.
 	//
-	// By default, a `ListPolicy` set at a resource supercedes any `Policy`
+	// By default, a `ListPolicy` set at a resource supersedes any `Policy`
 	// set
 	// anywhere up the resource hierarchy. However, if `inherit_from_parent`
 	// is
@@ -1323,6 +1341,12 @@ type GoogleCloudOrgpolicyV1Policy struct {
 	// Constraint: The name of the `Constraint` the `Policy` is configuring,
 	// for example,
 	// `constraints/serviceuser.services`.
+	//
+	// A [list of
+	// available
+	// constraints](/resource-manager/docs/organization-policy/org-
+	// policy-constraints)
+	// is available.
 	//
 	// Immutable after creation.
 	Constraint string `json:"constraint,omitempty"`
@@ -2701,7 +2725,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2839,7 +2863,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2980,7 +3004,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3124,7 +3148,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3259,7 +3283,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3412,7 +3436,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3616,7 +3640,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3798,7 +3822,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

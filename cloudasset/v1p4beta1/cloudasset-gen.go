@@ -505,10 +505,10 @@ func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssetV1p4beta1Access: A role or permission that appears in
-// an access control list.
+// GoogleCloudAssetV1p4beta1Access: An IAM role or permission under
+// analysis.
 type GoogleCloudAssetV1p4beta1Access struct {
-	// AnalysisState: The analysis state of this access node.
+	// AnalysisState: The analysis state of this access.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
 	// Permission: The permission.
@@ -607,9 +607,9 @@ func (s *GoogleCloudAssetV1p4beta1AccessControlList) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssetV1p4beta1AnalysisState: Represents analysis state of
-// each node in the result graph or non-critical
-// errors in the response.
+// GoogleCloudAssetV1p4beta1AnalysisState: Represents the detailed state
+// of an entity under analysis, such as a
+// resource, an identity or an access.
 type GoogleCloudAssetV1p4beta1AnalysisState struct {
 	// Cause: The human-readable description of the cause of failure.
 	Cause string `json:"cause,omitempty"`
@@ -617,9 +617,12 @@ type GoogleCloudAssetV1p4beta1AnalysisState struct {
 	// Code: The Google standard error code that best describes the
 	// state.
 	// For example:
-	// - OK means the node has been successfully explored;
+	// - OK means the analysis on this entity has been successfully
+	// finished;
 	// - PERMISSION_DENIED means an access denied error is encountered;
-	// - DEADLINE_EXCEEDED means the node hasn't been explored in time;
+	// - DEADLINE_EXCEEDED means the analysis on this entity hasn't been
+	// started
+	// in time;
 	//
 	// Possible values:
 	//   "OK" - Not an error; returned on success
@@ -832,10 +835,9 @@ func (s *GoogleCloudAssetV1p4beta1Edge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssetV1p4beta1Identity: An identity that appears in an
-// access control list.
+// GoogleCloudAssetV1p4beta1Identity: An identity under analysis.
 type GoogleCloudAssetV1p4beta1Identity struct {
-	// AnalysisState: The analysis state of this identity node.
+	// AnalysisState: The analysis state of this identity.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
 	// Name: The identity name in any form of members appear in
@@ -920,10 +922,10 @@ func (s *GoogleCloudAssetV1p4beta1IdentityList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssetV1p4beta1Resource: A GCP resource that appears in an
-// access control list.
+// GoogleCloudAssetV1p4beta1Resource: A Google Cloud resource under
+// analysis.
 type GoogleCloudAssetV1p4beta1Resource struct {
-	// AnalysisState: The analysis state of this resource node.
+	// AnalysisState: The analysis state of this resource.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
 	// FullResourceName: The [full
@@ -1027,12 +1029,12 @@ func (s *IamPolicyAnalysisOutputConfig) MarshalJSON() ([]byte, error) {
 // IamPolicyAnalysisQuery: IAM policy analysis query message.
 type IamPolicyAnalysisQuery struct {
 	// AccessSelector: Optional. Specifies roles or permissions for
-	// analysis. Leaving it empty
-	// means ANY.
+	// analysis. This is optional.
 	AccessSelector *AccessSelector `json:"accessSelector,omitempty"`
 
 	// IdentitySelector: Optional. Specifies an identity for analysis.
-	// Leaving it empty means ANY.
+	// Either ResourceSelector or
+	// IdentitySelector must be specified.
 	IdentitySelector *IdentitySelector `json:"identitySelector,omitempty"`
 
 	// Parent: Required. The relative name of the root asset. Only resources
@@ -1053,8 +1055,9 @@ type IamPolicyAnalysisQuery struct {
 	// ng-folders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
 
-	// ResourceSelector: Optional. Specifies a resource for analysis.
-	// Leaving it empty means ANY.
+	// ResourceSelector: Optional. Specifies a resource for analysis. Either
+	// ResourceSelector or
+	// IdentitySelector must be specified.
 	ResourceSelector *ResourceSelector `json:"resourceSelector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessSelector") to
@@ -1098,9 +1101,9 @@ type IamPolicyAnalysisResult struct {
 	// of the resource to which the iam_binding policy attaches.
 	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
 
-	// FullyExplored: Represents whether all nodes in the transitive closure
-	// of the
-	// iam_binding node have been explored.
+	// FullyExplored: Represents whether all analyses on the iam_binding
+	// have successfully
+	// finished.
 	FullyExplored bool `json:"fullyExplored,omitempty"`
 
 	// IamBinding: The Cloud IAM policy binding under analysis.
@@ -1386,9 +1389,7 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 // policies, which may be set
 // directly on the resource, or on ancestors such as organizations,
 // folders or
-// projects. Either ResourceSelector or IdentitySelector must
-// be
-// specified in a request.
+// projects.
 type ResourceSelector struct {
 	// FullResourceName: Required. The [full
 	// resource
@@ -1487,9 +1488,9 @@ type V1p4beta1AnalyzeIamPolicyCall struct {
 	header_      http.Header
 }
 
-// AnalyzeIamPolicy: Analyzes IAM policies based on the specified
-// request. Returns
-// a list of IamPolicyAnalysisResult matching the request.
+// AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
+// have what accesses on
+// which resources.
 func (r *V1p4beta1Service) AnalyzeIamPolicy(parent string) *V1p4beta1AnalyzeIamPolicyCall {
 	c := &V1p4beta1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1731,7 +1732,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1793,7 +1794,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes IAM policies based on the specified request. Returns\na list of IamPolicyAnalysisResult matching the request.",
+	//   "description": "Analyzes IAM policies to answer which identities have what accesses on\nwhich resources.",
 	//   "flatPath": "v1p4beta1/{v1p4beta1Id}/{v1p4beta1Id1}:analyzeIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeIamPolicy",
@@ -1889,13 +1890,20 @@ type V1p4beta1ExportIamPolicyAnalysisCall struct {
 	header_                        http.Header
 }
 
-// ExportIamPolicyAnalysis: Exports IAM policy analysis based on the
-// specified request. This API
-// implements the google.longrunning.Operation API allowing you to
-// keep
-// track of the export. The metadata contains the request to help
-// callers to
-// map responses to requests.
+// ExportIamPolicyAnalysis: Exports the answers of which identities have
+// what accesses on which
+// resources to a Google Cloud Storage destination. The output format
+// is
+// the JSON format that represents a AnalyzeIamPolicyResponse
+// in the JSON format.
+// This method implements the google.longrunning.Operation, which
+// allows
+// you to keep track of the export. We recommend intervals of at least
+// 2
+// seconds with exponential retry to poll the export operation result.
+// The
+// metadata contains the request to help callers to map responses to
+// requests.
 func (r *V1p4beta1Service) ExportIamPolicyAnalysis(parent string, exportiampolicyanalysisrequest *ExportIamPolicyAnalysisRequest) *V1p4beta1ExportIamPolicyAnalysisCall {
 	c := &V1p4beta1ExportIamPolicyAnalysisCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1930,7 +1938,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1994,7 +2002,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports IAM policy analysis based on the specified request. This API\nimplements the google.longrunning.Operation API allowing you to keep\ntrack of the export. The metadata contains the request to help callers to\nmap responses to requests.",
+	//   "description": "Exports the answers of which identities have what accesses on which\nresources to a Google Cloud Storage destination. The output format is\nthe JSON format that represents a AnalyzeIamPolicyResponse\nin the JSON format.\nThis method implements the google.longrunning.Operation, which allows\nyou to keep track of the export. We recommend intervals of at least 2\nseconds with exponential retry to poll the export operation result. The\nmetadata contains the request to help callers to map responses to requests.",
 	//   "flatPath": "v1p4beta1/{v1p4beta1Id}/{v1p4beta1Id1}:exportIamPolicyAnalysis",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.exportIamPolicyAnalysis",

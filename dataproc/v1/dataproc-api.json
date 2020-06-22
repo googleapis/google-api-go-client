@@ -40,11 +40,6 @@
       "location": "query",
       "type": "string"
     },
-    "access_token": {
-      "description": "OAuth access token.",
-      "location": "query",
-      "type": "string"
-    },
     "alt": {
       "default": "json",
       "description": "Data format for response.",
@@ -73,11 +68,6 @@
     },
     "key": {
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "location": "query",
-      "type": "string"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
     },
@@ -2129,7 +2119,7 @@
       }
     }
   },
-  "revision": "20200528",
+  "revision": "20200611",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2322,6 +2312,10 @@
           "$ref": "EncryptionConfig",
           "description": "Optional. Encryption settings for the cluster."
         },
+        "endpointConfig": {
+          "$ref": "EndpointConfig",
+          "description": "Optional. Port/endpoint configuration for this cluster"
+        },
         "gceClusterConfig": {
           "$ref": "GceClusterConfig",
           "description": "Optional. The shared Compute Engine config settings for all instances in a cluster."
@@ -2352,6 +2346,10 @@
         "softwareConfig": {
           "$ref": "SoftwareConfig",
           "description": "Optional. The config settings for software inside the cluster."
+        },
+        "tempBucket": {
+          "description": "Optional. A Cloud Storage bucket used to store ephemeral cluster and jobs data, such as Spark and MapReduce history files. If you do not specify a temp bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's temp bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket. The default bucket has a TTL of 90 days, but you can use any TTL (or none) if you specify a bucket.",
+          "type": "string"
         },
         "workerConfig": {
           "$ref": "InstanceGroupConfig",
@@ -2605,6 +2603,24 @@
         "gcePdKmsKeyName": {
           "description": "Optional. The Cloud KMS key name to use for PD disk encryption for all instances in the cluster.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EndpointConfig": {
+      "description": "Endpoint config for this cluster",
+      "id": "EndpointConfig",
+      "properties": {
+        "enableHttpPortAccess": {
+          "description": "Optional. If true, enable http access to specific ports on the cluster from external sources. Defaults to false.",
+          "type": "boolean"
+        },
+        "httpPorts": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Output only. The map of port descriptions to URLs. Will only be populated if enable_http_port_access is true.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -3763,7 +3779,7 @@
         "optionalComponents": {
           "description": "Optional. The set of components to activate on the cluster.",
           "enumDescriptions": [
-            "Unspecified component.",
+            "Unspecified component. Specifying this will cause Cluster creation to fail.",
             "The Anaconda python distribution.",
             "The Hive Web HCatalog (the REST service for accessing HCatalog).",
             "The Jupyter Notebook.",

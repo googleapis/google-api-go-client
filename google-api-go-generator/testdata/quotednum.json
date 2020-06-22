@@ -18,6 +18,7 @@
  "baseUrl": "https://www.googleapis.com/adexchangebuyer/v1.1/",
  "basePath": "/adexchangebuyer/v1.1/",
  "rootUrl": "https://www.googleapis.com/",
+ "mtlsRootUrl": "https://www.mtls.googleapis.com/",
  "servicePath": "adexchangebuyer/v1.1/",
  "batchPath": "batch",
  "parameters": {

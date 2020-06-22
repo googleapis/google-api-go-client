@@ -10,6 +10,7 @@
   },
   "basePath": "",
   "baseUrl": "https://ml.googleapis.com/",
+  "mtlsRootUrl": "https://ml.mtls.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud Machine Learning Engine",
   "description": "An API to enable creating and using machine learning models.",

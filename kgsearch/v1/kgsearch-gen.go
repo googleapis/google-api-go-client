@@ -75,10 +75,12 @@ const apiId = "kgsearch:v1"
 const apiName = "kgsearch"
 const apiVersion = "v1"
 const basePath = "https://kgsearch.googleapis.com/"
+const mtlsBasePath = "https://kgsearch.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -280,7 +282,7 @@ func (c *EntitiesSearchCall) Header() http.Header {
 
 func (c *EntitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200619")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200620")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

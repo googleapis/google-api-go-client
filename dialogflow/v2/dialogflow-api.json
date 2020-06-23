@@ -288,7 +288,7 @@
               ]
             },
             "import": {
-              "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+              "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest. After the import, the imported draft\nagent will be trained automatically (unless disabled in agent settings).\nHowever, once the import is done, training may not be completed yet. Please\ncall TrainAgent and wait for the operation it returns in order to train\nexplicitly.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e\nAn operation which tracks when importing is complete. It only tracks\nwhen the draft agent is updated not when it is done training.",
               "flatPath": "v2/projects/{projectsId}/agent:import",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.import",
@@ -317,7 +317,7 @@
               ]
             },
             "restore": {
-              "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+              "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted. After the restore, the\nrestored draft agent will be trained automatically (unless disabled in\nagent settings). However, once the restore is done, training may not be\ncompleted yet. Please call TrainAgent and wait for the operation it\nreturns in order to train explicitly.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e\nAn operation which tracks when restoring is complete. It only tracks\nwhen the draft agent is updated not when it is done training.",
               "flatPath": "v2/projects/{projectsId}/agent:restore",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.restore",
@@ -2049,7 +2049,7 @@
       }
     }
   },
-  "revision": "20200604",
+  "revision": "20200615",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3beta1ExportAgentResponse": {

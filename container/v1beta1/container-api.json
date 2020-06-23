@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20200519",
+  "revision": "20200603",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2586,26 +2586,26 @@
       "properties": {
         "management": {
           "$ref": "NodeManagement",
-          "description": "Specifies the node management options for NAP created node-pools."
+          "description": "NodeManagement configuration for this NodePool."
         },
         "minCpuPlatform": {
-          "description": "Minimum CPU platform to be used for NAP created node pools.\nThe instance may be scheduled on the specified or newer CPU platform.\nApplicable values are the friendly names of CPU platforms, such as\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Haswell\u0026quot;\u003c/code\u003e or\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Sandy Bridge\u0026quot;\u003c/code\u003e. For more\ninformation, read [how to specify min CPU\nplatform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)\nTo unset the min cpu platform field pass \"automatic\" as field value.",
+          "description": "Minimum CPU platform to be used by this instance. The instance may be\nscheduled on the specified or newer CPU platform. Applicable values are the\nfriendly names of CPU platforms, such as\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Haswell\u0026quot;\u003c/code\u003e or\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Sandy Bridge\u0026quot;\u003c/code\u003e. For more\ninformation, read [how to specify min CPU\nplatform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)\nTo unset the min cpu platform field pass \"automatic\"\nas field value.",
           "type": "string"
         },
         "oauthScopes": {
-          "description": "Scopes that are used by NAP when creating node pools.",
+          "description": "The set of Google API scopes to be made available on all of the\nnode VMs under the \"default\" service account.\n\nThe following scopes are recommended, but not required, and by default are\nnot included:\n\n* `https://www.googleapis.com/auth/compute` is required for mounting\npersistent storage on your nodes.\n* `https://www.googleapis.com/auth/devstorage.read_only` is required for\ncommunicating with **gcr.io**\n(the [Google Container\nRegistry](https://cloud.google.com/container-registry/)).\n\nIf unspecified, no scopes are added, unless Cloud Logging or Cloud\nMonitoring are enabled, in which case their required scopes will be added.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "serviceAccount": {
-          "description": "The Google Cloud Platform Service Account to be used by the node VMs.",
+          "description": "The Google Cloud Platform Service Account to be used by the node VMs.\nSpecify the email address of the Service Account; otherwise, if no Service\nAccount is specified, the \"default\" service account is used.",
           "type": "string"
         },
         "upgradeSettings": {
           "$ref": "UpgradeSettings",
-          "description": "Specifies the upgrade settings for NAP created node pools"
+          "description": "Upgrade settings control disruption and speed of the upgrade."
         }
       },
       "type": "object"
@@ -3205,7 +3205,7 @@
       "properties": {
         "cluster": {
           "$ref": "Cluster",
-          "description": "Required. A [cluster\nresource](https://cloud.google.com/container-engine/reference/rest/v1beta1/projects.zones.clusters)"
+          "description": "Required. A [cluster\nresource](https://cloud.google.com/container-engine/reference/rest/v1beta1/projects.locations.clusters)"
         },
         "parent": {
           "description": "The parent (project and location) where the cluster will be created.\nSpecified in the format `projects/*/locations/*`.",
@@ -4639,14 +4639,14 @@
           "type": "array"
         },
         "validMasterVersions": {
-          "description": "List of valid master versions.",
+          "description": "List of valid master versions, in descending order.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "validNodeVersions": {
-          "description": "List of valid node upgrade target versions.",
+          "description": "List of valid node upgrade target versions, in descending order.",
           "items": {
             "type": "string"
           },

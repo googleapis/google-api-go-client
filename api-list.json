@@ -2956,6 +2956,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "playablelocations:v3",
+      "name": "playablelocations",
+      "version": "v3",
+      "title": "Playable Locations API",
+      "description": "",
+      "discoveryRestUrl": "https://playablelocations.googleapis.com/$discovery/rest?version=v3",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/maps/contact-sales/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "playcustomapp:v1",
       "name": "playcustomapp",
       "version": "v1",
@@ -3220,7 +3235,7 @@
       "id": "run:v1alpha1",
       "name": "run",
       "version": "v1alpha1",
-      "title": "Cloud Run API",
+      "title": "Cloud Run Admin API",
       "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
       "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1alpha1",
       "icons": {
@@ -3235,7 +3250,7 @@
       "id": "run:v1",
       "name": "run",
       "version": "v1",
-      "title": "Cloud Run API",
+      "title": "Cloud Run Admin API",
       "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
       "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1",
       "icons": {
@@ -3250,7 +3265,7 @@
       "id": "run:v1beta1",
       "name": "run",
       "version": "v1beta1",
-      "title": "Cloud Run API",
+      "title": "Cloud Run Admin API",
       "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
       "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {

@@ -149,7 +149,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "The FieldMask to use when updating the settings resource.\n\n If empty all mutable fields will be updated.",
+              "description": "The FieldMask to use when updating the settings resource.\n\nIf empty all mutable fields will be updated.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -214,7 +214,7 @@
                   "type": "string"
                 },
                 "fieldMask": {
-                  "description": "Optional. A field mask to specify the ListAssetsResult fields to be listed in the\nresponse.\nAn empty field mask will list all fields.",
+                  "description": "A field mask to specify the ListAssetsResult fields to be listed in the\nresponse.\nAn empty field mask will list all fields.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -454,7 +454,7 @@
               ]
             },
             "patch": {
-              "description": "\nUpdates a notification config.",
+              "description": "\nUpdates a notification config. The following update\nfields are allowed: description, pubsub_topic, streaming_config.filter",
               "flatPath": "v1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
               "httpMethod": "PATCH",
               "id": "securitycenter.organizations.notificationConfigs.patch",
@@ -899,7 +899,7 @@
                       "type": "string"
                     },
                     "fieldMask": {
-                      "description": "Optional. A field mask to specify the Finding fields to be listed in the response.\nAn empty field mask will list all fields.",
+                      "description": "A field mask to specify the Finding fields to be listed in the response.\nAn empty field mask will list all fields.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -1056,7 +1056,7 @@
       }
     }
   },
-  "revision": "20200612",
+  "revision": "20200619",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {

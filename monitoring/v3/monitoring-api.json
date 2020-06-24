@@ -1848,7 +1848,7 @@
       }
     }
   },
-  "revision": "20200615",
+  "revision": "20200622",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -4091,7 +4091,7 @@
       "properties": {
         "metadata": {
           "$ref": "MonitoredResourceMetadata",
-          "description": "Output only. The associated monitored resource metadata. When reading a timeseries, this field will include metadata labels that are explicitly named in the reduction. When creating a timeseries, this field is ignored."
+          "description": "Output only. The associated monitored resource metadata. When reading a time series, this field will include metadata labels that are explicitly named in the reduction. When creating a time series, this field is ignored."
         },
         "metric": {
           "$ref": "Metric",
@@ -4171,7 +4171,7 @@
       "type": "object"
     },
     "TimeSeriesDescriptor": {
-      "description": "A descriptor for the labels and points in a timeseries.",
+      "description": "A descriptor for the labels and points in a time series.",
       "id": "TimeSeriesDescriptor",
       "properties": {
         "labelDescriptors": {

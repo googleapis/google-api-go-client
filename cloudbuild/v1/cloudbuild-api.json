@@ -674,53 +674,9 @@
           }
         }
       }
-    },
-    "vbeta1": {
-      "resources": {
-        "projects": {
-          "resources": {
-            "locations": {
-              "resources": {
-                "operations": {
-                  "methods": {
-                    "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
-                      "flatPath": "vbeta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-                      "httpMethod": "POST",
-                      "id": "cloudbuild.vbeta1.projects.locations.operations.cancel",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "The name of the operation resource to be cancelled.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "vbeta1/{+name}:cancel",
-                      "request": {
-                        "$ref": "CancelOperationRequest"
-                      },
-                      "response": {
-                        "$ref": "Empty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
-  "revision": "20200606",
+  "revision": "20200619",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -975,12 +931,16 @@
           "enum": [
             "LOGGING_UNSPECIFIED",
             "LEGACY",
-            "GCS_ONLY"
+            "GCS_ONLY",
+            "STACKDRIVER_ONLY",
+            "NONE"
           ],
           "enumDescriptions": [
             "The service determines the logging mode. The default is `LEGACY`. Do not\nrely on the default logging behavior as it may change in the future.",
-            "Stackdriver logging and Cloud Storage logging are enabled.",
-            "Only Cloud Storage logging is enabled."
+            "Cloud Logging (Stackdriver) and Cloud Storage logging are enabled.",
+            "Only Cloud Storage logging is enabled.",
+            "Only Cloud Logging (Stackdriver) is enabled. Note that logs for both the\nCloud Console UI and Cloud SDK are based on Cloud Storage logs, so\nneither will provide logs if this option is chosen.",
+            "Turn off all logging. No build logs will be captured."
           ],
           "type": "string"
         },

@@ -413,13 +413,12 @@
       "id": "androidpublisher:v3",
       "name": "androidpublisher",
       "version": "v3",
-      "title": "Google Play Developer API",
-      "description": "Accesses Android application developers' Google Play accounts.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v3/rest",
-      "discoveryLink": "./apis/androidpublisher/v3/rest",
+      "title": "Google Play Android Developer API",
+      "description": "Lets Android application developers access their Google Play accounts.",
+      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v3",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/android-publisher",
       "preferred": true
@@ -3108,6 +3107,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "realtimebidding:v1",
+      "name": "realtimebidding",
+      "version": "v1",
+      "title": "Real-time Bidding API",
+      "description": "Allows external bidders to manage their RTB integration with Google. This includes managing bidder endpoints, QPS quotas, configuring what ad inventory to receive via pretargeting, submitting creatives for verification, and accessing creative metadata such as approval status.",
+      "discoveryRestUrl": "https://realtimebidding.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "recommender:v1",
       "name": "recommender",
       "version": "v1",
@@ -4021,6 +4035,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/vault",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "vectortile:v1",
+      "name": "vectortile",
+      "version": "v1",
+      "title": "Semantic Tile API",
+      "description": "Serves vector tiles containing geospatial data.",
+      "discoveryRestUrl": "https://vectortile.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/maps/contact-sales/",
       "preferred": true
     },
     {

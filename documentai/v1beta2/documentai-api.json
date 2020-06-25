@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20200612",
+  "revision": "20200619",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse": {
@@ -2003,7 +2003,7 @@
         },
         "outputConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta2OutputConfig",
-          "description": "Optional. The desired output location. This field is only needed in\nBatchProcessDocumentsRequest."
+          "description": "The desired output location. This field is only needed in\nBatchProcessDocumentsRequest."
         },
         "parent": {
           "description": "Target project and location to make a call.\n\nFormat: `projects/{project-id}/locations/{location-id}`.\n\nIf no location is specified, a region will be chosen automatically.\nThis field is only populated when used in ProcessDocument method.",

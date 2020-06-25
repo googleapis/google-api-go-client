@@ -2459,7 +2459,7 @@
       }
     }
   },
-  "revision": "20200519",
+  "revision": "20200603",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2485,6 +2485,10 @@
         "cloudRunConfig": {
           "$ref": "CloudRunConfig",
           "description": "Configuration for the Cloud Run addon, which allows the user to use a\nmanaged Knative service."
+        },
+        "dnsCacheConfig": {
+          "$ref": "DnsCacheConfig",
+          "description": "Configuration for NodeLocalDNS, a dns cache running on cluster nodes"
         },
         "horizontalPodAutoscaling": {
           "$ref": "HorizontalPodAutoscaling",
@@ -2688,7 +2692,7 @@
           "type": "integer"
         },
         "currentNodeVersion": {
-          "description": "[Output only] Deprecated, use\n[NodePools.version](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.zones.clusters.nodePools)\ninstead. The current version of the node software components. If they are\ncurrently at multiple versions because they're in the process of being\nupgraded, this reflects the minimum version of all nodes.",
+          "description": "[Output only] Deprecated, use\n[NodePools.version](https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools)\ninstead. The current version of the node software components. If they are\ncurrently at multiple versions because they're in the process of being\nupgraded, this reflects the minimum version of all nodes.",
           "type": "string"
         },
         "databaseEncryption": {
@@ -3037,7 +3041,7 @@
       "properties": {
         "cluster": {
           "$ref": "Cluster",
-          "description": "Required. A [cluster\nresource](https://cloud.google.com/container-engine/reference/rest/v1/projects.zones.clusters)"
+          "description": "Required. A [cluster\nresource](https://cloud.google.com/container-engine/reference/rest/v1/projects.locations.clusters)"
         },
         "parent": {
           "description": "The parent (project and location) where the cluster will be created.\nSpecified in the format `projects/*/locations/*`.",
@@ -3117,6 +3121,17 @@
             "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to Compute Engine level full disk encryption."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DnsCacheConfig": {
+      "description": "Configuration for NodeLocal DNSCache",
+      "id": "DnsCacheConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether NodeLocal DNSCache is enabled for this cluster.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4242,14 +4257,14 @@
           "type": "array"
         },
         "validMasterVersions": {
-          "description": "List of valid master versions.",
+          "description": "List of valid master versions, in descending order.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "validNodeVersions": {
-          "description": "List of valid node upgrade target versions.",
+          "description": "List of valid node upgrade target versions, in descending order.",
           "items": {
             "type": "string"
           },

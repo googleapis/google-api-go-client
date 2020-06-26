@@ -3742,22 +3742,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "sqladmin:v1beta4",
-      "name": "sqladmin",
-      "version": "v1beta4",
-      "title": "Cloud SQL Admin API",
-      "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",
-      "discoveryLink": "./apis/sqladmin/v1beta4/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "storage:v1",
       "name": "storage",
       "version": "v1",

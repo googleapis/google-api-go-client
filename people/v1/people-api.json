@@ -5,6 +5,9 @@
         "https://www.googleapis.com/auth/contacts": {
           "description": "See, edit, download, and permanently delete your contacts"
         },
+        "https://www.googleapis.com/auth/contacts.other.readonly": {
+          "description": "See and download contact info automatically saved in your \"Other contacts\""
+        },
         "https://www.googleapis.com/auth/contacts.readonly": {
           "description": "See and download your contacts"
         },
@@ -369,7 +372,8 @@
             "$ref": "Person"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/contacts"
+            "https://www.googleapis.com/auth/contacts",
+            "https://www.googleapis.com/auth/contacts.other.readonly"
           ]
         },
         "list": {
@@ -410,7 +414,10 @@
           "path": "v1/otherContacts",
           "response": {
             "$ref": "ListOtherContactsResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/contacts.other.readonly"
+          ]
         }
       }
     },
@@ -930,7 +937,7 @@
       }
     }
   },
-  "revision": "20200615",
+  "revision": "20200624",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

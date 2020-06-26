@@ -461,7 +461,8 @@ type Voice struct {
 	// known.
 	//   "MALE" - A male voice.
 	//   "FEMALE" - A female voice.
-	//   "NEUTRAL" - A gender-neutral voice.
+	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet
+	// supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
@@ -539,7 +540,8 @@ type VoiceSelectionParams struct {
 	// known.
 	//   "MALE" - A male voice.
 	//   "FEMALE" - A female voice.
-	//   "NEUTRAL" - A gender-neutral voice.
+	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet
+	// supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -611,7 +613,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -765,7 +767,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

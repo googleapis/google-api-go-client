@@ -6,7 +6,7 @@
 
 // Package civicinfo provides access to the Google Civic Information API.
 //
-// For product documentation, see: https://developers.google.com/civic-information
+// For product documentation, see: https://developers.google.com/civic-information/
 //
 // Creating a client
 //
@@ -74,11 +74,13 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "civicinfo:v2"
 const apiName = "civicinfo"
 const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/civicinfo/v2/"
+const basePath = "https://civicinfo.googleapis.com/"
+const mtlsBasePath = "https://civicinfo.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -210,8 +212,6 @@ type AdministrativeBody struct {
 	// AbsenteeVotingInfoUrl: A URL provided by this administrative body for
 	// information on absentee voting.
 	AbsenteeVotingInfoUrl string `json:"absenteeVotingInfoUrl,omitempty"`
-
-	AddressLines []string `json:"addressLines,omitempty"`
 
 	// BallotInfoUrl: A URL provided by this administrative body to give
 	// contest information to the voter.
@@ -403,6 +403,17 @@ type Contest struct {
 	// at two different levels of government; for example, the mayor of the
 	// District of Columbia acts at "locality" level, but also effectively
 	// at both "administrative-area-2" and "administrative-area-1".
+	//
+	// Possible values:
+	//   "international"
+	//   "country"
+	//   "administrativeArea1"
+	//   "regional"
+	//   "administrativeArea2"
+	//   "locality"
+	//   "subLocality1"
+	//   "subLocality2"
+	//   "special"
 	Level []string `json:"level,omitempty"`
 
 	// NumberElected: The number of candidates that will be elected to
@@ -469,6 +480,19 @@ type Contest struct {
 	ReferendumUrl string `json:"referendumUrl,omitempty"`
 
 	// Roles: The roles which this office fulfills.
+	//
+	// Possible values:
+	//   "headOfState"
+	//   "headOfGovernment"
+	//   "deputyHeadOfGovernment"
+	//   "governmentOfficer"
+	//   "executiveCouncil"
+	//   "legislatorUpperBody"
+	//   "legislatorLowerBody"
+	//   "highestCourtJudge"
+	//   "judge"
+	//   "schoolBoard"
+	//   "specialPurposeOfficer"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this contest. If multiple sources are
@@ -505,87 +529,6 @@ type Contest struct {
 
 func (s *Contest) MarshalJSON() ([]byte, error) {
 	type NoMethod Contest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ContextParams struct {
-	ClientProfile string `json:"clientProfile,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClientProfile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientProfile") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContextParams) MarshalJSON() ([]byte, error) {
-	type NoMethod ContextParams
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DivisionRepresentativeInfoRequest: A request to look up
-// representative information for a single division.
-type DivisionRepresentativeInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DivisionRepresentativeInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionRepresentativeInfoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DivisionSearchRequest: A search request for political geographies.
-type DivisionSearchRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DivisionSearchRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DivisionSearchRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -639,7 +582,7 @@ type DivisionSearchResult struct {
 	// Name: The name of the division.
 	Name string `json:"name,omitempty"`
 
-	// OcdId: The unique Open Civic Data identifier for this division.
+	// OcdId: The unique Open Civic Data identifier for this division
 	OcdId string `json:"ocdId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
@@ -746,32 +689,6 @@ func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type ElectionsQueryRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ElectionsQueryRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ElectionsQueryRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ElectionsQueryResponse: The list of elections available for this
 // version of the API.
 type ElectionsQueryResponse struct {
@@ -816,8 +733,6 @@ type ElectoralDistrict struct {
 	// scope of stateUpper.
 	Id string `json:"id,omitempty"`
 
-	KgForeignKey string `json:"kgForeignKey,omitempty"`
-
 	// Name: The name of the district.
 	Name string `json:"name,omitempty"`
 
@@ -826,6 +741,22 @@ type ElectoralDistrict struct {
 	// congressional, stateUpper, stateLower, countywide, judicial,
 	// schoolBoard, cityWide, township, countyCouncil, cityCouncil, ward,
 	// special
+	//
+	// Possible values:
+	//   "statewide"
+	//   "congressional"
+	//   "stateUpper"
+	//   "stateLower"
+	//   "countywide"
+	//   "judicial"
+	//   "schoolBoard"
+	//   "citywide"
+	//   "special"
+	//   "countyCouncil"
+	//   "township"
+	//   "ward"
+	//   "cityCouncil"
+	//   "national"
 	Scope string `json:"scope,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -851,45 +782,16 @@ func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type FieldMetadataProto struct {
-	Internal *InternalFieldMetadataProto `json:"internal,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Internal") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Internal") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FieldMetadataProto) MarshalJSON() ([]byte, error) {
-	type NoMethod FieldMetadataProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GeographicDivision: Describes a political geography.
 type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
-	// division.
-	//
-	// Because OCD IDs are meant to be human-readable and at least somewhat
-	// predictable, there are occasionally several identifiers for a single
-	// division. These identifiers are defined to be equivalent to one
-	// another, and one is always indicated as the primary identifier. The
-	// primary identifier will be returned in ocd_id above, and any other
-	// equivalent valid identifiers will be returned in this list.
-	//
-	// For example, if this division's OCD ID is
+	// division.\n\nBecause OCD IDs are meant to be human-readable and at
+	// least somewhat predictable, there are occasionally several
+	// identifiers for a single division. These identifiers are defined to
+	// be equivalent to one another, and one is always indicated as the
+	// primary identifier. The primary identifier will be returned in ocd_id
+	// above, and any other equivalent valid identifiers will be returned in
+	// this list.\n\nFor example, if this division's OCD ID is
 	// ocd-division/country:us/district:dc, this will contain
 	// ocd-division/country:us/state:dc.
 	AlsoKnownAs []string `json:"alsoKnownAs,omitempty"`
@@ -925,62 +827,6 @@ func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type InternalFieldMetadataProto struct {
-	IsAuto bool `json:"isAuto,omitempty"`
-
-	SourceSummary *InternalSourceSummaryProto `json:"sourceSummary,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsAuto") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsAuto") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InternalFieldMetadataProto) MarshalJSON() ([]byte, error) {
-	type NoMethod InternalFieldMetadataProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type InternalSourceSummaryProto struct {
-	Dataset string `json:"dataset,omitempty"`
-
-	Provider string `json:"provider,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Dataset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dataset") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InternalSourceSummaryProto) MarshalJSON() ([]byte, error) {
-	type NoMethod InternalSourceSummaryProto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Office: Information about an Office held by one or more Officials.
 type Office struct {
 	// DivisionId: The OCD ID of the division with which this office is
@@ -992,6 +838,17 @@ type Office struct {
 	// at two different levels of government; for example, the mayor of the
 	// District of Columbia acts at "locality" level, but also effectively
 	// at both "administrative-area-2" and "administrative-area-1".
+	//
+	// Possible values:
+	//   "international"
+	//   "country"
+	//   "administrativeArea1"
+	//   "regional"
+	//   "administrativeArea2"
+	//   "locality"
+	//   "subLocality1"
+	//   "subLocality2"
+	//   "special"
 	Levels []string `json:"levels,omitempty"`
 
 	// Name: The human-readable name of the office.
@@ -1006,6 +863,19 @@ type Office struct {
 	// responsibilities of a given office, but are meant to be rough
 	// categories that are useful for general selection from or sorting of a
 	// list of offices.
+	//
+	// Possible values:
+	//   "headOfState"
+	//   "headOfGovernment"
+	//   "deputyHeadOfGovernment"
+	//   "governmentOfficer"
+	//   "executiveCouncil"
+	//   "legislatorUpperBody"
+	//   "legislatorLowerBody"
+	//   "highestCourtJudge"
+	//   "judge"
+	//   "schoolBoard"
+	//   "specialPurposeOfficer"
 	Roles []string `json:"roles,omitempty"`
 
 	// Sources: A list of sources for this office. If multiple sources are
@@ -1080,36 +950,6 @@ type Official struct {
 
 func (s *Official) MarshalJSON() ([]byte, error) {
 	type NoMethod Official
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type PointProto struct {
-	LatE7 int64 `json:"latE7,omitempty"`
-
-	LngE7 int64 `json:"lngE7,omitempty"`
-
-	Metadata *FieldMetadataProto `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LatE7") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LatE7") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PointProto) MarshalJSON() ([]byte, error) {
-	type NoMethod PointProto
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1207,119 +1047,10 @@ func (s *PollingLocation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type PostalAddress struct {
-	AddressLines []string `json:"addressLines,omitempty"`
-
-	AdministrativeAreaName string `json:"administrativeAreaName,omitempty"`
-
-	CountryName string `json:"countryName,omitempty"`
-
-	CountryNameCode string `json:"countryNameCode,omitempty"`
-
-	DependentLocalityName string `json:"dependentLocalityName,omitempty"`
-
-	DependentThoroughfareName string `json:"dependentThoroughfareName,omitempty"`
-
-	FirmName string `json:"firmName,omitempty"`
-
-	IsDisputed bool `json:"isDisputed,omitempty"`
-
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	LocalityName string `json:"localityName,omitempty"`
-
-	PostBoxNumber string `json:"postBoxNumber,omitempty"`
-
-	PostalCodeNumber string `json:"postalCodeNumber,omitempty"`
-
-	PostalCodeNumberExtension string `json:"postalCodeNumberExtension,omitempty"`
-
-	PremiseName string `json:"premiseName,omitempty"`
-
-	RecipientName string `json:"recipientName,omitempty"`
-
-	SortingCode string `json:"sortingCode,omitempty"`
-
-	SubAdministrativeAreaName string `json:"subAdministrativeAreaName,omitempty"`
-
-	SubPremiseName string `json:"subPremiseName,omitempty"`
-
-	ThoroughfareName string `json:"thoroughfareName,omitempty"`
-
-	ThoroughfareNumber string `json:"thoroughfareNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AddressLines") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLines") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
-	type NoMethod PostalAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Provenance struct {
-	CollidedSegmentSource *StreetSegmentList `json:"collidedSegmentSource,omitempty"`
-
-	CtclContestUuid string `json:"ctclContestUuid,omitempty"`
-
-	CtclOfficeUuid string `json:"ctclOfficeUuid,omitempty"`
-
-	DatasetId int64 `json:"datasetId,omitempty,string"`
-
-	PrecinctId int64 `json:"precinctId,omitempty,string"`
-
-	PrecinctSplitId int64 `json:"precinctSplitId,omitempty,string"`
-
-	TsStreetSegmentId string `json:"tsStreetSegmentId,omitempty"`
-
-	Vip5PrecinctId string `json:"vip5PrecinctId,omitempty"`
-
-	Vip5StreetSegmentId string `json:"vip5StreetSegmentId,omitempty"`
-
-	VipStreetSegmentId int64 `json:"vipStreetSegmentId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CollidedSegmentSource") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CollidedSegmentSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Provenance) MarshalJSON() ([]byte, error) {
-	type NoMethod Provenance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type RepresentativeInfoData struct {
-	// Divisions: Political geographic divisions that contain the requested
-	// address.
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for
+	// this division.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
 
 	// Offices: Elected offices referenced by the divisions listed above.
@@ -1357,39 +1088,12 @@ func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RepresentativeInfoRequest: A request for political geography and
-// representative information for an address.
-type RepresentativeInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RepresentativeInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod RepresentativeInfoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RepresentativeInfoResponse: The result of a representative info
 // lookup query.
 type RepresentativeInfoResponse struct {
-	// Divisions: Political geographic divisions that contain the requested
-	// address.
+	// Divisions: A map of political geographic divisions that contain the
+	// requested address, keyed by the unique Open Civic Data identifier for
+	// this division.
 	Divisions map[string]GeographicDivision `json:"divisions,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1512,177 +1216,6 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type StreetSegment struct {
-	AdministrationRegionIds []string `json:"administrationRegionIds,omitempty"`
-
-	BeforeGeocodeId string `json:"beforeGeocodeId,omitempty"`
-
-	CatalistUniquePrecinctCode string `json:"catalistUniquePrecinctCode,omitempty"`
-
-	City string `json:"city,omitempty"`
-
-	CityCouncilDistrict string `json:"cityCouncilDistrict,omitempty"`
-
-	CongressionalDistrict string `json:"congressionalDistrict,omitempty"`
-
-	ContestIds []string `json:"contestIds,omitempty"`
-
-	CountyCouncilDistrict string `json:"countyCouncilDistrict,omitempty"`
-
-	CountyFips string `json:"countyFips,omitempty"`
-
-	DatasetId int64 `json:"datasetId,omitempty,string"`
-
-	EarlyVoteSiteByIds []string `json:"earlyVoteSiteByIds,omitempty"`
-
-	EndHouseNumber int64 `json:"endHouseNumber,omitempty,string"`
-
-	GeocodedPoint *PointProto `json:"geocodedPoint,omitempty"`
-
-	GeographicDivisionOcdIds []string `json:"geographicDivisionOcdIds,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	JudicialDistrict string `json:"judicialDistrict,omitempty"`
-
-	MailOnly bool `json:"mailOnly,omitempty"`
-
-	MunicipalDistrict string `json:"municipalDistrict,omitempty"`
-
-	NcoaAddress string `json:"ncoaAddress,omitempty"`
-
-	OddOrEvens []string `json:"oddOrEvens,omitempty"`
-
-	OriginalId string `json:"originalId,omitempty"`
-
-	PollinglocationByIds []string `json:"pollinglocationByIds,omitempty"`
-
-	PrecinctName string `json:"precinctName,omitempty"`
-
-	PrecinctOcdId string `json:"precinctOcdId,omitempty"`
-
-	Provenances []*Provenance `json:"provenances,omitempty"`
-
-	Published bool `json:"published,omitempty"`
-
-	SchoolDistrict string `json:"schoolDistrict,omitempty"`
-
-	StartHouseNumber int64 `json:"startHouseNumber,omitempty,string"`
-
-	StartLatE7 int64 `json:"startLatE7,omitempty"`
-
-	StartLngE7 int64 `json:"startLngE7,omitempty"`
-
-	State string `json:"state,omitempty"`
-
-	StateHouseDistrict string `json:"stateHouseDistrict,omitempty"`
-
-	StateSenateDistrict string `json:"stateSenateDistrict,omitempty"`
-
-	StreetName string `json:"streetName,omitempty"`
-
-	SubAdministrativeAreaName string `json:"subAdministrativeAreaName,omitempty"`
-
-	SurrogateId int64 `json:"surrogateId,omitempty,string"`
-
-	TargetsmartUniquePrecinctCode string `json:"targetsmartUniquePrecinctCode,omitempty"`
-
-	TownshipDistrict string `json:"townshipDistrict,omitempty"`
-
-	UnitNumber string `json:"unitNumber,omitempty"`
-
-	UnitType string `json:"unitType,omitempty"`
-
-	VanPrecinctCode string `json:"vanPrecinctCode,omitempty"`
-
-	VoterGeographicDivisionOcdIds []string `json:"voterGeographicDivisionOcdIds,omitempty"`
-
-	WardDistrict string `json:"wardDistrict,omitempty"`
-
-	Wildcard bool `json:"wildcard,omitempty"`
-
-	Zip string `json:"zip,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdministrationRegionIds") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdministrationRegionIds")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreetSegment) MarshalJSON() ([]byte, error) {
-	type NoMethod StreetSegment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type StreetSegmentList struct {
-	Segments []*StreetSegment `json:"segments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Segments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Segments") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StreetSegmentList) MarshalJSON() ([]byte, error) {
-	type NoMethod StreetSegmentList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// VoterInfoRequest: A request for information about a voter.
-type VoterInfoRequest struct {
-	ContextParams *ContextParams `json:"contextParams,omitempty"`
-
-	VoterInfoSegmentResult *VoterInfoSegmentResult `json:"voterInfoSegmentResult,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContextParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContextParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoterInfoRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod VoterInfoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // VoterInfoResponse: The result of a voter info lookup query.
 type VoterInfoResponse struct {
 	// Contests: Contests that will appear on the voter's ballot.
@@ -1733,8 +1266,6 @@ type VoterInfoResponse struct {
 
 	PrecinctId string `json:"precinctId,omitempty"`
 
-	Segments []*StreetSegment `json:"segments,omitempty"`
-
 	// State: Local Election Information for the state that the voter votes
 	// in. For the US, there will only be one element in this array.
 	State []*AdministrationRegion `json:"state,omitempty"`
@@ -1766,55 +1297,20 @@ func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type VoterInfoSegmentResult struct {
-	GeneratedMillis int64 `json:"generatedMillis,omitempty,string"`
-
-	PostalAddress *PostalAddress `json:"postalAddress,omitempty"`
-
-	Request *VoterInfoRequest `json:"request,omitempty"`
-
-	Response *VoterInfoResponse `json:"response,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GeneratedMillis") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GeneratedMillis") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VoterInfoSegmentResult) MarshalJSON() ([]byte, error) {
-	type NoMethod VoterInfoSegmentResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "civicinfo.divisions.search":
 
 type DivisionsSearchCall struct {
-	s                     *Service
-	divisionsearchrequest *DivisionSearchRequest
-	urlParams_            gensupport.URLParams
-	ifNoneMatch_          string
-	ctx_                  context.Context
-	header_               http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // Search: Searches for political divisions by their natural name or OCD
 // ID.
-func (r *DivisionsService) Search(divisionsearchrequest *DivisionSearchRequest) *DivisionsSearchCall {
+func (r *DivisionsService) Search() *DivisionsSearchCall {
 	c := &DivisionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.divisionsearchrequest = divisionsearchrequest
 	return c
 }
 
@@ -1866,7 +1362,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1877,7 +1373,7 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "divisions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/divisions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1926,8 +1422,10 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 	return ret, nil
 	// {
 	//   "description": "Searches for political divisions by their natural name or OCD ID.",
+	//   "flatPath": "civicinfo/v2/divisions",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.divisions.search",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "query": {
 	//       "description": "The search query. Queries can cover any parts of a OCD ID or a human readable division name. All words given in the query are treated as required patterns. In addition to that, most query operators of the Apache Lucene library are supported. See http://lucene.apache.org/core/2_9_4/queryparsersyntax.html",
@@ -1935,10 +1433,7 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "divisions",
-	//   "request": {
-	//     "$ref": "DivisionSearchRequest"
-	//   },
+	//   "path": "civicinfo/v2/divisions",
 	//   "response": {
 	//     "$ref": "DivisionSearchResponse"
 	//   }
@@ -1949,18 +1444,16 @@ func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchR
 // method id "civicinfo.elections.electionQuery":
 
 type ElectionsElectionQueryCall struct {
-	s                     *Service
-	electionsqueryrequest *ElectionsQueryRequest
-	urlParams_            gensupport.URLParams
-	ifNoneMatch_          string
-	ctx_                  context.Context
-	header_               http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // ElectionQuery: List of available elections to query.
-func (r *ElectionsService) ElectionQuery(electionsqueryrequest *ElectionsQueryRequest) *ElectionsElectionQueryCall {
+func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	c := &ElectionsElectionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.electionsqueryrequest = electionsqueryrequest
 	return c
 }
 
@@ -2001,7 +1494,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,7 +1505,7 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "elections")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/elections")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2061,12 +1554,12 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 	return ret, nil
 	// {
 	//   "description": "List of available elections to query.",
+	//   "flatPath": "civicinfo/v2/elections",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.elections.electionQuery",
-	//   "path": "elections",
-	//   "request": {
-	//     "$ref": "ElectionsQueryRequest"
-	//   },
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "civicinfo/v2/elections",
 	//   "response": {
 	//     "$ref": "ElectionsQueryResponse"
 	//   }
@@ -2077,26 +1570,24 @@ func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*Election
 // method id "civicinfo.elections.voterInfoQuery":
 
 type ElectionsVoterInfoQueryCall struct {
-	s                *Service
-	voterinforequest *VoterInfoRequest
-	urlParams_       gensupport.URLParams
-	ifNoneMatch_     string
-	ctx_             context.Context
-	header_          http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
-func (r *ElectionsService) VoterInfoQuery(address string, voterinforequest *VoterInfoRequest) *ElectionsVoterInfoQueryCall {
+func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
 	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("address", address)
-	c.voterinforequest = voterinforequest
 	return c
 }
 
 // ElectionId sets the optional parameter "electionId": The unique ID of
 // the election to look up. A list of election IDs can be obtained at
-// https://www.googleapis.com/civicinfo/{version}/electionsIf no
+// https://www.googleapis.com/civicinfo/{version}/elections. If no
 // election ID is specified in the query and there is more than one
 // election with data for the given voter, the additional elections are
 // provided in the otherElections response field.
@@ -2159,7 +1650,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2170,7 +1661,7 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/voterinfo")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2219,6 +1710,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	return ret, nil
 	// {
 	//   "description": "Looks up information relevant to a voter based on the voter's registered address.",
+	//   "flatPath": "civicinfo/v2/voterinfo",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.elections.voterInfoQuery",
 	//   "parameterOrder": [
@@ -2233,7 +1725,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     },
 	//     "electionId": {
 	//       "default": "0",
-	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/electionsIf no election ID is specified in the query and there is more than one election with data for the given voter, the additional elections are provided in the otherElections response field.",
+	//       "description": "The unique ID of the election to look up. A list of election IDs can be obtained at https://www.googleapis.com/civicinfo/{version}/elections. If no election ID is specified in the query and there is more than one election with data for the given voter, the additional elections are provided in the otherElections response field.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -2251,10 +1743,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "voterinfo",
-	//   "request": {
-	//     "$ref": "VoterInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/voterinfo",
 	//   "response": {
 	//     "$ref": "VoterInfoResponse"
 	//   }
@@ -2265,24 +1754,22 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 // method id "civicinfo.representatives.representativeInfoByAddress":
 
 type RepresentativesRepresentativeInfoByAddressCall struct {
-	s                         *Service
-	representativeinforequest *RepresentativeInfoRequest
-	urlParams_                gensupport.URLParams
-	ifNoneMatch_              string
-	ctx_                      context.Context
-	header_                   http.Header
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // RepresentativeInfoByAddress: Looks up political geography and
 // representative information for a single address.
-func (r *RepresentativesService) RepresentativeInfoByAddress(representativeinforequest *RepresentativeInfoRequest) *RepresentativesRepresentativeInfoByAddressCall {
+func (r *RepresentativesService) RepresentativeInfoByAddress() *RepresentativesRepresentativeInfoByAddressCall {
 	c := &RepresentativesRepresentativeInfoByAddressCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.representativeinforequest = representativeinforequest
 	return c
 }
 
 // Address sets the optional parameter "address": The address to look
-// up. May only be specified if the field ocdId is not given in the URL.
+// up. May only be specified if the field ocdId is not given in the URL
 func (c *RepresentativesRepresentativeInfoByAddressCall) Address(address string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.Set("address", address)
 	return c
@@ -2302,15 +1789,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 // not be returned.
 //
 // Possible values:
-//   "administrativeArea1"
-//   "administrativeArea2"
-//   "country"
 //   "international"
-//   "locality"
+//   "country"
+//   "administrativeArea1"
 //   "regional"
-//   "special"
+//   "administrativeArea2"
+//   "locality"
 //   "subLocality1"
 //   "subLocality2"
+//   "special"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2322,15 +1809,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 // returned.
 //
 // Possible values:
-//   "deputyHeadOfGovernment"
-//   "executiveCouncil"
-//   "governmentOfficer"
-//   "headOfGovernment"
 //   "headOfState"
+//   "headOfGovernment"
+//   "deputyHeadOfGovernment"
+//   "governmentOfficer"
+//   "executiveCouncil"
+//   "legislatorUpperBody"
+//   "legislatorLowerBody"
 //   "highestCourtJudge"
 //   "judge"
-//   "legislatorLowerBody"
-//   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
@@ -2375,7 +1862,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +1873,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/representatives")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2435,11 +1922,13 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	return ret, nil
 	// {
 	//   "description": "Looks up political geography and representative information for a single address.",
+	//   "flatPath": "civicinfo/v2/representatives",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.representatives.representativeInfoByAddress",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "address": {
-	//       "description": "The address to look up. May only be specified if the field ocdId is not given in the URL.",
+	//       "description": "The address to look up. May only be specified if the field ocdId is not given in the URL",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2452,26 +1941,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//     "levels": {
 	//       "description": "A list of office levels to filter by. Only offices that serve at least one of these levels will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "administrativeArea1",
-	//         "administrativeArea2",
-	//         "country",
 	//         "international",
-	//         "locality",
+	//         "country",
+	//         "administrativeArea1",
 	//         "regional",
-	//         "special",
+	//         "administrativeArea2",
+	//         "locality",
 	//         "subLocality1",
-	//         "subLocality2"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
+	//         "subLocality2",
+	//         "special"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2480,40 +1958,24 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 	//     "roles": {
 	//       "description": "A list of office roles to filter by. Only offices fulfilling one of these roles will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "deputyHeadOfGovernment",
-	//         "executiveCouncil",
-	//         "governmentOfficer",
-	//         "headOfGovernment",
 	//         "headOfState",
+	//         "headOfGovernment",
+	//         "deputyHeadOfGovernment",
+	//         "governmentOfficer",
+	//         "executiveCouncil",
+	//         "legislatorUpperBody",
+	//         "legislatorLowerBody",
 	//         "highestCourtJudge",
 	//         "judge",
-	//         "legislatorLowerBody",
-	//         "legislatorUpperBody",
 	//         "schoolBoard",
 	//         "specialPurposeOfficer"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "representatives",
-	//   "request": {
-	//     "$ref": "RepresentativeInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/representatives",
 	//   "response": {
 	//     "$ref": "RepresentativeInfoResponse"
 	//   }
@@ -2524,21 +1986,19 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.Ca
 // method id "civicinfo.representatives.representativeInfoByDivision":
 
 type RepresentativesRepresentativeInfoByDivisionCall struct {
-	s                                 *Service
-	ocdId                             string
-	divisionrepresentativeinforequest *DivisionRepresentativeInfoRequest
-	urlParams_                        gensupport.URLParams
-	ifNoneMatch_                      string
-	ctx_                              context.Context
-	header_                           http.Header
+	s            *Service
+	ocdId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
 }
 
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
-func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string, divisionrepresentativeinforequest *DivisionRepresentativeInfoRequest) *RepresentativesRepresentativeInfoByDivisionCall {
+func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId
-	c.divisionrepresentativeinforequest = divisionrepresentativeinforequest
 	return c
 }
 
@@ -2548,15 +2008,15 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string, divi
 // not be returned.
 //
 // Possible values:
-//   "administrativeArea1"
-//   "administrativeArea2"
-//   "country"
 //   "international"
-//   "locality"
+//   "country"
+//   "administrativeArea1"
 //   "regional"
-//   "special"
+//   "administrativeArea2"
+//   "locality"
 //   "subLocality1"
 //   "subLocality2"
+//   "special"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2578,15 +2038,15 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 // returned.
 //
 // Possible values:
-//   "deputyHeadOfGovernment"
-//   "executiveCouncil"
-//   "governmentOfficer"
-//   "headOfGovernment"
 //   "headOfState"
+//   "headOfGovernment"
+//   "deputyHeadOfGovernment"
+//   "governmentOfficer"
+//   "executiveCouncil"
+//   "legislatorUpperBody"
+//   "legislatorLowerBody"
 //   "highestCourtJudge"
 //   "judge"
-//   "legislatorLowerBody"
-//   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
@@ -2631,7 +2091,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200624")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200625")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2642,7 +2102,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/{ocdId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/representatives/{ocdId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2694,6 +2154,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	return ret, nil
 	// {
 	//   "description": "Looks up representative information for a single geographic division.",
+	//   "flatPath": "civicinfo/v2/representatives/{ocdId}",
 	//   "httpMethod": "GET",
 	//   "id": "civicinfo.representatives.representativeInfoByDivision",
 	//   "parameterOrder": [
@@ -2703,26 +2164,15 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//     "levels": {
 	//       "description": "A list of office levels to filter by. Only offices that serve at least one of these levels will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "administrativeArea1",
-	//         "administrativeArea2",
-	//         "country",
 	//         "international",
-	//         "locality",
+	//         "country",
+	//         "administrativeArea1",
 	//         "regional",
-	//         "special",
+	//         "administrativeArea2",
+	//         "locality",
 	//         "subLocality1",
-	//         "subLocality2"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
+	//         "subLocality2",
+	//         "special"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2742,40 +2192,24 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.C
 	//     "roles": {
 	//       "description": "A list of office roles to filter by. Only offices fulfilling one of these roles will be returned. Divisions that don't contain a matching office will not be returned.",
 	//       "enum": [
-	//         "deputyHeadOfGovernment",
-	//         "executiveCouncil",
-	//         "governmentOfficer",
-	//         "headOfGovernment",
 	//         "headOfState",
+	//         "headOfGovernment",
+	//         "deputyHeadOfGovernment",
+	//         "governmentOfficer",
+	//         "executiveCouncil",
+	//         "legislatorUpperBody",
+	//         "legislatorLowerBody",
 	//         "highestCourtJudge",
 	//         "judge",
-	//         "legislatorLowerBody",
-	//         "legislatorUpperBody",
 	//         "schoolBoard",
 	//         "specialPurposeOfficer"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         "",
-	//         ""
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "representatives/{ocdId}",
-	//   "request": {
-	//     "$ref": "DivisionRepresentativeInfoRequest"
-	//   },
+	//   "path": "civicinfo/v2/representatives/{ocdId}",
 	//   "response": {
 	//     "$ref": "RepresentativeInfoData"
 	//   }

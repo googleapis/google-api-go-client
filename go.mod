@@ -15,5 +15,4 @@ require (
 	google.golang.org/appengine v1.6.5
 	google.golang.org/genproto v0.0.0-20200331122359-1ee6d9798940
 	google.golang.org/grpc v1.28.0
-	honnef.co/go/tools v0.0.1-2020.1.3
 )

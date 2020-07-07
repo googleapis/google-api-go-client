@@ -248,8 +248,8 @@ type ClaimDeviceRequest struct {
 	// being claimed.
 	CustomerId int64 `json:"customerId,omitempty,string"`
 
-	// DeviceIdentifier: Required. The device identifier of the device to
-	// claim.
+	// DeviceIdentifier: Required. Required. The device identifier of the
+	// device to claim.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: Optional. The metadata to attach to the device.
@@ -360,8 +360,8 @@ func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
 // Company: A reseller, vendor, or customer in the zero-touch reseller
 // and customer APIs.
 type Company struct {
-	// AdminEmails: Optional. Input only. Email address of customer's users
-	// in the admin role.
+	// AdminEmails: Optional. Email address of customer's users in the admin
+	// role.
 	// Each email address must be associated with a Google Account.
 	AdminEmails []string `json:"adminEmails,omitempty"`
 
@@ -387,8 +387,8 @@ type Company struct {
 	// ssigned by the server.
 	Name string `json:"name,omitempty"`
 
-	// OwnerEmails: Input only. Email address of customer's users in the
-	// owner role. At least
+	// OwnerEmails: Required. Input only. Email address of customer's users
+	// in the owner role. At least
 	// one `owner_email` is required. Each email address must be associated
 	// with a
 	// Google Account. Owners share the same access as admins but can also
@@ -846,12 +846,16 @@ type Device struct {
 	// DeviceIdentifier: The hardware IDs that identify a manufactured
 	// device. To learn more,
 	// read
-	// [Identifiers](/zero-touch/guides/identifiers).
+	// [Identifiers](https://developers.google.com/zero-touch/guides/ide
+	// ntifiers).
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: The metadata attached to the device. Structured as
 	// key-value pairs. To
-	// learn more, read [Device metadata](/zero-touch/guides/metadata).
+	// learn more, read
+	// [Device
+	// metadata](https://developers.google.com/zero-touch/guides/meta
+	// data).
 	DeviceMetadata *DeviceMetadata `json:"deviceMetadata,omitempty"`
 
 	// Name: Output only. The API resource name in the
@@ -945,7 +949,8 @@ func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
 // manufactured device.
 // To understand requirements on identifier sets,
 // read
-// [Identifiers](/zero-touch/guides/identifiers).
+// [Identifiers](https://developers.google.com/zero-touch/guides/ide
+// ntifiers).
 type DeviceIdentifier struct {
 	// Imei: The device’s IMEI number. Validated on input.
 	Imei string `json:"imei,omitempty"`
@@ -1000,7 +1005,8 @@ func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
 
 // DeviceMetadata: Metadata entries that can be attached to a `Device`.
 // To learn more, read
-// [Device metadata](/zero-touch/guides/metadata).
+// [Device
+// metadata](https://developers.google.com/zero-touch/guides/metadata).
 type DeviceMetadata struct {
 	// Entries: Metadata entries recorded as key-value pairs.
 	Entries map[string]string `json:"entries,omitempty"`
@@ -1045,7 +1051,10 @@ func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
 // parameter type
 // because it's more flexible for the caller. To learn more about
 // device
-// identifiers, read [Identifiers](/zero-touch/guides/identifiers).
+// identifiers,
+// read
+// [Identifiers](https://developers.google.com/zero-touch/guides/ide
+// ntifiers).
 type DeviceReference struct {
 	// DeviceId: The ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
@@ -1248,7 +1257,8 @@ type Empty struct {
 
 // FindDevicesByDeviceIdentifierRequest: Request to find devices.
 type FindDevicesByDeviceIdentifierRequest struct {
-	// DeviceIdentifier: Required. The device identifier to search for.
+	// DeviceIdentifier: Required. Required. The device identifier to search
+	// for.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// Limit: Required. The maximum number of devices to show in a page of
@@ -1648,7 +1658,8 @@ type PartnerClaim struct {
 	// being claimed.
 	CustomerId int64 `json:"customerId,omitempty,string"`
 
-	// DeviceIdentifier: Required. Device identifier of the device.
+	// DeviceIdentifier: Required. Required. Device identifier of the
+	// device.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: Required. The metadata to attach to the device at
@@ -1689,10 +1700,10 @@ func (s *PartnerClaim) MarshalJSON() ([]byte, error) {
 
 // PartnerUnclaim: Identifies one unclaim request.
 type PartnerUnclaim struct {
-	// DeviceId: Device ID of the device.
+	// DeviceId: Required. Device ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
-	// DeviceIdentifier: Device identifier of the device.
+	// DeviceIdentifier: Required. Device identifier of the device.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// SectionType: Required. The section type of the device's provisioning
@@ -1704,12 +1715,13 @@ type PartnerUnclaim struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
-	// VacationModeDays: The duration of the vacation unlock starting from
-	// when the request is
+	// VacationModeDays: Optional. The duration of the vacation unlock
+	// starting from when the request is
 	// processed. (1 day is treated as 24 hours)
 	VacationModeDays int64 `json:"vacationModeDays,omitempty"`
 
-	// VacationModeExpireTime: The expiration time of the vacation unlock.
+	// VacationModeExpireTime: Optional. The expiration time of the vacation
+	// unlock.
 	VacationModeExpireTime string `json:"vacationModeExpireTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
@@ -1845,11 +1857,11 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // UnclaimDeviceRequest: Request message to unclaim a device.
 type UnclaimDeviceRequest struct {
-	// DeviceId: The device ID returned by `ClaimDevice`.
+	// DeviceId: Required. The device ID returned by `ClaimDevice`.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
-	// DeviceIdentifier: The device identifier you used when you claimed
-	// this device.
+	// DeviceIdentifier: Required. The device identifier you used when you
+	// claimed this device.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// SectionType: Required. The section type of the device's provisioning
@@ -1981,10 +1993,10 @@ func (s *UpdateDeviceMetadataRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateMetadataArguments: Identifies metadata updates to one device.
 type UpdateMetadataArguments struct {
-	// DeviceId: Device ID of the device.
+	// DeviceId: Required. Device ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
-	// DeviceIdentifier: Device identifier.
+	// DeviceIdentifier: Required. Device identifier.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: Required. The metadata to update.
@@ -2081,7 +2093,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2235,7 +2247,7 @@ func (c *CustomersConfigurationsCreateCall) Header() http.Header {
 
 func (c *CustomersConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2372,7 +2384,7 @@ func (c *CustomersConfigurationsDeleteCall) Header() http.Header {
 
 func (c *CustomersConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2510,7 +2522,7 @@ func (c *CustomersConfigurationsGetCall) Header() http.Header {
 
 func (c *CustomersConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2651,7 +2663,7 @@ func (c *CustomersConfigurationsListCall) Header() http.Header {
 
 func (c *CustomersConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2796,7 +2808,7 @@ func (c *CustomersConfigurationsPatchCall) Header() http.Header {
 
 func (c *CustomersConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2943,7 +2955,7 @@ func (c *CustomersDevicesApplyConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesApplyConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3089,7 +3101,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3245,7 +3257,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3409,7 +3421,7 @@ func (c *CustomersDevicesRemoveConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesRemoveConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3552,7 +3564,7 @@ func (c *CustomersDevicesUnclaimCall) Header() http.Header {
 
 func (c *CustomersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3700,7 +3712,7 @@ func (c *CustomersDpcsListCall) Header() http.Header {
 
 func (c *CustomersDpcsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3845,7 +3857,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3985,7 +3997,7 @@ func (c *PartnersCustomersCreateCall) Header() http.Header {
 
 func (c *PartnersCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4150,7 +4162,7 @@ func (c *PartnersCustomersListCall) Header() http.Header {
 
 func (c *PartnersCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4318,7 +4330,7 @@ func (c *PartnersDevicesClaimCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4460,7 +4472,7 @@ func (c *PartnersDevicesClaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4599,7 +4611,7 @@ func (c *PartnersDevicesFindByIdentifierCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByIdentifierCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4765,7 +4777,7 @@ func (c *PartnersDevicesFindByOwnerCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByOwnerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4933,7 +4945,7 @@ func (c *PartnersDevicesGetCall) Header() http.Header {
 
 func (c *PartnersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5067,7 +5079,7 @@ func (c *PartnersDevicesMetadataCall) Header() http.Header {
 
 func (c *PartnersDevicesMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5217,7 +5229,7 @@ func (c *PartnersDevicesUnclaimCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5360,7 +5372,7 @@ func (c *PartnersDevicesUnclaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5504,7 +5516,7 @@ func (c *PartnersDevicesUpdateMetadataAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUpdateMetadataAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5665,7 +5677,7 @@ func (c *PartnersVendorsListCall) Header() http.Header {
 
 func (c *PartnersVendorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5852,7 +5864,7 @@ func (c *PartnersVendorsCustomersListCall) Header() http.Header {
 
 func (c *PartnersVendorsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200627")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

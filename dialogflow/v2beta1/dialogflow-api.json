@@ -1724,13 +1724,13 @@
                       ],
                       "parameters": {
                         "pageSize": {
-                          "description": "Optional. The maximum number of items to return in a single page. By\ndefault 10 and at most 100.",
+                          "description": "The maximum number of items to return in a single page. By\ndefault 10 and at most 100.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
                         },
                         "pageToken": {
-                          "description": "Optional. The next_page_token value returned from a previous list request.",
+                          "description": "The next_page_token value returned from a previous list request.",
                           "location": "query",
                           "type": "string"
                         },
@@ -2451,13 +2451,13 @@
                   ],
                   "parameters": {
                     "pageSize": {
-                      "description": "Optional. The maximum number of items to return in a single page. By\ndefault 10 and at most 100.",
+                      "description": "The maximum number of items to return in a single page. By\ndefault 10 and at most 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional. The next_page_token value returned from a previous list request.",
+                      "description": "The next_page_token value returned from a previous list request.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2668,41 +2668,6 @@
                     "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
-                "fulfillment": {
-                  "description": "Updates the fulfillment.",
-                  "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/fulfillment",
-                  "httpMethod": "POST",
-                  "id": "dialogflow.projects.locations.agent.fulfillment",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The unique identifier of the fulfillment.\nFormat: `projects/\u003cProject ID\u003e/agent/fulfillment`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "updateMask": {
-                      "description": "Required. The mask to control which fields get updated. If the mask is not\npresent, all fields will be updated.",
-                      "format": "google-fieldmask",
-                      "location": "query",
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+name}",
-                  "request": {
-                    "$ref": "GoogleCloudDialogflowV2beta1Fulfillment"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1Fulfillment"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/dialogflow"
-                  ]
-                },
                 "getFulfillment": {
                   "description": "Retrieves the fulfillment.",
                   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/fulfillment",
@@ -2847,6 +2812,41 @@
                   },
                   "response": {
                     "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "updateFulfillment": {
+                  "description": "Updates the fulfillment.",
+                  "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/agent/fulfillment",
+                  "httpMethod": "PATCH",
+                  "id": "dialogflow.projects.locations.agent.updateFulfillment",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The unique identifier of the fulfillment.\nFormat: `projects/\u003cProject ID\u003e/agent/fulfillment`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The mask to control which fields get updated. If the mask is not\npresent, all fields will be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowV2beta1Fulfillment"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowV2beta1Fulfillment"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -4454,7 +4454,7 @@
       }
     }
   },
-  "revision": "20200622",
+  "revision": "20200627",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3beta1ExportAgentResponse": {
@@ -4565,6 +4565,10 @@
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudio",
           "description": "Output only. An audio response message composed of both the synthesized Dialogflow\nagent responses and responses defined via\nplay_audio.\nThis message is generated by Dialogflow only and not supposed to be\ndefined by the user."
         },
+        "outputAudioText": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText",
+          "description": "A text or ssml response that is preferentially used for TTS output audio\nsynthesis, as described in the comment on the ResponseMessage message."
+        },
         "payload": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -4664,6 +4668,21 @@
         },
         "uri": {
           "description": "Client-specific URI that points to an audio clip accessible to the\nclient. Dialogflow does not impose any validation on it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText": {
+      "description": "A text or ssml response that is preferentially used for TTS output audio\nsynthesis, as described in the comment on the ResponseMessage message.",
+      "id": "GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText",
+      "properties": {
+        "ssml": {
+          "description": "The SSML text to be synthesized. For more information, see\n[SSML](/speech/text-to-speech/docs/ssml).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The raw text to be synthesized.",
           "type": "string"
         }
       },
@@ -6184,7 +6203,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2SentimentAnalysisResult": {
-      "description": "The result of sentiment analysis as configured by\n`sentiment_analysis_request_config`.",
+      "description": "The result of sentiment analysis. Sentiment analysis inspects user input\nand identifies the prevailing subjective opinion, especially to determine a\nuser's attitude as positive, negative, or neutral.\nFor Participants.AnalyzeContent, it needs to be configured in\nDetectIntentRequest.query_params. For\nParticipants.StreamingAnalyzeContent, it needs to be configured in\nStreamingDetectIntentRequest.query_params.\nAnd for Participants.AnalyzeContent and\nParticipants.StreamingAnalyzeContent, it needs to be configured in\nConversationProfile.human_agent_assistant_config",
       "id": "GoogleCloudDialogflowV2SentimentAnalysisResult",
       "properties": {
         "queryTextSentiment": {
@@ -8880,7 +8899,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1SentimentAnalysisResult": {
-      "description": "The result of sentiment analysis as configured by\n`sentiment_analysis_request_config`.",
+      "description": "The result of sentiment analysis. Sentiment analysis inspects user input\nand identifies the prevailing subjective opinion, especially to determine a\nuser's attitude as positive, negative, or neutral.\nFor Participants.AnalyzeContent, it needs to be configured in\nDetectIntentRequest.query_params. For\nParticipants.StreamingAnalyzeContent, it needs to be configured in\nStreamingDetectIntentRequest.query_params.\nAnd for Participants.AnalyzeContent and\nParticipants.StreamingAnalyzeContent, it needs to be configured in\nConversationProfile.human_agent_assistant_config",
       "id": "GoogleCloudDialogflowV2beta1SentimentAnalysisResult",
       "properties": {
         "queryTextSentiment": {

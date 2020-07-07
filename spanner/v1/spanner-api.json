@@ -1379,7 +1379,7 @@
                       ]
                     },
                     "commit": {
-                      "description": "Commits a transaction. The request includes the mutations to be\napplied to rows in the database.\n\n`Commit` might return an `ABORTED` error. This can occur at any time;\ncommonly, the cause is conflicts with concurrent\ntransactions. However, it can also happen for a variety of other\nreasons. If `Commit` returns `ABORTED`, the caller should re-attempt\nthe transaction from the beginning, re-using the same session.",
+                      "description": "Commits a transaction. The request includes the mutations to be\napplied to rows in the database.\n\n`Commit` might return an `ABORTED` error. This can occur at any time;\ncommonly, the cause is conflicts with concurrent\ntransactions. However, it can also happen for a variety of other\nreasons. If `Commit` returns `ABORTED`, the caller should re-attempt\nthe transaction from the beginning, re-using the same session.\n\nOn very rare occasions, `Commit` might return `UNKNOWN`. This can happen,\nfor example, if the client job experiences a 1+ hour networking failure.\nAt that point, Cloud Spanner has lost track of the transaction outcome and\nwe recommend that you perform another read from the database to see the\nstate of things as they are now.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:commit",
                       "httpMethod": "POST",
                       "id": "spanner.projects.instances.databases.sessions.commit",
@@ -1895,7 +1895,7 @@
       }
     }
   },
-  "revision": "20200616",
+  "revision": "20200623",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "Backup": {

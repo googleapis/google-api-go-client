@@ -161,7 +161,7 @@
             },
             "returnAllAvailableData": {
               "default": "false",
-              "description": "If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
+              "description": "If set to true, the query will return the success code and include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
               "location": "query",
               "type": "boolean"
             }
@@ -300,7 +300,7 @@
       }
     }
   },
-  "revision": "20200624",
+  "revision": "20200706",
   "rootUrl": "https://civicinfo.googleapis.com/",
   "schemas": {
     "AdministrationRegion": {
@@ -531,8 +531,15 @@
           "description": "The name of the office for this contest.",
           "type": "string"
         },
+        "primaryParties": {
+          "description": "If this is a partisan election, the name of the party/parties it is for.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "primaryParty": {
-          "description": "If this is a partisan election, the name of the party it is for.",
+          "description": "[DEPRECATED] If this is a partisan election, the name of the party it is for. This field as deprecated in favor of the array \"primaryParties\", as contests may contain more than one party.",
           "type": "string"
         },
         "referendumBallotResponses": {

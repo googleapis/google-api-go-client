@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20200617",
+  "revision": "20200625",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -4823,6 +4823,7 @@
             "DATETIME",
             "GEOGRAPHY",
             "NUMERIC",
+            "BIGNUMERIC",
             "ARRAY",
             "STRUCT"
           ],
@@ -4838,6 +4839,7 @@
             "Encoded as RFC 3339 partial-time format string: 23:20:50.52",
             "Encoded as RFC 3339 full-date \"T\" partial-time: 1985-04-12T23:20:50.52",
             "Encoded as WKT",
+            "Encoded as a decimal string.",
             "Encoded as a decimal string.",
             "Encoded as a list with types matching Type.array_type.",
             "Encoded as a list with fields of type Type.struct_type[i]. List is used\nbecause a JSON object cannot have duplicate field names."

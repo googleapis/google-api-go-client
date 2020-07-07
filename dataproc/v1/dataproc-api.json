@@ -40,6 +40,11 @@
       "location": "query",
       "type": "string"
     },
+    "access_token": {
+      "description": "OAuth access token.",
+      "location": "query",
+      "type": "string"
+    },
     "alt": {
       "default": "json",
       "description": "Data format for response.",
@@ -68,6 +73,11 @@
     },
     "key": {
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "location": "query",
+      "type": "string"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
     },
@@ -2119,7 +2129,7 @@
       }
     }
   },
-  "revision": "20200611",
+  "revision": "20200619",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2348,7 +2358,7 @@
           "description": "Optional. The config settings for software inside the cluster."
         },
         "tempBucket": {
-          "description": "Optional. A Cloud Storage bucket used to store ephemeral cluster and jobs data, such as Spark and MapReduce history files. If you do not specify a temp bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's temp bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket. The default bucket has a TTL of 90 days, but you can use any TTL (or none) if you specify a bucket.",
+          "description": "Optional. A Cloud Storage bucket used to store ephemeral cluster and jobs data, such as Spark and MapReduce history files. If you do not specify a temp bucket, Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's temp bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket. The default bucket has a TTL of 90 days, but you can use any TTL (or none) if you specify a bucket.",
           "type": "string"
         },
         "workerConfig": {
@@ -3066,7 +3076,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "Required. The ID of the Google Cloud Platform project that the job belongs to.",
+          "description": "Optional. The ID of the Google Cloud Platform project that the job belongs to. If specified, must match the request project ID.",
           "type": "string"
         }
       },
@@ -4218,7 +4228,7 @@
           "type": "string"
         },
         "parameters": {
-          "description": "Optional. emplate parameters whose values are substituted into the template. Values for parameters must be provided when the template is instantiated.",
+          "description": "Optional. Template parameters whose values are substituted into the template. Values for parameters must be provided when the template is instantiated.",
           "items": {
             "$ref": "TemplateParameter"
           },

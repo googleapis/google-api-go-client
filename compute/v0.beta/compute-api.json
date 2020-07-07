@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/mARDLmgrKjsx5nJx_d3S8OHEtK0\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/WLgRAJYGkywv7BP6LMTwsMhVKHU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -1537,7 +1537,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a BackendService resource in the specified project using the data included in the request. There are several restrictions and guidelines to keep in mind when creating a backend service. Read  Understanding backend services for more information.",
+          "description": "Creates a BackendService resource in the specified project using the data included in the request. For more information, see  Backend services overview.",
           "httpMethod": "POST",
           "id": "compute.backendServices.insert",
           "parameterOrder": [
@@ -1619,7 +1619,7 @@
           ]
         },
         "patch": {
-          "description": "Patches the specified BackendService resource with the data included in the request. There are several Understanding backend services to keep in mind when updating a backend service. Read  Understanding backend services for more information. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
+          "description": "Patches the specified BackendService resource with the data included in the request. For more information, see  Backend services overview. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
           "httpMethod": "PATCH",
           "id": "compute.backendServices.patch",
           "parameterOrder": [
@@ -1737,7 +1737,7 @@
           ]
         },
         "update": {
-          "description": "Updates the specified BackendService resource with the data included in the request. There are several Understanding backend services to keep in mind when updating a backend service. Read  Understanding backend services for more information.",
+          "description": "Updates the specified BackendService resource with the data included in the request. For more information, see Backend services overview.",
           "httpMethod": "PUT",
           "id": "compute.backendServices.update",
           "parameterOrder": [
@@ -5826,6 +5826,47 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "patch": {
+          "description": "Patches the specified image with the data included in the request. Only the following fields can be modified: family, description, deprecation status.",
+          "httpMethod": "PATCH",
+          "id": "compute.images.patch",
+          "parameterOrder": [
+            "project",
+            "image"
+          ],
+          "parameters": {
+            "image": {
+              "description": "Name of the image resource to patch.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/images/{image}",
+          "request": {
+            "$ref": "Image"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "setIamPolicy": {
           "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
           "httpMethod": "POST",
@@ -6399,7 +6440,7 @@
           ]
         },
         "listErrors": {
-          "description": "Lists all errors thrown by actions on instances for a given managed instance group.",
+          "description": "Lists all errors thrown by actions on instances for a given managed instance group. The filter and orderBy query parameters are not supported.",
           "httpMethod": "GET",
           "id": "compute.instanceGroupManagers.listErrors",
           "parameterOrder": [
@@ -6462,7 +6503,7 @@
           ]
         },
         "listManagedInstances": {
-          "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
+          "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.listManagedInstances",
           "parameterOrder": [
@@ -6525,7 +6566,7 @@
           ]
         },
         "listPerInstanceConfigs": {
-          "description": "Lists all of the per-instance configs defined for the managed instance group.",
+          "description": "Lists all of the per-instance configs defined for the managed instance group. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.listPerInstanceConfigs",
           "parameterOrder": [
@@ -7393,7 +7434,7 @@
           ]
         },
         "listInstances": {
-          "description": "Lists the instances in the specified instance group.",
+          "description": "Lists the instances in the specified instance group. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.instanceGroups.listInstances",
           "parameterOrder": [
@@ -15588,7 +15629,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a regional BackendService resource in the specified project using the data included in the request. There are several restrictions and guidelines to keep in mind when creating a regional backend service. Read  Understanding backend services for more information.",
+          "description": "Creates a regional BackendService resource in the specified project using the data included in the request. For more information, see  Backend services overview.",
           "httpMethod": "POST",
           "id": "compute.regionBackendServices.insert",
           "parameterOrder": [
@@ -15686,7 +15727,7 @@
           ]
         },
         "patch": {
-          "description": "Updates the specified regional BackendService resource with the data included in the request. There are several Understanding backend services to keep in mind when updating a backend service. Read  Understanding backend services for more information. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
+          "description": "Updates the specified regional BackendService resource with the data included in the request. For more information, see  Understanding backend services This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
           "httpMethod": "PATCH",
           "id": "compute.regionBackendServices.patch",
           "parameterOrder": [
@@ -15780,7 +15821,7 @@
           ]
         },
         "update": {
-          "description": "Updates the specified regional BackendService resource with the data included in the request. There are several Understanding backend services to keep in mind when updating a backend service. Read  Understanding backend services for more information.",
+          "description": "Updates the specified regional BackendService resource with the data included in the request. For more information, see  Backend services overview.",
           "httpMethod": "PUT",
           "id": "compute.regionBackendServices.update",
           "parameterOrder": [
@@ -17688,7 +17729,7 @@
           ]
         },
         "listErrors": {
-          "description": "Lists all errors thrown by actions on instances for a given regional managed instance group.",
+          "description": "Lists all errors thrown by actions on instances for a given regional managed instance group. The filter and orderBy query parameters are not supported.",
           "httpMethod": "GET",
           "id": "compute.regionInstanceGroupManagers.listErrors",
           "parameterOrder": [
@@ -17751,7 +17792,7 @@
           ]
         },
         "listManagedInstances": {
-          "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances.",
+          "description": "Lists the instances in the managed instance group and instances that are scheduled to be created. The list includes any current actions that the group has scheduled for its instances. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.listManagedInstances",
           "parameterOrder": [
@@ -17814,7 +17855,7 @@
           ]
         },
         "listPerInstanceConfigs": {
-          "description": "Lists all of the per-instance configs defined for the managed instance group.",
+          "description": "Lists all of the per-instance configs defined for the managed instance group. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.listPerInstanceConfigs",
           "parameterOrder": [
@@ -18451,7 +18492,7 @@
           ]
         },
         "listInstances": {
-          "description": "Lists the instances in the specified instance group and displays information about the named ports. Depending on the specified options, this method can list all instances or only the instances that are running.",
+          "description": "Lists the instances in the specified instance group and displays information about the named ports. Depending on the specified options, this method can list all instances or only the instances that are running. The orderBy query parameter is not supported.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroups.listInstances",
           "parameterOrder": [
@@ -23539,7 +23580,7 @@
           ]
         },
         "listUsable": {
-          "description": "Retrieves an aggregated list of all usable subnetworks in the project. The list contains all of the subnetworks in the project and the subnetworks that were shared by a Shared VPC host project.",
+          "description": "Retrieves an aggregated list of all usable subnetworks in the project.",
           "httpMethod": "GET",
           "id": "compute.subnetworks.listUsable",
           "parameterOrder": [
@@ -27645,7 +27686,7 @@
       }
     }
   },
-  "revision": "20200606",
+  "revision": "20200612",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -29540,7 +29581,7 @@
           "type": "string"
         },
         "capacityScaler": {
-          "description": "A multiplier applied to the group's maximum servicing capacity (based on UTILIZATION, RATE or CONNECTION). Default value is 1, which means the group will serve up to 100% of its configured capacity (depending on balancingMode). A setting of 0 means the group is completely drained, offering 0% of its available Capacity. Valid range is [0.0,1.0].\n\nThis cannot be used for internal load balancing.",
+          "description": "A multiplier applied to the group's maximum servicing capacity (based on UTILIZATION, RATE or CONNECTION). Default value is 1, which means the group will serve up to 100% of its configured capacity (depending on balancingMode). A setting of 0 means the group is completely drained, offering 0% of its available capacity. Valid range is 0.0 and [0.1,1.0]. You cannot configure a setting larger than 0 and smaller than 0.1. You cannot configure a setting of 0 when there is only one backend attached to the backend service.\n\nThis cannot be used for internal load balancing.",
           "format": "float",
           "type": "number"
         },
@@ -29772,7 +29813,7 @@
       "type": "object"
     },
     "BackendService": {
-      "description": "Represents a Backend Service resource.\n\nA backend service defines how Google Cloud load balancers distribute traffic. The backend service configuration contains a set of values, such as the protocol used to connect to backends, various distribution and session settings, health checks, and timeouts. These settings provide fine-grained control over how your load balancer behaves. Most of the settings have default values that allow for easy configuration if you need to get started quickly.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, read Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
+      "description": "Represents a Backend Service resource.\n\nA backend service defines how Google Cloud load balancers distribute traffic. The backend service configuration contains a set of values, such as the protocol used to connect to backends, various distribution and session settings, health checks, and timeouts. These settings provide fine-grained control over how your load balancer behaves. Most of the settings have default values that allow for easy configuration if you need to get started quickly.\n\nBackend services in Google Compute Engine can be either regionally or globally scoped.\n\n* [Global](/compute/docs/reference/rest/{$api_version}/backendServices) * [Regional](/compute/docs/reference/rest/{$api_version}/regionBackendServices)\n\nFor more information, see Backend Services.\n\n(== resource_for {$api_version}.backendService ==)",
       "id": "BackendService",
       "properties": {
         "affinityCookieTtlSec": {
@@ -29870,7 +29911,7 @@
           "type": "string"
         },
         "localityLbPolicy": {
-          "description": "The load balancing algorithm used within the scope of the locality. The possible values are:  \n- ROUND_ROBIN: This is a simple policy in which each healthy backend is selected in round robin order. This is the default. \n- LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and picks the host which has fewer active requests. \n- RING_HASH: The ring/modulo hash load balancer implements consistent hashing to backends. The algorithm has the property that the addition/removal of a host from a set of N hosts only affects 1/N of the requests. \n- RANDOM: The load balancer selects a random healthy host. \n- ORIGINAL_DESTINATION: Backend host is selected based on the client connection metadata, i.e., connections are opened to the same address as the destination address of the incoming connection before the connection was redirected to the load balancer. \n- MAGLEV: used as a drop in replacement for the ring hash load balancer. Maglev is not as stable as ring hash but has faster table lookup build times and host selection times. For more information about Maglev, refer to https://ai.google/research/pubs/pub44824 \n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.  \n\nIf sessionAffinity is not NONE, and this field is not set to \u003eMAGLEV or RING_HASH, session affinity settings will not take effect.",
+          "description": "The load balancing algorithm used within the scope of the locality. The possible values are:  \n- ROUND_ROBIN: This is a simple policy in which each healthy backend is selected in round robin order. This is the default. \n- LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and picks the host which has fewer active requests. \n- RING_HASH: The ring/modulo hash load balancer implements consistent hashing to backends. The algorithm has the property that the addition/removal of a host from a set of N hosts only affects 1/N of the requests. \n- RANDOM: The load balancer selects a random healthy host. \n- ORIGINAL_DESTINATION: Backend host is selected based on the client connection metadata, i.e., connections are opened to the same address as the destination address of the incoming connection before the connection was redirected to the load balancer. \n- MAGLEV: used as a drop in replacement for the ring hash load balancer. Maglev is not as stable as ring hash but has faster table lookup build times and host selection times. For more information about Maglev, see https://ai.google/research/pubs/pub44824 \n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.  \n\nIf sessionAffinity is not NONE, and this field is not set to \u003eMAGLEV or RING_HASH, session affinity settings will not take effect.",
           "enum": [
             "INVALID_LB_POLICY",
             "LEAST_REQUEST",
@@ -29976,7 +30017,7 @@
           "type": "string"
         },
         "timeoutSec": {
-          "description": "The backend service timeout has a different meaning depending on the type of load balancer. For more information read,  Backend service settings The default is 30 seconds.",
+          "description": "The backend service timeout has a different meaning depending on the type of load balancer. For more information see,  Backend service settings The default is 30 seconds.",
           "format": "int32",
           "type": "integer"
         }
@@ -31609,6 +31650,14 @@
         "sizeGb": {
           "description": "Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the sourceImage or sourceSnapshot parameter, or specify it alone to create an empty persistent disk.\n\nIf you specify this field along with sourceImage or sourceSnapshot, the value of sizeGb must not be less than the size of the sourceImage or the size of the snapshot. Acceptable values are 1 to 65536, inclusive.",
           "format": "int64",
+          "type": "string"
+        },
+        "sourceDisk": {
+          "description": "The source disk used to create this disk. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk \n- projects/project/zones/zone/disks/disk \n- zones/zone/disks/disk",
+          "type": "string"
+        },
+        "sourceDiskId": {
+          "description": "[Output Only] The unique ID of the disk used to create this disk. This value identifies the exact disk that was used to create this persistent disk. For example, if you created the persistent disk from a disk that was later deleted and recreated under the same name, the source disk ID would identify the exact version of the disk that was used.",
           "type": "string"
         },
         "sourceImage": {
@@ -38103,7 +38152,7 @@
       "id": "InstanceProperties",
       "properties": {
         "canIpForward": {
-          "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information.",
+          "description": "Enables instances created based on these properties to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information.",
           "type": "boolean"
         },
         "confidentialInstanceConfig": {
@@ -38111,11 +38160,11 @@
           "description": "Specifies the Confidential Instance options."
         },
         "description": {
-          "description": "An optional text description for the instances that are created from this instance template.",
+          "description": "An optional text description for the instances that are created from these properties.",
           "type": "string"
         },
         "disks": {
-          "description": "An array of disks that are associated with the instances that are created from this template.",
+          "description": "An array of disks that are associated with the instances that are created from these properties.",
           "items": {
             "$ref": "AttachedDisk"
           },
@@ -38126,7 +38175,7 @@
           "description": "Display Device properties to enable support for remote display products like: Teradici, VNC and TeamViewer"
         },
         "guestAccelerators": {
-          "description": "A list of guest accelerator cards' type and count to use for instances created from the instance template.",
+          "description": "A list of guest accelerator cards' type and count to use for instances created from these properties.",
           "items": {
             "$ref": "AcceleratorConfig"
           },
@@ -38136,7 +38185,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to instances that are created from this template.",
+          "description": "Labels to apply to instances that are created from these properties.",
           "type": "object"
         },
         "machineType": {
@@ -38145,15 +38194,15 @@
               "compute.instanceTemplates.insert"
             ]
           },
-          "description": "The machine type to use for instances that are created from this template.",
+          "description": "The machine type to use for instances that are created from these properties.",
           "type": "string"
         },
         "metadata": {
           "$ref": "Metadata",
-          "description": "The metadata key/value pairs to assign to instances that are created from this template. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
+          "description": "The metadata key/value pairs to assign to instances that are created from these properties. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
         },
         "minCpuPlatform": {
-          "description": "Minimum cpu/platform to be used by this instance. The instance may be scheduled on the specified or newer cpu/platform. Applicable values are the friendly names of CPU platforms, such as minCpuPlatform: \"Intel Haswell\" or minCpuPlatform: \"Intel Sandy Bridge\". For more information, read Specifying a Minimum CPU Platform.",
+          "description": "Minimum cpu/platform to be used by instances. The instance may be scheduled on the specified or newer cpu/platform. Applicable values are the friendly names of CPU platforms, such as minCpuPlatform: \"Intel Haswell\" or minCpuPlatform: \"Intel Sandy Bridge\". For more information, read Specifying a Minimum CPU Platform.",
           "type": "string"
         },
         "networkInterfaces": {
@@ -38164,7 +38213,7 @@
           "type": "array"
         },
         "privateIpv6GoogleAccess": {
-          "description": "The private IPv6 google access type for the VM. If not specified, use  INHERIT_FROM_SUBNETWORK as default.",
+          "description": "The private IPv6 google access type for VMs. If not specified, use  INHERIT_FROM_SUBNETWORK as default.",
           "enum": [
             "ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE",
             "ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE",
@@ -38179,10 +38228,10 @@
         },
         "reservationAffinity": {
           "$ref": "ReservationAffinity",
-          "description": "Specifies the reservations that this instance can consume from."
+          "description": "Specifies the reservations that instances can consume from."
         },
         "resourcePolicies": {
-          "description": "Resource policies (names, not ULRs) applied to instances created from this template.",
+          "description": "Resource policies (names, not ULRs) applied to instances created from these properties.",
           "items": {
             "type": "string"
           },
@@ -38190,10 +38239,10 @@
         },
         "scheduling": {
           "$ref": "Scheduling",
-          "description": "Specifies the scheduling options for the instances that are created from this template."
+          "description": "Specifies the scheduling options for the instances that are created from these properties."
         },
         "serviceAccounts": {
-          "description": "A list of service accounts with specified scopes. Access tokens for these service accounts are available to the instances that are created from this template. Use metadata queries to obtain the access tokens for these instances.",
+          "description": "A list of service accounts with specified scopes. Access tokens for these service accounts are available to the instances that are created from these properties. Use metadata queries to obtain the access tokens for these instances.",
           "items": {
             "$ref": "ServiceAccount"
           },
@@ -38204,11 +38253,11 @@
         },
         "shieldedVmConfig": {
           "$ref": "ShieldedVmConfig",
-          "description": "Specifies the Shielded VM options for the instances that are created from this template."
+          "description": "Specifies the Shielded VM options for the instances that are created from these properties."
         },
         "tags": {
           "$ref": "Tags",
-          "description": "A list of tags to apply to the instances that are created from this template. The tags identify valid sources or targets for network firewalls. The setTags method can modify this list of tags. Each tag within the list must comply with RFC1035."
+          "description": "A list of tags to apply to the instances that are created from these properties. The tags identify valid sources or targets for network firewalls. The setTags method can modify this list of tags. Each tag within the list must comply with RFC1035."
         }
       },
       "type": "object"
@@ -41253,7 +41302,7 @@
           "type": "string"
         },
         "autoCreateSubnetworks": {
-          "description": "When set to true, the VPC network is created in \"auto\" mode. When set to false, the VPC network is created in \"custom\" mode.\n\nAn auto mode VPC network starts with one subnet per region. Each subnet has a predetermined range as described in Auto mode VPC network IP ranges.",
+          "description": "When set to true, the VPC network is created in auto mode. When set to false, the VPC network is created in custom mode.\n\nAn auto mode VPC network starts with one subnet per region. Each subnet has a predetermined range as described in Auto mode VPC network IP ranges.\n\nFor custom mode VPC networks, you can add subnets using the subnetworks insert method.",
           "type": "boolean"
         },
         "creationTimestamp": {
@@ -42394,7 +42443,7 @@
           "type": "string"
         },
         "nodeTemplate": {
-          "description": "The URL of the node template to which this node group belongs.",
+          "description": "URL of the node template to create the node group from.",
           "type": "string"
         },
         "selfLink": {
@@ -51478,7 +51527,7 @@
           "type": "string"
         },
         "ipCidrRange": {
-          "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field can be set only at resource creation time.",
+          "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network. Only IPv4 is supported. This field is set at resource creation time. The range can be expanded after creation using expandIpCidrRange.",
           "type": "string"
         },
         "ipv6CidrRange": {

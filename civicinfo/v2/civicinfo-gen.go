@@ -427,8 +427,13 @@ type Contest struct {
 	// Office: The name of the office for this contest.
 	Office string `json:"office,omitempty"`
 
-	// PrimaryParty: If this is a partisan election, the name of the party
-	// it is for.
+	// PrimaryParties: If this is a partisan election, the name of the
+	// party/parties it is for.
+	PrimaryParties []string `json:"primaryParties,omitempty"`
+
+	// PrimaryParty: [DEPRECATED] If this is a partisan election, the name
+	// of the party it is for. This field as deprecated in favor of the
+	// array "primaryParties", as contests may contain more than one party.
 	PrimaryParty string `json:"primaryParty,omitempty"`
 
 	// ReferendumBallotResponses: The set of ballot responses for the
@@ -1362,7 +1367,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200626")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1494,7 +1499,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200626")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1605,7 +1610,7 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 
 // ReturnAllAvailableData sets the optional parameter
 // "returnAllAvailableData": If set to true, the query will return the
-// success codeand include any partial information when it is unable to
+// success code and include any partial information when it is unable to
 // determine a matching address or unable to determine the election for
 // electionId=0 queries.
 func (c *ElectionsVoterInfoQueryCall) ReturnAllAvailableData(returnAllAvailableData bool) *ElectionsVoterInfoQueryCall {
@@ -1650,7 +1655,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200626")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1738,7 +1743,7 @@ func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterIn
 	//     },
 	//     "returnAllAvailableData": {
 	//       "default": "false",
-	//       "description": "If set to true, the query will return the success codeand include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
+	//       "description": "If set to true, the query will return the success code and include any partial information when it is unable to determine a matching address or unable to determine the election for electionId=0 queries.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1862,7 +1867,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200626")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2091,7 +2096,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200626")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/Zomgh76tLgY704i1EdCf5efRzhA\"",
+  "etag": "\"u9GIe6H63LSGq-9_t39K2Zx_EAc/kQu8Vg9hIDq0iLeHAOTEY97OKEg\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -2126,7 +2126,7 @@
       }
     }
   },
-  "revision": "20200609",
+  "revision": "20200618",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2703,6 +2703,10 @@
           "properties": {
             "canAddChildren": {
               "description": "Whether the current user can add children to this folder. This is always false when the item is not a folder.",
+              "type": "boolean"
+            },
+            "canAddFolderFromAnotherDrive": {
+              "description": "Whether the current user can add a folder from another drive (different shared drive or My Drive) to this folder. This is false when the item is not a folder. Only populated for items in shared drives.",
               "type": "boolean"
             },
             "canAddMyDriveParent": {

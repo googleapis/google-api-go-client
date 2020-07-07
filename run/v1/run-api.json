@@ -3150,7 +3150,6 @@
           "type": "string"
         },
         "timeoutSeconds": {
-          "description": "TimeoutSeconds holds the max duration the instance is allowed for\nresponding to a request.\n\nCloud Run fully managed: defaults to 300 seconds (5 minutes). Maximum\nallowed value is 900 seconds (15 minutes).\n\nCloud Run for Anthos: defaults to 300 seconds (5 minutes). Maximum allowed\nvalue is configurable by the cluster operator.",
           "format": "int32",
           "type": "integer"
         },
@@ -3704,7 +3703,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Run Admin API",
+  "title": "Cloud Run API",
   "version": "v1",
   "version_module": true
 }

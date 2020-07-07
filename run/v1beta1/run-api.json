@@ -892,7 +892,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Run Admin API",
+  "title": "Cloud Run API",
   "version": "v1beta1",
   "version_module": true
 }

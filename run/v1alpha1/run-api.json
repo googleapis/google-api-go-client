@@ -6165,7 +6165,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Run Admin API",
+  "title": "Cloud Run API",
   "version": "v1alpha1",
   "version_module": true
 }

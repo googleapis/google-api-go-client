@@ -613,7 +613,7 @@
               ]
             },
             "get": {
-              "description": "Updates an existing inventory source.\nReturns the updated inventory source if successful.\nGets a channel for a partner or advertiser.",
+              "description": "Gets a channel for a partner or advertiser.",
               "flatPath": "v1/advertisers/{advertisersId}/channels/{channelsId}",
               "httpMethod": "GET",
               "id": "displayvideo.advertisers.channels.get",
@@ -4023,7 +4023,7 @@
               ]
             },
             "get": {
-              "description": "Updates an existing inventory source.\nReturns the updated inventory source if successful.\nGets a channel for a partner or advertiser.",
+              "description": "Gets a channel for a partner or advertiser.",
               "flatPath": "v1/partners/{partnersId}/channels/{channelsId}",
               "httpMethod": "GET",
               "id": "displayvideo.partners.channels.get",
@@ -4599,7 +4599,7 @@
       }
     }
   },
-  "revision": "20200623",
+  "revision": "20200630",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -8031,7 +8031,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Output only. The description of the first and third party audience.\n\nOnly applicable to first party audiences.",
+          "description": "The user-provided description of the audience.\n\nOnly applicable to first party audiences.",
           "type": "string"
         },
         "displayAudienceSize": {
@@ -8055,7 +8055,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "Output only. The display name of the first and third party audience.\n.",
+          "description": "The display name of the first and third party audience.",
           "type": "string"
         },
         "firstAndThirdPartyAudienceId": {
@@ -8064,7 +8064,7 @@
           "type": "string"
         },
         "firstAndThirdPartyAudienceType": {
-          "description": "Output only. Whether the audience is a first or third party audience.\n.",
+          "description": "Output only. Whether the audience is a first or third party audience.",
           "enum": [
             "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_UNSPECIFIED",
             "FIRST_AND_THIRD_PARTY_AUDIENCE_TYPE_FIRST_PARTY",
@@ -8083,7 +8083,7 @@
           "type": "string"
         },
         "membershipDurationDays": {
-          "description": "Output only. The duration in days that an entry remains in the audience after the\nqualifying event.\n\nOnly applicable to first party audiences.",
+          "description": "The duration in days that an entry remains in the audience after the\nqualifying event.\n\nOnly applicable to first party audiences.",
           "format": "int64",
           "type": "string"
         },

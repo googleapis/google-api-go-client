@@ -25,8 +25,7 @@ func NewTransport(ctx context.Context, base http.RoundTripper, settings *interna
 		quotaProject:  settings.QuotaProject,
 		requestReason: settings.RequestReason,
 	}
-	var trans http.RoundTripper = paramTransport
-	trans = addOCTransport(trans, settings)
+	trans := addOCTransport(paramTransport, settings)
 	switch {
 	case settings.NoAuth:
 		// Do nothing.

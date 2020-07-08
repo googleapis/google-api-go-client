@@ -17,7 +17,7 @@ import (
 )
 
 // NewTransport creates an http.RoundTripper for use communicating with a Google
-// cloud service, configured with the given ClientOptions. Its RoundTrip method delegates to base.
+// Cloud service, configured with the given ClientOptions. Its RoundTrip method delegates to base.
 func NewTransport(ctx context.Context, base http.RoundTripper, settings *internal.DialSettings) (http.RoundTripper, error) {
 	paramTransport := &parameterTransport{
 		base:          base,

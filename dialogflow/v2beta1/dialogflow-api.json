@@ -799,7 +799,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The agent to list all environments from.\nFormat: `projects/\u003cProject ID\u003e/agent`.",
+                      "description": "Required. The agent to list all environments from.\nFormat:\n- `projects/\u003cProject Number / ID\u003e/agent`\n- `projects/\u003cProject Number / ID\u003e/locations/\u003cLocation\nID\u003e/agent",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -3206,7 +3206,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The agent to list all environments from.\nFormat: `projects/\u003cProject ID\u003e/agent`.",
+                          "description": "Required. The agent to list all environments from.\nFormat:\n- `projects/\u003cProject Number / ID\u003e/agent`\n- `projects/\u003cProject Number / ID\u003e/locations/\u003cLocation\nID\u003e/agent",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -4454,7 +4454,7 @@
       }
     }
   },
-  "revision": "20200627",
+  "revision": "20200706",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3beta1ExportAgentResponse": {
@@ -6882,7 +6882,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. The unique identifier of this agent environment.\nFormat: `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e`.\nFor Environment ID, \"-\" is reserved for 'draft' environment.",
+          "description": "Output only. The unique identifier of this agent environment.\nFormat:\n- `projects/\u003cProject Number / ID\u003e/agent/environments/\u003cEnvironment ID\u003e`\n- `projects/\u003cProject Number / ID\u003e/locations/\u003cLocation\nID\u003e/agent/environments/\u003cEnvironment ID\u003e`",
           "type": "string"
         },
         "state": {

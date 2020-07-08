@@ -147,6 +147,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.AbuseReports = NewAbuseReportsService(s)
 	s.Activities = NewActivitiesService(s)
 	s.Captions = NewCaptionsService(s)
 	s.ChannelBanners = NewChannelBannersService(s)
@@ -170,6 +171,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Sponsors = NewSponsorsService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
 	s.SuperChatEvents = NewSuperChatEventsService(s)
+	s.ThirdPartyLinks = NewThirdPartyLinksService(s)
 	s.Thumbnails = NewThumbnailsService(s)
 	s.VideoAbuseReportReasons = NewVideoAbuseReportReasonsService(s)
 	s.VideoCategories = NewVideoCategoriesService(s)
@@ -183,6 +185,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	AbuseReports *AbuseReportsService
 
 	Activities *ActivitiesService
 
@@ -230,6 +234,8 @@ type Service struct {
 
 	SuperChatEvents *SuperChatEventsService
 
+	ThirdPartyLinks *ThirdPartyLinksService
+
 	Thumbnails *ThumbnailsService
 
 	VideoAbuseReportReasons *VideoAbuseReportReasonsService
@@ -248,6 +254,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAbuseReportsService(s *Service) *AbuseReportsService {
+	rs := &AbuseReportsService{s: s}
+	return rs
+}
+
+type AbuseReportsService struct {
+	s *Service
 }
 
 func NewActivitiesService(s *Service) *ActivitiesService {
@@ -457,6 +472,15 @@ type SuperChatEventsService struct {
 	s *Service
 }
 
+func NewThirdPartyLinksService(s *Service) *ThirdPartyLinksService {
+	rs := &ThirdPartyLinksService{s: s}
+	return rs
+}
+
+type ThirdPartyLinksService struct {
+	s *Service
+}
+
 func NewThumbnailsService(s *Service) *ThumbnailsService {
 	rs := &ThumbnailsService{s: s}
 	return rs
@@ -516,6 +540,7 @@ type YoutubeService struct {
 
 func NewYoutubeV3Service(s *Service) *YoutubeV3Service {
 	rs := &YoutubeV3Service{s: s}
+	rs.Infocards_ = NewYoutubeV3InfocardsService(s)
 	rs.Tests = NewYoutubeV3TestsService(s)
 	return rs
 }
@@ -523,7 +548,18 @@ func NewYoutubeV3Service(s *Service) *YoutubeV3Service {
 type YoutubeV3Service struct {
 	s *Service
 
+	Infocards_ *YoutubeV3InfocardsService
+
 	Tests *YoutubeV3TestsService
+}
+
+func NewYoutubeV3InfocardsService(s *Service) *YoutubeV3InfocardsService {
+	rs := &YoutubeV3InfocardsService{s: s}
+	return rs
+}
+
+type YoutubeV3InfocardsService struct {
+	s *Service
 }
 
 func NewYoutubeV3TestsService(s *Service) *YoutubeV3TestsService {
@@ -533,6 +569,68 @@ func NewYoutubeV3TestsService(s *Service) *YoutubeV3TestsService {
 
 type YoutubeV3TestsService struct {
 	s *Service
+}
+
+type AbuseReport struct {
+	AbuseTypes []*AbuseType `json:"abuseTypes,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	RelatedEntities []*RelatedEntity `json:"relatedEntities,omitempty"`
+
+	Subject *Entity `json:"subject,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AbuseTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbuseTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AbuseReport) MarshalJSON() ([]byte, error) {
+	type NoMethod AbuseReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AbuseType struct {
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AbuseType) MarshalJSON() ([]byte, error) {
+	type NoMethod AbuseType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AccessPolicy: Rights management policy for YouTube resources.
@@ -1820,6 +1918,38 @@ func (s *ChannelBrandingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ChannelCard struct {
+	// ChannelId: External channel ID.
+	// Required.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// CustomMessage: Each card can have a custom message.
+	// Required.
+	CustomMessage string `json:"customMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelCard) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChannelContentDetails: Details about the content of a channel.
 type ChannelContentDetails struct {
 	RelatedPlaylists *ChannelContentDetailsRelatedPlaylists `json:"relatedPlaylists,omitempty"`
@@ -2710,6 +2840,39 @@ func (s *ChannelStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ChannelToStoreLinkDetails: Information specific to a store on a
+// merchandising platform linked to a
+// YouTube channel.
+type ChannelToStoreLinkDetails struct {
+	// StoreName: Name of the store.
+	StoreName string `json:"storeName,omitempty"`
+
+	// StoreUrl: Landing page of the store.
+	StoreUrl string `json:"storeUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StoreName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StoreName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelToStoreLinkDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelToStoreLinkDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChannelTopicDetails: Freebase topic information related to the
 // channel.
 type ChannelTopicDetails struct {
@@ -3315,6 +3478,7 @@ type ContentRating struct {
 	//   "catv14plus" - 14+
 	//   "catv18plus" - 18+
 	//   "catvUnrated"
+	//   "catvE"
 	CatvRating string `json:"catvRating,omitempty"`
 
 	// CatvfrRating: The video's rating from the Canadian Radio-Television
@@ -3335,6 +3499,7 @@ type ContentRating struct {
 	//   "catvfr16plus" - 16+
 	//   "catvfr18plus" - 18+
 	//   "catvfrUnrated"
+	//   "catvfrE"
 	CatvfrRating string `json:"catvfrRating,omitempty"`
 
 	// CbfcRating: The video's Central Board of Film Certification (CBFC -
@@ -4289,6 +4454,36 @@ func (s *ContentRating) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Entity struct {
+	Id string `json:"id,omitempty"`
+
+	TypeId string `json:"typeId,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Entity) MarshalJSON() ([]byte, error) {
+	type NoMethod Entity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GeoPoint: Geographical coordinates of a point, in WGS84.
 type GeoPoint struct {
 	// Altitude: Altitude above the reference ellipsoid, in meters.
@@ -4858,6 +5053,185 @@ func (s *ImageSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InfoCard struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: UUID for this infocard.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the
+	// infocard.
+	Snippet *InfoCardSnippet `json:"snippet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfoCard) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InfoCardSnippet struct {
+	ChannelInfocard *ChannelCard `json:"channelInfocard,omitempty"`
+
+	LinkInfocard *LinkCard `json:"linkInfocard,omitempty"`
+
+	PlaylistInfocard *PlaylistCard `json:"playlistInfocard,omitempty"`
+
+	// Teaser: Each card can have a teaser.
+	// Required.
+	Teaser *InfoCardSnippetTeaser `json:"teaser,omitempty"`
+
+	VideoInfocard *VideoCard `json:"videoInfocard,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelInfocard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelInfocard") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfoCardSnippet) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoCardSnippet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InfoCardSnippetTeaser struct {
+	// TeaserStartOffset: The offset from the video start at which the
+	// teaser should be displayed
+	// (activated), in milliseconds.
+	// Required.
+	TeaserStartOffset string `json:"teaserStartOffset,omitempty"`
+
+	// TeaserText: The teaser text to show at the top of the player for the
+	// info-card.
+	// Required for channel and link type cards.
+	// Optional for video and playlist type cards.
+	TeaserText string `json:"teaserText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TeaserStartOffset")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TeaserStartOffset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfoCardSnippetTeaser) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoCardSnippetTeaser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InfoCards struct {
+	// Items: A list of infocards.
+	Items []*InfoCard `json:"items,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfoCards) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoCards
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InfocardListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of infocards.
+	Items []*InfoCard `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfocardListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InfocardListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IngestionInfo: Describes information necessary for ingesting an RTMP
 // or an HTTP stream.
 type IngestionInfo struct {
@@ -5171,6 +5545,79 @@ type LevelDetails struct {
 
 func (s *LevelDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LevelDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LinkCard struct {
+	// CustomLinkText: Custom text to show as the website link.
+	// Required.
+	CustomLinkText string `json:"customLinkText,omitempty"`
+
+	// ExternalImageUrl: URL to an externally hosted image.
+	ExternalImageUrl string `json:"externalImageUrl,omitempty"`
+
+	// TargetUrl: The URL to which this card points.
+	// Required.
+	TargetUrl string `json:"targetUrl,omitempty"`
+
+	// Title: The title to show on the card.
+	// Required.
+	Title string `json:"title,omitempty"`
+
+	// UploadedImage: Previously uploaded image.
+	UploadedImage *LinkCardUploadedImage `json:"uploadedImage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomLinkText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomLinkText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkCard) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LinkCardUploadedImage struct {
+	// ImageFile: Image reference on the thumbnail service.
+	ImageFile string `json:"imageFile,omitempty"`
+
+	// Version: The version in the thumbnail service.
+	Version int64 `json:"version,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkCardUploadedImage) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkCardUploadedImage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7504,6 +7951,42 @@ func (s *Playlist) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type PlaylistCard struct {
+	// CustomMessage: Each card can have a custom message.
+	// Optional.
+	CustomMessage string `json:"customMessage,omitempty"`
+
+	// PlaylistId: External playlist ID.
+	// Required.
+	PlaylistId string `json:"playlistId,omitempty"`
+
+	// StartVideoId: Starting video, if not the first.
+	// Optional.
+	StartVideoId string `json:"startVideoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlaylistCard) MarshalJSON() ([]byte, error) {
+	type NoMethod PlaylistCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type PlaylistContentDetails struct {
 	// ItemCount: The number of videos in the playlist.
 	ItemCount int64 `json:"itemCount,omitempty"`
@@ -8214,6 +8697,32 @@ type PropertyValue struct {
 
 func (s *PropertyValue) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RelatedEntity struct {
+	Entity *Entity `json:"entity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entity") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RelatedEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod RelatedEntity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9101,6 +9610,141 @@ func (s *TestItem) MarshalJSON() ([]byte, error) {
 type TestItemTestItemSnippet struct {
 }
 
+// ThirdPartyLink: A <code><strong>third party account
+// link</strong></code> resource represents
+// a link between a YouTube account or a channel and an account on
+// a
+// third-party service.
+type ThirdPartyLink struct {
+	// Etag: Etag of this resource
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string
+	// <code>"youtube#thirdPartyLink"</code>.
+	Kind string `json:"kind,omitempty"`
+
+	// LinkingToken: The <code>linking_token</code> identifies a YouTube
+	// account and
+	// channel with which the third party account is linked.
+	LinkingToken string `json:"linkingToken,omitempty"`
+
+	// Snippet: The <code>snippet</code> object contains basic details about
+	// the third-
+	// party account link.
+	Snippet *ThirdPartyLinkSnippet `json:"snippet,omitempty"`
+
+	// Status: The <code>status</code> object contains information about the
+	// status
+	// of the link.
+	Status *ThirdPartyLinkStatus `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyLink) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyLinkSnippet: Basic information about a third party account
+// link, including its type and
+// type-specific information.
+type ThirdPartyLinkSnippet struct {
+	// ChannelToStoreLink: Information specific to a link between a channel
+	// and a store on a
+	// merchandising platform.
+	ChannelToStoreLink *ChannelToStoreLinkDetails `json:"channelToStoreLink,omitempty"`
+
+	// Type: Type of the link named after the entities that are being
+	// linked.
+	//
+	// Possible values:
+	//   "linkUnspecified"
+	//   "channelToStoreLink" - A link that is connecting (or about to
+	// connect) a channel with a store on a
+	// merchandising platform in order to enable retail commerce
+	// capabilities for
+	// that channel on YouTube.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelToStoreLink")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelToStoreLink") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyLinkSnippet) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyLinkSnippet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyLinkStatus: The <code>third-party link status</code> object
+// contains information about
+// the status of the link.
+type ThirdPartyLinkStatus struct {
+	// Possible values:
+	//   "unknown"
+	//   "failed"
+	//   "pending"
+	//   "linked"
+	LinkStatus string `json:"linkStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkStatus") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyLinkStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyLinkStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Thumbnail: A thumbnail is an image representing a YouTube resource.
 type Thumbnail struct {
 	// Height: (Optional) Height of the thumbnail image.
@@ -9613,6 +10257,43 @@ type VideoAgeGating struct {
 
 func (s *VideoAgeGating) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAgeGating
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type VideoCard struct {
+	// CustomMessage: Each card can have a custom message.
+	// Optional.
+	CustomMessage string `json:"customMessage,omitempty"`
+
+	// PlaybackStartOffset: Playback start time offset in
+	// milliseconds.
+	// Optional.
+	PlaybackStartOffset string `json:"playbackStartOffset,omitempty"`
+
+	// VideoId: Encrypted Video ID.
+	// Required.
+	VideoId string `json:"videoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoCard) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoCard
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11181,6 +11862,143 @@ func (s *WatchSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "youtube.abuseReports.insert":
+
+type AbuseReportsInsertCall struct {
+	s           *Service
+	abusereport *AbuseReport
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Insert: Inserts a new resource into this collection.
+func (r *AbuseReportsService) Insert(part []string, abusereport *AbuseReport) *AbuseReportsInsertCall {
+	c := &AbuseReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	c.abusereport = abusereport
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AbuseReportsInsertCall) Fields(s ...googleapi.Field) *AbuseReportsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AbuseReportsInsertCall) Context(ctx context.Context) *AbuseReportsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AbuseReportsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AbuseReportsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.abusereport)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/abuseReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.abuseReports.insert" call.
+// Exactly one of *AbuseReport or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AbuseReport.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AbuseReportsInsertCall) Do(opts ...googleapi.CallOption) (*AbuseReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AbuseReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new resource into this collection.",
+	//   "flatPath": "youtube/v3/abuseReports",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.abuseReports.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The \u003ccode\u003e\u003cstrong\u003epart\u003c/strong\u003e\u003c/code\u003e parameter serves two purposes in\nthis operation. It identifies the properties that the write operation will\nset as well as the properties that the API response will include.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/abuseReports",
+	//   "request": {
+	//     "$ref": "AbuseReport"
+	//   },
+	//   "response": {
+	//     "$ref": "AbuseReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.activities.list":
 
 type ActivitiesListCall struct {
@@ -11293,7 +12111,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11517,7 +12335,7 @@ func (c *CaptionsDeleteCall) Header() http.Header {
 
 func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11686,7 +12504,7 @@ func (c *CaptionsDownloadCall) Header() http.Header {
 
 func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11912,7 +12730,7 @@ func (c *CaptionsInsertCall) Header() http.Header {
 
 func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12158,7 +12976,7 @@ func (c *CaptionsListCall) Header() http.Header {
 
 func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12395,7 +13213,7 @@ func (c *CaptionsUpdateCall) Header() http.Header {
 
 func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12707,7 +13525,7 @@ func (c *ChannelBannersInsertCall) Header() http.Header {
 
 func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12920,7 +13738,7 @@ func (c *ChannelSectionsDeleteCall) Header() http.Header {
 
 func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13096,7 +13914,7 @@ func (c *ChannelSectionsInsertCall) Header() http.Header {
 
 func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13309,7 +14127,7 @@ func (c *ChannelSectionsListCall) Header() http.Header {
 
 func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13497,7 +14315,7 @@ func (c *ChannelSectionsUpdateCall) Header() http.Header {
 
 func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13755,7 +14573,7 @@ func (c *ChannelsListCall) Header() http.Header {
 
 func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13988,7 +14806,7 @@ func (c *ChannelsUpdateCall) Header() http.Header {
 
 func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14131,7 +14949,7 @@ func (c *CommentThreadsInsertCall) Header() http.Header {
 
 func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14376,7 +15194,7 @@ func (c *CommentThreadsListCall) Header() http.Header {
 
 func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14599,7 +15417,7 @@ func (c *CommentThreadsUpdateCall) Header() http.Header {
 
 func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14733,7 +15551,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14831,7 +15649,7 @@ func (c *CommentsInsertCall) Header() http.Header {
 
 func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15029,7 +15847,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15215,7 +16033,7 @@ func (c *CommentsMarkAsSpamCall) Header() http.Header {
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15326,7 +16144,7 @@ func (c *CommentsSetModerationStatusCall) Header() http.Header {
 
 func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15445,7 +16263,7 @@ func (c *CommentsUpdateCall) Header() http.Header {
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15610,7 +16428,7 @@ func (c *GuideCategoriesListCall) Header() http.Header {
 
 func (c *GuideCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15775,7 +16593,7 @@ func (c *I18nLanguagesListCall) Header() http.Header {
 
 func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15929,7 +16747,7 @@ func (c *I18nRegionsListCall) Header() http.Header {
 
 func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16145,7 +16963,7 @@ func (c *LiveBroadcastsBindCall) Header() http.Header {
 
 func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16396,7 +17214,7 @@ func (c *LiveBroadcastsControlCall) Header() http.Header {
 
 func (c *LiveBroadcastsControlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16628,7 +17446,7 @@ func (c *LiveBroadcastsDeleteCall) Header() http.Header {
 
 func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16808,7 +17626,7 @@ func (c *LiveBroadcastsInsertCall) Header() http.Header {
 
 func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17098,7 +17916,7 @@ func (c *LiveBroadcastsListCall) Header() http.Header {
 
 func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17379,7 +18197,7 @@ func (c *LiveBroadcastsTransitionCall) Header() http.Header {
 
 func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17609,7 +18427,7 @@ func (c *LiveBroadcastsUpdateCall) Header() http.Header {
 
 func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17754,7 +18572,7 @@ func (c *LiveChatBansDeleteCall) Header() http.Header {
 
 func (c *LiveChatBansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17853,7 +18671,7 @@ func (c *LiveChatBansInsertCall) Header() http.Header {
 
 func (c *LiveChatBansInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17988,7 +18806,7 @@ func (c *LiveChatMessagesDeleteCall) Header() http.Header {
 
 func (c *LiveChatMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18087,7 +18905,7 @@ func (c *LiveChatMessagesInsertCall) Header() http.Header {
 
 func (c *LiveChatMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18272,7 +19090,7 @@ func (c *LiveChatMessagesListCall) Header() http.Header {
 
 func (c *LiveChatMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18454,7 +19272,7 @@ func (c *LiveChatModeratorsDeleteCall) Header() http.Header {
 
 func (c *LiveChatModeratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18553,7 +19371,7 @@ func (c *LiveChatModeratorsInsertCall) Header() http.Header {
 
 func (c *LiveChatModeratorsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18722,7 +19540,7 @@ func (c *LiveChatModeratorsListCall) Header() http.Header {
 
 func (c *LiveChatModeratorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18964,7 +19782,7 @@ func (c *LiveStreamsDeleteCall) Header() http.Header {
 
 func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19144,7 +19962,7 @@ func (c *LiveStreamsInsertCall) Header() http.Header {
 
 func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19407,7 +20225,7 @@ func (c *LiveStreamsListCall) Header() http.Header {
 
 func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19664,7 +20482,7 @@ func (c *LiveStreamsUpdateCall) Header() http.Header {
 
 func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19872,7 +20690,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20071,7 +20889,7 @@ func (c *MembershipsLevelsListCall) Header() http.Header {
 
 func (c *MembershipsLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20232,7 +21050,7 @@ func (c *PlaylistItemsDeleteCall) Header() http.Header {
 
 func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20365,7 +21183,7 @@ func (c *PlaylistItemsInsertCall) Header() http.Header {
 
 func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20587,7 +21405,7 @@ func (c *PlaylistItemsListCall) Header() http.Header {
 
 func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20802,7 +21620,7 @@ func (c *PlaylistItemsUpdateCall) Header() http.Header {
 
 func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20971,7 +21789,7 @@ func (c *PlaylistsDeleteCall) Header() http.Header {
 
 func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21147,7 +21965,7 @@ func (c *PlaylistsInsertCall) Header() http.Header {
 
 func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21425,7 +22243,7 @@ func (c *PlaylistsListCall) Header() http.Header {
 
 func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21651,7 +22469,7 @@ func (c *PlaylistsUpdateCall) Header() http.Header {
 
 func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22112,7 +22930,7 @@ func (c *SearchListCall) Header() http.Header {
 
 func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22540,7 +23358,7 @@ func (c *SponsorsListCall) Header() http.Header {
 
 func (c *SponsorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22715,7 +23533,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22815,7 +23633,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23111,7 +23929,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23368,7 +24186,7 @@ func (c *SuperChatEventsListCall) Header() http.Header {
 
 func (c *SuperChatEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23494,6 +24312,570 @@ func (c *SuperChatEventsListCall) Pages(ctx context.Context, f func(*SuperChatEv
 	}
 }
 
+// method id "youtube.thirdPartyLinks.delete":
+
+type ThirdPartyLinksDeleteCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a resource.
+func (r *ThirdPartyLinksService) Delete(linkingToken string, type_ string) *ThirdPartyLinksDeleteCall {
+	c := &ThirdPartyLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("linkingToken", linkingToken)
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// Part sets the optional parameter "part": Do not use. Required for
+// compatibility.
+func (c *ThirdPartyLinksDeleteCall) Part(part ...string) *ThirdPartyLinksDeleteCall {
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// ResourceId sets the optional parameter "resourceId":
+func (c *ThirdPartyLinksDeleteCall) ResourceId(resourceId string) *ThirdPartyLinksDeleteCall {
+	c.urlParams_.Set("resourceId", resourceId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ThirdPartyLinksDeleteCall) Fields(s ...googleapi.Field) *ThirdPartyLinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ThirdPartyLinksDeleteCall) Context(ctx context.Context) *ThirdPartyLinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ThirdPartyLinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ThirdPartyLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/thirdPartyLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.thirdPartyLinks.delete" call.
+func (c *ThirdPartyLinksDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a resource.",
+	//   "flatPath": "youtube/v3/thirdPartyLinks",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.thirdPartyLinks.delete",
+	//   "parameterOrder": [
+	//     "linkingToken",
+	//     "type"
+	//   ],
+	//   "parameters": {
+	//     "linkingToken": {
+	//       "description": "Delete the partner links with the given linking token.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "Do not use. Required for compatibility.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "resourceId": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Type of the link to be deleted.",
+	//       "enum": [
+	//         "linkUnspecified",
+	//         "channelToStoreLink"
+	//       ],
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/thirdPartyLinks"
+	// }
+
+}
+
+// method id "youtube.thirdPartyLinks.insert":
+
+type ThirdPartyLinksInsertCall struct {
+	s              *Service
+	thirdpartylink *ThirdPartyLink
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Insert: Inserts a new resource into this collection.
+func (r *ThirdPartyLinksService) Insert(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksInsertCall {
+	c := &ThirdPartyLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	c.thirdpartylink = thirdpartylink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ThirdPartyLinksInsertCall) Fields(s ...googleapi.Field) *ThirdPartyLinksInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ThirdPartyLinksInsertCall) Context(ctx context.Context) *ThirdPartyLinksInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ThirdPartyLinksInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ThirdPartyLinksInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.thirdpartylink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/thirdPartyLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.thirdPartyLinks.insert" call.
+// Exactly one of *ThirdPartyLink or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ThirdPartyLink.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ThirdPartyLinksInsertCall) Do(opts ...googleapi.CallOption) (*ThirdPartyLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ThirdPartyLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new resource into this collection.",
+	//   "flatPath": "youtube/v3/thirdPartyLinks",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.thirdPartyLinks.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The \u003ccode\u003e\u003cstrong\u003epart\u003c/strong\u003e\u003c/code\u003e parameter specifies the\n\u003ccode\u003ethirdPartyLink\u003c/code\u003e resource parts that the API request and\nresponse will include. Supported values are \u003ccode\u003elinkingToken\u003c/code\u003e,\n\u003ccode\u003estatus\u003c/code\u003e, and \u003ccode\u003esnippet\u003c/code\u003e.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/thirdPartyLinks",
+	//   "request": {
+	//     "$ref": "ThirdPartyLink"
+	//   },
+	//   "response": {
+	//     "$ref": "ThirdPartyLink"
+	//   }
+	// }
+
+}
+
+// method id "youtube.thirdPartyLinks.list":
+
+type ThirdPartyLinksListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of resources, possibly filtered.
+func (r *ThirdPartyLinksService) List(part []string) *ThirdPartyLinksListCall {
+	c := &ThirdPartyLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// LinkingToken sets the optional parameter "linkingToken": Get a third
+// party link with the given linking token.
+func (c *ThirdPartyLinksListCall) LinkingToken(linkingToken string) *ThirdPartyLinksListCall {
+	c.urlParams_.Set("linkingToken", linkingToken)
+	return c
+}
+
+// Type sets the optional parameter "type": Get a third party link of
+// the given type.
+//
+// Possible values:
+//   "linkUnspecified"
+//   "channelToStoreLink"
+func (c *ThirdPartyLinksListCall) Type(type_ string) *ThirdPartyLinksListCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ThirdPartyLinksListCall) Fields(s ...googleapi.Field) *ThirdPartyLinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ThirdPartyLinksListCall) IfNoneMatch(entityTag string) *ThirdPartyLinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ThirdPartyLinksListCall) Context(ctx context.Context) *ThirdPartyLinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ThirdPartyLinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ThirdPartyLinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/thirdPartyLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.thirdPartyLinks.list" call.
+// Exactly one of *ThirdPartyLink or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ThirdPartyLink.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ThirdPartyLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of resources, possibly filtered.",
+	//   "flatPath": "youtube/v3/thirdPartyLinks",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.thirdPartyLinks.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "linkingToken": {
+	//       "description": "Get a third party link with the given linking token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The \u003ccode\u003e\u003cstrong\u003epart\u003c/strong\u003e\u003c/code\u003e parameter specifies the\n\u003ccode\u003ethirdPartyLink\u003c/code\u003e resource parts that the API response will\ninclude. Supported values are \u003ccode\u003elinkingToken\u003c/code\u003e,\n\u003ccode\u003estatus\u003c/code\u003e, and \u003ccode\u003esnippet\u003c/code\u003e.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "Get a third party link of the given type.",
+	//       "enum": [
+	//         "linkUnspecified",
+	//         "channelToStoreLink"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/thirdPartyLinks",
+	//   "response": {
+	//     "$ref": "ThirdPartyLink"
+	//   }
+	// }
+
+}
+
+// method id "youtube.thirdPartyLinks.update":
+
+type ThirdPartyLinksUpdateCall struct {
+	s              *Service
+	thirdpartylink *ThirdPartyLink
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Update: Updates an existing resource.
+func (r *ThirdPartyLinksService) Update(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksUpdateCall {
+	c := &ThirdPartyLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	c.thirdpartylink = thirdpartylink
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ThirdPartyLinksUpdateCall) Fields(s ...googleapi.Field) *ThirdPartyLinksUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ThirdPartyLinksUpdateCall) Context(ctx context.Context) *ThirdPartyLinksUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ThirdPartyLinksUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ThirdPartyLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.thirdpartylink)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/thirdPartyLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.thirdPartyLinks.update" call.
+// Exactly one of *ThirdPartyLink or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ThirdPartyLink.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ThirdPartyLinksUpdateCall) Do(opts ...googleapi.CallOption) (*ThirdPartyLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ThirdPartyLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing resource.",
+	//   "flatPath": "youtube/v3/thirdPartyLinks",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.thirdPartyLinks.update",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The \u003ccode\u003e\u003cstrong\u003epart\u003c/strong\u003e\u003c/code\u003e parameter specifies the\n\u003ccode\u003ethirdPartyLink\u003c/code\u003e resource parts that the API request and\nresponse will include. Supported values are \u003ccode\u003elinkingToken\u003c/code\u003e,\n\u003ccode\u003estatus\u003c/code\u003e, and \u003ccode\u003esnippet\u003c/code\u003e.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/thirdPartyLinks",
+	//   "request": {
+	//     "$ref": "ThirdPartyLink"
+	//   },
+	//   "response": {
+	//     "$ref": "ThirdPartyLink"
+	//   }
+	// }
+
+}
+
 // method id "youtube.thumbnails.set":
 
 type ThumbnailsSetCall struct {
@@ -23609,7 +24991,7 @@ func (c *ThumbnailsSetCall) Header() http.Header {
 
 func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23802,7 +25184,7 @@ func (c *VideoAbuseReportReasonsListCall) Header() http.Header {
 
 func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23969,7 +25351,7 @@ func (c *VideoCategoriesListCall) Header() http.Header {
 
 func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24144,7 +25526,7 @@ func (c *VideosDeleteCall) Header() http.Header {
 
 func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24288,7 +25670,7 @@ func (c *VideosGetRatingCall) Header() http.Header {
 
 func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24559,7 +25941,7 @@ func (c *VideosInsertCall) Header() http.Header {
 
 func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24921,7 +26303,7 @@ func (c *VideosListCall) Header() http.Header {
 
 func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25149,7 +26531,7 @@ func (c *VideosRateCall) Header() http.Header {
 
 func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25287,7 +26669,7 @@ func (c *VideosReportAbuseCall) Header() http.Header {
 
 func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25421,7 +26803,7 @@ func (c *VideosUpdateCall) Header() http.Header {
 
 func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25632,7 +27014,7 @@ func (c *WatermarksSetCall) Header() http.Header {
 
 func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25815,7 +27197,7 @@ func (c *WatermarksUnsetCall) Header() http.Header {
 
 func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25875,6 +27257,339 @@ func (c *WatermarksUnsetCall) Do(opts ...googleapi.CallOption) error {
 
 }
 
+// method id "youtube.youtube.v3.infocards":
+
+type YoutubeV3InfocardsCall struct {
+	s          *Service
+	infocards  *InfoCards
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Infocards: Updates infocards for a given video.
+// Note:
+// * If the card id is not provided, a new card will be created.
+// * If the card id is provided, that card will be updated.
+// * Existing cards will be discarded if they're not included in the
+// request.
+func (r *YoutubeV3Service) Infocards(part []string, infocards *InfoCards) *YoutubeV3InfocardsCall {
+	c := &YoutubeV3InfocardsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	c.infocards = infocards
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Content owner of the video.
+func (c *YoutubeV3InfocardsCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *YoutubeV3InfocardsCall {
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// VideoId sets the optional parameter "videoId": Encrypted id of the
+// video.
+func (c *YoutubeV3InfocardsCall) VideoId(videoId string) *YoutubeV3InfocardsCall {
+	c.urlParams_.Set("videoId", videoId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *YoutubeV3InfocardsCall) Fields(s ...googleapi.Field) *YoutubeV3InfocardsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *YoutubeV3InfocardsCall) Context(ctx context.Context) *YoutubeV3InfocardsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *YoutubeV3InfocardsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *YoutubeV3InfocardsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.infocards)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/infocards")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.youtube.v3.infocards" call.
+// Exactly one of *InfoCards or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *InfoCards.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *YoutubeV3InfocardsCall) Do(opts ...googleapi.CallOption) (*InfoCards, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InfoCards{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates infocards for a given video.\nNote:\n* If the card id is not provided, a new card will be created.\n* If the card id is provided, that card will be updated.\n* Existing cards will be discarded if they're not included in the request.",
+	//   "flatPath": "youtube/v3/infocards",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.youtube.v3.infocards",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Content owner of the video.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The properties to update.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "videoId": {
+	//       "description": "Encrypted id of the video.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/infocards",
+	//   "request": {
+	//     "$ref": "InfoCards"
+	//   },
+	//   "response": {
+	//     "$ref": "InfoCards"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.youtube.v3.infocards.list":
+
+type YoutubeV3InfocardsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves all infocards for a given video.
+func (r *YoutubeV3InfocardsService) List(part []string) *YoutubeV3InfocardsListCall {
+	c := &YoutubeV3InfocardsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// OnBehalfOfContentOwner sets the optional parameter
+// "onBehalfOfContentOwner": Content owner of the video.
+func (c *YoutubeV3InfocardsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *YoutubeV3InfocardsListCall {
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// VideoId sets the optional parameter "videoId": Encrypted id of the
+// video.
+func (c *YoutubeV3InfocardsListCall) VideoId(videoId string) *YoutubeV3InfocardsListCall {
+	c.urlParams_.Set("videoId", videoId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *YoutubeV3InfocardsListCall) Fields(s ...googleapi.Field) *YoutubeV3InfocardsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *YoutubeV3InfocardsListCall) IfNoneMatch(entityTag string) *YoutubeV3InfocardsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *YoutubeV3InfocardsListCall) Context(ctx context.Context) *YoutubeV3InfocardsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *YoutubeV3InfocardsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *YoutubeV3InfocardsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/infocards")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.youtube.v3.infocards.list" call.
+// Exactly one of *InfocardListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *InfocardListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *YoutubeV3InfocardsListCall) Do(opts ...googleapi.CallOption) (*InfocardListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InfocardListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves all infocards for a given video.",
+	//   "flatPath": "youtube/v3/infocards",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.youtube.v3.infocards.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "onBehalfOfContentOwner": {
+	//       "description": "Content owner of the video.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The properties to return.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "videoId": {
+	//       "description": "Encrypted id of the video.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/infocards",
+	//   "response": {
+	//     "$ref": "InfocardListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.youtube.v3.tests.create":
 
 type YoutubeV3TestsCreateCall struct {
@@ -25925,7 +27640,7 @@ func (c *YoutubeV3TestsCreateCall) Header() http.Header {
 
 func (c *YoutubeV3TestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200630")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

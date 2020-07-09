@@ -1234,14 +1234,15 @@ func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 // attribute.
 // Note that client libraries represent this object
 // differently
-// depending on the language. See the corresponding
-// <a
-// href="https://cloud.google.com/pubsub/docs/reference/libraries">client
-//
-// library documentation</a> for more information. See
-// <a href="https://cloud.google.com/pubsub/quotas">Quotas and
-// limits</a>
-// for more information about message limits.
+// depending on the language. See the corresponding [client
+// library
+// documentation](https://cloud.google.com/pubsub/docs/reference/
+// libraries) for
+// more information. See [quotas and
+// limits]
+// (https://cloud.google.com/pubsub/quotas) for more information about
+// message
+// limits.
 type PubsubMessage struct {
 	// Attributes: Attributes for this message. If this field is empty, the
 	// message must
@@ -1651,16 +1652,15 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Snapshot: A snapshot resource. Snapshots are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
-// the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.
+// Snapshot: A snapshot resource. Snapshots are used
+// in
+// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+// operat
+// ions, which allow you to manage message acknowledgments in bulk.
+// That
+// is, you can set the acknowledgment state of messages in an
+// existing
+// subscription to the state captured by a snapshot.
 type Snapshot struct {
 	// ExpireTime: The snapshot is guaranteed to exist up until this time.
 	// A newly-created snapshot expires no later than 7 days from the time
@@ -1682,9 +1682,9 @@ type Snapshot struct {
 	// snapshot that would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
-	// Creating and
-	// managing labels</a>.
+	// Labels: See [Creating and managing
+	// labels]
+	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the snapshot.
@@ -1837,12 +1837,10 @@ type Subscription struct {
 	// they are
 	// acknowledged, until they fall out of the
 	// `message_retention_duration`
-	// window. This must be true if you would like
-	// to
-	// <a
-	// href="https://cloud.google.com/pubsub/docs/replay-overview#seek_
-	// to_a_time">
-	// Seek to a timestamp</a>.
+	// window. This must be true if you would like to [Seek to a
+	// timestamp]
+	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_
+	// to_a_time).
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
 	// RetryPolicy: A policy that specifies how Pub/Sub retries message
@@ -1974,9 +1972,9 @@ type Topic struct {
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
-	// Creating and
-	// managing labels</a>.
+	// Labels: See [Creating and managing
+	// labels]
+	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageStoragePolicy: Policy constraining the set of Google Cloud
@@ -2143,17 +2141,16 @@ type ProjectsSnapshotsCreateCall struct {
 }
 
 // Create: Creates a snapshot from the requested subscription. Snapshots
-// are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
-// the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.
-// <br><br>If the snapshot already exists, returns `ALREADY_EXISTS`.
+// are used
+// in
+// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+// operations,
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can
+// set the acknowledgment state of messages in an existing subscription
+// to the
+// state captured by a snapshot.
+// If the snapshot already exists, returns `ALREADY_EXISTS`.
 // If the requested subscription doesn't exist, returns `NOT_FOUND`.
 // If the backlog in the subscription is too old -- and the resulting
 // snapshot
@@ -2164,11 +2161,10 @@ type ProjectsSnapshotsCreateCall struct {
 // the request, the server will assign a random
 // name for this snapshot on the same project as the subscription,
 // conforming
-// to the
-// [resource
-// name
-// format](https://cloud.google.com/pubsub/docs/admin#resource_names
-// ). The
+// to the [resource name
+// format]
+// (https://cloud.google.com/pubsub/docs/admin#resource_names).
+// The
 // generated name is populated in the returned Snapshot object. Note
 // that for
 // REST API requests, you must specify a name in the request.
@@ -2206,7 +2202,7 @@ func (c *ProjectsSnapshotsCreateCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2270,7 +2266,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\n\u003cbr\u003e\u003cbr\u003eIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the\n[resource name\nformat](https://cloud.google.com/pubsub/docs/admin#resource_names). The\ngenerated name is populated in the returned Snapshot object. Note that for\nREST API requests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n[Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,\nwhich allow you to manage message acknowledgments in bulk. That is, you can\nset the acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names). The\ngenerated name is populated in the returned Snapshot object. Note that for\nREST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -2312,15 +2308,14 @@ type ProjectsSnapshotsDeleteCall struct {
 }
 
 // Delete: Removes an existing snapshot. Snapshots are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
+// [Seek]
+// (https://cloud.google.com/pubsub/docs/replay-overview) operations,
+// which
+// allow you to manage message acknowledgments in bulk. That is, you can
+// set
+// the acknowledgment state of messages in an existing subscription to
 // the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.<br><br>
+// state captured by a snapshot.
 // When the snapshot is deleted, all messages retained in the
 // snapshot
 // are immediately dropped. After a snapshot is deleted, a new one may
@@ -2362,7 +2357,7 @@ func (c *ProjectsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2421,7 +2416,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
+	//   "description": "Removes an existing snapshot. Snapshots are used in [Seek]\n(https://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.snapshots.delete",
@@ -2513,7 +2508,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2686,7 +2681,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2794,15 +2789,14 @@ type ProjectsSnapshotsListCall struct {
 }
 
 // List: Lists the existing snapshots. Snapshots are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
+// [Seek](
+// https://cloud.google.com/pubsub/docs/replay-overview) operations,
+// which
+// allow you to manage message acknowledgments in bulk. That is, you can
+// set
+// the acknowledgment state of messages in an existing subscription to
 // the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.
+// state captured by a snapshot.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2863,7 +2857,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2925,7 +2919,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing snapshots. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Lists the existing snapshots. Snapshots are used in [Seek](\nhttps://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.list",
@@ -3040,7 +3034,7 @@ func (c *ProjectsSnapshotsPatchCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3186,7 +3180,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3337,7 +3331,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3488,7 +3482,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3594,26 +3588,25 @@ type ProjectsSubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a subscription to a given topic. See the
-// <a
-// href="https://cloud.google.com/pubsub/docs/admin#resource_names">
-// reso
-// urce name rules</a>.
-// If the subscription already exists, returns `ALREADY_EXISTS`.
+// Create: Creates a subscription to a given topic. See the [resource
+// name
+// rules]
+// (https://cloud.google.com/pubsub/docs/admin#resource_names).
+// If
+//  the subscription already exists, returns `ALREADY_EXISTS`.
 // If the corresponding topic doesn't exist, returns `NOT_FOUND`.
 //
 // If the name is not provided in the request, the server will assign a
 // random
 // name for this subscription on the same project as the topic,
 // conforming
-// to the
-// [resource
-// name
-// format](https://cloud.google.com/pubsub/docs/admin#resource_names
-// ). The
-// generated name is populated in the returned Subscription object. Note
-// that
-// for REST API requests, you must specify a name in the request.
+// to the [resource name
+// format]
+// (https://cloud.google.com/pubsub/docs/admin#resource_names). The
+// generated
+// name is populated in the returned Subscription object. Note that for
+// REST
+// API requests, you must specify a name in the request.
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3648,7 +3641,7 @@ func (c *ProjectsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3712,7 +3705,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic. See the\n\u003ca href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e\nresource name rules\u003c/a\u003e.\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the\n[resource name\nformat](https://cloud.google.com/pubsub/docs/admin#resource_names). The\ngenerated name is populated in the returned Subscription object. Note that\nfor REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a subscription to a given topic. See the [resource name rules]\n(https://cloud.google.com/pubsub/docs/admin#resource_names).\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names). The generated\nname is populated in the returned Subscription object. Note that for REST\nAPI requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
@@ -3795,7 +3788,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3932,7 +3925,7 @@ func (c *ProjectsSubscriptionsDetachCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDetachCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4074,7 +4067,7 @@ func (c *ProjectsSubscriptionsGetCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4247,7 +4240,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4415,7 +4408,7 @@ func (c *ProjectsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4591,7 +4584,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4742,7 +4735,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4885,7 +4878,7 @@ func (c *ProjectsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5030,7 +5023,7 @@ func (c *ProjectsSubscriptionsPullCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5139,17 +5132,16 @@ type ProjectsSubscriptionsSeekCall struct {
 // Seek: Seeks an existing subscription to a point in time or to a given
 // snapshot,
 // whichever is provided in the request. Snapshots are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
+// [Seek](
+// https://cloud.google.com/pubsub/docs/replay-overview) operations,
+// which
+// allow you to manage message acknowledgments in bulk. That is, you can
+// set
+// the acknowledgment state of messages in an existing subscription to
 // the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot. Note that both the subscription and the
-// snapshot
-// must be on the same topic.
+// state captured by a snapshot. Note that both the subscription and
+// the
+// snapshot must be on the same topic.
 func (r *ProjectsSubscriptionsService) Seek(subscription string, seekrequest *SeekRequest) *ProjectsSubscriptionsSeekCall {
 	c := &ProjectsSubscriptionsSeekCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5184,7 +5176,7 @@ func (c *ProjectsSubscriptionsSeekCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSeekCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5248,7 +5240,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	}
 	return ret, nil
 	// {
-	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot. Note that both the subscription and the snapshot\nmust be on the same topic.",
+	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in [Seek](\nhttps://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot. Note that both the subscription and the\nsnapshot must be on the same topic.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:seek",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.seek",
@@ -5330,7 +5322,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5481,7 +5473,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5588,10 +5580,9 @@ type ProjectsTopicsCreateCall struct {
 }
 
 // Create: Creates the given topic with the given name. See the
-// <a
-// href="https://cloud.google.com/pubsub/docs/admin#resource_names">
-// reso
-// urce name rules</a>.
+// [resource name
+// rules](
+// https://cloud.google.com/pubsub/docs/admin#resource_names).
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5626,7 +5617,7 @@ func (c *ProjectsTopicsCreateCall) Header() http.Header {
 
 func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5690,7 +5681,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the given topic with the given name. See the\n\u003ca href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e\nresource name rules\u003c/a\u003e.",
+	//   "description": "Creates the given topic with the given name. See the [resource name rules](\nhttps://cloud.google.com/pubsub/docs/admin#resource_names).",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.topics.create",
@@ -5773,7 +5764,7 @@ func (c *ProjectsTopicsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5915,7 +5906,7 @@ func (c *ProjectsTopicsGetCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6088,7 +6079,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6256,7 +6247,7 @@ func (c *ProjectsTopicsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6426,7 +6417,7 @@ func (c *ProjectsTopicsPatchCall) Header() http.Header {
 
 func (c *ProjectsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6569,7 +6560,7 @@ func (c *ProjectsTopicsPublishCall) Header() http.Header {
 
 func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6715,7 +6706,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6866,7 +6857,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6974,15 +6965,13 @@ type ProjectsTopicsSnapshotsListCall struct {
 
 // List: Lists the names of the snapshots on this topic. Snapshots are
 // used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
-// the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.
+// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+// operations,
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can
+// set the acknowledgment state of messages in an existing subscription
+// to the
+// state captured by a snapshot.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7043,7 +7032,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7105,7 +7094,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n[Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,\nwhich allow you to manage message acknowledgments in bulk. That is, you can\nset the acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.snapshots.list",
@@ -7237,7 +7226,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

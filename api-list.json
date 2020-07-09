@@ -1499,6 +1499,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "customsearch:v1",
+      "name": "customsearch",
+      "version": "v1",
+      "title": "Custom Search API",
+      "description": "Searches over a website or collection of websites",
+      "discoveryRestUrl": "https://customsearch.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/custom-search/v1/introduction",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "datacatalog:v1beta1",
       "name": "datacatalog",
       "version": "v1beta1",
@@ -2074,18 +2089,33 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "firebasehosting:v1beta1",
+      "id": "firebasehosting:v1",
       "name": "firebasehosting",
-      "version": "v1beta1",
+      "version": "v1",
       "title": "Firebase Hosting API",
-      "description": "",
-      "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1beta1",
+      "description": "The Firebase Hosting REST API enables programmatic and customizable deployments to your Firebase-hosted sites. Use this REST API to deploy new or updated hosting configurations and content files.",
+      "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://firebase.google.com/docs/hosting/",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "firebasehosting:v1beta1",
+      "name": "firebasehosting",
+      "version": "v1beta1",
+      "title": "Firebase Hosting API",
+      "description": "The Firebase Hosting REST API enables programmatic and customizable deployments to your Firebase-hosted sites. Use this REST API to deploy new or updated hosting configurations and content files.",
+      "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/hosting/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -3776,7 +3806,7 @@
       "version": "v1beta4",
       "title": "Cloud SQL Admin API",
       "description": "API for Cloud SQL database instance management",
-      "discoveryRestUrl": "https://sqladmin.googleapis.com/$discovery/rest?version=v1beta4",
+      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v1beta4",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

@@ -502,8 +502,13 @@ type AndroidModel struct {
 	//
 	// Possible values:
 	//   "DEVICE_FORM_UNSPECIFIED" - Do not use.  For proto versioning only.
-	//   "VIRTUAL" - A software stack that simulates the device.
+	//   "VIRTUAL" - Android virtual device using Compute Engine native
+	// virtualization. Firebase
+	// Test Lab only.
 	//   "PHYSICAL" - Actual hardware.
+	//   "EMULATOR" - Android virtual device using emulator in nested
+	// virtualization. Equivalent
+	// to Android Studio.
 	Form string `json:"form,omitempty"`
 
 	// FormFactor: Whether this device is a phone, tablet, wearable, etc.
@@ -1960,7 +1965,11 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 type ManualSharding struct {
 	// TestTargetsForShard: Required. Group of packages, classes, and/or
 	// test methods to be run for
-	// each shard. The number of shard_test_targets must be >= 1 and <= 50.
+	// each shard. When any physical devices are selected,  the number
+	// of
+	// test_targets_for_shard must be >= 1 and <= 50. When no physical
+	// devices are
+	// selected, the number must be >= 1 and <= 250.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargetsForShard")
@@ -2164,11 +2173,12 @@ type RegularFile struct {
 
 	// DevicePath: Required. Where to put the content on the device. Must be
 	// an absolute,
-	// whitelisted path. If the file exists, it will be replaced.
+	// allowlisted path. If the file exists, it will be replaced.
 	// The following device-side directories and any of their subdirectories
 	// are
-	// whitelisted:
-	// <p>${EXTERNAL_STORAGE}, or /sdcard</p>
+	// allowlisted:
+	// <p>${EXTERNAL_STORAGE}, /sdcard, or
+	// /storage</p>
 	// <p>${ANDROID_DATA}/local/tmp, or /data/local/tmp</p>
 	// <p>Specifying a path outside of these directory trees is
 	// invalid.
@@ -2944,7 +2954,8 @@ type TestSetup struct {
 
 	// DirectoriesToPull: List of directories on the device to upload to GCS
 	// at the end of the test;
-	// they must be absolute paths under /sdcard or /data/local/tmp.
+	// they must be absolute paths under /sdcard, /storage or
+	// /data/local/tmp.
 	// Path names are restricted to characters a-z A-Z 0-9 _ - . + and
 	// /
 	//
@@ -2956,6 +2967,10 @@ type TestSetup struct {
 	// external
 	// storage path prefix for that device.
 	DirectoriesToPull []string `json:"directoriesToPull,omitempty"`
+
+	// DontAutograntPermissions: Whether to prevent all runtime permissions
+	// to be granted at app install
+	DontAutograntPermissions bool `json:"dontAutograntPermissions,omitempty"`
 
 	// EnvironmentVariables: Environment variables to set for the test (only
 	// applicable for
@@ -3285,8 +3300,11 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 // specifying these sharding arguments via environment_variables is
 // invalid.
 type UniformSharding struct {
-	// NumShards: Required. Total number of shards. The number must be >= 1
-	// and <= 50.
+	// NumShards: Required. Total number of shards. When any physical
+	// devices are selected,
+	// the number must be >= 1 and <= 50. When no physical devices are
+	// selected,
+	// the number must be >= 1 and <= 250.
 	NumShards int64 `json:"numShards,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
@@ -3390,7 +3408,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3527,7 +3545,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3690,7 +3708,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3851,7 +3869,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4016,7 +4034,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200707")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

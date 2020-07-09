@@ -3055,10 +3055,6 @@
               "repeated": true,
               "type": "string"
             },
-            "resourceId": {
-              "location": "query",
-              "type": "string"
-            },
             "type": {
               "description": "Type of the link to be deleted.",
               "enum": [
@@ -3813,7 +3809,7 @@
       }
     }
   },
-  "revision": "20200706",
+  "revision": "20200707",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AbuseReport": {

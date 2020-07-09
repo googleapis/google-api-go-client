@@ -1,0 +1,14 @@
+  
+{
+    "extends": [
+        "config:base",
+        "schedule:weekly"
+    ],
+    "semanticCommits": false,
+    "postUpdateOptions": [
+        "gomodTidy"
+    ],
+    "commitMessagePrefix": "chore(all): ",
+    "commitMessageAction": "update",
+    "groupName": "all"
+}

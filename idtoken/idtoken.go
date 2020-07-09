@@ -106,8 +106,6 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 		RefreshToken string `json:"refresh_token"`
 	}
 
-	fmt.Println(string(data))
-
 	if err := json.Unmarshal(data, &f); err != nil {
 		return nil, err
 	}

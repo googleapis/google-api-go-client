@@ -95,45 +95,96 @@ func newTokenSource(ctx context.Context, audience string, ds *internal.DialSetti
 }
 
 func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds *internal.DialSettings) (oauth2.TokenSource, error) {
-	if err := isServiceAccount(data); err != nil {
-		return nil, err
+	if len(data) == 0 {
+		return nil, fmt.Errorf("idtoken: credential provided is 0 bytes")
 	}
-	cfg, err := google.JWTConfigFromJSON(data, ds.Scopes...)
-	if err != nil {
+
+	var f struct {
+		Type         string `json:"type"`
+		ClientID     string `json:"client_id"`
+		ClientSecret string `json:"client_secret"`
+		RefreshToken string `json:"refresh_token"`
+	}
+
+	fmt.Println(string(data))
+
+	if err := json.Unmarshal(data, &f); err != nil {
 		return nil, err
 	}
 
-	customClaims := ds.CustomClaims
-	if customClaims == nil {
-		customClaims = make(map[string]interface{})
-	}
-	customClaims["target_audience"] = audience
+	switch f.Type {
+	case "service_account":
+		cfg, err := google.JWTConfigFromJSON(data, ds.Scopes...)
+		if err != nil {
+			return nil, err
+		}
 
-	cfg.PrivateClaims = customClaims
-	cfg.UseIDToken = true
+		customClaims := ds.CustomClaims
+		if customClaims == nil {
+			customClaims = make(map[string]interface{})
+		}
+		customClaims["target_audience"] = audience
 
-	ts := cfg.TokenSource(ctx)
-	tok, err := ts.Token()
-	if err != nil {
-		return nil, err
+		cfg.PrivateClaims = customClaims
+		cfg.UseIDToken = true
+
+		ts := cfg.TokenSource(ctx)
+		tok, err := ts.Token()
+		if err != nil {
+			return nil, err
+		}
+
+		return oauth2.ReuseTokenSource(tok, ts), nil
+	case "authorized_user":
+		refresh := oauth2.Token{
+			RefreshToken: f.RefreshToken,
+		}
+
+		cfg := &oauth2.Config{
+			ClientID:     f.ClientID,
+			ClientSecret: f.ClientSecret,
+			Endpoint:     google.Endpoint,
+			Scopes:       ds.Scopes,
+		}
+
+		cfg.TokenSource(ctx, &refresh)
+
+		ts := idTokenSource{cfg.TokenSource(ctx, &refresh)}
+
+		tok, err := ts.Token()
+		if err != nil {
+			return nil, err
+		}
+
+		return oauth2.ReuseTokenSource(tok, ts), nil
+	default:
+		return nil, fmt.Errorf("idtoken: unsupported credential type %q", f.Type)
 	}
-	return oauth2.ReuseTokenSource(tok, ts), nil
 }
 
-func isServiceAccount(data []byte) error {
-	if len(data) == 0 {
-		return fmt.Errorf("idtoken: credential provided is 0 bytes")
+type idTokenSource struct {
+	ts oauth2.TokenSource
+}
+
+func (s idTokenSource) Token() (*oauth2.Token, error) {
+	tok, err := s.ts.Token()
+	if err != nil {
+		return nil, err
 	}
-	var f struct {
-		Type string `json:"type"`
+
+	rawID := tok.Extra("id_token")
+	if rawID == nil {
+		return tok, nil
 	}
-	if err := json.Unmarshal(data, &f); err != nil {
-		return err
+
+	id, ok := rawID.(string)
+	if !ok {
+		return tok, nil
 	}
-	if f.Type != "service_account" {
-		return fmt.Errorf("idtoken: credential must be service_account, found %q", f.Type)
-	}
-	return nil
+
+	tok.AccessToken = id
+
+	return tok, nil
 }
 
 // WithCustomClaims optionally specifies custom private claims for an ID token.

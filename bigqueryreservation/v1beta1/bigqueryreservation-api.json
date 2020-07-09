@@ -736,7 +736,7 @@
       }
     }
   },
-  "revision": "20200619",
+  "revision": "20200702",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
@@ -811,6 +811,11 @@
       "properties": {
         "commitmentEndTime": {
           "description": "Output only. The end of the current commitment period. It is applicable only for ACTIVE\ncapacity commitments.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "commitmentStartTime": {
+          "description": "Output only. The start of the current commitment period. It is applicable only for\nACTIVE capacity commitments.",
           "format": "google-datetime",
           "type": "string"
         },

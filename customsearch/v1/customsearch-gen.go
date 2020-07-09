@@ -75,10 +75,12 @@ const apiId = "customsearch:v1"
 const apiName = "customsearch"
 const apiVersion = "v1"
 const basePath = "https://customsearch.googleapis.com/"
+const mtlsBasePath = "https://customsearch.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -2426,7 +2428,7 @@ func (c *CseListCall) Header() http.Header {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3329,7 +3331,7 @@ func (c *CseSiterestrictListCall) Header() http.Header {
 
 func (c *CseSiterestrictListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200617")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

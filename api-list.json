@@ -362,54 +362,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "androidpublisher:v1",
-      "name": "androidpublisher",
-      "version": "v1",
-      "title": "Google Play Developer API",
-      "description": "Accesses Android application developers' Google Play accounts.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v1/rest",
-      "discoveryLink": "./apis/androidpublisher/v1/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
-      },
-      "documentationLink": "https://developers.google.com/android-publisher",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "androidpublisher:v1.1",
-      "name": "androidpublisher",
-      "version": "v1.1",
-      "title": "Google Play Developer API",
-      "description": "Accesses Android application developers' Google Play accounts.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v1.1/rest",
-      "discoveryLink": "./apis/androidpublisher/v1.1/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
-      },
-      "documentationLink": "https://developers.google.com/android-publisher",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "androidpublisher:v2",
-      "name": "androidpublisher",
-      "version": "v2",
-      "title": "Google Play Developer API",
-      "description": "Accesses Android application developers' Google Play accounts.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v2/rest",
-      "discoveryLink": "./apis/androidpublisher/v2/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
-      },
-      "documentationLink": "https://developers.google.com/android-publisher",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "androidpublisher:v3",
       "name": "androidpublisher",
       "version": "v3",
@@ -1940,14 +1892,13 @@
       "name": "doubleclicksearch",
       "version": "v2",
       "title": "Search Ads 360 API",
-      "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/doubleclicksearch/v2/rest",
-      "discoveryLink": "./apis/doubleclicksearch/v2/rest",
+      "description": "The Search Ads 360 API allows developers to automate uploading conversions and downloading reports from Search Ads 360.",
+      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/doubleclick-search/",
+      "documentationLink": "https://developers.google.com/search-ads",
       "preferred": true
     },
     {
@@ -2375,22 +2326,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/gmail/postmaster",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "groupsmigration:v1",
-      "name": "groupsmigration",
-      "version": "v1",
-      "title": "Groups Migration API",
-      "description": "Groups Migration Api.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/groupsmigration/v1/rest",
-      "discoveryLink": "./apis/groupsmigration/v1/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/discussions-16.gif",
-        "x32": "https://www.google.com/images/icons/product/discussions-32.gif"
-      },
-      "documentationLink": "https://developers.google.com/google-apps/groups-migration/",
       "preferred": true
     },
     {
@@ -2987,14 +2922,13 @@
       "name": "pagespeedonline",
       "version": "v5",
       "title": "PageSpeed Insights API",
-      "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pagespeedonline/v5/rest",
-      "discoveryLink": "./apis/pagespeedonline/v5/rest",
+      "description": "The PageSpeed Insights API lets you analyze the performance of your website with a simple API. It offers tailored suggestions for how you can optimize your site, and lets you easily integrate PageSpeed Insights analysis into your development tools and workflow.",
+      "discoveryRestUrl": "https://pagespeedonline.googleapis.com/$discovery/rest?version=v5",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
-        "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
+      "documentationLink": "https://developers.google.com/speed/docs/insights/v5/about",
       "preferred": true
     },
     {

@@ -775,7 +775,7 @@ func (c *FoldersDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -917,7 +917,7 @@ func (c *FoldersGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1067,7 +1067,7 @@ func (c *FoldersUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1219,7 +1219,7 @@ func (c *FoldersApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1372,7 +1372,7 @@ func (c *FoldersApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1522,7 +1522,7 @@ func (c *FoldersApprovalRequestsGetCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1642,7 +1642,8 @@ func (r *FoldersApprovalRequestsService) List(parent string) *FoldersApprovalReq
 //   <li>ALL: All requests.</li>
 //   <li>PENDING: Only pending requests.</li>
 //   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
+//   <li>DISMISSED: Only dismissed (including expired) requests.</li>
+//   <li>HISTORY: Active and dismissed (including expired)
 // requests.</li>
 // </ol>
 func (c *FoldersApprovalRequestsListCall) Filter(filter string) *FoldersApprovalRequestsListCall {
@@ -1700,7 +1701,7 @@ func (c *FoldersApprovalRequestsListCall) Header() http.Header {
 
 func (c *FoldersApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1771,7 +1772,7 @@ func (c *FoldersApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n  \u003cli\u003eHISTORY: Active and dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1880,7 +1881,7 @@ func (c *OrganizationsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2022,7 +2023,7 @@ func (c *OrganizationsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2172,7 +2173,7 @@ func (c *OrganizationsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2324,7 +2325,7 @@ func (c *OrganizationsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2477,7 +2478,7 @@ func (c *OrganizationsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2627,7 +2628,7 @@ func (c *OrganizationsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2747,7 +2748,8 @@ func (r *OrganizationsApprovalRequestsService) List(parent string) *Organization
 //   <li>ALL: All requests.</li>
 //   <li>PENDING: Only pending requests.</li>
 //   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
+//   <li>DISMISSED: Only dismissed (including expired) requests.</li>
+//   <li>HISTORY: Active and dismissed (including expired)
 // requests.</li>
 // </ol>
 func (c *OrganizationsApprovalRequestsListCall) Filter(filter string) *OrganizationsApprovalRequestsListCall {
@@ -2805,7 +2807,7 @@ func (c *OrganizationsApprovalRequestsListCall) Header() http.Header {
 
 func (c *OrganizationsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2876,7 +2878,7 @@ func (c *OrganizationsApprovalRequestsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n  \u003cli\u003eHISTORY: Active and dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2985,7 +2987,7 @@ func (c *ProjectsDeleteAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsDeleteAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3127,7 +3129,7 @@ func (c *ProjectsGetAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3277,7 +3279,7 @@ func (c *ProjectsUpdateAccessApprovalSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateAccessApprovalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3429,7 +3431,7 @@ func (c *ProjectsApprovalRequestsApproveCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3582,7 +3584,7 @@ func (c *ProjectsApprovalRequestsDismissCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3732,7 +3734,7 @@ func (c *ProjectsApprovalRequestsGetCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3852,7 +3854,8 @@ func (r *ProjectsApprovalRequestsService) List(parent string) *ProjectsApprovalR
 //   <li>ALL: All requests.</li>
 //   <li>PENDING: Only pending requests.</li>
 //   <li>ACTIVE: Only active (i.e. currently approved) requests.</li>
-//   <li>DISMISSED: Only dismissed (including expired)
+//   <li>DISMISSED: Only dismissed (including expired) requests.</li>
+//   <li>HISTORY: Active and dismissed (including expired)
 // requests.</li>
 // </ol>
 func (c *ProjectsApprovalRequestsListCall) Filter(filter string) *ProjectsApprovalRequestsListCall {
@@ -3910,7 +3913,7 @@ func (c *ProjectsApprovalRequestsListCall) Header() http.Header {
 
 func (c *ProjectsApprovalRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200708")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3981,7 +3984,7 @@ func (c *ProjectsApprovalRequestsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
+	//       "description": "A filter on the type of approval requests to retrieve. Must be one of the\nfollowing values:\n\u003col\u003e\n  \u003cli\u003e[not set]: Requests that are pending or have active approvals.\u003c/li\u003e\n  \u003cli\u003eALL: All requests.\u003c/li\u003e\n  \u003cli\u003ePENDING: Only pending requests.\u003c/li\u003e\n  \u003cli\u003eACTIVE: Only active (i.e. currently approved) requests.\u003c/li\u003e\n  \u003cli\u003eDISMISSED: Only dismissed (including expired) requests.\u003c/li\u003e\n  \u003cli\u003eHISTORY: Active and dismissed (including expired) requests.\u003c/li\u003e\n\u003c/ol\u003e",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

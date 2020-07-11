@@ -330,6 +330,84 @@ func (s *BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchWriteRequest: The request for Firestore.BatchWrite.
+type BatchWriteRequest struct {
+	// Labels: Labels associated with this batch write.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Writes: The writes to apply.
+	//
+	// Method does not apply writes atomically and does not guarantee
+	// ordering.
+	// Each write succeeds or fails independently. You cannot write to the
+	// same
+	// document more than once per request.
+	Writes []*Write `json:"writes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchWriteResponse: The response from Firestore.BatchWrite.
+type BatchWriteResponse struct {
+	// Status: The status of applying the writes.
+	//
+	// This i-th write status corresponds to the i-th write in the
+	// request.
+	Status []*Status `json:"status,omitempty"`
+
+	// WriteResults: The result of applying the writes.
+	//
+	// This i-th write result corresponds to the i-th write in the
+	// request.
+	WriteResults []*WriteResult `json:"writeResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchWriteResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchWriteResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BeginTransactionRequest: The request for Firestore.BeginTransaction.
 type BeginTransactionRequest struct {
 	// Options: The options for the transaction.
@@ -981,23 +1059,48 @@ type FieldFilter struct {
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "LESS_THAN" - Less than. Requires that the field come first in
-	// `order_by`.
-	//   "LESS_THAN_OR_EQUAL" - Less than or equal. Requires that the field
-	// come first in `order_by`.
-	//   "GREATER_THAN" - Greater than. Requires that the field come first
-	// in `order_by`.
-	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal. Requires that the
-	// field come first in
-	// `order_by`.
-	//   "EQUAL" - Equal.
-	//   "ARRAY_CONTAINS" - Contains. Requires that the field is an array.
-	//   "IN" - In. Requires that `value` is a non-empty ArrayValue with at
-	// most 10
-	// values.
-	//   "ARRAY_CONTAINS_ANY" - Contains any. Requires that the field is an
-	// array and
-	// `value` is a non-empty ArrayValue with at most 10 values.
+	//   "LESS_THAN" - The given `field` is less than the given
+	// `value`.
+	//
+	// Requires:
+	//
+	// * That `field` come first in `order_by`.
+	//   "LESS_THAN_OR_EQUAL" - The given `field` is less than or equal to
+	// the given `value`.
+	//
+	// Requires:
+	//
+	// * That `field` come first in `order_by`.
+	//   "GREATER_THAN" - The given `field` is greater than the given
+	// `value`.
+	//
+	// Requires:
+	//
+	// * That `field` come first in `order_by`.
+	//   "GREATER_THAN_OR_EQUAL" - The given `field` is greater than or
+	// equal to the given `value`.
+	//
+	// Requires:
+	//
+	// * That `field` come first in `order_by`.
+	//   "EQUAL" - The given `field` is equal to the given `value`.
+	//   "ARRAY_CONTAINS" - The given `field` is an array that contains the
+	// given `value`.
+	//   "IN" - The given `field` is equal to at least one value in the
+	// given array.
+	//
+	// Requires:
+	//
+	// * That `value` is a non-empty `ArrayValue` with at most 10 values.
+	// * No other `IN`, `ARRAY_CONTAINS_ANY`, or `NOT_IN`.
+	//   "ARRAY_CONTAINS_ANY" - The given `field` is an array that contains
+	// any of the values in the
+	// given array.
+	//
+	// Requires:
+	//
+	// * That `value` is a non-empty `ArrayValue` with at most 10 values.
+	// * No other `IN`, `ARRAY_CONTAINS_ANY`, or `NOT_IN`.
 	Op string `json:"op,omitempty"`
 
 	// Value: The value to compare to.
@@ -2113,6 +2216,143 @@ func (s *Order) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PartitionQueryRequest: The request for Firestore.PartitionQuery.
+type PartitionQueryRequest struct {
+	// PageSize: The maximum number of partitions to return in this call,
+	// subject to
+	// `partition_count`.
+	//
+	// For example, if `partition_count` = 10 and `page_size` = 8, the first
+	// call
+	// to PartitionQuery will return up to 8 partitions and a
+	// `next_page_token`
+	// if more results exist. A second call to PartitionQuery will return up
+	// to
+	// 2 partitions, to complete the total of 10 specified in
+	// `partition_count`.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: The `next_page_token` value returned from a previous call
+	// to
+	// PartitionQuery that may be used to get an additional set of
+	// results.
+	// There are no ordering guarantees between sets of results. Thus,
+	// using
+	// multiple sets of results will require merging the different result
+	// sets.
+	//
+	// For example, two subsequent calls using a page_token may return:
+	//
+	//  * cursor B, cursor M, cursor Q
+	//  * cursor A, cursor U, cursor W
+	//
+	// To obtain a complete result set ordered with respect to the results
+	// of the
+	// query supplied to PartitionQuery, the results sets should be
+	// merged:
+	// cursor A, cursor B, cursor M, cursor Q, cursor U, cursor W
+	PageToken string `json:"pageToken,omitempty"`
+
+	// PartitionCount: The desired maximum number of partition points.
+	// The partitions may be returned across multiple pages of results.
+	// The number must be strictly positive. The actual number of
+	// partitions
+	// returned may be fewer.
+	//
+	// For example, this may be set to one fewer than the number of
+	// parallel
+	// queries to be run, or in running a data pipeline job, one fewer than
+	// the
+	// number of workers or compute instances available.
+	PartitionCount int64 `json:"partitionCount,omitempty,string"`
+
+	// StructuredQuery: A structured query.
+	// Filters, order bys, limits, offsets, and start/end cursors are
+	// not
+	// supported.
+	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionQueryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitionQueryResponse: The response for Firestore.PartitionQuery.
+type PartitionQueryResponse struct {
+	// NextPageToken: A page token that may be used to request an additional
+	// set of results, up
+	// to the number specified by `partition_count` in the PartitionQuery
+	// request.
+	// If blank, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Partitions: Partition results.
+	// Each partition is a split point that can be used by RunQuery as a
+	// starting
+	// or end point for the query results. The RunQuery requests must be
+	// made with
+	// the same query supplied to this PartitionQuery request. The
+	// partition
+	// cursors will be ordered according to same ordering as the results of
+	// the
+	// query supplied to PartitionQuery.
+	//
+	// For example, if a PartitionQuery request returns partition cursors A
+	// and B,
+	// running the following three queries will return the entire result set
+	// of
+	// the original query:
+	//
+	//  * query, end_at A
+	//  * query, start_at A, end_at B
+	//  * query, start_at B
+	Partitions []*Cursor `json:"partitions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Precondition: A precondition on a document, used for conditional
 // operations.
 type Precondition struct {
@@ -2719,8 +2959,8 @@ type UnaryFilter struct {
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "IS_NAN" - Test if a field is equal to NaN.
-	//   "IS_NULL" - Test if an expression evaluates to Null.
+	//   "IS_NAN" - The given `field` is equal to `NaN`.
+	//   "IS_NULL" - The given `field` is equal to `NULL`.
 	Op string `json:"op,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
@@ -3139,7 +3379,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3289,7 +3529,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3434,7 +3674,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3529,6 +3769,158 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "firestore.projects.databases.documents.batchWrite":
+
+type ProjectsDatabasesDocumentsBatchWriteCall struct {
+	s                 *Service
+	database          string
+	batchwriterequest *BatchWriteRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// BatchWrite: Applies a batch of write operations.
+//
+// The BatchWrite method does not apply the write operations
+// atomically
+// and can apply them out of order. Method does not allow more than one
+// write
+// per document. Each write succeeds or fails independently. See
+// the
+// BatchWriteResponse for the success status of each write.
+//
+// If you require an atomically applied set of writes, use
+// Commit instead.
+func (r *ProjectsDatabasesDocumentsService) BatchWrite(database string, batchwriterequest *BatchWriteRequest) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c := &ProjectsDatabasesDocumentsBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.database = database
+	c.batchwriterequest = batchwriterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsBatchWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchwriterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+database}/documents:batchWrite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"database": c.database,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.batchWrite" call.
+// Exactly one of *BatchWriteResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *BatchWriteResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsBatchWriteCall) Do(opts ...googleapi.CallOption) (*BatchWriteResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchWriteResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Applies a batch of write operations.\n\nThe BatchWrite method does not apply the write operations atomically\nand can apply them out of order. Method does not allow more than one write\nper document. Each write succeeds or fails independently. See the\nBatchWriteResponse for the success status of each write.\n\nIf you require an atomically applied set of writes, use\nCommit instead.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:batchWrite",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.documents.batchWrite",
+	//   "parameterOrder": [
+	//     "database"
+	//   ],
+	//   "parameters": {
+	//     "database": {
+	//       "description": "Required. The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+database}/documents:batchWrite",
+	//   "request": {
+	//     "$ref": "BatchWriteRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchWriteResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
 // method id "firestore.projects.databases.documents.beginTransaction":
 
 type ProjectsDatabasesDocumentsBeginTransactionCall struct {
@@ -3575,7 +3967,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3716,7 +4108,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3876,7 +4268,7 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4052,7 +4444,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4228,7 +4620,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4453,7 +4845,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4658,7 +5050,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4820,7 +5212,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4915,6 +5307,172 @@ func (c *ProjectsDatabasesDocumentsListenCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "firestore.projects.databases.documents.partitionQuery":
+
+type ProjectsDatabasesDocumentsPartitionQueryCall struct {
+	s                     *Service
+	parent                string
+	partitionqueryrequest *PartitionQueryRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// PartitionQuery: Partitions a query by returning partition cursors
+// that can be used to run
+// the query in parallel. The returned partition cursors are split
+// points that
+// can be used by RunQuery as starting/end points for the query results.
+func (r *ProjectsDatabasesDocumentsService) PartitionQuery(parent string, partitionqueryrequest *PartitionQueryRequest) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c := &ProjectsDatabasesDocumentsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.partitionqueryrequest = partitionqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Context(ctx context.Context) *ProjectsDatabasesDocumentsPartitionQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.partitionqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}:partitionQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.documents.partitionQuery" call.
+// Exactly one of *PartitionQueryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PartitionQueryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Do(opts ...googleapi.CallOption) (*PartitionQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PartitionQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Partitions a query by returning partition cursors that can be used to run\nthe query in parallel. The returned partition cursors are split points that\ncan be used by RunQuery as starting/end points for the query results.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:partitionQuery",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.documents.partitionQuery",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents`.\nDocument resource names are not supported; only database resource names\ncan be specified.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}:partitionQuery",
+	//   "request": {
+	//     "$ref": "PartitionQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PartitionQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Pages(ctx context.Context, f func(*PartitionQueryResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.partitionqueryrequest.PageToken = pt }(c.partitionqueryrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.partitionqueryrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "firestore.projects.databases.documents.patch":
 
 type ProjectsDatabasesDocumentsPatchCall struct {
@@ -4996,7 +5554,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5160,7 +5718,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5301,7 +5859,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5442,7 +6000,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5600,7 +6158,7 @@ func (c *ProjectsDatabasesIndexesCreateCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5739,7 +6297,7 @@ func (c *ProjectsDatabasesIndexesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5881,7 +6439,7 @@ func (c *ProjectsDatabasesIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6046,7 +6604,7 @@ func (c *ProjectsDatabasesIndexesListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200709")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200710")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

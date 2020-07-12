@@ -1553,7 +1553,7 @@
           ],
           "parameters": {
             "filter": {
-              "description": "A filter specifying what Services to return. The filter currently supports the following fields:\n- `identifier_case`\n- `app_engine.module_id`\n- `cloud_endpoints.service`\n- `cluster_istio.location`\n- `cluster_istio.cluster_name`\n- `cluster_istio.service_namespace`\n- `cluster_istio.service_name`\nidentifier_case refers to which option in the identifier oneof is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options are \"CUSTOM\", \"APP_ENGINE\", \"CLOUD_ENDPOINTS\", and \"CLUSTER_ISTIO\".",
+              "description": "A filter specifying what Services to return. The filter currently supports the following fields:\n- `identifier_case`\n- `app_engine.module_id`\n- `cloud_endpoints.service`\n- `mesh_istio.mesh_uid`\n- `mesh_istio.service_namespace`\n- `mesh_istio.service_name`\n- `cluster_istio.location` (deprecated)\n- `cluster_istio.cluster_name` (deprecated)\n- `cluster_istio.service_namespace` (deprecated)\n- `cluster_istio.service_name` (deprecated)\nidentifier_case refers to which option in the identifier oneof is populated. For example, the filter identifier_case = \"CUSTOM\" would match all services with a value for the custom field. Valid options are \"CUSTOM\", \"APP_ENGINE\", \"CLOUD_ENDPOINTS\", \"MESH_ISTIO\", and \"CLUSTER_ISTIO\" (deprecated),",
               "location": "query",
               "type": "string"
             },
@@ -1848,7 +1848,7 @@
       }
     }
   },
-  "revision": "20200622",
+  "revision": "20200708",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -3080,6 +3080,11 @@
             "$ref": "NotificationChannel"
           },
           "type": "array"
+        },
+        "totalSize": {
+          "description": "The total number of notification channels in all pages. This number is only an estimate, and may change in subsequent pages. https://aip.dev/158",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -3695,7 +3700,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of notification channel, such as \"email\", \"sms\", etc. Notification channel types are globally unique.",
+          "description": "The type of notification channel, such as \"email\" and \"sms\". To view the full list of channels, see Channel descriptors (https://cloud.google.com/monitoring/alerts/using-channels-api#ncd). Notification channel types are globally unique.",
           "type": "string"
         }
       },

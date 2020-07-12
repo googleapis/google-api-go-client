@@ -418,7 +418,7 @@
       }
     }
   },
-  "revision": "20200618",
+  "revision": "20200703",
   "rootUrl": "https://cloudscheduler.googleapis.com/",
   "schemas": {
     "AppEngineHttpTarget": {
@@ -744,7 +744,7 @@
       "type": "object"
     },
     "PubsubMessage": {
-      "description": "A message that is published by publishers and consumed by subscribers. The\nmessage must contain either a non-empty data field or at least one attribute.\nNote that client libraries represent this object differently\ndepending on the language. See the corresponding\n\u003ca href=\"https://cloud.google.com/pubsub/docs/reference/libraries\"\u003eclient\nlibrary documentation\u003c/a\u003e for more information. See\n\u003ca href=\"https://cloud.google.com/pubsub/quotas\"\u003eQuotas and limits\u003c/a\u003e\nfor more information about message limits.",
+      "description": "A message that is published by publishers and consumed by subscribers. The\nmessage must contain either a non-empty data field or at least one attribute.\nNote that client libraries represent this object differently\ndepending on the language. See the corresponding [client library\ndocumentation](https://cloud.google.com/pubsub/docs/reference/libraries) for\nmore information. See [quotas and limits]\n(https://cloud.google.com/pubsub/quotas) for more information about message\nlimits.",
       "id": "PubsubMessage",
       "properties": {
         "attributes": {

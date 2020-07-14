@@ -38,15 +38,15 @@ func WithDefaultMTLSEndpoint(url string) option.ClientOption {
 	return defaultMTLSEndpointOption(url)
 }
 
-// SkipValidation bypasses validation on ClientOptions.
+// SkipDialSettingsValidation bypasses validation on ClientOptions.
 //
 // It should only be used internally.
-func SkipValidation() option.ClientOption {
-	return skipValidation{}
+func SkipDialSettingsValidation() option.ClientOption {
+	return skipDialSettingsValidation{}
 }
 
-type skipValidation struct{}
+type skipDialSettingsValidation struct{}
 
-func (s skipValidation) Apply(settings *internal.DialSettings) {
+func (s skipDialSettingsValidation) Apply(settings *internal.DialSettings) {
 	settings.SkipValidation = true
 }

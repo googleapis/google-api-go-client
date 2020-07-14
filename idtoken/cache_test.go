@@ -6,11 +6,30 @@ package idtoken
 
 import (
 	"net/http"
+	"sync"
 	"testing"
 	"time"
 )
 
+type fakeClock struct {
+	mu sync.Mutex
+	t  time.Time
+}
+
+func (c *fakeClock) Now() time.Time {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.t
+}
+
+func (c *fakeClock) Sleep(d time.Duration) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.t = c.t.Add(d)
+}
+
 func TestCacheHit(t *testing.T) {
+	clock := &fakeClock{t: time.Now()}
 	dummyResp := &certResponse{
 		Keys: []jwk{
 			{
@@ -19,6 +38,8 @@ func TestCacheHit(t *testing.T) {
 		},
 	}
 	cache := newCachingClient(nil)
+	cache.clock = clock.Now
+
 	// Cache should be empty
 	cert, ok := cache.get(googleSACertsURL)
 	if ok || cert != nil {
@@ -27,6 +48,7 @@ func TestCacheHit(t *testing.T) {
 
 	// Add an item, but make it expire now
 	cache.set(googleSACertsURL, dummyResp, make(http.Header))
+	clock.Sleep(time.Nanosecond) // it expires when current time is > expiration, not >=
 	cert, ok = cache.get(googleSACertsURL)
 	if ok || cert != nil {
 		t.Fatal("cache for SA certs should be expired")
@@ -42,7 +64,7 @@ func TestCacheHit(t *testing.T) {
 		t.Fatal("cache for SA certs have a resp")
 	}
 	// Wait
-	time.Sleep(2 * time.Second)
+	clock.Sleep(2 * time.Second)
 	cert, ok = cache.get(googleSACertsURL)
 	if ok || cert != nil {
 		t.Fatal("cache for SA certs should be expired")

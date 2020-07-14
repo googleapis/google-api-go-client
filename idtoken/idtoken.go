@@ -15,8 +15,8 @@ import (
 	"golang.org/x/oauth2/google"
 
 	"google.golang.org/api/internal"
-	internalhttp "google.golang.org/api/internal/transport/http"
 	"google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // ClientOption is aliased so relevant options are easily found in the docs.
@@ -45,16 +45,13 @@ func NewClient(ctx context.Context, audience string, opts ...ClientOption) (*htt
 	if ds.TokenSource != nil {
 		return nil, fmt.Errorf("idtoken: option.WithTokenSource not supported")
 	}
-	if ds.HTTPClient != nil {
-		return nil, fmt.Errorf("idtoken: option.WithHTTPClient not supported")
-	}
 
 	ts, err := NewTokenSource(ctx, audience, opts...)
 	if err != nil {
 		return nil, err
 	}
-	ds.TokenSource = ts
-	t, err := internalhttp.NewTransport(ctx, http.DefaultTransport, &ds)
+	opts = append(opts, option.WithTokenSource(ts))
+	t, err := htransport.NewTransport(ctx, http.DefaultTransport, opts...)
 	if err != nil {
 		return nil, err
 	}

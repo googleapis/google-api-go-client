@@ -561,7 +561,8 @@ type Span struct {
 	// per Span.
 	Links *Links `json:"links,omitempty"`
 
-	// Name: The resource name of the span in the following format:
+	// Name: Required. The resource name of the span in the following
+	// format:
 	//
 	//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
 	// identifier for a trace within a project;
@@ -589,8 +590,8 @@ type Span struct {
 	// SpanId: Required. The [SPAN_ID] portion of the span's resource name.
 	SpanId string `json:"spanId,omitempty"`
 
-	// SpanKind: Distinguishes between spans generated in a particular
-	// context. For example,
+	// SpanKind: Optional. Distinguishes between spans generated in a
+	// particular context. For example,
 	// two spans with the same name may be distinguished using `CLIENT`
 	// (caller)
 	// and `SERVER` (callee) to identify an RPC call.
@@ -614,7 +615,7 @@ type Span struct {
 	// relationship between producer and consumer spans (e.g. publishing
 	// a
 	// message to a pubsub service).
-	//   "CONSUMER" - Indicates that the span describes consumer recieving a
+	//   "CONSUMER" - Indicates that the span describes consumer receiving a
 	// message from a
 	// broker. Unlike client and  server, there is no direct critical
 	// path
@@ -992,9 +993,6 @@ type ProjectsTracesBatchWriteCall struct {
 // BatchWrite: Sends new spans to new or existing traces. You cannot
 // update
 // existing spans.
-// In this case, writing traces is not considered an active
-// developer
-// method since traces are machine generated.
 func (r *ProjectsTracesService) BatchWrite(name string, batchwritespansrequest *BatchWriteSpansRequest) *ProjectsTracesBatchWriteCall {
 	c := &ProjectsTracesBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1029,7 +1027,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200713")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1093,7 +1091,7 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
+	//   "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.",
 	//   "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.batchWrite",
@@ -1136,9 +1134,6 @@ type ProjectsTracesSpansCreateSpanCall struct {
 }
 
 // CreateSpan: Creates a new span.
-// In this case, writing traces is not considered an active
-// developer
-// method since traces are machine generated.
 func (r *ProjectsTracesSpansService) CreateSpan(nameid string, span *Span) *ProjectsTracesSpansCreateSpanCall {
 	c := &ProjectsTracesSpansCreateSpanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -1173,7 +1168,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200711")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200713")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1237,7 +1232,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new span.\nIn this case, writing traces is not considered an active developer\nmethod since traces are machine generated.",
+	//   "description": "Creates a new span.",
 	//   "flatPath": "v2/projects/{projectsId}/traces/{tracesId}/spans/{spansId}",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.spans.createSpan",
@@ -1246,7 +1241,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
+	//       "description": "Required. The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$",
 	//       "required": true,

@@ -243,10 +243,10 @@ func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 		t.Fatalf("unable to sign content: %v", err)
 	}
 	rb := r.Bytes()
-	rPadded := make([]byte, es256KeySize)
-	copy(rPadded[es256KeySize-len(rb):], rb)
+	lPadded := make([]byte, es256KeySize)
+	copy(lPadded[es256KeySize-len(rb):], rb)
 	var sig []byte
-	sig = append(sig, rPadded...)
+	sig = append(sig, lPadded...)
 	sig = append(sig, s.Bytes()...)
 	token.signature = base64.RawURLEncoding.EncodeToString(sig)
 	return token.String(), privateKey.PublicKey

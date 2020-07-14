@@ -17,8 +17,13 @@ import (
 
 type cachingClient struct {
 	client *http.Client
-	mu     sync.Mutex
-	certs  map[string]*cachedResponse
+
+	// clock optionally specifies a func to return the current time.
+	// If nil, time.Now is used.
+	clock func() time.Time
+
+	mu    sync.Mutex
+	certs map[string]*cachedResponse
 }
 
 func newCachingClient(client *http.Client) *cachingClient {
@@ -60,6 +65,13 @@ func (c *cachingClient) getCert(ctx context.Context, url string) (*certResponse,
 	return certResp, nil
 }
 
+func (c *cachingClient) now() time.Time {
+	if c.clock != nil {
+		return c.clock()
+	}
+	return time.Now()
+}
+
 func (c *cachingClient) get(url string) (*certResponse, bool) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
@@ -67,14 +79,14 @@ func (c *cachingClient) get(url string) (*certResponse, bool) {
 	if !ok {
 		return nil, false
 	}
-	if time.Now().After(cachedResp.exp) {
+	if c.now().After(cachedResp.exp) {
 		return nil, false
 	}
 	return cachedResp.resp, true
 }
 
 func (c *cachingClient) set(url string, resp *certResponse, headers http.Header) {
-	exp := calculateExpireTime(headers)
+	exp := c.calculateExpireTime(headers)
 	c.mu.Lock()
 	c.certs[url] = &cachedResponse{resp: resp, exp: exp}
 	c.mu.Unlock()
@@ -83,25 +95,25 @@ func (c *cachingClient) set(url string, resp *certResponse, headers http.Header)
 // calculateExpireTime will determine the expire time for the cache based on
 // HTTP headers. If there is any difficulty reading the headers the fallback is
 // to set the cache to expire now.
-func calculateExpireTime(headers http.Header) time.Time {
+func (c *cachingClient) calculateExpireTime(headers http.Header) time.Time {
 	var maxAge int
 	cc := strings.Split(headers.Get("cache-control"), ",")
 	for _, v := range cc {
 		if strings.Contains(v, "max-age") {
 			ss := strings.Split(v, "=")
 			if len(ss) < 2 {
-				return time.Now()
+				return c.now()
 			}
 			ma, err := strconv.Atoi(ss[1])
 			if err != nil {
-				return time.Now()
+				return c.now()
 			}
 			maxAge = ma
 		}
 	}
 	age, err := strconv.Atoi(headers.Get("age"))
 	if err != nil {
-		return time.Now()
+		return c.now()
 	}
-	return time.Now().Add(time.Duration(maxAge-age) * time.Second)
+	return c.now().Add(time.Duration(maxAge-age) * time.Second)
 }

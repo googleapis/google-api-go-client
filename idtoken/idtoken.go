@@ -16,6 +16,7 @@ import (
 
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
+	"google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -50,7 +51,9 @@ func NewClient(ctx context.Context, audience string, opts ...ClientOption) (*htt
 	if err != nil {
 		return nil, err
 	}
-	opts = append(opts, option.WithTokenSource(ts))
+	// Skip DialSettings validation so added TokenSource will not conflict with user
+	// provided credentials.
+	opts = append(opts, option.WithTokenSource(ts), internaloption.SkipDialSettingsValidation())
 	t, err := htransport.NewTransport(ctx, http.DefaultTransport, opts...)
 	if err != nil {
 		return nil, err

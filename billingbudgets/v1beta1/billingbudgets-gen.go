@@ -157,11 +157,25 @@ type BillingAccountsBudgetsService struct {
 }
 
 // GoogleCloudBillingBudgetsV1beta1AllUpdatesRule: AllUpdatesRule
-// defines notifications that are sent on every update to the
-// billing account's spend, regardless of the thresholds defined
-// using
-// threshold rules.
+// defines notifications that are sent based on budget spend
+// and thresholds.
 type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
+	// MonitoringNotificationChannels: Optional. Targets to send
+	// notifications to when a threshold is exceeded. This is in
+	// addition to default recipients who have billing account roles.
+	// The value is the full REST resource name of a monitoring
+	// notification
+	// channel with the
+	// form
+	// `projects/{project_id}/notificationChannels/{channel_id}`. A maximum
+	// of 5
+	// channels are allowed.
+	// See
+	// https://cloud.google.com/billing/docs/how-to/budgets-notification-
+	// recipients
+	// for more details.
+	MonitoringNotificationChannels []string `json:"monitoringNotificationChannels,omitempty"`
+
 	// PubsubTopic: Required. The name of the Cloud Pub/Sub topic where
 	// budget related messages will be
 	// published, in the form `projects/{project_id}/topics/{topic_id}`.
@@ -177,32 +191,35 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// for a
 	// budget, otherwise, the API call will fail with PERMISSION_DENIED.
 	// See
-	// https://cloud.google.com/pubsub/docs/access-control for more details
-	// on
-	// Pub/Sub roles and permissions.
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-
+	// notifications
+	// for more details on Pub/Sub roles and permissions.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
-	// SchemaVersion: Required. The schema version of the notification.
+	// SchemaVersion: Required. The schema version of the notification sent
+	// to `pubsub_topic`.
 	// Only "1.0" is accepted. It represents the JSON schema as defined
 	// in
-	// https://cloud.google.com/billing/docs/how-to/budgets#notification_f
-	// ormat
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-n
+	// otifications#notification_format
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "MonitoringNotificationChannels") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PubsubTopic") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "MonitoringNotificationChannels") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -222,9 +239,8 @@ func (s *GoogleCloudBillingBudgetsV1beta1AllUpdatesRule) MarshalJSON() ([]byte, 
 // tracked are
 // implied (calendar months of usage back-to-back).
 type GoogleCloudBillingBudgetsV1beta1Budget struct {
-	// AllUpdatesRule: Optional. Rules to apply to all updates to the actual
-	// spend, regardless
-	// of the thresholds set in `threshold_rules`.
+	// AllUpdatesRule: Optional. Rules to apply to notifications sent based
+	// on budget spend and thresholds.
 	AllUpdatesRule *GoogleCloudBillingBudgetsV1beta1AllUpdatesRule `json:"allUpdatesRule,omitempty"`
 
 	// Amount: Required. Budgeted amount.
@@ -405,12 +421,13 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// `billingAccounts/{account_id}`, specifying
 	// that usage from only this set of subaccounts should be included in
 	// the
-	// budget. If a subaccount is set to the name of the resller account,
-	// usage
-	// from the reseller account will be included. If omitted, the report
-	// will
-	// include usage from the reseller account and all subaccounts, if they
-	// exist.
+	// budget. If a subaccount is set to the name of the parent
+	// account,
+	// usage from the parent account will be included. If omitted,
+	// the
+	// report will include usage from the parent account and
+	// all
+	// subaccounts, if they exist.
 	Subaccounts []string `json:"subaccounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -709,7 +726,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200714")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -848,7 +865,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200714")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -997,7 +1014,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200714")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1168,7 +1185,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200714")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1343,7 +1360,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200714")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

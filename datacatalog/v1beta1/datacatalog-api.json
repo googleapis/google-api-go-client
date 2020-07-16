@@ -1808,7 +1808,7 @@
       }
     }
   },
-  "revision": "20200618",
+  "revision": "20200714",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2118,7 +2118,7 @@
       "id": "GoogleCloudDatacatalogV1beta1FieldTypeEnumType",
       "properties": {
         "allowedValues": {
-          "description": "The set of allowed values for this enum. This set must not be empty, the\ndisplay names of the values in this set must not be empty and the display\nnames of the values must be case-insensitively unique within this set.\nThe order of items in this list is preserved. This field can be used to\ncreate, remove and reorder enum values. In order to rename enum value use\nRenameTagTemplateFieldEnumValue method. Can have up to 500 allowed\nvalues.",
+          "description": "The set of allowed values for this enum. This set must not be empty, the\ndisplay names of the values in this set must not be empty and the display\nnames of the values must be case-insensitively unique within this set.\nThe order of items in this list is preserved. This field can be used to\ncreate, remove and reorder enum values. To rename enum values, use the\nRenameTagTemplateFieldEnumValue method. This list can include up to 500\nallowed values.",
           "items": {
             "$ref": "GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue"
           },

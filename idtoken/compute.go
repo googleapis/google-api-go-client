@@ -19,7 +19,7 @@ import (
 // use the metadata service to build a TokenSource that fetches ID tokens.
 func computeTokenSource(audience string, ds *internal.DialSettings) (oauth2.TokenSource, error) {
 	if ds.CustomClaims != nil {
-		return nil, fmt.Errorf("idtoken: WithCustomClaims can't be used with the metadata serive, please provide a service account if you would like to use this feature")
+		return nil, fmt.Errorf("idtoken: WithCustomClaims can't be used with the metadata service, please provide a service account if you would like to use this feature")
 	}
 	ts := computeIDTokenSource{
 		audience: audience,

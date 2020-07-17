@@ -539,7 +539,7 @@ type Span struct {
 
 	// DisplayName: Required. A description of the span's operation (up to
 	// 128 bytes).
-	// Stackdriver Trace displays the description in the
+	// Trace displays the description in the
 	// Google Cloud Platform Console.
 	// For example, the display name can be a qualified method name or a
 	// file name
@@ -570,7 +570,9 @@ type Span struct {
 	// array.
 	//
 	// [SPAN_ID] is a unique identifier for a span within a trace; it
-	// is a 16-character hexadecimal encoding of an 8-byte array.
+	// is a 16-character hexadecimal encoding of an 8-byte array. It should
+	// not
+	// be zero.
 	Name string `json:"name,omitempty"`
 
 	// ParentSpanId: The [SPAN_ID] of this span's parent span. If this is a
@@ -582,9 +584,7 @@ type Span struct {
 	// whether this span is in
 	// the same process as its parent. If you do not set this
 	// parameter,
-	// Stackdriver Trace is unable to take advantage of this
-	// helpful
-	// information.
+	// Trace is unable to take advantage of this helpful information.
 	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
 
 	// SpanId: Required. The [SPAN_ID] portion of the span's resource name.
@@ -1027,7 +1027,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1168,7 +1168,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1241,7 +1241,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
+	//       "description": "Required. The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array. It should not\nbe zero.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$",
 	//       "required": true,

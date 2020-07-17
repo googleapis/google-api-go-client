@@ -2369,7 +2369,14 @@ func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
 }
 
 // Sort sets the optional parameter "sort": The sort expression to apply
-// to the results.
+// to the results. The sort parameter specifies
+// that the results be sorted according to the specified expression i.e.
+// sort
+// by
+// date.
+// [Example:
+// sort=date](https://developers.google.com/custom-search
+// /docs/structured_search#sort-by-attribute).
 func (c *CseListCall) Sort(sort string) *CseListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
@@ -2428,7 +2435,7 @@ func (c *CseListCall) Header() http.Header {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2697,7 +2704,7 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "sort": {
-	//       "description": "The sort expression to apply to the results.",
+	//       "description": "The sort expression to apply to the results. The sort parameter specifies\nthat the results be sorted according to the specified expression i.e. sort\nby date.\n[Example:\nsort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3272,7 +3279,14 @@ func (c *CseSiterestrictListCall) SiteSearchFilter(siteSearchFilter string) *Cse
 }
 
 // Sort sets the optional parameter "sort": The sort expression to apply
-// to the results.
+// to the results. The sort parameter specifies
+// that the results be sorted according to the specified expression i.e.
+// sort
+// by
+// date.
+// [Example:
+// sort=date](https://developers.google.com/custom-search
+// /docs/structured_search#sort-by-attribute).
 func (c *CseSiterestrictListCall) Sort(sort string) *CseSiterestrictListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
@@ -3331,7 +3345,7 @@ func (c *CseSiterestrictListCall) Header() http.Header {
 
 func (c *CseSiterestrictListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3600,7 +3614,7 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "sort": {
-	//       "description": "The sort expression to apply to the results.",
+	//       "description": "The sort expression to apply to the results. The sort parameter specifies\nthat the results be sorted according to the specified expression i.e. sort\nby date.\n[Example:\nsort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

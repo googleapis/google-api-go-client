@@ -242,7 +242,8 @@ type Trace struct {
 	// a 128-bit
 	// numeric value formatted as a 32-byte hex string. For
 	// example,
-	// `382d4f4c6b7bb2f4a972559d9085001d`.
+	// `382d4f4c6b7bb2f4a972559d9085001d`. The numeric value should not be
+	// zero.
 	TraceId string `json:"traceId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -344,8 +345,8 @@ type TraceSpan struct {
 
 	// Name: Name of the span. Must be less than 128 bytes. The span name is
 	// sanitized
-	// and displayed in the Stackdriver Trace tool in the
-	// Google Cloud Platform Console.
+	// and displayed in the Trace tool in the Google Cloud Platform
+	// Console.
 	// The name may be a method name or some other per-call site name.
 	// For the same executable and the same call point, a best practice
 	// is
@@ -427,8 +428,8 @@ type ProjectsPatchTracesCall struct {
 	header_    http.Header
 }
 
-// PatchTraces: Sends new traces to Stackdriver Trace or updates
-// existing traces. If the ID
+// PatchTraces: Sends new traces to Cloud Trace or updates existing
+// traces. If the ID
 // of a trace that you send matches that of an existing trace, any
 // fields
 // in the existing trace and its spans are overwritten by the provided
@@ -470,7 +471,7 @@ func (c *ProjectsPatchTracesCall) Header() http.Header {
 
 func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -534,7 +535,7 @@ func (c *ProjectsPatchTracesCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.",
+	//   "description": "Sends new traces to Cloud Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.",
 	//   "flatPath": "v1/projects/{projectId}/traces",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtrace.projects.patchTraces",
@@ -621,7 +622,7 @@ func (c *ProjectsTracesGetCall) Header() http.Header {
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -888,7 +889,7 @@ func (c *ProjectsTracesListCall) Header() http.Header {
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200715")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

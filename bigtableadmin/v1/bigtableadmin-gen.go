@@ -121,6 +121,130 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+// Backup: A backup of a Cloud Bigtable table.
+type Backup struct {
+	// EndTime: Output only. `end_time` is the time that the backup was
+	// finished. The row
+	// data in the backup will be no newer than this timestamp.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ExpireTime: Required. The expiration time of the backup, with
+	// microseconds
+	// granularity that must be at least 6 hours and at most 30 days
+	// from the time the request is received. Once the `expire_time`
+	// has passed, Cloud Bigtable will delete the backup and free
+	// the
+	// resources used by the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// Name: A globally unique identifier for the backup which cannot
+	// be
+	// changed. Values are of the
+	// form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/
+	//    backups/_a-zA-Z0-9*`
+	// The final segment of the name must be between 1 and 50 characters
+	// in length.
+	//
+	// The backup is stored in the cluster identified by the prefix of the
+	// backup
+	// name of the
+	// form
+	// `projects/{project}/instances/{instance}/clusters/{cluster}`.
+	Name string `json:"name,omitempty"`
+
+	// SizeBytes: Output only. Size of the backup in bytes.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// SourceTable: Required. Immutable. Name of the table from which this
+	// backup was created. This needs
+	// to be in the same instance as the backup. Values are of the
+	// form
+	// `projects/{project}/instances/{instance}/tables/{source_table}`.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: Output only. `start_time` is the time that the backup was
+	// started
+	// (i.e. approximately the time the
+	// CreateBackup request is received).  The
+	// row data in this backup will be no older than this timestamp.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The pending backup is still being created. Operations
+	// on the
+	// backup may fail with `FAILED_PRECONDITION` in this state.
+	//   "READY" - The backup is complete and ready for use.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Backup) MarshalJSON() ([]byte, error) {
+	type NoMethod Backup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackupInfo: Information about a backup.
+type BackupInfo struct {
+	// Backup: Output only. Name of the backup.
+	Backup string `json:"backup,omitempty"`
+
+	// EndTime: Output only. This time that the backup was finished. Row
+	// data in the
+	// backup will be no newer than this timestamp.
+	EndTime string `json:"endTime,omitempty"`
+
+	// SourceTable: Output only. Name of the table the backup was created
+	// from.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: Output only. The time that the backup was started. Row
+	// data in the backup
+	// will be no older than this timestamp.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackupInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Cluster: A resizable group of nodes in a particular cloud location,
 // capable
 // of serving all Tables in the parent
@@ -200,6 +324,46 @@ type Cluster struct {
 
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateBackupMetadata: Metadata type for the operation returned
+// by
+// CreateBackup.
+type CreateBackupMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was
+	// cancelled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The name of the backup being created.
+	Name string `json:"name,omitempty"`
+
+	// SourceTable: The name of the table the backup is created from.
+	SourceTable string `json:"sourceTable,omitempty"`
+
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBackupMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -474,6 +638,82 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationProgress: Encapsulates progress related information for a
+// Cloud Bigtable long
+// running operation.
+type OperationProgress struct {
+	// EndTime: If set, the time at which this operation failed or was
+	// completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ProgressPercent: Percent completion of the operation.
+	// Values are between 0 and 100 inclusive.
+	ProgressPercent int64 `json:"progressPercent,omitempty"`
+
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OptimizeRestoredTableMetadata: Metadata type for the long-running
+// operation used to track the progress
+// of optimizations performed on a newly restored table. This
+// long-running
+// operation is automatically created by the system after the
+// successful
+// completion of a table restore, and cannot be cancelled.
+type OptimizeRestoredTableMetadata struct {
+	// Name: Name of the restored table being optimized.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the post-restore optimizations.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OptimizeRestoredTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OptimizeRestoredTableMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartialUpdateInstanceRequest: Request message for
 // BigtableInstanceAdmin.PartialUpdateInstance.
 type PartialUpdateInstanceRequest struct {
@@ -505,6 +745,66 @@ type PartialUpdateInstanceRequest struct {
 
 func (s *PartialUpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialUpdateInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RestoreTableMetadata: Metadata type for the long-running operation
+// returned by
+// RestoreTable.
+type RestoreTableMetadata struct {
+	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
+
+	// Name: Name of the table being created and restored to.
+	Name string `json:"name,omitempty"`
+
+	// OptimizeTableOperationName: If exists, the name of the long-running
+	// operation that will be used to
+	// track the post-restore optimization process to optimize the
+	// performance of
+	// the restored table. The metadata type of the long-running operation
+	// is
+	// OptimizeRestoreTableMetadata. The response type is
+	// Empty. This long-running operation may be
+	// automatically created by the system if applicable after
+	// the
+	// RestoreTable long-running operation completes successfully. This
+	// operation
+	// may not be created if the table is already optimized or the restore
+	// was
+	// not successful.
+	OptimizeTableOperationName string `json:"optimizeTableOperationName,omitempty"`
+
+	// Progress: The progress of the RestoreTable
+	// operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceType: The type of the restore source.
+	//
+	// Possible values:
+	//   "RESTORE_SOURCE_TYPE_UNSPECIFIED" - No restore associated.
+	//   "BACKUP" - A backup was used as the source of the restore.
+	SourceType string `json:"sourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestoreTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreTableMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

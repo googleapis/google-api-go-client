@@ -1758,6 +1758,54 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "dns:v1",
+      "name": "dns",
+      "version": "v1",
+      "title": "Google Cloud DNS API",
+      "description": "Configures and serves authoritative DNS records.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dns/v1/rest",
+      "discoveryLink": "./apis/dns/v1/rest",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/cloud-dns",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dns:v1beta2",
+      "name": "dns",
+      "version": "v1beta2",
+      "title": "Google Cloud DNS API",
+      "description": "Configures and serves authoritative DNS records.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dns/v1beta2/rest",
+      "discoveryLink": "./apis/dns/v1beta2/rest",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/cloud-dns",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dns:v2beta1",
+      "name": "dns",
+      "version": "v2beta1",
+      "title": "Google Cloud DNS API",
+      "description": "Configures and serves authoritative DNS records.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dns/v2beta1/rest",
+      "discoveryLink": "./apis/dns/v2beta1/rest",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/cloud-dns",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "docs:v1",
       "name": "docs",
       "version": "v1",

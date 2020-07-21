@@ -19,10 +19,10 @@ func main() {
 	flag.Parse()
 
 	payload := map[string]interface{}{
-		"title": *title,
-		"body":  "", // TODO
-		"head":  "synth-update",
-		"base":  "master",
+		"title":                 *title,
+		"head":                  "regen",
+		"base":                  "master",
+		"maintainer_can_modify": true,
 	}
 	body, err := json.Marshal(payload)
 	if err != nil {

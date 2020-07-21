@@ -767,6 +767,9 @@ type ExecutePatchJobRequest struct {
 	// patched using the default configurations.
 	PatchConfig *PatchConfig `json:"patchConfig,omitempty"`
 
+	// Rollout: Rollout strategy of the patch job.
+	Rollout *PatchRollout `json:"rollout,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -786,6 +789,41 @@ type ExecutePatchJobRequest struct {
 
 func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutePatchJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FixedOrPercent: Message encapsulating a value that can be either
+// absolute ("fixed") or
+// relative ("percent") to a value.
+type FixedOrPercent struct {
+	// Fixed: Specifies a fixed value.
+	Fixed int64 `json:"fixed,omitempty"`
+
+	// Percent: Specifies the relative value defined as a percentage, which
+	// will be
+	// multiplied by a reference value.
+	Percent int64 `json:"percent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fixed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fixed") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedOrPercent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1487,6 +1525,9 @@ type PatchDeployment struct {
 	// RecurringSchedule: Required. Schedule recurring executions.
 	RecurringSchedule *RecurringSchedule `json:"recurringSchedule,omitempty"`
 
+	// Rollout: Optional. Rollout strategy of the patch job.
+	Rollout *PatchRollout `json:"rollout,omitempty"`
+
 	// UpdateTime: Output only. Time the patch deployment was last updated.
 	// Timestamp is in
 	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
@@ -1678,6 +1719,9 @@ type PatchJob struct {
 	// the range of
 	// 0.0 being no progress to 100.0 being complete.
 	PercentComplete float64 `json:"percentComplete,omitempty"`
+
+	// Rollout: Rollout strategy being applied.
+	Rollout *PatchRollout `json:"rollout,omitempty"`
 
 	// State: The current state of the PatchJob.
 	//
@@ -1899,6 +1943,92 @@ type PatchJobInstanceDetailsSummary struct {
 
 func (s *PatchJobInstanceDetailsSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchJobInstanceDetailsSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PatchRollout: Patch rollout configuration specifications. Contains
+// details on the
+// concurrency control when applying patch(es) to all targeted VMs.
+type PatchRollout struct {
+	// DisruptionBudget: The maximum number (or percentage) of VMs per zone
+	// to disrupt at any given
+	// moment. The number of VMs calculated from multiplying the percentage
+	// by the
+	// total number of VMs in a zone is rounded up.
+	//
+	// During patching, a VM is considered disrupted from the time the agent
+	// is
+	// notified to begin until patching has completed. This disruption
+	// time
+	// includes the time to complete reboot and any post-patch steps.
+	//
+	// A VM contributes to the disruption budget if its patching operation
+	// fails
+	// either when applying the patches, running pre or post patch steps, or
+	// if it
+	// fails to respond with a success notification before timing out. VMs
+	// that
+	// are not running or do not have an active agent do not count toward
+	// this
+	// disruption budget.
+	//
+	// For zone-by-zone rollouts, if the disruption budget in a zone is
+	// exceeded,
+	// the patch job stops, because continuing to the next zone
+	// requires
+	// completion of the patch process in the previous zone.
+	//
+	// For example, if the disruption budget has a fixed value of `10`, and
+	// 8 VMs
+	// fail to patch in the current zone, the patch job continues to patch 2
+	// VMs
+	// at a time until the zone is completed. When that zone is
+	// completed
+	// successfully, patching begins with 10 VMs at a time in the next zone.
+	// If 10
+	// VMs in the next zone fail to patch, the patch job stops.
+	DisruptionBudget *FixedOrPercent `json:"disruptionBudget,omitempty"`
+
+	// Mode: Mode of the patch rollout.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Mode must be specified.
+	//   "ZONE_BY_ZONE" - Patches are applied one zone at a time. The patch
+	// job begins in the
+	// region with the lowest number of targeted VMs. Within the
+	// region,
+	// patching begins in the zone with the lowest number of targeted VMs.
+	// If
+	// multiple regions (or zones within a region) have the same number
+	// of
+	// targeted VMs, a tie-breaker is achieved by sorting the regions or
+	// zones
+	// in alphabetical order.
+	//   "CONCURRENT_ZONES" - Patches are applied to VMs in all zones at the
+	// same time.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisruptionBudget") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisruptionBudget") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PatchRollout) MarshalJSON() ([]byte, error) {
+	type NoMethod PatchRollout
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3077,7 +3207,7 @@ func (c *ProjectsGuestPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3220,7 +3350,7 @@ func (c *ProjectsGuestPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3361,7 +3491,7 @@ func (c *ProjectsGuestPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3520,7 +3650,7 @@ func (c *ProjectsGuestPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3695,7 +3825,7 @@ func (c *ProjectsGuestPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3855,7 +3985,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3998,7 +4128,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4139,7 +4269,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4298,7 +4428,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4467,7 +4597,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4607,7 +4737,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4758,7 +4888,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4926,7 +5056,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5132,7 +5262,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5308,7 +5438,7 @@ func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) Header() http.Hea
 
 func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

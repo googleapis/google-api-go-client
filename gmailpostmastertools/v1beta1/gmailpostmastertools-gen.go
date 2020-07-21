@@ -77,8 +77,20 @@ const apiVersion = "v1beta1"
 const basePath = "https://gmailpostmastertools.googleapis.com/"
 const mtlsBasePath = "https://gmailpostmastertools.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See email traffic metrics for the domains you have registered in
+	// Gmail Postmaster Tools
+	PostmasterReadonlyScope = "https://www.googleapis.com/auth/postmaster.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/postmaster.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -687,7 +699,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -768,7 +780,10 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "Domain"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/postmaster.readonly"
+	//   ]
 	// }
 
 }
@@ -849,7 +864,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -929,7 +944,10 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse
 	//   "path": "v1beta1/domains",
 	//   "response": {
 	//     "$ref": "ListDomainsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/postmaster.readonly"
+	//   ]
 	// }
 
 }
@@ -1013,7 +1031,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1094,7 +1112,10 @@ func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficS
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "TrafficStats"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/postmaster.readonly"
+	//   ]
 	// }
 
 }
@@ -1230,7 +1251,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1358,7 +1379,10 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 	//   "path": "v1beta1/{+parent}/trafficStats",
 	//   "response": {
 	//     "$ref": "ListTrafficStatsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/postmaster.readonly"
+	//   ]
 	// }
 
 }

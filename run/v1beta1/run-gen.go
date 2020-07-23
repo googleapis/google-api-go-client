@@ -208,19 +208,14 @@ type ProjectsLocationsCustomresourcedefinitionsService struct {
 // specifies a column for server side printing.
 type CustomResourceColumnDefinition struct {
 	// Description: description is a human readable description of this
-	// column.
-	// +optional
+	// column. +optional
 	Description string `json:"description,omitempty"`
 
 	// Format: format is an optional OpenAPI type definition for this
-	// column. The 'name'
-	// format is applied to the primary identifier column to assist in
-	// clients
-	// identifying column is the resource name.
-	// See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/
-	// 2.0.md#data-types
-	// for more. +optional
+	// column. The 'name' format is applied to the primary identifier column
+	// to assist in clients identifying column is the resource name. See
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
+	// +optional
 	Format string `json:"format,omitempty"`
 
 	// JsonPath: JSONPath is a simple JSON path, i.e. with array notation.
@@ -230,20 +225,14 @@ type CustomResourceColumnDefinition struct {
 	Name string `json:"name,omitempty"`
 
 	// Priority: priority is an integer defining the relative importance of
-	// this column
-	// compared to others. Lower numbers are considered higher priority.
-	// Columns
-	// that may be omitted in limited space scenarios should be given a
-	// higher
-	// priority. +optional
+	// this column compared to others. Lower numbers are considered higher
+	// priority. Columns that may be omitted in limited space scenarios
+	// should be given a higher priority. +optional
 	Priority int64 `json:"priority,omitempty"`
 
-	// Type: type is an OpenAPI type definition for this
-	// column.
-	// See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/v
-	// ersions/2.0.md#data-types
-	// for more.
+	// Type: type is an OpenAPI type definition for this column. See
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
+	// more.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -270,10 +259,8 @@ func (s *CustomResourceColumnDefinition) MarshalJSON() ([]byte, error) {
 }
 
 // CustomResourceDefinition: CustomResourceDefinition represents a
-// resource that should be exposed on the
-// API server.  Its name MUST be in the
-// format
-// <.spec.name>.<.spec.group>.
+// resource that should be exposed on the API server. Its name MUST be
+// in the format <.spec.name>.<.spec.group>.
 type CustomResourceDefinition struct {
 	// ApiVersion: The API version for this call such as
 	// "k8s.apiextensions.io/v1beta1".
@@ -317,39 +304,31 @@ func (s *CustomResourceDefinition) MarshalJSON() ([]byte, error) {
 }
 
 // CustomResourceDefinitionNames: CustomResourceDefinitionNames
-// indicates the names to serve this
-// CustomResourceDefinition
+// indicates the names to serve this CustomResourceDefinition
 type CustomResourceDefinitionNames struct {
 	// Categories: Categories is a list of grouped resources custom
-	// resources belong to (e.g.
-	// 'all') +optional
+	// resources belong to (e.g. 'all') +optional
 	Categories []string `json:"categories,omitempty"`
 
-	// Kind: Kind is the serialized kind of the resource.  It is normally
-	// CamelCase and
-	// singular.
+	// Kind: Kind is the serialized kind of the resource. It is normally
+	// CamelCase and singular.
 	Kind string `json:"kind,omitempty"`
 
 	// ListKind: ListKind is the serialized kind of the list for this
-	// resource.  Defaults to
-	// <kind>List. +optional
+	// resource. Defaults to List. +optional
 	ListKind string `json:"listKind,omitempty"`
 
-	// Plural: Plural is the plural name of the resource to serve.  It must
-	// match the name
-	// of the CustomResourceDefinition-registration too: plural.group and it
-	// must
-	// be all lowercase.
+	// Plural: Plural is the plural name of the resource to serve. It must
+	// match the name of the CustomResourceDefinition-registration too:
+	// plural.group and it must be all lowercase.
 	Plural string `json:"plural,omitempty"`
 
-	// ShortNames: ShortNames are short names for the resource.  It must be
-	// all lowercase.
-	// +optional
+	// ShortNames: ShortNames are short names for the resource. It must be
+	// all lowercase. +optional
 	ShortNames []string `json:"shortNames,omitempty"`
 
-	// Singular: Singular is the singular name of the resource.  It must be
-	// all lowercase
-	// Defaults to lowercased <kind> +optional
+	// Singular: Singular is the singular name of the resource. It must be
+	// all lowercase Defaults to lowercased +optional
 	Singular string `json:"singular,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
@@ -376,12 +355,11 @@ func (s *CustomResourceDefinitionNames) MarshalJSON() ([]byte, error) {
 }
 
 // CustomResourceDefinitionSpec: CustomResourceDefinitionSpec describes
-// how a user wants their resource to
-// appear
+// how a user wants their resource to appear
 type CustomResourceDefinitionSpec struct {
 	// AdditionalPrinterColumns: AdditionalPrinterColumns are additional
-	// columns shown e.g. in kubectl next
-	// to the name. Defaults to a created-at column. +optional
+	// columns shown e.g. in kubectl next to the name. Defaults to a
+	// created-at column. +optional
 	AdditionalPrinterColumns []*CustomResourceColumnDefinition `json:"additionalPrinterColumns,omitempty"`
 
 	// Group: Group is the group this resource belongs in
@@ -391,51 +369,36 @@ type CustomResourceDefinitionSpec struct {
 	Names *CustomResourceDefinitionNames `json:"names,omitempty"`
 
 	// Scope: Scope indicates whether this resource is cluster or namespace
-	// scoped.
-	// Default is namespaced
+	// scoped. Default is namespaced
 	Scope string `json:"scope,omitempty"`
 
 	// Subresources: Subresources describes the subresources for
-	// CustomResources
-	// +optional
+	// CustomResources +optional
 	Subresources *CustomResourceSubresources `json:"subresources,omitempty"`
 
 	// Validation: Validation describes the validation methods for
-	// CustomResources
-	// +optional
+	// CustomResources +optional
 	Validation *CustomResourceValidation `json:"validation,omitempty"`
 
-	// Version: Version is the version this resource belongs in
-	// Should be always first item in Versions field if provided.
-	// Optional, but at least one of Version or Versions must be
-	// set.
-	// Deprecated: Please use `Versions`.
-	// +optional
+	// Version: Version is the version this resource belongs in Should be
+	// always first item in Versions field if provided. Optional, but at
+	// least one of Version or Versions must be set. Deprecated: Please use
+	// `Versions`. +optional
 	Version string `json:"version,omitempty"`
 
 	// Versions: Versions is the list of all supported versions for this
-	// resource.
-	// If Version field is provided, this field is optional.
+	// resource. If Version field is provided, this field is optional.
 	// Validation: All versions must use the same validation schema for now.
-	// i.e.,
-	// top level Validation field is applied to all of these versions.
-	// Order: The
-	// version name will be used to compute the order. If the version string
-	// is
-	// "kube-like", it will sort above non "kube-like" version strings,
-	// which are
-	// ordered lexicographically. "Kube-like" versions start with a "v",
-	// then are
-	// followed by a number (the major version), then optionally the
-	// string
-	// "alpha" or "beta" and another number (the minor version). These are
-	// sorted
-	// first by GA > beta > alpha (where GA is a version with no suffix such
-	// as
-	// beta or alpha), and then by comparing major version, then minor
-	// version. An
-	// example sorted list of versions: v10, v2, v1, v11beta2, v10beta3,
-	// v3beta1,
+	// i.e., top level Validation field is applied to all of these versions.
+	// Order: The version name will be used to compute the order. If the
+	// version string is "kube-like", it will sort above non "kube-like"
+	// version strings, which are ordered lexicographically. "Kube-like"
+	// versions start with a "v", then are followed by a number (the major
+	// version), then optionally the string "alpha" or "beta" and another
+	// number (the minor version). These are sorted first by GA > beta >
+	// alpha (where GA is a version with no suffix such as beta or alpha),
+	// and then by comparing major version, then minor version. An example
+	// sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1,
 	// v12alpha1, v11alpha2, foo1, foo10. +optional
 	Versions []*CustomResourceDefinitionVersion `json:"versions,omitempty"`
 
@@ -469,13 +432,11 @@ type CustomResourceDefinitionVersion struct {
 	Name string `json:"name,omitempty"`
 
 	// Served: Served is a flag enabling/disabling this version from being
-	// served via REST
-	// APIs
+	// served via REST APIs
 	Served bool `json:"served,omitempty"`
 
 	// Storage: Storage flags the version as storage version. There must be
-	// exactly one
-	// flagged as storage version.
+	// exactly one flagged as storage version.
 	Storage bool `json:"storage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -502,42 +463,30 @@ func (s *CustomResourceDefinitionVersion) MarshalJSON() ([]byte, error) {
 }
 
 // CustomResourceSubresourceScale: CustomResourceSubresourceScale
-// defines how to serve the scale subresource for
-// CustomResources.
+// defines how to serve the scale subresource for CustomResources.
 type CustomResourceSubresourceScale struct {
 	// LabelSelectorPath: LabelSelectorPath defines the JSON path inside of
-	// a CustomResource that
-	// corresponds to Scale.Status.Selector. Only JSON paths without the
-	// array
-	// notation are allowed. Must be a JSON Path under .status. Must be set
-	// to
-	// work with HPA. If there is no value under the given path in
-	// the
-	// CustomResource, the status label selector value in the /scale
-	// subresource
-	// will default to the empty string. +optional
+	// a CustomResource that corresponds to Scale.Status.Selector. Only JSON
+	// paths without the array notation are allowed. Must be a JSON Path
+	// under .status. Must be set to work with HPA. If there is no value
+	// under the given path in the CustomResource, the status label selector
+	// value in the /scale subresource will default to the empty string.
+	// +optional
 	LabelSelectorPath string `json:"labelSelectorPath,omitempty"`
 
 	// SpecReplicasPath: SpecReplicasPath defines the JSON path inside of a
-	// CustomResource that
-	// corresponds to Scale.Spec.Replicas. Only JSON paths without the
-	// array
-	// notation are allowed. Must be a JSON Path under .spec. If there is no
-	// value
-	// under the given path in the CustomResource, the /scale subresource
-	// will
-	// return an error on GET.
+	// CustomResource that corresponds to Scale.Spec.Replicas. Only JSON
+	// paths without the array notation are allowed. Must be a JSON Path
+	// under .spec. If there is no value under the given path in the
+	// CustomResource, the /scale subresource will return an error on GET.
 	SpecReplicasPath string `json:"specReplicasPath,omitempty"`
 
 	// StatusReplicasPath: StatusReplicasPath defines the JSON path inside
-	// of a CustomResource that
-	// corresponds to Scale.Status.Replicas. Only JSON paths without the
-	// array
-	// notation are allowed. Must be a JSON Path under .status. If there is
-	// no
-	// value under the given path in the CustomResource, the status replica
-	// value
-	// in the /scale subresource will default to 0.
+	// of a CustomResource that corresponds to Scale.Status.Replicas. Only
+	// JSON paths without the array notation are allowed. Must be a JSON
+	// Path under .status. If there is no value under the given path in the
+	// CustomResource, the status replica value in the /scale subresource
+	// will default to 0.
 	StatusReplicasPath string `json:"statusReplicasPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LabelSelectorPath")
@@ -565,31 +514,24 @@ func (s *CustomResourceSubresourceScale) MarshalJSON() ([]byte, error) {
 }
 
 // CustomResourceSubresourceStatus: CustomResourceSubresourceStatus
-// defines how to serve the status subresource
-// for CustomResources. Status is represented by the `.status` JSON path
-// inside
-// of a CustomResource. When set,
-// * exposes a /status subresource for the custom resource
-// * PUT requests to the /status subresource take a custom resource
-// object, and
-// ignore changes to anything except the status stanza
-// * PUT/POST/PATCH requests to the custom resource ignore changes to
-// the status
-// stanza
+// defines how to serve the status subresource for CustomResources.
+// Status is represented by the `.status` JSON path inside of a
+// CustomResource. When set, * exposes a /status subresource for the
+// custom resource * PUT requests to the /status subresource take a
+// custom resource object, and ignore changes to anything except the
+// status stanza * PUT/POST/PATCH requests to the custom resource ignore
+// changes to the status stanza
 type CustomResourceSubresourceStatus struct {
 }
 
 // CustomResourceSubresources: CustomResourceSubresources defines the
-// status and scale subresources for
-// CustomResources.
+// status and scale subresources for CustomResources.
 type CustomResourceSubresources struct {
-	// Scale: Scale denotes the scale subresource for
-	// CustomResources
+	// Scale: Scale denotes the scale subresource for CustomResources
 	// +optional
 	Scale *CustomResourceSubresourceScale `json:"scale,omitempty"`
 
-	// Status: Status denotes the status subresource for
-	// CustomResources
+	// Status: Status denotes the status subresource for CustomResources
 	// +optional
 	Status *CustomResourceSubresourceStatus `json:"status,omitempty"`
 
@@ -620,8 +562,7 @@ func (s *CustomResourceSubresources) MarshalJSON() ([]byte, error) {
 // validation methods for CustomResources.
 type CustomResourceValidation struct {
 	// OpenAPIV3Schema: OpenAPIV3Schema is the OpenAPI v3 schema to be
-	// validated against.
-	// +optional
+	// validated against. +optional
 	OpenAPIV3Schema *JSONSchemaProps `json:"openAPIV3Schema,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OpenAPIV3Schema") to
@@ -649,8 +590,7 @@ func (s *CustomResourceValidation) MarshalJSON() ([]byte, error) {
 }
 
 // ExternalDocumentation: ExternalDocumentation allows referencing an
-// external resource for extended
-// documentation.
+// external resource for extended documentation.
 type ExternalDocumentation struct {
 	Description string `json:"description,omitempty"`
 
@@ -679,9 +619,8 @@ func (s *ExternalDocumentation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JSON: JSON represents any valid JSON value.
-// These types are supported: bool, int64, float64, string,
-// []interface{},
+// JSON: JSON represents any valid JSON value. These types are
+// supported: bool, int64, float64, string, []interface{},
 // map[string]interface{} and nil.
 type JSON struct {
 	Raw string `json:"raw,omitempty"`
@@ -710,8 +649,7 @@ func (s *JSON) MarshalJSON() ([]byte, error) {
 }
 
 // JSONSchemaProps: JSONSchemaProps is a JSON-Schema following
-// Specification Draft 4
-// (http://json-schema.org/).
+// Specification Draft 4 (http://json-schema.org/).
 type JSONSchemaProps struct {
 	AdditionalItems *JSONSchemaPropsOrBool `json:"additionalItems,omitempty"`
 
@@ -828,10 +766,8 @@ func (s *JSONSchemaProps) UnmarshalJSON(data []byte) error {
 }
 
 // JSONSchemaPropsOrArray: JSONSchemaPropsOrArray represents a value
-// that can either be a
-// JSONSchemaProps or an array of JSONSchemaProps. Mainly here for
-// serialization
-// purposes.
+// that can either be a JSONSchemaProps or an array of JSONSchemaProps.
+// Mainly here for serialization purposes.
 type JSONSchemaPropsOrArray struct {
 	JsonSchemas []*JSONSchemaProps `json:"jsonSchemas,omitempty"`
 
@@ -861,8 +797,8 @@ func (s *JSONSchemaPropsOrArray) MarshalJSON() ([]byte, error) {
 }
 
 // JSONSchemaPropsOrBool: JSONSchemaPropsOrBool represents
-// JSONSchemaProps or a boolean value.
-// Defaults to true for the boolean property.
+// JSONSchemaProps or a boolean value. Defaults to true for the boolean
+// property.
 type JSONSchemaPropsOrBool struct {
 	Allows bool `json:"allows,omitempty"`
 
@@ -968,47 +904,30 @@ func (s *ListCustomResourceDefinitionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListMeta: ListMeta describes metadata that synthetic resources must
-// have, including
-// lists and various status objects. A resource may have only one
-// of
-// {ObjectMeta, ListMeta}.
+// have, including lists and various status objects. A resource may have
+// only one of {ObjectMeta, ListMeta}.
 type ListMeta struct {
 	// Continue: continue may be set if the user set a limit on the number
-	// of items
-	// returned, and indicates that the server has more data available. The
-	// value
-	// is opaque and may be used to issue another request to the endpoint
-	// that
-	// served this list to retrieve the next set of available objects.
-	// Continuing
-	// a list may not be possible if the server configuration has changed or
-	// more
-	// than a few minutes have passed. The resourceVersion field returned
-	// when
-	// using this continue value will be identical to the value in the
-	// first
-	// response.
+	// of items returned, and indicates that the server has more data
+	// available. The value is opaque and may be used to issue another
+	// request to the endpoint that served this list to retrieve the next
+	// set of available objects. Continuing a list may not be possible if
+	// the server configuration has changed or more than a few minutes have
+	// passed. The resourceVersion field returned when using this continue
+	// value will be identical to the value in the first response.
 	Continue string `json:"continue,omitempty"`
 
 	// ResourceVersion: String that identifies the server's internal version
-	// of this object that
-	// can be used by clients to determine when objects have changed. Value
-	// must
-	// be treated as opaque by clients and passed unmodified back to the
-	// server.
-	// Populated by the system.
-	// Read-only.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#concurrency-control-and-consistency
+	// of this object that can be used by clients to determine when objects
+	// have changed. Value must be treated as opaque by clients and passed
+	// unmodified back to the server. Populated by the system. Read-only.
+	// More info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	// +optional
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
-	// SelfLink: SelfLink is a URL representing this object.
-	// Populated by the system.
-	// Read-only.
-	// +optional
+	// SelfLink: SelfLink is a URL representing this object. Populated by
+	// the system. Read-only. +optional
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Continue") to
@@ -1035,261 +954,140 @@ func (s *ListMeta) MarshalJSON() ([]byte, error) {
 }
 
 // ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is
-// metadata that all
-// persisted resources must have, which includes all objects users must
-// create.
+// metadata that all persisted resources must have, which includes all
+// objects users must create.
 type ObjectMeta struct {
-	// Annotations: (Optional)
-	//
-	// Annotations is an unstructured key value map stored with a resource
-	// that
-	// may be set by external tools to store and retrieve arbitrary
-	// metadata. They
-	// are not queryable and should be preserved when modifying objects.
-	// More
-	// info: http://kubernetes.io/docs/user-guide/annotations
+	// Annotations: (Optional) Annotations is an unstructured key value map
+	// stored with a resource that may be set by external tools to store and
+	// retrieve arbitrary metadata. They are not queryable and should be
+	// preserved when modifying objects. More info:
+	// http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// ClusterName: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// The name of the cluster which the object belongs to.
-	// This is used to distinguish resources with same name and namespace
-	// in
-	// different clusters. This field is not set anywhere right now and
-	// apiserver
-	// is going to ignore it if set in create or update request.
+	// ClusterName: (Optional) Cloud Run fully managed: not supported Cloud
+	// Run for Anthos: supported The name of the cluster which the object
+	// belongs to. This is used to distinguish resources with same name and
+	// namespace in different clusters. This field is not set anywhere right
+	// now and apiserver is going to ignore it if set in create or update
+	// request.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// CreationTimestamp: (Optional)
-	//
-	// CreationTimestamp is a timestamp representing the server time when
-	// this
-	// object was created. It is not guaranteed to be set in happens-before
-	// order
-	// across separate operations. Clients may not set this value. It
-	// is
-	// represented in RFC3339 form and is in UTC.
-	//
-	// Populated by the system.
-	// Read-only.
-	// Null for lists.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#metadata
+	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp
+	// representing the server time when this object was created. It is not
+	// guaranteed to be set in happens-before order across separate
+	// operations. Clients may not set this value. It is represented in
+	// RFC3339 form and is in UTC. Populated by the system. Read-only. Null
+	// for lists. More info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DeletionGracePeriodSeconds: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// Number of seconds allowed for this object to gracefully terminate
-	// before
-	// it will be removed from the system. Only set when deletionTimestamp
-	// is also
-	// set. May only be shortened. Read-only.
+	// DeletionGracePeriodSeconds: (Optional) Cloud Run fully managed: not
+	// supported Cloud Run for Anthos: supported Number of seconds allowed
+	// for this object to gracefully terminate before it will be removed
+	// from the system. Only set when deletionTimestamp is also set. May
+	// only be shortened. Read-only.
 	DeletionGracePeriodSeconds int64 `json:"deletionGracePeriodSeconds,omitempty"`
 
-	// DeletionTimestamp: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// DeletionTimestamp is RFC 3339 date and time at which this resource
-	// will be
-	// deleted. This field is set by the server when a graceful deletion
-	// is
-	// requested by the user, and is not directly settable by a client.
-	// The
-	// resource is expected to be deleted (no longer visible from resource
-	// lists,
-	// and not reachable by name) after the time in this field, once
-	// the
-	// finalizers list is empty. As long as the finalizers list contains
-	// items,
-	// deletion is blocked. Once the deletionTimestamp is set, this value
-	// may not
-	// be unset or be set further into the future, although it may be
-	// shortened or
-	// the resource may be deleted prior to this time. For example, a user
-	// may
-	// request that a pod is deleted in 30 seconds. The Kubelet will react
-	// by
-	// sending a graceful termination signal to the containers in the pod.
-	// After
-	// that 30 seconds, the Kubelet will send a hard termination signal
-	// (SIGKILL)
-	// to the container and after cleanup, remove the pod from the API. In
-	// the
-	// presence of network partitions, this object may still exist after
-	// this
-	// timestamp, until an administrator or automated process can determine
-	// the
-	// resource is fully terminated.
-	// If not set, graceful deletion of the object has not been
-	// requested.
-	//
-	// Populated by the system when a graceful deletion is
-	// requested.
-	// Read-only.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#metadata
+	// DeletionTimestamp: (Optional) Cloud Run fully managed: not supported
+	// Cloud Run for Anthos: supported DeletionTimestamp is RFC 3339 date
+	// and time at which this resource will be deleted. This field is set by
+	// the server when a graceful deletion is requested by the user, and is
+	// not directly settable by a client. The resource is expected to be
+	// deleted (no longer visible from resource lists, and not reachable by
+	// name) after the time in this field, once the finalizers list is
+	// empty. As long as the finalizers list contains items, deletion is
+	// blocked. Once the deletionTimestamp is set, this value may not be
+	// unset or be set further into the future, although it may be shortened
+	// or the resource may be deleted prior to this time. For example, a
+	// user may request that a pod is deleted in 30 seconds. The Kubelet
+	// will react by sending a graceful termination signal to the containers
+	// in the pod. After that 30 seconds, the Kubelet will send a hard
+	// termination signal (SIGKILL) to the container and after cleanup,
+	// remove the pod from the API. In the presence of network partitions,
+	// this object may still exist after this timestamp, until an
+	// administrator or automated process can determine the resource is
+	// fully terminated. If not set, graceful deletion of the object has not
+	// been requested. Populated by the system when a graceful deletion is
+	// requested. Read-only. More info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 
-	// Finalizers: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// Must be empty before the object is deleted from the registry. Each
-	// entry
-	// is an identifier for the responsible component that will remove the
-	// entry
-	// from the list. If the deletionTimestamp of the object is non-nil,
-	// entries
-	// in this list can only be removed.
-	// +patchStrategy=merge
+	// Finalizers: (Optional) Cloud Run fully managed: not supported Cloud
+	// Run for Anthos: supported Must be empty before the object is deleted
+	// from the registry. Each entry is an identifier for the responsible
+	// component that will remove the entry from the list. If the
+	// deletionTimestamp of the object is non-nil, entries in this list can
+	// only be removed. +patchStrategy=merge
 	Finalizers []string `json:"finalizers,omitempty"`
 
-	// GenerateName: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// GenerateName is an optional prefix, used by the server, to generate
-	// a
-	// unique name ONLY IF the Name field has not been provided. If this
-	// field is
-	// used, the name returned to the client will be different than the
-	// name
-	// passed. This value will also be combined with a unique suffix. The
-	// provided
-	// value has the same validation rules as the Name field, and may be
-	// truncated
-	// by the length of the suffix required to make the value unique on
-	// the
-	// server.
-	//
+	// GenerateName: (Optional) Cloud Run fully managed: not supported Cloud
+	// Run for Anthos: supported GenerateName is an optional prefix, used by
+	// the server, to generate a unique name ONLY IF the Name field has not
+	// been provided. If this field is used, the name returned to the client
+	// will be different than the name passed. This value will also be
+	// combined with a unique suffix. The provided value has the same
+	// validation rules as the Name field, and may be truncated by the
+	// length of the suffix required to make the value unique on the server.
 	// If this field is specified and the generated name exists, the server
-	// will
-	// NOT return a 409 - instead, it will either return 201 Created or 500
-	// with
-	// Reason ServerTimeout indicating a unique name could not be found in
-	// the
-	// time allotted, and the client should retry (optionally after the
-	// time
-	// indicated in the Retry-After header).
-	//
-	// Applied only if Name is not specified.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#idempotency
-	//  string generateName = 2;
+	// will NOT return a 409 - instead, it will either return 201 Created or
+	// 500 with Reason ServerTimeout indicating a unique name could not be
+	// found in the time allotted, and the client should retry (optionally
+	// after the time indicated in the Retry-After header). Applied only if
+	// Name is not specified. More info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency string generateName =
+	// 2;
 	GenerateName string `json:"generateName,omitempty"`
 
-	// Generation: (Optional)
-	//
-	// A sequence number representing a specific generation of the desired
-	// state.
-	// Populated by the system. Read-only.
+	// Generation: (Optional) A sequence number representing a specific
+	// generation of the desired state. Populated by the system. Read-only.
 	Generation int64 `json:"generation,omitempty"`
 
-	// Labels: (Optional)
-	//
-	// Map of string keys and values that can be used to organize and
-	// categorize
-	// (scope and select) objects. May match selectors of replication
-	// controllers
-	// and routes.
-	// More info: http://kubernetes.io/docs/user-guide/labels
+	// Labels: (Optional) Map of string keys and values that can be used to
+	// organize and categorize (scope and select) objects. May match
+	// selectors of replication controllers and routes. More info:
+	// http://kubernetes.io/docs/user-guide/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Name must be unique within a namespace, within a Cloud Run
-	// region.
-	// Is required when creating
-	// resources, although some resources may allow a client to request
-	// the
-	// generation of an appropriate name automatically. Name is primarily
-	// intended
-	// for creation idempotence and configuration definition. Cannot be
-	// updated.
-	// More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#names
-	// +optional
+	// region. Is required when creating resources, although some resources
+	// may allow a client to request the generation of an appropriate name
+	// automatically. Name is primarily intended for creation idempotence
+	// and configuration definition. Cannot be updated. More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#names +optional
 	Name string `json:"name,omitempty"`
 
 	// Namespace: Namespace defines the space within each name must be
-	// unique, within a
-	// Cloud Run region. In Cloud Run the namespace must be equal to either
-	// the
-	// project ID or project number.
+	// unique, within a Cloud Run region. In Cloud Run the namespace must be
+	// equal to either the project ID or project number.
 	Namespace string `json:"namespace,omitempty"`
 
-	// OwnerReferences: (Optional)
-	//
-	// Cloud Run fully managed: not supported
-	//
-	// Cloud Run for Anthos: supported
-	//
-	// List of objects that own this object. If ALL objects in the list
-	// have
-	// been deleted, this object will be garbage collected.
+	// OwnerReferences: (Optional) Cloud Run fully managed: not supported
+	// Cloud Run for Anthos: supported List of objects that own this object.
+	// If ALL objects in the list have been deleted, this object will be
+	// garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
-	// ResourceVersion: (Optional)
-	//
-	// An opaque value that represents the internal version of this object
-	// that
-	// can be used by clients to determine when objects have changed. May be
-	// used
-	// for optimistic concurrency, change detection, and the watch operation
-	// on a
-	// resource or set of resources. Clients must treat these values as
-	// opaque and
-	// passed unmodified back to the server. They may only be valid for
-	// a
-	// particular resource or set of resources.
-	//
-	// Populated by the system.
-	// Read-only.
-	// Value must be treated as opaque by clients and .
-	// More
+	// ResourceVersion: (Optional) An opaque value that represents the
+	// internal version of this object that can be used by clients to
+	// determine when objects have changed. May be used for optimistic
+	// concurrency, change detection, and the watch operation on a resource
+	// or set of resources. Clients must treat these values as opaque and
+	// passed unmodified back to the server. They may only be valid for a
+	// particular resource or set of resources. Populated by the system.
+	// Read-only. Value must be treated as opaque by clients and . More
 	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#concurrency-control-and-consistency
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
-	// SelfLink: (Optional)
-	//
-	// SelfLink is a URL representing this object.
-	// Populated by the system.
-	// Read-only.
-	//  string selfLink = 4;
+	// SelfLink: (Optional) SelfLink is a URL representing this object.
+	// Populated by the system. Read-only. string selfLink = 4;
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Uid: (Optional)
-	//
-	// UID is the unique in time and space value for this object. It is
-	// typically
-	// generated by the server on successful creation of a resource and is
-	// not
-	// allowed to change on PUT operations.
-	//
-	// Populated by the system.
-	// Read-only.
-	// More info: http://kubernetes.io/docs/user-guide/identifiers#uids
+	// Uid: (Optional) UID is the unique in time and space value for this
+	// object. It is typically generated by the server on successful
+	// creation of a resource and is not allowed to change on PUT
+	// operations. Populated by the system. Read-only. More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
@@ -1316,44 +1114,34 @@ func (s *ObjectMeta) MarshalJSON() ([]byte, error) {
 }
 
 // OwnerReference: OwnerReference contains enough information to let you
-// identify an owning
-// object. Currently, an owning object must be in the same namespace, so
-// there
-// is no namespace field.
+// identify an owning object. Currently, an owning object must be in the
+// same namespace, so there is no namespace field.
 type OwnerReference struct {
 	// ApiVersion: API version of the referent.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// BlockOwnerDeletion: If true, AND if the owner has the
-	// "foregroundDeletion" finalizer, then
-	// the owner cannot be deleted from the key-value store until
-	// this
-	// reference is removed.
-	// Defaults to false.
-	// To set this field, a user needs "delete" permission of the
-	// owner,
-	// otherwise 422 (Unprocessable Entity) will be returned.
+	// "foregroundDeletion" finalizer, then the owner cannot be deleted from
+	// the key-value store until this reference is removed. Defaults to
+	// false. To set this field, a user needs "delete" permission of the
+	// owner, otherwise 422 (Unprocessable Entity) will be returned.
 	// +optional
 	BlockOwnerDeletion bool `json:"blockOwnerDeletion,omitempty"`
 
 	// Controller: If true, this reference points to the managing
-	// controller.
-	// +optional
+	// controller. +optional
 	Controller bool `json:"controller,omitempty"`
 
-	// Kind: Kind of the referent.
-	// More
-	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.
-	// md#types-kinds
+	// Kind: Kind of the referent. More info:
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the referent.
-	// More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	// Name: Name of the referent. More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#names
 	Name string `json:"name,omitempty"`
 
-	// Uid: UID of the referent.
-	// More info: http://kubernetes.io/docs/user-guide/identifiers#uids
+	// Uid: UID of the referent. More info:
+	// http://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
@@ -1403,9 +1191,9 @@ func (c *CustomresourcedefinitionsListCall) Continue(continue_ string) *Customre
 }
 
 // FieldSelector sets the optional parameter "fieldSelector": Allows to
-// filter resources based on a specific value for a field name.
-// Send this in a query string format. i.e. 'metadata.name%3Dlorem'.
-// Not currently used by Cloud Run.
+// filter resources based on a specific value for a field name. Send
+// this in a query string format. i.e. 'metadata.name%3Dlorem'. Not
+// currently used by Cloud Run.
 func (c *CustomresourcedefinitionsListCall) FieldSelector(fieldSelector string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fieldSelector", fieldSelector)
 	return c
@@ -1419,8 +1207,8 @@ func (c *CustomresourcedefinitionsListCall) IncludeUninitialized(includeUninitia
 }
 
 // LabelSelector sets the optional parameter "labelSelector": Allows to
-// filter resources based on a label. Supported operations are
-// =, !=, exists, in, and notIn.
+// filter resources based on a label. Supported operations are =, !=,
+// exists, in, and notIn.
 func (c *CustomresourcedefinitionsListCall) LabelSelector(labelSelector string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("labelSelector", labelSelector)
 	return c
@@ -1433,8 +1221,7 @@ func (c *CustomresourcedefinitionsListCall) Limit(limit int64) *Customresourcede
 }
 
 // Parent sets the optional parameter "parent": The project ID or
-// project number from which the storages should
-// be listed.
+// project number from which the storages should be listed.
 func (c *CustomresourcedefinitionsListCall) Parent(parent string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -1442,16 +1229,15 @@ func (c *CustomresourcedefinitionsListCall) Parent(parent string) *Customresourc
 
 // ResourceVersion sets the optional parameter "resourceVersion": The
 // baseline resource version from which the list or watch operation
-// should
-// start. Not currently used by Cloud Run.
+// should start. Not currently used by Cloud Run.
 func (c *CustomresourcedefinitionsListCall) ResourceVersion(resourceVersion string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("resourceVersion", resourceVersion)
 	return c
 }
 
 // Watch sets the optional parameter "watch": Flag that indicates that
-// the client expects to watch this resource as well.
-// Not currently used by Cloud Run.
+// the client expects to watch this resource as well. Not currently used
+// by Cloud Run.
 func (c *CustomresourcedefinitionsListCall) Watch(watch bool) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("watch", fmt.Sprint(watch))
 	return c
@@ -1494,7 +1280,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1566,7 +1352,7 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "fieldSelector": {
-	//       "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+	//       "description": "Allows to filter resources based on a specific value for a field name. Send this in a query string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1576,7 +1362,7 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "boolean"
 	//     },
 	//     "labelSelector": {
-	//       "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+	//       "description": "Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1586,17 +1372,17 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the storages should\nbe listed.",
+	//       "description": "The project ID or project number from which the storages should be listed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "resourceVersion": {
-	//       "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+	//       "description": "The baseline resource version from which the list or watch operation should start. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "watch": {
-	//       "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+	//       "description": "Flag that indicates that the client expects to watch this resource as well. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -1667,7 +1453,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1738,7 +1524,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed,\nreplace {namespace_id} with the project ID.",
+	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed, replace {namespace_id} with the project ID.",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/customresourcedefinitions/[^/]+$",
 	//       "required": true,
@@ -1811,7 +1597,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1882,7 +1668,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed,\nreplace {namespace_id} with the project ID.",
+	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed, replace {namespace_id} with the project ID.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/customresourcedefinitions/[^/]+$",
 	//       "required": true,
@@ -1926,9 +1712,9 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Continue(continue_ 
 }
 
 // FieldSelector sets the optional parameter "fieldSelector": Allows to
-// filter resources based on a specific value for a field name.
-// Send this in a query string format. i.e. 'metadata.name%3Dlorem'.
-// Not currently used by Cloud Run.
+// filter resources based on a specific value for a field name. Send
+// this in a query string format. i.e. 'metadata.name%3Dlorem'. Not
+// currently used by Cloud Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) FieldSelector(fieldSelector string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fieldSelector", fieldSelector)
 	return c
@@ -1942,8 +1728,8 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) IncludeUninitialize
 }
 
 // LabelSelector sets the optional parameter "labelSelector": Allows to
-// filter resources based on a label. Supported operations are
-// =, !=, exists, in, and notIn.
+// filter resources based on a label. Supported operations are =, !=,
+// exists, in, and notIn.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) LabelSelector(labelSelector string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("labelSelector", labelSelector)
 	return c
@@ -1957,16 +1743,15 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Limit(limit int64) 
 
 // ResourceVersion sets the optional parameter "resourceVersion": The
 // baseline resource version from which the list or watch operation
-// should
-// start. Not currently used by Cloud Run.
+// should start. Not currently used by Cloud Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) ResourceVersion(resourceVersion string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("resourceVersion", resourceVersion)
 	return c
 }
 
 // Watch sets the optional parameter "watch": Flag that indicates that
-// the client expects to watch this resource as well.
-// Not currently used by Cloud Run.
+// the client expects to watch this resource as well. Not currently used
+// by Cloud Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Watch(watch bool) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("watch", fmt.Sprint(watch))
 	return c
@@ -2009,7 +1794,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2086,7 +1871,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "fieldSelector": {
-	//       "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+	//       "description": "Allows to filter resources based on a specific value for a field name. Send this in a query string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2096,7 +1881,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 	//       "type": "boolean"
 	//     },
 	//     "labelSelector": {
-	//       "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+	//       "description": "Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2106,19 +1891,19 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The project ID or project number from which the storages should\nbe listed.",
+	//       "description": "The project ID or project number from which the storages should be listed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "resourceVersion": {
-	//       "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+	//       "description": "The baseline resource version from which the list or watch operation should start. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "watch": {
-	//       "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+	//       "description": "Flag that indicates that the client expects to watch this resource as well. Not currently used by Cloud Run.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

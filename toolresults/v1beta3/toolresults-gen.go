@@ -74,7 +74,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "toolresults:v1beta3"
 const apiName = "toolresults"
 const apiVersion = "v1beta3"
-const basePath = "https://www.googleapis.com/"
+const basePath = "https://toolresults.googleapis.com/"
+const mtlsBasePath = "https://toolresults.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -90,6 +91,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -114,17 +116,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Clusters = NewClustersService(s)
-	s.Environments = NewEnvironmentsService(s)
-	s.Executions = NewExecutionsService(s)
-	s.Histories = NewHistoriesService(s)
-	s.PerfMetricsSummary = NewPerfMetricsSummaryService(s)
-	s.PerfSampleSeries = NewPerfSampleSeriesService(s)
 	s.Projects = NewProjectsService(s)
-	s.Samples = NewSamplesService(s)
-	s.Steps = NewStepsService(s)
-	s.TestCases = NewTestCasesService(s)
-	s.Thumbnails = NewThumbnailsService(s)
 	return s, nil
 }
 
@@ -133,27 +125,7 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Clusters *ClustersService
-
-	Environments *EnvironmentsService
-
-	Executions *ExecutionsService
-
-	Histories *HistoriesService
-
-	PerfMetricsSummary *PerfMetricsSummaryService
-
-	PerfSampleSeries *PerfSampleSeriesService
-
 	Projects *ProjectsService
-
-	Samples *SamplesService
-
-	Steps *StepsService
-
-	TestCases *TestCasesService
-
-	Thumbnails *ThumbnailsService
 }
 
 func (s *Service) userAgent() string {
@@ -163,102 +135,132 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
-func NewClustersService(s *Service) *ClustersService {
-	rs := &ClustersService{s: s}
-	return rs
-}
-
-type ClustersService struct {
-	s *Service
-}
-
-func NewEnvironmentsService(s *Service) *EnvironmentsService {
-	rs := &EnvironmentsService{s: s}
-	return rs
-}
-
-type EnvironmentsService struct {
-	s *Service
-}
-
-func NewExecutionsService(s *Service) *ExecutionsService {
-	rs := &ExecutionsService{s: s}
-	return rs
-}
-
-type ExecutionsService struct {
-	s *Service
-}
-
-func NewHistoriesService(s *Service) *HistoriesService {
-	rs := &HistoriesService{s: s}
-	return rs
-}
-
-type HistoriesService struct {
-	s *Service
-}
-
-func NewPerfMetricsSummaryService(s *Service) *PerfMetricsSummaryService {
-	rs := &PerfMetricsSummaryService{s: s}
-	return rs
-}
-
-type PerfMetricsSummaryService struct {
-	s *Service
-}
-
-func NewPerfSampleSeriesService(s *Service) *PerfSampleSeriesService {
-	rs := &PerfSampleSeriesService{s: s}
-	return rs
-}
-
-type PerfSampleSeriesService struct {
-	s *Service
-}
-
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Histories = NewProjectsHistoriesService(s)
 	return rs
 }
 
 type ProjectsService struct {
 	s *Service
+
+	Histories *ProjectsHistoriesService
 }
 
-func NewSamplesService(s *Service) *SamplesService {
-	rs := &SamplesService{s: s}
+func NewProjectsHistoriesService(s *Service) *ProjectsHistoriesService {
+	rs := &ProjectsHistoriesService{s: s}
+	rs.Executions = NewProjectsHistoriesExecutionsService(s)
 	return rs
 }
 
-type SamplesService struct {
+type ProjectsHistoriesService struct {
+	s *Service
+
+	Executions *ProjectsHistoriesExecutionsService
+}
+
+func NewProjectsHistoriesExecutionsService(s *Service) *ProjectsHistoriesExecutionsService {
+	rs := &ProjectsHistoriesExecutionsService{s: s}
+	rs.Clusters = NewProjectsHistoriesExecutionsClustersService(s)
+	rs.Environments = NewProjectsHistoriesExecutionsEnvironmentsService(s)
+	rs.Steps = NewProjectsHistoriesExecutionsStepsService(s)
+	return rs
+}
+
+type ProjectsHistoriesExecutionsService struct {
+	s *Service
+
+	Clusters *ProjectsHistoriesExecutionsClustersService
+
+	Environments *ProjectsHistoriesExecutionsEnvironmentsService
+
+	Steps *ProjectsHistoriesExecutionsStepsService
+}
+
+func NewProjectsHistoriesExecutionsClustersService(s *Service) *ProjectsHistoriesExecutionsClustersService {
+	rs := &ProjectsHistoriesExecutionsClustersService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsClustersService struct {
 	s *Service
 }
 
-func NewStepsService(s *Service) *StepsService {
-	rs := &StepsService{s: s}
+func NewProjectsHistoriesExecutionsEnvironmentsService(s *Service) *ProjectsHistoriesExecutionsEnvironmentsService {
+	rs := &ProjectsHistoriesExecutionsEnvironmentsService{s: s}
 	return rs
 }
 
-type StepsService struct {
+type ProjectsHistoriesExecutionsEnvironmentsService struct {
 	s *Service
 }
 
-func NewTestCasesService(s *Service) *TestCasesService {
-	rs := &TestCasesService{s: s}
+func NewProjectsHistoriesExecutionsStepsService(s *Service) *ProjectsHistoriesExecutionsStepsService {
+	rs := &ProjectsHistoriesExecutionsStepsService{s: s}
+	rs.PerfMetricsSummary = NewProjectsHistoriesExecutionsStepsPerfMetricsSummaryService(s)
+	rs.PerfSampleSeries = NewProjectsHistoriesExecutionsStepsPerfSampleSeriesService(s)
+	rs.TestCases = NewProjectsHistoriesExecutionsStepsTestCasesService(s)
+	rs.Thumbnails = NewProjectsHistoriesExecutionsStepsThumbnailsService(s)
 	return rs
 }
 
-type TestCasesService struct {
+type ProjectsHistoriesExecutionsStepsService struct {
+	s *Service
+
+	PerfMetricsSummary *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService
+
+	PerfSampleSeries *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService
+
+	TestCases *ProjectsHistoriesExecutionsStepsTestCasesService
+
+	Thumbnails *ProjectsHistoriesExecutionsStepsThumbnailsService
+}
+
+func NewProjectsHistoriesExecutionsStepsPerfMetricsSummaryService(s *Service) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService {
+	rs := &ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService struct {
 	s *Service
 }
 
-func NewThumbnailsService(s *Service) *ThumbnailsService {
-	rs := &ThumbnailsService{s: s}
+func NewProjectsHistoriesExecutionsStepsPerfSampleSeriesService(s *Service) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService {
+	rs := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesService{s: s}
+	rs.Samples = NewProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService(s)
 	return rs
 }
 
-type ThumbnailsService struct {
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesService struct {
+	s *Service
+
+	Samples *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService
+}
+
+func NewProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService(s *Service) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService {
+	rs := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService struct {
+	s *Service
+}
+
+func NewProjectsHistoriesExecutionsStepsTestCasesService(s *Service) *ProjectsHistoriesExecutionsStepsTestCasesService {
+	rs := &ProjectsHistoriesExecutionsStepsTestCasesService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsStepsTestCasesService struct {
+	s *Service
+}
+
+func NewProjectsHistoriesExecutionsStepsThumbnailsService(s *Service) *ProjectsHistoriesExecutionsStepsThumbnailsService {
+	rs := &ProjectsHistoriesExecutionsStepsThumbnailsService{s: s}
+	return rs
+}
+
+type ProjectsHistoriesExecutionsStepsThumbnailsService struct {
 	s *Service
 }
 
@@ -693,36 +695,36 @@ type AvailableDeepLinks struct {
 // series represented by a line chart
 type BasicPerfSampleSeries struct {
 	// Possible values:
-	//   "PERF_METRIC_TYPE_UNSPECIFIED"
-	//   "MEMORY"
-	//   "CPU"
-	//   "NETWORK"
-	//   "GRAPHICS"
+	//   "perfMetricTypeUnspecified"
+	//   "memory"
+	//   "cpu"
+	//   "network"
+	//   "graphics"
 	PerfMetricType string `json:"perfMetricType,omitempty"`
 
 	// Possible values:
-	//   "PERF_UNIT_UNSPECIFIED"
-	//   "KIBIBYTE"
-	//   "PERCENT"
-	//   "BYTES_PER_SECOND"
-	//   "FRAMES_PER_SECOND"
-	//   "BYTE"
+	//   "perfUnitUnspecified"
+	//   "kibibyte"
+	//   "percent"
+	//   "bytesPerSecond"
+	//   "framesPerSecond"
+	//   "byte"
 	PerfUnit string `json:"perfUnit,omitempty"`
 
 	// Possible values:
-	//   "SAMPLE_SERIES_TYPE_UNSPECIFIED"
-	//   "MEMORY_RSS_PRIVATE" - Memory sample series
-	//   "MEMORY_RSS_SHARED"
-	//   "MEMORY_RSS_TOTAL"
-	//   "MEMORY_TOTAL"
-	//   "CPU_USER" - CPU sample series
-	//   "CPU_KERNEL"
-	//   "CPU_TOTAL"
-	//   "NT_BYTES_TRANSFERRED" - Network sample series
-	//   "NT_BYTES_RECEIVED"
-	//   "NETWORK_SENT"
-	//   "NETWORK_RECEIVED"
-	//   "GRAPHICS_FRAME_RATE" - Graphics sample series
+	//   "sampleSeriesTypeUnspecified"
+	//   "memoryRssPrivate" - Memory sample series
+	//   "memoryRssShared"
+	//   "memoryRssTotal"
+	//   "memoryTotal"
+	//   "cpuUser" - CPU sample series
+	//   "cpuKernel"
+	//   "cpuTotal"
+	//   "ntBytesTransferred" - Network sample series
+	//   "ntBytesReceived"
+	//   "networkSent"
+	//   "networkReceived"
+	//   "graphicsFrameRate" - Graphics sample series
 	SampleSeriesLabel string `json:"sampleSeriesLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PerfMetricType") to
@@ -1254,16 +1256,16 @@ type Execution struct {
 	// - In create/update request: optional
 	//
 	// Possible values:
-	//   "UNKNOWN_STATE" - Should never be in this state. Exists for proto
+	//   "unknownState" - Should never be in this state. Exists for proto
 	// deserialization backward
 	// compatibility.
-	//   "PENDING" - The Execution/Step is created, ready to run, but not
+	//   "pending" - The Execution/Step is created, ready to run, but not
 	// running yet.
 	// If an Execution/Step is created without initial state, it is
 	// assumed
 	// that the Execution/Step is in PENDING state.
-	//   "IN_PROGRESS" - The Execution/Step is in progress.
-	//   "COMPLETE" - The finalized, immutable state. Steps/Executions in
+	//   "inProgress" - The Execution/Step is in progress.
+	//   "complete" - The finalized, immutable state. Steps/Executions in
 	// this state cannot be
 	// modified.
 	State string `json:"state,omitempty"`
@@ -1313,6 +1315,13 @@ type FailureDetail struct {
 	// Crashed: If the failure was severe because the system (app) under
 	// test crashed.
 	Crashed bool `json:"crashed,omitempty"`
+
+	// FailedRoboscript: If the Roboscript failed to complete successfully,
+	// e.g., because a
+	// Roboscript action or assertion failed or a Roboscript action could
+	// not be
+	// matched during the entire crawl.
+	FailedRoboscript bool `json:"failedRoboscript,omitempty"`
 
 	// NotInstalled: If an app is not installed and thus no test can be run
 	// with the app.
@@ -1572,9 +1581,9 @@ type History struct {
 	// unknown.
 	//
 	// Possible values:
-	//   "UNKNOWN_PLATFORM"
-	//   "ANDROID"
-	//   "IOS"
+	//   "unknownPlatform"
+	//   "android"
+	//   "ios"
 	TestPlatform string `json:"testPlatform,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1744,22 +1753,22 @@ type IndividualOutcome struct {
 	MultistepNumber int64 `json:"multistepNumber,omitempty"`
 
 	// Possible values:
-	//   "UNSET" - Do not use. For proto versioning only.
-	//   "SUCCESS" - The test matrix run was successful, for instance:
+	//   "unset" - Do not use. For proto versioning only.
+	//   "success" - The test matrix run was successful, for instance:
 	// - All the test cases passed.
 	// - Robo did not detect a crash of the application under test.
-	//   "FAILURE" - A run failed, for instance:
+	//   "failure" - A run failed, for instance:
 	// - One or more test case failed.
 	// - A test timed out.
 	// - The application under test crashed.
-	//   "INCONCLUSIVE" - Something unexpected happened. The run should
+	//   "inconclusive" - Something unexpected happened. The run should
 	// still be considered
 	// unsuccessful but this is likely a transient problem and re-running
 	// the
 	// test might be successful.
-	//   "SKIPPED" - All tests were skipped, for instance:
+	//   "skipped" - All tests were skipped, for instance:
 	// - All device configurations were incompatible.
-	//   "FLAKY" - A group of steps that were run with the same
+	//   "flaky" - A group of steps that were run with the same
 	// configuration had both
 	// failure and success outcomes.
 	OutcomeSummary string `json:"outcomeSummary,omitempty"`
@@ -2441,16 +2450,16 @@ type MergedResult struct {
 	// State: State of the resource
 	//
 	// Possible values:
-	//   "UNKNOWN_STATE" - Should never be in this state. Exists for proto
+	//   "unknownState" - Should never be in this state. Exists for proto
 	// deserialization backward
 	// compatibility.
-	//   "PENDING" - The Execution/Step is created, ready to run, but not
+	//   "pending" - The Execution/Step is created, ready to run, but not
 	// running yet.
 	// If an Execution/Step is created without initial state, it is
 	// assumed
 	// that the Execution/Step is in PENDING state.
-	//   "IN_PROGRESS" - The Execution/Step is in progress.
-	//   "COMPLETE" - The finalized, immutable state. Steps/Executions in
+	//   "inProgress" - The Execution/Step is in progress.
+	//   "complete" - The finalized, immutable state. Steps/Executions in
 	// this state cannot be
 	// modified.
 	State string `json:"state,omitempty"`
@@ -2782,22 +2791,22 @@ type Outcome struct {
 	// Required
 	//
 	// Possible values:
-	//   "UNSET" - Do not use. For proto versioning only.
-	//   "SUCCESS" - The test matrix run was successful, for instance:
+	//   "unset" - Do not use. For proto versioning only.
+	//   "success" - The test matrix run was successful, for instance:
 	// - All the test cases passed.
 	// - Robo did not detect a crash of the application under test.
-	//   "FAILURE" - A run failed, for instance:
+	//   "failure" - A run failed, for instance:
 	// - One or more test case failed.
 	// - A test timed out.
 	// - The application under test crashed.
-	//   "INCONCLUSIVE" - Something unexpected happened. The run should
+	//   "inconclusive" - Something unexpected happened. The run should
 	// still be considered
 	// unsuccessful but this is likely a transient problem and re-running
 	// the
 	// test might be successful.
-	//   "SKIPPED" - All tests were skipped, for instance:
+	//   "skipped" - All tests were skipped, for instance:
 	// - All device configurations were incompatible.
-	//   "FLAKY" - A group of steps that were run with the same
+	//   "flaky" - A group of steps that were run with the same
 	// configuration had both
 	// failure and success outcomes.
 	Summary string `json:"summary,omitempty"`
@@ -2946,11 +2955,11 @@ type PerfMetricsSummary struct {
 	// PerfMetrics: Set of resource collected
 	//
 	// Possible values:
-	//   "PERF_METRIC_TYPE_UNSPECIFIED"
-	//   "MEMORY"
-	//   "CPU"
-	//   "NETWORK"
-	//   "GRAPHICS"
+	//   "perfMetricTypeUnspecified"
+	//   "memory"
+	//   "cpu"
+	//   "network"
+	//   "graphics"
 	PerfMetrics []string `json:"perfMetrics,omitempty"`
 
 	// ProjectId: The cloud project
@@ -3135,22 +3144,22 @@ type PrimaryStep struct {
 	// configuration as a group.
 	//
 	// Possible values:
-	//   "UNSET" - Do not use. For proto versioning only.
-	//   "SUCCESS" - The test matrix run was successful, for instance:
+	//   "unset" - Do not use. For proto versioning only.
+	//   "success" - The test matrix run was successful, for instance:
 	// - All the test cases passed.
 	// - Robo did not detect a crash of the application under test.
-	//   "FAILURE" - A run failed, for instance:
+	//   "failure" - A run failed, for instance:
 	// - One or more test case failed.
 	// - A test timed out.
 	// - The application under test crashed.
-	//   "INCONCLUSIVE" - Something unexpected happened. The run should
+	//   "inconclusive" - Something unexpected happened. The run should
 	// still be considered
 	// unsuccessful but this is likely a transient problem and re-running
 	// the
 	// test might be successful.
-	//   "SKIPPED" - All tests were skipped, for instance:
+	//   "skipped" - All tests were skipped, for instance:
 	// - All device configurations were incompatible.
-	//   "FLAKY" - A group of steps that were run with the same
+	//   "flaky" - A group of steps that were run with the same
 	// configuration had both
 	// failure and success outcomes.
 	RollUp string `json:"rollUp,omitempty"`
@@ -3947,16 +3956,16 @@ type Step struct {
 	// - In create/update request: optional
 	//
 	// Possible values:
-	//   "UNKNOWN_STATE" - Should never be in this state. Exists for proto
+	//   "unknownState" - Should never be in this state. Exists for proto
 	// deserialization backward
 	// compatibility.
-	//   "PENDING" - The Execution/Step is created, ready to run, but not
+	//   "pending" - The Execution/Step is created, ready to run, but not
 	// running yet.
 	// If an Execution/Step is created without initial state, it is
 	// assumed
 	// that the Execution/Step is in PENDING state.
-	//   "IN_PROGRESS" - The Execution/Step is in progress.
-	//   "COMPLETE" - The finalized, immutable state. Steps/Executions in
+	//   "inProgress" - The Execution/Step is in progress.
+	//   "complete" - The finalized, immutable state. Steps/Executions in
 	// this state cannot be
 	// modified.
 	State string `json:"state,omitempty"`
@@ -4111,11 +4120,11 @@ type SuggestionClusterProto struct {
 	// Always set.
 	//
 	// Possible values:
-	//   "UNKNOWN_CATEGORY"
-	//   "CONTENT_LABELING"
-	//   "TOUCH_TARGET_SIZE"
-	//   "LOW_CONTRAST"
-	//   "IMPLEMENTATION"
+	//   "unknownCategory"
+	//   "contentLabeling"
+	//   "touchTargetSize"
+	//   "lowContrast"
+	//   "implementation"
 	Category string `json:"category,omitempty"`
 
 	// Suggestions: A sequence of suggestions. All of the suggestions within
@@ -4164,10 +4173,10 @@ type SuggestionProto struct {
 	// Always set.
 	//
 	// Possible values:
-	//   "UNKNOWN_PRIORITY"
-	//   "ERROR"
-	//   "WARNING"
-	//   "INFO"
+	//   "unknownPriority"
+	//   "error"
+	//   "warning"
+	//   "info"
 	Priority string `json:"priority,omitempty"`
 
 	// PseudoResourceId: A somewhat human readable identifier of the source
@@ -4285,11 +4294,11 @@ type TestCase struct {
 	// Required.
 	//
 	// Possible values:
-	//   "PASSED" - Test passed.
-	//   "FAILED" - Test failed.
-	//   "ERROR" - Test encountered an error
-	//   "SKIPPED" - Test skipped
-	//   "FLAKY" - Test flaked.
+	//   "passed" - Test passed.
+	//   "failed" - Test failed.
+	//   "error" - Test encountered an error
+	//   "skipped" - Test skipped
+	//   "flaky" - Test flaked.
 	//
 	// Present only for rollup test cases; test cases from steps that were
 	// run
@@ -4463,11 +4472,11 @@ type TestIssue struct {
 	// Required.
 	//
 	// Possible values:
-	//   "UNSPECIFIED_CATEGORY" - Default unspecified category.
+	//   "unspecifiedCategory" - Default unspecified category.
 	// Do not use. For versioning only.
-	//   "COMMON" - Issue is not specific to a particular test kind (e.g., a
+	//   "common" - Issue is not specific to a particular test kind (e.g., a
 	// native crash).
-	//   "ROBO" - Issue is specific to Robo run.
+	//   "robo" - Issue is specific to Robo run.
 	Category string `json:"category,omitempty"`
 
 	// ErrorMessage: A brief human-readable message describing the
@@ -4479,15 +4488,15 @@ type TestIssue struct {
 	// Required.
 	//
 	// Possible values:
-	//   "UNSPECIFIED_SEVERITY" - Default unspecified severity.
+	//   "unspecifiedSeverity" - Default unspecified severity.
 	// Do not use. For versioning only.
-	//   "INFO" - Non critical issue, providing users with some info about
+	//   "info" - Non critical issue, providing users with some info about
 	// the test run.
-	//   "SUGGESTION" - Non critical issue, providing users with some hints
+	//   "suggestion" - Non critical issue, providing users with some hints
 	// on improving their
 	// testing experience, e.g., suggesting to use Game Loops.
-	//   "WARNING" - Potentially critical issue.
-	//   "SEVERE" - Critical issue.
+	//   "warning" - Potentially critical issue.
+	//   "severe" - Critical issue.
 	Severity string `json:"severity,omitempty"`
 
 	// StackTrace: Deprecated in favor of stack trace fields inside specific
@@ -4498,51 +4507,52 @@ type TestIssue struct {
 	// Required.
 	//
 	// Possible values:
-	//   "UNSPECIFIED_TYPE" - Default unspecified type.
+	//   "unspecifiedType" - Default unspecified type.
 	// Do not use. For versioning only.
-	//   "FATAL_EXCEPTION" - Issue is a fatal exception.
-	//   "NATIVE_CRASH" - Issue is a native crash.
-	//   "ANR" - Issue is an ANR crash.
-	//   "UNUSED_ROBO_DIRECTIVE" - Issue is an unused robo directive.
-	//   "COMPATIBLE_WITH_ORCHESTRATOR" - Issue is a suggestion to use
+	//   "fatalException" - Issue is a fatal exception.
+	//   "nativeCrash" - Issue is a native crash.
+	//   "anr" - Issue is an ANR crash.
+	//   "unusedRoboDirective" - Issue is an unused robo directive.
+	//   "compatibleWithOrchestrator" - Issue is a suggestion to use
 	// orchestrator.
-	//   "LAUNCHER_ACTIVITY_NOT_FOUND" - Issue with finding a launcher
-	// activity
-	//   "START_ACTIVITY_NOT_FOUND" - Issue with resolving a user-provided
+	//   "launcherActivityNotFound" - Issue with finding a launcher activity
+	//   "startActivityNotFound" - Issue with resolving a user-provided
 	// intent to start an activity
-	//   "INCOMPLETE_ROBO_SCRIPT_EXECUTION" - A Robo script was not fully
+	//   "incompleteRoboScriptExecution" - A Robo script was not fully
 	// executed.
-	//   "COMPLETE_ROBO_SCRIPT_EXECUTION" - A Robo script was fully and
+	//   "completeRoboScriptExecution" - A Robo script was fully and
 	// successfully executed.
-	//   "FAILED_TO_INSTALL" - The APK failed to install.
-	//   "AVAILABLE_DEEP_LINKS" - The app-under-test has deep links, but
-	// none were provided to Robo.
-	//   "NON_SDK_API_USAGE_VIOLATION" - App accessed a non-sdk Api.
-	//   "NON_SDK_API_USAGE_REPORT" - App accessed a non-sdk Api (new
-	// detailed report)
-	//   "ENCOUNTERED_NON_ANDROID_UI_WIDGET_SCREEN" - Robo crawl encountered
-	// at least one screen with elements that are not
+	//   "failedToInstall" - The APK failed to install.
+	//   "availableDeepLinks" - The app-under-test has deep links, but none
+	// were provided to Robo.
+	//   "nonSdkApiUsageViolation" - App accessed a non-sdk Api.
+	//   "nonSdkApiUsageReport" - App accessed a non-sdk Api (new detailed
+	// report)
+	//   "encounteredNonAndroidUiWidgetScreen" - Robo crawl encountered at
+	// least one screen with elements that are not
 	// Android UI widgets.
-	//   "ENCOUNTERED_LOGIN_SCREEN" - Robo crawl encountered at least one
+	//   "encounteredLoginScreen" - Robo crawl encountered at least one
 	// probable login screen.
-	//   "PERFORMED_GOOGLE_LOGIN" - Robo signed in with Google.
-	//   "IOS_EXCEPTION" - iOS App crashed with an exception.
-	//   "IOS_CRASH" - iOS App crashed without an exception (e.g. killed).
-	//   "PERFORMED_MONKEY_ACTIONS" - Robo crawl involved performing some
+	//   "performedGoogleLogin" - Robo signed in with Google.
+	//   "iosException" - iOS App crashed with an exception.
+	//   "iosCrash" - iOS App crashed without an exception (e.g. killed).
+	//   "performedMonkeyActions" - Robo crawl involved performing some
 	// monkey actions.
-	//   "USED_ROBO_DIRECTIVE" - Robo crawl used a Robo directive.
-	//   "USED_ROBO_IGNORE_DIRECTIVE" - Robo crawl used a Robo directive to
+	//   "usedRoboDirective" - Robo crawl used a Robo directive.
+	//   "usedRoboIgnoreDirective" - Robo crawl used a Robo directive to
 	// ignore an UI element.
-	//   "INSUFFICIENT_COVERAGE" - Robo did not crawl some potentially
+	//   "insufficientCoverage" - Robo did not crawl some potentially
 	// important parts of the app.
-	//   "IN_APP_PURCHASES" - Robo crawl involved some in-app purchases.
-	//   "CRASH_DIALOG_ERROR" - Crash dialog was detected during the test
+	//   "inAppPurchases" - Robo crawl involved some in-app purchases.
+	//   "crashDialogError" - Crash dialog was detected during the test
 	// execution
-	//   "UI_ELEMENTS_TOO_DEEP" - UI element depth is greater than the
+	//   "uiElementsTooDeep" - UI element depth is greater than the
 	// threshold
-	//   "BLANK_SCREEN" - Blank screen is found in the Robo crawl
-	//   "OVERLAPPING_UI_ELEMENTS" - Overlapping UI elements are found in
-	// the Robo crawl
+	//   "blankScreen" - Blank screen is found in the Robo crawl
+	//   "overlappingUiElements" - Overlapping UI elements are found in the
+	// Robo crawl
+	//   "unityException" - An uncaught Unity exception was detected (these
+	// don't crash apps).
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue.
@@ -5157,2779 +5167,6 @@ func (s *UsedRoboIgnoreDirective) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "toolresults.clusters.get":
-
-type ClustersGetCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	clusterId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Retrieves a single screenshot cluster by its ID
-func (r *ClustersService) Get(projectId string, historyId string, executionId string, clusterId string) *ClustersGetCall {
-	c := &ClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.clusterId = clusterId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ClustersGetCall) Fields(s ...googleapi.Field) *ClustersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ClustersGetCall) IfNoneMatch(entityTag string) *ClustersGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ClustersGetCall) Context(ctx context.Context) *ClustersGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ClustersGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ClustersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"clusterId":   c.clusterId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.clusters.get" call.
-// Exactly one of *ScreenshotCluster or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ScreenshotCluster.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ClustersGetCall) Do(opts ...googleapi.CallOption) (*ScreenshotCluster, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ScreenshotCluster{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a single screenshot cluster by its ID",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.clusters.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "clusterId"
-	//   ],
-	//   "parameters": {
-	//     "clusterId": {
-	//       "description": "A Cluster id\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "executionId": {
-	//       "description": "An Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
-	//   "response": {
-	//     "$ref": "ScreenshotCluster"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.clusters.list":
-
-type ClustersListCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Screenshot Clusters
-//
-// Returns the list of screenshot clusters corresponding to an
-// execution.
-// Screenshot clusters are created after the execution is
-// finished.
-// Clusters are created from a set of screenshots. Between any
-// two
-// screenshots, a matching score is calculated based off their
-// metadata
-// that determines how similar they are. Screenshots are placed
-// in the cluster that has screens which have the highest
-// matching
-// scores.
-func (r *ClustersService) List(projectId string, historyId string, executionId string) *ClustersListCall {
-	c := &ClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ClustersListCall) Fields(s ...googleapi.Field) *ClustersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ClustersListCall) IfNoneMatch(entityTag string) *ClustersListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ClustersListCall) Context(ctx context.Context) *ClustersListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ClustersListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ClustersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.clusters.list" call.
-// Exactly one of *ListScreenshotClustersResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListScreenshotClustersResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ClustersListCall) Do(opts ...googleapi.CallOption) (*ListScreenshotClustersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListScreenshotClustersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Screenshot Clusters\n\nReturns the list of screenshot clusters corresponding to an execution.\nScreenshot clusters are created after the execution is finished.\nClusters are created from a set of screenshots. Between any two\nscreenshots, a matching score is calculated based off their metadata\nthat determines how similar they are. Screenshots are placed\nin the cluster that has screens which have the highest matching\nscores.",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.clusters.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "An Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters",
-	//   "response": {
-	//     "$ref": "ListScreenshotClustersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.environments.get":
-
-type EnvironmentsGetCall struct {
-	s             *Service
-	projectId     string
-	historyId     string
-	executionId   string
-	environmentId string
-	urlParams_    gensupport.URLParams
-	ifNoneMatch_  string
-	ctx_          context.Context
-	header_       http.Header
-}
-
-// Get: Gets an Environment.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the Environment does not exist
-func (r *EnvironmentsService) Get(projectId string, historyId string, executionId string, environmentId string) *EnvironmentsGetCall {
-	c := &EnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.environmentId = environmentId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *EnvironmentsGetCall) Fields(s ...googleapi.Field) *EnvironmentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *EnvironmentsGetCall) IfNoneMatch(entityTag string) *EnvironmentsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *EnvironmentsGetCall) Context(ctx context.Context) *EnvironmentsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *EnvironmentsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *EnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":     c.projectId,
-		"historyId":     c.historyId,
-		"executionId":   c.executionId,
-		"environmentId": c.environmentId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.environments.get" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *EnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Environment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets an Environment.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Environment does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.environments.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "environmentId"
-	//   ],
-	//   "parameters": {
-	//     "environmentId": {
-	//       "description": "Required. An Environment id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "executionId": {
-	//       "description": "Required. An Execution id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "Required. A History id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Required. A Project id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.environments.list":
-
-type EnvironmentsListCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Environments for a given Execution.
-//
-// The Environments are sorted by display name.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the containing Execution does not exist
-func (r *EnvironmentsService) List(projectId string, historyId string, executionId string) *EnvironmentsListCall {
-	c := &EnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Environments to fetch.
-//
-// Default value: 25. The server will use this default if the field is
-// not set
-// or has a value of 0.
-func (c *EnvironmentsListCall) PageSize(pageSize int64) *EnvironmentsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token to resume the query at the next item.
-func (c *EnvironmentsListCall) PageToken(pageToken string) *EnvironmentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *EnvironmentsListCall) Fields(s ...googleapi.Field) *EnvironmentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *EnvironmentsListCall) IfNoneMatch(entityTag string) *EnvironmentsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *EnvironmentsListCall) Context(ctx context.Context) *EnvironmentsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *EnvironmentsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *EnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.environments.list" call.
-// Exactly one of *ListEnvironmentsResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListEnvironmentsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *EnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListEnvironmentsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListEnvironmentsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Environments for a given Execution.\n\nThe Environments are sorted by display name.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.environments.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "Required. An Execution id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "Required. A History id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of Environments to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token to resume the query at the next item.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Required. A Project id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments",
-	//   "response": {
-	//     "$ref": "ListEnvironmentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *EnvironmentsListCall) Pages(ctx context.Context, f func(*ListEnvironmentsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "toolresults.executions.create":
-
-type ExecutionsCreateCall struct {
-	s          *Service
-	projectId  string
-	historyId  string
-	execution  *Execution
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Create: Creates an Execution.
-//
-// The returned Execution will have the id set.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the containing History does not exist
-func (r *ExecutionsService) Create(projectId string, historyId string, execution *Execution) *ExecutionsCreateCall {
-	c := &ExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.execution = execution
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": A unique request
-// ID for server to detect duplicated requests.
-// For example, a UUID.
-//
-// Optional, but strongly recommended.
-func (c *ExecutionsCreateCall) RequestId(requestId string) *ExecutionsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ExecutionsCreateCall) Fields(s ...googleapi.Field) *ExecutionsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ExecutionsCreateCall) Context(ctx context.Context) *ExecutionsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ExecutionsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.execution)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-		"historyId": c.historyId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.executions.create" call.
-// Exactly one of *Execution or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Execution.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ExecutionsCreateCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Execution{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an Execution.\n\nThe returned Execution will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing History does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.executions.create",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId"
-	//   ],
-	//   "parameters": {
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
-	//   "request": {
-	//     "$ref": "Execution"
-	//   },
-	//   "response": {
-	//     "$ref": "Execution"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.executions.get":
-
-type ExecutionsGetCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets an Execution.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the Execution does not exist
-func (r *ExecutionsService) Get(projectId string, historyId string, executionId string) *ExecutionsGetCall {
-	c := &ExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ExecutionsGetCall) Fields(s ...googleapi.Field) *ExecutionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ExecutionsGetCall) IfNoneMatch(entityTag string) *ExecutionsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ExecutionsGetCall) Context(ctx context.Context) *ExecutionsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ExecutionsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.executions.get" call.
-// Exactly one of *Execution or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Execution.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ExecutionsGetCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Execution{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets an Execution.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.executions.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "An Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
-	//   "response": {
-	//     "$ref": "Execution"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.executions.list":
-
-type ExecutionsListCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Executions for a given History.
-//
-// The executions are sorted by creation_time in descending order.
-// The
-// execution_id key will be used to order the executions with the
-// same
-// creation_time.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the containing History does not exist
-func (r *ExecutionsService) List(projectId string, historyId string) *ExecutionsListCall {
-	c := &ExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Executions to fetch.
-//
-// Default value: 25. The server will use this default if the field is
-// not set
-// or has a value of 0.
-func (c *ExecutionsListCall) PageSize(pageSize int64) *ExecutionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token to resume the query at the next item.
-func (c *ExecutionsListCall) PageToken(pageToken string) *ExecutionsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ExecutionsListCall) Fields(s ...googleapi.Field) *ExecutionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ExecutionsListCall) IfNoneMatch(entityTag string) *ExecutionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ExecutionsListCall) Context(ctx context.Context) *ExecutionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ExecutionsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ExecutionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-		"historyId": c.historyId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.executions.list" call.
-// Exactly one of *ListExecutionsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListExecutionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListExecutionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListExecutionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Executions for a given History.\n\nThe executions are sorted by creation_time in descending order. The\nexecution_id key will be used to order the executions with the same\ncreation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing History does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.executions.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId"
-	//   ],
-	//   "parameters": {
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of Executions to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.\n\nOptional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
-	//   "response": {
-	//     "$ref": "ListExecutionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ExecutionsListCall) Pages(ctx context.Context, f func(*ListExecutionsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "toolresults.executions.patch":
-
-type ExecutionsPatchCall struct {
-	s           *Service
-	projectId   string
-	historyId   string
-	executionId string
-	execution   *Execution
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Patch: Updates an existing Execution with the supplied partial
-// entity.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if the requested state transition is
-// illegal
-// - NOT_FOUND - if the containing History does not exist
-func (r *ExecutionsService) Patch(projectId string, historyId string, executionId string, execution *Execution) *ExecutionsPatchCall {
-	c := &ExecutionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.execution = execution
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": A unique request
-// ID for server to detect duplicated requests.
-// For example, a UUID.
-//
-// Optional, but strongly recommended.
-func (c *ExecutionsPatchCall) RequestId(requestId string) *ExecutionsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ExecutionsPatchCall) Fields(s ...googleapi.Field) *ExecutionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ExecutionsPatchCall) Context(ctx context.Context) *ExecutionsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ExecutionsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ExecutionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.execution)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.executions.patch" call.
-// Exactly one of *Execution or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Execution.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ExecutionsPatchCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Execution{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing Execution with the supplied partial entity.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal\n- NOT_FOUND - if the containing History does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "toolresults.executions.patch",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "Required.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "Required.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
-	//   "request": {
-	//     "$ref": "Execution"
-	//   },
-	//   "response": {
-	//     "$ref": "Execution"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.histories.create":
-
-type HistoriesCreateCall struct {
-	s          *Service
-	projectId  string
-	history    *History
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Create: Creates a History.
-//
-// The returned History will have the id set.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the containing project does not exist
-func (r *HistoriesService) Create(projectId string, history *History) *HistoriesCreateCall {
-	c := &HistoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.history = history
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": A unique request
-// ID for server to detect duplicated requests.
-// For example, a UUID.
-//
-// Optional, but strongly recommended.
-func (c *HistoriesCreateCall) RequestId(requestId string) *HistoriesCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *HistoriesCreateCall) Fields(s ...googleapi.Field) *HistoriesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *HistoriesCreateCall) Context(ctx context.Context) *HistoriesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *HistoriesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *HistoriesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.history)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.histories.create" call.
-// Exactly one of *History or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *History.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *HistoriesCreateCall) Do(opts ...googleapi.CallOption) (*History, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &History{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a History.\n\nThe returned History will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing project does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.histories.create",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories",
-	//   "request": {
-	//     "$ref": "History"
-	//   },
-	//   "response": {
-	//     "$ref": "History"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.histories.get":
-
-type HistoriesGetCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a History.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the History does not exist
-func (r *HistoriesService) Get(projectId string, historyId string) *HistoriesGetCall {
-	c := &HistoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *HistoriesGetCall) Fields(s ...googleapi.Field) *HistoriesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *HistoriesGetCall) IfNoneMatch(entityTag string) *HistoriesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *HistoriesGetCall) Context(ctx context.Context) *HistoriesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *HistoriesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *HistoriesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-		"historyId": c.historyId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.histories.get" call.
-// Exactly one of *History or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *History.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *HistoriesGetCall) Do(opts ...googleapi.CallOption) (*History, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &History{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a History.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the History does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.histories.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId"
-	//   ],
-	//   "parameters": {
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}",
-	//   "response": {
-	//     "$ref": "History"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.histories.list":
-
-type HistoriesListCall struct {
-	s            *Service
-	projectId    string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Histories for a given Project.
-//
-// The histories are sorted by modification time in descending order.
-// The
-// history_id key will be used to order the history with the
-// same
-// modification time.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the History does not exist
-func (r *HistoriesService) List(projectId string) *HistoriesListCall {
-	c := &HistoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	return c
-}
-
-// FilterByName sets the optional parameter "filterByName": If set, only
-// return histories with the given name.
-func (c *HistoriesListCall) FilterByName(filterByName string) *HistoriesListCall {
-	c.urlParams_.Set("filterByName", filterByName)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Histories to fetch.
-//
-// Default value: 20. The server will use this default if the field is
-// not set
-// or has a value of 0. Any value greater than 100 will be treated as
-// 100.
-func (c *HistoriesListCall) PageSize(pageSize int64) *HistoriesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token to resume the query at the next item.
-func (c *HistoriesListCall) PageToken(pageToken string) *HistoriesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *HistoriesListCall) Fields(s ...googleapi.Field) *HistoriesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *HistoriesListCall) IfNoneMatch(entityTag string) *HistoriesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *HistoriesListCall) Context(ctx context.Context) *HistoriesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *HistoriesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *HistoriesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId": c.projectId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.histories.list" call.
-// Exactly one of *ListHistoriesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListHistoriesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *HistoriesListCall) Do(opts ...googleapi.CallOption) (*ListHistoriesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListHistoriesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Histories for a given Project.\n\nThe histories are sorted by modification time in descending order. The\nhistory_id key will be used to order the history with the same\nmodification time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the History does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.histories.list",
-	//   "parameterOrder": [
-	//     "projectId"
-	//   ],
-	//   "parameters": {
-	//     "filterByName": {
-	//       "description": "If set, only return histories with the given name.\n\nOptional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of Histories to fetch.\n\nDefault value: 20. The server will use this default if the field is not set\nor has a value of 0. Any value greater than 100 will be treated as 100.\n\nOptional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories",
-	//   "response": {
-	//     "$ref": "ListHistoriesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *HistoriesListCall) Pages(ctx context.Context, f func(*ListHistoriesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "toolresults.perfMetricsSummary.create":
-
-type PerfMetricsSummaryCreateCall struct {
-	s                  *Service
-	projectId          string
-	historyId          string
-	executionId        string
-	stepId             string
-	perfmetricssummary *PerfMetricsSummary
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
-}
-
-// Create: Creates a PerfMetricsSummary resource. Returns the existing
-// one if it has
-// already been created.
-//
-// May return any of the following error code(s):
-// - NOT_FOUND - The containing Step does not exist
-func (r *PerfMetricsSummaryService) Create(projectId string, historyId string, executionId string, stepId string, perfmetricssummary *PerfMetricsSummary) *PerfMetricsSummaryCreateCall {
-	c := &PerfMetricsSummaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	c.perfmetricssummary = perfmetricssummary
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PerfMetricsSummaryCreateCall) Fields(s ...googleapi.Field) *PerfMetricsSummaryCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PerfMetricsSummaryCreateCall) Context(ctx context.Context) *PerfMetricsSummaryCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PerfMetricsSummaryCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PerfMetricsSummaryCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.perfmetricssummary)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.perfMetricsSummary.create" call.
-// Exactly one of *PerfMetricsSummary or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PerfMetricsSummary.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PerfMetricsSummaryCreateCall) Do(opts ...googleapi.CallOption) (*PerfMetricsSummary, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &PerfMetricsSummary{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a PerfMetricsSummary resource. Returns the existing one if it has\nalready been created.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The containing Step does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.perfMetricsSummary.create",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A tool results execution ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A tool results history ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The cloud project",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A tool results step ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
-	//   "request": {
-	//     "$ref": "PerfMetricsSummary"
-	//   },
-	//   "response": {
-	//     "$ref": "PerfMetricsSummary"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.perfSampleSeries.create":
-
-type PerfSampleSeriesCreateCall struct {
-	s                *Service
-	projectId        string
-	historyId        string
-	executionId      string
-	stepId           string
-	perfsampleseries *PerfSampleSeries
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-	header_          http.Header
-}
-
-// Create: Creates a PerfSampleSeries.
-//
-// May return any of the following error code(s):
-// - ALREADY_EXISTS - PerfMetricSummary already exists for the given
-// Step
-// - NOT_FOUND - The containing Step does not exist
-func (r *PerfSampleSeriesService) Create(projectId string, historyId string, executionId string, stepId string, perfsampleseries *PerfSampleSeries) *PerfSampleSeriesCreateCall {
-	c := &PerfSampleSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	c.perfsampleseries = perfsampleseries
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PerfSampleSeriesCreateCall) Fields(s ...googleapi.Field) *PerfSampleSeriesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PerfSampleSeriesCreateCall) Context(ctx context.Context) *PerfSampleSeriesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PerfSampleSeriesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PerfSampleSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.perfsampleseries)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.perfSampleSeries.create" call.
-// Exactly one of *PerfSampleSeries or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PerfSampleSeries.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PerfSampleSeriesCreateCall) Do(opts ...googleapi.CallOption) (*PerfSampleSeries, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &PerfSampleSeries{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a PerfSampleSeries.\n\nMay return any of the following error code(s):\n- ALREADY_EXISTS - PerfMetricSummary already exists for the given Step\n- NOT_FOUND - The containing Step does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.perfSampleSeries.create",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A tool results execution ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A tool results history ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The cloud project",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A tool results step ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
-	//   "request": {
-	//     "$ref": "PerfSampleSeries"
-	//   },
-	//   "response": {
-	//     "$ref": "PerfSampleSeries"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.perfSampleSeries.get":
-
-type PerfSampleSeriesGetCall struct {
-	s              *Service
-	projectId      string
-	historyId      string
-	executionId    string
-	stepId         string
-	sampleSeriesId string
-	urlParams_     gensupport.URLParams
-	ifNoneMatch_   string
-	ctx_           context.Context
-	header_        http.Header
-}
-
-// Get: Gets a PerfSampleSeries.
-//
-// May return any of the following error code(s):
-// - NOT_FOUND - The specified PerfSampleSeries does not exist
-func (r *PerfSampleSeriesService) Get(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *PerfSampleSeriesGetCall {
-	c := &PerfSampleSeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	c.sampleSeriesId = sampleSeriesId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PerfSampleSeriesGetCall) Fields(s ...googleapi.Field) *PerfSampleSeriesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PerfSampleSeriesGetCall) IfNoneMatch(entityTag string) *PerfSampleSeriesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PerfSampleSeriesGetCall) Context(ctx context.Context) *PerfSampleSeriesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PerfSampleSeriesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PerfSampleSeriesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":      c.projectId,
-		"historyId":      c.historyId,
-		"executionId":    c.executionId,
-		"stepId":         c.stepId,
-		"sampleSeriesId": c.sampleSeriesId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.perfSampleSeries.get" call.
-// Exactly one of *PerfSampleSeries or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PerfSampleSeries.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PerfSampleSeriesGetCall) Do(opts ...googleapi.CallOption) (*PerfSampleSeries, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &PerfSampleSeries{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a PerfSampleSeries.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The specified PerfSampleSeries does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.perfSampleSeries.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId",
-	//     "sampleSeriesId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A tool results execution ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A tool results history ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The cloud project",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sampleSeriesId": {
-	//       "description": "A sample series id",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A tool results step ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
-	//   "response": {
-	//     "$ref": "PerfSampleSeries"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.perfSampleSeries.list":
-
-type PerfSampleSeriesListCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	stepId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists PerfSampleSeries for a given Step.
-//
-// The request provides an optional filter which specifies one or
-// more
-// PerfMetricsType to include in the result; if none returns all.
-// The resulting PerfSampleSeries are sorted by ids.
-//
-// May return any of the following canonical error codes:
-// - NOT_FOUND - The containing Step does not exist
-func (r *PerfSampleSeriesService) List(projectId string, historyId string, executionId string, stepId string) *PerfSampleSeriesListCall {
-	c := &PerfSampleSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	return c
-}
-
-// Filter sets the optional parameter "filter": Specify one or more
-// PerfMetricType values such as CPU to filter the result
-//
-// Possible values:
-//   "PERF_METRIC_TYPE_UNSPECIFIED"
-//   "MEMORY"
-//   "CPU"
-//   "NETWORK"
-//   "GRAPHICS"
-func (c *PerfSampleSeriesListCall) Filter(filter ...string) *PerfSampleSeriesListCall {
-	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *PerfSampleSeriesListCall) Fields(s ...googleapi.Field) *PerfSampleSeriesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *PerfSampleSeriesListCall) IfNoneMatch(entityTag string) *PerfSampleSeriesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *PerfSampleSeriesListCall) Context(ctx context.Context) *PerfSampleSeriesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *PerfSampleSeriesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PerfSampleSeriesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.perfSampleSeries.list" call.
-// Exactly one of *ListPerfSampleSeriesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListPerfSampleSeriesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *PerfSampleSeriesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSampleSeriesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListPerfSampleSeriesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists PerfSampleSeries for a given Step.\n\nThe request provides an optional filter which specifies one or more\nPerfMetricsType to include in the result; if none returns all.\nThe resulting PerfSampleSeries are sorted by ids.\n\nMay return any of the following canonical error codes:\n- NOT_FOUND - The containing Step does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.perfSampleSeries.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A tool results execution ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "filter": {
-	//       "description": "Specify one or more PerfMetricType values such as CPU to filter the result",
-	//       "enum": [
-	//         "PERF_METRIC_TYPE_UNSPECIFIED",
-	//         "MEMORY",
-	//         "CPU",
-	//         "NETWORK",
-	//         "GRAPHICS"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A tool results history ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The cloud project",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A tool results step ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
-	//   "response": {
-	//     "$ref": "ListPerfSampleSeriesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "toolresults.projects.getSettings":
 
 type ProjectsGetSettingsCall struct {
@@ -7990,7 +5227,7 @@ func (c *ProjectsGetSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8158,7 +5395,7 @@ func (c *ProjectsInitializeSettingsCall) Header() http.Header {
 
 func (c *ProjectsInitializeSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8243,9 +5480,4100 @@ func (c *ProjectsInitializeSettingsCall) Do(opts ...googleapi.CallOption) (*Proj
 
 }
 
-// method id "toolresults.samples.batchCreate":
+// method id "toolresults.projects.histories.create":
 
-type SamplesBatchCreateCall struct {
+type ProjectsHistoriesCreateCall struct {
+	s          *Service
+	projectId  string
+	history    *History
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a History.
+//
+// The returned History will have the id set.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write to
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the containing project does not exist
+func (r *ProjectsHistoriesService) Create(projectId string, history *History) *ProjectsHistoriesCreateCall {
+	c := &ProjectsHistoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.history = history
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for server to detect duplicated requests.
+// For example, a UUID.
+//
+// Optional, but strongly recommended.
+func (c *ProjectsHistoriesCreateCall) RequestId(requestId string) *ProjectsHistoriesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesCreateCall) Context(ctx context.Context) *ProjectsHistoriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.history)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.create" call.
+// Exactly one of *History or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *History.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsHistoriesCreateCall) Do(opts ...googleapi.CallOption) (*History, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &History{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a History.\n\nThe returned History will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing project does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.create",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories",
+	//   "request": {
+	//     "$ref": "History"
+	//   },
+	//   "response": {
+	//     "$ref": "History"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.get":
+
+type ProjectsHistoriesGetCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a History.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the History does not exist
+func (r *ProjectsHistoriesService) Get(projectId string, historyId string) *ProjectsHistoriesGetCall {
+	c := &ProjectsHistoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesGetCall) Context(ctx context.Context) *ProjectsHistoriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"historyId": c.historyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.get" call.
+// Exactly one of *History or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *History.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsHistoriesGetCall) Do(opts ...googleapi.CallOption) (*History, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &History{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a History.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the History does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId"
+	//   ],
+	//   "parameters": {
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}",
+	//   "response": {
+	//     "$ref": "History"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.list":
+
+type ProjectsHistoriesListCall struct {
+	s            *Service
+	projectId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Histories for a given Project.
+//
+// The histories are sorted by modification time in descending order.
+// The
+// history_id key will be used to order the history with the
+// same
+// modification time.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the History does not exist
+func (r *ProjectsHistoriesService) List(projectId string) *ProjectsHistoriesListCall {
+	c := &ProjectsHistoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	return c
+}
+
+// FilterByName sets the optional parameter "filterByName": If set, only
+// return histories with the given name.
+func (c *ProjectsHistoriesListCall) FilterByName(filterByName string) *ProjectsHistoriesListCall {
+	c.urlParams_.Set("filterByName", filterByName)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Histories to fetch.
+//
+// Default value: 20. The server will use this default if the field is
+// not set
+// or has a value of 0. Any value greater than 100 will be treated as
+// 100.
+func (c *ProjectsHistoriesListCall) PageSize(pageSize int64) *ProjectsHistoriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token to resume the query at the next item.
+func (c *ProjectsHistoriesListCall) PageToken(pageToken string) *ProjectsHistoriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesListCall) Context(ctx context.Context) *ProjectsHistoriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.list" call.
+// Exactly one of *ListHistoriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListHistoriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesListCall) Do(opts ...googleapi.CallOption) (*ListHistoriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListHistoriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Histories for a given Project.\n\nThe histories are sorted by modification time in descending order. The\nhistory_id key will be used to order the history with the same\nmodification time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the History does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.list",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "filterByName": {
+	//       "description": "If set, only return histories with the given name.\n\nOptional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Histories to fetch.\n\nDefault value: 20. The server will use this default if the field is not set\nor has a value of 0. Any value greater than 100 will be treated as 100.\n\nOptional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories",
+	//   "response": {
+	//     "$ref": "ListHistoriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsHistoriesListCall) Pages(ctx context.Context, f func(*ListHistoriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "toolresults.projects.histories.executions.create":
+
+type ProjectsHistoriesExecutionsCreateCall struct {
+	s          *Service
+	projectId  string
+	historyId  string
+	execution  *Execution
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates an Execution.
+//
+// The returned Execution will have the id set.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write to
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the containing History does not exist
+func (r *ProjectsHistoriesExecutionsService) Create(projectId string, historyId string, execution *Execution) *ProjectsHistoriesExecutionsCreateCall {
+	c := &ProjectsHistoriesExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.execution = execution
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for server to detect duplicated requests.
+// For example, a UUID.
+//
+// Optional, but strongly recommended.
+func (c *ProjectsHistoriesExecutionsCreateCall) RequestId(requestId string) *ProjectsHistoriesExecutionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsCreateCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.execution)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"historyId": c.historyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.create" call.
+// Exactly one of *Execution or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Execution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsCreateCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an Execution.\n\nThe returned Execution will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing History does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.executions.create",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId"
+	//   ],
+	//   "parameters": {
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
+	//   "request": {
+	//     "$ref": "Execution"
+	//   },
+	//   "response": {
+	//     "$ref": "Execution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.get":
+
+type ProjectsHistoriesExecutionsGetCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Execution.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write to
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the Execution does not exist
+func (r *ProjectsHistoriesExecutionsService) Get(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsGetCall {
+	c := &ProjectsHistoriesExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.get" call.
+// Exactly one of *Execution or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Execution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsGetCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Execution.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "An Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
+	//   "response": {
+	//     "$ref": "Execution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.list":
+
+type ProjectsHistoriesExecutionsListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Executions for a given History.
+//
+// The executions are sorted by creation_time in descending order.
+// The
+// execution_id key will be used to order the executions with the
+// same
+// creation_time.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the containing History does not exist
+func (r *ProjectsHistoriesExecutionsService) List(projectId string, historyId string) *ProjectsHistoriesExecutionsListCall {
+	c := &ProjectsHistoriesExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Executions to fetch.
+//
+// Default value: 25. The server will use this default if the field is
+// not set
+// or has a value of 0.
+func (c *ProjectsHistoriesExecutionsListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token to resume the query at the next item.
+func (c *ProjectsHistoriesExecutionsListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"historyId": c.historyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.list" call.
+// Exactly one of *ListExecutionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListExecutionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListExecutionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListExecutionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Executions for a given History.\n\nThe executions are sorted by creation_time in descending order. The\nexecution_id key will be used to order the executions with the same\ncreation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing History does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId"
+	//   ],
+	//   "parameters": {
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Executions to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.\n\nOptional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions",
+	//   "response": {
+	//     "$ref": "ListExecutionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsHistoriesExecutionsListCall) Pages(ctx context.Context, f func(*ListExecutionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "toolresults.projects.histories.executions.patch":
+
+type ProjectsHistoriesExecutionsPatchCall struct {
+	s           *Service
+	projectId   string
+	historyId   string
+	executionId string
+	execution   *Execution
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates an existing Execution with the supplied partial
+// entity.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write to
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if the requested state transition is
+// illegal
+// - NOT_FOUND - if the containing History does not exist
+func (r *ProjectsHistoriesExecutionsService) Patch(projectId string, historyId string, executionId string, execution *Execution) *ProjectsHistoriesExecutionsPatchCall {
+	c := &ProjectsHistoriesExecutionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.execution = execution
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for server to detect duplicated requests.
+// For example, a UUID.
+//
+// Optional, but strongly recommended.
+func (c *ProjectsHistoriesExecutionsPatchCall) RequestId(requestId string) *ProjectsHistoriesExecutionsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsPatchCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsPatchCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.execution)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.patch" call.
+// Exactly one of *Execution or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Execution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsPatchCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Execution with the supplied partial entity.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal\n- NOT_FOUND - if the containing History does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "toolresults.projects.histories.executions.patch",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "Required.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}",
+	//   "request": {
+	//     "$ref": "Execution"
+	//   },
+	//   "response": {
+	//     "$ref": "Execution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.clusters.get":
+
+type ProjectsHistoriesExecutionsClustersGetCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	clusterId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a single screenshot cluster by its ID
+func (r *ProjectsHistoriesExecutionsClustersService) Get(projectId string, historyId string, executionId string, clusterId string) *ProjectsHistoriesExecutionsClustersGetCall {
+	c := &ProjectsHistoriesExecutionsClustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.clusterId = clusterId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsClustersGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsClustersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsClustersGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsClustersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsClustersGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsClustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsClustersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsClustersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"clusterId":   c.clusterId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.clusters.get" call.
+// Exactly one of *ScreenshotCluster or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ScreenshotCluster.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsClustersGetCall) Do(opts ...googleapi.CallOption) (*ScreenshotCluster, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ScreenshotCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a single screenshot cluster by its ID",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.clusters.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "A Cluster id\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "executionId": {
+	//       "description": "An Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters/{clusterId}",
+	//   "response": {
+	//     "$ref": "ScreenshotCluster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.clusters.list":
+
+type ProjectsHistoriesExecutionsClustersListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Screenshot Clusters
+//
+// Returns the list of screenshot clusters corresponding to an
+// execution.
+// Screenshot clusters are created after the execution is
+// finished.
+// Clusters are created from a set of screenshots. Between any
+// two
+// screenshots, a matching score is calculated based off their
+// metadata
+// that determines how similar they are. Screenshots are placed
+// in the cluster that has screens which have the highest
+// matching
+// scores.
+func (r *ProjectsHistoriesExecutionsClustersService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsClustersListCall {
+	c := &ProjectsHistoriesExecutionsClustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsClustersListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsClustersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsClustersListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsClustersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsClustersListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsClustersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsClustersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.clusters.list" call.
+// Exactly one of *ListScreenshotClustersResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListScreenshotClustersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsClustersListCall) Do(opts ...googleapi.CallOption) (*ListScreenshotClustersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListScreenshotClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Screenshot Clusters\n\nReturns the list of screenshot clusters corresponding to an execution.\nScreenshot clusters are created after the execution is finished.\nClusters are created from a set of screenshots. Between any two\nscreenshots, a matching score is calculated based off their metadata\nthat determines how similar they are. Screenshots are placed\nin the cluster that has screens which have the highest matching\nscores.",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.clusters.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "An Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/clusters",
+	//   "response": {
+	//     "$ref": "ListScreenshotClustersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.environments.get":
+
+type ProjectsHistoriesExecutionsEnvironmentsGetCall struct {
+	s             *Service
+	projectId     string
+	historyId     string
+	executionId   string
+	environmentId string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Get: Gets an Environment.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the Environment does not exist
+func (r *ProjectsHistoriesExecutionsEnvironmentsService) Get(projectId string, historyId string, executionId string, environmentId string) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c := &ProjectsHistoriesExecutionsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.environmentId = environmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsEnvironmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":     c.projectId,
+		"historyId":     c.historyId,
+		"executionId":   c.executionId,
+		"environmentId": c.environmentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.environments.get" call.
+// Exactly one of *Environment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Environment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an Environment.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Environment does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.environments.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "environmentId"
+	//   ],
+	//   "parameters": {
+	//     "environmentId": {
+	//       "description": "Required. An Environment id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "executionId": {
+	//       "description": "Required. An Execution id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required. A History id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. A Project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments/{environmentId}",
+	//   "response": {
+	//     "$ref": "Environment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.environments.list":
+
+type ProjectsHistoriesExecutionsEnvironmentsListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Environments for a given Execution.
+//
+// The Environments are sorted by display name.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsEnvironmentsService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c := &ProjectsHistoriesExecutionsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Environments to fetch.
+//
+// Default value: 25. The server will use this default if the field is
+// not set
+// or has a value of 0.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token to resume the query at the next item.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsEnvironmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.environments.list" call.
+// Exactly one of *ListEnvironmentsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEnvironmentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListEnvironmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEnvironmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Environments for a given Execution.\n\nThe Environments are sorted by display name.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.environments.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "Required. An Execution id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required. A History id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Environments to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token to resume the query at the next item.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. A Project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/environments",
+	//   "response": {
+	//     "$ref": "ListEnvironmentsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) Pages(ctx context.Context, f func(*ListEnvironmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "toolresults.projects.histories.executions.steps.accessibilityClusters":
+
+type ProjectsHistoriesExecutionsStepsAccessibilityClustersCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AccessibilityClusters: Lists accessibility clusters for a given
+// Step
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if an argument in the request happens to be
+//                         invalid; e.g. if the locale format is
+// incorrect
+// - NOT_FOUND - if the containing Step does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) AccessibilityClusters(name string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
+	c := &ProjectsHistoriesExecutionsStepsAccessibilityClustersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Locale sets the optional parameter "locale": The accepted format is
+// the canonical Unicode format with hyphen as a
+// delimiter. Language must be lowercase, Language Script -
+// Capitalized,
+// Region - UPPERCASE.
+// See http://www.unicode.org/reports/tr35/#Unicode_locale_identifier
+// for
+// details.
+//
+// Required.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Locale(locale string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
+	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/{+name}:accessibilityClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.accessibilityClusters" call.
+// Exactly one of *ListStepAccessibilityClustersResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListStepAccessibilityClustersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) Do(opts ...googleapi.CallOption) (*ListStepAccessibilityClustersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListStepAccessibilityClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists accessibility clusters for a given Step\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if an argument in the request happens to be\n                        invalid; e.g. if the locale format is incorrect\n- NOT_FOUND - if the containing Step does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectsId}/histories/{historiesId}/executions/{executionsId}/steps/{stepsId}:accessibilityClusters",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.accessibilityClusters",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "The accepted format is the canonical Unicode format with hyphen as a\ndelimiter. Language must be lowercase, Language Script - Capitalized,\nRegion - UPPERCASE.\nSee http://www.unicode.org/reports/tr35/#Unicode_locale_identifier for\ndetails.\n\nRequired.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "A full resource name of the step.\nFor example, projects/my-project/histories/bh.1234567890abcdef/executions/\n1234567890123456789/steps/bs.1234567890abcdef\n\nRequired.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/histories/[^/]+/executions/[^/]+/steps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/{+name}:accessibilityClusters",
+	//   "response": {
+	//     "$ref": "ListStepAccessibilityClustersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.create":
+
+type ProjectsHistoriesExecutionsStepsCreateCall struct {
+	s           *Service
+	projectId   string
+	historyId   string
+	executionId string
+	step        *Step
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a Step.
+//
+// The returned Step will have the id set.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write to
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if the step is too large (more than 10Mib)
+// - NOT_FOUND - if the containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) Create(projectId string, historyId string, executionId string, step *Step) *ProjectsHistoriesExecutionsStepsCreateCall {
+	c := &ProjectsHistoriesExecutionsStepsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.step = step
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for server to detect duplicated requests.
+// For example, a UUID.
+//
+// Optional, but strongly recommended.
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) RequestId(requestId string) *ProjectsHistoriesExecutionsStepsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.step)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.create" call.
+// Exactly one of *Step or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Step.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsHistoriesExecutionsStepsCreateCall) Do(opts ...googleapi.CallOption) (*Step, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Step{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Step.\n\nThe returned Step will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the step is too large (more than 10Mib)\n- NOT_FOUND - if the containing Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.executions.steps.create",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "Required. An Execution id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "Required. A History id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. A Project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
+	//   "request": {
+	//     "$ref": "Step"
+	//   },
+	//   "response": {
+	//     "$ref": "Step"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.get":
+
+type ProjectsHistoriesExecutionsStepsGetCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	stepId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a Step.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - NOT_FOUND - if the Step does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) Get(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsGetCall {
+	c := &ProjectsHistoriesExecutionsStepsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.get" call.
+// Exactly one of *Step or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Step.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsHistoriesExecutionsStepsGetCall) Do(opts ...googleapi.CallOption) (*Step, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Step{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Step.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Step does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A Step id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+	//   "response": {
+	//     "$ref": "Step"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.getPerfMetricsSummary":
+
+type ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	stepId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPerfMetricsSummary: Retrieves a PerfMetricsSummary.
+//
+// May return any of the following error code(s):
+// - NOT_FOUND - The specified PerfMetricsSummary does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) GetPerfMetricsSummary(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
+	c := &ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.getPerfMetricsSummary" call.
+// Exactly one of *PerfMetricsSummary or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PerfMetricsSummary.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) Do(opts ...googleapi.CallOption) (*PerfMetricsSummary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PerfMetricsSummary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a PerfMetricsSummary.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The specified PerfMetricsSummary does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.getPerfMetricsSummary",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A tool results execution ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A tool results history ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The cloud project",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A tool results step ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+	//   "response": {
+	//     "$ref": "PerfMetricsSummary"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.list":
+
+type ProjectsHistoriesExecutionsStepsListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Steps for a given Execution.
+//
+// The steps are sorted by creation_time in descending order.
+// The
+// step_id key will be used to order the steps with the
+// same
+// creation_time.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to read project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if an argument in the request happens to be
+//                         invalid; e.g. if an attempt is made to list
+// the
+//                         children of a nonexistent Step
+// - NOT_FOUND - if the containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) List(projectId string, historyId string, executionId string) *ProjectsHistoriesExecutionsStepsListCall {
+	c := &ProjectsHistoriesExecutionsStepsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Steps to fetch.
+//
+// Default value: 25. The server will use this default if the field is
+// not set
+// or has a value of 0.
+func (c *ProjectsHistoriesExecutionsStepsListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsStepsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A continuation
+// token to resume the query at the next item.
+func (c *ProjectsHistoriesExecutionsStepsListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsStepsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.list" call.
+// Exactly one of *ListStepsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListStepsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsListCall) Do(opts ...googleapi.CallOption) (*ListStepsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListStepsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Steps for a given Execution.\n\nThe steps are sorted by creation_time in descending order. The\nstep_id key will be used to order the steps with the same\ncreation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if an argument in the request happens to be\n                        invalid; e.g. if an attempt is made to list the\n                        children of a nonexistent Step\n- NOT_FOUND - if the containing Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Steps to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.\n\nOptional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
+	//   "response": {
+	//     "$ref": "ListStepsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsHistoriesExecutionsStepsListCall) Pages(ctx context.Context, f func(*ListStepsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "toolresults.projects.histories.executions.steps.patch":
+
+type ProjectsHistoriesExecutionsStepsPatchCall struct {
+	s           *Service
+	projectId   string
+	historyId   string
+	executionId string
+	stepId      string
+	step        *Step
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates an existing Step with the supplied partial
+// entity.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if the requested state transition is illegal
+//                         (e.g try to upload a duplicate xml file), if
+// the
+//                         updated step is too large (more than 10Mib)
+// - NOT_FOUND - if the containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) Patch(projectId string, historyId string, executionId string, stepId string, step *Step) *ProjectsHistoriesExecutionsStepsPatchCall {
+	c := &ProjectsHistoriesExecutionsStepsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	c.step = step
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for server to detect duplicated requests.
+// For example, a UUID.
+//
+// Optional, but strongly recommended.
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) RequestId(requestId string) *ProjectsHistoriesExecutionsStepsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.step)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.patch" call.
+// Exactly one of *Step or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Step.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsHistoriesExecutionsStepsPatchCall) Do(opts ...googleapi.CallOption) (*Step, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Step{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Step with the supplied partial entity.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal\n                        (e.g try to upload a duplicate xml file), if the\n                        updated step is too large (more than 10Mib)\n- NOT_FOUND - if the containing Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "toolresults.projects.histories.executions.steps.patch",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A Step id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
+	//   "request": {
+	//     "$ref": "Step"
+	//   },
+	//   "response": {
+	//     "$ref": "Step"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.publishXunitXmlFiles":
+
+type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
+	s                           *Service
+	projectId                   string
+	historyId                   string
+	executionId                 string
+	stepId                      string
+	publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// PublishXunitXmlFiles: Publish xml files to an existing Step.
+//
+// May return any of the following canonical error codes:
+//
+// - PERMISSION_DENIED - if the user is not authorized to write
+// project
+// - INVALID_ARGUMENT - if the request is malformed
+// - FAILED_PRECONDITION - if the requested state transition is
+// illegal,
+// e.g try to upload a duplicate xml file or a file too large.
+// - NOT_FOUND - if the containing Execution does not exist
+func (r *ProjectsHistoriesExecutionsStepsService) PublishXunitXmlFiles(projectId string, historyId string, executionId string, stepId string, publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
+	c := &ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	c.publishxunitxmlfilesrequest = publishxunitxmlfilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishxunitxmlfilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.publishXunitXmlFiles" call.
+// Exactly one of *Step or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Step.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) Do(opts ...googleapi.CallOption) (*Step, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Step{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Publish xml files to an existing Step.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal,\ne.g try to upload a duplicate xml file or a file too large.\n- NOT_FOUND - if the containing Execution does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.executions.steps.publishXunitXmlFiles",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A Execution id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A History id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A Project id.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A Step id.\nNote: This step must include a TestExecutionStep.\n\nRequired.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
+	//   "request": {
+	//     "$ref": "PublishXunitXmlFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Step"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.perfMetricsSummary.create":
+
+type ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall struct {
+	s                  *Service
+	projectId          string
+	historyId          string
+	executionId        string
+	stepId             string
+	perfmetricssummary *PerfMetricsSummary
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a PerfMetricsSummary resource. Returns the existing
+// one if it has
+// already been created.
+//
+// May return any of the following error code(s):
+// - NOT_FOUND - The containing Step does not exist
+func (r *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryService) Create(projectId string, historyId string, executionId string, stepId string, perfmetricssummary *PerfMetricsSummary) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	c.perfmetricssummary = perfmetricssummary
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.perfmetricssummary)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.perfMetricsSummary.create" call.
+// Exactly one of *PerfMetricsSummary or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PerfMetricsSummary.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) Do(opts ...googleapi.CallOption) (*PerfMetricsSummary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PerfMetricsSummary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a PerfMetricsSummary resource. Returns the existing one if it has\nalready been created.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The containing Step does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.executions.steps.perfMetricsSummary.create",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A tool results execution ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A tool results history ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The cloud project",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A tool results step ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
+	//   "request": {
+	//     "$ref": "PerfMetricsSummary"
+	//   },
+	//   "response": {
+	//     "$ref": "PerfMetricsSummary"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.perfSampleSeries.create":
+
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall struct {
+	s                *Service
+	projectId        string
+	historyId        string
+	executionId      string
+	stepId           string
+	perfsampleseries *PerfSampleSeries
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a PerfSampleSeries.
+//
+// May return any of the following error code(s):
+// - ALREADY_EXISTS - PerfMetricSummary already exists for the given
+// Step
+// - NOT_FOUND - The containing Step does not exist
+func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Create(projectId string, historyId string, executionId string, stepId string, perfsampleseries *PerfSampleSeries) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	c.perfsampleseries = perfsampleseries
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.perfsampleseries)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.create" call.
+// Exactly one of *PerfSampleSeries or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PerfSampleSeries.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) Do(opts ...googleapi.CallOption) (*PerfSampleSeries, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PerfSampleSeries{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a PerfSampleSeries.\n\nMay return any of the following error code(s):\n- ALREADY_EXISTS - PerfMetricSummary already exists for the given Step\n- NOT_FOUND - The containing Step does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+	//   "httpMethod": "POST",
+	//   "id": "toolresults.projects.histories.executions.steps.perfSampleSeries.create",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A tool results execution ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A tool results history ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The cloud project",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A tool results step ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+	//   "request": {
+	//     "$ref": "PerfSampleSeries"
+	//   },
+	//   "response": {
+	//     "$ref": "PerfSampleSeries"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.perfSampleSeries.get":
+
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall struct {
+	s              *Service
+	projectId      string
+	historyId      string
+	executionId    string
+	stepId         string
+	sampleSeriesId string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Get: Gets a PerfSampleSeries.
+//
+// May return any of the following error code(s):
+// - NOT_FOUND - The specified PerfSampleSeries does not exist
+func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) Get(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	c.sampleSeriesId = sampleSeriesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":      c.projectId,
+		"historyId":      c.historyId,
+		"executionId":    c.executionId,
+		"stepId":         c.stepId,
+		"sampleSeriesId": c.sampleSeriesId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.get" call.
+// Exactly one of *PerfSampleSeries or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PerfSampleSeries.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) Do(opts ...googleapi.CallOption) (*PerfSampleSeries, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PerfSampleSeries{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a PerfSampleSeries.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The specified PerfSampleSeries does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.perfSampleSeries.get",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId",
+	//     "sampleSeriesId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A tool results execution ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A tool results history ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The cloud project",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sampleSeriesId": {
+	//       "description": "A sample series id",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A tool results step ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}",
+	//   "response": {
+	//     "$ref": "PerfSampleSeries"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.perfSampleSeries.list":
+
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall struct {
+	s            *Service
+	projectId    string
+	historyId    string
+	executionId  string
+	stepId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists PerfSampleSeries for a given Step.
+//
+// The request provides an optional filter which specifies one or
+// more
+// PerfMetricsType to include in the result; if none returns all.
+// The resulting PerfSampleSeries are sorted by ids.
+//
+// May return any of the following canonical error codes:
+// - NOT_FOUND - The containing Step does not exist
+func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.historyId = historyId
+	c.executionId = executionId
+	c.stepId = stepId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specify one or more
+// PerfMetricType values such as CPU to filter the result
+//
+// Possible values:
+//   "perfMetricTypeUnspecified"
+//   "memory"
+//   "cpu"
+//   "network"
+//   "graphics"
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Filter(filter ...string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
+	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId":   c.projectId,
+		"historyId":   c.historyId,
+		"executionId": c.executionId,
+		"stepId":      c.stepId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.list" call.
+// Exactly one of *ListPerfSampleSeriesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPerfSampleSeriesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSampleSeriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPerfSampleSeriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists PerfSampleSeries for a given Step.\n\nThe request provides an optional filter which specifies one or more\nPerfMetricsType to include in the result; if none returns all.\nThe resulting PerfSampleSeries are sorted by ids.\n\nMay return any of the following canonical error codes:\n- NOT_FOUND - The containing Step does not exist",
+	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+	//   "httpMethod": "GET",
+	//   "id": "toolresults.projects.histories.executions.steps.perfSampleSeries.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "historyId",
+	//     "executionId",
+	//     "stepId"
+	//   ],
+	//   "parameters": {
+	//     "executionId": {
+	//       "description": "A tool results execution ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Specify one or more PerfMetricType values such as CPU to filter the result",
+	//       "enum": [
+	//         "perfMetricTypeUnspecified",
+	//         "memory",
+	//         "cpu",
+	//         "network",
+	//         "graphics"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "historyId": {
+	//       "description": "A tool results history ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The cloud project",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stepId": {
+	//       "description": "A tool results step ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries",
+	//   "response": {
+	//     "$ref": "ListPerfSampleSeriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.batchCreate":
+
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall struct {
 	s                             *Service
 	projectId                     string
 	historyId                     string
@@ -8270,8 +9598,8 @@ type SamplesBatchCreateCall struct {
 //
 // May return any of the following canonical error codes:
 // - NOT_FOUND - The containing PerfSampleSeries does not exist
-func (r *SamplesService) BatchCreate(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string, batchcreateperfsamplesrequest *BatchCreatePerfSamplesRequest) *SamplesBatchCreateCall {
-	c := &SamplesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) BatchCreate(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string, batchcreateperfsamplesrequest *BatchCreatePerfSamplesRequest) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.historyId = historyId
 	c.executionId = executionId
@@ -8284,7 +9612,7 @@ func (r *SamplesService) BatchCreate(projectId string, historyId string, executi
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *SamplesBatchCreateCall) Fields(s ...googleapi.Field) *SamplesBatchCreateCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -8292,23 +9620,23 @@ func (c *SamplesBatchCreateCall) Fields(s ...googleapi.Field) *SamplesBatchCreat
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *SamplesBatchCreateCall) Context(ctx context.Context) *SamplesBatchCreateCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *SamplesBatchCreateCall) Header() http.Header {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SamplesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8338,14 +9666,14 @@ func (c *SamplesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "toolresults.samples.batchCreate" call.
+// Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.batchCreate" call.
 // Exactly one of *BatchCreatePerfSamplesResponse or error will be
 // non-nil. Any non-2xx status code is an error. Response headers are in
 // either *BatchCreatePerfSamplesResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *SamplesBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreatePerfSamplesResponse, error) {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreatePerfSamplesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8379,7 +9707,7 @@ func (c *SamplesBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateP
 	//   "description": "Creates a batch of PerfSamples\n- a client can submit multiple batches of Perf Samples through repeated\ncalls to this method in order to split up a large request payload\n- duplicates and existing timestamp entries will be ignored.\n- the batch operation may partially succeed\n- the set of elements successfully inserted is returned in the response\n(omits items which already existed in the database).\n\nMay return any of the following canonical error codes:\n- NOT_FOUND - The containing PerfSampleSeries does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples:batchCreate",
 	//   "httpMethod": "POST",
-	//   "id": "toolresults.samples.batchCreate",
+	//   "id": "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.batchCreate",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "historyId",
@@ -8433,9 +9761,9 @@ func (c *SamplesBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateP
 
 }
 
-// method id "toolresults.samples.list":
+// method id "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.list":
 
-type SamplesListCall struct {
+type ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall struct {
 	s              *Service
 	projectId      string
 	historyId      string
@@ -8464,8 +9792,8 @@ type SamplesListCall struct {
 // - OUT_OF_RANGE - The specified request page_token is out of valid
 // range
 // - NOT_FOUND - The containing PerfSampleSeries does not exist
-func (r *SamplesService) List(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *SamplesListCall {
-	c := &SamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesService) List(projectId string, historyId string, executionId string, stepId string, sampleSeriesId string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
+	c := &ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.historyId = historyId
 	c.executionId = executionId
@@ -8478,14 +9806,14 @@ func (r *SamplesService) List(projectId string, historyId string, executionId st
 // size is 500 samples, and the maximum size is 5000. If
 // the page_size is greater than 5000, the effective page size will be
 // 5000
-func (c *SamplesListCall) PageSize(pageSize int64) *SamplesListCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Optional, the
 // next_page_token returned in the previous response
-func (c *SamplesListCall) PageToken(pageToken string) *SamplesListCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -8493,7 +9821,7 @@ func (c *SamplesListCall) PageToken(pageToken string) *SamplesListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *SamplesListCall) Fields(s ...googleapi.Field) *SamplesListCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -8503,7 +9831,7 @@ func (c *SamplesListCall) Fields(s ...googleapi.Field) *SamplesListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *SamplesListCall) IfNoneMatch(entityTag string) *SamplesListCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -8511,23 +9839,23 @@ func (c *SamplesListCall) IfNoneMatch(entityTag string) *SamplesListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *SamplesListCall) Context(ctx context.Context) *SamplesListCall {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *SamplesListCall) Header() http.Header {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SamplesListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8555,14 +9883,14 @@ func (c *SamplesListCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "toolresults.samples.list" call.
+// Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.list" call.
 // Exactly one of *ListPerfSamplesResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *ListPerfSamplesResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *SamplesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSamplesResponse, error) {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSamplesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8596,7 +9924,7 @@ func (c *SamplesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSamplesResp
 	//   "description": "Lists the Performance Samples of a given Sample Series\n- The list results are sorted by timestamps ascending\n- The default page size is 500 samples; and maximum size allowed 5000\n- The response token indicates the last returned PerfSample timestamp\n- When the results size exceeds the page size, submit a subsequent request\nincluding the page token to return the rest of the samples up to the\npage limit\n\nMay return any of the following canonical error codes:\n- OUT_OF_RANGE - The specified request page_token is out of valid range\n- NOT_FOUND - The containing PerfSampleSeries does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfSampleSeries/{sampleSeriesId}/samples",
 	//   "httpMethod": "GET",
-	//   "id": "toolresults.samples.list",
+	//   "id": "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.list",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "historyId",
@@ -8661,7 +9989,7 @@ func (c *SamplesListCall) Do(opts ...googleapi.CallOption) (*ListPerfSamplesResp
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *SamplesListCall) Pages(ctx context.Context, f func(*ListPerfSamplesResponse) error) error {
+func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) Pages(ctx context.Context, f func(*ListPerfSamplesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -8679,1327 +10007,9 @@ func (c *SamplesListCall) Pages(ctx context.Context, f func(*ListPerfSamplesResp
 	}
 }
 
-// method id "toolresults.steps.accessibilityClusters":
+// method id "toolresults.projects.histories.executions.steps.testCases.get":
 
-type StepsAccessibilityClustersCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// AccessibilityClusters: Lists accessibility clusters for a given
-// Step
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if an argument in the request happens to be
-//                         invalid; e.g. if the locale format is
-// incorrect
-// - NOT_FOUND - if the containing Step does not exist
-func (r *StepsService) AccessibilityClusters(name string) *StepsAccessibilityClustersCall {
-	c := &StepsAccessibilityClustersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Locale sets the optional parameter "locale": The accepted format is
-// the canonical Unicode format with hyphen as a
-// delimiter. Language must be lowercase, Language Script -
-// Capitalized,
-// Region - UPPERCASE.
-// See http://www.unicode.org/reports/tr35/#Unicode_locale_identifier
-// for
-// details.
-//
-// Required.
-func (c *StepsAccessibilityClustersCall) Locale(locale string) *StepsAccessibilityClustersCall {
-	c.urlParams_.Set("locale", locale)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsAccessibilityClustersCall) Fields(s ...googleapi.Field) *StepsAccessibilityClustersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *StepsAccessibilityClustersCall) IfNoneMatch(entityTag string) *StepsAccessibilityClustersCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsAccessibilityClustersCall) Context(ctx context.Context) *StepsAccessibilityClustersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsAccessibilityClustersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsAccessibilityClustersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/{+name}:accessibilityClusters")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.accessibilityClusters" call.
-// Exactly one of *ListStepAccessibilityClustersResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *ListStepAccessibilityClustersResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *StepsAccessibilityClustersCall) Do(opts ...googleapi.CallOption) (*ListStepAccessibilityClustersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListStepAccessibilityClustersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists accessibility clusters for a given Step\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if an argument in the request happens to be\n                        invalid; e.g. if the locale format is incorrect\n- NOT_FOUND - if the containing Step does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectsId}/histories/{historiesId}/executions/{executionsId}/steps/{stepsId}:accessibilityClusters",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.steps.accessibilityClusters",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "locale": {
-	//       "description": "The accepted format is the canonical Unicode format with hyphen as a\ndelimiter. Language must be lowercase, Language Script - Capitalized,\nRegion - UPPERCASE.\nSee http://www.unicode.org/reports/tr35/#Unicode_locale_identifier for\ndetails.\n\nRequired.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "A full resource name of the step.\nFor example, projects/my-project/histories/bh.1234567890abcdef/executions/\n1234567890123456789/steps/bs.1234567890abcdef\n\nRequired.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/histories/[^/]+/executions/[^/]+/steps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/{+name}:accessibilityClusters",
-	//   "response": {
-	//     "$ref": "ListStepAccessibilityClustersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.steps.create":
-
-type StepsCreateCall struct {
-	s           *Service
-	projectId   string
-	historyId   string
-	executionId string
-	step        *Step
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Create: Creates a Step.
-//
-// The returned Step will have the id set.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write to
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if the step is too large (more than 10Mib)
-// - NOT_FOUND - if the containing Execution does not exist
-func (r *StepsService) Create(projectId string, historyId string, executionId string, step *Step) *StepsCreateCall {
-	c := &StepsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.step = step
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": A unique request
-// ID for server to detect duplicated requests.
-// For example, a UUID.
-//
-// Optional, but strongly recommended.
-func (c *StepsCreateCall) RequestId(requestId string) *StepsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsCreateCall) Fields(s ...googleapi.Field) *StepsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsCreateCall) Context(ctx context.Context) *StepsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.step)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.create" call.
-// Exactly one of *Step or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Step.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *StepsCreateCall) Do(opts ...googleapi.CallOption) (*Step, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Step{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a Step.\n\nThe returned Step will have the id set.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the step is too large (more than 10Mib)\n- NOT_FOUND - if the containing Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.steps.create",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "Required. An Execution id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "Required. A History id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "Required. A Project id.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
-	//   "request": {
-	//     "$ref": "Step"
-	//   },
-	//   "response": {
-	//     "$ref": "Step"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.steps.get":
-
-type StepsGetCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	stepId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a Step.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - NOT_FOUND - if the Step does not exist
-func (r *StepsService) Get(projectId string, historyId string, executionId string, stepId string) *StepsGetCall {
-	c := &StepsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsGetCall) Fields(s ...googleapi.Field) *StepsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *StepsGetCall) IfNoneMatch(entityTag string) *StepsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsGetCall) Context(ctx context.Context) *StepsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.get" call.
-// Exactly one of *Step or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Step.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *StepsGetCall) Do(opts ...googleapi.CallOption) (*Step, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Step{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a Step.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Step does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.steps.get",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A Step id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
-	//   "response": {
-	//     "$ref": "Step"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.steps.getPerfMetricsSummary":
-
-type StepsGetPerfMetricsSummaryCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	stepId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetPerfMetricsSummary: Retrieves a PerfMetricsSummary.
-//
-// May return any of the following error code(s):
-// - NOT_FOUND - The specified PerfMetricsSummary does not exist
-func (r *StepsService) GetPerfMetricsSummary(projectId string, historyId string, executionId string, stepId string) *StepsGetPerfMetricsSummaryCall {
-	c := &StepsGetPerfMetricsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsGetPerfMetricsSummaryCall) Fields(s ...googleapi.Field) *StepsGetPerfMetricsSummaryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *StepsGetPerfMetricsSummaryCall) IfNoneMatch(entityTag string) *StepsGetPerfMetricsSummaryCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsGetPerfMetricsSummaryCall) Context(ctx context.Context) *StepsGetPerfMetricsSummaryCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsGetPerfMetricsSummaryCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsGetPerfMetricsSummaryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.getPerfMetricsSummary" call.
-// Exactly one of *PerfMetricsSummary or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PerfMetricsSummary.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *StepsGetPerfMetricsSummaryCall) Do(opts ...googleapi.CallOption) (*PerfMetricsSummary, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &PerfMetricsSummary{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves a PerfMetricsSummary.\n\nMay return any of the following error code(s):\n- NOT_FOUND - The specified PerfMetricsSummary does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.steps.getPerfMetricsSummary",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A tool results execution ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A tool results history ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "The cloud project",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A tool results step ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/perfMetricsSummary",
-	//   "response": {
-	//     "$ref": "PerfMetricsSummary"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.steps.list":
-
-type StepsListCall struct {
-	s            *Service
-	projectId    string
-	historyId    string
-	executionId  string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Steps for a given Execution.
-//
-// The steps are sorted by creation_time in descending order.
-// The
-// step_id key will be used to order the steps with the
-// same
-// creation_time.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to read project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if an argument in the request happens to be
-//                         invalid; e.g. if an attempt is made to list
-// the
-//                         children of a nonexistent Step
-// - NOT_FOUND - if the containing Execution does not exist
-func (r *StepsService) List(projectId string, historyId string, executionId string) *StepsListCall {
-	c := &StepsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of Steps to fetch.
-//
-// Default value: 25. The server will use this default if the field is
-// not set
-// or has a value of 0.
-func (c *StepsListCall) PageSize(pageSize int64) *StepsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A continuation
-// token to resume the query at the next item.
-func (c *StepsListCall) PageToken(pageToken string) *StepsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsListCall) Fields(s ...googleapi.Field) *StepsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *StepsListCall) IfNoneMatch(entityTag string) *StepsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsListCall) Context(ctx context.Context) *StepsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.list" call.
-// Exactly one of *ListStepsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListStepsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *StepsListCall) Do(opts ...googleapi.CallOption) (*ListStepsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListStepsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Steps for a given Execution.\n\nThe steps are sorted by creation_time in descending order. The\nstep_id key will be used to order the steps with the same\ncreation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if an argument in the request happens to be\n                        invalid; e.g. if an attempt is made to list the\n                        children of a nonexistent Step\n- NOT_FOUND - if the containing Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
-	//   "httpMethod": "GET",
-	//   "id": "toolresults.steps.list",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of Steps to fetch.\n\nDefault value: 25. The server will use this default if the field is not set\nor has a value of 0.\n\nOptional.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A continuation token to resume the query at the next item.\n\nOptional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps",
-	//   "response": {
-	//     "$ref": "ListStepsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *StepsListCall) Pages(ctx context.Context, f func(*ListStepsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "toolresults.steps.patch":
-
-type StepsPatchCall struct {
-	s           *Service
-	projectId   string
-	historyId   string
-	executionId string
-	stepId      string
-	step        *Step
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Patch: Updates an existing Step with the supplied partial
-// entity.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if the requested state transition is illegal
-//                         (e.g try to upload a duplicate xml file), if
-// the
-//                         updated step is too large (more than 10Mib)
-// - NOT_FOUND - if the containing Execution does not exist
-func (r *StepsService) Patch(projectId string, historyId string, executionId string, stepId string, step *Step) *StepsPatchCall {
-	c := &StepsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	c.step = step
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": A unique request
-// ID for server to detect duplicated requests.
-// For example, a UUID.
-//
-// Optional, but strongly recommended.
-func (c *StepsPatchCall) RequestId(requestId string) *StepsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsPatchCall) Fields(s ...googleapi.Field) *StepsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsPatchCall) Context(ctx context.Context) *StepsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.step)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.patch" call.
-// Exactly one of *Step or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Step.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *StepsPatchCall) Do(opts ...googleapi.CallOption) (*Step, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Step{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing Step with the supplied partial entity.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal\n                        (e.g try to upload a duplicate xml file), if the\n                        updated step is too large (more than 10Mib)\n- NOT_FOUND - if the containing Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "toolresults.steps.patch",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique request ID for server to detect duplicated requests.\nFor example, a UUID.\n\nOptional, but strongly recommended.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A Step id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}",
-	//   "request": {
-	//     "$ref": "Step"
-	//   },
-	//   "response": {
-	//     "$ref": "Step"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.steps.publishXunitXmlFiles":
-
-type StepsPublishXunitXmlFilesCall struct {
-	s                           *Service
-	projectId                   string
-	historyId                   string
-	executionId                 string
-	stepId                      string
-	publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest
-	urlParams_                  gensupport.URLParams
-	ctx_                        context.Context
-	header_                     http.Header
-}
-
-// PublishXunitXmlFiles: Publish xml files to an existing Step.
-//
-// May return any of the following canonical error codes:
-//
-// - PERMISSION_DENIED - if the user is not authorized to write
-// project
-// - INVALID_ARGUMENT - if the request is malformed
-// - FAILED_PRECONDITION - if the requested state transition is
-// illegal,
-// e.g try to upload a duplicate xml file or a file too large.
-// - NOT_FOUND - if the containing Execution does not exist
-func (r *StepsService) PublishXunitXmlFiles(projectId string, historyId string, executionId string, stepId string, publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest) *StepsPublishXunitXmlFilesCall {
-	c := &StepsPublishXunitXmlFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.projectId = projectId
-	c.historyId = historyId
-	c.executionId = executionId
-	c.stepId = stepId
-	c.publishxunitxmlfilesrequest = publishxunitxmlfilesrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *StepsPublishXunitXmlFilesCall) Fields(s ...googleapi.Field) *StepsPublishXunitXmlFilesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *StepsPublishXunitXmlFilesCall) Context(ctx context.Context) *StepsPublishXunitXmlFilesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *StepsPublishXunitXmlFilesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *StepsPublishXunitXmlFilesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.publishxunitxmlfilesrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"projectId":   c.projectId,
-		"historyId":   c.historyId,
-		"executionId": c.executionId,
-		"stepId":      c.stepId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "toolresults.steps.publishXunitXmlFiles" call.
-// Exactly one of *Step or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Step.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *StepsPublishXunitXmlFilesCall) Do(opts ...googleapi.CallOption) (*Step, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Step{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Publish xml files to an existing Step.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write project\n- INVALID_ARGUMENT - if the request is malformed\n- FAILED_PRECONDITION - if the requested state transition is illegal,\ne.g try to upload a duplicate xml file or a file too large.\n- NOT_FOUND - if the containing Execution does not exist",
-	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
-	//   "httpMethod": "POST",
-	//   "id": "toolresults.steps.publishXunitXmlFiles",
-	//   "parameterOrder": [
-	//     "projectId",
-	//     "historyId",
-	//     "executionId",
-	//     "stepId"
-	//   ],
-	//   "parameters": {
-	//     "executionId": {
-	//       "description": "A Execution id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "historyId": {
-	//       "description": "A History id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "projectId": {
-	//       "description": "A Project id.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "stepId": {
-	//       "description": "A Step id.\nNote: This step must include a TestExecutionStep.\n\nRequired.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}:publishXunitXmlFiles",
-	//   "request": {
-	//     "$ref": "PublishXunitXmlFilesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Step"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "toolresults.testCases.get":
-
-type TestCasesGetCall struct {
+type ProjectsHistoriesExecutionsStepsTestCasesGetCall struct {
 	s            *Service
 	projectId    string
 	historyId    string
@@ -10021,8 +10031,8 @@ type TestCasesGetCall struct {
 // project
 // - INVALID_ARGUMENT - if the request is malformed
 // - NOT_FOUND - if the containing Test Case does not exist
-func (r *TestCasesService) Get(projectId string, historyId string, executionId string, stepId string, testCaseId string) *TestCasesGetCall {
-	c := &TestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsHistoriesExecutionsStepsTestCasesService) Get(projectId string, historyId string, executionId string, stepId string, testCaseId string) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
+	c := &ProjectsHistoriesExecutionsStepsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.historyId = historyId
 	c.executionId = executionId
@@ -10034,7 +10044,7 @@ func (r *TestCasesService) Get(projectId string, historyId string, executionId s
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *TestCasesGetCall) Fields(s ...googleapi.Field) *TestCasesGetCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -10044,7 +10054,7 @@ func (c *TestCasesGetCall) Fields(s ...googleapi.Field) *TestCasesGetCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *TestCasesGetCall) IfNoneMatch(entityTag string) *TestCasesGetCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -10052,23 +10062,23 @@ func (c *TestCasesGetCall) IfNoneMatch(entityTag string) *TestCasesGetCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *TestCasesGetCall) Context(ctx context.Context) *TestCasesGetCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *TestCasesGetCall) Header() http.Header {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *TestCasesGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10096,14 +10106,14 @@ func (c *TestCasesGetCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "toolresults.testCases.get" call.
+// Do executes the "toolresults.projects.histories.executions.steps.testCases.get" call.
 // Exactly one of *TestCase or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *TestCase.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TestCasesGetCall) Do(opts ...googleapi.CallOption) (*TestCase, error) {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) Do(opts ...googleapi.CallOption) (*TestCase, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10137,7 +10147,7 @@ func (c *TestCasesGetCall) Do(opts ...googleapi.CallOption) (*TestCase, error) {
 	//   "description": "Gets details of a Test Case for a Step.\nExperimental test cases API. Still in active development.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing Test Case does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases/{testCaseId}",
 	//   "httpMethod": "GET",
-	//   "id": "toolresults.testCases.get",
+	//   "id": "toolresults.projects.histories.executions.steps.testCases.get",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "historyId",
@@ -10188,9 +10198,9 @@ func (c *TestCasesGetCall) Do(opts ...googleapi.CallOption) (*TestCase, error) {
 
 }
 
-// method id "toolresults.testCases.list":
+// method id "toolresults.projects.histories.executions.steps.testCases.list":
 
-type TestCasesListCall struct {
+type ProjectsHistoriesExecutionsStepsTestCasesListCall struct {
 	s            *Service
 	projectId    string
 	historyId    string
@@ -10211,8 +10221,8 @@ type TestCasesListCall struct {
 // project
 // - INVALID_ARGUMENT - if the request is malformed
 // - NOT_FOUND - if the containing Step does not exist
-func (r *TestCasesService) List(projectId string, historyId string, executionId string, stepId string) *TestCasesListCall {
-	c := &TestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsHistoriesExecutionsStepsTestCasesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
+	c := &ProjectsHistoriesExecutionsStepsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.historyId = historyId
 	c.executionId = executionId
@@ -10226,14 +10236,14 @@ func (r *TestCasesService) List(projectId string, historyId string, executionId 
 // Default value: 100. The server will use this default if the field is
 // not
 // set or has a value of 0.
-func (c *TestCasesListCall) PageSize(pageSize int64) *TestCasesListCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A continuation
 // token to resume the query at the next item.
-func (c *TestCasesListCall) PageToken(pageToken string) *TestCasesListCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -10241,7 +10251,7 @@ func (c *TestCasesListCall) PageToken(pageToken string) *TestCasesListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *TestCasesListCall) Fields(s ...googleapi.Field) *TestCasesListCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -10251,7 +10261,7 @@ func (c *TestCasesListCall) Fields(s ...googleapi.Field) *TestCasesListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *TestCasesListCall) IfNoneMatch(entityTag string) *TestCasesListCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -10259,23 +10269,23 @@ func (c *TestCasesListCall) IfNoneMatch(entityTag string) *TestCasesListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *TestCasesListCall) Context(ctx context.Context) *TestCasesListCall {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *TestCasesListCall) Header() http.Header {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *TestCasesListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10302,14 +10312,14 @@ func (c *TestCasesListCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "toolresults.testCases.list" call.
+// Do executes the "toolresults.projects.histories.executions.steps.testCases.list" call.
 // Exactly one of *ListTestCasesResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *ListTestCasesResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *TestCasesListCall) Do(opts ...googleapi.CallOption) (*ListTestCasesResponse, error) {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Do(opts ...googleapi.CallOption) (*ListTestCasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10343,7 +10353,7 @@ func (c *TestCasesListCall) Do(opts ...googleapi.CallOption) (*ListTestCasesResp
 	//   "description": "Lists Test Cases attached to a Step.\nExperimental test cases API. Still in active development.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the containing Step does not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/testCases",
 	//   "httpMethod": "GET",
-	//   "id": "toolresults.testCases.list",
+	//   "id": "toolresults.projects.histories.executions.steps.testCases.list",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "historyId",
@@ -10401,7 +10411,7 @@ func (c *TestCasesListCall) Do(opts ...googleapi.CallOption) (*ListTestCasesResp
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *TestCasesListCall) Pages(ctx context.Context, f func(*ListTestCasesResponse) error) error {
+func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) Pages(ctx context.Context, f func(*ListTestCasesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -10419,9 +10429,9 @@ func (c *TestCasesListCall) Pages(ctx context.Context, f func(*ListTestCasesResp
 	}
 }
 
-// method id "toolresults.thumbnails.list":
+// method id "toolresults.projects.histories.executions.steps.thumbnails.list":
 
-type ThumbnailsListCall struct {
+type ProjectsHistoriesExecutionsStepsThumbnailsListCall struct {
 	s            *Service
 	projectId    string
 	historyId    string
@@ -10441,8 +10451,8 @@ type ThumbnailsListCall struct {
 // - INVALID_ARGUMENT - if the request is malformed
 // - NOT_FOUND - if the step does not exist, or if any of the images
 //               do not exist
-func (r *ThumbnailsService) List(projectId string, historyId string, executionId string, stepId string) *ThumbnailsListCall {
-	c := &ThumbnailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsHistoriesExecutionsStepsThumbnailsService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
+	c := &ProjectsHistoriesExecutionsStepsThumbnailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.historyId = historyId
 	c.executionId = executionId
@@ -10456,14 +10466,14 @@ func (r *ThumbnailsService) List(projectId string, historyId string, executionId
 // Default value: 50. The server will use this default if the field is
 // not set
 // or has a value of 0.
-func (c *ThumbnailsListCall) PageSize(pageSize int64) *ThumbnailsListCall {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) PageSize(pageSize int64) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A continuation
 // token to resume the query at the next item.
-func (c *ThumbnailsListCall) PageToken(pageToken string) *ThumbnailsListCall {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) PageToken(pageToken string) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -10471,7 +10481,7 @@ func (c *ThumbnailsListCall) PageToken(pageToken string) *ThumbnailsListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ThumbnailsListCall) Fields(s ...googleapi.Field) *ThumbnailsListCall {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Fields(s ...googleapi.Field) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -10481,7 +10491,7 @@ func (c *ThumbnailsListCall) Fields(s ...googleapi.Field) *ThumbnailsListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ThumbnailsListCall) IfNoneMatch(entityTag string) *ThumbnailsListCall {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) IfNoneMatch(entityTag string) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -10489,23 +10499,23 @@ func (c *ThumbnailsListCall) IfNoneMatch(entityTag string) *ThumbnailsListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ThumbnailsListCall) Context(ctx context.Context) *ThumbnailsListCall {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Context(ctx context.Context) *ProjectsHistoriesExecutionsStepsThumbnailsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ThumbnailsListCall) Header() http.Header {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ThumbnailsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200514")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10532,14 +10542,14 @@ func (c *ThumbnailsListCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "toolresults.thumbnails.list" call.
+// Do executes the "toolresults.projects.histories.executions.steps.thumbnails.list" call.
 // Exactly one of *ListStepThumbnailsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListStepThumbnailsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ThumbnailsListCall) Do(opts ...googleapi.CallOption) (*ListStepThumbnailsResponse, error) {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Do(opts ...googleapi.CallOption) (*ListStepThumbnailsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -10573,7 +10583,7 @@ func (c *ThumbnailsListCall) Do(opts ...googleapi.CallOption) (*ListStepThumbnai
 	//   "description": "Lists thumbnails of images attached to a step.\n\nMay return any of the following canonical error codes:\n- PERMISSION_DENIED - if the user is not authorized to read from the\n                      project, or from any of the images\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the step does not exist, or if any of the images\n              do not exist",
 	//   "flatPath": "toolresults/v1beta3/projects/{projectId}/histories/{historyId}/executions/{executionId}/steps/{stepId}/thumbnails",
 	//   "httpMethod": "GET",
-	//   "id": "toolresults.thumbnails.list",
+	//   "id": "toolresults.projects.histories.executions.steps.thumbnails.list",
 	//   "parameterOrder": [
 	//     "projectId",
 	//     "historyId",
@@ -10631,7 +10641,7 @@ func (c *ThumbnailsListCall) Do(opts ...googleapi.CallOption) (*ListStepThumbnai
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ThumbnailsListCall) Pages(ctx context.Context, f func(*ListStepThumbnailsResponse) error) error {
+func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) Pages(ctx context.Context, f func(*ListStepThumbnailsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

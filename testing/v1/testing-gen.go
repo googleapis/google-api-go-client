@@ -1201,6 +1201,78 @@ func (s *DeviceFile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeviceIpBlock: A single device IP block
+type DeviceIpBlock struct {
+	// AddedDate: The date this block was added to Firebase Test Lab
+	AddedDate *Date `json:"addedDate,omitempty"`
+
+	// Block: An IP address block in CIDR notation eg: 34.68.194.64/29
+	Block string `json:"block,omitempty"`
+
+	// Form: Whether this block is used by physical or virtual devices
+	//
+	// Possible values:
+	//   "DEVICE_FORM_UNSPECIFIED" - Do not use.  For proto versioning only.
+	//   "VIRTUAL" - Android virtual device using Compute Engine native
+	// virtualization. Firebase
+	// Test Lab only.
+	//   "PHYSICAL" - Actual hardware.
+	//   "EMULATOR" - Android virtual device using emulator in nested
+	// virtualization. Equivalent
+	// to Android Studio.
+	Form string `json:"form,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddedDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddedDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceIpBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceIpBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceIpBlockCatalog: List of IP blocks used by the Firebase Test Lab
+type DeviceIpBlockCatalog struct {
+	// IpBlocks: The device IP blocks used by Firebase Test Lab
+	IpBlocks []*DeviceIpBlock `json:"ipBlocks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpBlocks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpBlocks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceIpBlockCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceIpBlockCatalog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Distribution: Data about the relative number of devices running
 // a
 // given configuration of the Android platform.
@@ -2544,6 +2616,10 @@ type TestEnvironmentCatalog struct {
 	// AndroidDeviceCatalog: Supported Android devices.
 	AndroidDeviceCatalog *AndroidDeviceCatalog `json:"androidDeviceCatalog,omitempty"`
 
+	// DeviceIpBlockCatalog: The IP blocks used by devices in the test
+	// environment.
+	DeviceIpBlockCatalog *DeviceIpBlockCatalog `json:"deviceIpBlockCatalog,omitempty"`
+
 	// IosDeviceCatalog: Supported iOS devices.
 	IosDeviceCatalog *IosDeviceCatalog `json:"iosDeviceCatalog,omitempty"`
 
@@ -3408,7 +3484,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3545,7 +3621,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3708,7 +3784,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3869,7 +3945,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4034,7 +4110,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4111,7 +4187,8 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	//         "ANDROID",
 	//         "IOS",
 	//         "NETWORK_CONFIGURATION",
-	//         "PROVIDED_SOFTWARE"
+	//         "PROVIDED_SOFTWARE",
+	//         "DEVICE_IP_BLOCKS"
 	//       ],
 	//       "location": "path",
 	//       "required": true,

@@ -434,13 +434,13 @@ type VolumesUseruploadedService struct {
 
 type Annotation struct {
 	// AfterSelectedText: Anchor text after excerpt. For requests, if the
-	// user bookmarked a screen
-	// that has no flowing text on it, then this field should be empty.
+	// user bookmarked a screen that has no flowing text on it, then this
+	// field should be empty.
 	AfterSelectedText string `json:"afterSelectedText,omitempty"`
 
 	// BeforeSelectedText: Anchor text before excerpt. For requests, if the
-	// user bookmarked a screen
-	// that has no flowing text on it, then this field should be empty.
+	// user bookmarked a screen that has no flowing text on it, then this
+	// field should be empty.
 	BeforeSelectedText string `json:"beforeSelectedText,omitempty"`
 
 	// ClientVersionRanges: Selection ranges sent from the client.
@@ -605,18 +605,15 @@ func (s *AnnotationCurrentVersionRanges) MarshalJSON() ([]byte, error) {
 
 type AnnotationLayerSummary struct {
 	// AllowedCharacterCount: Maximum allowed characters on this layer,
-	// especially for the "copy"
-	// layer.
+	// especially for the "copy" layer.
 	AllowedCharacterCount int64 `json:"allowedCharacterCount,omitempty"`
 
 	// LimitType: Type of limitation on this layer. "limited" or "unlimited"
-	// for the "copy"
-	// layer.
+	// for the "copy" layer.
 	LimitType string `json:"limitType,omitempty"`
 
 	// RemainingCharacterCount: Remaining allowed characters on this layer,
-	// especially for the "copy"
-	// layer.
+	// especially for the "copy" layer.
 	RemainingCharacterCount int64 `json:"remainingCharacterCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -652,13 +649,12 @@ type Annotations struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present
-	// if this request does not have more results.
+	// This will not be present if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: Total number of annotations found. This may be greater
-	// than the number of
-	// notes returned in this response if results have been paginated.
+	// than the number of notes returned in this response if results have
+	// been paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -764,8 +760,7 @@ type Annotationsdata struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present
-	// if this request does not have more results.
+	// This will not be present if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: The total number of volume annotations found.
@@ -906,8 +901,7 @@ type Bookshelf struct {
 	Access string `json:"access,omitempty"`
 
 	// Created: Created time for this bookshelf (formatted UTC timestamp
-	// with millisecond
-	// resolution).
+	// with millisecond resolution).
 	Created string `json:"created,omitempty"`
 
 	// Description: Description of this bookshelf.
@@ -926,16 +920,14 @@ type Bookshelf struct {
 	Title string `json:"title,omitempty"`
 
 	// Updated: Last modified time of this bookshelf (formatted UTC
-	// timestamp with
-	// millisecond resolution).
+	// timestamp with millisecond resolution).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeCount: Number of volumes in this bookshelf.
 	VolumeCount int64 `json:"volumeCount,omitempty"`
 
 	// VolumesLastUpdated: Last time a volume was added or removed from this
-	// bookshelf (formatted UTC
-	// timestamp with millisecond resolution).
+	// bookshelf (formatted UTC timestamp with millisecond resolution).
 	VolumesLastUpdated string `json:"volumesLastUpdated,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1092,8 +1084,7 @@ type ConcurrentAccessRestriction struct {
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
 
-	// Source: Client app identifier for verification. Download access
-	// and
+	// Source: Client app identifier for verification. Download access and
 	// client-validation only.
 	Source string `json:"source,omitempty"`
 
@@ -1130,10 +1121,9 @@ type DictionaryAnnotationdata struct {
 	// AnnotationType: The type of annotation this data is for.
 	AnnotationType string `json:"annotationType,omitempty"`
 
-	// Data: JSON encoded data for this dictionary annotation data.
-	// Emitted with name 'data' in JSON output. Either this or geo_data
-	// will
-	// be populated.
+	// Data: JSON encoded data for this dictionary annotation data. Emitted
+	// with name 'data' in JSON output. Either this or geo_data will be
+	// populated.
 	Data *Dictlayerdata `json:"data,omitempty"`
 
 	// EncodedData: Base64 encoded data for this annotation data.
@@ -1152,8 +1142,7 @@ type DictionaryAnnotationdata struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time this data was updated. (RFC 3339
-	// UTC date-time
-	// format).
+	// UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: The volume id for this data. *
@@ -1219,8 +1208,7 @@ func (s *Dictlayerdata) MarshalJSON() ([]byte, error) {
 
 type DictlayerdataCommon struct {
 	// Title: The display title and localized canonical name to use when
-	// searching for
-	// this entity on Google search.
+	// searching for this entity on Google search.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Title") to
@@ -1313,8 +1301,7 @@ type DictlayerdataDictWords struct {
 	Senses []*DictlayerdataDictWordsSenses `json:"senses,omitempty"`
 
 	// Source: The words with different meanings but not related words, e.g.
-	// "go"
-	// (game) and "go" (verb).
+	// "go" (game) and "go" (verb).
 	Source *DictlayerdataDictWordsSource `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Derivatives") to
@@ -1689,8 +1676,7 @@ func (s *DictlayerdataDictWordsSensesSynonymsSource) MarshalJSON() ([]byte, erro
 }
 
 // DictlayerdataDictWordsSource: The words with different meanings but
-// not related words, e.g. "go"
-// (game) and "go" (verb).
+// not related words, e.g. "go" (game) and "go" (verb).
 type DictlayerdataDictWordsSource struct {
 	Attribution string `json:"attribution,omitempty"`
 
@@ -1834,8 +1820,8 @@ type DownloadAccessRestriction struct {
 	DeviceAllowed bool `json:"deviceAllowed,omitempty"`
 
 	// DownloadsAcquired: If restricted, the number of content download
-	// licenses already acquired
-	// (including the requesting client, if licensed).
+	// licenses already acquired (including the requesting client, if
+	// licensed).
 	DownloadsAcquired int64 `json:"downloadsAcquired,omitempty"`
 
 	// JustAcquired: If deviceAllowed, whether access was just acquired with
@@ -1846,8 +1832,7 @@ type DownloadAccessRestriction struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MaxDownloadDevices: If restricted, the maximum number of content
-	// download licenses for this
-	// volume.
+	// download licenses for this volume.
 	MaxDownloadDevices int64 `json:"maxDownloadDevices,omitempty"`
 
 	// Message: Error/warning message.
@@ -1857,11 +1842,9 @@ type DownloadAccessRestriction struct {
 	// client-validation only.
 	Nonce string `json:"nonce,omitempty"`
 
-	// ReasonCode: Error/warning reason code.  Additional codes may be added
-	// in the future. 0
-	// OK 100   ACCESS_DENIED_PUBLISHER_LIMIT 101   ACCESS_DENIED_LIMIT
-	// 200
-	// WARNING_USED_LAST_ACCESS
+	// ReasonCode: Error/warning reason code. Additional codes may be added
+	// in the future. 0 OK 100 ACCESS_DENIED_PUBLISHER_LIMIT 101
+	// ACCESS_DENIED_LIMIT 200 WARNING_USED_LAST_ACCESS
 	ReasonCode string `json:"reasonCode,omitempty"`
 
 	// Restricted: Whether this volume has any download access restrictions.
@@ -1870,8 +1853,7 @@ type DownloadAccessRestriction struct {
 	// Signature: Response signature.
 	Signature string `json:"signature,omitempty"`
 
-	// Source: Client app identifier for verification. Download access
-	// and
+	// Source: Client app identifier for verification. Download access and
 	// client-validation only.
 	Source string `json:"source,omitempty"`
 
@@ -1937,17 +1919,11 @@ func (s *DownloadAccesses) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2034,10 +2010,9 @@ type GeoAnnotationdata struct {
 	// AnnotationType: The type of annotation this data is for.
 	AnnotationType string `json:"annotationType,omitempty"`
 
-	// Data: JSON encoded data for this geo annotation data.
-	// Emitted with name 'data' in JSON output. Either this or dict_data
-	// will
-	// be populated.
+	// Data: JSON encoded data for this geo annotation data. Emitted with
+	// name 'data' in JSON output. Either this or dict_data will be
+	// populated.
 	Data *Geolayerdata `json:"data,omitempty"`
 
 	// EncodedData: Base64 encoded data for this annotation data.
@@ -2056,8 +2031,7 @@ type GeoAnnotationdata struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time this data was updated. (RFC 3339
-	// UTC date-time
-	// format).
+	// UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: The volume id for this data. *
@@ -2132,8 +2106,7 @@ type GeolayerdataCommon struct {
 	SnippetUrl string `json:"snippetUrl,omitempty"`
 
 	// Title: The display title and localized canonical name to use when
-	// searching for
-	// this entity on Google search.
+	// searching for this entity on Google search.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Lang") to
@@ -2161,13 +2134,11 @@ func (s *GeolayerdataCommon) MarshalJSON() ([]byte, error) {
 
 type GeolayerdataGeo struct {
 	// Boundary: The boundary of the location as a set of loops containing
-	// pairs of
-	// latitude, longitude coordinates.
+	// pairs of latitude, longitude coordinates.
 	Boundary []string `json:"boundary,omitempty"`
 
 	// CachePolicy: The cache policy active for this data. EX: UNRESTRICTED,
-	// RESTRICTED,
-	// NEVER
+	// RESTRICTED, NEVER
 	CachePolicy string `json:"cachePolicy,omitempty"`
 
 	// CountryCode: The country code of the location.
@@ -2180,23 +2151,17 @@ type GeolayerdataGeo struct {
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// MapType: The type of map that should be used for this location. EX:
-	// HYBRID,
-	// ROADMAP, SATELLITE, TERRAIN
+	// HYBRID, ROADMAP, SATELLITE, TERRAIN
 	MapType string `json:"mapType,omitempty"`
 
 	// Viewport: The viewport for showing this location. This is a latitude,
-	// longitude
-	// rectangle.
+	// longitude rectangle.
 	Viewport *GeolayerdataGeoViewport `json:"viewport,omitempty"`
 
 	// Zoom: The Zoom level to use for the map. Zoom levels between 0 (the
-	// lowest zoom
-	// level, in which the entire world can be seen on one map) to 21+ (down
-	// to
-	// individual buildings). See:
-	// https:
-	// //developers.google.com/maps/documentation/staticmaps/#Zoomleve
-	// ls
+	// lowest zoom level, in which the entire world can be seen on one map)
+	// to 21+ (down to individual buildings). See: https:
+	// //developers.google.com/maps/documentation/staticmaps/#Zoomlevels
 	Zoom int64 `json:"zoom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Boundary") to
@@ -2239,8 +2204,7 @@ func (s *GeolayerdataGeo) UnmarshalJSON(data []byte) error {
 }
 
 // GeolayerdataGeoViewport: The viewport for showing this location. This
-// is a latitude, longitude
-// rectangle.
+// is a latitude, longitude rectangle.
 type GeolayerdataGeoViewport struct {
 	Hi *GeolayerdataGeoViewportHi `json:"hi,omitempty"`
 
@@ -2427,15 +2391,13 @@ type Layersummary struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time an item in this layer was
-	// updated. (RFC 3339
-	// UTC date-time format).
+	// updated. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeAnnotationsVersion: The current version of this layer's volume
-	// annotations. Note that this
-	// version applies only to the data in the
-	// books.layers.volumeAnnotations.*
-	// responses. The actual annotation data is versioned separately.
+	// annotations. Note that this version applies only to the data in the
+	// books.layers.volumeAnnotations.* responses. The actual annotation
+	// data is versioned separately.
 	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
 
 	// VolumeId: The volume id this resource is for.
@@ -2718,8 +2680,7 @@ type ReadingPosition struct {
 	PdfPosition string `json:"pdfPosition,omitempty"`
 
 	// Updated: Timestamp when this reading position was last updated
-	// (formatted UTC
-	// timestamp with millisecond resolution).
+	// (formatted UTC timestamp with millisecond resolution).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: Volume id associated with this reading position.
@@ -2809,21 +2770,18 @@ type Review struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Rating: Star rating for this review. Possible values are ONE, TWO,
-	// THREE, FOUR,
-	// FIVE or NOT_RATED.
+	// THREE, FOUR, FIVE or NOT_RATED.
 	Rating string `json:"rating,omitempty"`
 
 	// Source: Information regarding the source of this review, when the
-	// review is not
-	// from a Google Books user.
+	// review is not from a Google Books user.
 	Source *ReviewSource `json:"source,omitempty"`
 
 	// Title: Title for this review.
 	Title string `json:"title,omitempty"`
 
 	// Type: Source type for this review. Possible values are EDITORIAL,
-	// WEB_USER or
-	// GOOGLE_USER.
+	// WEB_USER or GOOGLE_USER.
 	Type string `json:"type,omitempty"`
 
 	// VolumeId: Volume that this review is for.
@@ -2881,8 +2839,7 @@ func (s *ReviewAuthor) MarshalJSON() ([]byte, error) {
 }
 
 // ReviewSource: Information regarding the source of this review, when
-// the review is not
-// from a Google Books user.
+// the review is not from a Google Books user.
 type ReviewSource struct {
 	// Description: Name of the source.
 	Description string `json:"description,omitempty"`
@@ -3389,15 +3346,12 @@ func (s *UsersettingsNotificationRewardExpirations) MarshalJSON() ([]byte, error
 
 type Volume struct {
 	// AccessInfo: Any information about a volume related to reading or
-	// obtaining that volume
-	// text. This information can depend on country (books may be public
-	// domain in
-	// one country but not in another, e.g.).
+	// obtaining that volume text. This information can depend on country
+	// (books may be public domain in one country but not in another, e.g.).
 	AccessInfo *VolumeAccessInfo `json:"accessInfo,omitempty"`
 
 	// Etag: Opaque identifier for a specific version of a volume resource.
-	// (In LITE
-	// projection)
+	// (In LITE projection)
 	Etag string `json:"etag,omitempty"`
 
 	// Id: Unique identifier for a volume. (In LITE projection.)
@@ -3414,12 +3368,9 @@ type Volume struct {
 	RecommendedInfo *VolumeRecommendedInfo `json:"recommendedInfo,omitempty"`
 
 	// SaleInfo: Any information about a volume related to the eBookstore
-	// and/or
-	// purchaseability. This information can depend on the country where
-	// the
-	// request originates from (i.e. books may not be for sale in
-	// certain
-	// countries).
+	// and/or purchaseability. This information can depend on the country
+	// where the request originates from (i.e. books may not be for sale in
+	// certain countries).
 	SaleInfo *VolumeSaleInfo `json:"saleInfo,omitempty"`
 
 	// SearchInfo: Search result information related to this volume.
@@ -3429,8 +3380,7 @@ type Volume struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// UserInfo: User specific information related to this volume. (e.g.
-	// page this user last
-	// read or whether they purchased this book)
+	// page this user last read or whether they purchased this book)
 	UserInfo *VolumeUserInfo `json:"userInfo,omitempty"`
 
 	// VolumeInfo: General volume information.
@@ -3464,21 +3414,17 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeAccessInfo: Any information about a volume related to reading
-// or obtaining that volume
-// text. This information can depend on country (books may be public
-// domain in
-// one country but not in another, e.g.).
+// or obtaining that volume text. This information can depend on country
+// (books may be public domain in one country but not in another, e.g.).
 type VolumeAccessInfo struct {
 	// AccessViewStatus: Combines the access and viewability of this volume
-	// into a single status
-	// field for this user. Values can be FULL_PURCHASED,
-	// FULL_PUBLIC_DOMAIN,
-	// SAMPLE or NONE. (In LITE projection.)
+	// into a single status field for this user. Values can be
+	// FULL_PURCHASED, FULL_PUBLIC_DOMAIN, SAMPLE or NONE. (In LITE
+	// projection.)
 	AccessViewStatus string `json:"accessViewStatus,omitempty"`
 
 	// Country: The two-letter ISO_3166-1 country code for which this access
-	// information
-	// is valid. (In LITE projection.)
+	// information is valid. (In LITE projection.)
 	Country string `json:"country,omitempty"`
 
 	// DownloadAccess: Information about a volume's download license access
@@ -3486,23 +3432,21 @@ type VolumeAccessInfo struct {
 	DownloadAccess *DownloadAccessRestriction `json:"downloadAccess,omitempty"`
 
 	// DriveImportedContentLink: URL to the Google Drive viewer if this
-	// volume is uploaded by the user by
-	// selecting the file from Google Drive.
+	// volume is uploaded by the user by selecting the file from Google
+	// Drive.
 	DriveImportedContentLink string `json:"driveImportedContentLink,omitempty"`
 
 	// Embeddable: Whether this volume can be embedded in a viewport using
-	// the Embedded
-	// Viewer API.
+	// the Embedded Viewer API.
 	Embeddable bool `json:"embeddable,omitempty"`
 
 	// Epub: Information about epub content. (In LITE projection.)
 	Epub *VolumeAccessInfoEpub `json:"epub,omitempty"`
 
 	// ExplicitOfflineLicenseManagement: Whether this volume requires that
-	// the client explicitly request offline
-	// download license rather than have it done automatically when loading
-	// the
-	// content, if the client supports it.
+	// the client explicitly request offline download license rather than
+	// have it done automatically when loading the content, if the client
+	// supports it.
 	ExplicitOfflineLicenseManagement bool `json:"explicitOfflineLicenseManagement,omitempty"`
 
 	// Pdf: Information about pdf content. (In LITE projection.)
@@ -3517,31 +3461,24 @@ type VolumeAccessInfo struct {
 	QuoteSharingAllowed bool `json:"quoteSharingAllowed,omitempty"`
 
 	// TextToSpeechPermission: Whether text-to-speech is permitted for this
-	// volume. Values can be
-	// ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or NOT_ALLOWED.
+	// volume. Values can be ALLOWED, ALLOWED_FOR_ACCESSIBILITY, or
+	// NOT_ALLOWED.
 	TextToSpeechPermission string `json:"textToSpeechPermission,omitempty"`
 
 	// ViewOrderUrl: For ordered but not yet processed orders, we give a URL
-	// that can be used
-	// to go to the appropriate Google Wallet page.
+	// that can be used to go to the appropriate Google Wallet page.
 	ViewOrderUrl string `json:"viewOrderUrl,omitempty"`
 
 	// Viewability: The read access of a volume. Possible values are
-	// PARTIAL, ALL_PAGES,
-	// NO_PAGES or UNKNOWN. This value depends on the country listed above.
-	// A
-	// value of PARTIAL means that the publisher has allowed some portion of
-	// the
-	// volume to be viewed publicly, without purchase. This can apply to
-	// eBooks
-	// as well as non-eBooks. Public domain books will always have a value
-	// of
-	// ALL_PAGES.
+	// PARTIAL, ALL_PAGES, NO_PAGES or UNKNOWN. This value depends on the
+	// country listed above. A value of PARTIAL means that the publisher has
+	// allowed some portion of the volume to be viewed publicly, without
+	// purchase. This can apply to eBooks as well as non-eBooks. Public
+	// domain books will always have a value of ALL_PAGES.
 	Viewability string `json:"viewability,omitempty"`
 
 	// WebReaderLink: URL to read this volume on the Google Books site. Link
-	// will not allow
-	// users to read non-viewable volumes.
+	// will not allow users to read non-viewable volumes.
 	WebReaderLink string `json:"webReaderLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessViewStatus") to
@@ -3579,8 +3516,7 @@ type VolumeAccessInfoEpub struct {
 	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a flowing text epub available either as public domain
-	// or for
-	// purchase. (In LITE projection.)
+	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
@@ -3617,8 +3553,7 @@ type VolumeAccessInfoPdf struct {
 	DownloadLink string `json:"downloadLink,omitempty"`
 
 	// IsAvailable: Is a scanned image pdf available either as public domain
-	// or for
-	// purchase. (In LITE projection.)
+	// or for purchase. (In LITE projection.)
 	IsAvailable bool `json:"isAvailable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcsTokenLink") to
@@ -3679,12 +3614,9 @@ type VolumeLayerInfoLayers struct {
 	LayerId string `json:"layerId,omitempty"`
 
 	// VolumeAnnotationsVersion: The current version of this layer's volume
-	// annotations. Note that this
-	// version applies only to the data in
-	// the
+	// annotations. Note that this version applies only to the data in the
 	// books.layers.volumeAnnotations.* responses. The actual annotation
-	// data
-	// is versioned separately.
+	// data is versioned separately.
 	VolumeAnnotationsVersion string `json:"volumeAnnotationsVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LayerId") to
@@ -3740,26 +3672,20 @@ func (s *VolumeRecommendedInfo) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeSaleInfo: Any information about a volume related to the
-// eBookstore and/or
-// purchaseability. This information can depend on the country where
-// the
-// request originates from (i.e. books may not be for sale in
-// certain
-// countries).
+// eBookstore and/or purchaseability. This information can depend on the
+// country where the request originates from (i.e. books may not be for
+// sale in certain countries).
 type VolumeSaleInfo struct {
 	// BuyLink: URL to purchase this volume on the Google Books site. (In
-	// LITE
-	// projection)
+	// LITE projection)
 	BuyLink string `json:"buyLink,omitempty"`
 
 	// Country: The two-letter ISO_3166-1 country code for which this sale
-	// information is
-	// valid. (In LITE projection.)
+	// information is valid. (In LITE projection.)
 	Country string `json:"country,omitempty"`
 
 	// IsEbook: Whether or not this volume is an eBook (can be added to the
-	// My eBooks
-	// shelf).
+	// My eBooks shelf).
 	IsEbook bool `json:"isEbook,omitempty"`
 
 	// ListPrice: Suggested retail price. (In LITE projection.)
@@ -3772,19 +3698,14 @@ type VolumeSaleInfo struct {
 	OnSaleDate string `json:"onSaleDate,omitempty"`
 
 	// RetailPrice: The actual selling price of the book. This is the same
-	// as the suggested
-	// retail or list price unless there are offers or discounts on this
-	// volume.
-	// (In LITE projection.)
+	// as the suggested retail or list price unless there are offers or
+	// discounts on this volume. (In LITE projection.)
 	RetailPrice *VolumeSaleInfoRetailPrice `json:"retailPrice,omitempty"`
 
 	// Saleability: Whether or not this book is available for sale or
-	// offered for free in the
-	// Google eBookstore for the country listed above. Possible values
-	// are
-	// FOR_SALE, FOR_RENTAL_ONLY, FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE,
-	// or
-	// FOR_PREORDER.
+	// offered for free in the Google eBookstore for the country listed
+	// above. Possible values are FOR_SALE, FOR_RENTAL_ONLY,
+	// FOR_SALE_AND_RENTAL, FREE, NOT_FOR_SALE, or FOR_PREORDER.
 	Saleability string `json:"saleability,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuyLink") to
@@ -4032,10 +3953,8 @@ func (s *VolumeSaleInfoOffersRetailPrice) UnmarshalJSON(data []byte) error {
 }
 
 // VolumeSaleInfoRetailPrice: The actual selling price of the book. This
-// is the same as the suggested
-// retail or list price unless there are offers or discounts on this
-// volume.
-// (In LITE projection.)
+// is the same as the suggested retail or list price unless there are
+// offers or discounts on this volume. (In LITE projection.)
 type VolumeSaleInfoRetailPrice struct {
 	// Amount: Amount in the currency listed below. (In LITE projection.)
 	Amount float64 `json:"amount,omitempty"`
@@ -4110,14 +4029,11 @@ func (s *VolumeSearchInfo) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeUserInfo: User specific information related to this volume.
-// (e.g. page this user last
-// read or whether they purchased this book)
+// (e.g. page this user last read or whether they purchased this book)
 type VolumeUserInfo struct {
 	// AcquiredTime: Timestamp when this volume was acquired by the user.
-	// (RFC 3339 UTC
-	// date-time format) Acquiring includes purchase, user upload,
-	// receiving
-	// family sharing, etc.
+	// (RFC 3339 UTC date-time format) Acquiring includes purchase, user
+	// upload, receiving family sharing, etc.
 	AcquiredTime string `json:"acquiredTime,omitempty"`
 
 	// AcquisitionType: How this volume was acquired.
@@ -4151,21 +4067,18 @@ type VolumeUserInfo struct {
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
 
 	// IsPreordered: Whether or not this volume was pre-ordered by the
-	// authenticated user
-	// making the request. (In LITE projection.)
+	// authenticated user making the request. (In LITE projection.)
 	IsPreordered bool `json:"isPreordered,omitempty"`
 
 	// IsPurchased: Whether or not this volume was purchased by the
-	// authenticated user making
-	// the request. (In LITE projection.)
+	// authenticated user making the request. (In LITE projection.)
 	IsPurchased bool `json:"isPurchased,omitempty"`
 
 	// IsUploaded: Whether or not this volume was user uploaded.
 	IsUploaded bool `json:"isUploaded,omitempty"`
 
 	// ReadingPosition: The user's current reading position in the volume,
-	// if one is available.
-	// (In LITE projection.)
+	// if one is available. (In LITE projection.)
 	ReadingPosition *ReadingPosition `json:"readingPosition,omitempty"`
 
 	// RentalPeriod: Period during this book is/was a valid rental.
@@ -4178,10 +4091,8 @@ type VolumeUserInfo struct {
 	Review *Review `json:"review,omitempty"`
 
 	// Updated: Timestamp when this volume was last modified by a user
-	// action, such as a
-	// reading position update, volume purchase or writing a review. (RFC
-	// 3339
-	// UTC date-time format).
+	// action, such as a reading position update, volume purchase or writing
+	// a review. (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
@@ -4251,15 +4162,13 @@ type VolumeUserInfoFamilySharing struct {
 	FamilyRole string `json:"familyRole,omitempty"`
 
 	// IsSharingAllowed: Whether or not this volume can be shared with the
-	// family by the user.
-	// This includes sharing eligibility of both the volume and the user.
-	// If
-	// the value is true, the user can initiate a family sharing action.
+	// family by the user. This includes sharing eligibility of both the
+	// volume and the user. If the value is true, the user can initiate a
+	// family sharing action.
 	IsSharingAllowed bool `json:"isSharingAllowed,omitempty"`
 
 	// IsSharingDisabledByFop: Whether or not sharing this volume is
-	// temporarily disabled due to
-	// issues with the Family Wallet.
+	// temporarily disabled due to issues with the Family Wallet.
 	IsSharingDisabledByFop bool `json:"isSharingDisabledByFop,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FamilyRole") to
@@ -4348,8 +4257,7 @@ type VolumeVolumeInfo struct {
 	AllowAnonLogging bool `json:"allowAnonLogging,omitempty"`
 
 	// Authors: The names of the authors and/or editors for this volume. (In
-	// LITE
-	// projection)
+	// LITE projection)
 	Authors []string `json:"authors,omitempty"`
 
 	// AverageRating: The mean review rating for this volume. (min = 1.0,
@@ -4368,41 +4276,35 @@ type VolumeVolumeInfo struct {
 	ComicsContent bool `json:"comicsContent,omitempty"`
 
 	// ContentVersion: An identifier for the version of the volume content
-	// (text & images). (In
-	// LITE projection)
+	// (text & images). (In LITE projection)
 	ContentVersion string `json:"contentVersion,omitempty"`
 
 	// Description: A synopsis of the volume. The text of the description is
-	// formatted in
-	// HTML and includes simple formatting elements, such as b, i, and br
-	// tags.
-	// (In LITE projection.)
+	// formatted in HTML and includes simple formatting elements, such as b,
+	// i, and br tags. (In LITE projection.)
 	Description string `json:"description,omitempty"`
 
 	// Dimensions: Physical dimensions of this volume.
 	Dimensions *VolumeVolumeInfoDimensions `json:"dimensions,omitempty"`
 
 	// ImageLinks: A list of image links for all the sizes that are
-	// available. (In LITE
-	// projection.)
+	// available. (In LITE projection.)
 	ImageLinks *VolumeVolumeInfoImageLinks `json:"imageLinks,omitempty"`
 
 	// IndustryIdentifiers: Industry standard identifiers for this volume.
 	IndustryIdentifiers []*VolumeVolumeInfoIndustryIdentifiers `json:"industryIdentifiers,omitempty"`
 
 	// InfoLink: URL to view information about this volume on the Google
-	// Books site. (In
-	// LITE projection)
+	// Books site. (In LITE projection)
 	InfoLink string `json:"infoLink,omitempty"`
 
 	// Language: Best language for this volume (based on content). It is the
-	// two-letter
-	// ISO 639-1 code such as 'fr', 'en', etc.
+	// two-letter ISO 639-1 code such as 'fr', 'en', etc.
 	Language string `json:"language,omitempty"`
 
 	// MainCategory: The main category to which this volume belongs. It will
-	// be the category
-	// from the categories list returned below that has the highest weight.
+	// be the category from the categories list returned below that has the
+	// highest weight.
 	MainCategory string `json:"mainCategory,omitempty"`
 
 	MaturityRating string `json:"maturityRating,omitempty"`
@@ -4522,12 +4424,10 @@ func (s *VolumeVolumeInfoDimensions) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeVolumeInfoImageLinks: A list of image links for all the sizes
-// that are available. (In LITE
-// projection.)
+// that are available. (In LITE projection.)
 type VolumeVolumeInfoImageLinks struct {
 	// ExtraLarge: Image link for extra large size (width of ~1280 pixels).
-	// (In LITE
-	// projection)
+	// (In LITE projection)
 	ExtraLarge string `json:"extraLarge,omitempty"`
 
 	// Large: Image link for large size (width of ~800 pixels). (In LITE
@@ -4543,13 +4443,11 @@ type VolumeVolumeInfoImageLinks struct {
 	Small string `json:"small,omitempty"`
 
 	// SmallThumbnail: Image link for small thumbnail size (width of ~80
-	// pixels). (In LITE
-	// projection)
+	// pixels). (In LITE projection)
 	SmallThumbnail string `json:"smallThumbnail,omitempty"`
 
 	// Thumbnail: Image link for thumbnail size (width of ~128 pixels). (In
-	// LITE
-	// projection)
+	// LITE projection)
 	Thumbnail string `json:"thumbnail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExtraLarge") to
@@ -4745,8 +4643,7 @@ type Volumeannotation struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Updated: Timestamp for the last time this anntoation was updated.
-	// (RFC 3339 UTC
-	// date-time format).
+	// (RFC 3339 UTC date-time format).
 	Updated string `json:"updated,omitempty"`
 
 	// VolumeId: The Volume this annotation is for.
@@ -4828,19 +4725,16 @@ type Volumeannotations struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token to pass in for pagination for the next page.
-	// This will not be present
-	// if this request does not have more results.
+	// This will not be present if this request does not have more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalItems: The total number of volume annotations found.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// Version: The version string for all of the volume annotations in this
-	// layer (not
-	// just the ones in this response). Note: the version string
+	// layer (not just the ones in this response). Note: the version string
 	// doesn't apply to the annotation data, just the information in this
-	// response
-	// (e.g. the location of annotations in the book).
+	// response (e.g. the location of annotations in the book).
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4878,8 +4772,8 @@ type Volumes struct {
 	Kind string `json:"kind,omitempty"`
 
 	// TotalItems: Total number of volumes found. This might be greater than
-	// the number of
-	// volumes returned in this response if results have been paginated.
+	// the number of volumes returned in this response if results have been
+	// paginated.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4911,9 +4805,8 @@ func (s *Volumes) MarshalJSON() ([]byte, error) {
 
 type Volumeseriesinfo struct {
 	// BookDisplayNumber: The display number string. This should be used
-	// only for display purposes
-	// and the actual sequence should be inferred from the below
-	// orderNumber.
+	// only for display purposes and the actual sequence should be inferred
+	// from the below orderNumber.
 	BookDisplayNumber string `json:"bookDisplayNumber,omitempty"`
 
 	// Kind: Resource type.
@@ -4957,8 +4850,7 @@ type VolumeseriesinfoVolumeSeries struct {
 	OrderNumber int64 `json:"orderNumber,omitempty"`
 
 	// SeriesBookType: The book type in the context of series. Examples -
-	// Single Issue,
-	// Collection Edition, etc.
+	// Single Issue, Collection Edition, etc.
 	SeriesBookType string `json:"seriesBookType,omitempty"`
 
 	// SeriesId: The series id.
@@ -5081,7 +4973,7 @@ func (c *BookshelvesGetCall) Header() http.Header {
 
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5244,7 +5136,7 @@ func (c *BookshelvesListCall) Header() http.Header {
 
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5423,7 +5315,7 @@ func (c *BookshelvesVolumesListCall) Header() http.Header {
 
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5611,7 +5503,7 @@ func (c *CloudloadingAddBookCall) Header() http.Header {
 
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5754,7 +5646,7 @@ func (c *CloudloadingDeleteBookCall) Header() http.Header {
 
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5877,7 +5769,7 @@ func (c *CloudloadingUpdateBookCall) Header() http.Header {
 
 func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6019,7 +5911,7 @@ func (c *DictionaryListOfflineMetadataCall) Header() http.Header {
 
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6162,7 +6054,7 @@ func (c *FamilysharingGetFamilyInfoCall) Header() http.Header {
 
 func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6254,8 +6146,7 @@ type FamilysharingShareCall struct {
 }
 
 // Share: Initiates sharing of the content with the user's family. Empty
-// response
-// indicates success.
+// response indicates success.
 func (r *FamilysharingService) Share() *FamilysharingShareCall {
 	c := &FamilysharingShareCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6307,7 +6198,7 @@ func (c *FamilysharingShareCall) Header() http.Header {
 
 func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6363,7 +6254,7 @@ func (c *FamilysharingShareCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates sharing of the content with the user's family. Empty response\nindicates success.",
+	//   "description": "Initiates sharing of the content with the user's family. Empty response indicates success.",
 	//   "flatPath": "books/v1/familysharing/share",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.share",
@@ -6406,8 +6297,7 @@ type FamilysharingUnshareCall struct {
 }
 
 // Unshare: Initiates revoking content that has already been shared with
-// the user's
-// family. Empty response indicates success.
+// the user's family. Empty response indicates success.
 func (r *FamilysharingService) Unshare() *FamilysharingUnshareCall {
 	c := &FamilysharingUnshareCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6460,7 +6350,7 @@ func (c *FamilysharingUnshareCall) Header() http.Header {
 
 func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6516,7 +6406,7 @@ func (c *FamilysharingUnshareCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates revoking content that has already been shared with the user's\nfamily. Empty response indicates success.",
+	//   "description": "Initiates revoking content that has already been shared with the user's family. Empty response indicates success.",
 	//   "flatPath": "books/v1/familysharing/unshare",
 	//   "httpMethod": "POST",
 	//   "id": "books.familysharing.unshare",
@@ -6620,7 +6510,7 @@ func (c *LayersGetCall) Header() http.Header {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6809,7 +6699,7 @@ func (c *LayersListCall) Header() http.Header {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6956,16 +6846,15 @@ func (c *LayersAnnotationDataGetCall) ContentVersion(contentVersion string) *Lay
 }
 
 // H sets the optional parameter "h": The requested pixel height for any
-// images. If height is provided width must
-// also be provided.
+// images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1
-// country code. Ex: 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
 func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -6986,8 +6875,7 @@ func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDat
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
-// images. If width is provided height must
-// also be provided.
+// images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
@@ -7030,7 +6918,7 @@ func (c *LayersAnnotationDataGetCall) Header() http.Header {
 
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7121,7 +7009,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//       "type": "string"
 	//     },
 	//     "h": {
-	//       "description": "The requested pixel height for any images. If height is provided width must\nalso be provided.",
+	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7133,7 +7021,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7155,7 +7043,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//       "type": "string"
 	//     },
 	//     "w": {
-	//       "description": "The requested pixel width for any images. If width is provided height must\nalso be provided.",
+	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7194,8 +7082,7 @@ func (r *LayersAnnotationDataService) List(volumeId string, layerId string) *Lay
 
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
-// this
-// is set.
+// this is set.
 func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId ...string) *LayersAnnotationDataListCall {
 	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
 	return c
@@ -7209,16 +7096,15 @@ func (c *LayersAnnotationDataListCall) ContentVersion(contentVersion string) *La
 }
 
 // H sets the optional parameter "h": The requested pixel height for any
-// images. If height is provided width must
-// also be provided.
+// images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1
-// country code. Ex: 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
 func (c *LayersAnnotationDataListCall) Locale(locale string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -7253,8 +7139,7 @@ func (c *LayersAnnotationDataListCall) Source(source string) *LayersAnnotationDa
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this
-// timestamp
+// timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -7262,8 +7147,7 @@ func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnno
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this
-// timestamp
+// timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -7271,8 +7155,7 @@ func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnno
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
-// images. If width is provided height must
-// also be provided.
+// images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
@@ -7315,7 +7198,7 @@ func (c *LayersAnnotationDataListCall) Header() http.Header {
 
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7388,7 +7271,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//   ],
 	//   "parameters": {
 	//     "annotationDataId": {
-	//       "description": "The list of Annotation Data Ids to retrieve. Pagination is ignored if this\nis set.",
+	//       "description": "The list of Annotation Data Ids to retrieve. Pagination is ignored if this is set.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -7399,7 +7282,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "h": {
-	//       "description": "The requested pixel height for any images. If height is provided width must\nalso be provided.",
+	//       "description": "The requested pixel height for any images. If height is provided width must also be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7411,7 +7294,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7438,12 +7321,12 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7454,7 +7337,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "w": {
-	//       "description": "The requested pixel width for any images. If width is provided height must\nalso be provided.",
+	//       "description": "The requested pixel width for any images. If width is provided height must also be provided.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7515,8 +7398,8 @@ func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, an
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1
-// country code. Ex: 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
 func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnnotationsGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -7566,7 +7449,7 @@ func (c *LayersVolumeAnnotationsGetCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7653,7 +7536,7 @@ func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7722,8 +7605,8 @@ func (c *LayersVolumeAnnotationsListCall) EndPosition(endPosition string) *Layer
 }
 
 // Locale sets the optional parameter "locale": The locale information
-// for the data. ISO-639-1 language and ISO-3166-1
-// country code. Ex: 'en_US'.
+// for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
+// 'en_US'.
 func (c *LayersVolumeAnnotationsListCall) Locale(locale string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -7744,8 +7627,8 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
-// return deleted annotations. updatedMin must be in the
-// request to use this. Defaults to false.
+// return deleted annotations. updatedMin must be in the request to use
+// this. Defaults to false.
 func (c *LayersVolumeAnnotationsListCall) ShowDeleted(showDeleted bool) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -7773,8 +7656,7 @@ func (c *LayersVolumeAnnotationsListCall) StartPosition(startPosition string) *L
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this
-// timestamp
+// timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -7782,8 +7664,7 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersV
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this
-// timestamp
+// timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -7835,7 +7716,7 @@ func (c *LayersVolumeAnnotationsListCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7929,7 +7810,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1\ncountry code. Ex: 'en_US'.",
+	//       "description": "The locale information for the data. ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7945,7 +7826,7 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Set to true to return deleted annotations. updatedMin must be in the\nrequest to use this. Defaults to false.",
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7965,12 +7846,12 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8078,7 +7959,7 @@ func (c *MyconfigGetUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8230,7 +8111,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Header() http.Header {
 
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8348,14 +8229,13 @@ func (c *MyconfigRequestAccessCall) Cpksver(cpksver string) *MyconfigRequestAcce
 }
 
 // LicenseTypes sets the optional parameter "licenseTypes": The type of
-// access license to request. If not specified, the default is
-// BOTH.
+// access license to request. If not specified, the default is BOTH.
 //
 // Possible values:
 //   "LICENSE_TYPES_UNDEFINED"
-//   "BOTH"
-//   "CONCURRENT"
-//   "DOWNLOAD"
+//   "BOTH" - Both concurrent and download licenses.
+//   "CONCURRENT" - Concurrent access license.
+//   "DOWNLOAD" - Offline download access license.
 func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("licenseTypes", licenseTypes)
 	return c
@@ -8415,7 +8295,7 @@ func (c *MyconfigRequestAccessCall) Header() http.Header {
 
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8483,12 +8363,18 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//       "type": "string"
 	//     },
 	//     "licenseTypes": {
-	//       "description": "The type of access license to request. If not specified, the default is\nBOTH.",
+	//       "description": "The type of access license to request. If not specified, the default is BOTH.",
 	//       "enum": [
 	//         "LICENSE_TYPES_UNDEFINED",
 	//         "BOTH",
 	//         "CONCURRENT",
 	//         "DOWNLOAD"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Both concurrent and download licenses.",
+	//         "Concurrent access license.",
+	//         "Offline download access license."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8535,8 +8421,7 @@ type MyconfigSyncVolumeLicensesCall struct {
 }
 
 // SyncVolumeLicenses: Request downloaded content access for specified
-// volumes on the My eBooks
-// shelf.
+// volumes on the My eBooks shelf.
 func (r *MyconfigService) SyncVolumeLicenses() *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8554,7 +8439,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Cpksver(cpksver string) *MyconfigSyncVo
 //
 // Possible values:
 //   "FEATURES_UNDEFINED"
-//   "RENTALS"
+//   "RENTALS" - Client supports rentals.
 func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
@@ -8629,7 +8514,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Header() http.Header {
 
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8685,7 +8570,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	}
 	return ret, nil
 	// {
-	//   "description": "Request downloaded content access for specified volumes on the My eBooks\nshelf.",
+	//   "description": "Request downloaded content access for specified volumes on the My eBooks shelf.",
 	//   "flatPath": "books/v1/myconfig/syncVolumeLicenses",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.syncVolumeLicenses",
@@ -8701,6 +8586,10 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//       "enum": [
 	//         "FEATURES_UNDEFINED",
 	//         "RENTALS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Client supports rentals."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -8760,10 +8649,8 @@ type MyconfigUpdateUserSettingsCall struct {
 }
 
 // UpdateUserSettings: Sets the settings for the user. If a sub-object
-// is specified, it will
-// overwrite the existing sub-object stored in the server.
-// Unspecified
-// sub-objects will retain the existing value.
+// is specified, it will overwrite the existing sub-object stored in the
+// server. Unspecified sub-objects will retain the existing value.
 func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *MyconfigUpdateUserSettingsCall {
 	c := &MyconfigUpdateUserSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.usersettings = usersettings
@@ -8797,7 +8684,7 @@ func (c *MyconfigUpdateUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8858,7 +8745,7 @@ func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*User
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the settings for the user. If a sub-object is specified, it will\noverwrite the existing sub-object stored in the server. Unspecified\nsub-objects will retain the existing value.",
+	//   "description": "Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.",
 	//   "flatPath": "books/v1/myconfig/updateUserSettings",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.updateUserSettings",
@@ -8929,7 +8816,7 @@ func (c *MylibraryAnnotationsDeleteCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9052,8 +8939,7 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 
 // ShowOnlySummaryInResponse sets the optional parameter
 // "showOnlySummaryInResponse": Requests that only the summary of the
-// specified layer be provided in the
-// response.
+// specified layer be provided in the response.
 func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySummaryInResponse bool) *MylibraryAnnotationsInsertCall {
 	c.urlParams_.Set("showOnlySummaryInResponse", fmt.Sprint(showOnlySummaryInResponse))
 	return c
@@ -9093,7 +8979,7 @@ func (c *MylibraryAnnotationsInsertCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9171,7 +9057,7 @@ func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Anno
 	//       "type": "string"
 	//     },
 	//     "showOnlySummaryInResponse": {
-	//       "description": "Requests that only the summary of the specified layer be provided in the\nresponse.",
+	//       "description": "Requests that only the summary of the specified layer be provided in the response.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9247,8 +9133,8 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
-// return deleted annotations. updatedMin must be in the
-// request to use this. Defaults to false.
+// return deleted annotations. updatedMin must be in the request to use
+// this. Defaults to false.
 func (c *MylibraryAnnotationsListCall) ShowDeleted(showDeleted bool) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -9262,8 +9148,7 @@ func (c *MylibraryAnnotationsListCall) Source(source string) *MylibraryAnnotatio
 }
 
 // UpdatedMax sets the optional parameter "updatedMax": RFC 3339
-// timestamp to restrict to items updated prior to this
-// timestamp
+// timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMax", updatedMax)
@@ -9271,8 +9156,7 @@ func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryA
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": RFC 3339
-// timestamp to restrict to items updated since this
-// timestamp
+// timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
@@ -9323,7 +9207,7 @@ func (c *MylibraryAnnotationsListCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9416,7 +9300,7 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Set to true to return deleted annotations. updatedMin must be in the\nrequest to use this. Defaults to false.",
+	//       "description": "Set to true to return deleted annotations. updatedMin must be in the request to use this. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9426,12 +9310,12 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "type": "string"
 	//     },
 	//     "updatedMax": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp\n(exclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated prior to this timestamp (exclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp\n(inclusive).",
+	//       "description": "RFC 3339 timestamp to restrict to items updated since this timestamp (inclusive).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9529,7 +9413,7 @@ func (c *MylibraryAnnotationsSummaryCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9667,7 +9551,7 @@ func (c *MylibraryAnnotationsUpdateCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9787,9 +9671,9 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string) *MylibraryBookshel
 //
 // Possible values:
 //   "REASON_UNDEFINED"
-//   "IOS_PREX"
-//   "IOS_SEARCH"
-//   "ONBOARDING"
+//   "IOS_PREX" - Volumes added from the PREX flow on iOS.
+//   "IOS_SEARCH" - Volumes added from the Search flow on iOS.
+//   "ONBOARDING" - Volumes added from the Onboarding flow.
 func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -9835,7 +9719,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9909,6 +9793,12 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*E
 	//         "IOS_PREX",
 	//         "IOS_SEARCH",
 	//         "ONBOARDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Volumes added from the PREX flow on iOS.",
+	//         "Volumes added from the Search flow on iOS.",
+	//         "Volumes added from the Onboarding flow."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -9992,7 +9882,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10094,8 +9984,7 @@ type MylibraryBookshelvesGetCall struct {
 }
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
-// authenticated
-// user.
+// authenticated user.
 func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
 	c := &MylibraryBookshelvesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10146,7 +10035,7 @@ func (c *MylibraryBookshelvesGetCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10208,7 +10097,7 @@ func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshe
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated\nuser.",
+	//   "description": "Retrieves metadata for a specific bookshelf belonging to the authenticated user.",
 	//   "flatPath": "books/v1/mylibrary/bookshelves/{shelf}",
 	//   "httpMethod": "GET",
 	//   "id": "books.mylibrary.bookshelves.get",
@@ -10300,7 +10189,7 @@ func (c *MylibraryBookshelvesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10414,8 +10303,8 @@ func (c *MylibraryBookshelvesMoveVolumeCall) VolumeId(volumeId string) *Mylibrar
 }
 
 // VolumePosition sets the optional parameter "volumePosition": Position
-// on shelf to move the item (0 puts the item before the current
-// first item, 1 puts it between the first and the second and so on.)
+// on shelf to move the item (0 puts the item before the current first
+// item, 1 puts it between the first and the second and so on.)
 func (c *MylibraryBookshelvesMoveVolumeCall) VolumePosition(volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
 	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
@@ -10448,7 +10337,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10532,7 +10421,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "volumePosition": {
-	//       "description": "Position on shelf to move the item (0 puts the item before the current\nfirst item, 1 puts it between the first and the second and so on.)",
+	//       "description": "Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10571,7 +10460,7 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string) *MylibraryBooks
 //
 // Possible values:
 //   "REASON_UNDEFINED"
-//   "ONBOARDING"
+//   "ONBOARDING" - Samples removed from the Onboarding flow.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -10618,7 +10507,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10691,6 +10580,10 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//         "REASON_UNDEFINED",
 	//         "ONBOARDING"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Samples removed from the Onboarding flow."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10759,8 +10652,8 @@ func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *Myli
 //
 // Possible values:
 //   "PROJECTION_UNDEFINED"
-//   "FULL"
-//   "LITE"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10831,7 +10724,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10918,6 +10811,11 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//         "PROJECTION_UNDEFINED",
 	//         "FULL",
 	//         "LITE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Includes all volume data.",
+	//         "Includes a subset of fields in volumeInfo and accessInfo."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -11030,7 +10928,7 @@ func (c *MylibraryReadingpositionsGetCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11150,12 +11048,12 @@ func (r *MylibraryReadingpositionsService) SetPosition(volumeId string) *Mylibra
 //
 // Possible values:
 //   "ACTION_UNDEFINED"
-//   "bookmark"
-//   "chapter"
-//   "next-page"
-//   "prev-page"
-//   "scroll"
-//   "search"
+//   "bookmark" - User chose bookmark within volume.
+//   "chapter" - User selected chapter from list.
+//   "next-page" - Next page event.
+//   "prev-page" - Previous page event.
+//   "scroll" - User navigated to page.
+//   "search" - User chose search results within volume.
 func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -11223,7 +11121,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11301,6 +11199,15 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//         "scroll",
 	//         "search"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "User chose bookmark within volume.",
+	//         "User selected chapter from list.",
+	//         "Next page event.",
+	//         "Previous page event.",
+	//         "User navigated to page.",
+	//         "User chose search results within volume."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11364,8 +11271,8 @@ func (r *NotificationService) Get() *NotificationGetCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating notification title and body.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// notification title and body.
 func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -11422,7 +11329,7 @@ func (c *NotificationGetCall) Header() http.Header {
 
 func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11488,7 +11395,7 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating notification title and body.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating notification title and body.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11574,7 +11481,7 @@ func (c *OnboardingListCategoriesCall) Header() http.Header {
 
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11689,13 +11596,13 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned volumes. Books with a
-// higher maturity rating are filtered out.
+// returned volumes. Books with a higher maturity rating are filtered
+// out.
 //
 // Possible values:
 //   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//   "MATURE"
-//   "not-mature"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11752,7 +11659,7 @@ func (c *OnboardingListCategoryVolumesCall) Header() http.Header {
 
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11829,11 +11736,16 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a\nhigher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned volumes. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
 	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
 	//         "MATURE",
 	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -11899,8 +11811,8 @@ func (r *PersonalizedstreamService) Get() *PersonalizedstreamGetCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
 func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -11908,13 +11820,13 @@ func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGet
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with
-// a higher maturity rating are filtered out.
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
 //
 // Possible values:
 //   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//   "MATURE"
-//   "not-mature"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11964,7 +11876,7 @@ func (c *PersonalizedstreamGetCall) Header() http.Header {
 
 func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12030,16 +11942,21 @@ func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discovery
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
 	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
 	//         "MATURE",
 	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12153,7 +12070,7 @@ func (c *PromoofferAcceptCall) Header() http.Header {
 
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12351,7 +12268,7 @@ func (c *PromoofferDismissCall) Header() http.Header {
 
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12550,7 +12467,7 @@ func (c *PromoofferGetCall) Header() http.Header {
 
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12717,7 +12634,7 @@ func (c *SeriesGetCall) Header() http.Header {
 
 func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12874,7 +12791,7 @@ func (c *SeriesMembershipGetCall) Header() http.Header {
 
 func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13012,14 +12929,14 @@ func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
 //
 // Possible values:
 //   "PROJECTION_UNDEFINED"
-//   "FULL"
-//   "LITE"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
 }
 
-// Source sets the optional parameter "source": string  to identify the
+// Source sets the optional parameter "source": string to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	c.urlParams_.Set("source", source)
@@ -13070,7 +12987,7 @@ func (c *VolumesGetCall) Header() http.Header {
 
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13162,11 +13079,16 @@ func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
 	//         "FULL",
 	//         "LITE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Includes all volume data.",
+	//         "Includes a subset of fields in volumeInfo and accessInfo."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "source": {
-	//       "description": "string  to identify the originator of this request.",
+	//       "description": "string to identify the originator of this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13213,7 +13135,7 @@ func (r *VolumesService) List() *VolumesListCall {
 //
 // Possible values:
 //   "DOWNLOAD_UNDEFINED"
-//   "EPUB"
+//   "EPUB" - All volumes with epub.
 func (c *VolumesListCall) Download(download string) *VolumesListCall {
 	c.urlParams_.Set("download", download)
 	return c
@@ -13223,11 +13145,11 @@ func (c *VolumesListCall) Download(download string) *VolumesListCall {
 //
 // Possible values:
 //   "FILTER_UNDEFINED"
-//   "ebooks"
-//   "free-ebooks"
-//   "full"
-//   "paid-ebooks"
-//   "partial"
+//   "ebooks" - All Google eBooks.
+//   "free-ebooks" - Google eBook with full volume text viewability.
+//   "full" - Public can view entire volume text.
+//   "paid-ebooks" - Google eBook with a price.
+//   "partial" - Public able to see parts of text.
 func (c *VolumesListCall) Filter(filter string) *VolumesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -13245,8 +13167,8 @@ func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
 //
 // Possible values:
 //   "LIBRARY_RESTRICT_UNDEFINED"
-//   "my-library"
-//   "no-restrict"
+//   "my-library" - Restrict to the user's library, any shelf.
+//   "no-restrict" - Do not restrict based on user's library.
 func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
 	c.urlParams_.Set("libraryRestrict", libraryRestrict)
 	return c
@@ -13254,13 +13176,13 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with
-// a higher maturity rating are filtered out.
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
 //
 // Possible values:
 //   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//   "MATURE"
-//   "not-mature"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13277,8 +13199,8 @@ func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
 //
 // Possible values:
 //   "ORDER_BY_UNDEFINED"
-//   "newest"
-//   "relevance"
+//   "newest" - Most recently published.
+//   "relevance" - Relevance to search terms.
 func (c *VolumesListCall) OrderBy(orderBy string) *VolumesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -13296,9 +13218,9 @@ func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
 //
 // Possible values:
 //   "PRINT_TYPE_UNDEFINED"
-//   "ALL"
-//   "BOOKS"
-//   "MAGAZINES"
+//   "ALL" - All volume content types.
+//   "BOOKS" - Just books.
+//   "MAGAZINES" - Just magazines.
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 	c.urlParams_.Set("printType", printType)
 	return c
@@ -13309,8 +13231,8 @@ func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 //
 // Possible values:
 //   "PROJECTION_UNDEFINED"
-//   "FULL"
-//   "LITE"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -13380,7 +13302,7 @@ func (c *VolumesListCall) Header() http.Header {
 
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13451,6 +13373,10 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "DOWNLOAD_UNDEFINED",
 	//         "EPUB"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "All volumes with epub."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13463,6 +13389,14 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "full",
 	//         "paid-ebooks",
 	//         "partial"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "All Google eBooks.",
+	//         "Google eBook with full volume text viewability.",
+	//         "Public can view entire volume text.",
+	//         "Google eBook with a price.",
+	//         "Public able to see parts of text."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13479,15 +13413,25 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "my-library",
 	//         "no-restrict"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Restrict to the user's library, any shelf.",
+	//         "Do not restrict based on user's library."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
 	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
 	//         "MATURE",
 	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13505,6 +13449,11 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "newest",
 	//         "relevance"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Most recently published.",
+	//         "Relevance to search terms."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13521,6 +13470,12 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "BOOKS",
 	//         "MAGAZINES"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "All volume content types.",
+	//         "Just books.",
+	//         "Just magazines."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13530,6 +13485,11 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//         "PROJECTION_UNDEFINED",
 	//         "FULL",
 	//         "LITE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Includes all volume data.",
+	//         "Includes a subset of fields in volumeInfo and accessInfo."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13590,17 +13550,17 @@ func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListC
 //
 // Possible values:
 //   "ASSOCIATION_UNDEFINED"
-//   "end-of-sample"
-//   "end-of-volume"
-//   "related-for-play"
+//   "end-of-sample" - Recommendations for display end-of-sample.
+//   "end-of-volume" - Recommendations for display end-of-volume.
+//   "related-for-play" - Related volumes for Play Store.
 func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("association", association)
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
 func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -13608,13 +13568,13 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with
-// a higher maturity rating are filtered out.
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
 //
 // Possible values:
 //   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//   "MATURE"
-//   "not-mature"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13664,7 +13624,7 @@ func (c *VolumesAssociatedListCall) Header() http.Header {
 
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13742,20 +13702,31 @@ func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, 
 	//         "end-of-volume",
 	//         "related-for-play"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Recommendations for display end-of-sample.",
+	//         "Recommendations for display end-of-volume.",
+	//         "Related volumes for Play Store."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
 	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
 	//         "MATURE",
 	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13804,14 +13775,14 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 //
 // Possible values:
 //   "ACQUIRE_METHOD_UNDEFINED"
-//   "FAMILY_SHARED"
-//   "PREORDERED"
-//   "PREVIOUSLY_RENTED"
-//   "PUBLIC_DOMAIN"
-//   "PURCHASED"
-//   "RENTED"
-//   "SAMPLE"
-//   "UPLOADED"
+//   "FAMILY_SHARED" - Books acquired via Family Sharing
+//   "PREORDERED" - Preordered books (not yet available)
+//   "PREVIOUSLY_RENTED" - User-rented books past their expiration time
+//   "PUBLIC_DOMAIN" - Public domain books
+//   "PURCHASED" - Purchased books
+//   "RENTED" - User-rented books
+//   "SAMPLE" - Sample books
+//   "UPLOADED" - User uploaded books
 func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
@@ -13825,8 +13796,8 @@ func (c *VolumesMybooksListCall) Country(country string) *VolumesMybooksListCall
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex:'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex:'en_US'. Used for generating
+// recommendations.
 func (c *VolumesMybooksListCall) Locale(locale string) *VolumesMybooksListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -13840,15 +13811,14 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 }
 
 // ProcessingState sets the optional parameter "processingState": The
-// processing state of the user uploaded volumes to be
-// returned.
+// processing state of the user uploaded volumes to be returned.
 // Applicable only if the UPLOADED is specified in the acquireMethod.
 //
 // Possible values:
 //   "PROCESSING_STATE_UNDEFINED"
-//   "COMPLETED_FAILED"
-//   "COMPLETED_SUCCESS"
-//   "RUNNING"
+//   "COMPLETED_FAILED" - The volume processing hase failed.
+//   "COMPLETED_SUCCESS" - The volume processing was completed.
+//   "RUNNING" - The volume processing is not completed.
 func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -13905,7 +13875,7 @@ func (c *VolumesMybooksListCall) Header() http.Header {
 
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13983,6 +13953,17 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//         "SAMPLE",
 	//         "UPLOADED"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Books acquired via Family Sharing",
+	//         "Preordered books (not yet available)",
+	//         "User-rented books past their expiration time",
+	//         "Public domain books",
+	//         "Purchased books",
+	//         "User-rented books",
+	//         "Sample books",
+	//         "User uploaded books"
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -13993,7 +13974,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "type": "string"
 	//     },
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14004,12 +13985,18 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "type": "integer"
 	//     },
 	//     "processingState": {
-	//       "description": "The processing state of the user uploaded volumes to be returned.\nApplicable only if the UPLOADED is specified in the acquireMethod.",
+	//       "description": "The processing state of the user uploaded volumes to be returned. Applicable only if the UPLOADED is specified in the acquireMethod.",
 	//       "enum": [
 	//         "PROCESSING_STATE_UNDEFINED",
 	//         "COMPLETED_FAILED",
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "The volume processing hase failed.",
+	//         "The volume processing was completed.",
+	//         "The volume processing is not completed."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -14055,8 +14042,8 @@ func (r *VolumesRecommendedService) List() *VolumesRecommendedListCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
 func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -14064,13 +14051,13 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 
 // MaxAllowedMaturityRating sets the optional parameter
 // "maxAllowedMaturityRating": The maximum allowed maturity rating of
-// returned recommendations. Books with
-// a higher maturity rating are filtered out.
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
 //
 // Possible values:
 //   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//   "MATURE"
-//   "not-mature"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -14120,7 +14107,7 @@ func (c *VolumesRecommendedListCall) Header() http.Header {
 
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14186,16 +14173,21 @@ func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxAllowedMaturityRating": {
-	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with\na higher maturity rating are filtered out.",
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
 	//       "enum": [
 	//         "MAX_ALLOWED_MATURITY_RATING_UNDEFINED",
 	//         "MATURE",
 	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14233,8 +14225,8 @@ func (r *VolumesRecommendedService) Rate() *VolumesRecommendedRateCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
 func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -14245,8 +14237,9 @@ func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRa
 //
 // Possible values:
 //   "RATING_UNDEFINED"
-//   "HAVE_IT"
-//   "NOT_INTERESTED"
+//   "HAVE_IT" - Rating indicating a dismissal due to ownership.
+//   "NOT_INTERESTED" - Rating indicating a negative dismissal of a
+// volume.
 func (c *VolumesRecommendedRateCall) Rating(rating string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("rating", rating)
 	return c
@@ -14293,7 +14286,7 @@ func (c *VolumesRecommendedRateCall) Header() http.Header {
 
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14357,7 +14350,7 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14367,6 +14360,11 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//         "RATING_UNDEFINED",
 	//         "HAVE_IT",
 	//         "NOT_INTERESTED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "Rating indicating a dismissal due to ownership.",
+	//         "Rating indicating a negative dismissal of a volume."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -14410,8 +14408,8 @@ func (r *VolumesUseruploadedService) List() *VolumesUseruploadedListCall {
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
-// ISO-3166-1 country code. Ex: 'en_US'. Used for
-// generating recommendations.
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
 func (c *VolumesUseruploadedListCall) Locale(locale string) *VolumesUseruploadedListCall {
 	c.urlParams_.Set("locale", locale)
 	return c
@@ -14429,9 +14427,9 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 //
 // Possible values:
 //   "PROCESSING_STATE_UNDEFINED"
-//   "COMPLETED_FAILED"
-//   "COMPLETED_SUCCESS"
-//   "RUNNING"
+//   "COMPLETED_FAILED" - The volume processing hase failed.
+//   "COMPLETED_SUCCESS" - The volume processing was completed.
+//   "RUNNING" - The volume processing is not completed.
 func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -14452,8 +14450,7 @@ func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseru
 }
 
 // VolumeId sets the optional parameter "volumeId": The ids of the
-// volumes to be returned. If not specified all that match
-// the
+// volumes to be returned. If not specified all that match the
 // processingState are returned.
 func (c *VolumesUseruploadedListCall) VolumeId(volumeId ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("volumeId", append([]string{}, volumeId...))
@@ -14497,7 +14494,7 @@ func (c *VolumesUseruploadedListCall) Header() http.Header {
 
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14563,7 +14560,7 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "locale": {
-	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for\ngenerating recommendations.",
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14581,6 +14578,12 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//         "COMPLETED_SUCCESS",
 	//         "RUNNING"
 	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "The volume processing hase failed.",
+	//         "The volume processing was completed.",
+	//         "The volume processing is not completed."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -14597,7 +14600,7 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "type": "integer"
 	//     },
 	//     "volumeId": {
-	//       "description": "The ids of the volumes to be returned. If not specified all that match the\nprocessingState are returned.",
+	//       "description": "The ids of the volumes to be returned. If not specified all that match the processingState are returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

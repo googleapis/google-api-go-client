@@ -202,6 +202,19 @@ func (s *Bin) UnmarshalJSON(data []byte) error {
 // Key: Key defines all the dimensions that identify this record as
 // unique.
 type Key struct {
+	// EffectiveConnectionType: The effective connection type is the general
+	// connection class that all
+	// users experienced for this record. This field uses the values
+	// ["offline",
+	// "slow-2G", "2G", "3G", "4G"] as specified
+	// in:
+	// https://wicg.github.io/netinfo/#effective-connection-types
+	//
+	// If the effective connection type is unspecified, then aggregated
+	// data
+	// over all effective connection types will be returned.
+	EffectiveConnectionType string `json:"effectiveConnectionType,omitempty"`
+
 	// FormFactor: The form factor is the device class that all users used
 	// to access the
 	// site for this record.
@@ -234,20 +247,22 @@ type Key struct {
 	// aggregated.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormFactor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveConnectionType") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormFactor") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EffectiveConnectionType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -336,6 +351,20 @@ func (s *Percentiles) MarshalJSON() ([]byte, error) {
 // This request includes all necessary context to load a particular
 // user experience record.
 type QueryRequest struct {
+	// EffectiveConnectionType: The effective connection type is a query
+	// dimension that specifies the
+	// effective network class that the record's data should belong to. This
+	// field
+	// uses the values ["offline", "slow-2G", "2G", "3G", "4G"] as specified
+	// in:
+	// https://wicg.github.io/netinfo/#effective-connection-types
+	//
+	// Note: If no effective connection type is specified, then a special
+	// record
+	// with aggregated data over all effective connection types will be
+	// returned.
+	EffectiveConnectionType string `json:"effectiveConnectionType,omitempty"`
+
 	// FormFactor: The form factor is a query dimension that specifies the
 	// device class that
 	// the record's data should belong to.
@@ -378,20 +407,22 @@ type QueryRequest struct {
 	//   "https://cloud.google.com/why-google-cloud/"
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormFactor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectiveConnectionType") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormFactor") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EffectiveConnectionType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -579,7 +610,7 @@ func (c *RecordsQueryRecordCall) Header() http.Header {
 
 func (c *RecordsQueryRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

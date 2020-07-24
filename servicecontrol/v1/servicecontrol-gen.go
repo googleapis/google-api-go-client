@@ -387,8 +387,8 @@ type AuditLog struct {
 	// For API calls, this should be the name of the API method.
 	// For example,
 	//
-	//     "google.datastore.v1.Datastore.RunQuery"
-	//     "google.logging.v1.LoggingService.DeleteLog"
+	//     "google.cloud.bigquery.v2.TableService.InsertTable"
+	//     "google.logging.v2.ConfigServiceV2.CreateSink"
 	MethodName string `json:"methodName,omitempty"`
 
 	// NumResponseItems: The number of items returned from a List or Query
@@ -420,8 +420,8 @@ type AuditLog struct {
 	// name.
 	// For example:
 	//
-	//     "shelves/SHELF_ID/books"
-	//     "shelves/SHELF_ID/books/BOOK_ID"
+	//     "projects/PROJECT_ID/zones/us-central1-a/instances"
+	//     "projects/PROJECT_ID/datasets/DATASET_ID"
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ResourceOriginalState: The resource's original state before mutation.
@@ -449,7 +449,7 @@ type AuditLog struct {
 	// name will be indicated in the `@type` property.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServiceData: Deprecated, use `metadata` field instead.
+	// ServiceData: Deprecated. Use the `metadata` field instead.
 	// Other service-specific data about the request, response, and
 	// other
 	// activities.
@@ -457,7 +457,7 @@ type AuditLog struct {
 
 	// ServiceName: The name of the API service performing the operation.
 	// For example,
-	// "datastore.googleapis.com".
+	// "compute.googleapis.com".
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// Status: The status of the overall operation.
@@ -3367,7 +3367,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3529,7 +3529,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3690,7 +3690,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200717")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200718")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

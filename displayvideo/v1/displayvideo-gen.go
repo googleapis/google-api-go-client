@@ -91,6 +91,10 @@ const (
 	// billing invoices
 	DisplayVideoMediaplanningScope = "https://www.googleapis.com/auth/display-video-mediaplanning"
 
+	// New Service:
+	// https://www.googleapis.com/auth/display-video-user-management
+	DisplayVideoUserManagementScope = "https://www.googleapis.com/auth/display-video-user-management"
+
 	// View and manage your reports in DoubleClick Bid Manager
 	DoubleclickbidmanagerScope = "https://www.googleapis.com/auth/doubleclickbidmanager"
 )
@@ -100,6 +104,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/display-video",
 		"https://www.googleapis.com/auth/display-video-mediaplanning",
+		"https://www.googleapis.com/auth/display-video-user-management",
 		"https://www.googleapis.com/auth/doubleclickbidmanager",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -142,6 +147,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Partners = NewPartnersService(s)
 	s.Sdfdownloadtasks = NewSdfdownloadtasksService(s)
 	s.TargetingTypes = NewTargetingTypesService(s)
+	s.Users = NewUsersService(s)
 	return s, nil
 }
 
@@ -173,6 +179,8 @@ type Service struct {
 	Sdfdownloadtasks *SdfdownloadtasksService
 
 	TargetingTypes *TargetingTypesService
+
+	Users *UsersService
 }
 
 func (s *Service) userAgent() string {
@@ -458,6 +466,7 @@ type MediaService struct {
 func NewPartnersService(s *Service) *PartnersService {
 	rs := &PartnersService{s: s}
 	rs.Channels = NewPartnersChannelsService(s)
+	rs.TargetingTypes = NewPartnersTargetingTypesService(s)
 	return rs
 }
 
@@ -465,6 +474,8 @@ type PartnersService struct {
 	s *Service
 
 	Channels *PartnersChannelsService
+
+	TargetingTypes *PartnersTargetingTypesService
 }
 
 func NewPartnersChannelsService(s *Service) *PartnersChannelsService {
@@ -485,6 +496,27 @@ func NewPartnersChannelsSitesService(s *Service) *PartnersChannelsSitesService {
 }
 
 type PartnersChannelsSitesService struct {
+	s *Service
+}
+
+func NewPartnersTargetingTypesService(s *Service) *PartnersTargetingTypesService {
+	rs := &PartnersTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewPartnersTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type PartnersTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *PartnersTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewPartnersTargetingTypesAssignedTargetingOptionsService(s *Service) *PartnersTargetingTypesAssignedTargetingOptionsService {
+	rs := &PartnersTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type PartnersTargetingTypesAssignedTargetingOptionsService struct {
 	s *Service
 }
 
@@ -527,6 +559,15 @@ func NewTargetingTypesTargetingOptionsService(s *Service) *TargetingTypesTargeti
 }
 
 type TargetingTypesTargetingOptionsService struct {
+	s *Service
+}
+
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
+}
+
+type UsersService struct {
 	s *Service
 }
 
@@ -1802,6 +1843,92 @@ func (s *AssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AssignedUserRole: A single assigned user role, which defines a user's
+// authorized interaction with a specified partner or advertiser.
+type AssignedUserRole struct {
+	// AdvertiserId: The ID of the advertiser that the assigend user role
+	// applies to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AssignedUserRoleId: Output only. The ID of the assigned user role.
+	AssignedUserRoleId string `json:"assignedUserRoleId,omitempty"`
+
+	// PartnerId: The ID of the partner that the assigned user role applies
+	// to.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// UserRole: Required. The user role to assign to a user for the entity.
+	//
+	// Possible values:
+	//   "USER_ROLE_UNSPECIFIED" - Default value when the user role is not
+	// specified or is unknown in this version.
+	//   "ADMIN" - The user can manage campaigns, creatives, insertion
+	// orders, line items, and reports for the entity. They can view and
+	// edit billing information, create or modify users, and enable or
+	// disable exchanges. This role can only be assigned for a partner
+	// entity.
+	//   "ADMIN_PARTNER_CLIENT" - The user can manage campaigns, creatives,
+	// insertion orders, line items, and reports for the entity. They can
+	// create and modify other `ADMIN_PARTNER_CLIENT` users and view billing
+	// information. They cannot view revenue models, markups, or any other
+	// reseller-sensitive fields. This role can only be assigned for a
+	// partner entity.
+	//   "STANDARD" - The user can manage campaigns, creatives, insertion
+	// orders, line items, and reports for the entity. They cannot create
+	// and modify users or view billing information.
+	//   "STANDARD_PLANNER" - The user can view all campaigns, creatives,
+	// insertion orders, line items, and reports for the entity, including
+	// all cost data. They can create and modify planning-related features,
+	// including plans and inventory.
+	//   "STANDARD_PLANNER_LIMITED" - The user can view all campaigns,
+	// creatives, insertion orders, line items, and reports for the entity.
+	// They can create or modify planning-related features, including plans
+	// and inventory. They have no access to cost data and cannot start,
+	// accept, or negotiate deals.
+	//   "STANDARD_PARTNER_CLIENT" - The user can manage campaigns,
+	// creatives, insertion orders, line items, and reports for the entity.
+	// They cannot create or modify other users or view billing information.
+	// They cannot view revenue models, markups, or any other
+	// reseller-sensitive fields. This role can only be assigned for an
+	// advertiser entity.
+	//   "READ_ONLY" - The user can only build reports and view data for the
+	// entity.
+	//   "REPORTING_ONLY" - The user can only create and manage reports.
+	//   "LIMITED_REPORTING_ONLY" - The user can only create and manage the
+	// following client-safe reports: General, Audience Performance,
+	// Cross-Partner, Keyword, Order ID, Category, and Third-Party Data
+	// Provider.
+	//   "CREATIVE" - The user can view media plan information they need to
+	// collaborate, but can't view cost-related data or Marketplace.
+	//   "CREATIVE_ADMIN" - The user can view media plan information they
+	// need to collaborate, but can't view cost-related data or Marketplace.
+	// In addition, they can add other creative admins or creative users to
+	// the entity.
+	UserRole string `json:"userRole,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssignedUserRole) MarshalJSON() ([]byte, error) {
+	type NoMethod AssignedUserRole
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AudienceGroupAssignedTargetingOptionDetails: Assigned audience group
 // targeting option details. This will be populated in the details field
 // of an AssignedTargetingOption when targeting_type is
@@ -1897,6 +2024,52 @@ type AudioVideoOffset struct {
 
 func (s *AudioVideoOffset) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioVideoOffset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuditAdvertiserResponse: Response message for
+// AdvertiserService.AuditAdvertiser.
+type AuditAdvertiserResponse struct {
+	// UsedCampaignsCount: The number of ACTIVE and PAUSED campaigns under
+	// this advertiser. These campaigns count towards the limit of 9,999
+	// campaigns per advertiser.
+	UsedCampaignsCount int64 `json:"usedCampaignsCount,omitempty,string"`
+
+	// UsedInsertionOrdersCount: The number of ACTIVE, PAUSED and DRAFT
+	// insertion orders under this advertiser. These insertion orders count
+	// towards the limit of 9,999 insertion orders per advertiser.
+	UsedInsertionOrdersCount int64 `json:"usedInsertionOrdersCount,omitempty,string"`
+
+	// UsedLineItemsCount: The number of ACTIVE, PAUSED, and DRAFT line
+	// items under this advertiser. These line items count towards the limit
+	// of 9,999 line items per advertiser.
+	UsedLineItemsCount int64 `json:"usedLineItemsCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "UsedCampaignsCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UsedCampaignsCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuditAdvertiserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditAdvertiserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2343,6 +2516,80 @@ func (s *BulkEditAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BulkEditAssignedUserRolesRequest: Request message for
+// BulkEditAssignedUserRoles.
+type BulkEditAssignedUserRolesRequest struct {
+	// CreatedAssignedUserRoles: The assigned user roles to create in batch,
+	// specified as a list of AssignedUserRoles.
+	CreatedAssignedUserRoles []*AssignedUserRole `json:"createdAssignedUserRoles,omitempty"`
+
+	// DeletedAssignedUserRoles: The assigned user roles to delete in batch,
+	// specified as a list of assigned_user_role_ids. The format of
+	// assigned_user_role_id is `entityType-entityid`, for example
+	// `partner-123`.
+	DeletedAssignedUserRoles []string `json:"deletedAssignedUserRoles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedUserRoles") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditAssignedUserRolesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAssignedUserRolesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditAssignedUserRolesResponse: Response message for
+// BulkEditAssignedUserRoles.
+type BulkEditAssignedUserRolesResponse struct {
+	// CreatedAssignedUserRoles: The list of assigned user roles that have
+	// been successfully created. This list will be absent if empty.
+	CreatedAssignedUserRoles []*AssignedUserRole `json:"createdAssignedUserRoles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedUserRoles") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditAssignedUserRolesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAssignedUserRolesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BulkEditLineItemAssignedTargetingOptionsRequest: Request message for
 // BulkEditLineItemAssignedTargetingOptions.
 type BulkEditLineItemAssignedTargetingOptionsRequest struct {
@@ -2480,6 +2727,78 @@ type BulkEditNegativeKeywordsResponse struct {
 
 func (s *BulkEditNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditNegativeKeywordsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditPartnerAssignedTargetingOptionsRequest: Request message for
+// BulkEditPartnerAssignedTargetingOptions.
+type BulkEditPartnerAssignedTargetingOptionsRequest struct {
+	// CreateRequests: The assigned targeting options to create in batch,
+	// specified as a list of `CreateAssignedTargetingOptionsRequest`.
+	// Supported targeting types: * `TARGETING_TYPE_CHANNEL`
+	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
+
+	// DeleteRequests: The assigned targeting options to delete in batch,
+	// specified as a list of `DeleteAssignedTargetingOptionsRequest`.
+	// Supported targeting types: * `TARGETING_TYPE_CHANNEL`
+	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateRequests") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditPartnerAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditPartnerAssignedTargetingOptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkEditPartnerAssignedTargetingOptionsResponse struct {
+	// CreatedAssignedTargetingOptions: The list of assigned targeting
+	// options that have been successfully created. This list will be absent
+	// if empty.
+	CreatedAssignedTargetingOptions []*AssignedTargetingOption `json:"createdAssignedTargetingOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditPartnerAssignedTargetingOptionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5453,6 +5772,142 @@ type ExchangeAssignedTargetingOptionDetails struct {
 
 func (s *ExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeConfig: Settings that control which exchanges are enabled for
+// a partner.
+type ExchangeConfig struct {
+	// EnabledExchanges: All enabled exchanges in the partner. Duplicate
+	// enabled exchanges will be ignored.
+	EnabledExchanges []*ExchangeConfigEnabledExchange `json:"enabledExchanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnabledExchanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledExchanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeConfigEnabledExchange: An enabled exchange in the partner.
+type ExchangeConfigEnabledExchange struct {
+	// Exchange: The enabled exchange.
+	//
+	// Possible values:
+	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
+	// this version.
+	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
+	//   "EXCHANGE_APPNEXUS" - AppNexus.
+	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
+	//   "EXCHANGE_ADFORM" - Adform.
+	//   "EXCHANGE_ADMETA" - Admeta.
+	//   "EXCHANGE_ADMIXER" - Admixer.
+	//   "EXCHANGE_ADSMOGO" - AdsMogo.
+	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
+	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
+	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
+	// from Yahoo!.
+	//   "EXCHANGE_CADREON" - Cadreon.
+	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
+	//   "EXCHANGE_FIVE" - Five.
+	//   "EXCHANGE_FLUCT" - Fluct.
+	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
+	//   "EXCHANGE_GENIEE" - Geniee.
+	//   "EXCHANGE_GUMGUM" - GumGum.
+	//   "EXCHANGE_IMOBILE" - i-mobile.
+	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
+	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
+	//   "EXCHANGE_INDEX" - Index Exchange.
+	//   "EXCHANGE_KARGO" - Kargo.
+	//   "EXCHANGE_MICROAD" - MicroAd.
+	//   "EXCHANGE_MOPUB" - MoPub.
+	//   "EXCHANGE_NEND" - Nend.
+	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
+	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
+	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
+	//   "EXCHANGE_OOYALA" - Ooyala.
+	//   "EXCHANGE_OPENX" - OpenX.
+	//   "EXCHANGE_PERMODO" - Permodo.
+	//   "EXCHANGE_PLATFORMONE" - Platform One.
+	//   "EXCHANGE_PLATFORMID" - PlatformId.
+	//   "EXCHANGE_PUBMATIC" - PubMatic.
+	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
+	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
+	//   "EXCHANGE_RUBICON" - Rubicon.
+	//   "EXCHANGE_SMARTCLIP" - SmartClip.
+	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
+	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
+	//   "EXCHANGE_SOVRN" - Sovrn.
+	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
+	//   "EXCHANGE_STROER" - Ströer SSP.
+	//   "EXCHANGE_TEADSTV" - TeadsTv.
+	//   "EXCHANGE_TELARIA" - Telaria.
+	//   "EXCHANGE_TVN" - TVN.
+	//   "EXCHANGE_UNITED" - United.
+	//   "EXCHANGE_YIELDLAB" - Yieldlab.
+	//   "EXCHANGE_YIELDMO" - Yieldmo.
+	//   "EXCHANGE_UNRULYX" - UnrulyX
+	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_TRITON" - Triton.
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift
+	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_INMOBI" - InMobi.
+	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_AJA" - Aja.
+	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
+	//   "EXCHANGE_WAZE" - Waze.
+	Exchange string `json:"exchange,omitempty"`
+
+	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
+	// The field is only relevant when Google Ad Manager is the enabled
+	// exchange.
+	GoogleAdManagerAgencyId string `json:"googleAdManagerAgencyId,omitempty"`
+
+	// GoogleAdManagerBuyerNetworkId: Output only. Network ID of Google Ad
+	// Manager. The field is only relevant when Google Ad Manager is the
+	// enabled exchange.
+	GoogleAdManagerBuyerNetworkId string `json:"googleAdManagerBuyerNetworkId,omitempty"`
+
+	// SeatId: Output only. Seat ID of the enabled exchange.
+	SeatId string `json:"seatId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exchange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exchange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeConfigEnabledExchange) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeConfigEnabledExchange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8666,6 +9121,86 @@ func (s *ListNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListPartnerAssignedTargetingOptionsResponse: Response message for
+// ListPartnerAssignedTargetingOptions.
+type ListPartnerAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// ListPartnerAssignedTargetingOptionsRequest to fetch the next page of
+	// results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPartnerAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPartnersResponse: Response message for ListPartners.
+type ListPartnersResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListPartners` method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Partners: The list of partners. This list will be absent if empty.
+	Partners []*Partner `json:"partners,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPartnersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPartnersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSitesResponse: Response message for SiteService.ListSites.
 type ListSitesResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass
@@ -8738,6 +9273,44 @@ type ListTargetingOptionsResponse struct {
 
 func (s *ListTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListUsersResponse: Response message for ListUsers.
+type ListUsersResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListUsers` method to retrieve the next page of results. This token
+	// will be absent if there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Users: The list of users. This list will be absent if empty.
+	Users []*User `json:"users,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUsersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8883,6 +9456,41 @@ type MaximizeSpendBidStrategy struct {
 
 func (s *MaximizeSpendBidStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaximizeSpendBidStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MeasurementConfig: Measurement settings of a partner.
+type MeasurementConfig struct {
+	// Dv360ToCmCostReportingEnabled: Whether or not to report DV360 cost to
+	// CM.
+	Dv360ToCmCostReportingEnabled bool `json:"dv360ToCmCostReportingEnabled,omitempty"`
+
+	// Dv360ToCmDataSharingEnabled: Whether or not to include DV360 data in
+	// CM data transfer reports.
+	Dv360ToCmDataSharingEnabled bool `json:"dv360ToCmDataSharingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "Dv360ToCmCostReportingEnabled") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "Dv360ToCmCostReportingEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MeasurementConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MeasurementConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9570,6 +10178,112 @@ func (s *ParentalStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Partner: A single partner in Display & Video 360 (DV360).
+type Partner struct {
+	// AdServerConfig: Ad server related settings of the partner.
+	AdServerConfig *PartnerAdServerConfig `json:"adServerConfig,omitempty"`
+
+	// DataAccessConfig: Settings that control how partner data may be
+	// accessed.
+	DataAccessConfig *PartnerDataAccessConfig `json:"dataAccessConfig,omitempty"`
+
+	// DisplayName: The display name of the partner. Must be UTF-8 encoded
+	// with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Output only. The status of the partner.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// ExchangeConfig: Settings that control which exchanges are enabled for
+	// the partner.
+	ExchangeConfig *ExchangeConfig `json:"exchangeConfig,omitempty"`
+
+	// GeneralConfig: General settings of the partner.
+	GeneralConfig *PartnerGeneralConfig `json:"generalConfig,omitempty"`
+
+	// Name: Output only. The resource name of the partner.
+	Name string `json:"name,omitempty"`
+
+	// PartnerId: Output only. The unique ID of the partner. Assigned by the
+	// system.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// UpdateTime: Output only. The timestamp when the partner was last
+	// updated. Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdServerConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdServerConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Partner) MarshalJSON() ([]byte, error) {
+	type NoMethod Partner
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerAdServerConfig: Ad server related settings of a partner.
+type PartnerAdServerConfig struct {
+	// MeasurementConfig: Measurement settings of a partner.
+	MeasurementConfig *MeasurementConfig `json:"measurementConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MeasurementConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MeasurementConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerAdServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerAdServerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartnerCost: Settings that control a partner cost. A partner cost is
 // any type of expense involved in running a campaign, other than the
 // costs of purchasing impressions (which is called the media cost) and
@@ -9699,6 +10413,69 @@ type PartnerCost struct {
 
 func (s *PartnerCost) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerCost
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerDataAccessConfig: Settings that control how partner related
+// data may be accessed.
+type PartnerDataAccessConfig struct {
+	// SdfConfig: Structured Data Files (SDF) settings for the partner. The
+	// SDF configuration for the partner.
+	SdfConfig *SdfConfig `json:"sdfConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdfConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdfConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerDataAccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerDataAccessConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerGeneralConfig: General settings of a partner.
+type PartnerGeneralConfig struct {
+	// CurrencyCode: Immutable. Partner's currency in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// TimeZone: Immutable. The standard TZ database name of the partner's
+	// time zone. For example, `America/New_York`. See more at:
+	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerGeneralConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerGeneralConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11211,6 +11988,56 @@ func (s *UrlAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// User: A single user in Display & Video 360.
+type User struct {
+	// AssignedUserRoles: The assigned user roles. Required in CreateUser.
+	// Output only in UpdateUser. Can only be updated through
+	// BulkEditAssignedUserRoles.
+	AssignedUserRoles []*AssignedUserRole `json:"assignedUserRoles,omitempty"`
+
+	// DisplayName: Required. The display name of the user. Must be UTF-8
+	// encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: Required. Immutable. The email address used to identify the
+	// user.
+	Email string `json:"email,omitempty"`
+
+	// Name: Output only. The resource name of the user.
+	Name string `json:"name,omitempty"`
+
+	// UserId: Output only. The unique ID of the user. Assigned by the
+	// system.
+	UserId int64 `json:"userId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AssignedUserRoles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedUserRoles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *User) MarshalJSON() ([]byte, error) {
+	type NoMethod User
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserRewardedContentAssignedTargetingOptionDetails: User rewarded
 // content targeting option details. This will be populated in the
 // user_rewarded_content_details field when targeting_type is
@@ -11512,6 +12339,169 @@ func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "displayvideo.advertisers.audit":
+
+type AdvertisersAuditCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Audit: Audits an advertiser. Returns the counts of used entities per
+// resource type under the advertiser provided. Used entities count
+// towards their [respective resource limit]:
+// (https://support.google.com/displayvideo/answer/6071450?hl=en)
+func (r *AdvertisersService) Audit(advertiserId int64) *AdvertisersAuditCall {
+	c := &AdvertisersAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": The specific fields
+// to return. If no mask is specified, all fields in the response proto
+// will be filled. Valid values are: * usedLineItemsCount *
+// usedInsertionOrdersCount * usedCampaignsCount
+func (c *AdvertisersAuditCall) ReadMask(readMask string) *AdvertisersAuditCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersAuditCall) Fields(s ...googleapi.Field) *AdvertisersAuditCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersAuditCall) IfNoneMatch(entityTag string) *AdvertisersAuditCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersAuditCall) Context(ctx context.Context) *AdvertisersAuditCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersAuditCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAuditCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}:audit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.audit" call.
+// Exactly one of *AuditAdvertiserResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AuditAdvertiserResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersAuditCall) Do(opts ...googleapi.CallOption) (*AuditAdvertiserResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AuditAdvertiserResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Audits an advertiser. Returns the counts of used entities per resource type under the advertiser provided. Used entities count towards their [respective resource limit]: (https://support.google.com/displayvideo/answer/6071450?hl=en)",
+	//   "flatPath": "v1/advertisers/{advertisersId}:audit",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.audit",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to audit.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. The specific fields to return. If no mask is specified, all fields in the response proto will be filled. Valid values are: * usedLineItemsCount * usedInsertionOrdersCount * usedCampaignsCount",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}:audit",
+	//   "response": {
+	//     "$ref": "AuditAdvertiserResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.bulkEditAdvertiserAssignedTargetingOptions":
 
 type AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall struct {
@@ -11563,7 +12553,7 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11759,7 +12749,7 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11939,7 +12929,7 @@ func (c *AdvertisersCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12066,7 +13056,7 @@ func (c *AdvertisersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12208,7 +13198,7 @@ func (c *AdvertisersGetCall) Header() http.Header {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12402,7 +13392,7 @@ func (c *AdvertisersListCall) Header() http.Header {
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12581,7 +13571,7 @@ func (c *AdvertisersPatchCall) Header() http.Header {
 
 func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12770,7 +13760,7 @@ func (c *AdvertisersAssetsUploadCall) Header() http.Header {
 
 func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12952,7 +13942,7 @@ func (c *AdvertisersCampaignsCreateCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13096,7 +14086,7 @@ func (c *AdvertisersCampaignsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13251,7 +14241,7 @@ func (c *AdvertisersCampaignsGetCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13453,7 +14443,7 @@ func (c *AdvertisersCampaignsListCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13642,7 +14632,7 @@ func (c *AdvertisersCampaignsPatchCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13808,7 +14798,7 @@ func (c *AdvertisersChannelsCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13973,7 +14963,7 @@ func (c *AdvertisersChannelsGetCall) Header() http.Header {
 
 func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14183,7 +15173,7 @@ func (c *AdvertisersChannelsListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14383,7 +15373,7 @@ func (c *AdvertisersChannelsPatchCall) Header() http.Header {
 
 func (c *AdvertisersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14549,7 +15539,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14708,7 +15698,7 @@ func (c *AdvertisersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14873,7 +15863,7 @@ func (c *AdvertisersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15088,7 +16078,7 @@ func (c *AdvertisersChannelsSitesListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15283,7 +16273,7 @@ func (c *AdvertisersCreativesCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15427,7 +16417,7 @@ func (c *AdvertisersCreativesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15581,7 +16571,7 @@ func (c *AdvertisersCreativesGetCall) Header() http.Header {
 
 func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15810,7 +16800,7 @@ func (c *AdvertisersCreativesListCall) Header() http.Header {
 
 func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15998,7 +16988,7 @@ func (c *AdvertisersCreativesPatchCall) Header() http.Header {
 
 func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16156,7 +17146,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16300,7 +17290,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16455,7 +17445,7 @@ func (c *AdvertisersInsertionOrdersGetCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16659,7 +17649,7 @@ func (c *AdvertisersInsertionOrdersListCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16847,7 +17837,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17011,7 +18001,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17223,7 +18213,7 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17414,7 +18404,7 @@ func (c *AdvertisersLineItemsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17558,7 +18548,7 @@ func (c *AdvertisersLineItemsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17712,7 +18702,7 @@ func (c *AdvertisersLineItemsGetCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17838,15 +18828,20 @@ func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineI
 // of one or more restrictions. * Restrictions can be combined by `AND`
 // or `OR` logical operators. A sequence of restrictions implicitly uses
 // `AND`. * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`. * Supported fields: -
-// `campaignId` - `insertionOrderId` - `entityStatus` - `lineItemType`
-// Examples: * All line items under an insertion order:
-// `insertionOrderId="1234" * All `ENTITY_STATUS_ACTIVE` or
-// `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line
-// items under an advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// * The operator used on `flight.dateRange.endDate` must be LESS THAN
+// (<). * The operators used on all other fields must be `EQUALS (=)`. *
+// Supported fields: - `campaignId` - `insertionOrderId` -
+// `entityStatus` - `lineItemType` - `flight.dateRange.endDate` (input
+// formatted as YYYY-MM-DD) Examples: * All line items under an
+// insertion order: `insertionOrderId="1234" * All
+// `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and
+// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED") AND
-// lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT" The length of this
-// field should be no more than 500 characters.
+// lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT" * All line items whose
+// flight dates end before March 28, 2019:
+// `flight.dateRange.endDate<"2019-03-28" The length of this field
+// should be no more than 500 characters.
 func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -17919,7 +18914,7 @@ func (c *AdvertisersLineItemsListCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17998,7 +18993,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `campaignId` - `insertionOrderId` - `entityStatus` - `lineItemType` Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `flight.dateRange.endDate` must be LESS THAN (\u003c). * The operators used on all other fields must be `EQUALS (=)`. * Supported fields: - `campaignId` - `insertionOrderId` - `entityStatus` - `lineItemType` - `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18107,7 +19102,7 @@ func (c *AdvertisersLineItemsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18269,7 +19264,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18513,7 +19508,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18769,7 +19764,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Head
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19072,7 +20067,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Hea
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19352,7 +20347,7 @@ func (c *AdvertisersLocationListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19504,7 +20499,7 @@ func (c *AdvertisersLocationListsGetCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19701,7 +20696,7 @@ func (c *AdvertisersLocationListsListCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19889,7 +20884,7 @@ func (c *AdvertisersLocationListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20052,7 +21047,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Header() http.He
 
 func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20205,7 +21200,7 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20357,7 +21352,7 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20560,7 +21555,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Header() http.Header
 
 func (c *AdvertisersLocationListsAssignedLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20747,7 +21742,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20889,7 +21884,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21044,7 +22039,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21217,7 +22212,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21395,7 +22390,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21559,7 +22554,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Header() h
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21711,7 +22706,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21863,7 +22858,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22066,7 +23061,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Header() http.
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22257,7 +23252,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22489,7 +23484,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22733,7 +23728,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Header() http
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23021,7 +24016,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Header() htt
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23313,7 +24308,7 @@ func (c *CombinedAudiencesGetCall) Header() http.Header {
 
 func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23525,7 +24520,7 @@ func (c *CombinedAudiencesListCall) Header() http.Header {
 
 func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23718,7 +24713,7 @@ func (c *CustomListsGetCall) Header() http.Header {
 
 func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23917,7 +24912,7 @@ func (c *CustomListsListCall) Header() http.Header {
 
 func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24113,7 +25108,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24328,7 +25323,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24522,7 +25517,7 @@ func (c *FloodlightGroupsGetCall) Header() http.Header {
 
 func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24679,7 +25674,7 @@ func (c *FloodlightGroupsPatchCall) Header() http.Header {
 
 func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24854,7 +25849,7 @@ func (c *GoogleAudiencesGetCall) Header() http.Header {
 
 func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25066,7 +26061,7 @@ func (c *GoogleAudiencesListCall) Header() http.Header {
 
 func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25259,7 +26254,7 @@ func (c *InventorySourceGroupsCreateCall) Header() http.Header {
 
 func (c *InventorySourceGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25413,7 +26408,7 @@ func (c *InventorySourceGroupsDeleteCall) Header() http.Header {
 
 func (c *InventorySourceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25584,7 +26579,7 @@ func (c *InventorySourceGroupsGetCall) Header() http.Header {
 
 func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25796,7 +26791,7 @@ func (c *InventorySourceGroupsListCall) Header() http.Header {
 
 func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25998,7 +26993,7 @@ func (c *InventorySourceGroupsPatchCall) Header() http.Header {
 
 func (c *InventorySourceGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26162,7 +27157,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Header() htt
 
 func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26323,7 +27318,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26494,7 +27489,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26718,7 +27713,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Header() http.He
 
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26926,7 +27921,7 @@ func (c *InventorySourcesGetCall) Header() http.Header {
 
 func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27138,7 +28133,7 @@ func (c *InventorySourcesListCall) Header() http.Header {
 
 func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27326,7 +28321,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27433,6 +28428,513 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 
 }
 
+// method id "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions":
+
+type PartnersBulkEditPartnerAssignedTargetingOptionsCall struct {
+	s                                              *Service
+	partnerId                                      int64
+	bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// BulkEditPartnerAssignedTargetingOptions: Bulk edits targeting options
+// under a single partner. The operation will delete the assigned
+// targeting options provided in
+// BulkEditPartnerAssignedTargetingOptionsRequest.delete_requests and
+// then create the assigned targeting options provided in
+// BulkEditPartnerAssignedTargetingOptionsRequest.create_requests .
+func (r *PartnersService) BulkEditPartnerAssignedTargetingOptions(partnerId int64, bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c := &PartnersBulkEditPartnerAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.bulkeditpartnerassignedtargetingoptionsrequest = bulkeditpartnerassignedtargetingoptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Context(ctx context.Context) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkeditpartnerassignedtargetingoptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}:bulkEditPartnerAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions" call.
+// Exactly one of *BulkEditPartnerAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkEditPartnerAssignedTargetingOptionsResponse.ServerResponse.Header
+//  or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkEditPartnerAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkEditPartnerAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk edits targeting options under a single partner. The operation will delete the assigned targeting options provided in BulkEditPartnerAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditPartnerAssignedTargetingOptionsRequest.create_requests .",
+	//   "flatPath": "v1/partners/{partnersId}:bulkEditPartnerAssignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "partnerId"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}:bulkEditPartnerAssignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "BulkEditPartnerAssignedTargetingOptionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkEditPartnerAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.get":
+
+type PartnersGetCall struct {
+	s            *Service
+	partnerId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a partner.
+func (r *PartnersService) Get(partnerId int64) *PartnersGetCall {
+	c := &PartnersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersGetCall) Fields(s ...googleapi.Field) *PartnersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersGetCall) IfNoneMatch(entityTag string) *PartnersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersGetCall) Context(ctx context.Context) *PartnersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.get" call.
+// Exactly one of *Partner or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Partner.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PartnersGetCall) Do(opts ...googleapi.CallOption) (*Partner, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Partner{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a partner.",
+	//   "flatPath": "v1/partners/{partnersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.get",
+	//   "parameterOrder": [
+	//     "partnerId"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}",
+	//   "response": {
+	//     "$ref": "Partner"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.list":
+
+type PartnersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists partners that are accessible to the current user. The
+// order is defined by the order_by parameter.
+func (r *PartnersService) List() *PartnersListCall {
+	c := &PartnersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// partner properties. Supported syntax: * Filter expressions are made
+// up of one or more restrictions. * Restrictions can be combined by
+// `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// fields: - `entityStatus` Examples: * All active partners:
+// `entityStatus="ENTITY_STATUS_ACTIVE" The length of this field should
+// be no more than 500 characters.
+func (c *PartnersListCall) Filter(filter string) *PartnersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// "desc" should be added to the field name. For example, `displayName
+// desc`.
+func (c *PartnersListCall) OrderBy(orderBy string) *PartnersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+func (c *PartnersListCall) PageSize(pageSize int64) *PartnersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListPartners` method. If not specified, the first page of results
+// will be returned.
+func (c *PartnersListCall) PageToken(pageToken string) *PartnersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersListCall) Fields(s ...googleapi.Field) *PartnersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersListCall) IfNoneMatch(entityTag string) *PartnersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersListCall) Context(ctx context.Context) *PartnersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.list" call.
+// Exactly one of *ListPartnersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPartnersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPartnersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists partners that are accessible to the current user. The order is defined by the order_by parameter.",
+	//   "flatPath": "v1/partners",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by partner properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `entityStatus` Examples: * All active partners: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListPartners` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners",
+	//   "response": {
+	//     "$ref": "ListPartnersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersListCall) Pages(ctx context.Context, f func(*ListPartnersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.partners.channels.create":
 
 type PartnersChannelsCreateCall struct {
@@ -27487,7 +28989,7 @@ func (c *PartnersChannelsCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27652,7 +29154,7 @@ func (c *PartnersChannelsGetCall) Header() http.Header {
 
 func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27862,7 +29364,7 @@ func (c *PartnersChannelsListCall) Header() http.Header {
 
 func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28062,7 +29564,7 @@ func (c *PartnersChannelsPatchCall) Header() http.Header {
 
 func (c *PartnersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28228,7 +29730,7 @@ func (c *PartnersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28387,7 +29889,7 @@ func (c *PartnersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28552,7 +30054,7 @@ func (c *PartnersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28767,7 +30269,7 @@ func (c *PartnersChannelsSitesListCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28915,6 +30417,1042 @@ func (c *PartnersChannelsSitesListCall) Pages(ctx context.Context, f func(*ListS
 	}
 }
 
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.create":
+
+type PartnersTargetingTypesAssignedTargetingOptionsCreateCall struct {
+	s                       *Service
+	partnerId               int64
+	targetingType           string
+	assignedtargetingoption *AssignedTargetingOption
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Assigns a targeting option to a partner. Returns the assigned
+// targeting option if successful.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Create(partnerId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedtargetingoption = assignedtargetingoption
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.assignedtargetingoption)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":     strconv.FormatInt(c.partnerId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.create" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Assigns a targeting option to a partner. Returns the assigned targeting option if successful.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.create",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete":
+
+type PartnersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
+	s                         *Service
+	partnerId                 int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an assigned targeting option from a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Delete(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":                 strconv.FormatInt(c.partnerId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an assigned targeting option from a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. The ID of the assigned targeting option to delete.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.get":
+
+type PartnersTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	partnerId                 int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Get(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":                 strconv.FormatInt(c.partnerId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this partner that identifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.list":
+
+type PartnersTargetingTypesAssignedTargetingOptionsListCall struct {
+	s             *Service
+	partnerId     int64
+	targetingType string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists the targeting options assigned to a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) List(partnerId int64, targetingType string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
+// AssignedTargetingOption with ID 123456
+// `assignedTargetingOptionId="123456" The length of this field should
+// be no more than 500 characters.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListPartnerAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":     strconv.FormatInt(c.partnerId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListPartnerAssignedTargetingOptionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListPartnerAssignedTargetingOptionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListPartnerAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPartnerAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOption with ID 123456 `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListPartnerAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListPartnerAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListPartnerAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.sdfdownloadtasks.create":
 
 type SdfdownloadtasksCreateCall struct {
@@ -28967,7 +31505,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29105,7 +31643,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29259,7 +31797,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29546,7 +32084,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29761,4 +32299,938 @@ func (c *TargetingTypesTargetingOptionsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "displayvideo.users.bulkEditAssignedUserRoles":
+
+type UsersBulkEditAssignedUserRolesCall struct {
+	s                                *Service
+	userId                           int64
+	bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// BulkEditAssignedUserRoles: Bulk edits user roles for a user. The
+// operation will delete the assigned user roles provided in
+// BulkEditAssignedUserRolesRequest.deleted_assigned_user_roles and then
+// assign the user roles provided in
+// BulkEditAssignedUserRolesRequest.created_assigned_user_roles.
+func (r *UsersService) BulkEditAssignedUserRoles(userId int64, bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest) *UsersBulkEditAssignedUserRolesCall {
+	c := &UsersBulkEditAssignedUserRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.bulkeditassigneduserrolesrequest = bulkeditassigneduserrolesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersBulkEditAssignedUserRolesCall) Fields(s ...googleapi.Field) *UsersBulkEditAssignedUserRolesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersBulkEditAssignedUserRolesCall) Context(ctx context.Context) *UsersBulkEditAssignedUserRolesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersBulkEditAssignedUserRolesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersBulkEditAssignedUserRolesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkeditassigneduserrolesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}:bulkEditAssignedUserRoles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.bulkEditAssignedUserRoles" call.
+// Exactly one of *BulkEditAssignedUserRolesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BulkEditAssignedUserRolesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersBulkEditAssignedUserRolesCall) Do(opts ...googleapi.CallOption) (*BulkEditAssignedUserRolesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkEditAssignedUserRolesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk edits user roles for a user. The operation will delete the assigned user roles provided in BulkEditAssignedUserRolesRequest.deleted_assigned_user_roles and then assign the user roles provided in BulkEditAssignedUserRolesRequest.created_assigned_user_roles.",
+	//   "flatPath": "v1/users/{usersId}:bulkEditAssignedUserRoles",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.users.bulkEditAssignedUserRoles",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to which the assigned user roles belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}:bulkEditAssignedUserRoles",
+	//   "request": {
+	//     "$ref": "BulkEditAssignedUserRolesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkEditAssignedUserRolesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.create":
+
+type UsersCreateCall struct {
+	s          *Service
+	user       *User
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new user. Returns the newly created user if
+// successful.
+func (r *UsersService) Create(user *User) *UsersCreateCall {
+	c := &UsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.user = user
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersCreateCall) Fields(s ...googleapi.Field) *UsersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersCreateCall) Context(ctx context.Context) *UsersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.create" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new user. Returns the newly created user if successful.",
+	//   "flatPath": "v1/users",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.users.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/users",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.delete":
+
+type UsersDeleteCall struct {
+	s          *Service
+	userId     int64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a user.
+func (r *UsersService) Delete(userId int64) *UsersDeleteCall {
+	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a user.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.users.delete",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.get":
+
+type UsersGetCall struct {
+	s            *Service
+	userId       int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a user.
+func (r *UsersService) Get(userId int64) *UsersGetCall {
+	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersGetCall) IfNoneMatch(entityTag string) *UsersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.get" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a user.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.users.get",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.list":
+
+type UsersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists users that are accessible to the current user. If two
+// users have user roles on the same partner or advertiser, they can
+// access each other.
+func (r *UsersService) List() *UsersListCall {
+	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by user
+// properties. Supported syntax: * Filter expressions are made up of one
+// or more restrictions. * Restrictions can be combined by the logical
+// operator `AND`. * A restriction has the form of `{field} {operator}
+// {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
+// The operator must be `CONTAINS (:)` for the following fields: -
+// `displayName` - `email` * The operator must be `EQUALS (=)` for the
+// following fields: - `assignedUserRole.userRole` -
+// `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` -
+// `assignedUserRole.entityType`: A synthetic field of AssignedUserRole
+// used for filtering. Identifies the type of entity to which the user
+// role is assigned. Valid values are `Partner` and `Advertiser`. -
+// `assignedUserRole.parentPartnerId`: A synthetic field of
+// AssignedUserRole used for filtering. Identifies the parent partner of
+// the entity to which the user role is assigned." Examples: * The user
+// with displayName containing `foo`: `displayName:"foo" * The user
+// with email containing `bar`: `email:"bar" * All users with standard
+// user roles: `assignedUserRole.userRole="STANDARD" * All users with
+// user roles for partner 123: `assignedUserRole.partnerId="123" * All
+// users with user roles for advertiser 123:
+// `assignedUserRole.advertiserId="123" * All users with partner level
+// user roles: `entityType="PARTNER" * All users with user roles for
+// partner 123 and advertisers under partner 123:
+// `parentPartnerId="123" The length of this field should be no more
+// than 500 characters.
+func (c *UsersListCall) Filter(filter string) *UsersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. For
+// example, `displayName desc`.
+func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+func (c *UsersListCall) PageSize(pageSize int64) *UsersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListUsers` method. If not specified, the first page of results
+// will be returned.
+func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersListCall) IfNoneMatch(entityTag string) *UsersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersListCall) Context(ctx context.Context) *UsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.list" call.
+// Exactly one of *ListUsersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListUsersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists users that are accessible to the current user. If two users have user roles on the same partner or advertiser, they can access each other.",
+	//   "flatPath": "v1/users",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.users.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by user properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following fields: - `displayName` - `email` * The operator must be `EQUALS (=)` for the following fields: - `assignedUserRole.userRole` - `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` - `assignedUserRole.entityType`: A synthetic field of AssignedUserRole used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. - `assignedUserRole.parentPartnerId`: A synthetic field of AssignedUserRole used for filtering. Identifies the parent partner of the entity to which the user role is assigned.\" Examples: * The user with displayName containing `foo`: `displayName:\"foo\"` * The user with email containing `bar`: `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListUsers` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users",
+	//   "response": {
+	//     "$ref": "ListUsersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersListCall) Pages(ctx context.Context, f func(*ListUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.users.patch":
+
+type UsersPatchCall struct {
+	s          *Service
+	userId     int64
+	user       *User
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing user. Returns the updated user if
+// successful.
+func (r *UsersService) Patch(userId int64, user *User) *UsersPatchCall {
+	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.user = user
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *UsersPatchCall) UpdateMask(updateMask string) *UsersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPatchCall) Fields(s ...googleapi.Field) *UsersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersPatchCall) Context(ctx context.Context) *UsersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.patch" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing user. Returns the updated user if successful.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.users.patch",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "Output only. The unique ID of the user. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
 }

@@ -206,7 +206,8 @@ type Aggregation struct {
 	// seconds. If a per-series aligner other than ALIGN_NONE is specified,
 	// this field is required or an error is returned. If no per-series
 	// aligner is specified, or the aligner ALIGN_NONE is specified, then
-	// this field is ignored.
+	// this field is ignored.The maximum value of the alignment_period is 2
+	// years, or 104 weeks.
 	AlignmentPeriod string `json:"alignmentPeriod,omitempty"`
 
 	// CrossSeriesReducer: The reduction operation to be used to combine
@@ -1818,7 +1819,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1961,7 +1962,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2107,7 +2108,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2273,7 +2274,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2445,7 +2446,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

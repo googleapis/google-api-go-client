@@ -182,18 +182,15 @@ type Availability struct {
 	AvailabilityTimestamp int64 `json:"availabilityTimestamp,omitempty,string"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,
-	// DoubleClick Search
-	// Floodlight activity ID).
+	// DoubleClick Search Floodlight activity ID).
 	SegmentationId int64 `json:"segmentationId,omitempty,string"`
 
 	// SegmentationName: The friendly segmentation identifier (for example,
-	// DoubleClick Search
-	// Floodlight activity name).
+	// DoubleClick Search Floodlight activity name).
 	SegmentationName string `json:"segmentationName,omitempty"`
 
 	// SegmentationType: The segmentation type that this availability is for
-	// (its default value is
-	// `FLOODLIGHT`).
+	// (its default value is `FLOODLIGHT`).
 	SegmentationType string `json:"segmentationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -235,33 +232,26 @@ type Conversion struct {
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
 	// AttributionModel: Available to advertisers only after contacting
-	// DoubleClick Search customer
-	// support.
+	// DoubleClick Search customer support.
 	AttributionModel string `json:"attributionModel,omitempty"`
 
 	// CampaignId: DS campaign ID.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
-	// Channel: Sales channel for the product. Acceptable values are:
-	// <ul>
-	// <li>"local": a physical store</li> <li>"online":
-	// an online store</li> </ul>
+	// Channel: Sales channel for the product. Acceptable values are: -
+	// "local": a physical store - "online": an online store
 	Channel string `json:"channel,omitempty"`
 
 	// ClickId: DS click ID for the conversion.
 	ClickId string `json:"clickId,omitempty"`
 
 	// ConversionId: For offline conversions, advertisers provide this ID.
-	// Advertisers can
-	// specify any ID that is meaningful to them. Each conversion in a
-	// request
-	// must specify a unique ID, and the combination of ID and timestamp
-	// must be
-	// unique amongst all conversions within the advertiser.<br> For
-	// online
-	// conversions, DS copies the `dsConversionId` or
-	// `floodlightOrderId` into this property depending on the
-	// advertiser's Floodlight instructions.
+	// Advertisers can specify any ID that is meaningful to them. Each
+	// conversion in a request must specify a unique ID, and the combination
+	// of ID and timestamp must be unique amongst all conversions within the
+	// advertiser. For online conversions, DS copies the `dsConversionId` or
+	// `floodlightOrderId` into this property depending on the advertiser's
+	// Floodlight instructions.
 	ConversionId string `json:"conversionId,omitempty"`
 
 	// ConversionModifiedTimestamp: The time at which the conversion was
@@ -273,21 +263,18 @@ type Conversion struct {
 	ConversionTimestamp string `json:"conversionTimestamp,omitempty"`
 
 	// CountMillis: Available to advertisers only after contacting
-	// DoubleClick Search customer
-	// support.
+	// DoubleClick Search customer support.
 	CountMillis int64 `json:"countMillis,omitempty,string"`
 
 	// CriterionId: DS criterion (keyword) ID.
 	CriterionId int64 `json:"criterionId,omitempty,string"`
 
 	// CurrencyCode: The currency code for the conversion's revenue. Should
-	// be in ISO 4217
-	// alphabetic (3-char) format.
+	// be in ISO 4217 alphabetic (3-char) format.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// CustomDimension: Custom dimensions for the conversion, which can be
-	// used to filter data in a
-	// report.
+	// used to filter data in a report.
 	CustomDimension []*CustomDimension `json:"customDimension,omitempty"`
 
 	// CustomMetric: Custom metrics for the conversion.
@@ -308,13 +295,11 @@ type Conversion struct {
 	FloodlightOrderId string `json:"floodlightOrderId,omitempty"`
 
 	// InventoryAccountId: ID that DS generates and uses to uniquely
-	// identify the inventory account
-	// that contains the product.
+	// identify the inventory account that contains the product.
 	InventoryAccountId int64 `json:"inventoryAccountId,omitempty,string"`
 
 	// ProductCountry: The country registered for the Merchant Center feed
-	// that contains the
-	// product. Use an ISO 3166 code to specify a country.
+	// that contains the product. Use an ISO 3166 code to specify a country.
 	ProductCountry string `json:"productCountry,omitempty"`
 
 	// ProductGroupId: DS product group ID.
@@ -324,55 +309,44 @@ type Conversion struct {
 	ProductId string `json:"productId,omitempty"`
 
 	// ProductLanguage: The language registered for the Merchant Center feed
-	// that contains the
-	// product. Use an ISO 639 code to specify a language.
+	// that contains the product. Use an ISO 639 code to specify a language.
 	ProductLanguage string `json:"productLanguage,omitempty"`
 
 	// QuantityMillis: The quantity of this conversion, in millis.
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
 
 	// RevenueMicros: The revenue amount of this `TRANSACTION` conversion,
-	// in micros
-	// (value multiplied by 1000000, no decimal). For example, to specify
-	// a
-	// revenue value of "10"  enter "10000000" (10 million) in your request.
+	// in micros (value multiplied by 1000000, no decimal). For example, to
+	// specify a revenue value of "10" enter "10000000" (10 million) in your
+	// request.
 	RevenueMicros string `json:"revenueMicros,omitempty"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,
-	// DoubleClick Search
-	// Floodlight activity ID).
+	// DoubleClick Search Floodlight activity ID).
 	SegmentationId int64 `json:"segmentationId,omitempty,string"`
 
 	// SegmentationName: The friendly segmentation identifier (for example,
-	// DoubleClick Search
-	// Floodlight activity name).
+	// DoubleClick Search Floodlight activity name).
 	SegmentationName string `json:"segmentationName,omitempty"`
 
 	// SegmentationType: The segmentation type of this conversion (for
-	// example,
-	// `FLOODLIGHT`).
+	// example, `FLOODLIGHT`).
 	SegmentationType string `json:"segmentationType,omitempty"`
 
-	// State: The state of the conversion, that is, either `ACTIVE`
-	// or
+	// State: The state of the conversion, that is, either `ACTIVE` or
 	// `REMOVED`. Note: state DELETED is deprecated.
 	State string `json:"state,omitempty"`
 
 	// StoreId: The ID of the local store for which the product was
-	// advertised. Applicable
-	// only when the channel is "local".
+	// advertised. Applicable only when the channel is "local".
 	StoreId string `json:"storeId,omitempty"`
 
-	// Type: The type of the conversion, that is, either `ACTION`
-	// or
-	// `TRANSACTION`. An `ACTION` conversion is an action by
-	// the user that has no monetarily quantifiable value, while
-	// a
-	// `TRANSACTION` conversion is an action that does have a
-	// monetarily quantifiable value. Examples are email list
-	// signups
-	// (`ACTION`) versus ecommerce purchases
-	// (`TRANSACTION`).
+	// Type: The type of the conversion, that is, either `ACTION` or
+	// `TRANSACTION`. An `ACTION` conversion is an action by the user that
+	// has no monetarily quantifiable value, while a `TRANSACTION`
+	// conversion is an action that does have a monetarily quantifiable
+	// value. Examples are email list signups (`ACTION`) versus ecommerce
+	// purchases (`TRANSACTION`).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdGroupId") to
@@ -404,8 +378,7 @@ type ConversionList struct {
 	Conversion []*Conversion `json:"conversion,omitempty"`
 
 	// Kind: Identifies this as a ConversionList resource. Value: the fixed
-	// string
-	// <code>doubleclicksearch#conversionList</code>.
+	// string doubleclicksearch#conversionList.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -512,32 +485,27 @@ func (s *CustomMetric) UnmarshalJSON(data []byte) error {
 }
 
 // Report: A DoubleClick Search report. This object contains the report
-// request, some
-// report metadata such as currency code, and the generated report rows
-// or
-// report files.
+// request, some report metadata such as currency code, and the
+// generated report rows or report files.
 type Report struct {
 	// Files: Asynchronous report only. Contains a list of generated report
-	// files once
-	// the report has successfully completed.
+	// files once the report has successfully completed.
 	Files []*ReportFiles `json:"files,omitempty"`
 
 	// Id: Asynchronous report only. Id of the report.
 	Id string `json:"id,omitempty"`
 
 	// IsReportReady: Asynchronous report only. True if and only if the
-	// report has completed
-	// successfully and the report files are ready to be downloaded.
+	// report has completed successfully and the report files are ready to
+	// be downloaded.
 	IsReportReady bool `json:"isReportReady,omitempty"`
 
-	// Kind: Identifies this as a Report resource. Value: the fixed
-	// string
+	// Kind: Identifies this as a Report resource. Value: the fixed string
 	// `doubleclicksearch#report`.
 	Kind string `json:"kind,omitempty"`
 
 	// Request: The request that created the report. Optional fields not
-	// specified in the
-	// original request are filled with default values.
+	// specified in the original request are filled with default values.
 	Request *ReportRequest `json:"request,omitempty"`
 
 	// RowCount: The number of report rows generated by the report, not
@@ -548,17 +516,14 @@ type Report struct {
 	Rows []googleapi.RawMessage `json:"rows,omitempty"`
 
 	// StatisticsCurrencyCode: The currency code of all monetary values
-	// produced in the report, including
-	// values that are set by users (e.g., keyword bid settings) and
-	// metrics
-	// (e.g., cost and revenue). The currency code of a report is determined
-	// by
-	// the `statisticsCurrency` field of the report request.
+	// produced in the report, including values that are set by users (e.g.,
+	// keyword bid settings) and metrics (e.g., cost and revenue). The
+	// currency code of a report is determined by the `statisticsCurrency`
+	// field of the report request.
 	StatisticsCurrencyCode string `json:"statisticsCurrencyCode,omitempty"`
 
 	// StatisticsTimeZone: If all statistics of the report are sourced from
-	// the same time zone, this
-	// would be it. Otherwise the field is unset.
+	// the same time zone, this would be it. Otherwise the field is unset.
 	StatisticsTimeZone string `json:"statisticsTimeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -626,74 +591,54 @@ type ReportApiColumnSpec struct {
 	ColumnName string `json:"columnName,omitempty"`
 
 	// CustomDimensionName: Segments a report by a custom dimension. The
-	// report must be scoped to an
-	// advertiser or lower, and the custom dimension must already be set up
-	// in
-	// DoubleClick Search. The custom dimension name, which appears in
-	// DoubleClick
-	// Search, is case sensitive.\
-	// If used in a conversion report, returns the
-	// value of the specified custom dimension for the given conversion, if
-	// set.
-	// This column does not segment the conversion report.
+	// report must be scoped to an advertiser or lower, and the custom
+	// dimension must already be set up in DoubleClick Search. The custom
+	// dimension name, which appears in DoubleClick Search, is case
+	// sensitive.\ If used in a conversion report, returns the value of the
+	// specified custom dimension for the given conversion, if set. This
+	// column does not segment the conversion report.
 	CustomDimensionName string `json:"customDimensionName,omitempty"`
 
 	// CustomMetricName: Name of a custom metric to include in the report.
-	// The report must be scoped
-	// to an advertiser or lower, and the custom metric must already be set
-	// up in
-	// DoubleClick Search. The custom metric name, which appears in
-	// DoubleClick
-	// Search, is case sensitive.
+	// The report must be scoped to an advertiser or lower, and the custom
+	// metric must already be set up in DoubleClick Search. The custom
+	// metric name, which appears in DoubleClick Search, is case sensitive.
 	CustomMetricName string `json:"customMetricName,omitempty"`
 
 	// EndDate: Inclusive day in YYYY-MM-DD format. When provided, this
-	// overrides the
-	// overall time range of the report for this column only. Must be
-	// provided
-	// together with `startDate`.
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with `startDate`.
 	EndDate string `json:"endDate,omitempty"`
 
 	// GroupByColumn: Synchronous report only. Set to `true` to group by
-	// this column.
-	// Defaults to `false`.
+	// this column. Defaults to `false`.
 	GroupByColumn bool `json:"groupByColumn,omitempty"`
 
 	// HeaderText: Text used to identify this column in the report output;
-	// defaults to
-	// `columnName` or `savedColumnName` when not specified.
+	// defaults to `columnName` or `savedColumnName` when not specified.
 	// This can be used to prevent collisions between DoubleClick Search
-	// columns
-	// and saved columns with the same name.
+	// columns and saved columns with the same name.
 	HeaderText string `json:"headerText,omitempty"`
 
 	// PlatformSource: The platform that is used to provide data for the
-	// custom dimension.
-	// Acceptable values are "floodlight".
+	// custom dimension. Acceptable values are "floodlight".
 	PlatformSource string `json:"platformSource,omitempty"`
 
 	// ProductReportPerspective: Returns metrics only for a specific type of
-	// product activity. Accepted
-	// values are: <ul> <li>"sold": returns metrics only for products
-	// that were sold</li> <li>"advertised": returns metrics only
-	// for
-	// products that were advertised in a Shopping campaign, and that might
-	// or
-	// might not have been sold</li> </ul>
+	// product activity. Accepted values are: - "sold": returns metrics
+	// only for products that were sold - "advertised": returns metrics
+	// only for products that were advertised in a Shopping campaign, and
+	// that might or might not have been sold
 	ProductReportPerspective string `json:"productReportPerspective,omitempty"`
 
 	// SavedColumnName: Name of a saved column to include in the report. The
-	// report must be scoped
-	// at advertiser or lower, and this saved column must already be created
-	// in
-	// the DoubleClick Search UI.
+	// report must be scoped at advertiser or lower, and this saved column
+	// must already be created in the DoubleClick Search UI.
 	SavedColumnName string `json:"savedColumnName,omitempty"`
 
 	// StartDate: Inclusive date in YYYY-MM-DD format. When provided, this
-	// overrides the
-	// overall time range of the report for this column only. Must be
-	// provided
-	// together with `endDate`.
+	// overrides the overall time range of the report for this column only.
+	// Must be provided together with `endDate`.
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnName") to
@@ -723,97 +668,78 @@ func (s *ReportApiColumnSpec) MarshalJSON() ([]byte, error) {
 // report.
 type ReportRequest struct {
 	// Columns: The columns to include in the report. This includes both
-	// DoubleClick Search
-	// columns and saved columns. For DoubleClick Search columns, only
-	// the
-	// `columnName` parameter is required. For saved columns only
-	// the
-	// `savedColumnName` parameter is required. Both
-	// `columnName` and `savedColumnName` cannot be set in
-	// the same stanza.\
+	// DoubleClick Search columns and saved columns. For DoubleClick Search
+	// columns, only the `columnName` parameter is required. For saved
+	// columns only the `savedColumnName` parameter is required. Both
+	// `columnName` and `savedColumnName` cannot be set in the same stanza.\
 	// The maximum number of columns per request is 300.
 	Columns []*ReportApiColumnSpec `json:"columns,omitempty"`
 
 	// DownloadFormat: Format that the report should be returned in.
-	// Currently `csv` or
-	// `tsv` is supported.
+	// Currently `csv` or `tsv` is supported.
 	DownloadFormat string `json:"downloadFormat,omitempty"`
 
-	// Filters: A list of filters to be applied to the report.\
-	// The maximum number of filters per request is 300.
+	// Filters: A list of filters to be applied to the report.\ The maximum
+	// number of filters per request is 300.
 	Filters []*ReportRequestFilters `json:"filters,omitempty"`
 
 	// IncludeDeletedEntities: Determines if removed entities should be
-	// included in the report. Defaults
-	// to `false`. Deprecated, please use
+	// included in the report. Defaults to `false`. Deprecated, please use
 	// `includeRemovedEntities` instead.
 	IncludeDeletedEntities bool `json:"includeDeletedEntities,omitempty"`
 
 	// IncludeRemovedEntities: Determines if removed entities should be
-	// included in the report. Defaults
-	// to `false`.
+	// included in the report. Defaults to `false`.
 	IncludeRemovedEntities bool `json:"includeRemovedEntities,omitempty"`
 
 	// MaxRowsPerFile: Asynchronous report only. The maximum number of rows
-	// per report file. A
-	// large report is split into many files based on this field.
-	// Acceptable
-	// values are `1000000` to `100000000`, inclusive.
+	// per report file. A large report is split into many files based on
+	// this field. Acceptable values are `1000000` to `100000000`,
+	// inclusive.
 	MaxRowsPerFile int64 `json:"maxRowsPerFile,omitempty"`
 
 	// OrderBy: Synchronous report only. A list of columns and directions
-	// defining sorting
-	// to be performed on the report rows.\
-	// The maximum number of orderings per request is 300.
+	// defining sorting to be performed on the report rows.\ The maximum
+	// number of orderings per request is 300.
 	OrderBy []*ReportRequestOrderBy `json:"orderBy,omitempty"`
 
 	// ReportScope: The reportScope is a set of IDs that are used to
-	// determine which subset of
-	// entities will be returned in the report. The full lineage of IDs from
-	// the
-	// lowest scoped level desired up through agency is required.
+	// determine which subset of entities will be returned in the report.
+	// The full lineage of IDs from the lowest scoped level desired up
+	// through agency is required.
 	ReportScope *ReportRequestReportScope `json:"reportScope,omitempty"`
 
 	// ReportType: Determines the type of rows that are returned in the
-	// report. For example,
-	// if you specify `reportType: keyword`, each row in the report
-	// will contain data about a keyword. See the [Types
-	// of
+	// report. For example, if you specify `reportType: keyword`, each row
+	// in the report will contain data about a keyword. See the [Types of
 	// Reports](/search-ads/v2/report-types/) reference for the columns that
-	// are
-	// available for each type.
+	// are available for each type.
 	ReportType string `json:"reportType,omitempty"`
 
 	// RowCount: Synchronous report only. The maximum number of rows to
-	// return; additional
-	// rows are dropped. Acceptable values are `0` to
+	// return; additional rows are dropped. Acceptable values are `0` to
 	// `10000`, inclusive. Defaults to `10000`.
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// StartRow: Synchronous report only. Zero-based index of the first row
-	// to return.
-	// Acceptable values are `0` to `50000`, inclusive.
-	// Defaults to `0`.
+	// to return. Acceptable values are `0` to `50000`, inclusive. Defaults
+	// to `0`.
 	StartRow int64 `json:"startRow,omitempty"`
 
 	// StatisticsCurrency: Specifies the currency in which monetary will be
-	// returned. Possible values
-	// are: `usd`, `agency` (valid if the report is scoped
-	// to agency or lower), `advertiser` (valid if the report is scoped
-	// to * advertiser or lower), or `account` (valid if the report
-	// is
-	// scoped to engine account or lower).
+	// returned. Possible values are: `usd`, `agency` (valid if the report
+	// is scoped to agency or lower), `advertiser` (valid if the report is
+	// scoped to * advertiser or lower), or `account` (valid if the report
+	// is scoped to engine account or lower).
 	StatisticsCurrency string `json:"statisticsCurrency,omitempty"`
 
 	// TimeRange: If metrics are requested in a report, this argument will
-	// be used to
-	// restrict the metrics to a specific time range.
+	// be used to restrict the metrics to a specific time range.
 	TimeRange *ReportRequestTimeRange `json:"timeRange,omitempty"`
 
 	// VerifySingleTimeZone: If `true`, the report would only be created if
-	// all the requested
-	// stat data are sourced from a single timezone. Defaults to
-	// `false`.
+	// all the requested stat data are sourced from a single timezone.
+	// Defaults to `false`.
 	VerifySingleTimeZone bool `json:"verifySingleTimeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -841,17 +767,15 @@ func (s *ReportRequest) MarshalJSON() ([]byte, error) {
 
 type ReportRequestFilters struct {
 	// Column: Column to perform the filter on. This can be a DoubleClick
-	// Search column
-	// or a saved column.
+	// Search column or a saved column.
 	Column *ReportApiColumnSpec `json:"column,omitempty"`
 
 	// Operator: Operator to use in the filter. See the filter reference for
-	// a list of
-	// available operators.
+	// a list of available operators.
 	Operator string `json:"operator,omitempty"`
 
-	// Values: A list of values to filter the column value against.\
-	// The maximum number of filter values per request is 300.
+	// Values: A list of values to filter the column value against.\ The
+	// maximum number of filter values per request is 300.
 	Values []interface{} `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Column") to
@@ -879,12 +803,10 @@ func (s *ReportRequestFilters) MarshalJSON() ([]byte, error) {
 
 type ReportRequestOrderBy struct {
 	// Column: Column to perform the sort on. This can be a DoubleClick
-	// Search-defined
-	// column or a saved column.
+	// Search-defined column or a saved column.
 	Column *ReportApiColumnSpec `json:"column,omitempty"`
 
-	// SortOrder: The sort direction, which is either `ascending`
-	// or
+	// SortOrder: The sort direction, which is either `ascending` or
 	// `descending`.
 	SortOrder string `json:"sortOrder,omitempty"`
 
@@ -912,10 +834,9 @@ func (s *ReportRequestOrderBy) MarshalJSON() ([]byte, error) {
 }
 
 // ReportRequestReportScope: The reportScope is a set of IDs that are
-// used to determine which subset of
-// entities will be returned in the report. The full lineage of IDs from
-// the
-// lowest scoped level desired up through agency is required.
+// used to determine which subset of entities will be returned in the
+// report. The full lineage of IDs from the lowest scoped level desired
+// up through agency is required.
 type ReportRequestReportScope struct {
 	// AdGroupId: DS ad group ID.
 	AdGroupId int64 `json:"adGroupId,omitempty,string"`
@@ -962,18 +883,16 @@ func (s *ReportRequestReportScope) MarshalJSON() ([]byte, error) {
 }
 
 // ReportRequestTimeRange: If metrics are requested in a report, this
-// argument will be used to
-// restrict the metrics to a specific time range.
+// argument will be used to restrict the metrics to a specific time
+// range.
 type ReportRequestTimeRange struct {
 	// ChangedAttributesSinceTimestamp: Inclusive UTC timestamp in RFC
-	// format, e.g.,
-	// `2013-07-16T10:16:23.555Z`. See additional references on how
-	// changed attribute reports work.
+	// format, e.g., `2013-07-16T10:16:23.555Z`. See additional references
+	// on how changed attribute reports work.
 	ChangedAttributesSinceTimestamp string `json:"changedAttributesSinceTimestamp,omitempty"`
 
 	// ChangedMetricsSinceTimestamp: Inclusive UTC timestamp in RFC format,
-	// e.g.,
-	// `2013-07-16T10:16:23.555Z`. See additional references on how
+	// e.g., `2013-07-16T10:16:23.555Z`. See additional references on how
 	// changed metrics reports work.
 	ChangedMetricsSinceTimestamp string `json:"changedMetricsSinceTimestamp,omitempty"`
 
@@ -1011,8 +930,7 @@ func (s *ReportRequestTimeRange) MarshalJSON() ([]byte, error) {
 // SavedColumn: A saved column
 type SavedColumn struct {
 	// Kind: Identifies this as a SavedColumn resource. Value: the fixed
-	// string
-	// <code>doubleclicksearch#savedColumn</code>.
+	// string doubleclicksearch#savedColumn.
 	Kind string `json:"kind,omitempty"`
 
 	// SavedColumnName: The name of the saved column.
@@ -1045,18 +963,15 @@ func (s *SavedColumn) MarshalJSON() ([]byte, error) {
 }
 
 // SavedColumnList: A list of saved columns. Advertisers create saved
-// columns to report on
-// Floodlight activities, Google Analytics goals, or custom KPIs. To
-// request
-// reports with saved columns,
-// you'll need the saved column names that are available from this list.
+// columns to report on Floodlight activities, Google Analytics goals,
+// or custom KPIs. To request reports with saved columns, you'll need
+// the saved column names that are available from this list.
 type SavedColumnList struct {
 	// Items: The saved columns being requested.
 	Items []*SavedColumn `json:"items,omitempty"`
 
 	// Kind: Identifies this as a SavedColumnList resource. Value: the fixed
-	// string
-	// <code>doubleclicksearch#savedColumnList</code>.
+	// string doubleclicksearch#savedColumnList.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1240,7 +1155,7 @@ func (c *ConversionGetCall) Header() http.Header {
 
 func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1382,7 +1297,7 @@ func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, e
 	//       "type": "integer"
 	//     },
 	//     "startDate": {
-	//       "description": "First date (inclusive) on which to retrieve conversions. Format is\nyyyymmdd.",
+	//       "description": "First date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "99991231",
@@ -1453,7 +1368,7 @@ func (c *ConversionInsertCall) Header() http.Header {
 
 func (c *ConversionInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1578,7 +1493,7 @@ func (c *ConversionUpdateCall) Header() http.Header {
 
 func (c *ConversionUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1670,8 +1585,7 @@ type ConversionUpdateAvailabilityCall struct {
 }
 
 // UpdateAvailability: Updates the availabilities of a batch of
-// floodlight activities in
-// DoubleClick Search.
+// floodlight activities in DoubleClick Search.
 func (r *ConversionService) UpdateAvailability(updateavailabilityrequest *UpdateAvailabilityRequest) *ConversionUpdateAvailabilityCall {
 	c := &ConversionUpdateAvailabilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.updateavailabilityrequest = updateavailabilityrequest
@@ -1705,7 +1619,7 @@ func (c *ConversionUpdateAvailabilityCall) Header() http.Header {
 
 func (c *ConversionUpdateAvailabilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1766,7 +1680,7 @@ func (c *ConversionUpdateAvailabilityCall) Do(opts ...googleapi.CallOption) (*Up
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the availabilities of a batch of floodlight activities in\nDoubleClick Search.",
+	//   "description": "Updates the availabilities of a batch of floodlight activities in DoubleClick Search.",
 	//   "flatPath": "doubleclicksearch/v2/conversion/updateAvailability",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclicksearch.conversion.updateAvailability",
@@ -1830,7 +1744,7 @@ func (c *ReportsGenerateCall) Header() http.Header {
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1966,7 +1880,7 @@ func (c *ReportsGetCall) Header() http.Header {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2111,7 +2025,7 @@ func (c *ReportsGetFileCall) Header() http.Header {
 
 func (c *ReportsGetFileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2243,7 +2157,7 @@ func (c *ReportsRequestCall) Header() http.Header {
 
 func (c *ReportsRequestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2381,7 +2295,7 @@ func (c *SavedColumnsListCall) Header() http.Header {
 
 func (c *SavedColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

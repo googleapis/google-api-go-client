@@ -1647,7 +1647,7 @@ func (c *ControllerDebuggeesRegisterCall) Header() http.Header {
 
 func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1839,7 +1839,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2003,7 +2003,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Header() http.Header {
 
 func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2182,7 +2182,7 @@ func (c *DebuggerDebuggeesListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2329,7 +2329,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2493,7 +2493,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2709,7 +2709,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2898,7 +2898,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Header() http.Header {
 
 func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

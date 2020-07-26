@@ -164,72 +164,31 @@ type OperationsService struct {
 	s *Service
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE"
-//             },
-//             {
-//               "log_type": "ADMIN_READ"
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ"
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// jose@example.com from DATA_READ logging, and aliya@example.com from
+// DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
@@ -258,31 +217,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE"
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -320,95 +263,53 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -435,65 +336,40 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -519,32 +395,24 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Folder: A Folder in an Organization's resource hierarchy, used
-// to
+// Folder: A Folder in an Organization's resource hierarchy, used to
 // organize that Organization's resources.
 type Folder struct {
 	// CreateTime: Output only. Timestamp when the Folder was created.
 	// Assigned by the server.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: The folder’s display name.
-	// A folder’s display name must be unique amongst its siblings,
-	// e.g.
-	// no two folders with the same parent can share the same display
-	// name.
-	// The display name must start and end with a letter or digit, may
-	// contain
-	// letters, digits, spaces, hyphens and underscores and can be no
-	// longer
-	// than 30 characters. This is captured by the regular
-	// expression:
+	// DisplayName: The folder’s display name. A folder’s display name
+	// must be unique amongst its siblings, e.g. no two folders with the
+	// same parent can share the same display name. The display name must
+	// start and end with a letter or digit, may contain letters, digits,
+	// spaces, hyphens and underscores and can be no longer than 30
+	// characters. This is captured by the regular expression:
 	// [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// LifecycleState: Output only. The lifecycle state of the
-	// folder.
-	// Updates to the lifecycle_state must be performed via
-	// DeleteFolder and
+	// LifecycleState: Output only. The lifecycle state of the folder.
+	// Updates to the lifecycle_state must be performed via DeleteFolder and
 	// UndeleteFolder.
 	//
 	// Possible values:
@@ -554,13 +422,12 @@ type Folder struct {
 	// user.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: Output only. The resource name of the Folder.
-	// Its format is `folders/{folder_id}`, for example: "folders/1234".
+	// Name: Output only. The resource name of the Folder. Its format is
+	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
 
-	// Parent: Required. The Folder’s parent's resource name.
-	// Updates to the folder's parent must be performed via
-	// MoveFolder.
+	// Parent: Required. The Folder’s parent's resource name. Updates to
+	// the folder's parent must be performed via MoveFolder.
 	Parent string `json:"parent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -593,8 +460,7 @@ func (s *Folder) MarshalJSON() ([]byte, error) {
 // FolderOperation: Metadata describing a long running folder operation
 type FolderOperation struct {
 	// DestinationParent: The resource name of the folder or organization we
-	// are either creating
-	// the folder under or moving the folder to.
+	// are either creating the folder under or moving the folder to.
 	DestinationParent string `json:"destinationParent,omitempty"`
 
 	// DisplayName: The display name of the folder.
@@ -608,8 +474,8 @@ type FolderOperation struct {
 	//   "MOVE" - A move folder operation.
 	OperationType string `json:"operationType,omitempty"`
 
-	// SourceParent: The resource name of the folder's parent.
-	// Only applicable when the operation_type is MOVE.
+	// SourceParent: The resource name of the folder's parent. Only
+	// applicable when the operation_type is MOVE.
 	SourceParent string `json:"sourceParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationParent")
@@ -648,8 +514,7 @@ type FolderOperationError struct {
 	//   "MAX_CHILD_FOLDERS_VIOLATION" - The attempted action would violate
 	// the max child folders constraint.
 	//   "FOLDER_NAME_UNIQUENESS_VIOLATION" - The attempted action would
-	// violate the locally-unique folder
-	// display_name constraint.
+	// violate the locally-unique folder display_name constraint.
 	//   "RESOURCE_DELETED_VIOLATION" - The resource being moved has been
 	// deleted.
 	//   "PARENT_DELETED_VIOLATION" - The resource a folder was being added
@@ -661,8 +526,7 @@ type FolderOperationError struct {
 	//   "FOLDER_TO_DELETE_NON_EMPTY_VIOLATION" - The folder the caller is
 	// trying to delete contains active resources.
 	//   "DELETED_FOLDER_HEIGHT_VIOLATION" - The attempted action would
-	// violate the max deleted folder depth
-	// constraint.
+	// violate the max deleted folder depth constraint.
 	ErrorMessageId string `json:"errorMessageId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessageId") to
@@ -692,8 +556,7 @@ func (s *FolderOperationError) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -722,24 +585,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -770,13 +623,11 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // ListFoldersResponse: The ListFolders response message.
 type ListFoldersResponse struct {
 	// Folders: A possibly paginated list of Folders that are direct
-	// descendants of
-	// the specified parent resource.
+	// descendants of the specified parent resource.
 	Folders []*Folder `json:"folders,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// `ListFolders`
-	// that indicates from where listing should continue.
+	// `ListFolders` that indicates from where listing should continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -809,10 +660,8 @@ func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
 // MoveFolderRequest: The MoveFolder request message.
 type MoveFolderRequest struct {
 	// DestinationParent: Required. The resource name of the Folder or
-	// Organization to reparent
-	// the folder under.
-	// Must be of the form `folders/{folder_id}` or
-	// `organizations/{org_id}`.
+	// Organization to reparent the folder under. Must be of the form
+	// `folders/{folder_id}` or `organizations/{org_id}`.
 	DestinationParent string `json:"destinationParent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationParent")
@@ -840,52 +689,38 @@ func (s *MoveFolderRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -916,154 +751,77 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -1096,19 +854,16 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // ProjectCreationStatus: A status object which is used as the
-// `metadata` field for the Operation
-// returned by CreateProject. It provides insight for when significant
-// phases of
-// Project creation have completed.
+// `metadata` field for the Operation returned by CreateProject. It
+// provides insight for when significant phases of Project creation have
+// completed.
 type ProjectCreationStatus struct {
 	// CreateTime: Creation time of the project creation workflow.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Gettable: True if the project can be retrieved using GetProject. No
-	// other operations
-	// on the project are guaranteed to work until the project creation
-	// is
-	// complete.
+	// other operations on the project are guaranteed to work until the
+	// project creation is complete.
 	Gettable bool `json:"gettable,omitempty"`
 
 	// Ready: True if the project creation process is complete.
@@ -1144,43 +899,26 @@ type SearchFoldersRequest struct {
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Optional. A pagination token returned from a previous call
-	// to `SearchFolders`
-	// that indicates from where search should continue.
+	// to `SearchFolders` that indicates from where search should continue.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Query: Search criteria used to select the Folders to return.
-	// If no search criteria is specified then all accessible folders will
-	// be
-	// returned.
-	//
-	// Query expressions can be used to restrict results based upon
-	// displayName,
-	// lifecycleState and parent, where the operators `=`, `NOT`, `AND` and
-	// `OR`
-	// can be used along with the suffix wildcard symbol `*`.
-	//
-	// The displayName field in a query expression should use escaped
-	// quotes
-	// for values that include whitespace to prevent unexpected
-	// behavior.
-	//
-	// Some example queries are:
-	//
-	// * Query `displayName=Test*` returns Folder resources whose display
-	// name
-	// starts with "Test".
-	// * Query `lifecycleState=ACTIVE` returns Folder resources
-	// with
-	// `lifecycleState` set to `ACTIVE`.
-	// * Query `parent=folders/123` returns Folder resources that
-	// have
-	// `folders/123` as a parent resource.
-	// * Query `parent=folders/123 AND lifecycleState=ACTIVE` returns
-	// active
-	// Folder resources that have `folders/123` as a parent resource.
-	// * Query `displayName=\\"Test String\\" returns Folder resources
-	// with
-	// display names that include both "Test" and "String".
+	// Query: Search criteria used to select the Folders to return. If no
+	// search criteria is specified then all accessible folders will be
+	// returned. Query expressions can be used to restrict results based
+	// upon displayName, lifecycleState and parent, where the operators `=`,
+	// `NOT`, `AND` and `OR` can be used along with the suffix wildcard
+	// symbol `*`. The displayName field in a query expression should use
+	// escaped quotes for values that include whitespace to prevent
+	// unexpected behavior. Some example queries are: * Query
+	// `displayName=Test*` returns Folder resources whose display name
+	// starts with "Test". * Query `lifecycleState=ACTIVE` returns Folder
+	// resources with `lifecycleState` set to `ACTIVE`. * Query
+	// `parent=folders/123` returns Folder resources that have `folders/123`
+	// as a parent resource. * Query `parent=folders/123 AND
+	// lifecycleState=ACTIVE` returns active Folder resources that have
+	// `folders/123` as a parent resource. * Query `displayName=\\"Test
+	// String\\" returns Folder resources with display names that include
+	// both "Test" and "String".
 	Query string `json:"query,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
@@ -1208,13 +946,12 @@ func (s *SearchFoldersRequest) MarshalJSON() ([]byte, error) {
 
 // SearchFoldersResponse: The response message for searching folders.
 type SearchFoldersResponse struct {
-	// Folders: A possibly paginated folder search results.
-	// the specified parent resource.
+	// Folders: A possibly paginated folder search results. the specified
+	// parent resource.
 	Folders []*Folder `json:"folders,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// `SearchFolders`
-	// that indicates from where searching should continue.
+	// `SearchFolders` that indicates from where searching should continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1247,20 +984,15 @@ func (s *SearchFoldersResponse) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1287,32 +1019,24 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1342,11 +1066,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -1377,8 +1098,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1422,47 +1142,25 @@ type FoldersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Folder in the resource hierarchy.
-// Returns an Operation which can be used to track the progress of
-// the
-// folder creation workflow.
-// Upon success the Operation.response field will be populated with
-// the
-// created Folder.
-//
-// In order to succeed, the addition of this new Folder must not
-// violate
-// the Folder naming, height or fanout constraints.
-//
-// + The Folder's display_name must be distinct from all other Folder's
-// that
-// share its parent.
-// + The addition of the Folder must not cause the active Folder
-// hierarchy
-// to exceed a height of 4. Note, the full active + deleted Folder
-// hierarchy
-// is allowed to reach a height of 8; this provides additional headroom
-// when
-// moving folders that contain deleted folders.
-// + The addition of the Folder must not cause the total number of
-// Folders
-// under its parent to exceed 100.
-//
-// If the operation fails due to a folder constraint violation, some
-// errors
-// may be returned by the CreateFolder request, with status
-// code
-// FAILED_PRECONDITION and an error description. Other folder
-// constraint
-// violations will be communicated in the Operation, with the
-// specific
-// PreconditionFailure returned via the details list in the
-// Operation.error
-// field.
-//
-// The caller must have `resourcemanager.folders.create` permission on
-// the
-// identified parent.
+// Create: Creates a Folder in the resource hierarchy. Returns an
+// Operation which can be used to track the progress of the folder
+// creation workflow. Upon success the Operation.response field will be
+// populated with the created Folder. In order to succeed, the addition
+// of this new Folder must not violate the Folder naming, height or
+// fanout constraints. + The Folder's display_name must be distinct from
+// all other Folder's that share its parent. + The addition of the
+// Folder must not cause the active Folder hierarchy to exceed a height
+// of 4. Note, the full active + deleted Folder hierarchy is allowed to
+// reach a height of 8; this provides additional headroom when moving
+// folders that contain deleted folders. + The addition of the Folder
+// must not cause the total number of Folders under its parent to exceed
+// 100. If the operation fails due to a folder constraint violation,
+// some errors may be returned by the CreateFolder request, with status
+// code FAILED_PRECONDITION and an error description. Other folder
+// constraint violations will be communicated in the Operation, with the
+// specific PreconditionFailure returned via the details list in the
+// Operation.error field. The caller must have
+// `resourcemanager.folders.create` permission on the identified parent.
 func (r *FoldersService) Create(folder *Folder) *FoldersCreateCall {
 	c := &FoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.folder = folder
@@ -1470,9 +1168,8 @@ func (r *FoldersService) Create(folder *Folder) *FoldersCreateCall {
 }
 
 // Parent sets the optional parameter "parent": Required. The resource
-// name of the new Folder's parent.
-// Must be of the form `folders/{folder_id}` or
-// `organizations/{org_id}`.
+// name of the new Folder's parent. Must be of the form
+// `folders/{folder_id}` or `organizations/{org_id}`.
 func (c *FoldersCreateCall) Parent(parent string) *FoldersCreateCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -1505,7 +1202,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1566,14 +1263,14 @@ func (c *FoldersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Folder in the resource hierarchy.\nReturns an Operation which can be used to track the progress of the\nfolder creation workflow.\nUpon success the Operation.response field will be populated with the\ncreated Folder.\n\nIn order to succeed, the addition of this new Folder must not violate\nthe Folder naming, height or fanout constraints.\n\n+ The Folder's display_name must be distinct from all other Folder's that\nshare its parent.\n+ The addition of the Folder must not cause the active Folder hierarchy\nto exceed a height of 4. Note, the full active + deleted Folder hierarchy\nis allowed to reach a height of 8; this provides additional headroom when\nmoving folders that contain deleted folders.\n+ The addition of the Folder must not cause the total number of Folders\nunder its parent to exceed 100.\n\nIf the operation fails due to a folder constraint violation, some errors\nmay be returned by the CreateFolder request, with status code\nFAILED_PRECONDITION and an error description. Other folder constraint\nviolations will be communicated in the Operation, with the specific\nPreconditionFailure returned via the details list in the Operation.error\nfield.\n\nThe caller must have `resourcemanager.folders.create` permission on the\nidentified parent.",
+	//   "description": "Creates a Folder in the resource hierarchy. Returns an Operation which can be used to track the progress of the folder creation workflow. Upon success the Operation.response field will be populated with the created Folder. In order to succeed, the addition of this new Folder must not violate the Folder naming, height or fanout constraints. + The Folder's display_name must be distinct from all other Folder's that share its parent. + The addition of the Folder must not cause the active Folder hierarchy to exceed a height of 4. Note, the full active + deleted Folder hierarchy is allowed to reach a height of 8; this provides additional headroom when moving folders that contain deleted folders. + The addition of the Folder must not cause the total number of Folders under its parent to exceed 100. If the operation fails due to a folder constraint violation, some errors may be returned by the CreateFolder request, with status code FAILED_PRECONDITION and an error description. Other folder constraint violations will be communicated in the Operation, with the specific PreconditionFailure returned via the details list in the Operation.error field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
 	//   "flatPath": "v2/folders",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.create",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the new Folder's parent.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
+	//       "description": "Required. The resource name of the new Folder's parent. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1602,18 +1299,12 @@ type FoldersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Requests deletion of a Folder. The Folder is moved into
-// the
-// DELETE_REQUESTED state
-// immediately, and is deleted approximately 30 days later. This method
-// may
-// only be called on an empty Folder in the
-// ACTIVE state, where a Folder is empty if
-// it doesn't contain any Folders or Projects in the
-// ACTIVE state.
-// The caller must have `resourcemanager.folders.delete` permission on
-// the
-// identified folder.
+// Delete: Requests deletion of a Folder. The Folder is moved into the
+// DELETE_REQUESTED state immediately, and is deleted approximately 30
+// days later. This method may only be called on an empty Folder in the
+// ACTIVE state, where a Folder is empty if it doesn't contain any
+// Folders or Projects in the ACTIVE state. The caller must have
+// `resourcemanager.folders.delete` permission on the identified folder.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1647,7 +1338,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1706,7 +1397,7 @@ func (c *FoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Requests deletion of a Folder. The Folder is moved into the\nDELETE_REQUESTED state\nimmediately, and is deleted approximately 30 days later. This method may\nonly be called on an empty Folder in the\nACTIVE state, where a Folder is empty if\nit doesn't contain any Folders or Projects in the\nACTIVE state.\nThe caller must have `resourcemanager.folders.delete` permission on the\nidentified folder.",
+	//   "description": "Requests deletion of a Folder. The Folder is moved into the DELETE_REQUESTED state immediately, and is deleted approximately 30 days later. This method may only be called on an empty Folder in the ACTIVE state, where a Folder is empty if it doesn't contain any Folders or Projects in the ACTIVE state. The caller must have `resourcemanager.folders.delete` permission on the identified folder.",
 	//   "flatPath": "v2/folders/{foldersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.folders.delete",
@@ -1715,7 +1406,7 @@ func (c *FoldersDeleteCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. the resource name of the Folder to be deleted.\nMust be of the form `folders/{folder_id}`.",
+	//       "description": "Required. the resource name of the Folder to be deleted. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -1744,14 +1435,10 @@ type FoldersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a Folder identified by the supplied resource
-// name.
-// Valid Folder resource names have the format
-// `folders/{folder_id}`
-// (for example, `folders/1234`).
-// The caller must have `resourcemanager.folders.get` permission on
-// the
-// identified folder.
+// Get: Retrieves a Folder identified by the supplied resource name.
+// Valid Folder resource names have the format `folders/{folder_id}`
+// (for example, `folders/1234`). The caller must have
+// `resourcemanager.folders.get` permission on the identified folder.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1795,7 +1482,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1857,7 +1544,7 @@ func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a Folder identified by the supplied resource name.\nValid Folder resource names have the format `folders/{folder_id}`\n(for example, `folders/1234`).\nThe caller must have `resourcemanager.folders.get` permission on the\nidentified folder.",
+	//   "description": "Retrieves a Folder identified by the supplied resource name. Valid Folder resource names have the format `folders/{folder_id}` (for example, `folders/1234`). The caller must have `resourcemanager.folders.get` permission on the identified folder.",
 	//   "flatPath": "v2/folders/{foldersId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.folders.get",
@@ -1866,7 +1553,7 @@ func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to retrieve.\nMust be of the form `folders/{folder_id}`.",
+	//       "description": "Required. The resource name of the Folder to retrieve. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -1897,13 +1584,11 @@ type FoldersGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a Folder. The
-// returned policy may be
-// empty if no such policy or resource exists. The `resource` field
-// should
-// be the Folder's resource name, e.g. "folders/1234".
-// The caller must have `resourcemanager.folders.getIamPolicy`
-// permission
-// on the identified folder.
+// returned policy may be empty if no such policy or resource exists.
+// The `resource` field should be the Folder's resource name, e.g.
+// "folders/1234". The caller must have
+// `resourcemanager.folders.getIamPolicy` permission on the identified
+// folder.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1938,7 +1623,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2002,7 +1687,7 @@ func (c *FoldersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Folder. The returned policy may be\nempty if no such policy or resource exists. The `resource` field should\nbe the Folder's resource name, e.g. \"folders/1234\".\nThe caller must have `resourcemanager.folders.getIamPolicy` permission\non the identified folder.",
+	//   "description": "Gets the access control policy for a Folder. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". The caller must have `resourcemanager.folders.getIamPolicy` permission on the identified folder.",
 	//   "flatPath": "v2/folders/{foldersId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.getIamPolicy",
@@ -2011,7 +1696,7 @@ func (c *FoldersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -2044,16 +1729,11 @@ type FoldersListCall struct {
 }
 
 // List: Lists the Folders that are direct descendants of supplied
-// parent resource.
-// List provides a strongly consistent view of the Folders
-// underneath
-// the specified parent resource.
-// List returns Folders sorted based upon the (ascending) lexical
-// ordering
-// of their display_name.
-// The caller must have `resourcemanager.folders.list` permission on
-// the
-// identified parent.
+// parent resource. List provides a strongly consistent view of the
+// Folders underneath the specified parent resource. List returns
+// Folders sorted based upon the (ascending) lexical ordering of their
+// display_name. The caller must have `resourcemanager.folders.list`
+// permission on the identified parent.
 func (r *FoldersService) List() *FoldersListCall {
 	c := &FoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2067,30 +1747,27 @@ func (c *FoldersListCall) PageSize(pageSize int64) *FoldersListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to `ListFolders`
-// that indicates where this listing should continue from.
+// returned from a previous call to `ListFolders` that indicates where
+// this listing should continue from.
 func (c *FoldersListCall) PageToken(pageToken string) *FoldersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Parent sets the optional parameter "parent": Required. The resource
-// name of the Organization or Folder whose Folders are
-// being listed.
+// name of the Organization or Folder whose Folders are being listed.
 // Must be of the form `folders/{folder_id}` or
-// `organizations/{org_id}`.
-// Access to this method is controlled by checking
-// the
-// `resourcemanager.folders.list` permission on the `parent`.
+// `organizations/{org_id}`. Access to this method is controlled by
+// checking the `resourcemanager.folders.list` permission on the
+// `parent`.
 func (c *FoldersListCall) Parent(parent string) *FoldersListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Folders in the
-// DELETE_REQUESTED
-// state should be returned. Defaults to false.
+// whether Folders in the DELETE_REQUESTED state should be returned.
+// Defaults to false.
 func (c *FoldersListCall) ShowDeleted(showDeleted bool) *FoldersListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -2133,7 +1810,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2192,7 +1869,7 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Folders that are direct descendants of supplied parent resource.\nList provides a strongly consistent view of the Folders underneath\nthe specified parent resource.\nList returns Folders sorted based upon the (ascending) lexical ordering\nof their display_name.\nThe caller must have `resourcemanager.folders.list` permission on the\nidentified parent.",
+	//   "description": "Lists the Folders that are direct descendants of supplied parent resource. List provides a strongly consistent view of the Folders underneath the specified parent resource. List returns Folders sorted based upon the (ascending) lexical ordering of their display_name. The caller must have `resourcemanager.folders.list` permission on the identified parent.",
 	//   "flatPath": "v2/folders",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.folders.list",
@@ -2205,17 +1882,17 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to `ListFolders`\nthat indicates where this listing should continue from.",
+	//       "description": "Optional. A pagination token returned from a previous call to `ListFolders` that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the Organization or Folder whose Folders are\nbeing listed.\nMust be of the form `folders/{folder_id}` or `organizations/{org_id}`.\nAccess to this method is controlled by checking the\n`resourcemanager.folders.list` permission on the `parent`.",
+	//       "description": "Required. The resource name of the Organization or Folder whose Folders are being listed. Must be of the form `folders/{folder_id}` or `organizations/{org_id}`. Access to this method is controlled by checking the `resourcemanager.folders.list` permission on the `parent`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Optional. Controls whether Folders in the\nDELETE_REQUESTED\nstate should be returned. Defaults to false.",
+	//       "description": "Optional. Controls whether Folders in the DELETE_REQUESTED state should be returned. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -2264,32 +1941,20 @@ type FoldersMoveCall struct {
 	header_           http.Header
 }
 
-// Move: Moves a Folder under a new resource parent.
-// Returns an Operation which can be used to track the progress of
-// the
-// folder move workflow.
-// Upon success the Operation.response field will be populated with
-// the
-// moved Folder.
-// Upon failure, a FolderOperationError categorizing the failure cause
-// will
-// be returned - if the failure occurs synchronously then
-// the
-// FolderOperationError will be returned via the Status.details
-// field
-// and if it occurs asynchronously then the FolderOperation will be
-// returned
-// via the Operation.error field.
-// In addition, the Operation.metadata field will be populated with
-// a
-// FolderOperation message as an aid to stateless clients.
-// Folder moves will be rejected if they violate either the naming,
-// height
-// or fanout constraints described in the
-// CreateFolder documentation.
-// The caller must have `resourcemanager.folders.move` permission on
-// the
-// folder's current and proposed new parent.
+// Move: Moves a Folder under a new resource parent. Returns an
+// Operation which can be used to track the progress of the folder move
+// workflow. Upon success the Operation.response field will be populated
+// with the moved Folder. Upon failure, a FolderOperationError
+// categorizing the failure cause will be returned - if the failure
+// occurs synchronously then the FolderOperationError will be returned
+// via the Status.details field and if it occurs asynchronously then the
+// FolderOperation will be returned via the Operation.error field. In
+// addition, the Operation.metadata field will be populated with a
+// FolderOperation message as an aid to stateless clients. Folder moves
+// will be rejected if they violate either the naming, height or fanout
+// constraints described in the CreateFolder documentation. The caller
+// must have `resourcemanager.folders.move` permission on the folder's
+// current and proposed new parent.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2324,7 +1989,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2388,7 +2053,7 @@ func (c *FoldersMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves a Folder under a new resource parent.\nReturns an Operation which can be used to track the progress of the\nfolder move workflow.\nUpon success the Operation.response field will be populated with the\nmoved Folder.\nUpon failure, a FolderOperationError categorizing the failure cause will\nbe returned - if the failure occurs synchronously then the\nFolderOperationError will be returned via the Status.details field\nand if it occurs asynchronously then the FolderOperation will be returned\nvia the Operation.error field.\nIn addition, the Operation.metadata field will be populated with a\nFolderOperation message as an aid to stateless clients.\nFolder moves will be rejected if they violate either the naming, height\nor fanout constraints described in the\nCreateFolder documentation.\nThe caller must have `resourcemanager.folders.move` permission on the\nfolder's current and proposed new parent.",
+	//   "description": "Moves a Folder under a new resource parent. Returns an Operation which can be used to track the progress of the folder move workflow. Upon success the Operation.response field will be populated with the moved Folder. Upon failure, a FolderOperationError categorizing the failure cause will be returned - if the failure occurs synchronously then the FolderOperationError will be returned via the Status.details field and if it occurs asynchronously then the FolderOperation will be returned via the Operation.error field. In addition, the Operation.metadata field will be populated with a FolderOperation message as an aid to stateless clients. Folder moves will be rejected if they violate either the naming, height or fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.move` permission on the folder's current and proposed new parent.",
 	//   "flatPath": "v2/folders/{foldersId}:move",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.move",
@@ -2397,7 +2062,7 @@ func (c *FoldersMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to move.\nMust be of the form folders/{folder_id}",
+	//       "description": "Required. The resource name of the Folder to move. Must be of the form folders/{folder_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -2429,28 +2094,18 @@ type FoldersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a Folder, changing its display_name.
-// Changes to the folder display_name will be rejected if they violate
-// either
-// the display_name formatting rules or naming constraints described
-// in
-// the CreateFolder documentation.
-//
-// The Folder's display name must start and end with a letter or
-// digit,
-// may contain letters, digits, spaces, hyphens and underscores and can
-// be
-// no longer than 30 characters. This is captured by the regular
-// expression:
-// [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?.
-// The caller must have `resourcemanager.folders.update` permission on
-// the
-// identified folder.
-//
-// If the update fails due to the unique name constraint then
-// a
-// PreconditionFailure explaining this violation will be returned
-// in the Status.details field.
+// Patch: Updates a Folder, changing its display_name. Changes to the
+// folder display_name will be rejected if they violate either the
+// display_name formatting rules or naming constraints described in the
+// CreateFolder documentation. The Folder's display name must start and
+// end with a letter or digit, may contain letters, digits, spaces,
+// hyphens and underscores and can be no longer than 30 characters. This
+// is captured by the regular expression: [\p{L}\p{N}]([\p{L}\p{N}_-
+// ]{0,28}[\p{L}\p{N}])?. The caller must have
+// `resourcemanager.folders.update` permission on the identified folder.
+// If the update fails due to the unique name constraint then a
+// PreconditionFailure explaining this violation will be returned in the
+// Status.details field.
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2459,8 +2114,7 @@ func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Fields
-// to be updated.
-// Only the `display_name` can be updated.
+// to be updated. Only the `display_name` can be updated.
 func (c *FoldersPatchCall) UpdateMask(updateMask string) *FoldersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2493,7 +2147,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2557,7 +2211,7 @@ func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Folder, changing its display_name.\nChanges to the folder display_name will be rejected if they violate either\nthe display_name formatting rules or naming constraints described in\nthe CreateFolder documentation.\n\nThe Folder's display name must start and end with a letter or digit,\nmay contain letters, digits, spaces, hyphens and underscores and can be\nno longer than 30 characters. This is captured by the regular expression:\n[\\p{L}\\p{N}]([\\p{L}\\p{N}_- ]{0,28}[\\p{L}\\p{N}])?.\nThe caller must have `resourcemanager.folders.update` permission on the\nidentified folder.\n\nIf the update fails due to the unique name constraint then a\nPreconditionFailure explaining this violation will be returned\nin the Status.details field.",
+	//   "description": "Updates a Folder, changing its display_name. Changes to the folder display_name will be rejected if they violate either the display_name formatting rules or naming constraints described in the CreateFolder documentation. The Folder's display name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be no longer than 30 characters. This is captured by the regular expression: [\\p{L}\\p{N}]([\\p{L}\\p{N}_- ]{0,28}[\\p{L}\\p{N}])?. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a PreconditionFailure explaining this violation will be returned in the Status.details field.",
 	//   "flatPath": "v2/folders/{foldersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudresourcemanager.folders.patch",
@@ -2566,14 +2220,14 @@ func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the Folder.\nIts format is `folders/{folder_id}`, for example: \"folders/1234\".",
+	//       "description": "Output only. The resource name of the Folder. Its format is `folders/{folder_id}`, for example: \"folders/1234\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Fields to be updated.\nOnly the `display_name` can be updated.",
+	//       "description": "Required. Fields to be updated. Only the `display_name` can be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2603,14 +2257,11 @@ type FoldersSearchCall struct {
 	header_              http.Header
 }
 
-// Search: Search for folders that match specific filter
-// criteria.
+// Search: Search for folders that match specific filter criteria.
 // Search provides an eventually consistent view of the folders a user
-// has
-// access to which meet the specified filter criteria.
-//
-// This will only return folders on which the caller has the
-// permission `resourcemanager.folders.get`.
+// has access to which meet the specified filter criteria. This will
+// only return folders on which the caller has the permission
+// `resourcemanager.folders.get`.
 func (r *FoldersService) Search(searchfoldersrequest *SearchFoldersRequest) *FoldersSearchCall {
 	c := &FoldersSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchfoldersrequest = searchfoldersrequest
@@ -2644,7 +2295,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2705,7 +2356,7 @@ func (c *FoldersSearchCall) Do(opts ...googleapi.CallOption) (*SearchFoldersResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Search for folders that match specific filter criteria.\nSearch provides an eventually consistent view of the folders a user has\naccess to which meet the specified filter criteria.\n\nThis will only return folders on which the caller has the\npermission `resourcemanager.folders.get`.",
+	//   "description": "Search for folders that match specific filter criteria. Search provides an eventually consistent view of the folders a user has access to which meet the specified filter criteria. This will only return folders on which the caller has the permission `resourcemanager.folders.get`.",
 	//   "flatPath": "v2/folders:search",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.search",
@@ -2759,13 +2410,10 @@ type FoldersSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on a Folder, replacing
-// any existing policy.
-// The `resource` field should be the Folder's resource name,
-// e.g.
-// "folders/1234".
-// The caller must have `resourcemanager.folders.setIamPolicy`
-// permission
-// on the identified folder.
+// any existing policy. The `resource` field should be the Folder's
+// resource name, e.g. "folders/1234". The caller must have
+// `resourcemanager.folders.setIamPolicy` permission on the identified
+// folder.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2800,7 +2448,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2864,7 +2512,7 @@ func (c *FoldersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Folder, replacing any existing policy.\nThe `resource` field should be the Folder's resource name, e.g.\n\"folders/1234\".\nThe caller must have `resourcemanager.folders.setIamPolicy` permission\non the identified folder.",
+	//   "description": "Sets the access control policy on a Folder, replacing any existing policy. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". The caller must have `resourcemanager.folders.setIamPolicy` permission on the identified folder.",
 	//   "flatPath": "v2/folders/{foldersId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.setIamPolicy",
@@ -2873,7 +2521,7 @@ func (c *FoldersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, err
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -2906,11 +2554,9 @@ type FoldersTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified Folder.
-// The `resource` field should be the Folder's resource name,
-// e.g. "folders/1234".
-//
-// There are no permissions required for making this API call.
+// specified Folder. The `resource` field should be the Folder's
+// resource name, e.g. "folders/1234". There are no permissions required
+// for making this API call.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2945,7 +2591,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3009,7 +2655,7 @@ func (c *FoldersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified Folder.\nThe `resource` field should be the Folder's resource name,\ne.g. \"folders/1234\".\n\nThere are no permissions required for making this API call.",
+	//   "description": "Returns permissions that a caller has on the specified Folder. The `resource` field should be the Folder's resource name, e.g. \"folders/1234\". There are no permissions required for making this API call.",
 	//   "flatPath": "v2/folders/{foldersId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.testIamPermissions",
@@ -3018,7 +2664,7 @@ func (c *FoldersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestI
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3051,19 +2697,13 @@ type FoldersUndeleteCall struct {
 }
 
 // Undelete: Cancels the deletion request for a Folder. This method may
-// only be
-// called on a Folder in the
-// DELETE_REQUESTED state.
-// In order to succeed, the Folder's parent must be in the
-// ACTIVE state.
-// In addition, reintroducing the folder into the tree must not
-// violate
-// folder naming, height and fanout constraints described in
-// the
-// CreateFolder documentation.
-// The caller must have `resourcemanager.folders.undelete` permission on
-// the
-// identified folder.
+// only be called on a Folder in the DELETE_REQUESTED state. In order to
+// succeed, the Folder's parent must be in the ACTIVE state. In
+// addition, reintroducing the folder into the tree must not violate
+// folder naming, height and fanout constraints described in the
+// CreateFolder documentation. The caller must have
+// `resourcemanager.folders.undelete` permission on the identified
+// folder.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3098,7 +2738,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3162,7 +2802,7 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Folder, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels the deletion request for a Folder. This method may only be\ncalled on a Folder in the\nDELETE_REQUESTED state.\nIn order to succeed, the Folder's parent must be in the\nACTIVE state.\nIn addition, reintroducing the folder into the tree must not violate\nfolder naming, height and fanout constraints described in the\nCreateFolder documentation.\nThe caller must have `resourcemanager.folders.undelete` permission on the\nidentified folder.",
+	//   "description": "Cancels the deletion request for a Folder. This method may only be called on a Folder in the DELETE_REQUESTED state. In order to succeed, the Folder's parent must be in the ACTIVE state. In addition, reintroducing the folder into the tree must not violate folder naming, height and fanout constraints described in the CreateFolder documentation. The caller must have `resourcemanager.folders.undelete` permission on the identified folder.",
 	//   "flatPath": "v2/folders/{foldersId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.undelete",
@@ -3171,7 +2811,7 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Folder, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Folder to undelete.\nMust be of the form `folders/{folder_id}`.",
+	//       "description": "Required. The resource name of the Folder to undelete. Must be of the form `folders/{folder_id}`.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -3203,11 +2843,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3251,7 +2889,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3313,7 +2951,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.operations.get",

@@ -573,11 +573,13 @@ type SearchQueriesNextPage struct {
 	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
-	// Cx: The identifier of a custom search engine created using the Custom
-	// Search
-	// [Control Panel](https://cse.google.com/). This is a custom property
-	// not
-	// defined in the OpenSearch spec. This parameter is **required**.
+	// Cx: The identifier of an engine created using the Programmable Search
+	// Engine
+	// [Control Panel](https://programmablesearchengine.google.com/). This
+	// is a
+	// custom property not defined in the OpenSearch spec. This parameter
+	// is
+	// **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
@@ -955,11 +957,13 @@ type SearchQueriesPreviousPage struct {
 	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
-	// Cx: The identifier of a custom search engine created using the Custom
-	// Search
-	// [Control Panel](https://cse.google.com/). This is a custom property
-	// not
-	// defined in the OpenSearch spec. This parameter is **required**.
+	// Cx: The identifier of an engine created using the Programmable Search
+	// Engine
+	// [Control Panel](https://programmablesearchengine.google.com/). This
+	// is a
+	// custom property not defined in the OpenSearch spec. This parameter
+	// is
+	// **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
@@ -1337,11 +1341,13 @@ type SearchQueriesRequest struct {
 	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
-	// Cx: The identifier of a custom search engine created using the Custom
-	// Search
-	// [Control Panel](https://cse.google.com/). This is a custom property
-	// not
-	// defined in the OpenSearch spec. This parameter is **required**.
+	// Cx: The identifier of an engine created using the Programmable Search
+	// Engine
+	// [Control Panel](https://programmablesearchengine.google.com/). This
+	// is a
+	// custom property not defined in the OpenSearch spec. This parameter
+	// is
+	// **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
@@ -1789,7 +1795,8 @@ type SearchUrl struct {
 	Template string `json:"template,omitempty"`
 
 	// Type: The MIME type of the OpenSearch URL template for the Custom
-	// Search API.
+	// Search JSON
+	// API.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Template") to
@@ -1825,9 +1832,9 @@ type CseListCall struct {
 	header_      http.Header
 }
 
-// List: Returns metadata about the search performed, metadata about the
-// custom
-// search engine used for the search, and the search results.
+// List: Returns metadata about the search performed, metadata about
+// the
+// engine used for the search, and the search results.
 func (r *CseService) List() *CseListCall {
 	c := &CseListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1875,8 +1882,8 @@ func (c *CseListCall) Cr(cr string) *CseListCall {
 	return c
 }
 
-// Cx sets the optional parameter "cx": The custom search engine ID to
-// use for this request.
+// Cx sets the optional parameter "cx": The Programmable Search Engine
+// ID to use for this request.
 func (c *CseListCall) Cx(cx string) *CseListCall {
 	c.urlParams_.Set("cx", cx)
 	return c
@@ -2435,7 +2442,7 @@ func (c *CseListCall) Header() http.Header {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2501,7 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns metadata about the search performed, metadata about the custom\nsearch engine used for the search, and the search results.",
+	//   "description": "Returns metadata about the search performed, metadata about the\nengine used for the search, and the search results.",
 	//   "flatPath": "customsearch/v1",
 	//   "httpMethod": "GET",
 	//   "id": "search.cse.list",
@@ -2511,7 +2518,7 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "cx": {
-	//       "description": "The custom search engine ID to use for this request.",
+	//       "description": "The Programmable Search Engine ID to use for this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2733,10 +2740,10 @@ type CseSiterestrictListCall struct {
 	header_      http.Header
 }
 
-// List: Returns metadata about the search performed, metadata about the
-// custom
-// search engine used for the search, and the search results. Uses a
-// small set
+// List: Returns metadata about the search performed, metadata about
+// the
+// engine used for the search, and the search results. Uses a small
+// set
 // of url patterns.
 func (r *CseSiterestrictService) List() *CseSiterestrictListCall {
 	c := &CseSiterestrictListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2785,8 +2792,8 @@ func (c *CseSiterestrictListCall) Cr(cr string) *CseSiterestrictListCall {
 	return c
 }
 
-// Cx sets the optional parameter "cx": The custom search engine ID to
-// use for this request.
+// Cx sets the optional parameter "cx": The Programmable Search Engine
+// ID to use for this request.
 func (c *CseSiterestrictListCall) Cx(cx string) *CseSiterestrictListCall {
 	c.urlParams_.Set("cx", cx)
 	return c
@@ -3345,7 +3352,7 @@ func (c *CseSiterestrictListCall) Header() http.Header {
 
 func (c *CseSiterestrictListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3404,7 +3411,7 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns metadata about the search performed, metadata about the custom\nsearch engine used for the search, and the search results. Uses a small set\nof url patterns.",
+	//   "description": "Returns metadata about the search performed, metadata about the\nengine used for the search, and the search results. Uses a small set\nof url patterns.",
 	//   "flatPath": "customsearch/v1/siterestrict",
 	//   "httpMethod": "GET",
 	//   "id": "search.cse.siterestrict.list",
@@ -3421,7 +3428,7 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "cx": {
-	//       "description": "The custom search engine ID to use for this request.",
+	//       "description": "The Programmable Search Engine ID to use for this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

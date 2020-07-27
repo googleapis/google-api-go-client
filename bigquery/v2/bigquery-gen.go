@@ -508,6 +508,67 @@ func (s *ArimaFittingMetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ArimaForecastingMetrics: Model evaluation metrics for ARIMA
+// forecasting models.
+type ArimaForecastingMetrics struct {
+	// ArimaFittingMetrics: Arima model fitting metrics.
+	ArimaFittingMetrics []*ArimaFittingMetrics `json:"arimaFittingMetrics,omitempty"`
+
+	// ArimaSingleModelForecastingMetrics: Repeated as there can be many
+	// metric sets (one for each model) in
+	// auto-arima and the large-scale case.
+	ArimaSingleModelForecastingMetrics []*ArimaSingleModelForecastingMetrics `json:"arimaSingleModelForecastingMetrics,omitempty"`
+
+	// HasDrift: Whether Arima model fitted with drift or not. It is always
+	// false when d
+	// is not 1.
+	HasDrift []bool `json:"hasDrift,omitempty"`
+
+	// NonSeasonalOrder: Non-seasonal order.
+	NonSeasonalOrder []*ArimaOrder `json:"nonSeasonalOrder,omitempty"`
+
+	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
+	// are supported for one
+	// time series.
+	//
+	// Possible values:
+	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
+	//   "NO_SEASONALITY" - No seasonality
+	//   "DAILY" - Daily period, 24 hours.
+	//   "WEEKLY" - Weekly period, 7 days.
+	//   "MONTHLY" - Monthly period, 30 days or irregular.
+	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
+	//   "YEARLY" - Yearly period, 365 days or irregular.
+	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
+
+	// TimeSeriesId: Id to differentiate different time series for the
+	// large-scale case.
+	TimeSeriesId []string `json:"timeSeriesId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArimaFittingMetrics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArimaFittingMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ArimaForecastingMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ArimaForecastingMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ArimaModelInfo: Arima model information.
 type ArimaModelInfo struct {
 	// ArimaCoefficients: Arima coefficients.
@@ -643,6 +704,61 @@ type ArimaResult struct {
 
 func (s *ArimaResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ArimaResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ArimaSingleModelForecastingMetrics: Model evaluation metrics for a
+// single ARIMA forecasting model.
+type ArimaSingleModelForecastingMetrics struct {
+	// ArimaFittingMetrics: Arima fitting metrics.
+	ArimaFittingMetrics *ArimaFittingMetrics `json:"arimaFittingMetrics,omitempty"`
+
+	// HasDrift: Is arima model fitted with drift or not. It is always false
+	// when d
+	// is not 1.
+	HasDrift bool `json:"hasDrift,omitempty"`
+
+	// NonSeasonalOrder: Non-seasonal order.
+	NonSeasonalOrder *ArimaOrder `json:"nonSeasonalOrder,omitempty"`
+
+	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
+	// are supported
+	// for one time series.
+	//
+	// Possible values:
+	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
+	//   "NO_SEASONALITY" - No seasonality
+	//   "DAILY" - Daily period, 24 hours.
+	//   "WEEKLY" - Weekly period, 7 days.
+	//   "MONTHLY" - Monthly period, 30 days or irregular.
+	//   "QUARTERLY" - Quarterly period, 90 days or irregular.
+	//   "YEARLY" - Yearly period, 365 days or irregular.
+	SeasonalPeriods []string `json:"seasonalPeriods,omitempty"`
+
+	// TimeSeriesId: The id to indicate different time series.
+	TimeSeriesId string `json:"timeSeriesId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArimaFittingMetrics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArimaFittingMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ArimaSingleModelForecastingMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2305,6 +2421,9 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 // during
 // training. These are not present for imported models.
 type EvaluationMetrics struct {
+	// ArimaForecastingMetrics: Populated for ARIMA models.
+	ArimaForecastingMetrics *ArimaForecastingMetrics `json:"arimaForecastingMetrics,omitempty"`
+
 	// BinaryClassificationMetrics: Populated for binary
 	// classification/classifier models.
 	BinaryClassificationMetrics *BinaryClassificationMetrics `json:"binaryClassificationMetrics,omitempty"`
@@ -2316,9 +2435,8 @@ type EvaluationMetrics struct {
 	// classification/classifier models.
 	MultiClassClassificationMetrics *MultiClassClassificationMetrics `json:"multiClassClassificationMetrics,omitempty"`
 
-	// RankingMetrics: [Alpha] Populated for implicit feedback type matrix
-	// factorization
-	// models.
+	// RankingMetrics: Populated for implicit feedback type matrix
+	// factorization models.
 	RankingMetrics *RankingMetrics `json:"rankingMetrics,omitempty"`
 
 	// RegressionMetrics: Populated for regression models and explicit
@@ -2327,7 +2445,7 @@ type EvaluationMetrics struct {
 	RegressionMetrics *RegressionMetrics `json:"regressionMetrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "BinaryClassificationMetrics") to unconditionally include in API
+	// "ArimaForecastingMetrics") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -2335,13 +2453,13 @@ type EvaluationMetrics struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "BinaryClassificationMetrics") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ArimaForecastingMetrics")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4582,14 +4700,15 @@ type Model struct {
 	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
 	// model.
 	//   "KMEANS" - K-means clustering model.
-	//   "MATRIX_FACTORIZATION" - Matrix factorization model.
-	//   "DNN_CLASSIFIER" - DNN classifier model.
+	//   "MATRIX_FACTORIZATION" - [Beta] Matrix factorization model.
+	//   "DNN_CLASSIFIER" - [Beta] DNN classifier model.
 	//   "TENSORFLOW" - [Beta] An imported TensorFlow model.
-	//   "DNN_REGRESSOR" - DNN regressor model.
-	//   "BOOSTED_TREE_REGRESSOR" - Boosted tree regressor model.
-	//   "BOOSTED_TREE_CLASSIFIER" - Boosted tree classifier model.
-	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
-	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
+	//   "DNN_REGRESSOR" - [Beta] DNN regressor model.
+	//   "BOOSTED_TREE_REGRESSOR" - [Beta] Boosted tree regressor model.
+	//   "BOOSTED_TREE_CLASSIFIER" - [Beta] Boosted tree classifier model.
+	//   "ARIMA" - [Beta] ARIMA model.
+	//   "AUTOML_REGRESSOR" - [Beta] AutoML Tables regression model.
+	//   "AUTOML_CLASSIFIER" - [Beta] AutoML Tables classification model.
 	ModelType string `json:"modelType,omitempty"`
 
 	// TrainingRuns: Output only. Information for all training runs in
@@ -6064,6 +6183,39 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SnapshotDefinition struct {
+	// BaseTableReference: [Required] Reference describing the ID of the
+	// table that is snapshotted.
+	BaseTableReference *TableReference `json:"baseTableReference,omitempty"`
+
+	// SnapshotTime: [Required] The time at which the base table was
+	// snapshot.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTableReference")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTableReference") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StandardSqlDataType: The type of a variable, e.g., a function
 // argument.
 // Examples:
@@ -6342,6 +6494,9 @@ type Table struct {
 	// resource again.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SnapshotDefinition: [Output-only] Snapshot definition.
+	SnapshotDefinition *SnapshotDefinition `json:"snapshotDefinition,omitempty"`
+
 	// StreamingBuffer: [Output-only] Contains information regarding this
 	// table's streaming buffer, if one is present. This field will be
 	// absent if the table is not being streamed to or if there is no data
@@ -6358,10 +6513,11 @@ type Table struct {
 
 	// Type: [Output-only] Describes the table type. The following values
 	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
-	// defined by a SQL query. [TrustedTester] MATERIALIZED_VIEW: SQL query
-	// whose result is persisted. EXTERNAL: A table that references data
-	// stored in an external storage system, such as Google Cloud Storage.
-	// The default value is TABLE.
+	// defined by a SQL query. [TrustedTester] SNAPSHOT: An immutable,
+	// read-only table that is a copy of another table. [TrustedTester]
+	// MATERIALIZED_VIEW: SQL query whose result is persisted. EXTERNAL: A
+	// table that references data stored in an external storage system, such
+	// as Google Cloud Storage. The default value is TABLE.
 	Type string `json:"type,omitempty"`
 
 	// View: [Optional] The view definition.
@@ -7071,8 +7227,24 @@ func (s *TimePartitioning) MarshalJSON() ([]byte, error) {
 }
 
 type TrainingOptions struct {
+	// AutoArima: Whether to enable auto ARIMA or not.
+	AutoArima bool `json:"autoArima,omitempty"`
+
 	// BatchSize: Batch size for dnn models.
 	BatchSize int64 `json:"batchSize,omitempty,string"`
+
+	// DataFrequency: The data frequency of a time series.
+	//
+	// Possible values:
+	//   "DATA_FREQUENCY_UNSPECIFIED"
+	//   "AUTO_FREQUENCY" - Automatically inferred from timestamps.
+	//   "YEARLY" - Yearly data.
+	//   "QUARTERLY" - Quarterly data.
+	//   "MONTHLY" - Monthly data.
+	//   "WEEKLY" - Weekly data.
+	//   "DAILY" - Daily data.
+	//   "HOURLY" - Hourly data.
+	DataFrequency string `json:"dataFrequency,omitempty"`
 
 	// DataSplitColumn: The column to split data with. This column won't be
 	// used as a
@@ -7146,6 +7318,92 @@ type TrainingOptions struct {
 
 	// HiddenUnits: Hidden units for dnn models.
 	HiddenUnits googleapi.Int64s `json:"hiddenUnits,omitempty"`
+
+	// HolidayRegion: The geographical region based on which the holidays
+	// are considered in
+	// time series modeling. If a valid value is specified, then
+	// holiday
+	// effects modeling is enabled.
+	//
+	// Possible values:
+	//   "HOLIDAY_REGION_UNSPECIFIED" - Holiday region unspecified.
+	//   "GLOBAL" - Global.
+	//   "NA" - North America.
+	//   "JAPAC" - Japan and Asia Pacific: Korea, Greater China, India,
+	// Australia, and New
+	// Zealand.
+	//   "EMEA" - Europe, the Middle East and Africa.
+	//   "LAC" - Latin America and the Caribbean.
+	//   "AE" - United Arab Emirates
+	//   "AR" - Argentina
+	//   "AT" - Austria
+	//   "AU" - Australia
+	//   "BE" - Belgium
+	//   "BR" - Brazil
+	//   "CA" - Canada
+	//   "CH" - Switzerland
+	//   "CL" - Chile
+	//   "CN" - China
+	//   "CO" - Colombia
+	//   "CS" - Czechoslovakia
+	//   "CZ" - Czech Republic
+	//   "DE" - Germany
+	//   "DK" - Denmark
+	//   "DZ" - Algeria
+	//   "EC" - Ecuador
+	//   "EE" - Estonia
+	//   "EG" - Egypt
+	//   "ES" - Spain
+	//   "FI" - Finland
+	//   "FR" - France
+	//   "GB" - Great Britain (United Kingdom)
+	//   "GR" - Greece
+	//   "HK" - Hong Kong
+	//   "HU" - Hungary
+	//   "ID" - Indonesia
+	//   "IE" - Ireland
+	//   "IL" - Israel
+	//   "IN" - India
+	//   "IR" - Iran
+	//   "IT" - Italy
+	//   "JP" - Japan
+	//   "KR" - Korea (South)
+	//   "LV" - Latvia
+	//   "MA" - Morocco
+	//   "MX" - Mexico
+	//   "MY" - Malaysia
+	//   "NG" - Nigeria
+	//   "NL" - Netherlands
+	//   "NO" - Norway
+	//   "NZ" - New Zealand
+	//   "PE" - Peru
+	//   "PH" - Philippines
+	//   "PK" - Pakistan
+	//   "PL" - Poland
+	//   "PT" - Portugal
+	//   "RO" - Romania
+	//   "RS" - Serbia
+	//   "RU" - Russian Federation
+	//   "SA" - Saudi Arabia
+	//   "SE" - Sweden
+	//   "SG" - Singapore
+	//   "SI" - Slovenia
+	//   "SK" - Slovakia
+	//   "TH" - Thailand
+	//   "TR" - Turkey
+	//   "TW" - Taiwan
+	//   "UA" - Ukraine
+	//   "US" - United States
+	//   "VE" - Venezuela
+	//   "VN" - Viet Nam
+	//   "ZA" - South Africa
+	HolidayRegion string `json:"holidayRegion,omitempty"`
+
+	// Horizon: The number of periods ahead that need to be forecasted.
+	Horizon int64 `json:"horizon,omitempty,string"`
+
+	// IncludeDrift: Include drift when fitting an ARIMA model.
+	IncludeDrift bool `json:"includeDrift,omitempty"`
 
 	// InitialLearnRate: Specifies the initial learning rate for the line
 	// search learn rate
@@ -7231,6 +7489,13 @@ type TrainingOptions struct {
 	// applicable for imported models.
 	ModelUri string `json:"modelUri,omitempty"`
 
+	// NonSeasonalOrder: A specification of the non-seasonal part of the
+	// ARIMA model: the three
+	// components (p, d, q) are the AR order, the degree of differencing,
+	// and
+	// the MA order.
+	NonSeasonalOrder *ArimaOrder `json:"nonSeasonalOrder,omitempty"`
+
 	// NumClusters: Number of clusters for clustering models.
 	NumClusters int64 `json:"numClusters,omitempty,string"`
 
@@ -7260,6 +7525,19 @@ type TrainingOptions struct {
 	// overfitting for boosted tree models.
 	Subsample float64 `json:"subsample,omitempty"`
 
+	// TimeSeriesDataColumn: Column to be designated as time series data for
+	// ARIMA model.
+	TimeSeriesDataColumn string `json:"timeSeriesDataColumn,omitempty"`
+
+	// TimeSeriesIdColumn: The id column that will be used to indicate
+	// different time series to
+	// forecast in parallel.
+	TimeSeriesIdColumn string `json:"timeSeriesIdColumn,omitempty"`
+
+	// TimeSeriesTimestampColumn: Column to be designated as time series
+	// timestamp for ARIMA model.
+	TimeSeriesTimestampColumn string `json:"timeSeriesTimestampColumn,omitempty"`
+
 	// UserColumn: User column specified for matrix factorization models.
 	UserColumn string `json:"userColumn,omitempty"`
 
@@ -7271,7 +7549,7 @@ type TrainingOptions struct {
 	// WarmStart: Whether to train a model from the last checkpoint.
 	WarmStart bool `json:"warmStart,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BatchSize") to
+	// ForceSendFields is a list of field names (e.g. "AutoArima") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -7279,7 +7557,7 @@ type TrainingOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BatchSize") to include in
+	// NullFields is a list of field names (e.g. "AutoArima") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -7510,7 +7788,7 @@ func (c *DatasetsDeleteCall) Header() http.Header {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7637,7 +7915,7 @@ func (c *DatasetsGetCall) Header() http.Header {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7781,7 +8059,7 @@ func (c *DatasetsInsertCall) Header() http.Header {
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7961,7 +8239,7 @@ func (c *DatasetsListCall) Header() http.Header {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8144,7 +8422,7 @@ func (c *DatasetsPatchCall) Header() http.Header {
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8295,7 +8573,7 @@ func (c *DatasetsUpdateCall) Header() http.Header {
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8453,7 +8731,7 @@ func (c *JobsCancelCall) Header() http.Header {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8618,7 +8896,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8817,7 +9095,7 @@ func (c *JobsGetQueryResultsCall) Header() http.Header {
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9051,7 +9329,7 @@ func (c *JobsInsertCall) Header() http.Header {
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9318,7 +9596,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9538,7 +9816,7 @@ func (c *JobsQueryCall) Header() http.Header {
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9681,7 +9959,7 @@ func (c *ModelsDeleteCall) Header() http.Header {
 
 func (c *ModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9817,7 +10095,7 @@ func (c *ModelsGetCall) Header() http.Header {
 
 func (c *ModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10002,7 +10280,7 @@ func (c *ModelsListCall) Header() http.Header {
 
 func (c *ModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10185,7 +10463,7 @@ func (c *ModelsPatchCall) Header() http.Header {
 
 func (c *ModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10354,7 +10632,7 @@ func (c *ProjectsGetServiceAccountCall) Header() http.Header {
 
 func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10512,7 +10790,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10670,7 +10948,7 @@ func (c *RoutinesDeleteCall) Header() http.Header {
 
 func (c *RoutinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10814,7 +11092,7 @@ func (c *RoutinesGetCall) Header() http.Header {
 
 func (c *RoutinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10978,7 +11256,7 @@ func (c *RoutinesInsertCall) Header() http.Header {
 
 func (c *RoutinesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11182,7 +11460,7 @@ func (c *RoutinesListCall) Header() http.Header {
 
 func (c *RoutinesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11378,7 +11656,7 @@ func (c *RoutinesUpdateCall) Header() http.Header {
 
 func (c *RoutinesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11542,7 +11820,7 @@ func (c *TabledataInsertAllCall) Header() http.Header {
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11741,7 +12019,7 @@ func (c *TabledataListCall) Header() http.Header {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11939,7 +12217,7 @@ func (c *TablesDeleteCall) Header() http.Header {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12081,7 +12359,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12241,7 +12519,7 @@ func (c *TablesGetIamPolicyCall) Header() http.Header {
 
 func (c *TablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12386,7 +12664,7 @@ func (c *TablesInsertCall) Header() http.Header {
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12559,7 +12837,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12742,7 +13020,7 @@ func (c *TablesPatchCall) Header() http.Header {
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12902,7 +13180,7 @@ func (c *TablesSetIamPolicyCall) Header() http.Header {
 
 func (c *TablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13053,7 +13331,7 @@ func (c *TablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13202,7 +13480,7 @@ func (c *TablesUpdateCall) Header() http.Header {
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200723")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200725")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -129,16 +129,16 @@ func (w withGRPCConn) Apply(o *internal.DialSettings) {
 	o.GRPCConn = w.conn
 }
 
-// WithGRPCDialOption returns a ClientOption that appends a new grpc.DialOption
+// WithGRPCDialOption returns a ClientOption that appends new grpc.DialOptions
 // to an underlying gRPC dial. It does not work with WithGRPCConn.
-func WithGRPCDialOption(opt grpc.DialOption) ClientOption {
-	return withGRPCDialOption{opt}
+func WithGRPCDialOption(opts ...grpc.DialOption) ClientOption {
+	return withGRPCDialOption{opts}
 }
 
-type withGRPCDialOption struct{ opt grpc.DialOption }
+type withGRPCDialOption struct{ opts []grpc.DialOption }
 
 func (w withGRPCDialOption) Apply(o *internal.DialSettings) {
-	o.GRPCDialOpts = append(o.GRPCDialOpts, w.opt)
+	o.GRPCDialOpts = append(o.GRPCDialOpts, w.opts...)
 }
 
 // WithGRPCConnectionPool returns a ClientOption that creates a pool of gRPC

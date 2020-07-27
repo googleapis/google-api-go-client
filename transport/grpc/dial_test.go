@@ -41,8 +41,11 @@ func TestGRPCHook(t *testing.T) {
 
 	conn, err := Dial(ctx,
 		option.WithTokenSource(oauth2.StaticTokenSource(nil)), // No creds.
-		option.WithGRPCDialOption(expectedDialer),
-		option.WithGRPCDialOption(grpc.WithBlock()))
+		option.WithGRPCDialOption(
+			expectedDialer,
+			grpc.WithBlock(),
+		),
+	)
 	if err != context.Canceled {
 		t.Errorf("got %v, want %v", err, context.Canceled)
 	}

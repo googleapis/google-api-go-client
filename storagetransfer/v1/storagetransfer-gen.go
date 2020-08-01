@@ -1849,7 +1849,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1981,7 +1981,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2125,7 +2125,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2307,7 +2307,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2478,7 +2478,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2582,9 +2582,46 @@ type TransferOperationsCancelCall struct {
 	header_    http.Header
 }
 
-// Cancel: Cancels a transfer. Use the get method to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation.
+// Cancel: Cancels a transfer. Use the
+// transferOperations.get method to
+// check if the cancellation succeeded or if the operation completed
+// despite
+// the `cancel` request.
+//
+// When you cancel an operation, the currently running transfer
+// is
+// interrupted.  For recurring transfer jobs, the next instance of the
+// transfer job
+// will still run.  For example, if your job is configured to run every
+// day
+// at 1pm and you cancel Monday's operation at 1:05pm, Monday's
+// transfer
+// will stop. However, a transfer job will still be attempted on
+// Tuesday.
+//
+// This applies only to currently running operations. If an operation
+// is
+// not currently running, `cancel` does nothing.
+//
+// <aside class="caution">
+// <b>Caution:</b> Canceling a transfer job can leave your data in an
+// unknown
+// state. We recommend that you restore the state at both the
+// destination and the
+// source after the `cancel` request completes so that your data is in a
+// consistent
+// state.
+// </aside>
+//
+// When you cancel a job, the next job computes a delta of files and may
+// repair any
+// inconsistent state. For instance, if you run a job every day, and
+// today's job
+// found 10 new files and transferred five files before you canceled the
+// job,
+// tomorrow's transfer operation will compute a new delta with the five
+// files that
+// were not copied today plus any new files discovered tomorrow.
 func (r *TransferOperationsService) Cancel(name string) *TransferOperationsCancelCall {
 	c := &TransferOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2618,7 +2655,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,7 +2714,7 @@ func (c *TransferOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancels a transfer. Use the get method to check whether the cancellation succeeded or whether the operation completed despite cancellation.",
+	//   "description": "Cancels a transfer. Use the\ntransferOperations.get method to\ncheck if the cancellation succeeded or if the operation completed despite\nthe `cancel` request.\n\nWhen you cancel an operation, the currently running transfer is\ninterrupted.  For recurring transfer jobs, the next instance of the transfer job\nwill still run.  For example, if your job is configured to run every day\nat 1pm and you cancel Monday's operation at 1:05pm, Monday's transfer\nwill stop. However, a transfer job will still be attempted on Tuesday.\n\nThis applies only to currently running operations. If an operation is\nnot currently running, `cancel` does nothing.\n\n\u003caside class=\"caution\"\u003e\n\u003cb\u003eCaution:\u003c/b\u003e Canceling a transfer job can leave your data in an unknown\nstate. We recommend that you restore the state at both the destination and the\nsource after the `cancel` request completes so that your data is in a consistent\nstate.\n\u003c/aside\u003e\n\nWhen you cancel a job, the next job computes a delta of files and may repair any\ninconsistent state. For instance, if you run a job every day, and today's job\nfound 10 new files and transferred five files before you canceled the job,\ntomorrow's transfer operation will compute a new delta with the five files that\nwere not copied today plus any new files discovered tomorrow.",
 	//   "flatPath": "v1/transferOperations/{transferOperationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "storagetransfer.transferOperations.cancel",
@@ -2763,7 +2800,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2938,7 +2975,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3110,7 +3147,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3250,7 +3287,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

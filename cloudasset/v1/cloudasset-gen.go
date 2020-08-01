@@ -2702,27 +2702,31 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resoure.
+// information of a cloud resource.
 type ResourceSearchResult struct {
-	// AdditionalAttributes: The additional attributes of this resource. The
-	// attributes may vary from
-	// one resource type to another. Examples: `projectId` for
+	// AdditionalAttributes: The additional searchable attributes of this
+	// resource. The attributes may
+	// vary from one resource type to another. Examples: `projectId` for
 	// Project,
 	// `dnsName` for DNS ManagedZone. This field contains a subset of the
 	// resource
 	// metadata fields that are returned by the List or Get APIs provided by
 	// the
-	// corresponding GCP service (e.g., Compute Engine). see
-	// [API
-	// references](https://cloud.google.com/asset-inventory/docs/support
-	// ed-asset-types#supported_resource_types)
-	// of CAIS supported resource types. You can search values of these
-	// fields
-	// through free text search. However, you should not consume the
-	// field
-	// programically as the field names and values may change as the GCP
-	// service
-	// (e.g., Compute Engine) updates to a new incompatible API version.
+	// corresponding GCP service (e.g., Compute Engine). see [API references
+	// and
+	// supported
+	// searchable
+	// attributes](https://cloud.google.com/asset-inventory/docs/s
+	// upported-asset-types#searchable_asset_types)
+	// for more information.
+	//
+	// You can search values of these fields through free text search.
+	// However,
+	// you should not consume the field programically as the field names
+	// and
+	// values may change as the GCP service updates to a new incompatible
+	// API
+	// version.
 	//
 	// To search against the `additional_attributes`:
 	//
@@ -3161,7 +3165,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3299,7 +3303,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3440,7 +3444,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3584,7 +3588,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3719,7 +3723,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3872,7 +3876,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4076,7 +4080,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4258,7 +4262,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4363,11 +4367,11 @@ type V1SearchAllIamPoliciesCall struct {
 	header_      http.Header
 }
 
-// SearchAllIamPolicies: Searches all the IAM policies within the given
-// accessible scope (e.g., a
-// project, a folder or an organization). Callers should
-// have
-// `cloud.assets.SearchAllIamPolicies` permission upon the requested
+// SearchAllIamPolicies: Searches all IAM policies within the specified
+// scope, such as a project,
+// folder, or organization. The caller must be granted
+// the
+// `cloudasset.assets.searchAllIamPolicies` permission on the desired
 // scope,
 // otherwise the request will be rejected.
 func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCall {
@@ -4400,36 +4404,45 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 	return c
 }
 
-// Query sets the optional parameter "query": The query statement. An
-// empty query can be specified to search all the IAM
-// policies within the given `scope`.
-//
-// Examples:
-//
-// * `policy : "amy@gmail.com" to find Cloud IAM policy bindings that
-//   specify user "amy@gmail.com".
-// * `policy : "roles/compute.admin" to find Cloud IAM policy bindings
-// that
-//   specify the Compute Admin role.
-// * `policy.role.permissions : "storage.buckets.update" to find Cloud
-// IAM
-//   policy bindings that specify a role containing
-// "storage.buckets.update"
-//   permission.
-// * `resource : "organizations/123" to find Cloud IAM policy bindings
-// that
-//   are set on "organizations/123".
-// * `(resource : ("organizations/123" OR "folders/1234") AND policy :
-// "amy")`
-//   to find Cloud IAM policy bindings that are set on
-// "organizations/123" or
-//   "folders/1234", and also specify user "amy".
-//
-// See [how to construct
+// Query sets the optional parameter "query": The query statement. See
+// [how to construct
 // a
 // query](https://cloud.google.com/asset-inventory/docs/searching-iam-p
 // olicies#how_to_construct_a_query)
-// for more details.
+// for more information. If not specified or empty, it will search all
+// the
+// IAM policies within the specified `scope`.
+//
+// Examples:
+//
+// * `policy : "amy@gmail.com" to find IAM policy bindings that specify
+// user
+//   "amy@gmail.com".
+// * `policy : "roles/compute.admin" to find IAM policy bindings that
+// specify
+//   the Compute Admin role.
+// * `policy.role.permissions : "storage.buckets.update" to find IAM
+// policy
+//   bindings that specify a role containing "storage.buckets.update"
+//   permission. Note that if callers don't have `iam.roles.get` access
+// to a
+//   role's included permissions, policy bindings that specify this role
+// will
+//   be dropped from the search results.
+// * `resource : "organizations/123456" to find IAM policy bindings
+//   that are set on "organizations/123456".
+// * "Important" to find IAM policy bindings that contain "Important"
+// as a
+//   word in any of the searchable fields (except for the included
+//   permissions).
+// * "*por*" to find IAM policy bindings which contain "por" as a
+// substring
+//   in any of the searchable fields (except for the included
+// permissions).
+// * `(resource : ("instance1" OR "instance2") AND policy : "amy")` to
+// find
+//   IAM policy bindings that are set on resources "instance1" or
+//   "instance2" and also specify user "amy".
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -4472,7 +4485,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4534,7 +4547,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the IAM policies within the given accessible scope (e.g., a\nproject, a folder or an organization). Callers should have\n`cloud.assets.SearchAllIamPolicies` permission upon the requested scope,\notherwise the request will be rejected.",
+	//   "description": "Searches all IAM policies within the specified scope, such as a project,\nfolder, or organization. The caller must be granted the\n`cloudasset.assets.searchAllIamPolicies` permission on the desired scope,\notherwise the request will be rejected.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:searchAllIamPolicies",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.searchAllIamPolicies",
@@ -4554,12 +4567,12 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. An empty query can be specified to search all the IAM\npolicies within the given `scope`.\n\nExamples:\n\n* `policy : \"amy@gmail.com\"` to find Cloud IAM policy bindings that\n  specify user \"amy@gmail.com\".\n* `policy : \"roles/compute.admin\"` to find Cloud IAM policy bindings that\n  specify the Compute Admin role.\n* `policy.role.permissions : \"storage.buckets.update\"` to find Cloud IAM\n  policy bindings that specify a role containing \"storage.buckets.update\"\n  permission.\n* `resource : \"organizations/123\"` to find Cloud IAM policy bindings that\n  are set on \"organizations/123\".\n* `(resource : (\"organizations/123\" OR \"folders/1234\") AND policy : \"amy\")`\n  to find Cloud IAM policy bindings that are set on \"organizations/123\" or\n  \"folders/1234\", and also specify user \"amy\".\n\nSee [how to construct a\nquery](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)\nfor more details.",
+	//       "description": "Optional. The query statement. See [how to construct a\nquery](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)\nfor more information. If not specified or empty, it will search all the\nIAM policies within the specified `scope`.\n\nExamples:\n\n* `policy : \"amy@gmail.com\"` to find IAM policy bindings that specify user\n  \"amy@gmail.com\".\n* `policy : \"roles/compute.admin\"` to find IAM policy bindings that specify\n  the Compute Admin role.\n* `policy.role.permissions : \"storage.buckets.update\"` to find IAM policy\n  bindings that specify a role containing \"storage.buckets.update\"\n  permission. Note that if callers don't have `iam.roles.get` access to a\n  role's included permissions, policy bindings that specify this role will\n  be dropped from the search results.\n* `resource : \"organizations/123456\"` to find IAM policy bindings\n  that are set on \"organizations/123456\".\n* `\"Important\"` to find IAM policy bindings that contain \"Important\" as a\n  word in any of the searchable fields (except for the included\n  permissions).\n* `\"*por*\"` to find IAM policy bindings which contain \"por\" as a substring\n  in any of the searchable fields (except for the included permissions).\n* `(resource : (\"instance1\" OR \"instance2\") AND policy : \"amy\")` to find\n  IAM policy bindings that are set on resources \"instance1\" or\n  \"instance2\" and also specify user \"amy\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. A scope can be a project, a folder or an organization. The search is\nlimited to the IAM policies within the `scope`.\n\nThe allowed values are:\n\n* projects/{PROJECT_ID}\n* projects/{PROJECT_NUMBER}\n* folders/{FOLDER_NUMBER}\n* organizations/{ORGANIZATION_NUMBER}",
+	//       "description": "Required. A scope can be a project, a folder, or an organization. The search is\nlimited to the IAM policies within the `scope`. The caller must be granted\nthe\n[`cloudasset.assets.searchAllIamPolicies`](http://cloud.google.com/asset-inventory/docs/access-control#required_permissions)\npermission on the desired scope.\n\nThe allowed values are:\n\n* projects/{PROJECT_ID} (e.g., \"projects/foo-bar\")\n* projects/{PROJECT_NUMBER} (e.g., \"projects/12345678\")\n* folders/{FOLDER_NUMBER} (e.g., \"folders/1234567\")\n* organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -4609,11 +4622,11 @@ type V1SearchAllResourcesCall struct {
 	header_      http.Header
 }
 
-// SearchAllResources: Searches all the resources within the given
-// accessible scope (e.g., a
-// project, a folder or an organization). Callers should
-// have
-// `cloud.assets.SearchAllResources` permission upon the requested
+// SearchAllResources: Searches all Cloud resources within the specified
+// scope, such as a project,
+// folder, or organization. The caller must be granted
+// the
+// `cloudasset.assets.searchAllResources` permission on the desired
 // scope,
 // otherwise the request will be rejected.
 func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
@@ -4677,18 +4690,33 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 	return c
 }
 
-// Query sets the optional parameter "query": The query statement. An
-// empty query can be specified to search all the
-// resources of certain `asset_types` within the given
-// `scope`.
+// Query sets the optional parameter "query": The query statement. See
+// [how to construct
+// a
+// query](http://cloud.google.com/asset-inventory/docs/searching-resour
+// ces#how_to_construct_a_query)
+// for more information. If not specified or empty, it will search all
+// the
+// resources within the specified `scope`. Note that the query string
+// is
+// compared against each Cloud IAM policy binding, including its
+// members,
+// roles, and Cloud IAM conditions. The returned Cloud IAM policies will
+// only
+// contain the bindings that match your query. To learn more about the
+// IAM
+// policy structure, see [IAM
+// policy
+// doc](https://cloud.google.com/iam/docs/policies#structure).
 //
-// Examples:
+// Ex
+// amples:
 //
 // * `name : "Important" to find Cloud resources whose name contains
 //   "Important" as a word.
 // * `displayName : "Impor*" to find Cloud resources whose display
 // name
-//   contains "Impor" as a word prefix.
+//   contains "Impor" as a prefix.
 // * `description : "*por*" to find Cloud resources whose description
 //   contains "por" as a substring.
 // * `location : "us-west*" to find Cloud resources whose location is
@@ -4704,7 +4732,7 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 // * "Important" to find Cloud resources which contain "Important" as
 // a word
 //   in any of the searchable fields.
-// * "Impor*" to find Cloud resources which contain "Impor" as a word
+// * "Impor*" to find Cloud resources which contain "Impor" as a
 // prefix
 //   in any of the searchable fields.
 // * "*por*" to find Cloud resources which contain "por" as a
@@ -4717,12 +4745,6 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 //   fields and are also located in the "us-west1" region or the
 // "global"
 //   location.
-//
-// See [how to construct
-// a
-// query](https://cloud.google.com/asset-inventory/docs/searching-resou
-// rces#how_to_construct_a_query)
-// for more details.
 func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -4765,7 +4787,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4827,7 +4849,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the resources within the given accessible scope (e.g., a\nproject, a folder or an organization). Callers should have\n`cloud.assets.SearchAllResources` permission upon the requested scope,\notherwise the request will be rejected.",
+	//   "description": "Searches all Cloud resources within the specified scope, such as a project,\nfolder, or organization. The caller must be granted the\n`cloudasset.assets.searchAllResources` permission on the desired scope,\notherwise the request will be rejected.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:searchAllResources",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.searchAllResources",
@@ -4858,12 +4880,12 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. An empty query can be specified to search all the\nresources of certain `asset_types` within the given `scope`.\n\nExamples:\n\n* `name : \"Important\"` to find Cloud resources whose name contains\n  \"Important\" as a word.\n* `displayName : \"Impor*\"` to find Cloud resources whose display name\n  contains \"Impor\" as a word prefix.\n* `description : \"*por*\"` to find Cloud resources whose description\n  contains \"por\" as a substring.\n* `location : \"us-west*\"` to find Cloud resources whose location is\n  prefixed with \"us-west\".\n* `labels : \"prod\"` to find Cloud resources whose labels contain \"prod\" as\n  a key or value.\n* `labels.env : \"prod\"` to find Cloud resources which have a label \"env\"\n  and its value is \"prod\".\n* `labels.env : *` to find Cloud resources which have a label \"env\".\n* `\"Important\"` to find Cloud resources which contain \"Important\" as a word\n  in any of the searchable fields.\n* `\"Impor*\"` to find Cloud resources which contain \"Impor\" as a word prefix\n  in any of the searchable fields.\n* `\"*por*\"` to find Cloud resources which contain \"por\" as a substring in\n  any of the searchable fields.\n* `(\"Important\" AND location : (\"us-west1\" OR \"global\"))` to find Cloud\n  resources which contain \"Important\" as a word in any of the searchable\n  fields and are also located in the \"us-west1\" region or the \"global\"\n  location.\n\nSee [how to construct a\nquery](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)\nfor more details.",
+	//       "description": "Optional. The query statement. See [how to construct a\nquery](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)\nfor more information. If not specified or empty, it will search all the\nresources within the specified `scope`. Note that the query string is\ncompared against each Cloud IAM policy binding, including its members,\nroles, and Cloud IAM conditions. The returned Cloud IAM policies will only\ncontain the bindings that match your query. To learn more about the IAM\npolicy structure, see [IAM policy\ndoc](https://cloud.google.com/iam/docs/policies#structure).\n\nExamples:\n\n* `name : \"Important\"` to find Cloud resources whose name contains\n  \"Important\" as a word.\n* `displayName : \"Impor*\"` to find Cloud resources whose display name\n  contains \"Impor\" as a prefix.\n* `description : \"*por*\"` to find Cloud resources whose description\n  contains \"por\" as a substring.\n* `location : \"us-west*\"` to find Cloud resources whose location is\n  prefixed with \"us-west\".\n* `labels : \"prod\"` to find Cloud resources whose labels contain \"prod\" as\n  a key or value.\n* `labels.env : \"prod\"` to find Cloud resources which have a label \"env\"\n  and its value is \"prod\".\n* `labels.env : *` to find Cloud resources which have a label \"env\".\n* `\"Important\"` to find Cloud resources which contain \"Important\" as a word\n  in any of the searchable fields.\n* `\"Impor*\"` to find Cloud resources which contain \"Impor\" as a prefix\n  in any of the searchable fields.\n* `\"*por*\"` to find Cloud resources which contain \"por\" as a substring in\n  any of the searchable fields.\n* `(\"Important\" AND location : (\"us-west1\" OR \"global\"))` to find Cloud\n  resources which contain \"Important\" as a word in any of the searchable\n  fields and are also located in the \"us-west1\" region or the \"global\"\n  location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. A scope can be a project, a folder or an organization. The search is\nlimited to the resources within the `scope`.\n\nThe allowed values are:\n\n* projects/{PROJECT_ID}\n* projects/{PROJECT_NUMBER}\n* folders/{FOLDER_NUMBER}\n* organizations/{ORGANIZATION_NUMBER}",
+	//       "description": "Required. A scope can be a project, a folder, or an organization. The search is\nlimited to the resources within the `scope`. The caller must be granted the\n[`cloudasset.assets.searchAllResources`](http://cloud.google.com/asset-inventory/docs/access-control#required_permissions)\npermission on the desired scope.\n\nThe allowed values are:\n\n* projects/{PROJECT_ID} (e.g., \"projects/foo-bar\")\n* projects/{PROJECT_NUMBER} (e.g., \"projects/12345678\")\n* folders/{FOLDER_NUMBER} (e.g., \"folders/1234567\")\n* organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

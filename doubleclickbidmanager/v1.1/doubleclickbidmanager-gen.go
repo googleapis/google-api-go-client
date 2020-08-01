@@ -178,6 +178,73 @@ type SdfService struct {
 	s *Service
 }
 
+// ChannelGrouping: A channel grouping defines a set of rules that can
+// be used to categorize events in a path report.
+type ChannelGrouping struct {
+	// FallbackName: The name to apply to an event that does not match any
+	// of the rules in the channel grouping.
+	FallbackName string `json:"fallbackName,omitempty"`
+
+	// Name: Channel Grouping name.
+	Name string `json:"name,omitempty"`
+
+	// Rules: Rules within Channel Grouping. There is a limit of 100 rules
+	// that can be set per channel grouping.
+	Rules []*Rule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FallbackName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FallbackName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelGrouping
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DisjunctiveMatchStatement: DisjunctiveMatchStatement that OR's all
+// contained filters.
+type DisjunctiveMatchStatement struct {
+	// EventFilters: Filters. There is a limit of 100 filters that can be
+	// set per disjunctive match statement.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
+	type NoMethod DisjunctiveMatchStatement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DownloadLineItemsRequest: Request to fetch stored line items.
 type DownloadLineItemsRequest struct {
 	// FileSpec: File specification (column names, types, order) in which
@@ -263,7 +330,7 @@ func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DownloadRequest: Request to fetch stored inventory sources,
-// campaigns, insertion orders, line items, TrueView ad groups and ads.
+// campaigns, insertion orders, line items, YouTube ad groups and ads.
 type DownloadRequest struct {
 	// FileTypes: File types that will be returned. If INVENTORY_SOURCE is
 	// requested, no other file types may be requested.
@@ -375,6 +442,36 @@ func (s *DownloadResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EventFilter: Defines the type of filter to be applied to the path, a
+// DV360 event dimension filter.
+type EventFilter struct {
+	// DimensionFilter: Filter on a dimension.
+	DimensionFilter *PathQueryOptionsFilter `json:"dimensionFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod EventFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FilterPair: Filter used to match traffic data in your report.
 type FilterPair struct {
 	// Type: Filter type.
@@ -416,6 +513,7 @@ type FilterPair struct {
 	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
 	//   "FILTER_CARRIER"
 	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_GROUPING"
 	//   "FILTER_CHANNEL_ID"
 	//   "FILTER_CHANNEL_NAME"
 	//   "FILTER_CHANNEL_TYPE"
@@ -458,6 +556,7 @@ type FilterPair struct {
 	//   "FILTER_DOMAIN"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
+	//   "FILTER_EVENT_TYPE"
 	//   "FILTER_EXCHANGE"
 	//   "FILTER_EXCHANGE_CODE"
 	//   "FILTER_EXCHANGE_ID"
@@ -533,6 +632,8 @@ type FilterPair struct {
 	//   "FILTER_PARTNER_CURRENCY"
 	//   "FILTER_PARTNER_NAME"
 	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_PATH_PATTERN_ID"
 	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLATFORM"
@@ -751,6 +852,10 @@ type Options struct {
 	// audience lists specifically targeted by those items.
 	IncludeOnlyTargetedUserLists bool `json:"includeOnlyTargetedUserLists,omitempty"`
 
+	// PathQueryOptions: Options that contain Path Filters and Custom
+	// Channel Groupings.
+	PathQueryOptions *PathQueryOptions `json:"pathQueryOptions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "IncludeOnlyTargetedUserLists") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -820,6 +925,7 @@ type Parameters struct {
 	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
 	//   "FILTER_CARRIER"
 	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_GROUPING"
 	//   "FILTER_CHANNEL_ID"
 	//   "FILTER_CHANNEL_NAME"
 	//   "FILTER_CHANNEL_TYPE"
@@ -862,6 +968,7 @@ type Parameters struct {
 	//   "FILTER_DOMAIN"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
 	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
+	//   "FILTER_EVENT_TYPE"
 	//   "FILTER_EXCHANGE"
 	//   "FILTER_EXCHANGE_CODE"
 	//   "FILTER_EXCHANGE_ID"
@@ -937,6 +1044,8 @@ type Parameters struct {
 	//   "FILTER_PARTNER_CURRENCY"
 	//   "FILTER_PARTNER_NAME"
 	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_PATH_PATTERN_ID"
 	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
 	//   "FILTER_PLATFORM"
@@ -1117,6 +1226,7 @@ type Parameters struct {
 	//   "METRIC_ACTIVE_VIEW_UNVIEWABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_VIEWABLE_FOR_TIME_THRESHOLD"
 	//   "METRIC_ACTIVE_VIEW_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_ACTIVITY_REVENUE"
 	//   "METRIC_ADAPTED_AUDIENCE_FREQUENCY"
 	//   "METRIC_ADLINGO_FEE_ADVERTISER_CURRENCY"
 	//   "METRIC_AUDIO_CLIENT_COST_ECPCL_ADVERTISER_CURRENCY"
@@ -1167,6 +1277,7 @@ type Parameters struct {
 	//   "METRIC_COMPLETE_LISTENS_AUDIO"
 	//   "METRIC_COMPLETION_RATE_AUDIO"
 	//   "METRIC_CONVERSIONS_PER_MILLE"
+	//   "METRIC_CONVERTING_PATHS"
 	//   "METRIC_COOKIE_REACH_AVERAGE_IMPRESSION_FREQUENCY"
 	//   "METRIC_COOKIE_REACH_IMPRESSION_REACH"
 	//   "METRIC_COST_PER_STORE_VISIT"
@@ -1206,6 +1317,7 @@ type Parameters struct {
 	// SER_CURRENCY"
 	//   "METRIC_EXITS"
 	//   "METRIC_EXPANSIONS"
+	//   "METRIC_EXPOSURE_CONVERSION_RATE"
 	//   "METRIC_FEE10_ADVERTISER"
 	//   "METRIC_FEE10_PARTNER"
 	//   "METRIC_FEE10_USD"
@@ -1297,6 +1409,9 @@ type Parameters struct {
 	//   "METRIC_INVALID_TRACKED_ADS"
 	//   "METRIC_LAST_CLICKS"
 	//   "METRIC_LAST_IMPRESSIONS"
+	//   "METRIC_LAST_TOUCH_CLICK_THROUGH_CONVERSIONS"
+	//   "METRIC_LAST_TOUCH_TOTAL_CONVERSIONS"
+	//   "METRIC_LAST_TOUCH_VIEW_THROUGH_CONVERSIONS"
 	//   "METRIC_MEDIA_COST_ADVERTISER"
 	//   "METRIC_MEDIA_COST_ADVERTISER_CURRENCY_PER_STORE_VISIT_ADX_ONLY"
 	//   "METRIC_MEDIA_COST_ECPAPC_ADVERTISER"
@@ -1350,6 +1465,7 @@ type Parameters struct {
 	//   "METRIC_NIELSEN_REACH_SHARE"
 	//   "METRIC_NIELSEN_UNIQUE_AUDIENCE"
 	//   "METRIC_ORIGINAL_AUDIENCE_FREQUENCY"
+	//   "METRIC_PATH_CONVERSION_RATE"
 	//   "METRIC_PAUSES_AUDIO"
 	//   "METRIC_PERCENT_IMPRESSIONS_WITH_POSITIVE_CUSTOM_VALUE"
 	//   "METRIC_PERCENT_INVALID_IMPRESSIONS_PREBID"
@@ -1377,6 +1493,7 @@ type Parameters struct {
 	//
 	// "METRIC_PROGRAMMATIC_GUARANTEED_SAVINGS_RE_INVESTED_DUE_TO_FREQUENCY_A
 	// DVERTISER_CURRENCY"
+	//   "METRIC_PROVISIONAL_IMPRESSIONS"
 	//   "METRIC_REFUND_BILLABLE_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_MEDIA_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_PLATFORM_FEE_ADVERTISER_CURRENCY"
@@ -1429,6 +1546,7 @@ type Parameters struct {
 	//   "METRIC_TOTAL_CONVERSIONS_CROSS_ENVIRONMENT"
 	//   "METRIC_TOTAL_COOKIES"
 	//   "METRIC_TOTAL_DISPLAY_TIME"
+	//   "METRIC_TOTAL_EXPOSURES"
 	//   "METRIC_TOTAL_IMPRESSION_CUSTOM_VALUE"
 	//   "METRIC_TOTAL_INTERACTION_TIME"
 	//   "METRIC_TOTAL_MEDIA_COST_ADVERTISER"
@@ -1457,6 +1575,7 @@ type Parameters struct {
 	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
 	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
 	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_USD"
+	//   "METRIC_TOTAL_PATHS"
 	//   "METRIC_TOTAL_USERS"
 	//   "METRIC_TOTAL_VIEWERS_COOKIES"
 	//   "METRIC_TRACKED_ADS"
@@ -1533,6 +1652,8 @@ type Parameters struct {
 	//   "TYPE_NOT_SUPPORTED"
 	//   "TYPE_ORDER_ID"
 	//   "TYPE_PAGE_CATEGORY"
+	//   "TYPE_PATH"
+	//   "TYPE_PATH_ATTRIBUTION"
 	//   "TYPE_PETRA_NIELSEN_AUDIENCE_PROFILE"
 	//   "TYPE_PETRA_NIELSEN_DAILY_REACH_BUILD"
 	//   "TYPE_PETRA_NIELSEN_ONLINE_GLOBAL_MARKET"
@@ -1565,6 +1686,388 @@ type Parameters struct {
 
 func (s *Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathFilter: Path filters specify which paths to include in a report.
+// A path is the result of combining DV360 events based on User ID to
+// create a workflow of users' actions.
+//
+// When a path filter is set, the resulting report will only include
+// paths that match the specified event at the specified position. All
+// other paths will be excluded.
+type PathFilter struct {
+	// EventFilters: Filter on an event to be applied to some part of the
+	// path.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
+
+	// PathMatchPosition: Indicates the position of the path the filter
+	// should match to (first, last, or any event in path).
+	//
+	// Possible values:
+	//   "ANY"
+	//   "FIRST"
+	//   "LAST"
+	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathQueryOptions: Path Query Options for Report Options.
+type PathQueryOptions struct {
+	// ChannelGrouping: Custom Channel Groupings.
+	ChannelGrouping *ChannelGrouping `json:"channelGrouping,omitempty"`
+
+	// PathFilters: Path Filters. There is a limit of 100 path filters that
+	// can be set per report.
+	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelGrouping") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelGrouping") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathQueryOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod PathQueryOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathQueryOptionsFilter: Dimension Filter for a Path Filter.
+type PathQueryOptionsFilter struct {
+	// Filter: Dimension the filter is applied to.
+	//
+	// Possible values:
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_ID"
+	//   "FILTER_ACTIVE_VIEW_CUSTOM_METRIC_NAME"
+	//   "FILTER_ACTIVE_VIEW_EXPECTED_VIEWABILITY"
+	//   "FILTER_ADVERTISER"
+	//   "FILTER_ADVERTISER_CURRENCY"
+	//   "FILTER_ADVERTISER_INTEGRATION_CODE"
+	//   "FILTER_ADVERTISER_INTEGRATION_STATUS"
+	//   "FILTER_ADVERTISER_NAME"
+	//   "FILTER_ADVERTISER_TIMEZONE"
+	//   "FILTER_AD_POSITION"
+	//   "FILTER_AD_POSITION_NAME"
+	//   "FILTER_AD_TYPE"
+	//   "FILTER_AGE"
+	//   "FILTER_ALGORITHM"
+	//   "FILTER_ALGORITHM_ID"
+	//   "FILTER_AMP_PAGE_REQUEST"
+	//   "FILTER_ANONYMOUS_INVENTORY_MODELING"
+	//   "FILTER_APP_URL"
+	//   "FILTER_APP_URL_EXCLUDED"
+	//   "FILTER_ATTRIBUTED_USERLIST"
+	//   "FILTER_ATTRIBUTED_USERLIST_COST"
+	//   "FILTER_ATTRIBUTED_USERLIST_TYPE"
+	//   "FILTER_ATTRIBUTION_MODEL"
+	//   "FILTER_AUDIENCE_LIST"
+	//   "FILTER_AUDIENCE_LIST_COST"
+	//   "FILTER_AUDIENCE_LIST_TYPE"
+	//   "FILTER_AUDIENCE_NAME"
+	//   "FILTER_AUDIENCE_TYPE"
+	//   "FILTER_AUTHORIZED_SELLER_STATE"
+	//   "FILTER_BILLABLE_OUTCOME"
+	//   "FILTER_BRAND_LIFT_TYPE"
+	//   "FILTER_BROWSER"
+	//   "FILTER_BUDGET_SEGMENT_DESCRIPTION"
+	//   "FILTER_CAMPAIGN_DAILY_FREQUENCY"
+	//   "FILTER_CARRIER"
+	//   "FILTER_CARRIER_NAME"
+	//   "FILTER_CHANNEL_GROUPING"
+	//   "FILTER_CHANNEL_ID"
+	//   "FILTER_CHANNEL_NAME"
+	//   "FILTER_CHANNEL_TYPE"
+	//   "FILTER_CITY"
+	//   "FILTER_CITY_NAME"
+	//   "FILTER_CM_PLACEMENT_ID"
+	//   "FILTER_COMPANION_CREATIVE_ID"
+	//   "FILTER_COMPANION_CREATIVE_NAME"
+	//   "FILTER_CONVERSION_DELAY"
+	//   "FILTER_CONVERSION_SOURCE"
+	//   "FILTER_CONVERSION_SOURCE_ID"
+	//   "FILTER_COUNTRY"
+	//   "FILTER_COUNTRY_ID"
+	//   "FILTER_CREATIVE"
+	//   "FILTER_CREATIVE_ASSET"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
+	//   "FILTER_CREATIVE_HEIGHT"
+	//   "FILTER_CREATIVE_ID"
+	//   "FILTER_CREATIVE_INTEGRATION_CODE"
+	//   "FILTER_CREATIVE_RENDERED_IN_AMP"
+	//   "FILTER_CREATIVE_SIZE"
+	//   "FILTER_CREATIVE_SOURCE"
+	//   "FILTER_CREATIVE_STATUS"
+	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
+	//   "FILTER_DATA_PROVIDER"
+	//   "FILTER_DATA_PROVIDER_NAME"
+	//   "FILTER_DATE"
+	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_DETAILED_DEMOGRAPHICS"
+	//   "FILTER_DETAILED_DEMOGRAPHICS_ID"
+	//   "FILTER_DEVICE"
+	//   "FILTER_DEVICE_MAKE"
+	//   "FILTER_DEVICE_MODEL"
+	//   "FILTER_DEVICE_TYPE"
+	//   "FILTER_DFP_ORDER_ID"
+	//   "FILTER_DIGITAL_CONTENT_LABEL"
+	//   "FILTER_DMA"
+	//   "FILTER_DMA_NAME"
+	//   "FILTER_DOMAIN"
+	//   "FILTER_ELIGIBLE_COOKIES_ON_FIRST_PARTY_AUDIENCE_LIST"
+	//   "FILTER_ELIGIBLE_COOKIES_ON_THIRD_PARTY_AUDIENCE_LIST_AND_INTEREST"
+	//   "FILTER_EVENT_TYPE"
+	//   "FILTER_EXCHANGE"
+	//   "FILTER_EXCHANGE_CODE"
+	//   "FILTER_EXCHANGE_ID"
+	//   "FILTER_EXTENSION"
+	//   "FILTER_EXTENSION_STATUS"
+	//   "FILTER_EXTENSION_TYPE"
+	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_COST"
+	//   "FILTER_FIRST_PARTY_AUDIENCE_LIST_TYPE"
+	//   "FILTER_FLOODLIGHT_ACTIVITY"
+	//   "FILTER_FLOODLIGHT_ACTIVITY_ID"
+	//   "FILTER_FORMAT"
+	//   "FILTER_GAM_INSERTION_ORDER"
+	//   "FILTER_GAM_LINE_ITEM"
+	//   "FILTER_GAM_LINE_ITEM_ID"
+	//   "FILTER_GENDER"
+	//   "FILTER_GMAIL_AGE"
+	//   "FILTER_GMAIL_CITY"
+	//   "FILTER_GMAIL_COUNTRY"
+	//   "FILTER_GMAIL_COUNTRY_NAME"
+	//   "FILTER_GMAIL_DEVICE_TYPE"
+	//   "FILTER_GMAIL_DEVICE_TYPE_NAME"
+	//   "FILTER_GMAIL_GENDER"
+	//   "FILTER_GMAIL_REGION"
+	//   "FILTER_GMAIL_REMARKETING_LIST"
+	//   "FILTER_HOUSEHOLD_INCOME"
+	//   "FILTER_IMPRESSION_COUNTING_METHOD"
+	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_INSERTION_ORDER_INTEGRATION_CODE"
+	//   "FILTER_INSERTION_ORDER_NAME"
+	//   "FILTER_INSERTION_ORDER_STATUS"
+	//   "FILTER_INTEREST"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
+	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_INVENTORY_RATE_TYPE"
+	//   "FILTER_INVENTORY_SOURCE"
+	//   "FILTER_INVENTORY_SOURCE_EXTERNAL_ID"
+	//   "FILTER_INVENTORY_SOURCE_GROUP"
+	//   "FILTER_INVENTORY_SOURCE_GROUP_ID"
+	//   "FILTER_INVENTORY_SOURCE_ID"
+	//   "FILTER_INVENTORY_SOURCE_NAME"
+	//   "FILTER_INVENTORY_SOURCE_TYPE"
+	//   "FILTER_KEYWORD"
+	//   "FILTER_LIFE_EVENT"
+	//   "FILTER_LIFE_EVENTS"
+	//   "FILTER_LINE_ITEM"
+	//   "FILTER_LINE_ITEM_DAILY_FREQUENCY"
+	//   "FILTER_LINE_ITEM_INTEGRATION_CODE"
+	//   "FILTER_LINE_ITEM_LIFETIME_FREQUENCY"
+	//   "FILTER_LINE_ITEM_NAME"
+	//   "FILTER_LINE_ITEM_STATUS"
+	//   "FILTER_LINE_ITEM_TYPE"
+	//   "FILTER_MATCH_RATIO"
+	//   "FILTER_MEASUREMENT_SOURCE"
+	//   "FILTER_MEDIA_PLAN"
+	//   "FILTER_MEDIA_PLAN_NAME"
+	//   "FILTER_MOBILE_GEO"
+	//   "FILTER_MONTH"
+	//   "FILTER_MRAID_SUPPORT"
+	//   "FILTER_NIELSEN_AGE"
+	//   "FILTER_NIELSEN_COUNTRY_CODE"
+	//   "FILTER_NIELSEN_DATE_RANGE"
+	//   "FILTER_NIELSEN_DEVICE_ID"
+	//   "FILTER_NIELSEN_GENDER"
+	//   "FILTER_NIELSEN_RESTATEMENT_DATE"
+	//   "FILTER_NOT_SUPPORTED"
+	//   "FILTER_ORDER_ID"
+	//   "FILTER_OS"
+	//   "FILTER_PAGE_CATEGORY"
+	//   "FILTER_PAGE_LAYOUT"
+	//   "FILTER_PARENTAL_STATUS"
+	//   "FILTER_PARTNER"
+	//   "FILTER_PARTNER_CURRENCY"
+	//   "FILTER_PARTNER_NAME"
+	//   "FILTER_PARTNER_STATUS"
+	//   "FILTER_PATH_EVENT_INDEX"
+	//   "FILTER_PATH_PATTERN_ID"
+	//   "FILTER_PLACEMENT_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_PLACEMENT_NAME_ALL_YOUTUBE_CHANNELS"
+	//   "FILTER_PLATFORM"
+	//   "FILTER_PLAYBACK_METHOD"
+	//   "FILTER_POSITION_IN_CONTENT"
+	//   "FILTER_PUBLIC_INVENTORY"
+	//   "FILTER_PUBLISHER_PROPERTY"
+	//   "FILTER_PUBLISHER_PROPERTY_ID"
+	//   "FILTER_PUBLISHER_PROPERTY_SECTION"
+	//   "FILTER_PUBLISHER_PROPERTY_SECTION_ID"
+	//   "FILTER_QUARTER"
+	//   "FILTER_REFUND_REASON"
+	//   "FILTER_REGION"
+	//   "FILTER_REGION_NAME"
+	//   "FILTER_REMARKETING_LIST"
+	//   "FILTER_REWARDED"
+	//   "FILTER_SENSITIVE_CATEGORY"
+	//   "FILTER_SERVED_PIXEL_DENSITY"
+	//   "FILTER_SITE_ID"
+	//   "FILTER_SITE_LANGUAGE"
+	//   "FILTER_SKIPPABLE_SUPPORT"
+	//   "FILTER_TARGETED_DATA_PROVIDERS"
+	//   "FILTER_TARGETED_USER_LIST"
+	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_COST"
+	//   "FILTER_THIRD_PARTY_AUDIENCE_LIST_TYPE"
+	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_AD"
+	//   "FILTER_TRUEVIEW_AD_GROUP"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AGE"
+	//   "FILTER_TRUEVIEW_CATEGORY"
+	//   "FILTER_TRUEVIEW_CITY"
+	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_TRUEVIEW_COUNTRY"
+	//   "FILTER_TRUEVIEW_CUSTOM_AFFINITY"
+	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS"
+	//   "FILTER_TRUEVIEW_DETAILED_DEMOGRAPHICS_ID"
+	//   "FILTER_TRUEVIEW_DMA"
+	//   "FILTER_TRUEVIEW_DMA_NAME"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_HOUSEHOLD_INCOME"
+	//   "FILTER_TRUEVIEW_IAR_AGE"
+	//   "FILTER_TRUEVIEW_IAR_CATEGORY"
+	//   "FILTER_TRUEVIEW_IAR_CITY"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY"
+	//   "FILTER_TRUEVIEW_IAR_COUNTRY_NAME"
+	//   "FILTER_TRUEVIEW_IAR_GENDER"
+	//   "FILTER_TRUEVIEW_IAR_INTEREST"
+	//   "FILTER_TRUEVIEW_IAR_LANGUAGE"
+	//   "FILTER_TRUEVIEW_IAR_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_IAR_REGION"
+	//   "FILTER_TRUEVIEW_IAR_REGION_NAME"
+	//   "FILTER_TRUEVIEW_IAR_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_IAR_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_CHANNEL"
+	//   "FILTER_TRUEVIEW_IAR_YOUTUBE_VIDEO"
+	//   "FILTER_TRUEVIEW_IAR_ZIPCODE"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_KEYWORD"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_PLACEMENT"
+	//   "FILTER_TRUEVIEW_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_REGION"
+	//   "FILTER_TRUEVIEW_REGION_NAME"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST_NAME"
+	//   "FILTER_TRUEVIEW_URL"
+	//   "FILTER_TRUEVIEW_ZIPCODE"
+	//   "FILTER_UNKNOWN"
+	//   "FILTER_USER_LIST"
+	//   "FILTER_USER_LIST_FIRST_PARTY"
+	//   "FILTER_USER_LIST_FIRST_PARTY_NAME"
+	//   "FILTER_USER_LIST_THIRD_PARTY"
+	//   "FILTER_USER_LIST_THIRD_PARTY_NAME"
+	//   "FILTER_VARIANT_ID"
+	//   "FILTER_VARIANT_NAME"
+	//   "FILTER_VARIANT_VERSION"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VERIFICATION_VIDEO_POSITION"
+	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
+	//   "FILTER_VIDEO_COMPANION_CREATIVE_SIZE"
+	//   "FILTER_VIDEO_CONTINUOUS_PLAY"
+	//   "FILTER_VIDEO_CREATIVE_DURATION"
+	//   "FILTER_VIDEO_CREATIVE_DURATION_SKIPPABLE"
+	//   "FILTER_VIDEO_DURATION"
+	//   "FILTER_VIDEO_DURATION_SECONDS"
+	//   "FILTER_VIDEO_DURATION_SECONDS_RANGE"
+	//   "FILTER_VIDEO_FORMAT_SUPPORT"
+	//   "FILTER_VIDEO_PLAYER_SIZE"
+	//   "FILTER_VIDEO_RATING_TIER"
+	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
+	//   "FILTER_VIDEO_VPAID_SUPPORT"
+	//   "FILTER_WEEK"
+	//   "FILTER_YEAR"
+	//   "FILTER_YOUTUBE_ADAPTED_AUDIENCE_LIST"
+	//   "FILTER_YOUTUBE_AD_VIDEO"
+	//   "FILTER_YOUTUBE_AD_VIDEO_ID"
+	//   "FILTER_YOUTUBE_CHANNEL"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_ADVERTISER"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_INSERTION_ORDER"
+	//   "FILTER_YOUTUBE_PROGRAMMATIC_GUARANTEED_PARTNER"
+	//   "FILTER_YOUTUBE_VIDEO"
+	//   "FILTER_ZIP_CODE"
+	//   "FILTER_ZIP_POSTAL_CODE"
+	Filter string `json:"filter,omitempty"`
+
+	// Match: Indicates how the filter should be matched to the value.
+	//
+	// Possible values:
+	//   "BEGINS_WITH"
+	//   "EXACT"
+	//   "PARTIAL"
+	//   "UNKNOWN"
+	//   "WILDCARD_EXPRESSION"
+	Match string `json:"match,omitempty"`
+
+	// Values: Value to filter on.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathQueryOptionsFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathQueryOptionsFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2025,6 +2528,42 @@ func (s *RowStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Rule: A Rule defines a name, and a boolean expression in [conjunctive
+// normal
+// form](http://mathworld.wolfram.com/ConjunctiveNormalForm.html){.extern
+// al} that can be applied to a path event to determine if that name
+// should be applied.
+type Rule struct {
+	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
+
+	// Name: Rule name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod Rule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RunQueryRequest: Request to run a stored query to generate a report.
 type RunQueryRequest struct {
 	// DataRange: Report data range used to generate the report.
@@ -2201,8 +2740,8 @@ type LineitemsDownloadlineitemsCall struct {
 	header_                  http.Header
 }
 
-// Downloadlineitems: Retrieves line items in CSV format. TrueView line
-// items are not supported.
+// Downloadlineitems: Retrieves line items in CSV format. YouTube &
+// partners line items are not supported.
 func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
 	c := &LineitemsDownloadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.downloadlineitemsrequest = downloadlineitemsrequest
@@ -2236,7 +2775,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2297,7 +2836,7 @@ func (c *LineitemsDownloadlineitemsCall) Do(opts ...googleapi.CallOption) (*Down
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves line items in CSV format. TrueView line items are not supported.",
+	//   "description": "Retrieves line items in CSV format. YouTube \u0026 partners line items are not supported.",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.lineitems.downloadlineitems",
 	//   "path": "lineitems/downloadlineitems",
@@ -2324,8 +2863,8 @@ type LineitemsUploadlineitemsCall struct {
 	header_                http.Header
 }
 
-// Uploadlineitems: Uploads line items in CSV format. TrueView line
-// items are not supported.
+// Uploadlineitems: Uploads line items in CSV format. YouTube & partners
+// line items are not supported.
 func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
 	c := &LineitemsUploadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.uploadlineitemsrequest = uploadlineitemsrequest
@@ -2359,7 +2898,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2420,7 +2959,7 @@ func (c *LineitemsUploadlineitemsCall) Do(opts ...googleapi.CallOption) (*Upload
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads line items in CSV format. TrueView line items are not supported.",
+	//   "description": "Uploads line items in CSV format. YouTube \u0026 partners line items are not supported.",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.lineitems.uploadlineitems",
 	//   "path": "lineitems/uploadlineitems",
@@ -2489,7 +3028,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2620,7 +3159,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2732,7 +3271,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2888,7 +3427,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3048,7 +3587,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3189,7 +3728,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3353,7 +3892,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

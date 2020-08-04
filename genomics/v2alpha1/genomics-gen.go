@@ -193,34 +193,10 @@ type ProjectsWorkersService struct {
 
 func NewWorkersService(s *Service) *WorkersService {
 	rs := &WorkersService{s: s}
-	rs.Projects = NewWorkersProjectsService(s)
 	return rs
 }
 
 type WorkersService struct {
-	s *Service
-
-	Projects *WorkersProjectsService
-}
-
-func NewWorkersProjectsService(s *Service) *WorkersProjectsService {
-	rs := &WorkersProjectsService{s: s}
-	rs.Workers = NewWorkersProjectsWorkersService(s)
-	return rs
-}
-
-type WorkersProjectsService struct {
-	s *Service
-
-	Workers *WorkersProjectsWorkersService
-}
-
-func NewWorkersProjectsWorkersService(s *Service) *WorkersProjectsWorkersService {
-	rs := &WorkersProjectsWorkersService{s: s}
-	return rs
-}
-
-type WorkersProjectsWorkersService struct {
 	s *Service
 }
 
@@ -991,7 +967,7 @@ type FailedEvent struct {
 	// Note to server developers: if a request is denied for an entire
 	// class
 	// of users, such as gradual feature rollout or undocumented
-	// whitelist,
+	// allowlist,
 	// `NOT_FOUND` may be used. If a request is denied for some users
 	// within
 	// a class of users, such as user-based access control,
@@ -1128,88 +1104,6 @@ type FailedEvent struct {
 
 func (s *FailedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod FailedEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HttpBody: Message that represents an arbitrary HTTP body. It should
-// only be used for
-// payload formats that can't be represented as JSON, such as raw binary
-// or
-// an HTML page.
-//
-//
-// This message can be used both in streaming and non-streaming API
-// methods in
-// the request as well as the response.
-//
-// It can be used as a top-level request field, which is convenient if
-// one
-// wants to extract parameters from either the URL or HTTP template into
-// the
-// request fields and also want access to the raw HTTP body.
-//
-// Example:
-//
-//     message GetResourceRequest {
-//       // A unique request id.
-//       string request_id = 1;
-//
-//       // The raw HTTP body is bound to this field.
-//       google.api.HttpBody http_body = 2;
-//     }
-//
-//     service ResourceService {
-//       rpc GetResource(GetResourceRequest) returns
-// (google.api.HttpBody);
-//       rpc UpdateResource(google.api.HttpBody) returns
-//       (google.protobuf.Empty);
-//     }
-//
-// Example with streaming methods:
-//
-//     service CaldavService {
-//       rpc GetCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//       rpc UpdateCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//     }
-//
-// Use of this type only changes how the request and response bodies
-// are
-// handled, all other features will continue to work unchanged.
-type HttpBody struct {
-	// ContentType: The HTTP Content-Type header value specifying the
-	// content type of the body.
-	ContentType string `json:"contentType,omitempty"`
-
-	// Data: The HTTP request/response body as raw binary.
-	Data string `json:"data,omitempty"`
-
-	// Extensions: Application specific response metadata. Must be set in
-	// the first response
-	// for streaming APIs.
-	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
-	type NoMethod HttpBody
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1987,13 +1881,6 @@ func (s *UnexpectedExitStatusEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UploadSOSReportResponse: The response to the UploadSOSReport method.
-type UploadSOSReportResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-}
-
 // VirtualMachine: Carries information about a Compute Engine VM
 // resource.
 type VirtualMachine struct {
@@ -2056,7 +1943,12 @@ type VirtualMachine struct {
 	// must
 	// match those of the tags used or the latest version will still be
 	// pulled.
-	// Only a single image is supported.
+	// The root directory of the ext4 image must contain `image` and
+	// `overlay2`
+	// directories copied from the Docker directory of a VM where the
+	// desired
+	// Docker images have already been pulled. Only a single image is
+	// supported.
 	DockerCacheImages []string `json:"dockerCacheImages,omitempty"`
 
 	// EnableStackdriverMonitoring: Whether Stackdriver monitoring should be
@@ -2317,7 +2209,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2457,7 +2349,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2614,7 +2506,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2820,7 +2712,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2995,7 +2887,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3138,7 +3030,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3223,148 +3115,6 @@ func (c *WorkersCheckInCall) Do(opts ...googleapi.CallOption) (*CheckInResponse,
 	//   },
 	//   "response": {
 	//     "$ref": "CheckInResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/genomics"
-	//   ]
-	// }
-
-}
-
-// method id "genomics.workers.projects.workers.uploadSosReport":
-
-type WorkersProjectsWorkersUploadSosReportCall struct {
-	s          *Service
-	id         string
-	httpbody   *HttpBody
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// UploadSosReport: The worker uses this method to upload SOS reports
-// for unexpected errors.
-func (r *WorkersProjectsWorkersService) UploadSosReport(id string, httpbody *HttpBody) *WorkersProjectsWorkersUploadSosReportCall {
-	c := &WorkersProjectsWorkersUploadSosReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.id = id
-	c.httpbody = httpbody
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *WorkersProjectsWorkersUploadSosReportCall) Fields(s ...googleapi.Field) *WorkersProjectsWorkersUploadSosReportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *WorkersProjectsWorkersUploadSosReportCall) Context(ctx context.Context) *WorkersProjectsWorkersUploadSosReportCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *WorkersProjectsWorkersUploadSosReportCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *WorkersProjectsWorkersUploadSosReportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpbody)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha1/workers/{+id}:uploadSosReport")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"id": c.id,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "genomics.workers.projects.workers.uploadSosReport" call.
-// Exactly one of *UploadSOSReportResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *UploadSOSReportResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *WorkersProjectsWorkersUploadSosReportCall) Do(opts ...googleapi.CallOption) (*UploadSOSReportResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &UploadSOSReportResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "The worker uses this method to upload SOS reports for unexpected errors.",
-	//   "flatPath": "v2alpha1/workers/projects/{projectsId}/workers/{workersId}:uploadSosReport",
-	//   "httpMethod": "POST",
-	//   "id": "genomics.workers.projects.workers.uploadSosReport",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The VM identity token for authenticating the VM instance.\nhttps://cloud.google.com/compute/docs/instances/verifying-instance-identity",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/workers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2alpha1/workers/{+id}:uploadSosReport",
-	//   "request": {
-	//     "$ref": "HttpBody"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadSOSReportResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

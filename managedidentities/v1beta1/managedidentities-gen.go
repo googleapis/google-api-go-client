@@ -192,8 +192,7 @@ type ProjectsLocationsGlobalOperationsService struct {
 	s *Service
 }
 
-// AttachTrustRequest: Request message for
-// AttachTrust
+// AttachTrustRequest: Request message for AttachTrust
 type AttachTrustRequest struct {
 	// Trust: Required. The domain trust resource.
 	Trust *Trust `json:"trust,omitempty"`
@@ -223,95 +222,53 @@ func (s *AttachTrustRequest) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -342,8 +299,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// DetachTrustRequest: Request message for
-// DetachTrust
+// DetachTrustRequest: Request message for DetachTrust
 type DetachTrustRequest struct {
 	// Trust: Required. The domain trust resource to removed.
 	Trust *Trust `json:"trust,omitempty"`
@@ -374,57 +330,44 @@ func (s *DetachTrustRequest) MarshalJSON() ([]byte, error) {
 // Domain: Represents a managed Microsoft Active Directory domain.
 type Domain struct {
 	// Admin: Optional. The name of delegated administrator account used to
-	// perform
-	// Active Directory operations. If not specified, `setupadmin` will be
-	// used.
+	// perform Active Directory operations. If not specified, `setupadmin`
+	// will be used.
 	Admin string `json:"admin,omitempty"`
 
 	// AuthorizedNetworks: Optional. The full names of the Google Compute
-	// Engine
-	// [networks](/compute/docs/networks-and-firewalls#networks) the
-	// domain
-	// instance is connected to. Networks can be added using
-	// UpdateDomain.
-	// The domain is only available on networks listed in
-	// `authorized_networks`.
-	// If CIDR subnets overlap between networks, domain creation will fail.
+	// Engine [networks](/compute/docs/networks-and-firewalls#networks) the
+	// domain instance is connected to. Networks can be added using
+	// UpdateDomain. The domain is only available on networks listed in
+	// `authorized_networks`. If CIDR subnets overlap between networks,
+	// domain creation will fail.
 	AuthorizedNetworks []string `json:"authorizedNetworks,omitempty"`
 
 	// CreateTime: Output only. The time the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Fqdn: Output only. The fully-qualified domain name of the exposed
-	// domain used by
-	// clients to connect to the service. Similar to what would be chosen
-	// for an
-	// Active Directory set up on an internal network.
+	// domain used by clients to connect to the service. Similar to what
+	// would be chosen for an Active Directory set up on an internal
+	// network.
 	Fqdn string `json:"fqdn,omitempty"`
 
 	// Labels: Optional. Resource labels that can contain user-provided
 	// metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Locations: Required. Locations where domain needs to be
-	// provisioned.
-	// regions
-	// e.g. us-west1 or us-east4
-	// Service supports up to 4 locations at once. Each location will use a
-	// /26
-	// block.
+	// Locations: Required. Locations where domain needs to be provisioned.
+	// regions e.g. us-west1 or us-east4 Service supports up to 4 locations
+	// at once. Each location will use a /26 block.
 	Locations []string `json:"locations,omitempty"`
 
-	// Name: Output only. The unique name of the domain using the
-	// form:
+	// Name: Output only. The unique name of the domain using the form:
 	// `projects/{project_id}/locations/global/domains/{domain_name}`.
 	Name string `json:"name,omitempty"`
 
 	// ReservedIpRange: Required. The CIDR range of internal addresses that
-	// are reserved for this
-	// domain. Reserved networks must be /24 or larger. Ranges must
-	// be
-	// unique and non-overlapping with existing subnets
-	// in
-	// [Domain].[authorized_networks].
+	// are reserved for this domain. Reserved networks must be /24 or
+	// larger. Ranges must be unique and non-overlapping with existing
+	// subnets in [Domain].[authorized_networks].
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
 	// State: Output only. The current state of this domain.
@@ -436,15 +379,13 @@ type Domain struct {
 	//   "UPDATING" - The domain's configuration is being updated.
 	//   "DELETING" - The domain is being deleted.
 	//   "REPAIRING" - The domain is being repaired and may be unusable.
-	// Details
-	// can be found in the `status_message` field.
+	// Details can be found in the `status_message` field.
 	//   "PERFORMING_MAINTENANCE" - The domain is undergoing maintenance.
 	//   "UNAVAILABLE" - The domain is not serving requests.
 	State string `json:"state,omitempty"`
 
 	// StatusMessage: Output only. Additional information about the current
-	// status of this
-	// domain, if available.
+	// status of this domain, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// Trusts: Output only. The current trusts associated with the domain.
@@ -481,17 +422,11 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -499,65 +434,40 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -596,12 +506,9 @@ type GoogleCloudManagedidentitiesV1OpMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation
-	// of the operation. Operations that have successfully been
-	// cancelled
-	// have Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 
 	// Target: Output only. Server-defined resource path for the target of
@@ -647,12 +554,9 @@ type GoogleCloudManagedidentitiesV1alpha1OpMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation
-	// of the operation. Operations that have successfully been
-	// cancelled
-	// have Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 
 	// Target: Output only. Server-defined resource path for the target of
@@ -698,12 +602,9 @@ type GoogleCloudManagedidentitiesV1beta1OpMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// RequestedCancellation: Output only. Identifies whether the user has
-	// requested cancellation
-	// of the operation. Operations that have successfully been
-	// cancelled
-	// have Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 
 	// Target: Output only. Server-defined resource path for the target of
@@ -738,39 +639,29 @@ func (s *GoogleCloudManagedidentitiesV1beta1OpMetadata) MarshalJSON() ([]byte, e
 
 type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// ConsumerDefinedName: consumer_defined_name is the name that is set by
-	// the consumer. On the other
-	// hand Name field represents system-assigned id of an instance so
-	// consumers
-	// are not necessarily aware of it.
+	// the consumer. On the other hand Name field represents system-assigned
+	// id of an instance so consumers are not necessarily aware of it.
 	// consumer_defined_name is used for notification/UI purposes for
-	// consumer to
-	// recognize their instances.
+	// consumer to recognize their instances.
 	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
 
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Labels: Optional. Resource labels to represent user provided
-	// metadata. Each label
-	// is a key-value pair, where both the key and the value are arbitrary
-	// strings
-	// provided by the user.
+	// metadata. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings provided by the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MaintenancePolicyNames: The MaintenancePolicies that have been
-	// attached to the instance.
-	// The key must be of the type name of the oneof policy name defined
-	// in
-	// MaintenancePolicy, and the referenced policy must define the same
-	// policy
-	// type. For complete details of MaintenancePolicy, please refer
-	// to
-	// go/cloud-saas-mw-ug.
+	// attached to the instance. The key must be of the type name of the
+	// oneof policy name defined in MaintenancePolicy, and the referenced
+	// policy must define the same policy type. For complete details of
+	// MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
 	// MaintenanceSchedules: The MaintenanceSchedule contains the scheduling
-	// information of published
-	// maintenance schedule.
+	// information of published maintenance schedule.
 	MaintenanceSchedules map[string]GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule `json:"maintenanceSchedules,omitempty"`
 
 	// MaintenanceSettings: Optional. The MaintenanceSettings associated
@@ -778,45 +669,38 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	MaintenanceSettings *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings `json:"maintenanceSettings,omitempty"`
 
 	// Name: Unique name of the resource. It uses the form:
-	//
 	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
 	// `
 	Name string `json:"name,omitempty"`
 
 	// ProducerMetadata: Output only. Custom string attributes used
-	// primarily to expose
-	// producer-specific information in monitoring dashboards.
-	// See go/get-instance-metadata.
+	// primarily to expose producer-specific information in monitoring
+	// dashboards. See go/get-instance-metadata.
 	ProducerMetadata map[string]string `json:"producerMetadata,omitempty"`
 
 	// ProvisionedResources: Output only. The list of data plane resources
-	// provisioned for this
-	// instance, e.g. compute VMs. See go/get-instance-metadata.
+	// provisioned for this instance, e.g. compute VMs. See
+	// go/get-instance-metadata.
 	ProvisionedResources []*GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource `json:"provisionedResources,omitempty"`
 
 	// SlmInstanceTemplate: Link to the SLM instance template. Only
-	// populated when updating SLM
-	// instances via SSA's Actuation service adaptor.
-	// Service producers with custom control plane (e.g. Cloud SQL)
-	// doesn't
-	// need to populate this field. Instead they should use
+	// populated when updating SLM instances via SSA's Actuation service
+	// adaptor. Service producers with custom control plane (e.g. Cloud SQL)
+	// doesn't need to populate this field. Instead they should use
 	// software_versions.
 	SlmInstanceTemplate string `json:"slmInstanceTemplate,omitempty"`
 
 	// SloMetadata: Output only. SLO metadata for instance classification in
-	// the
-	// Standardized dataplane SLO platform.
-	// See go/cloud-ssa-standard-slo for feature description.
+	// the Standardized dataplane SLO platform. See
+	// go/cloud-ssa-standard-slo for feature description.
 	SloMetadata *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata `json:"sloMetadata,omitempty"`
 
 	// SoftwareVersions: Software versions that are used to deploy this
-	// instance. This can be
-	// mutated by rollout services.
+	// instance. This can be mutated by rollout services.
 	SoftwareVersions map[string]string `json:"softwareVersions,omitempty"`
 
 	// State: Output only. Current lifecycle state of the resource (e.g. if
-	// it's being
-	// created or ready to use).
+	// it's being created or ready to use).
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -830,8 +714,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	State string `json:"state,omitempty"`
 
 	// TenantProjectId: Output only. ID of the associated GCP tenant
-	// project.
-	// See go/get-instance-metadata.
+	// project. See go/get-instance-metadata.
 	TenantProjectId string `json:"tenantProjectId,omitempty"`
 
 	// UpdateTime: Output only. Timestamp when the resource was last
@@ -864,23 +747,19 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() 
 
 // GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule:
 // Maintenance schedule which is exposed to customer and potentially end
-// user,
-// indicating published upcoming future maintenance schedule
+// user, indicating published upcoming future maintenance schedule
 type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
-	// CanReschedule: Can this scheduled update be rescheduled?
-	// By default, it's true and API needs to do explicitly check whether
-	// it's
-	// set, if it's set as false explicitly, it's false
+	// CanReschedule: Can this scheduled update be rescheduled? By default,
+	// it's true and API needs to do explicitly check whether it's set, if
+	// it's set as false explicitly, it's false
 	CanReschedule bool `json:"canReschedule,omitempty"`
 
 	// EndTime: The scheduled end time for the maintenance.
 	EndTime string `json:"endTime,omitempty"`
 
 	// RolloutManagementPolicy: The rollout management policy this
-	// maintenance schedule is associated
-	// with. When doing reschedule update request, the reschedule should
-	// be
-	// against this given policy.
+	// maintenance schedule is associated with. When doing reschedule update
+	// request, the reschedule should be against this given policy.
 	RolloutManagementPolicy string `json:"rolloutManagementPolicy,omitempty"`
 
 	// StartTime: The scheduled start time for the maintenance.
@@ -911,15 +790,13 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule) Mar
 
 // GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings:
 // Maintenance settings associated with instance. Allows service
-// producers and
-// end users to assign settings that controls maintenance on this
-// instance.
+// producers and end users to assign settings that controls maintenance
+// on this instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// Exclude: Optional. Exclude instance from maintenance. When true,
-	// rollout service will not
-	// attempt maintenance on the instance. Rollout service will include
-	// the
-	// instance in reported rollout progress as not attempted.
+	// rollout service will not attempt maintenance on the instance. Rollout
+	// service will include the instance in reported rollout progress as not
+	// attempted.
 	Exclude bool `json:"exclude,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to
@@ -946,28 +823,24 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings) Mar
 }
 
 // GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata: Node
-// information for custom per-node SLO implementations.
-// SSA does not support per-node SLO, but producers can populate
-// per-node
-// information in SloMetadata for custom precomputations.
-// SSA Eligibility Exporter will emit per-node metric based on this
-// information.
+// information for custom per-node SLO implementations. SSA does not
+// support per-node SLO, but producers can populate per-node information
+// in SloMetadata for custom precomputations. SSA Eligibility Exporter
+// will emit per-node metric based on this information.
 type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
-	// Exclusions: By default node is eligible if instance is eligible.
-	// But individual node might be excluded from SLO by adding entry
-	// here.
-	// For semantic see SloMetadata.exclusions.
-	// If both instance and node level exclusions are present for time
-	// period,
-	// the node level's reason will be reported by Eligibility Exporter.
+	// Exclusions: By default node is eligible if instance is eligible. But
+	// individual node might be excluded from SLO by adding entry here. For
+	// semantic see SloMetadata.exclusions. If both instance and node level
+	// exclusions are present for time period, the node level's reason will
+	// be reported by Eligibility Exporter.
 	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
 
 	// Location: The location of the node, if different from instance
 	// location.
 	Location string `json:"location,omitempty"`
 
-	// NodeId: The id of the node.
-	// This should be equal to SaasInstanceNode.node_id.
+	// NodeId: The id of the node. This should be equal to
+	// SaasInstanceNode.node_id.
 	NodeId string `json:"nodeId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclusions") to
@@ -997,20 +870,15 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) Marshal
 // Describes provisioned dataplane resources.
 type GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource struct {
 	// ResourceType: Type of the resource. This can be either a GCP resource
-	// or a custom one
-	// (e.g. another cloud provider's VM). For GCP compute resources use
-	// singular
-	// form of the names listed in GCP compute API
+	// or a custom one (e.g. another cloud provider's VM). For GCP compute
+	// resources use singular form of the names listed in GCP compute API
 	// documentation
-	// (https://cloud.google.com/compute/docs/reference/rest/v1
-	// /), prefixed with
-	// 'compute-', for example: 'compute-instance',
-	// 'compute-disk',
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/), prefixed
+	// with 'compute-', for example: 'compute-instance', 'compute-disk',
 	// 'compute-autoscaler'.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ResourceUrl: URL identifying the resource,
-	// e.g.
+	// ResourceUrl: URL identifying the resource, e.g.
 	// "https://www.googleapis.com/compute/v1/projects/...)".
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
@@ -1039,19 +907,16 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource) Mar
 
 // GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility:
 // SloEligibility is a tuple containing eligibility value: true if an
-// instance
-// is eligible for SLO calculation or false if it should be excluded
-// from all
-// SLO-related calculations along with a user-defined reason.
+// instance is eligible for SLO calculation or false if it should be
+// excluded from all SLO-related calculations along with a user-defined
+// reason.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility struct {
 	// Eligible: Whether an instance is eligible or ineligible.
 	Eligible bool `json:"eligible,omitempty"`
 
 	// Reason: User-defined reason for the current value of instance
-	// eligibility. Usually,
-	// this can be directly mapped to the internal state. An empty reason
-	// is
-	// allowed.
+	// eligibility. Usually, this can be directly mapped to the internal
+	// state. An empty reason is allowed.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Eligible") to
@@ -1081,35 +946,25 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility) MarshalJ
 // SloExclusion represents an exclusion in SLI calculation applies to
 // all SLOs.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
-	// Duration: Exclusion duration. No restrictions on the possible
-	// values.
-	//
-	// When an ongoing operation is taking longer than initially
-	// expected,
+	// Duration: Exclusion duration. No restrictions on the possible values.
+	// When an ongoing operation is taking longer than initially expected,
 	// an existing entry in the exclusion list can be updated by extending
-	// the
-	// duration. This is supported by the subsystem exporting eligibility
-	// data
-	// as long as such extension is committed at least 10 minutes before
-	// the
-	// original exclusion expiration - otherwise it is possible that there
-	// will
-	// be "gaps" in the exclusion application in the exported timeseries.
+	// the duration. This is supported by the subsystem exporting
+	// eligibility data as long as such extension is committed at least 10
+	// minutes before the original exclusion expiration - otherwise it is
+	// possible that there will be "gaps" in the exclusion application in
+	// the exported timeseries.
 	Duration string `json:"duration,omitempty"`
 
-	// Reason: Human-readable reason for the exclusion.
-	// This should be a static string (e.g. "Disruptive update in
-	// progress")
-	// and should not contain dynamically generated data (e.g. instance
-	// name).
-	// Can be left empty.
+	// Reason: Human-readable reason for the exclusion. This should be a
+	// static string (e.g. "Disruptive update in progress") and should not
+	// contain dynamically generated data (e.g. instance name). Can be left
+	// empty.
 	Reason string `json:"reason,omitempty"`
 
 	// SliName: Name of an SLI that this exclusion applies to. Can be left
-	// empty,
-	// signaling that the instance should be excluded from all SLIs
-	// defined
-	// in the service SLO configuration.
+	// empty, signaling that the instance should be excluded from all SLIs
+	// defined in the service SLO configuration.
 	SliName string `json:"sliName,omitempty"`
 
 	// StartTime: Start time of the exclusion. No alignment (e.g. to a full
@@ -1141,50 +996,34 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion) MarshalJSO
 
 // GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata:
 // SloMetadata contains resources required for proper SLO classification
-// of the
-// instance.
+// of the instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// Eligibility: Optional. User-defined instance eligibility.
 	Eligibility *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibility,omitempty"`
 
 	// Exclusions: List of SLO exclusion windows. When multiple entries in
-	// the list match
-	// (matching the exclusion time-window against current time point)
-	// the exclusion reason used in the first matching entry will be
-	// published.
-	//
-	// It is not needed to include expired exclusion in this list, as only
-	// the
-	// currently applicable exclusions are taken into account by the
-	// eligibility
-	// exporting subsystem (the historical state of exclusions will be
-	// reflected
-	// in the historically produced timeseries regardless of the current
-	// state).
-	//
-	// This field can be used to mark the instance as temporary
-	// ineligible
-	// for the purpose of SLO calculation. For permanent instance SLO
-	// exclusion,
-	// use of custom instance eligibility is recommended. See 'eligibility'
-	// field
-	// below.
+	// the list match (matching the exclusion time-window against current
+	// time point) the exclusion reason used in the first matching entry
+	// will be published. It is not needed to include expired exclusion in
+	// this list, as only the currently applicable exclusions are taken into
+	// account by the eligibility exporting subsystem (the historical state
+	// of exclusions will be reflected in the historically produced
+	// timeseries regardless of the current state). This field can be used
+	// to mark the instance as temporary ineligible for the purpose of SLO
+	// calculation. For permanent instance SLO exclusion, use of custom
+	// instance eligibility is recommended. See 'eligibility' field below.
 	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
 
-	// Nodes: Optional. List of nodes.
-	// Some producers need to use per-node metadata to calculate SLO.
-	// This field allows such producers to publish per-node SLO meta
-	// data,
-	// which will be consumed by SSA Eligibility Exporter and published in
-	// the
-	// form of per node metric to Monarch.
+	// Nodes: Optional. List of nodes. Some producers need to use per-node
+	// metadata to calculate SLO. This field allows such producers to
+	// publish per-node SLO meta data, which will be consumed by SSA
+	// Eligibility Exporter and published in the form of per node metric to
+	// Monarch.
 	Nodes []*GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata `json:"nodes,omitempty"`
 
 	// Tier: Name of the SLO tier the Instance belongs to. This name will be
-	// expected to
-	// match the tiers specified in the service SLO configuration.
-	//
-	// Field is mandatory and must not be empty.
+	// expected to match the tiers specified in the service SLO
+	// configuration. Field is mandatory and must not be empty.
 	Tier string `json:"tier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Eligibility") to
@@ -1210,15 +1049,13 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListDomainsResponse: Response message for
-// ListDomains
+// ListDomainsResponse: Response message for ListDomains
 type ListDomainsResponse struct {
 	// Domains: A list of Managed Identities Service domains in the project.
 	Domains []*Domain `json:"domains,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results, or empty
-	// if there are no more
-	// results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Unreachable: A list of locations that could not be reached.
@@ -1328,13 +1165,11 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -1342,13 +1177,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1379,52 +1213,38 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1461,12 +1281,9 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// CancelRequested: [Output only] Identifies whether the user has
-	// requested cancellation
-	// of the operation. Operations that have successfully been
-	// cancelled
-	// have Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
 	// CreateTime: [Output only] The time the operation was created.
@@ -1510,150 +1327,73 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -1685,17 +1425,14 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReconfigureTrustRequest: Request message for
-// ReconfigureTrust
+// ReconfigureTrustRequest: Request message for ReconfigureTrust
 type ReconfigureTrustRequest struct {
 	// TargetDnsIpAddresses: Required. The target DNS server IP addresses to
-	// resolve the remote domain involved
-	// in the trust.
+	// resolve the remote domain involved in the trust.
 	TargetDnsIpAddresses []string `json:"targetDnsIpAddresses,omitempty"`
 
 	// TargetDomainName: Required. The fully-qualified target domain name
-	// which will be in trust with current
-	// domain.
+	// which will be in trust with current domain.
 	TargetDomainName string `json:"targetDomainName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1723,13 +1460,11 @@ func (s *ReconfigureTrustRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResetAdminPasswordRequest: Request message for
-// ResetAdminPassword
+// ResetAdminPasswordRequest: Request message for ResetAdminPassword
 type ResetAdminPasswordRequest struct {
 }
 
-// ResetAdminPasswordResponse: Response message for
-// ResetAdminPassword
+// ResetAdminPasswordResponse: Response message for ResetAdminPassword
 type ResetAdminPasswordResponse struct {
 	// Password: A random password. See admin for more information.
 	Password string `json:"password,omitempty"`
@@ -1764,11 +1499,9 @@ func (s *ResetAdminPasswordResponse) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1795,32 +1528,24 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1850,11 +1575,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -1885,8 +1607,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1917,22 +1638,18 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Trust: Represents a relationship between two domains. This allows a
-// controller in
-// one domain to authenticate a user in another domain.
+// controller in one domain to authenticate a user in another domain.
 type Trust struct {
 	// CreateTime: Output only. The time the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// LastTrustHeartbeatTime: Output only. The last heartbeat time when the
-	// trust was known to be
-	// connected.
+	// trust was known to be connected.
 	LastTrustHeartbeatTime string `json:"lastTrustHeartbeatTime,omitempty"`
 
 	// SelectiveAuthentication: The trust authentication type, which decides
-	// whether the trusted side has
-	// forest/domain wide access or selective access to an approved set
-	// of
-	// resources.
+	// whether the trusted side has forest/domain wide access or selective
+	// access to an approved set of resources.
 	SelectiveAuthentication bool `json:"selectiveAuthentication,omitempty"`
 
 	// State: Output only. The current state of the trust.
@@ -1947,23 +1664,19 @@ type Trust struct {
 	State string `json:"state,omitempty"`
 
 	// StateDescription: Output only. Additional information about the
-	// current state of the
-	// trust, if available.
+	// current state of the trust, if available.
 	StateDescription string `json:"stateDescription,omitempty"`
 
 	// TargetDnsIpAddresses: The target DNS server IP addresses which can
-	// resolve the remote domain
-	// involved in the trust.
+	// resolve the remote domain involved in the trust.
 	TargetDnsIpAddresses []string `json:"targetDnsIpAddresses,omitempty"`
 
 	// TargetDomainName: The fully qualified target domain name which will
-	// be in trust with the
-	// current domain.
+	// be in trust with the current domain.
 	TargetDomainName string `json:"targetDomainName,omitempty"`
 
 	// TrustDirection: The trust direction, which decides if the current
-	// domain is trusted,
-	// trusting, or both.
+	// domain is trusted, trusting, or both.
 	//
 	// Possible values:
 	//   "TRUST_DIRECTION_UNSPECIFIED" - Not set.
@@ -1973,9 +1686,8 @@ type Trust struct {
 	// trusted / trusting side.
 	TrustDirection string `json:"trustDirection,omitempty"`
 
-	// TrustHandshakeSecret: Input only, and will not be stored. The trust
-	// secret used for the handshake
-	// with the target domain.
+	// TrustHandshakeSecret: Input only. The trust secret used for the
+	// handshake with the target domain. It will not be stored.
 	TrustHandshakeSecret string `json:"trustHandshakeSecret,omitempty"`
 
 	// TrustType: The type of trust represented by the trust resource.
@@ -2012,8 +1724,7 @@ func (s *Trust) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ValidateTrustRequest: Request message for
-// ValidateTrust
+// ValidateTrustRequest: Request message for ValidateTrust
 type ValidateTrustRequest struct {
 	// Trust: Required. The domain trust to validate trust state for.
 	Trust *Trust `json:"trust,omitempty"`
@@ -2096,7 +1807,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2213,8 +1924,7 @@ func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsList
 
 // IncludeUnrevealedLocations sets the optional parameter
 // "includeUnrevealedLocations": If true, the returned list will include
-// locations which are not yet
-// revealed.
+// locations which are not yet revealed.
 func (c *ProjectsLocationsListCall) IncludeUnrevealedLocations(includeUnrevealedLocations bool) *ProjectsLocationsListCall {
 	c.urlParams_.Set("includeUnrevealedLocations", fmt.Sprint(includeUnrevealedLocations))
 	return c
@@ -2271,7 +1981,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2347,7 +2057,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "includeUnrevealedLocations": {
-	//       "description": "If true, the returned list will include locations which are not yet\nrevealed.",
+	//       "description": "If true, the returned list will include locations which are not yet revealed.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2448,7 +2158,7 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2521,7 +2231,7 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource domain name, project name and location using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The resource domain name, project name and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -2563,18 +2273,12 @@ func (r *ProjectsLocationsGlobalDomainsService) Create(parent string, domain *Do
 
 // DomainName sets the optional parameter "domainName": Required. A
 // domain name, e.g. mydomain.myorg.com, with the following
-// restrictions:
-//  * Must contain only lowercase letters, numbers, periods and
-// hyphens.
-//  * Must start with a letter.
-//  * Must contain between 2-64 characters.
-//  * Must end with a number or a letter.
-//  * Must not start with period.
-//  * First segement length (mydomain form example above) shouldn't
-// exceed
-//    15 chars.
-//  * The last segment cannot be fully numeric.
-//  * Must be unique within the customer project.
+// restrictions: * Must contain only lowercase letters, numbers, periods
+// and hyphens. * Must start with a letter. * Must contain between 2-64
+// characters. * Must end with a number or a letter. * Must not start
+// with period. * First segement length (mydomain form example above)
+// shouldn't exceed 15 chars. * The last segment cannot be fully
+// numeric. * Must be unique within the customer project.
 func (c *ProjectsLocationsGlobalDomainsCreateCall) DomainName(domainName string) *ProjectsLocationsGlobalDomainsCreateCall {
 	c.urlParams_.Set("domainName", domainName)
 	return c
@@ -2607,7 +2311,7 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2680,12 +2384,12 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "domainName": {
-	//       "description": "Required. A domain name, e.g. mydomain.myorg.com, with the following restrictions:\n * Must contain only lowercase letters, numbers, periods and hyphens.\n * Must start with a letter.\n * Must contain between 2-64 characters.\n * Must end with a number or a letter.\n * Must not start with period.\n * First segement length (mydomain form example above) shouldn't exceed\n   15 chars.\n * The last segment cannot be fully numeric.\n * Must be unique within the customer project.",
+	//       "description": "Required. A domain name, e.g. mydomain.myorg.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * First segement length (mydomain form example above) shouldn't exceed 15 chars. * The last segment cannot be fully numeric. * Must be unique within the customer project.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource project name and location using the form:\n`projects/{project_id}/locations/global`",
+	//       "description": "Required. The resource project name and location using the form: `projects/{project_id}/locations/global`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global$",
 	//       "required": true,
@@ -2750,7 +2454,7 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2818,7 +2522,7 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The domain resource name using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -2882,7 +2586,7 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2955,7 +2659,7 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource domain name, project name, and location using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The resource domain name, project name, and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -3031,7 +2735,7 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3102,7 +2806,7 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The domain resource name using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -3131,9 +2835,8 @@ type ProjectsLocationsGlobalDomainsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3143,24 +2846,14 @@ func (r *ProjectsLocationsGlobalDomainsService) GetIamPolicy(resource string) *P
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGlobalDomainsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -3203,7 +2896,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3265,7 +2958,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.domains.getIamPolicy",
@@ -3274,13 +2967,13 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -3317,41 +3010,34 @@ func (r *ProjectsLocationsGlobalDomainsService) List(parent string) *ProjectsLoc
 }
 
 // Filter sets the optional parameter "filter": A filter specifying
-// constraints of a list operation.
-// For example, `Domain.fqdn="mydomain.myorginization".
+// constraints of a list operation. For example,
+// `Domain.fqdn="mydomain.myorginization".
 func (c *ProjectsLocationsGlobalDomainsListCall) Filter(filter string) *ProjectsLocationsGlobalDomainsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Specifies the ordering
-// of results.
-// See
-// [Sorting
-// order](https://cloud.google.com/apis/design/design_patter
-// ns#sorting_order)
-// for more information.
+// of results. See [Sorting
+// order](https://cloud.google.com/apis/design/design_patterns#sorting_or
+// der) for more information.
 func (c *ProjectsLocationsGlobalDomainsListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalDomainsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.
-// If not specified, a default value of 1000 will be used.
-// Regardless of the page_size value, the response may include a partial
-// list.
-// Callers should rely on a response's
-// next_page_token
-// to determine if there are additional results to list.
+// of items to return. If not specified, a default value of 1000 will be
+// used. Regardless of the page_size value, the response may include a
+// partial list. Callers should rely on a response's next_page_token to
+// determine if there are additional results to list.
 func (c *ProjectsLocationsGlobalDomainsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalDomainsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous
-// ListDomainsRequest
+// `next_page_token` value returned from a previous ListDomainsRequest
 // request, if any.
 func (c *ProjectsLocationsGlobalDomainsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalDomainsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -3395,7 +3081,7 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3466,28 +3152,28 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter specifying constraints of a list operation.\nFor example, `Domain.fqdn=\"mydomain.myorginization\"`.",
+	//       "description": "Optional. A filter specifying constraints of a list operation. For example, `Domain.fqdn=\"mydomain.myorginization\"`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specifies the ordering of results. See\n[Sorting\norder](https://cloud.google.com/apis/design/design_patterns#sorting_order)\nfor more information.",
+	//       "description": "Optional. Specifies the ordering of results. See [Sorting order](https://cloud.google.com/apis/design/design_patterns#sorting_order) for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return.\nIf not specified, a default value of 1000 will be used.\nRegardless of the page_size value, the response may include a partial list.\nCallers should rely on a response's\nnext_page_token\nto determine if there are additional results to list.",
+	//       "description": "Optional. The maximum number of items to return. If not specified, a default value of 1000 will be used. Regardless of the page_size value, the response may include a partial list. Callers should rely on a response's next_page_token to determine if there are additional results to list.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous ListDomainsRequest\nrequest, if any.",
+	//       "description": "The `next_page_token` value returned from a previous ListDomainsRequest request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the domain location using the form:\n`projects/{project_id}/locations/global`",
+	//       "description": "Required. The resource name of the domain location using the form: `projects/{project_id}/locations/global`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global$",
 	//       "required": true,
@@ -3546,14 +3232,9 @@ func (r *ProjectsLocationsGlobalDomainsService) Patch(name string, domain *Domai
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Mask
-// of fields to update. At least one path must be supplied in
-// this
-// field. The elements of the repeated paths field may only
-// include
-// fields from Domain:
-//  * `labels`
-//  * `locations`
-//  * `authorized_networks`
+// of fields to update. At least one path must be supplied in this
+// field. The elements of the repeated paths field may only include
+// fields from Domain: * `labels` * `locations` * `authorized_networks`
 func (c *ProjectsLocationsGlobalDomainsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalDomainsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3586,7 +3267,7 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3659,14 +3340,14 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The unique name of the domain using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`.",
+	//       "description": "Output only. The unique name of the domain using the form: `projects/{project_id}/locations/global/domains/{domain_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this\nfield. The elements of the repeated paths field may only include\nfields from Domain:\n * `labels`\n * `locations`\n * `authorized_networks`",
+	//       "description": "Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include fields from Domain: * `labels` * `locations` * `authorized_networks`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3732,7 +3413,7 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3805,7 +3486,7 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource domain name, project name and location using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The resource domain name, project name and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -3872,7 +3553,7 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3945,7 +3626,7 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The domain resource name using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -3978,11 +3659,8 @@ type ProjectsLocationsGlobalDomainsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsLocationsGlobalDomainsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGlobalDomainsSetIamPolicyCall {
 	c := &ProjectsLocationsGlobalDomainsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4017,7 +3695,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4081,7 +3759,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "managedidentities.projects.locations.global.domains.setIamPolicy",
@@ -4090,7 +3768,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -4123,16 +3801,11 @@ type ProjectsLocationsGlobalDomainsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsLocationsGlobalDomainsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGlobalDomainsTestIamPermissionsCall {
 	c := &ProjectsLocationsGlobalDomainsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4167,7 +3840,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4231,7 +3904,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "managedidentities.projects.locations.global.domains.testIamPermissions",
@@ -4240,7 +3913,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -4273,8 +3946,8 @@ type ProjectsLocationsGlobalDomainsValidateTrustCall struct {
 }
 
 // ValidateTrust: Validates a trust state, that the target domain is
-// reachable, and that the
-// target domain is able to accept incoming trust requests.
+// reachable, and that the target domain is able to accept incoming
+// trust requests.
 func (r *ProjectsLocationsGlobalDomainsService) ValidateTrust(name string, validatetrustrequest *ValidateTrustRequest) *ProjectsLocationsGlobalDomainsValidateTrustCall {
 	c := &ProjectsLocationsGlobalDomainsValidateTrustCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4309,7 +3982,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4373,7 +4046,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Validates a trust state, that the target domain is reachable, and that the\ntarget domain is able to accept incoming trust requests.",
+	//   "description": "Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}:validateTrust",
 	//   "httpMethod": "POST",
 	//   "id": "managedidentities.projects.locations.global.domains.validateTrust",
@@ -4382,7 +4055,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource domain name, project name, and location using the form:\n`projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "description": "Required. The resource domain name, project name, and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -4415,23 +4088,15 @@ type ProjectsLocationsGlobalOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsLocationsGlobalOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsGlobalOperationsCancelCall {
 	c := &ProjectsLocationsGlobalOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4466,7 +4131,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4530,7 +4195,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "managedidentities.projects.locations.global.operations.cancel",
@@ -4571,12 +4236,9 @@ type ProjectsLocationsGlobalOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsLocationsGlobalOperationsService) Delete(name string) *ProjectsLocationsGlobalOperationsDeleteCall {
 	c := &ProjectsLocationsGlobalOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4610,7 +4272,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4669,7 +4331,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "managedidentities.projects.locations.global.operations.delete",
@@ -4707,11 +4369,9 @@ type ProjectsLocationsGlobalOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsLocationsGlobalOperationsService) Get(name string) *ProjectsLocationsGlobalOperationsGetCall {
 	c := &ProjectsLocationsGlobalOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4755,7 +4415,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4817,7 +4477,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.operations.get",
@@ -4856,22 +4516,15 @@ type ProjectsLocationsGlobalOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsLocationsGlobalOperationsService) List(name string) *ProjectsLocationsGlobalOperationsListCall {
 	c := &ProjectsLocationsGlobalOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4936,7 +4589,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4998,7 +4651,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/operations",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.operations.list",

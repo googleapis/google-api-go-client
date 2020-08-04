@@ -23,10 +23,6 @@
 //
 // Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
-//
-//   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithScopes(realtimebidding.RealtimeBiddingScope))
-//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -83,9 +79,6 @@ const mtlsBasePath = "https://realtimebidding.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your Ad Exchange buyer account configuration
-	AdexchangeBuyerScope = "https://www.googleapis.com/auth/adexchange.buyer"
-
 	// See, create, edit, and delete your Authorized Buyers and Open Bidding
 	// account entities
 	RealtimeBiddingScope = "https://www.googleapis.com/auth/realtime-bidding"
@@ -94,7 +87,6 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
-		"https://www.googleapis.com/auth/adexchange.buyer",
 		"https://www.googleapis.com/auth/realtime-bidding",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -2128,7 +2120,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2237,7 +2229,6 @@ func (c *BiddersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreati
 	//     "$ref": "ListCreativesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -2322,7 +2313,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2410,7 +2401,6 @@ func (c *BiddersCreativesWatchCall) Do(opts ...googleapi.CallOption) (*WatchCrea
 	//     "$ref": "WatchCreativesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -2477,7 +2467,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2560,7 +2550,6 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	//     "$ref": "GetRemarketingTagResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -2613,7 +2602,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2701,7 +2690,6 @@ func (c *BuyersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creative,
 	//     "$ref": "Creative"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -2780,7 +2768,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2873,7 +2861,6 @@ func (c *BuyersCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, er
 	//     "$ref": "Creative"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -2988,7 +2975,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3097,7 +3084,6 @@ func (c *BuyersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativ
 	//     "$ref": "ListCreativesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3178,7 +3164,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3272,7 +3258,6 @@ func (c *BuyersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, 
 	//     "$ref": "Creative"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3327,7 +3312,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3415,7 +3400,6 @@ func (c *BuyersUserListsCloseCall) Do(opts ...googleapi.CallOption) (*UserList, 
 	//     "$ref": "UserList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3468,7 +3452,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3556,7 +3540,6 @@ func (c *BuyersUserListsCreateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	//     "$ref": "UserList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3618,7 +3601,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3701,7 +3684,6 @@ func (c *BuyersUserListsGetCall) Do(opts ...googleapi.CallOption) (*UserList, er
 	//     "$ref": "UserList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3768,7 +3750,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3851,7 +3833,6 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "GetRemarketingTagResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -3927,7 +3908,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4021,7 +4002,6 @@ func (c *BuyersUserListsListCall) Do(opts ...googleapi.CallOption) (*ListUserLis
 	//     "$ref": "ListUserListsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -4097,7 +4077,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4185,7 +4165,6 @@ func (c *BuyersUserListsOpenCall) Do(opts ...googleapi.CallOption) (*UserList, e
 	//     "$ref": "UserList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }
@@ -4240,7 +4219,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200727")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4328,7 +4307,6 @@ func (c *BuyersUserListsUpdateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	//     "$ref": "UserList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer",
 	//     "https://www.googleapis.com/auth/realtime-bidding"
 	//   ]
 	// }

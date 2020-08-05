@@ -170,8 +170,7 @@ type DeliveryError struct {
 	ErrorClass string `json:"errorClass,omitempty"`
 
 	// ErrorRatio: The ratio of messages where the error occurred vs all
-	// authenticated
-	// traffic.
+	// authenticated traffic.
 	ErrorRatio float64 `json:"errorRatio,omitempty"`
 
 	// ErrorType: The type of delivery error.
@@ -180,10 +179,9 @@ type DeliveryError struct {
 	//   "DELIVERY_ERROR_TYPE_UNSPECIFIED" - The default value which should
 	// never be used explicitly.
 	//   "RATE_LIMIT_EXCEEDED" - The Domain or IP is sending traffic at a
-	// suspiciously high rate, due to
-	// which temporary rate limits have been imposed. The limit will be
-	// lifted
-	// when Gmail is confident enough of the nature of the traffic.
+	// suspiciously high rate, due to which temporary rate limits have been
+	// imposed. The limit will be lifted when Gmail is confident enough of
+	// the nature of the traffic.
 	//   "SUSPECTED_SPAM" - The traffic is suspected to be spam, by Gmail,
 	// for various reasons.
 	//   "CONTENT_SPAMMY" - The traffic is suspected to be spammy, specific
@@ -196,17 +194,14 @@ type DeliveryError struct {
 	// low.
 	//   "LOW_DOMAIN_REPUTATION" - The Domain reputation of the sending
 	// domain is very low.
-	//   "IP_IN_RBL" - The IP is listed in one or more public
+	//   "IP_IN_RBL" - The IP is listed in one or more public [Real-time
+	// Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work with the
+	// RBL to get your IP delisted.
+	//   "DOMAIN_IN_RBL" - The Domain is listed in one or more public
 	// [Real-time Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work
-	// with
-	// the RBL to get your IP delisted.
-	//   "DOMAIN_IN_RBL" - The Domain is listed in one or more
-	// public
-	// [Real-time Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work
-	// with
-	// the RBL to get your domain delisted.
-	//   "BAD_PTR_RECORD" - The sending IP is missing a
-	// [PTR record](https://support.google.com/domains/answer/3251147#ptr).
+	// with the RBL to get your domain delisted.
+	//   "BAD_PTR_RECORD" - The sending IP is missing a [PTR
+	// record](https://support.google.com/domains/answer/3251147#ptr).
 	ErrorType string `json:"errorType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorClass") to
@@ -249,14 +244,12 @@ func (s *DeliveryError) UnmarshalJSON(data []byte) error {
 // Domain: A registered domain resource in the Postmaster API.
 type Domain struct {
 	// CreateTime: Timestamp when the user registered this domain. Assigned
-	// by
-	// the server.
+	// by the server.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Name: The resource name of the Domain.
-	// Domain names have the form `domains/{domain_name}`, where
-	// domain_name
-	// is the fully qualified domain name (i.e.,  mymail.mydomain.com).
+	// Name: The resource name of the Domain. Domain names have the form
+	// `domains/{domain_name}`, where domain_name is the fully qualified
+	// domain name (i.e., mymail.mydomain.com).
 	Name string `json:"name,omitempty"`
 
 	// Permission: User’s permission for this domain. Assigned by the
@@ -269,10 +262,8 @@ type Domain struct {
 	// with others.
 	//   "READER" - User has read access to the domain.
 	//   "NONE" - User doesn't have permission to access information about
-	// the domain. User
-	// did not verify ownership of domain nor was access granted by other
-	// domain
-	// owners.
+	// the domain. User did not verify ownership of domain nor was access
+	// granted by other domain owners.
 	Permission string `json:"permission,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -303,8 +294,7 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 }
 
 // FeedbackLoop: [Feedback
-// loop](https://support.google.com/mail/answer/6254652)
-// identifier
+// loop](https://support.google.com/mail/answer/6254652) identifier
 // information.
 type FeedbackLoop struct {
 	// Id: Feedback loop identifier that uniquely identifies individual
@@ -312,8 +302,7 @@ type FeedbackLoop struct {
 	Id string `json:"id,omitempty"`
 
 	// SpamRatio: The ratio of user marked spam messages with the identifier
-	// vs the total
-	// number of inboxed messages with that identifier.
+	// vs the total number of inboxed messages with that identifier.
 	SpamRatio float64 `json:"spamRatio,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -357,35 +346,28 @@ func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
 // specific reputation category.
 type IpReputation struct {
 	// NumIps: Total number of unique IPs in this reputation category. This
-	// metric only
-	// pertains to traffic that passed [SPF](http://www.openspf.org/)
-	// or
-	// [DKIM](http://www.dkim.org/).
+	// metric only pertains to traffic that passed
+	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
 	NumIps int64 `json:"numIps,omitempty,string"`
 
 	// Reputation: The reputation category this IP reputation represents.
 	//
 	// Possible values:
 	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should
-	// never be used explicitly. This represents
-	// the state where no reputation information is available.
+	// never be used explicitly. This represents the state where no
+	// reputation information is available.
 	//   "HIGH" - Has a good track record of a very low spam rate, and
-	// complies with Gmail's
-	// sender guidelines. Mail will rarely be marked by the spam filter.
+	// complies with Gmail's sender guidelines. Mail will rarely be marked
+	// by the spam filter.
 	//   "MEDIUM" - Known to send good mail, but is prone to sending a low
-	// volume of spam
-	// intermittently. Most of the email from this entity will have a
-	// fair
-	// deliverability rate, except when there is a notable increase in
-	// spam
-	// levels.
+	// volume of spam intermittently. Most of the email from this entity
+	// will have a fair deliverability rate, except when there is a notable
+	// increase in spam levels.
 	//   "LOW" - Known to send a considerable volume of spam regularly, and
-	// mail from this
-	// sender will likely be marked as spam.
+	// mail from this sender will likely be marked as spam.
 	//   "BAD" - History of sending an enormously high volume of spam. Mail
-	// coming from this
-	// entity will almost always be rejected at SMTP level or marked as
-	// spam.
+	// coming from this entity will almost always be rejected at SMTP level
+	// or marked as spam.
 	Reputation string `json:"reputation,omitempty"`
 
 	// SampleIps: A sample of IPs in this reputation category.
@@ -420,8 +402,7 @@ type ListDomainsResponse struct {
 	Domains []*Domain `json:"domains,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -454,8 +435,7 @@ func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
 // ListTrafficStatsResponse: Response message for ListTrafficStats.
 type ListTrafficStatsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TrafficStats: The list of TrafficStats.
@@ -491,104 +471,79 @@ func (s *ListTrafficStatsResponse) MarshalJSON() ([]byte, error) {
 // TrafficStats: Email traffic statistics pertaining to a specific date.
 type TrafficStats struct {
 	// DeliveryErrors: Delivery errors for the domain. This metric only
-	// pertains to traffic that
-	// passed [SPF](http://www.openspf.org/) or
+	// pertains to traffic that passed [SPF](http://www.openspf.org/) or
 	// [DKIM](http://www.dkim.org/).
 	DeliveryErrors []*DeliveryError `json:"deliveryErrors,omitempty"`
 
 	// DkimSuccessRatio: The ratio of mail that successfully authenticated
-	// with DKIM vs. all mail
-	// that attempted to authenticate with [DKIM](http://www.dkim.org/).
-	// Spoofed
-	// mail is excluded.
+	// with DKIM vs. all mail that attempted to authenticate with
+	// [DKIM](http://www.dkim.org/). Spoofed mail is excluded.
 	DkimSuccessRatio float64 `json:"dkimSuccessRatio,omitempty"`
 
 	// DmarcSuccessRatio: The ratio of mail that passed
-	// [DMARC](https://dmarc.org/) alignment checks
-	// vs all mail received from the domain that successfully authenticated
-	// with
-	// either of [SPF](http://www.openspf.org/) or
-	// [DKIM](http://www.dkim.org/).
+	// [DMARC](https://dmarc.org/) alignment checks vs all mail received
+	// from the domain that successfully authenticated with either of
+	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
 	DmarcSuccessRatio float64 `json:"dmarcSuccessRatio,omitempty"`
 
 	// DomainReputation: Reputation of the domain.
 	//
 	// Possible values:
 	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should
-	// never be used explicitly. This represents
-	// the state where no reputation information is available.
+	// never be used explicitly. This represents the state where no
+	// reputation information is available.
 	//   "HIGH" - Has a good track record of a very low spam rate, and
-	// complies with Gmail's
-	// sender guidelines. Mail will rarely be marked by the spam filter.
+	// complies with Gmail's sender guidelines. Mail will rarely be marked
+	// by the spam filter.
 	//   "MEDIUM" - Known to send good mail, but is prone to sending a low
-	// volume of spam
-	// intermittently. Most of the email from this entity will have a
-	// fair
-	// deliverability rate, except when there is a notable increase in
-	// spam
-	// levels.
+	// volume of spam intermittently. Most of the email from this entity
+	// will have a fair deliverability rate, except when there is a notable
+	// increase in spam levels.
 	//   "LOW" - Known to send a considerable volume of spam regularly, and
-	// mail from this
-	// sender will likely be marked as spam.
+	// mail from this sender will likely be marked as spam.
 	//   "BAD" - History of sending an enormously high volume of spam. Mail
-	// coming from this
-	// entity will almost always be rejected at SMTP level or marked as
-	// spam.
+	// coming from this entity will almost always be rejected at SMTP level
+	// or marked as spam.
 	DomainReputation string `json:"domainReputation,omitempty"`
 
 	// InboundEncryptionRatio: The ratio of incoming mail (to Gmail), that
-	// passed secure transport (TLS)
-	// vs all mail received from that domain. This metric only pertains to
-	// traffic
-	// that passed [SPF](http://www.openspf.org/) or
-	// [DKIM](http://www.dkim.org/).
+	// passed secure transport (TLS) vs all mail received from that domain.
+	// This metric only pertains to traffic that passed
+	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
 	InboundEncryptionRatio float64 `json:"inboundEncryptionRatio,omitempty"`
 
 	// IpReputations: Reputation information pertaining to the IP addresses
-	// of the email servers
-	// for the domain. There is exactly one entry for each reputation
-	// category
-	// except
-	// REPUTATION_CATEGORY_UNSPECIFIED.
+	// of the email servers for the domain. There is exactly one entry for
+	// each reputation category except REPUTATION_CATEGORY_UNSPECIFIED.
 	IpReputations []*IpReputation `json:"ipReputations,omitempty"`
 
 	// Name: The resource name of the traffic statistics. Traffic statistic
-	// names have
-	// the form `domains/{domain}/trafficStats/{date}`, where
+	// names have the form `domains/{domain}/trafficStats/{date}`, where
 	// domain_name is the fully qualified domain name (i.e.,
-	// mymail.mydomain.com)
-	// of the domain this traffic statistics pertains to and date is the
-	// date in
-	// yyyymmdd format that these statistics corresponds to.
-	// For example: domains/mymail.mydomain.com/trafficStats/20160807
+	// mymail.mydomain.com) of the domain this traffic statistics pertains
+	// to and date is the date in yyyymmdd format that these statistics
+	// corresponds to. For example:
+	// domains/mymail.mydomain.com/trafficStats/20160807
 	Name string `json:"name,omitempty"`
 
 	// OutboundEncryptionRatio: The ratio of outgoing mail (from Gmail) that
-	// was accepted over secure
-	// transport (TLS).
+	// was accepted over secure transport (TLS).
 	OutboundEncryptionRatio float64 `json:"outboundEncryptionRatio,omitempty"`
 
-	// SpammyFeedbackLoops: Spammy [Feedback loop
-	// identifiers]
+	// SpammyFeedbackLoops: Spammy [Feedback loop identifiers]
 	// (https://support.google.com/mail/answer/6254652) with their
-	// individual spam
-	// rates. This metric only pertains to traffic that is authenticated
-	// by
-	// [DKIM](http://www.dkim.org/).
+	// individual spam rates. This metric only pertains to traffic that is
+	// authenticated by [DKIM](http://www.dkim.org/).
 	SpammyFeedbackLoops []*FeedbackLoop `json:"spammyFeedbackLoops,omitempty"`
 
 	// SpfSuccessRatio: The ratio of mail that successfully authenticated
-	// with SPF vs. all mail
-	// that attempted to authenticate with [SPF](http://www.openspf.org/).
-	// Spoofed
-	// mail is excluded.
+	// with SPF vs. all mail that attempted to authenticate with
+	// [SPF](http://www.openspf.org/). Spoofed mail is excluded.
 	SpfSuccessRatio float64 `json:"spfSuccessRatio,omitempty"`
 
 	// UserReportedSpamRatio: The ratio of user-report spam vs. email that
-	// was sent to the inbox. This
-	// metric only pertains to emails authenticated
-	// by
-	// [DKIM](http://www.dkim.org/).
+	// was sent to the inbox. This metric only pertains to emails
+	// authenticated by [DKIM](http://www.dkim.org/).
 	UserReportedSpamRatio float64 `json:"userReportedSpamRatio,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -654,8 +609,8 @@ type DomainsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a specific domain registered by the client.
-// Returns NOT_FOUND if the domain does not exist.
+// Get: Gets a specific domain registered by the client. Returns
+// NOT_FOUND if the domain does not exist.
 func (r *DomainsService) Get(name string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -699,7 +654,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -761,7 +716,7 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a specific domain registered by the client.\nReturns NOT_FOUND if the domain does not exist.",
+	//   "description": "Gets a specific domain registered by the client. Returns NOT_FOUND if the domain does not exist.",
 	//   "flatPath": "v1beta1/domains/{domainsId}",
 	//   "httpMethod": "GET",
 	//   "id": "gmailpostmastertools.domains.get",
@@ -770,7 +725,7 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the domain. It should have the form\n`domains/{domain_name}`, where domain_name is the fully qualified\ndomain name.",
+	//       "description": "The resource name of the domain. It should have the form `domains/{domain_name}`, where domain_name is the fully qualified domain name.",
 	//       "location": "path",
 	//       "pattern": "^domains/[^/]+$",
 	//       "required": true,
@@ -799,29 +754,26 @@ type DomainsListCall struct {
 }
 
 // List: Lists the domains that have been registered by the client. The
-// order of
-// domains in the response is unspecified and non-deterministic. Newly
-// created
-// domains will not necessarily be added to the end of this list.
+// order of domains in the response is unspecified and
+// non-deterministic. Newly created domains will not necessarily be
+// added to the end of this list.
 func (r *DomainsService) List() *DomainsListCall {
 	c := &DomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer domains than requested.
-// If unspecified, server will pick an appropriate default.
+// Server may return fewer domains than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *DomainsListCall) PageSize(pageSize int64) *DomainsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if
-// any.
-// This is the value of
-// ListDomainsResponse.next_page_token
-// returned from the previous call to `ListDomains` method.
+// next_page_token value returned from a previous List request, if any.
+// This is the value of ListDomainsResponse.next_page_token returned
+// from the previous call to `ListDomains` method.
 func (c *DomainsListCall) PageToken(pageToken string) *DomainsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -864,7 +816,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -923,20 +875,20 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the domains that have been registered by the client. The order of\ndomains in the response is unspecified and non-deterministic. Newly created\ndomains will not necessarily be added to the end of this list.",
+	//   "description": "Lists the domains that have been registered by the client. The order of domains in the response is unspecified and non-deterministic. Newly created domains will not necessarily be added to the end of this list.",
 	//   "flatPath": "v1beta1/domains",
 	//   "httpMethod": "GET",
 	//   "id": "gmailpostmastertools.domains.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer domains than requested.\nIf unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer domains than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.\nThis is the value of\nListDomainsResponse.next_page_token\nreturned from the previous call to `ListDomains` method.",
+	//       "description": "The next_page_token value returned from a previous List request, if any. This is the value of ListDomainsResponse.next_page_token returned from the previous call to `ListDomains` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -984,9 +936,8 @@ type DomainsTrafficStatsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get traffic statistics for a domain on a specific date.
-// Returns PERMISSION_DENIED if user does not have permission to
-// access
+// Get: Get traffic statistics for a domain on a specific date. Returns
+// PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
 func (r *DomainsTrafficStatsService) Get(name string) *DomainsTrafficStatsGetCall {
 	c := &DomainsTrafficStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1031,7 +982,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1093,7 +1044,7 @@ func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficS
 	}
 	return ret, nil
 	// {
-	//   "description": "Get traffic statistics for a domain on a specific date.\nReturns PERMISSION_DENIED if user does not have permission to access\nTrafficStats for the domain.",
+	//   "description": "Get traffic statistics for a domain on a specific date. Returns PERMISSION_DENIED if user does not have permission to access TrafficStats for the domain.",
 	//   "flatPath": "v1beta1/domains/{domainsId}/trafficStats/{trafficStatsId}",
 	//   "httpMethod": "GET",
 	//   "id": "gmailpostmastertools.domains.trafficStats.get",
@@ -1102,7 +1053,7 @@ func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficS
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the traffic statistics to get.\nE.g., domains/mymail.mydomain.com/trafficStats/20160807.",
+	//       "description": "The resource name of the traffic statistics to get. E.g., domains/mymail.mydomain.com/trafficStats/20160807.",
 	//       "location": "path",
 	//       "pattern": "^domains/[^/]+/trafficStats/[^/]+$",
 	//       "required": true,
@@ -1131,9 +1082,8 @@ type DomainsTrafficStatsListCall struct {
 	header_      http.Header
 }
 
-// List: List traffic statistics for all available days.
-// Returns PERMISSION_DENIED if user does not have permission to
-// access
+// List: List traffic statistics for all available days. Returns
+// PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
 func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsListCall {
 	c := &DomainsTrafficStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1142,9 +1092,8 @@ func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsLis
 }
 
 // EndDateDay sets the optional parameter "endDate.day": Day of month.
-// Must be from 1 to 31 and valid for the year and month, or 0
-// if specifying a year by itself or a year and month where the day is
-// not
+// Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a year by itself or a year and month where the day is not
 // significant.
 func (c *DomainsTrafficStatsListCall) EndDateDay(endDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.day", fmt.Sprint(endDateDay))
@@ -1152,35 +1101,31 @@ func (c *DomainsTrafficStatsListCall) EndDateDay(endDateDay int64) *DomainsTraff
 }
 
 // EndDateMonth sets the optional parameter "endDate.month": Month of
-// year. Must be from 1 to 12, or 0 if specifying a year without a
-// month and day.
+// year. Must be from 1 to 12, or 0 if specifying a year without a month
+// and day.
 func (c *DomainsTrafficStatsListCall) EndDateMonth(endDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.month", fmt.Sprint(endDateMonth))
 	return c
 }
 
 // EndDateYear sets the optional parameter "endDate.year": Year of date.
-// Must be from 1 to 9999, or 0 if specifying a date without
-// a year.
+// Must be from 1 to 9999, or 0 if specifying a date without a year.
 func (c *DomainsTrafficStatsListCall) EndDateYear(endDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.year", fmt.Sprint(endDateYear))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer TrafficStats than
-// requested. If unspecified, server will pick an appropriate default.
+// Server may return fewer TrafficStats than requested. If unspecified,
+// server will pick an appropriate default.
 func (c *DomainsTrafficStatsListCall) PageSize(pageSize int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if
-// any.
-// This is the value
-// of
-// ListTrafficStatsResponse.next_page_token
+// next_page_token value returned from a previous List request, if any.
+// This is the value of ListTrafficStatsResponse.next_page_token
 // returned from the previous call to `ListTrafficStats` method.
 func (c *DomainsTrafficStatsListCall) PageToken(pageToken string) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -1188,9 +1133,8 @@ func (c *DomainsTrafficStatsListCall) PageToken(pageToken string) *DomainsTraffi
 }
 
 // StartDateDay sets the optional parameter "startDate.day": Day of
-// month. Must be from 1 to 31 and valid for the year and month, or 0
-// if specifying a year by itself or a year and month where the day is
-// not
+// month. Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a year by itself or a year and month where the day is not
 // significant.
 func (c *DomainsTrafficStatsListCall) StartDateDay(startDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.day", fmt.Sprint(startDateDay))
@@ -1198,8 +1142,7 @@ func (c *DomainsTrafficStatsListCall) StartDateDay(startDateDay int64) *DomainsT
 }
 
 // StartDateMonth sets the optional parameter "startDate.month": Month
-// of year. Must be from 1 to 12, or 0 if specifying a year without
-// a
+// of year. Must be from 1 to 12, or 0 if specifying a year without a
 // month and day.
 func (c *DomainsTrafficStatsListCall) StartDateMonth(startDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.month", fmt.Sprint(startDateMonth))
@@ -1207,8 +1150,8 @@ func (c *DomainsTrafficStatsListCall) StartDateMonth(startDateMonth int64) *Doma
 }
 
 // StartDateYear sets the optional parameter "startDate.year": Year of
-// date. Must be from 1 to 9999, or 0 if specifying a date without
-// a year.
+// date. Must be from 1 to 9999, or 0 if specifying a date without a
+// year.
 func (c *DomainsTrafficStatsListCall) StartDateYear(startDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.year", fmt.Sprint(startDateYear))
 	return c
@@ -1251,7 +1194,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1313,7 +1256,7 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 	}
 	return ret, nil
 	// {
-	//   "description": "List traffic statistics for all available days.\nReturns PERMISSION_DENIED if user does not have permission to access\nTrafficStats for the domain.",
+	//   "description": "List traffic statistics for all available days. Returns PERMISSION_DENIED if user does not have permission to access TrafficStats for the domain.",
 	//   "flatPath": "v1beta1/domains/{domainsId}/trafficStats",
 	//   "httpMethod": "GET",
 	//   "id": "gmailpostmastertools.domains.trafficStats.list",
@@ -1322,55 +1265,55 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 	//   ],
 	//   "parameters": {
 	//     "endDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year by itself or a year and month where the day is not\nsignificant.",
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a\nmonth and day.",
+	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
+	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer TrafficStats than\nrequested. If unspecified, server will pick an appropriate default.",
+	//       "description": "Requested page size. Server may return fewer TrafficStats than requested. If unspecified, server will pick an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any.\nThis is the value of\nListTrafficStatsResponse.next_page_token\nreturned from the previous call to `ListTrafficStats` method.",
+	//       "description": "The next_page_token value returned from a previous List request, if any. This is the value of ListTrafficStatsResponse.next_page_token returned from the previous call to `ListTrafficStats` method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The resource name of the domain whose traffic statistics we'd like to list.\nIt should have the form `domains/{domain_name}`, where domain_name is\nthe fully qualified domain name.",
+	//       "description": "The resource name of the domain whose traffic statistics we'd like to list. It should have the form `domains/{domain_name}`, where domain_name is the fully qualified domain name.",
 	//       "location": "path",
 	//       "pattern": "^domains/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year by itself or a year and month where the day is not\nsignificant.",
+	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a\nmonth and day.",
+	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
+	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

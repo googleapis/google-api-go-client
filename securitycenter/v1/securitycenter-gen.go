@@ -204,58 +204,44 @@ type OrganizationsSourcesFindingsService struct {
 	s *Service
 }
 
-// Asset: Security Command Center representation of a Google
-// Cloud
-// resource.
-//
-// The Asset is a Security Command Center resource that captures
-// information
-// about a single Google Cloud resource. All modifications to an Asset
-// are only
-// within the context of Security Command Center and don't affect the
-// referenced
-// Google Cloud resource.
+// Asset: Security Command Center representation of a Google Cloud
+// resource. The Asset is a Security Command Center resource that
+// captures information about a single Google Cloud resource. All
+// modifications to an Asset are only within the context of Security
+// Command Center and don't affect the referenced Google Cloud resource.
 type Asset struct {
 	// CreateTime: The time at which the asset was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// IamPolicy: Cloud IAM Policy information associated with the Google
-	// Cloud resource
-	// described by the Security Command Center asset. This information is
-	// managed
-	// and defined by the Google Cloud resource and cannot be modified by
-	// the
-	// user.
+	// Cloud resource described by the Security Command Center asset. This
+	// information is managed and defined by the Google Cloud resource and
+	// cannot be modified by the user.
 	IamPolicy *IamPolicy `json:"iamPolicy,omitempty"`
 
-	// Name: The relative resource name of this asset.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/assets/{asset_id}"
-	// .
+	// Name: The relative resource name of this asset. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/assets/{asset_id}".
 	Name string `json:"name,omitempty"`
 
 	// ResourceProperties: Resource managed properties. These properties are
-	// managed and defined by
-	// the Google Cloud resource and cannot be modified by the user.
+	// managed and defined by the Google Cloud resource and cannot be
+	// modified by the user.
 	ResourceProperties googleapi.RawMessage `json:"resourceProperties,omitempty"`
 
 	// SecurityCenterProperties: Security Command Center managed properties.
-	// These properties are managed by
-	// Security Command Center and cannot be modified by the user.
+	// These properties are managed by Security Command Center and cannot be
+	// modified by the user.
 	SecurityCenterProperties *SecurityCenterProperties `json:"securityCenterProperties,omitempty"`
 
 	// SecurityMarks: User specified security marks. These marks are
-	// entirely managed by the user
-	// and come from the SecurityMarks resource that belongs to the asset.
+	// entirely managed by the user and come from the SecurityMarks resource
+	// that belongs to the asset.
 	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
 
 	// UpdateTime: The time at which the asset was last updated, added, or
-	// deleted in Security
-	// Command Center.
+	// deleted in Security Command Center.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -288,14 +274,12 @@ type AssetDiscoveryConfig struct {
 	//
 	// Possible values:
 	//   "INCLUSION_MODE_UNSPECIFIED" - Unspecified. Setting the mode with
-	// this value will disable
-	// inclusion/exclusion filtering for Asset Discovery.
+	// this value will disable inclusion/exclusion filtering for Asset
+	// Discovery.
 	//   "INCLUDE_ONLY" - Asset Discovery will capture only the resources
-	// within the projects
-	// specified. All other resources will be ignored.
+	// within the projects specified. All other resources will be ignored.
 	//   "EXCLUDE" - Asset Discovery will ignore all resources under the
-	// projects specified.
-	// All other resources will be retrieved.
+	// projects specified. All other resources will be retrieved.
 	InclusionMode string `json:"inclusionMode,omitempty"`
 
 	// ProjectIds: The project ids to use for filtering asset discovery.
@@ -324,72 +308,31 @@ func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE"
-//             },
-//             {
-//               "log_type": "ADMIN_READ"
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ"
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// jose@example.com from DATA_READ logging, and aliya@example.com from
+// DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
@@ -418,31 +361,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE"
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -480,95 +407,53 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -595,17 +480,11 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -613,65 +492,40 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -697,22 +551,16 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Finding: Security Command Center finding.
-//
-// A finding is a record of assessment data like security, risk, health,
-// or
-// privacy, that is ingested into Security Command Center for
-// presentation,
-// notification, analysis, policy testing, and enforcement. For example,
-// a
-// cross-site scripting (XSS) vulnerability in an App Engine application
-// is a
+// Finding: Security Command Center finding. A finding is a record of
+// assessment data like security, risk, health, or privacy, that is
+// ingested into Security Command Center for presentation, notification,
+// analysis, policy testing, and enforcement. For example, a cross-site
+// scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
 	// Category: The additional taxonomy group within findings from a given
-	// source.
-	// This field is immutable after creation time.
-	// Example: "XSS_FLASH_INJECTION"
+	// source. This field is immutable after creation time. Example:
+	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
@@ -720,65 +568,45 @@ type Finding struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// EventTime: The time at which the event took place. For example, if
-	// the finding
-	// represents an open firewall it would capture the time the detector
-	// believes
-	// the firewall became open. The accuracy is determined by the detector.
+	// the finding represents an open firewall it would capture the time the
+	// detector believes the firewall became open. The accuracy is
+	// determined by the detector.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
-	// of Security
-	// Command Center where additional information about the finding can be
-	// found.
-	// This field is guaranteed to be either empty or a well formed URL.
+	// of Security Command Center where additional information about the
+	// finding can be found. This field is guaranteed to be either empty or
+	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
-	// Name: The relative resource name of this finding.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id
-	// }/findings/{finding_id}"
+	// Name: The relative resource name of this finding. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
-	// to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// This field is immutable after creation time.
-	// For example:
+	// to. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
-	// resource
-	// name of the Google Cloud resource this finding is for.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
-	// When the finding is for a non-Google Cloud resource, the resourceName
-	// can
-	// be a customer or partner defined string. This field is immutable
-	// after
-	// creation time.
+	// resource name of the Google Cloud resource this finding is for. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
+	// time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
-	// marks are entirely
-	// managed by the user and come from the SecurityMarks resource that
-	// belongs
-	// to the finding.
+	// marks are entirely managed by the user and come from the
+	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
 
 	// SourceProperties: Source specific properties. These properties are
-	// managed by the source
-	// that writes the finding. The key names in the source_properties map
-	// must be
-	// between 1 and 255 characters, and must start with a letter and
-	// contain
-	// alphanumeric characters or underscores only.
+	// managed by the source that writes the finding. The key names in the
+	// source_properties map must be between 1 and 255 characters, and must
+	// start with a letter and contain alphanumeric characters or
+	// underscores only.
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
 
 	// State: The state of the finding.
@@ -788,8 +616,7 @@ type Finding struct {
 	//   "ACTIVE" - The finding requires attention and has not been
 	// addressed yet.
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed
-	// and is no longer active.
+	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -822,8 +649,7 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -852,24 +678,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -901,8 +717,7 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // Notification
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
 	// Finding: If it's a Finding based notification config, this field will
-	// be
-	// populated.
+	// be populated.
 	Finding *Finding `json:"finding,omitempty"`
 
 	// NotificationConfigName: Name of the notification config that
@@ -935,28 +750,25 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Resource:
-// Information related to the Google Cloud resource.
+// GoogleCloudSecuritycenterV1Resource:  Information related to the
+// Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
-	// Name: The full resource name of the resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// Name: The full resource name of the resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
 
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:
-	// The human readable name of resource's parent.
+	// ParentDisplayName:  The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:
-	// The human readable name of project that the resource belongs to.
+	// ProjectDisplayName:  The human readable name of project that the
+	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -994,8 +806,8 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -1034,8 +846,8 @@ type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -1063,57 +875,44 @@ func (s *GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON(
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Asset: Security Command Center
-// representation of a Google Cloud
-// resource.
-//
-// The Asset is a Security Command Center resource that captures
-// information
-// about a single Google Cloud resource. All modifications to an Asset
-// are only
-// within the context of Security Command Center and don't affect the
-// referenced
-// Google Cloud resource.
+// representation of a Google Cloud resource. The Asset is a Security
+// Command Center resource that captures information about a single
+// Google Cloud resource. All modifications to an Asset are only within
+// the context of Security Command Center and don't affect the
+// referenced Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Asset struct {
 	// CreateTime: The time at which the asset was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// IamPolicy: Cloud IAM Policy information associated with the Google
-	// Cloud resource
-	// described by the Security Command Center asset. This information is
-	// managed
-	// and defined by the Google Cloud resource and cannot be modified by
-	// the
-	// user.
+	// Cloud resource described by the Security Command Center asset. This
+	// information is managed and defined by the Google Cloud resource and
+	// cannot be modified by the user.
 	IamPolicy *GoogleCloudSecuritycenterV1p1beta1IamPolicy `json:"iamPolicy,omitempty"`
 
-	// Name: The relative resource name of this asset.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/assets/{asset_id}"
-	// .
+	// Name: The relative resource name of this asset. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/assets/{asset_id}".
 	Name string `json:"name,omitempty"`
 
 	// ResourceProperties: Resource managed properties. These properties are
-	// managed and defined by
-	// the Google Cloud resource and cannot be modified by the user.
+	// managed and defined by the Google Cloud resource and cannot be
+	// modified by the user.
 	ResourceProperties googleapi.RawMessage `json:"resourceProperties,omitempty"`
 
 	// SecurityCenterProperties: Security Command Center managed properties.
-	// These properties are managed by
-	// Security Command Center and cannot be modified by the user.
+	// These properties are managed by Security Command Center and cannot be
+	// modified by the user.
 	SecurityCenterProperties *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties `json:"securityCenterProperties,omitempty"`
 
 	// SecurityMarks: User specified security marks. These marks are
-	// entirely managed by the user
-	// and come from the SecurityMarks resource that belongs to the asset.
+	// entirely managed by the user and come from the SecurityMarks resource
+	// that belongs to the asset.
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
 
 	// UpdateTime: The time at which the asset was last updated, added, or
-	// deleted in Cloud
-	// SCC.
+	// deleted in Cloud SCC.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -1140,20 +939,15 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Asset) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Finding: Security Command Center
-// finding.
-//
-// A finding is a record of assessment data (security, risk, health or
-// privacy)
-// ingested into Security Command Center for presentation,
-// notification,
-// analysis, policy testing, and enforcement. For example, an XSS
-// vulnerability
-// in an App Engine application is a finding.
+// finding. A finding is a record of assessment data (security, risk,
+// health or privacy) ingested into Security Command Center for
+// presentation, notification, analysis, policy testing, and
+// enforcement. For example, an XSS vulnerability in an App Engine
+// application is a finding.
 type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// Category: The additional taxonomy group within findings from a given
-	// source.
-	// This field is immutable after creation time.
-	// Example: "XSS_FLASH_INJECTION"
+	// source. This field is immutable after creation time. Example:
+	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
@@ -1161,65 +955,45 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// EventTime: The time at which the event took place. For example, if
-	// the finding
-	// represents an open firewall it would capture the time the detector
-	// believes
-	// the firewall became open. The accuracy is determined by the detector.
+	// the finding represents an open firewall it would capture the time the
+	// detector believes the firewall became open. The accuracy is
+	// determined by the detector.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
-	// of Security
-	// Command Center where additional information about the finding can be
-	// found.
-	// This field is guaranteed to be either empty or a well formed URL.
+	// of Security Command Center where additional information about the
+	// finding can be found. This field is guaranteed to be either empty or
+	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
-	// Name: The relative resource name of this finding.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id
-	// }/findings/{finding_id}"
+	// Name: The relative resource name of this finding. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
-	// to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// This field is immutable after creation time.
-	// For example:
+	// to. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
-	// resource
-	// name of the Google Cloud resource this finding is for.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
-	// When the finding is for a non-Google Cloud resource, the resourceName
-	// can
-	// be a customer or partner defined string. This field is immutable
-	// after
-	// creation time.
+	// resource name of the Google Cloud resource this finding is for. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
+	// time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
-	// marks are entirely
-	// managed by the user and come from the SecurityMarks resource that
-	// belongs
-	// to the finding.
+	// marks are entirely managed by the user and come from the
+	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
 
 	// SourceProperties: Source specific properties. These properties are
-	// managed by the source
-	// that writes the finding. The key names in the source_properties map
-	// must be
-	// between 1 and 255 characters, and must start with a letter and
-	// contain
-	// alphanumeric characters or underscores only.
+	// managed by the source that writes the finding. The key names in the
+	// source_properties map must be between 1 and 255 characters, and must
+	// start with a letter and contain alphanumeric characters or
+	// underscores only.
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
 
 	// State: The state of the finding.
@@ -1229,8 +1003,7 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	//   "ACTIVE" - The finding requires attention and has not been
 	// addressed yet.
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed
-	// and is no longer active.
+	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
@@ -1257,18 +1030,14 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudSecuritycenterV1p1beta1IamPolicy: Cloud IAM Policy
-// information associated with the Google Cloud resource
-// described by the Security Command Center asset. This information is
-// managed
-// and defined by the Google Cloud resource and cannot be modified by
-// the
+// information associated with the Google Cloud resource described by
+// the Security Command Center asset. This information is managed and
+// defined by the Google Cloud resource and cannot be modified by the
 // user.
 type GoogleCloudSecuritycenterV1p1beta1IamPolicy struct {
 	// PolicyBlob: The JSON representation of the Policy associated with the
-	// asset.
-	// See https://cloud.google.com/iam/docs/reference/rest/v1/Policy
-	// for
-	// format details.
+	// asset. See https://cloud.google.com/iam/docs/reference/rest/v1/Policy
+	// for format details.
 	PolicyBlob string `json:"policyBlob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBlob") to
@@ -1298,8 +1067,7 @@ func (s *GoogleCloudSecuritycenterV1p1beta1IamPolicy) MarshalJSON() ([]byte, err
 // Command Center's Notification
 type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 	// Finding: If it's a Finding based notification config, this field will
-	// be
-	// populated.
+	// be populated.
 	Finding *GoogleCloudSecuritycenterV1p1beta1Finding `json:"finding,omitempty"`
 
 	// NotificationConfigName: Name of the notification config that
@@ -1310,8 +1078,7 @@ type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 	Resource *GoogleCloudSecuritycenterV1p1beta1Resource `json:"resource,omitempty"`
 
 	// TemporalAsset: If it's an asset based notification config, this field
-	// will be
-	// populated.
+	// will be populated.
 	TemporalAsset *GoogleCloudSecuritycenterV1p1beta1TemporalAsset `json:"temporalAsset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
@@ -1337,28 +1104,25 @@ func (s *GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Resource:
-// Information related to the Google Cloud resource.
+// GoogleCloudSecuritycenterV1p1beta1Resource:  Information related to
+// the Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Resource struct {
-	// Name: The full resource name of the resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// Name: The full resource name of the resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
 
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:
-	// The human readable name of resource's parent.
+	// ParentDisplayName:  The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:
-	// The human readable name of project that the resource belongs to.
+	// ProjectDisplayName:  The human readable name of project that the
+	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1396,8 +1160,8 @@ type GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -1425,29 +1189,24 @@ func (s *GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSO
 }
 
 // GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties: Security
-// Command Center managed properties. These properties are managed
-// by
+// Command Center managed properties. These properties are managed by
 // Security Command Center and cannot be modified by the user.
 type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	// ResourceDisplayName: The user defined display name for this resource.
 	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
 
 	// ResourceName: The full resource name of the Google Cloud resource
-	// this asset
-	// represents. This field is immutable after create time.
+	// this asset represents. This field is immutable after create time.
 	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ResourceOwners: Owners of the Google Cloud resource.
 	ResourceOwners []string `json:"resourceOwners,omitempty"`
 
 	// ResourceParent: The full resource name of the immediate parent of the
-	// resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceParent string `json:"resourceParent,omitempty"`
 
 	// ResourceParentDisplayName: The user defined display name for the
@@ -1455,10 +1214,8 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	ResourceParentDisplayName string `json:"resourceParentDisplayName,omitempty"`
 
 	// ResourceProject: The full resource name of the project the resource
-	// belongs to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// belongs to. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceProject string `json:"resourceProject,omitempty"`
 
 	// ResourceProjectDisplayName: The user defined display name for the
@@ -1466,12 +1223,9 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	ResourceProjectDisplayName string `json:"resourceProjectDisplayName,omitempty"`
 
 	// ResourceType: The type of the Google Cloud resource. Examples
-	// include: APPLICATION,
-	// PROJECT, and ORGANIZATION. This is a case insensitive field defined
-	// by
-	// Security Command Center and/or the producer of the resource and
-	// is
-	// immutable after create time.
+	// include: APPLICATION, PROJECT, and ORGANIZATION. This is a case
+	// insensitive field defined by Security Command Center and/or the
+	// producer of the resource and is immutable after create time.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
@@ -1499,33 +1253,23 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties) MarshalJSON
 }
 
 // GoogleCloudSecuritycenterV1p1beta1SecurityMarks: User specified
-// security marks that are attached to the parent Security
-// Command Center resource. Security marks are scoped within a Security
-// Command
+// security marks that are attached to the parent Security Command
+// Center resource. Security marks are scoped within a Security Command
 // Center organization -- they can be modified and viewed by all users
-// who have
-// proper permissions on the organization.
+// who have proper permissions on the organization.
 type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 	// Marks: Mutable user specified security marks belonging to the parent
-	// resource.
-	// Constraints are as follows:
-	//
-	//   * Keys and values are treated as case insensitive
-	//   * Keys must be between 1 - 256 characters (inclusive)
-	//   * Keys must be letters, numbers, underscores, or dashes
-	//   * Values have leading and trailing whitespace trimmed, remaining
-	//     characters must be between 1 - 4096 characters (inclusive)
+	// resource. Constraints are as follows: * Keys and values are treated
+	// as case insensitive * Keys must be between 1 - 256 characters
+	// (inclusive) * Keys must be letters, numbers, underscores, or dashes *
+	// Values have leading and trailing whitespace trimmed, remaining
+	// characters must be between 1 - 4096 characters (inclusive)
 	Marks map[string]string `json:"marks,omitempty"`
 
-	// Name: The relative resource name of the SecurityMarks.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Examples:
-	// "organizations/{organization_id}/assets/{asset_id}
-	// /securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/f
-	// indings/{finding_id}/securityMarks".
+	// Name: The relative resource name of the SecurityMarks. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Marks") to
@@ -1552,8 +1296,8 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudSecuritycenterV1p1beta1TemporalAsset: Wrapper over asset
-// object that also captures the state change for the asset
-// e.g. if it was a newly created asset vs updated or deleted asset.
+// object that also captures the state change for the asset e.g. if it
+// was a newly created asset vs updated or deleted asset.
 type GoogleCloudSecuritycenterV1p1beta1TemporalAsset struct {
 	// Asset: Asset data that includes attributes, properties and marks
 	// about the asset.
@@ -1594,163 +1338,92 @@ func (s *GoogleCloudSecuritycenterV1p1beta1TemporalAsset) MarshalJSON() ([]byte,
 // GroupAssetsRequest: Request message for grouping by assets.
 type GroupAssetsRequest struct {
 	// CompareDuration: When compare_duration is set, the GroupResult's
-	// "state_change" property is
-	// updated to indicate whether the asset was added, removed, or
-	// remained
-	// present during the compare_duration period of time that precedes
-	// the
-	// read_time. This is the time between (read_time - compare_duration)
-	// and
-	// read_time.
-	//
-	// The state change value is derived based on the presence of the asset
-	// at the
-	// two points in time. Intermediate state changes between the two times
-	// don't
-	// affect the result. For example, the results aren't affected if the
-	// asset is
-	// removed and re-created again.
-	//
-	// Possible "state_change" values when compare_duration is specified:
-	//
-	// * "ADDED":   indicates that the asset was not present at the start
-	// of
-	//                compare_duration, but present at reference_time.
-	// * "REMOVED": indicates that the asset was present at the start of
-	//                compare_duration, but not present at reference_time.
-	// * "ACTIVE":  indicates that the asset was present at both the
-	//                start and the end of the time period defined by
-	//                compare_duration and reference_time.
-	//
-	// If compare_duration is not specified, then the only possible
-	// state_change
-	// is "UNUSED", which will be the state_change set for all assets
-	// present at
-	// read_time.
-	//
-	// If this field is set then `state_change` must be a specified field
-	// in
-	// `group_by`.
+	// "state_change" property is updated to indicate whether the asset was
+	// added, removed, or remained present during the compare_duration
+	// period of time that precedes the read_time. This is the time between
+	// (read_time - compare_duration) and read_time. The state change value
+	// is derived based on the presence of the asset at the two points in
+	// time. Intermediate state changes between the two times don't affect
+	// the result. For example, the results aren't affected if the asset is
+	// removed and re-created again. Possible "state_change" values when
+	// compare_duration is specified: * "ADDED": indicates that the asset
+	// was not present at the start of compare_duration, but present at
+	// reference_time. * "REMOVED": indicates that the asset was present at
+	// the start of compare_duration, but not present at reference_time. *
+	// "ACTIVE": indicates that the asset was present at both the start and
+	// the end of the time period defined by compare_duration and
+	// reference_time. If compare_duration is not specified, then the only
+	// possible state_change is "UNUSED", which will be the state_change set
+	// for all assets present at read_time. If this field is set then
+	// `state_change` must be a specified field in `group_by`.
 	CompareDuration string `json:"compareDuration,omitempty"`
 
-	// Filter: Expression that defines the filter to apply across
-	// assets.
+	// Filter: Expression that defines the filter to apply across assets.
 	// The expression is a list of zero or more restrictions combined via
-	// logical
-	// operators `AND` and `OR`.
-	// Parentheses are supported, and `OR` has higher precedence than
-	// `AND`.
-	//
-	// Restrictions have the form `<field> <operator> <value>` and may have
-	// a `-`
-	// character in front of them to indicate negation. The fields map to
-	// those
-	// defined in the Asset resource. Examples include:
-	//
-	// * name
-	// * security_center_properties.resource_name
-	// * resource_properties.a_property
-	// * security_marks.marks.marka
-	//
-	// The supported operators are:
-	//
-	// * `=` for all value types.
-	// * `>`, `<`, `>=`, `<=` for integer values.
-	// * `:`, meaning substring matching, for strings.
-	//
-	// The supported value types are:
-	//
-	// * string literals in quotes.
-	// * integer literals without quotes.
-	// * boolean literals `true` and `false` without quotes.
-	//
-	// The following field and operator combinations are supported:
-	//
-	// * name: `=`
-	// * update_time: `=`, `>`, `<`, `>=`, `<=`
-	//
-	//   Usage: This should be milliseconds since epoch or an RFC3339
-	// string.
-	//   Examples:
-	//     `update_time = "2019-06-10T16:07:18-07:00"
-	//     `update_time = 1560208038000`
-	//
-	// * create_time: `=`, `>`, `<`, `>=`, `<=`
-	//
-	//   Usage: This should be milliseconds since epoch or an RFC3339
-	// string.
-	//   Examples:
-	//     `create_time = "2019-06-10T16:07:18-07:00"
-	//     `create_time = 1560208038000`
-	//
-	// * iam_policy.policy_blob: `=`, `:`
-	// * resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=`
-	// * security_marks.marks: `=`, `:`
-	// * security_center_properties.resource_name: `=`, `:`
-	// * security_center_properties.resource_display_name: `=`, `:`
-	// * security_center_properties.resource_type: `=`, `:`
-	// * security_center_properties.resource_parent: `=`, `:`
-	// * security_center_properties.resource_parent_display_name: `=`, `:`
-	// * security_center_properties.resource_project: `=`, `:`
-	// * security_center_properties.resource_project_display_name: `=`,
-	// `:`
-	// * security_center_properties.resource_owners: `=`, `:`
-	//
-	// For example, `resource_properties.size = 100` is a valid filter
-	// string.
-	//
-	// Use a partial match on the empty string to filter based on a
-	// property
-	// existing: `resource_properties.my_property : ""
-	//
-	// Use a negated partial match on the empty string to filter based on
-	// a
-	// property not existing: `-resource_properties.my_property : ""
+	// logical operators `AND` and `OR`. Parentheses are supported, and `OR`
+	// has higher precedence than `AND`. Restrictions have the form ` ` and
+	// may have a `-` character in front of them to indicate negation. The
+	// fields map to those defined in the Asset resource. Examples include:
+	// * name * security_center_properties.resource_name *
+	// resource_properties.a_property * security_marks.marks.marka The
+	// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+	// `<=` for integer values. * `:`, meaning substring matching, for
+	// strings. The supported value types are: * string literals in quotes.
+	// * integer literals without quotes. * boolean literals `true` and
+	// `false` without quotes. The following field and operator combinations
+	// are supported: * name: `=` * update_time: `=`, `>`, `<`, `>=`, `<=`
+	// Usage: This should be milliseconds since epoch or an RFC3339 string.
+	// Examples: `update_time = "2019-06-10T16:07:18-07:00" `update_time =
+	// 1560208038000` * create_time: `=`, `>`, `<`, `>=`, `<=` Usage: This
+	// should be milliseconds since epoch or an RFC3339 string. Examples:
+	// `create_time = "2019-06-10T16:07:18-07:00" `create_time =
+	// 1560208038000` * iam_policy.policy_blob: `=`, `:` *
+	// resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=` *
+	// security_marks.marks: `=`, `:` *
+	// security_center_properties.resource_name: `=`, `:` *
+	// security_center_properties.resource_display_name: `=`, `:` *
+	// security_center_properties.resource_type: `=`, `:` *
+	// security_center_properties.resource_parent: `=`, `:` *
+	// security_center_properties.resource_parent_display_name: `=`, `:` *
+	// security_center_properties.resource_project: `=`, `:` *
+	// security_center_properties.resource_project_display_name: `=`, `:` *
+	// security_center_properties.resource_owners: `=`, `:` For example,
+	// `resource_properties.size = 100` is a valid filter string. Use a
+	// partial match on the empty string to filter based on a property
+	// existing: `resource_properties.my_property : "" Use a negated
+	// partial match on the empty string to filter based on a property not
+	// existing: `-resource_properties.my_property : ""
 	Filter string `json:"filter,omitempty"`
 
 	// GroupBy: Required. Expression that defines what assets fields to use
-	// for grouping. The string
-	// value should follow SQL syntax: comma separated list of fields.
-	// For
-	// example:
-	// "security_center_properties.resource_project,security_cen
-	// ter_properties.project".
-	//
-	// The following fields are supported when compare_duration is not
-	// set:
-	//
-	// * security_center_properties.resource_project
-	// * security_center_properties.resource_project_display_name
-	// * security_center_properties.resource_type
-	// * security_center_properties.resource_parent
-	// * security_center_properties.resource_parent_display_name
-	//
-	// The following fields are supported when compare_duration is set:
-	//
-	// * security_center_properties.resource_type
-	// * security_center_properties.resource_project_display_name
-	// * security_center_properties.resource_parent_display_name
+	// for grouping. The string value should follow SQL syntax: comma
+	// separated list of fields. For example:
+	// "security_center_properties.resource_project,security_center_propertie
+	// s.project". The following fields are supported when compare_duration
+	// is not set: * security_center_properties.resource_project *
+	// security_center_properties.resource_project_display_name *
+	// security_center_properties.resource_type *
+	// security_center_properties.resource_parent *
+	// security_center_properties.resource_parent_display_name The following
+	// fields are supported when compare_duration is set: *
+	// security_center_properties.resource_type *
+	// security_center_properties.resource_project_display_name *
+	// security_center_properties.resource_parent_display_name
 	GroupBy string `json:"groupBy,omitempty"`
 
 	// PageSize: The maximum number of results to return in a single
-	// response. Default is
-	// 10, minimum is 1, maximum is 1000.
+	// response. Default is 10, minimum is 1, maximum is 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The value returned by the last `GroupAssetsResponse`;
-	// indicates
-	// that this is a continuation of a prior `GroupAssets` call, and that
-	// the
-	// system should return the next page of data.
+	// indicates that this is a continuation of a prior `GroupAssets` call,
+	// and that the system should return the next page of data.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ReadTime: Time used as a reference point when filtering assets. The
-	// filter is limited
-	// to assets existing at the supplied time and their values are those at
-	// that
-	// specific time. Absence of this field will default to the API's
-	// version of
-	// NOW.
+	// filter is limited to assets existing at the supplied time and their
+	// values are those at that specific time. Absence of this field will
+	// default to the API's version of NOW.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompareDuration") to
@@ -1780,15 +1453,13 @@ func (s *GroupAssetsRequest) MarshalJSON() ([]byte, error) {
 // GroupAssetsResponse: Response message for grouping by assets.
 type GroupAssetsResponse struct {
 	// GroupByResults: Group results. There exists an element for each
-	// existing unique
-	// combination of property/values. The element contains a count for the
-	// number
-	// of times those specific property/values appear.
+	// existing unique combination of property/values. The element contains
+	// a count for the number of times those specific property/values
+	// appear.
 	GroupByResults []*GroupResult `json:"groupByResults,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReadTime: Time used for executing the groupBy request.
@@ -1828,152 +1499,77 @@ func (s *GroupAssetsResponse) MarshalJSON() ([]byte, error) {
 // GroupFindingsRequest: Request message for grouping by findings.
 type GroupFindingsRequest struct {
 	// CompareDuration: When compare_duration is set, the GroupResult's
-	// "state_change" attribute is
-	// updated to indicate whether the finding had its state changed,
-	// the
-	// finding's state remained unchanged, or if the finding was added
-	// during the
-	// compare_duration period of time that precedes the read_time. This is
-	// the
-	// time between (read_time - compare_duration) and read_time.
-	//
-	// The state_change value is derived based on the presence and state of
-	// the
-	// finding at the two points in time. Intermediate state changes between
-	// the
-	// two times don't affect the result. For example, the results aren't
-	// affected
-	// if the finding is made inactive and then active again.
-	//
-	// Possible "state_change" values when compare_duration is specified:
-	//
-	// * "CHANGED":   indicates that the finding was present and matched the
-	// given
-	//                  filter at the start of compare_duration, but changed
-	// its
-	//                  state at read_time.
-	// * "UNCHANGED": indicates that the finding was present and matched the
-	// given
-	//                  filter at the start of compare_duration and did not
-	// change
-	//                  state at read_time.
-	// * "ADDED":     indicates that the finding did not match the given
-	// filter or
-	//                  was not present at the start of compare_duration,
-	// but was
-	//                  present at read_time.
-	// * "REMOVED":   indicates that the finding was present and matched
-	// the
-	//                  filter at the start of compare_duration, but did not
-	// match
-	//                  the filter at read_time.
-	//
+	// "state_change" attribute is updated to indicate whether the finding
+	// had its state changed, the finding's state remained unchanged, or if
+	// the finding was added during the compare_duration period of time that
+	// precedes the read_time. This is the time between (read_time -
+	// compare_duration) and read_time. The state_change value is derived
+	// based on the presence and state of the finding at the two points in
+	// time. Intermediate state changes between the two times don't affect
+	// the result. For example, the results aren't affected if the finding
+	// is made inactive and then active again. Possible "state_change"
+	// values when compare_duration is specified: * "CHANGED": indicates
+	// that the finding was present and matched the given filter at the
+	// start of compare_duration, but changed its state at read_time. *
+	// "UNCHANGED": indicates that the finding was present and matched the
+	// given filter at the start of compare_duration and did not change
+	// state at read_time. * "ADDED": indicates that the finding did not
+	// match the given filter or was not present at the start of
+	// compare_duration, but was present at read_time. * "REMOVED":
+	// indicates that the finding was present and matched the filter at the
+	// start of compare_duration, but did not match the filter at read_time.
 	// If compare_duration is not specified, then the only possible
-	// state_change
-	// is "UNUSED",  which will be the state_change set for all findings
-	// present
-	// at read_time.
-	//
-	// If this field is set then `state_change` must be a specified field
-	// in
-	// `group_by`.
+	// state_change is "UNUSED", which will be the state_change set for all
+	// findings present at read_time. If this field is set then
+	// `state_change` must be a specified field in `group_by`.
 	CompareDuration string `json:"compareDuration,omitempty"`
 
-	// Filter: Expression that defines the filter to apply across
-	// findings.
+	// Filter: Expression that defines the filter to apply across findings.
 	// The expression is a list of one or more restrictions combined via
-	// logical
-	// operators `AND` and `OR`.
-	// Parentheses are supported, and `OR` has higher precedence than
-	// `AND`.
-	//
-	// Restrictions have the form `<field> <operator> <value>` and may have
-	// a `-`
-	// character in front of them to indicate negation. Examples include:
-	//
-	//  * name
-	//  * source_properties.a_property
-	//  * security_marks.marks.marka
-	//
-	// The supported operators are:
-	//
-	// * `=` for all value types.
-	// * `>`, `<`, `>=`, `<=` for integer values.
-	// * `:`, meaning substring matching, for strings.
-	//
-	// The supported value types are:
-	//
-	// * string literals in quotes.
-	// * integer literals without quotes.
-	// * boolean literals `true` and `false` without quotes.
-	//
-	// The following field and operator combinations are supported:
-	//
-	// * name: `=`
-	// * parent: `=`, `:`
-	// * resource_name: `=`, `:`
-	// * state: `=`, `:`
-	// * category: `=`, `:`
-	// * external_uri: `=`, `:`
-	// * event_time: `=`, `>`, `<`, `>=`, `<=`
-	//
-	//   Usage: This should be milliseconds since epoch or an RFC3339
-	// string.
-	//   Examples:
-	//     `event_time = "2019-06-10T16:07:18-07:00"
-	//     `event_time = 1560208038000`
-	//
-	// * security_marks.marks: `=`, `:`
-	// * source_properties: `=`, `:`, `>`, `<`, `>=`, `<=`
-	//
-	// For example, `source_properties.size = 100` is a valid filter
-	// string.
-	//
-	// Use a partial match on the empty string to filter based on a
-	// property
-	// existing: `source_properties.my_property : ""
-	//
-	// Use a negated partial match on the empty string to filter based on
-	// a
-	// property not existing: `-source_properties.my_property : ""
+	// logical operators `AND` and `OR`. Parentheses are supported, and `OR`
+	// has higher precedence than `AND`. Restrictions have the form ` ` and
+	// may have a `-` character in front of them to indicate negation.
+	// Examples include: * name * source_properties.a_property *
+	// security_marks.marks.marka The supported operators are: * `=` for all
+	// value types. * `>`, `<`, `>=`, `<=` for integer values. * `:`,
+	// meaning substring matching, for strings. The supported value types
+	// are: * string literals in quotes. * integer literals without quotes.
+	// * boolean literals `true` and `false` without quotes. The following
+	// field and operator combinations are supported: * name: `=` * parent:
+	// `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`,
+	// `:` * external_uri: `=`, `:` * event_time: `=`, `>`, `<`, `>=`, `<=`
+	// Usage: This should be milliseconds since epoch or an RFC3339 string.
+	// Examples: `event_time = "2019-06-10T16:07:18-07:00" `event_time =
+	// 1560208038000` * security_marks.marks: `=`, `:` * source_properties:
+	// `=`, `:`, `>`, `<`, `>=`, `<=` For example, `source_properties.size =
+	// 100` is a valid filter string. Use a partial match on the empty
+	// string to filter based on a property existing:
+	// `source_properties.my_property : "" Use a negated partial match on
+	// the empty string to filter based on a property not existing:
+	// `-source_properties.my_property : ""
 	Filter string `json:"filter,omitempty"`
 
 	// GroupBy: Required. Expression that defines what assets fields to use
-	// for grouping (including
-	// `state_change`). The string value should follow SQL syntax: comma
-	// separated
-	// list of fields. For example: "parent,resource_name".
-	//
-	// The following fields are supported:
-	//
-	// * resource_name
-	// * category
-	// * state
-	// * parent
-	//
-	// The following fields are supported when compare_duration is set:
-	//
-	// * state_change
+	// for grouping (including `state_change`). The string value should
+	// follow SQL syntax: comma separated list of fields. For example:
+	// "parent,resource_name". The following fields are supported: *
+	// resource_name * category * state * parent The following fields are
+	// supported when compare_duration is set: * state_change
 	GroupBy string `json:"groupBy,omitempty"`
 
 	// PageSize: The maximum number of results to return in a single
-	// response. Default is
-	// 10, minimum is 1, maximum is 1000.
+	// response. Default is 10, minimum is 1, maximum is 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The value returned by the last `GroupFindingsResponse`;
-	// indicates
-	// that this is a continuation of a prior `GroupFindings` call, and
-	// that the system should return the next page of data.
+	// indicates that this is a continuation of a prior `GroupFindings`
+	// call, and that the system should return the next page of data.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ReadTime: Time used as a reference point when filtering findings. The
-	// filter is
-	// limited to findings existing at the supplied time and their values
-	// are
-	// those at that specific time. Absence of this field will default to
-	// the
-	// API's version of NOW.
+	// filter is limited to findings existing at the supplied time and their
+	// values are those at that specific time. Absence of this field will
+	// default to the API's version of NOW.
 	ReadTime string `json:"readTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompareDuration") to
@@ -2003,15 +1599,13 @@ func (s *GroupFindingsRequest) MarshalJSON() ([]byte, error) {
 // GroupFindingsResponse: Response message for group by findings.
 type GroupFindingsResponse struct {
 	// GroupByResults: Group results. There exists an element for each
-	// existing unique
-	// combination of property/values. The element contains a count for the
-	// number
-	// of times those specific property/values appear.
+	// existing unique combination of property/values. The element contains
+	// a count for the number of times those specific property/values
+	// appear.
 	GroupByResults []*GroupResult `json:"groupByResults,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReadTime: Time used for executing the groupBy request.
@@ -2081,18 +1675,13 @@ func (s *GroupResult) MarshalJSON() ([]byte, error) {
 }
 
 // IamPolicy: Cloud IAM Policy information associated with the Google
-// Cloud resource
-// described by the Security Command Center asset. This information is
-// managed
-// and defined by the Google Cloud resource and cannot be modified by
-// the
-// user.
+// Cloud resource described by the Security Command Center asset. This
+// information is managed and defined by the Google Cloud resource and
+// cannot be modified by the user.
 type IamPolicy struct {
 	// PolicyBlob: The JSON representation of the Policy associated with the
-	// asset.
-	// See https://cloud.google.com/iam/reference/rest/v1/Policy for
-	// format
-	// details.
+	// asset. See https://cloud.google.com/iam/reference/rest/v1/Policy for
+	// format details.
 	PolicyBlob string `json:"policyBlob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBlob") to
@@ -2124,8 +1713,7 @@ type ListAssetsResponse struct {
 	ListAssetsResults []*ListAssetsResult `json:"listAssetsResults,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReadTime: Time used for executing the list request.
@@ -2206,8 +1794,7 @@ type ListFindingsResponse struct {
 	ListFindingsResults []*ListFindingsResult `json:"listFindingsResults,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReadTime: Time used for executing the list request.
@@ -2259,15 +1846,12 @@ type ListFindingsResult struct {
 	//   "UNUSED" - State change is unused, this is the canonical default
 	// for this enum.
 	//   "CHANGED" - The finding has changed state in some way between the
-	// points in time
-	// and existed at both points.
+	// points in time and existed at both points.
 	//   "UNCHANGED" - The finding has not changed state between the points
-	// in time and
-	// existed at both points.
+	// in time and existed at both points.
 	//   "ADDED" - The finding was created between the points in time.
 	//   "REMOVED" - The finding at timestamp does not match the filter
-	// specified, but it
-	// did at timestamp - compare_duration.
+	// specified, but it did at timestamp - compare_duration.
 	StateChange string `json:"stateChange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
@@ -2297,8 +1881,7 @@ func (s *ListFindingsResult) MarshalJSON() ([]byte, error) {
 // notification configs.
 type ListNotificationConfigsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// NotificationConfigs: Notification configs belonging to the requested
@@ -2372,8 +1955,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // ListSourcesResponse: Response message for listing sources.
 type ListSourcesResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more
-	// results.
+	// if there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Sources: Sources belonging to the requested parent.
@@ -2407,34 +1989,26 @@ func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // NotificationConfig: Cloud Security Command Center (Cloud SCC)
-// notification configs.
-//
-// A notification config is a Cloud SCC resource that contains the
-// configuration
-// to send notifications for create/update events of findings, assets
-// and etc.
+// notification configs. A notification config is a Cloud SCC resource
+// that contains the configuration to send notifications for
+// create/update events of findings, assets and etc.
 type NotificationConfig struct {
 	// Description: The description of the notification config (max of 1024
 	// characters).
 	Description string `json:"description,omitempty"`
 
-	// Name: The relative resource name of this notification config.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/notificationConfig
-	// s/notify_public_bucket".
+	// Name: The relative resource name of this notification config. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/notificationConfigs/notify_public_buc
+	// ket".
 	Name string `json:"name,omitempty"`
 
-	// PubsubTopic: The PubSub topic to send notifications to. Its format
-	// is
+	// PubsubTopic: The PubSub topic to send notifications to. Its format is
 	// "projects/[project_id]/topics/[topic]".
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ServiceAccount: Output only. The service account that needs
-	// "pubsub.topics.publish"
-	// permission to publish to the PubSub topic.
+	// "pubsub.topics.publish" permission to publish to the PubSub topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// StreamingConfig: The config for triggering streaming-based
@@ -2469,52 +2043,38 @@ func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2545,29 +2105,21 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // OrganizationSettings: User specified settings that are attached to
-// the Security Command
-// Center organization.
+// the Security Command Center organization.
 type OrganizationSettings struct {
 	// AssetDiscoveryConfig: The configuration used for Asset Discovery
 	// runs.
 	AssetDiscoveryConfig *AssetDiscoveryConfig `json:"assetDiscoveryConfig,omitempty"`
 
 	// EnableAssetDiscovery: A flag that indicates if Asset Discovery should
-	// be enabled. If the flag is
-	// set to `true`, then discovery of assets will occur. If it is set to
-	// `false,
-	// all historical assets will remain, but discovery of future assets
-	// will not
-	// occur.
+	// be enabled. If the flag is set to `true`, then discovery of assets
+	// will occur. If it is set to `false, all historical assets will
+	// remain, but discovery of future assets will not occur.
 	EnableAssetDiscovery bool `json:"enableAssetDiscovery,omitempty"`
 
-	// Name: The relative resource name of the settings.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/organizationSettin
-	// gs".
+	// Name: The relative resource name of the settings. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/organizationSettings".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2600,154 +2152,77 @@ func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -2779,14 +2254,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Resource: Information related to the Google Cloud resource that
-// is
-// associated with this finding.
+// Resource: Information related to the Google Cloud resource that is
+// associated with this finding. LINT.IfChange
 type Resource struct {
-	// Name: The full resource name of the resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// Name: The full resource name of the resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
 
 	// ParentDisplayName: The human readable name of resource's parent.
@@ -2832,28 +2304,24 @@ type RunAssetDiscoveryRequest struct {
 }
 
 // SecurityCenterProperties: Security Command Center managed properties.
-// These properties are managed by
-// Security Command Center and cannot be modified by the user.
+// These properties are managed by Security Command Center and cannot be
+// modified by the user.
 type SecurityCenterProperties struct {
 	// ResourceDisplayName: The user defined display name for this resource.
 	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
 
 	// ResourceName: The full resource name of the Google Cloud resource
-	// this asset
-	// represents. This field is immutable after create time.
+	// this asset represents. This field is immutable after create time.
 	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ResourceOwners: Owners of the Google Cloud resource.
 	ResourceOwners []string `json:"resourceOwners,omitempty"`
 
 	// ResourceParent: The full resource name of the immediate parent of the
-	// resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceParent string `json:"resourceParent,omitempty"`
 
 	// ResourceParentDisplayName: The user defined display name for the
@@ -2861,10 +2329,8 @@ type SecurityCenterProperties struct {
 	ResourceParentDisplayName string `json:"resourceParentDisplayName,omitempty"`
 
 	// ResourceProject: The full resource name of the project the resource
-	// belongs to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// belongs to. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceProject string `json:"resourceProject,omitempty"`
 
 	// ResourceProjectDisplayName: The user defined display name for the
@@ -2872,12 +2338,9 @@ type SecurityCenterProperties struct {
 	ResourceProjectDisplayName string `json:"resourceProjectDisplayName,omitempty"`
 
 	// ResourceType: The type of the Google Cloud resource. Examples
-	// include: APPLICATION,
-	// PROJECT, and ORGANIZATION. This is a case insensitive field defined
-	// by
-	// Security Command Center and/or the producer of the resource and
-	// is
-	// immutable after create time.
+	// include: APPLICATION, PROJECT, and ORGANIZATION. This is a case
+	// insensitive field defined by Security Command Center and/or the
+	// producer of the resource and is immutable after create time.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
@@ -2905,33 +2368,23 @@ func (s *SecurityCenterProperties) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityMarks: User specified security marks that are attached to the
-// parent Security
-// Command Center resource. Security marks are scoped within a Security
-// Command
-// Center organization -- they can be modified and viewed by all users
-// who have
-// proper permissions on the organization.
+// parent Security Command Center resource. Security marks are scoped
+// within a Security Command Center organization -- they can be modified
+// and viewed by all users who have proper permissions on the
+// organization.
 type SecurityMarks struct {
 	// Marks: Mutable user specified security marks belonging to the parent
-	// resource.
-	// Constraints are as follows:
-	//
-	//   * Keys and values are treated as case insensitive
-	//   * Keys must be between 1 - 256 characters (inclusive)
-	//   * Keys must be letters, numbers, underscores, or dashes
-	//   * Values have leading and trailing whitespace trimmed, remaining
-	//     characters must be between 1 - 4096 characters (inclusive)
+	// resource. Constraints are as follows: * Keys and values are treated
+	// as case insensitive * Keys must be between 1 - 256 characters
+	// (inclusive) * Keys must be letters, numbers, underscores, or dashes *
+	// Values have leading and trailing whitespace trimmed, remaining
+	// characters must be between 1 - 4096 characters (inclusive)
 	Marks map[string]string `json:"marks,omitempty"`
 
-	// Name: The relative resource name of the SecurityMarks.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Examples:
-	// "organizations/{organization_id}/assets/{asset_id}
-	// /securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/f
-	// indings/{finding_id}/securityMarks".
+	// Name: The relative resource name of the SecurityMarks. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2975,8 +2428,7 @@ type SetFindingStateRequest struct {
 	//   "ACTIVE" - The finding requires attention and has not been
 	// addressed yet.
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed
-	// and is no longer active.
+	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
@@ -3005,20 +2457,15 @@ func (s *SetFindingStateRequest) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -3044,42 +2491,28 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Source: Security Command Center finding source. A finding source
-// is an entity or a mechanism that can produce a finding. A source is
-// like a
-// container of findings that come from the same scanner, logger,
-// monitor, and
-// other tools.
+// Source: Security Command Center finding source. A finding source is
+// an entity or a mechanism that can produce a finding. A source is like
+// a container of findings that come from the same scanner, logger,
+// monitor, and other tools.
 type Source struct {
-	// Description: The description of the source (max of 1024
-	// characters).
-	// Example:
-	// "Web Security Scanner is a web security scanner for
-	// common
-	// vulnerabilities in App Engine applications. It can automatically
-	// scan and detect four common vulnerabilities, including
-	// cross-site-scripting
-	// (XSS), Flash injection, mixed content (HTTP in HTTPS), and
-	// outdated or insecure libraries."
+	// Description: The description of the source (max of 1024 characters).
+	// Example: "Web Security Scanner is a web security scanner for common
+	// vulnerabilities in App Engine applications. It can automatically scan
+	// and detect four common vulnerabilities, including
+	// cross-site-scripting (XSS), Flash injection, mixed content (HTTP in
+	// HTTPS), and outdated or insecure libraries."
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: The source's display name.
-	// A source's display name must be unique amongst its siblings, for
-	// example,
-	// two sources with the same parent can't share the same display
-	// name.
-	// The display name must have a length between 1 and 64
-	// characters
-	// (inclusive).
+	// DisplayName: The source's display name. A source's display name must
+	// be unique amongst its siblings, for example, two sources with the
+	// same parent can't share the same display name. The display name must
+	// have a length between 1 and 64 characters (inclusive).
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The relative resource name of this source.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id
-	// }"
+	// Name: The relative resource name of this source. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/sources/{source_id}"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3110,32 +2543,24 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -3162,36 +2587,20 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // StreamingConfig: The config for streaming-based notifications, which
-// send each event as soon
-// as it is detected.
+// send each event as soon as it is detected.
 type StreamingConfig struct {
 	// Filter: Expression that defines the filter to apply across
-	// create/update events
-	// of assets or findings as specified by the event type. The expression
-	// is a
-	// list of zero or more restrictions combined via logical operators
-	// `AND`
-	// and `OR`. Parentheses are supported, and `OR` has higher precedence
-	// than
-	// `AND`.
-	//
-	// Restrictions have the form `<field> <operator> <value>` and may have
-	// a
-	// `-` character in front of them to indicate negation. The fields map
-	// to
-	// those defined in the corresponding resource.
-	//
-	// The supported operators are:
-	//
-	// * `=` for all value types.
-	// * `>`, `<`, `>=`, `<=` for integer values.
-	// * `:`, meaning substring matching, for strings.
-	//
-	// The supported value types are:
-	//
-	// * string literals in quotes.
-	// * integer literals without quotes.
-	// * boolean literals `true` and `false` without quotes.
+	// create/update events of assets or findings as specified by the event
+	// type. The expression is a list of zero or more restrictions combined
+	// via logical operators `AND` and `OR`. Parentheses are supported, and
+	// `OR` has higher precedence than `AND`. Restrictions have the form ` `
+	// and may have a `-` character in front of them to indicate negation.
+	// The fields map to those defined in the corresponding resource. The
+	// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+	// `<=` for integer values. * `:`, meaning substring matching, for
+	// strings. The supported value types are: * string literals in quotes.
+	// * integer literals without quotes. * boolean literals `true` and
+	// `false` without quotes.
 	Filter string `json:"filter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -3221,11 +2630,8 @@ func (s *StreamingConfig) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -3256,8 +2662,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3342,7 +2747,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3413,7 +2818,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the organization to get organization settings for. Its format is\n\"organizations/[organization_id]/organizationSettings\".",
+	//       "description": "Required. Name of the organization to get organization settings for. Its format is \"organizations/[organization_id]/organizationSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/organizationSettings$",
 	//       "required": true,
@@ -3451,9 +2856,8 @@ func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizat
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the settings resource.
-//
-// If empty all mutable fields will be updated.
+// use when updating the settings resource. If empty all mutable fields
+// will be updated.
 func (c *OrganizationsUpdateOrganizationSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateOrganizationSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3486,7 +2890,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3559,14 +2963,14 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the settings. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/organizationSettings\".",
+	//       "description": "The relative resource name of the settings. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/organizationSettings\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/organizationSettings$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the settings resource.\n\nIf empty all mutable fields will be updated.",
+	//       "description": "The FieldMask to use when updating the settings resource. If empty all mutable fields will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3597,9 +3001,8 @@ type OrganizationsAssetsGroupCall struct {
 	header_            http.Header
 }
 
-// Group: Filters an organization's assets and  groups them by their
-// specified
-// properties.
+// Group: Filters an organization's assets and groups them by their
+// specified properties.
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3634,7 +3037,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3698,7 +3101,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	}
 	return ret, nil
 	// {
-	//   "description": "Filters an organization's assets and  groups them by their specified\nproperties.",
+	//   "description": "Filters an organization's assets and groups them by their specified properties.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:group",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.assets.group",
@@ -3707,7 +3110,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -3768,166 +3171,95 @@ func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsLis
 }
 
 // CompareDuration sets the optional parameter "compareDuration": When
-// compare_duration is set, the ListAssetsResult's
-// "state_change"
+// compare_duration is set, the ListAssetsResult's "state_change"
 // attribute is updated to indicate whether the asset was added,
-// removed, or
-// remained present during the compare_duration period of time that
-// precedes
-// the read_time. This is the time between (read_time -
-// compare_duration) and
-// read_time.
-//
-// The state_change value is derived based on the presence of the asset
-// at the
-// two points in time. Intermediate state changes between the two times
-// don't
-// affect the result. For example, the results aren't affected if the
-// asset is
-// removed and re-created again.
-//
-// Possible "state_change" values when compare_duration is specified:
-//
-// * "ADDED":   indicates that the asset was not present at the start
-// of
-//                compare_duration, but present at read_time.
-// * "REMOVED": indicates that the asset was present at the start of
-//                compare_duration, but not present at read_time.
-// * "ACTIVE":  indicates that the asset was present at both the
-//                start and the end of the time period defined by
-//                compare_duration and read_time.
-//
-// If compare_duration is not specified, then the only possible
-// state_change
-// is "UNUSED",  which will be the state_change set for all assets
-// present at
-// read_time.
+// removed, or remained present during the compare_duration period of
+// time that precedes the read_time. This is the time between (read_time
+// - compare_duration) and read_time. The state_change value is derived
+// based on the presence of the asset at the two points in time.
+// Intermediate state changes between the two times don't affect the
+// result. For example, the results aren't affected if the asset is
+// removed and re-created again. Possible "state_change" values when
+// compare_duration is specified: * "ADDED": indicates that the asset
+// was not present at the start of compare_duration, but present at
+// read_time. * "REMOVED": indicates that the asset was present at the
+// start of compare_duration, but not present at read_time. * "ACTIVE":
+// indicates that the asset was present at both the start and the end of
+// the time period defined by compare_duration and read_time. If
+// compare_duration is not specified, then the only possible
+// state_change is "UNUSED", which will be the state_change set for all
+// assets present at read_time.
 func (c *OrganizationsAssetsListCall) CompareDuration(compareDuration string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("compareDuration", compareDuration)
 	return c
 }
 
 // FieldMask sets the optional parameter "fieldMask": A field mask to
-// specify the ListAssetsResult fields to be listed in the
-// response.
-// An empty field mask will list all fields.
+// specify the ListAssetsResult fields to be listed in the response. An
+// empty field mask will list all fields.
 func (c *OrganizationsAssetsListCall) FieldMask(fieldMask string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
 }
 
 // Filter sets the optional parameter "filter": Expression that defines
-// the filter to apply across assets.
-// The expression is a list of zero or more restrictions combined via
-// logical
-// operators `AND` and `OR`.
-// Parentheses are supported, and `OR` has higher precedence than
-// `AND`.
-//
-// Restrictions have the form `<field> <operator> <value>` and may have
-// a `-`
-// character in front of them to indicate negation. The fields map to
-// those
-// defined in the Asset resource. Examples include:
-//
-// * name
-// * security_center_properties.resource_name
-// * resource_properties.a_property
-// * security_marks.marks.marka
-//
-// The supported operators are:
-//
-// * `=` for all value types.
-// * `>`, `<`, `>=`, `<=` for integer values.
-// * `:`, meaning substring matching, for strings.
-//
-// The supported value types are:
-//
-// * string literals in quotes.
-// * integer literals without quotes.
-// * boolean literals `true` and `false` without quotes.
-//
-// The following are the allowed field and operator combinations:
-//
-// * name: `=`
-// * update_time: `=`, `>`, `<`, `>=`, `<=`
-//
-//   Usage: This should be milliseconds since epoch or an RFC3339
-// string.
-//   Examples:
-//     `update_time = "2019-06-10T16:07:18-07:00"
-//     `update_time = 1560208038000`
-//
-// * create_time: `=`, `>`, `<`, `>=`, `<=`
-//
-//   Usage: This should be milliseconds since epoch or an RFC3339
-// string.
-//   Examples:
-//     `create_time = "2019-06-10T16:07:18-07:00"
-//     `create_time = 1560208038000`
-//
-// * iam_policy.policy_blob: `=`, `:`
-// * resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=`
-// * security_marks.marks: `=`, `:`
-// * security_center_properties.resource_name: `=`, `:`
-// * security_center_properties.resource_display_name: `=`, `:`
-// * security_center_properties.resource_type: `=`, `:`
-// * security_center_properties.resource_parent: `=`, `:`
-// * security_center_properties.resource_parent_display_name: `=`, `:`
-// * security_center_properties.resource_project: `=`, `:`
-// * security_center_properties.resource_project_display_name: `=`,
-// `:`
-// * security_center_properties.resource_owners: `=`, `:`
-//
-// For example, `resource_properties.size = 100` is a valid filter
-// string.
-//
-// Use a partial match on the empty string to filter based on a
-// property
-// existing: `resource_properties.my_property : ""
-//
-// Use a negated partial match on the empty string to filter based on
-// a
-// property not existing: `-resource_properties.my_property : ""
+// the filter to apply across assets. The expression is a list of zero
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. The fields map to those defined in the
+// Asset resource. Examples include: * name *
+// security_center_properties.resource_name *
+// resource_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following are the allowed field and
+// operator combinations: * name: `=` * update_time: `=`, `>`, `<`,
+// `>=`, `<=` Usage: This should be milliseconds since epoch or an
+// RFC3339 string. Examples: `update_time = "2019-06-10T16:07:18-07:00"
+// `update_time = 1560208038000` * create_time: `=`, `>`, `<`, `>=`,
+// `<=` Usage: This should be milliseconds since epoch or an RFC3339
+// string. Examples: `create_time = "2019-06-10T16:07:18-07:00"
+// `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` *
+// resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=` *
+// security_marks.marks: `=`, `:` *
+// security_center_properties.resource_name: `=`, `:` *
+// security_center_properties.resource_display_name: `=`, `:` *
+// security_center_properties.resource_type: `=`, `:` *
+// security_center_properties.resource_parent: `=`, `:` *
+// security_center_properties.resource_parent_display_name: `=`, `:` *
+// security_center_properties.resource_project: `=`, `:` *
+// security_center_properties.resource_project_display_name: `=`, `:` *
+// security_center_properties.resource_owners: `=`, `:` For example,
+// `resource_properties.size = 100` is a valid filter string. Use a
+// partial match on the empty string to filter based on a property
+// existing: `resource_properties.my_property : "" Use a negated
+// partial match on the empty string to filter based on a property not
+// existing: `-resource_properties.my_property : ""
 func (c *OrganizationsAssetsListCall) Filter(filter string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Expression that
-// defines what fields and order to use for sorting. The
-// string value should follow SQL syntax: comma separated list of
-// fields. For
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
 // example: "name,resource_properties.a_property". The default sorting
-// order
-// is ascending. To specify descending order for a field, a suffix "
-// desc"
-// should be appended to the field name. For example:
-// "name
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
 // desc,resource_properties.a_property". Redundant space characters in
-// the
-// syntax are insignificant. "name desc,resource_properties.a_property"
-// and "
-// name     desc  ,   resource_properties.a_property  " are
-// equivalent.
-//
-// The following fields are
-// supported:
-// name
-// update_time
-// resource_properties
-// security_marks.marks
-// s
-// ecurity_center_properties.resource_name
-// security_center_properties.res
-// ource_display_name
+// the syntax are insignificant. "name
+// desc,resource_properties.a_property" and " name desc ,
+// resource_properties.a_property " are equivalent. The following fields
+// are supported: name update_time resource_properties
+// security_marks.marks security_center_properties.resource_name
+// security_center_properties.resource_display_name
 // security_center_properties.resource_parent
-// security
-// _center_properties.resource_parent_display_name
-// security_center_proper
-// ties.resource_project
-// security_center_properties.resource_project_disp
-// lay_name
+// security_center_properties.resource_parent_display_name
+// security_center_properties.resource_project
+// security_center_properties.resource_project_display_name
 // security_center_properties.resource_type
 func (c *OrganizationsAssetsListCall) OrderBy(orderBy string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -3935,29 +3267,27 @@ func (c *OrganizationsAssetsListCall) OrderBy(orderBy string) *OrganizationsAsse
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in a single response. Default is
-// 10, minimum is 1, maximum is 1000.
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
 func (c *OrganizationsAssetsListCall) PageSize(pageSize int64) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListAssetsResponse`; indicates
-// that this is a continuation of a prior `ListAssets` call, and
-// that the system should return the next page of data.
+// by the last `ListAssetsResponse`; indicates that this is a
+// continuation of a prior `ListAssets` call, and that the system should
+// return the next page of data.
 func (c *OrganizationsAssetsListCall) PageToken(pageToken string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ReadTime sets the optional parameter "readTime": Time used as a
-// reference point when filtering assets. The filter is limited
-// to assets existing at the supplied time and their values are those at
-// that
-// specific time. Absence of this field will default to the API's
-// version of
-// NOW.
+// reference point when filtering assets. The filter is limited to
+// assets existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
 func (c *OrganizationsAssetsListCall) ReadTime(readTime string) *OrganizationsAssetsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -4000,7 +3330,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4071,47 +3401,47 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//   ],
 	//   "parameters": {
 	//     "compareDuration": {
-	//       "description": "When compare_duration is set, the ListAssetsResult's \"state_change\"\nattribute is updated to indicate whether the asset was added, removed, or\nremained present during the compare_duration period of time that precedes\nthe read_time. This is the time between (read_time - compare_duration) and\nread_time.\n\nThe state_change value is derived based on the presence of the asset at the\ntwo points in time. Intermediate state changes between the two times don't\naffect the result. For example, the results aren't affected if the asset is\nremoved and re-created again.\n\nPossible \"state_change\" values when compare_duration is specified:\n\n* \"ADDED\":   indicates that the asset was not present at the start of\n               compare_duration, but present at read_time.\n* \"REMOVED\": indicates that the asset was present at the start of\n               compare_duration, but not present at read_time.\n* \"ACTIVE\":  indicates that the asset was present at both the\n               start and the end of the time period defined by\n               compare_duration and read_time.\n\nIf compare_duration is not specified, then the only possible state_change\nis \"UNUSED\",  which will be the state_change set for all assets present at\nread_time.",
+	//       "description": "When compare_duration is set, the ListAssetsResult's \"state_change\" attribute is updated to indicate whether the asset was added, removed, or remained present during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence of the asset at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the asset is removed and re-created again. Possible \"state_change\" values when compare_duration is specified: * \"ADDED\": indicates that the asset was not present at the start of compare_duration, but present at read_time. * \"REMOVED\": indicates that the asset was present at the start of compare_duration, but not present at read_time. * \"ACTIVE\": indicates that the asset was present at both the start and the end of the time period defined by compare_duration and read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all assets present at read_time.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "A field mask to specify the ListAssetsResult fields to be listed in the\nresponse.\nAn empty field mask will list all fields.",
+	//       "description": "A field mask to specify the ListAssetsResult fields to be listed in the response. An empty field mask will list all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following are the allowed field and operator combinations:\n\n* name: `=`\n* update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    `update_time = \"2019-06-10T16:07:18-07:00\"`\n    `update_time = 1560208038000`\n\n* create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    `create_time = \"2019-06-10T16:07:18-07:00\"`\n    `create_time = 1560208038000`\n\n* iam_policy.policy_blob: `=`, `:`\n* resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n* security_marks.marks: `=`, `:`\n* security_center_properties.resource_name: `=`, `:`\n* security_center_properties.resource_display_name: `=`, `:`\n* security_center_properties.resource_type: `=`, `:`\n* security_center_properties.resource_parent: `=`, `:`\n* security_center_properties.resource_parent_display_name: `=`, `:`\n* security_center_properties.resource_project: `=`, `:`\n* security_center_properties.resource_project_display_name: `=`, `:`\n* security_center_properties.resource_owners: `=`, `:`\n\nFor example, `resource_properties.size = 100` is a valid filter string.\n\nUse a partial match on the empty string to filter based on a property\nexisting: `resource_properties.my_property : \"\"`\n\nUse a negated partial match on the empty string to filter based on a\nproperty not existing: `-resource_properties.my_property : \"\"`",
+	//       "description": "Expression that defines the filter to apply across assets. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the Asset resource. Examples include: * name * security_center_properties.resource_name * resource_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following are the allowed field and operator combinations: * name: `=` * update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `update_time = \"2019-06-10T16:07:18-07:00\"` `update_time = 1560208038000` * create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `create_time = \"2019-06-10T16:07:18-07:00\"` `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` * resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * security_marks.marks: `=`, `:` * security_center_properties.resource_name: `=`, `:` * security_center_properties.resource_display_name: `=`, `:` * security_center_properties.resource_type: `=`, `:` * security_center_properties.resource_parent: `=`, `:` * security_center_properties.resource_parent_display_name: `=`, `:` * security_center_properties.resource_project: `=`, `:` * security_center_properties.resource_project_display_name: `=`, `:` * security_center_properties.resource_owners: `=`, `:` For example, `resource_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `resource_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-resource_properties.my_property : \"\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,resource_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,resource_properties.a_property\" and \"\nname     desc  ,   resource_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nupdate_time\nresource_properties\nsecurity_marks.marks\nsecurity_center_properties.resource_name\nsecurity_center_properties.resource_display_name\nsecurity_center_properties.resource_parent\nsecurity_center_properties.resource_parent_display_name\nsecurity_center_properties.resource_project\nsecurity_center_properties.resource_project_display_name\nsecurity_center_properties.resource_type",
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,resource_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,resource_properties.a_property\" and \" name desc , resource_properties.a_property \" are equivalent. The following fields are supported: name update_time resource_properties security_marks.marks security_center_properties.resource_name security_center_properties.resource_display_name security_center_properties.resource_parent security_center_properties.resource_parent_display_name security_center_properties.resource_project security_center_properties.resource_project_display_name security_center_properties.resource_type",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return in a single response. Default is\n10, minimum is 1, maximum is 1000.",
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListAssetsResponse`; indicates\nthat this is a continuation of a prior `ListAssets` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListAssetsResponse`; indicates that this is a continuation of a prior `ListAssets` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Time used as a reference point when filtering assets. The filter is limited\nto assets existing at the supplied time and their values are those at that\nspecific time. Absence of this field will default to the API's version of\nNOW.",
+	//       "description": "Time used as a reference point when filtering assets. The filter is limited to assets existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -4161,14 +3491,9 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 }
 
 // RunDiscovery: Runs asset discovery. The discovery is tracked with a
-// long-running
-// operation.
-//
-// This API can only be called with limited frequency for an
-// organization. If
-// it is called too frequently the caller will receive a
-// TOO_MANY_REQUESTS
-// error.
+// long-running operation. This API can only be called with limited
+// frequency for an organization. If it is called too frequently the
+// caller will receive a TOO_MANY_REQUESTS error.
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4203,7 +3528,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4267,7 +3592,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs asset discovery. The discovery is tracked with a long-running\noperation.\n\nThis API can only be called with limited frequency for an organization. If\nit is called too frequently the caller will receive a TOO_MANY_REQUESTS\nerror.",
+	//   "description": "Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.",
 	//   "flatPath": "v1/organizations/{organizationsId}/assets:runDiscovery",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.assets.runDiscovery",
@@ -4276,7 +3601,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to run asset discovery for. Its format is\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization to run asset discovery for. Its format is \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -4317,22 +3642,18 @@ func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, securityma
 }
 
 // StartTime sets the optional parameter "startTime": The time at which
-// the updated SecurityMarks take effect.
-// If not set uses current server time.  Updates will be applied to
-// the
-// SecurityMarks that are active immediately preceding this time.
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the security marks resource.
-//
-// The field mask must not contain duplicate fields.
-// If empty or set to "marks", all marks will be replaced.
-// Individual
-// marks can be updated using "marks.<mark_key>".
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) UpdateMask(updateMask string) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4365,7 +3686,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4438,20 +3759,20 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/assets/[^/]+/securityMarks$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect.\nIf not set uses current server time.  Updates will be applied to the\nSecurityMarks that are active immediately preceding this time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the security marks resource.\n\nThe field mask must not contain duplicate fields.\nIf empty or set to \"marks\", all marks will be replaced.  Individual\nmarks can be updated using \"marks.\u003cmark_key\u003e\".",
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4490,11 +3811,10 @@ func (r *OrganizationsNotificationConfigsService) Create(parent string, notifica
 	return c
 }
 
-// ConfigId sets the optional parameter "configId": Required.
-// Unique identifier provided by the client within the parent scope.
-// It must be between 1 and 128 characters, and contains
-// alphanumeric
-// characters, underscores or hyphens only.
+// ConfigId sets the optional parameter "configId": Required. Unique
+// identifier provided by the client within the parent scope. It must be
+// between 1 and 128 characters, and contains alphanumeric characters,
+// underscores or hyphens only.
 func (c *OrganizationsNotificationConfigsCreateCall) ConfigId(configId string) *OrganizationsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -4527,7 +3847,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4600,12 +3920,12 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required.\nUnique identifier provided by the client within the parent scope.\nIt must be between 1 and 128 characters, and contains alphanumeric\ncharacters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new notification config's parent. Its format is\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -4670,7 +3990,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4738,7 +4058,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to delete. Its format is\n\"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -4811,7 +4131,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4882,7 +4202,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to get. Its format is\n\"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -4919,18 +4239,17 @@ func (r *OrganizationsNotificationConfigsService) List(parent string) *Organizat
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in a single response. Default is
-// 10, minimum is 1, maximum is 1000.
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
 func (c *OrganizationsNotificationConfigsListCall) PageSize(pageSize int64) *OrganizationsNotificationConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListNotificationConfigsResponse`; indicates
-// that this is a continuation of a prior `ListNotificationConfigs`
-// call, and
-// that the system should return the next page of data.
+// by the last `ListNotificationConfigsResponse`; indicates that this is
+// a continuation of a prior `ListNotificationConfigs` call, and that
+// the system should return the next page of data.
 func (c *OrganizationsNotificationConfigsListCall) PageToken(pageToken string) *OrganizationsNotificationConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4973,7 +4292,7 @@ func (c *OrganizationsNotificationConfigsListCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5044,18 +4363,18 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return in a single response. Default is\n10, minimum is 1, maximum is 1000.",
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates\nthat this is a continuation of a prior `ListNotificationConfigs` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates that this is a continuation of a prior `ListNotificationConfigs` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs.\nIts format is \"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -5105,10 +4424,8 @@ type OrganizationsNotificationConfigsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch:
-// Updates a notification config. The following update
-// fields are allowed: description, pubsub_topic,
-// streaming_config.filter
+// Patch:  Updates a notification config. The following update fields
+// are allowed: description, pubsub_topic, streaming_config.filter
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5117,9 +4434,8 @@ func (r *OrganizationsNotificationConfigsService) Patch(name string, notificatio
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the notification config.
-//
-// If empty all mutable fields will be updated.
+// use when updating the notification config. If empty all mutable
+// fields will be updated.
 func (c *OrganizationsNotificationConfigsPatchCall) UpdateMask(updateMask string) *OrganizationsNotificationConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5152,7 +4468,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5216,7 +4532,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "\nUpdates a notification config. The following update\nfields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
 	//   "flatPath": "v1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.notificationConfigs.patch",
@@ -5225,14 +4541,14 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this notification config. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the notification config.\n\nIf empty all mutable fields will be updated.",
+	//       "description": "The FieldMask to use when updating the notification config. If empty all mutable fields will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5263,23 +4579,15 @@ type OrganizationsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *OrganizationsOperationsService) Cancel(name string) *OrganizationsOperationsCancelCall {
 	c := &OrganizationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5313,7 +4621,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5372,7 +4680,7 @@ func (c *OrganizationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.operations.cancel",
@@ -5410,12 +4718,9 @@ type OrganizationsOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *OrganizationsOperationsService) Delete(name string) *OrganizationsOperationsDeleteCall {
 	c := &OrganizationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5449,7 +4754,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5508,7 +4813,7 @@ func (c *OrganizationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.organizations.operations.delete",
@@ -5546,11 +4851,9 @@ type OrganizationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5594,7 +4897,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5656,7 +4959,7 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.operations.get",
@@ -5695,22 +4998,15 @@ type OrganizationsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
 	c := &OrganizationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5775,7 +5071,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5837,7 +5133,7 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/organizations/{organizationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.operations.list",
@@ -5947,7 +5243,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6020,7 +5316,7 @@ func (c *OrganizationsSourcesCreateCall) Do(opts ...googleapi.CallOption) (*Sour
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the new source's parent. Its format should be\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Resource name of the new source's parent. Its format should be \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -6096,7 +5392,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6167,7 +5463,7 @@ func (c *OrganizationsSourcesGetCall) Do(opts ...googleapi.CallOption) (*Source,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Relative resource name of the source. Its format is\n\"organizations/[organization_id]/source/[source_id]\".",
+	//       "description": "Required. Relative resource name of the source. Its format is \"organizations/[organization_id]/source/[source_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6231,7 +5527,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6304,7 +5600,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6344,17 +5640,17 @@ func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesL
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in a single response. Default is
-// 10, minimum is 1, maximum is 1000.
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
 func (c *OrganizationsSourcesListCall) PageSize(pageSize int64) *OrganizationsSourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListSourcesResponse`; indicates
-// that this is a continuation of a prior `ListSources` call, and
-// that the system should return the next page of data.
+// by the last `ListSourcesResponse`; indicates that this is a
+// continuation of a prior `ListSources` call, and that the system
+// should return the next page of data.
 func (c *OrganizationsSourcesListCall) PageToken(pageToken string) *OrganizationsSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6397,7 +5693,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6468,18 +5764,18 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return in a single response. Default is\n10, minimum is 1, maximum is 1000.",
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListSourcesResponse`; indicates\nthat this is a continuation of a prior `ListSources` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListSourcesResponse`; indicates that this is a continuation of a prior `ListSources` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be\n\"organizations/[organization_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -6538,9 +5834,8 @@ func (r *OrganizationsSourcesService) Patch(name string, source *Source) *Organi
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the source resource.
-//
-// If empty all mutable fields will be updated.
+// use when updating the source resource. If empty all mutable fields
+// will be updated.
 func (c *OrganizationsSourcesPatchCall) UpdateMask(updateMask string) *OrganizationsSourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6573,7 +5868,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6646,14 +5941,14 @@ func (c *OrganizationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*Sourc
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this source. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}\"",
+	//       "description": "The relative resource name of this source. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the source resource.\n\nIf empty all mutable fields will be updated.",
+	//       "description": "The FieldMask to use when updating the source resource. If empty all mutable fields will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6719,7 +6014,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6792,7 +6087,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6860,7 +6155,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6933,7 +6228,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6966,8 +6261,7 @@ type OrganizationsSourcesFindingsCreateCall struct {
 }
 
 // Create: Creates a finding. The corresponding source must exist for
-// finding creation
-// to succeed.
+// finding creation to succeed.
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6976,10 +6270,9 @@ func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Fin
 }
 
 // FindingId sets the optional parameter "findingId": Required. Unique
-// identifier provided by the client within the parent scope.
-// It must be alphanumeric and less than or equal to 32 characters
-// and
-// greater than 0 characters in length.
+// identifier provided by the client within the parent scope. It must be
+// alphanumeric and less than or equal to 32 characters and greater than
+// 0 characters in length.
 func (c *OrganizationsSourcesFindingsCreateCall) FindingId(findingId string) *OrganizationsSourcesFindingsCreateCall {
 	c.urlParams_.Set("findingId", findingId)
 	return c
@@ -7012,7 +6305,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7076,7 +6369,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a finding. The corresponding source must exist for finding creation\nto succeed.",
+	//   "description": "Creates a finding. The corresponding source must exist for finding creation to succeed.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.create",
@@ -7085,12 +6378,12 @@ func (c *OrganizationsSourcesFindingsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "findingId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope.\nIt must be alphanumeric and less than or equal to 32 characters and\ngreater than 0 characters in length.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be alphanumeric and less than or equal to 32 characters and greater than 0 characters in length.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new finding's parent. Its format should be\n\"organizations/[organization_id]/sources/[source_id]\".",
+	//       "description": "Required. Resource name of the new finding's parent. Its format should be \"organizations/[organization_id]/sources/[source_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -7122,12 +6415,10 @@ type OrganizationsSourcesFindingsGroupCall struct {
 	header_              http.Header
 }
 
-// Group: Filters an organization or source's findings and  groups them
-// by their
-// specified properties.
-//
-// To group across all sources provide a `-` as the source id.
-// Example: /v1/organizations/{organization_id}/sources/-/findings
+// Group: Filters an organization or source's findings and groups them
+// by their specified properties. To group across all sources provide a
+// `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7162,7 +6453,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7226,7 +6517,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Filters an organization or source's findings and  groups them by their\nspecified properties.\n\nTo group across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
+	//   "description": "Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings:group",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.group",
@@ -7235,7 +6526,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the source to groupBy. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To groupBy across\nall sources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
+	//       "description": "Required. Name of the source to groupBy. Its format is \"organizations/[organization_id]/sources/[source_id]\". To groupBy across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -7288,10 +6579,9 @@ type OrganizationsSourcesFindingsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists an organization or source's findings.
-//
-// To list across all sources provide a `-` as the source id.
-// Example: /v1/organizations/{organization_id}/sources/-/findings
+// List: Lists an organization or source's findings. To list across all
+// sources provide a `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7299,123 +6589,64 @@ func (r *OrganizationsSourcesFindingsService) List(parent string) *Organizations
 }
 
 // CompareDuration sets the optional parameter "compareDuration": When
-// compare_duration is set, the ListFindingsResult's
-// "state_change"
+// compare_duration is set, the ListFindingsResult's "state_change"
 // attribute is updated to indicate whether the finding had its state
-// changed,
-// the finding's state remained unchanged, or if the finding was added
-// in any
-// state during the compare_duration period of time that precedes
-// the
-// read_time. This is the time between (read_time - compare_duration)
-// and
-// read_time.
-//
-// The state_change value is derived based on the presence and state of
-// the
-// finding at the two points in time. Intermediate state changes between
-// the
-// two times don't affect the result. For example, the results aren't
-// affected
-// if the finding is made inactive and then active again.
-//
-// Possible "state_change" values when compare_duration is specified:
-//
-// * "CHANGED":   indicates that the finding was present and matched the
-// given
-//                  filter at the start of compare_duration, but changed
-// its
-//                  state at read_time.
-// * "UNCHANGED": indicates that the finding was present and matched the
-// given
-//                  filter at the start of compare_duration and did not
-// change
-//                  state at read_time.
-// * "ADDED":     indicates that the finding did not match the given
-// filter or
-//                  was not present at the start of compare_duration,
-// but was
-//                  present at read_time.
-// * "REMOVED":   indicates that the finding was present and matched
-// the
-//                  filter at the start of compare_duration, but did not
-// match
-//                  the filter at read_time.
-//
+// changed, the finding's state remained unchanged, or if the finding
+// was added in any state during the compare_duration period of time
+// that precedes the read_time. This is the time between (read_time -
+// compare_duration) and read_time. The state_change value is derived
+// based on the presence and state of the finding at the two points in
+// time. Intermediate state changes between the two times don't affect
+// the result. For example, the results aren't affected if the finding
+// is made inactive and then active again. Possible "state_change"
+// values when compare_duration is specified: * "CHANGED": indicates
+// that the finding was present and matched the given filter at the
+// start of compare_duration, but changed its state at read_time. *
+// "UNCHANGED": indicates that the finding was present and matched the
+// given filter at the start of compare_duration and did not change
+// state at read_time. * "ADDED": indicates that the finding did not
+// match the given filter or was not present at the start of
+// compare_duration, but was present at read_time. * "REMOVED":
+// indicates that the finding was present and matched the filter at the
+// start of compare_duration, but did not match the filter at read_time.
 // If compare_duration is not specified, then the only possible
-// state_change
-// is "UNUSED", which will be the state_change set for all findings
-// present at
-// read_time.
+// state_change is "UNUSED", which will be the state_change set for all
+// findings present at read_time.
 func (c *OrganizationsSourcesFindingsListCall) CompareDuration(compareDuration string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("compareDuration", compareDuration)
 	return c
 }
 
 // FieldMask sets the optional parameter "fieldMask": A field mask to
-// specify the Finding fields to be listed in the response.
-// An empty field mask will list all fields.
+// specify the Finding fields to be listed in the response. An empty
+// field mask will list all fields.
 func (c *OrganizationsSourcesFindingsListCall) FieldMask(fieldMask string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
 }
 
 // Filter sets the optional parameter "filter": Expression that defines
-// the filter to apply across findings.
-// The expression is a list of one or more restrictions combined via
-// logical
-// operators `AND` and `OR`.
-// Parentheses are supported, and `OR` has higher precedence than
-// `AND`.
-//
-// Restrictions have the form `<field> <operator> <value>` and may have
-// a `-`
-// character in front of them to indicate negation. Examples include:
-//
-//  * name
-//  * source_properties.a_property
-//  * security_marks.marks.marka
-//
-// The supported operators are:
-//
-// * `=` for all value types.
-// * `>`, `<`, `>=`, `<=` for integer values.
-// * `:`, meaning substring matching, for strings.
-//
-// The supported value types are:
-//
-// * string literals in quotes.
-// * integer literals without quotes.
-// * boolean literals `true` and `false` without quotes.
-//
-// The following field and operator combinations are supported:
-//
-// name: `=`
-// parent: `=`, `:`
-// resource_name: `=`, `:`
-// state: `=`, `:`
-// category: `=`, `:`
-// external_uri: `=`, `:`
-// event_time: `=`, `>`, `<`, `>=`, `<=`
-//
-//   Usage: This should be milliseconds since epoch or an RFC3339
-// string.
-//   Examples:
-//     `event_time = "2019-06-10T16:07:18-07:00"
-//     `event_time = 1560208038000`
-//
-// security_marks.marks: `=`, `:`
-// source_properties: `=`, `:`, `>`, `<`, `>=`, `<=`
-//
-// For example, `source_properties.size = 100` is a valid filter
-// string.
-//
-// Use a partial match on the empty string to filter based on a
-// property
-// existing: `source_properties.my_property : ""
-//
-// Use a negated partial match on the empty string to filter based on
-// a
+// the filter to apply across findings. The expression is a list of one
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. Examples include: * name *
+// source_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following field and operator combinations
+// are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:`
+// state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time:
+// `=`, `>`, `<`, `>=`, `<=` Usage: This should be milliseconds since
+// epoch or an RFC3339 string. Examples: `event_time =
+// "2019-06-10T16:07:18-07:00" `event_time = 1560208038000`
+// security_marks.marks: `=`, `:` source_properties: `=`, `:`, `>`, `<`,
+// `>=`, `<=` For example, `source_properties.size = 100` is a valid
+// filter string. Use a partial match on the empty string to filter
+// based on a property existing: `source_properties.my_property : ""
+// Use a negated partial match on the empty string to filter based on a
 // property not existing: `-source_properties.my_property : ""
 func (c *OrganizationsSourcesFindingsListCall) Filter(filter string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -7423,62 +6654,43 @@ func (c *OrganizationsSourcesFindingsListCall) Filter(filter string) *Organizati
 }
 
 // OrderBy sets the optional parameter "orderBy": Expression that
-// defines what fields and order to use for sorting. The
-// string value should follow SQL syntax: comma separated list of
-// fields. For
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
 // example: "name,resource_properties.a_property". The default sorting
-// order
-// is ascending. To specify descending order for a field, a suffix "
-// desc"
-// should be appended to the field name. For example:
-// "name
-// desc,source_properties.a_property". Redundant space characters in
-// the
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
+// desc,source_properties.a_property". Redundant space characters in the
 // syntax are insignificant. "name desc,source_properties.a_property"
-// and "
-// name     desc  ,   source_properties.a_property  " are
-// equivalent.
-//
-// The following fields are
-// supported:
-// name
-// parent
-// state
-// category
-// resource_name
-// event_time
-// source_
-// properties
-// security_marks.marks
+// and " name desc , source_properties.a_property " are equivalent. The
+// following fields are supported: name parent state category
+// resource_name event_time source_properties security_marks.marks
 func (c *OrganizationsSourcesFindingsListCall) OrderBy(orderBy string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in a single response. Default is
-// 10, minimum is 1, maximum is 1000.
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
 func (c *OrganizationsSourcesFindingsListCall) PageSize(pageSize int64) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListFindingsResponse`; indicates
-// that this is a continuation of a prior `ListFindings` call, and
-// that the system should return the next page of data.
+// by the last `ListFindingsResponse`; indicates that this is a
+// continuation of a prior `ListFindings` call, and that the system
+// should return the next page of data.
 func (c *OrganizationsSourcesFindingsListCall) PageToken(pageToken string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ReadTime sets the optional parameter "readTime": Time used as a
-// reference point when filtering findings. The filter is
-// limited to findings existing at the supplied time and their values
-// are
-// those at that specific time. Absence of this field will default to
-// the
-// API's version of NOW.
+// reference point when filtering findings. The filter is limited to
+// findings existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
 func (c *OrganizationsSourcesFindingsListCall) ReadTime(readTime string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
@@ -7521,7 +6733,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7583,7 +6795,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists an organization or source's findings.\n\nTo list across all sources provide a `-` as the source id.\nExample: /v1/organizations/{organization_id}/sources/-/findings",
+	//   "description": "Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.sources.findings.list",
@@ -7592,47 +6804,47 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "compareDuration": {
-	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\"\nattribute is updated to indicate whether the finding had its state changed,\nthe finding's state remained unchanged, or if the finding was added in any\nstate during the compare_duration period of time that precedes the\nread_time. This is the time between (read_time - compare_duration) and\nread_time.\n\nThe state_change value is derived based on the presence and state of the\nfinding at the two points in time. Intermediate state changes between the\ntwo times don't affect the result. For example, the results aren't affected\nif the finding is made inactive and then active again.\n\nPossible \"state_change\" values when compare_duration is specified:\n\n* \"CHANGED\":   indicates that the finding was present and matched the given\n                 filter at the start of compare_duration, but changed its\n                 state at read_time.\n* \"UNCHANGED\": indicates that the finding was present and matched the given\n                 filter at the start of compare_duration and did not change\n                 state at read_time.\n* \"ADDED\":     indicates that the finding did not match the given filter or\n                 was not present at the start of compare_duration, but was\n                 present at read_time.\n* \"REMOVED\":   indicates that the finding was present and matched the\n                 filter at the start of compare_duration, but did not match\n                 the filter at read_time.\n\nIf compare_duration is not specified, then the only possible state_change\nis \"UNUSED\", which will be the state_change set for all findings present at\nread_time.",
+	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "A field mask to specify the Finding fields to be listed in the response.\nAn empty field mask will list all fields.",
+	//       "description": "A field mask to specify the Finding fields to be listed in the response. An empty field mask will list all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across findings.\nThe expression is a list of one or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. Examples include:\n\n * name\n * source_properties.a_property\n * security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following field and operator combinations are supported:\n\nname: `=`\nparent: `=`, `:`\nresource_name: `=`, `:`\nstate: `=`, `:`\ncategory: `=`, `:`\nexternal_uri: `=`, `:`\nevent_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\n  Usage: This should be milliseconds since epoch or an RFC3339 string.\n  Examples:\n    `event_time = \"2019-06-10T16:07:18-07:00\"`\n    `event_time = 1560208038000`\n\nsecurity_marks.marks: `=`, `:`\nsource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\n\nFor example, `source_properties.size = 100` is a valid filter string.\n\nUse a partial match on the empty string to filter based on a property\nexisting: `source_properties.my_property : \"\"`\n\nUse a negated partial match on the empty string to filter based on a\nproperty not existing: `-source_properties.my_property : \"\"`",
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:` state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Expression that defines what fields and order to use for sorting. The\nstring value should follow SQL syntax: comma separated list of fields. For\nexample: \"name,resource_properties.a_property\". The default sorting order\nis ascending. To specify descending order for a field, a suffix \" desc\"\nshould be appended to the field name. For example: \"name\ndesc,source_properties.a_property\". Redundant space characters in the\nsyntax are insignificant. \"name desc,source_properties.a_property\" and \"\nname     desc  ,   source_properties.a_property  \" are equivalent.\n\nThe following fields are supported:\nname\nparent\nstate\ncategory\nresource_name\nevent_time\nsource_properties\nsecurity_marks.marks",
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,source_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,source_properties.a_property\" and \" name desc , source_properties.a_property \" are equivalent. The following fields are supported: name parent state category resource_name event_time source_properties security_marks.marks",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return in a single response. Default is\n10, minimum is 1, maximum is 1000.",
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListFindingsResponse`; indicates\nthat this is a continuation of a prior `ListFindings` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListFindingsResponse`; indicates that this is a continuation of a prior `ListFindings` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the source the findings belong to. Its format is\n\"organizations/[organization_id]/sources/[source_id]\". To list across all\nsources provide a source_id of `-`. For example:\norganizations/{organization_id}/sources/-",
+	//       "description": "Required. Name of the source the findings belong to. Its format is \"organizations/[organization_id]/sources/[source_id]\". To list across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Time used as a reference point when filtering findings. The filter is\nlimited to findings existing at the supplied time and their values are\nthose at that specific time. Absence of this field will default to the\nAPI's version of NOW.",
+	//       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -7682,8 +6894,7 @@ type OrganizationsSourcesFindingsPatchCall struct {
 }
 
 // Patch: Creates or updates a finding. The corresponding source must
-// exist for a
-// finding creation to succeed.
+// exist for a finding creation to succeed.
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7692,16 +6903,11 @@ func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Findin
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the finding resource. This field should
-// not be specified when creating a finding.
-//
-// When updating a finding, an empty mask is treated as updating all
-// mutable
-// fields and replacing source_properties.  Individual source_properties
-// can
-// be added/updated by using "source_properties.<property key>" in the
-// field
-// mask.
+// use when updating the finding resource. This field should not be
+// specified when creating a finding. When updating a finding, an empty
+// mask is treated as updating all mutable fields and replacing
+// source_properties. Individual source_properties can be added/updated
+// by using "source_properties." in the field mask.
 func (c *OrganizationsSourcesFindingsPatchCall) UpdateMask(updateMask string) *OrganizationsSourcesFindingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7734,7 +6940,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7798,7 +7004,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or updates a finding. The corresponding source must exist for a\nfinding creation to succeed.",
+	//   "description": "Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.sources.findings.patch",
@@ -7807,14 +7013,14 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the finding resource. This field should\nnot be specified when creating a finding.\n\nWhen updating a finding, an empty mask is treated as updating all mutable\nfields and replacing source_properties.  Individual source_properties can\nbe added/updated by using \"source_properties.\u003cproperty key\u003e\" in the field\nmask.",
+	//       "description": "The FieldMask to use when updating the finding resource. This field should not be specified when creating a finding. When updating a finding, an empty mask is treated as updating all mutable fields and replacing source_properties. Individual source_properties can be added/updated by using \"source_properties.\" in the field mask.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7880,7 +7086,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7953,7 +7159,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExample:\n\"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -7994,22 +7200,18 @@ func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, s
 }
 
 // StartTime sets the optional parameter "startTime": The time at which
-// the updated SecurityMarks take effect.
-// If not set uses current server time.  Updates will be applied to
-// the
-// SecurityMarks that are active immediately preceding this time.
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": The FieldMask to
-// use when updating the security marks resource.
-//
-// The field mask must not contain duplicate fields.
-// If empty or set to "marks", all marks will be replaced.
-// Individual
-// marks can be updated using "marks.<mark_key>".
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) UpdateMask(updateMask string) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8042,7 +7244,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8115,20 +7317,20 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the SecurityMarks. See:\nhttps://cloud.google.com/apis/design/resource_names#relative_resource_name\nExamples:\n\"organizations/{organization_id}/assets/{asset_id}/securityMarks\"\n\"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "The time at which the updated SecurityMarks take effect.\nIf not set uses current server time.  Updates will be applied to the\nSecurityMarks that are active immediately preceding this time.",
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The FieldMask to use when updating the security marks resource.\n\nThe field mask must not contain duplicate fields.\nIf empty or set to \"marks\", all marks will be replaced.  Individual\nmarks can be updated using \"marks.\u003cmark_key\u003e\".",
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -827,15 +827,14 @@ type CertificateRawData struct {
 	// PrivateKey: Unencrypted PEM encoded RSA private key. This field is
 	// set once on certificate creation and then encrypted. The key size
 	// must be 2048 bits or fewer. Must include the header and footer.
-	// Example: <pre> -----BEGIN RSA PRIVATE KEY-----
-	// <unencrypted_key_value> -----END RSA PRIVATE KEY----- </pre>
-	// @InputOnly
+	// Example: -----BEGIN RSA PRIVATE KEY----- -----END RSA PRIVATE
+	// KEY----- @InputOnly
 	PrivateKey string `json:"privateKey,omitempty"`
 
 	// PublicCertificate: PEM encoded x.509 public key certificate. This
 	// field is set once on certificate creation. Must include the header
-	// and footer. Example: <pre> -----BEGIN CERTIFICATE-----
-	// <certificate_value> -----END CERTIFICATE----- </pre>
+	// and footer. Example: -----BEGIN CERTIFICATE----- -----END
+	// CERTIFICATE-----
 	PublicCertificate string `json:"publicCertificate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrivateKey") to
@@ -1139,10 +1138,9 @@ func (s *CustomMetric) UnmarshalJSON(data []byte) error {
 
 // DebugInstanceRequest: Request message for Instances.DebugInstance.
 type DebugInstanceRequest struct {
-	// SshKey: Public SSH key to add to the instance.
-	// Examples:
-	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME]
-	// [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh
+	// SshKey: Public SSH key to add to the instance. Examples:
+	// [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa
+	// [KEY_VALUE] google-ssh
 	// {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}For more
 	// information, see Adding and Removing SSH Keys
 	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
@@ -1311,12 +1309,9 @@ func (s *DomainMapping) MarshalJSON() ([]byte, error) {
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-// }
-// The JSON representation for Empty is empty JSON object {}.
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for Empty is empty
+// JSON object {}.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1514,7 +1509,7 @@ type FileInfo struct {
 
 	// SourceUrl: URL source to use to fetch this file. Must be a URL to a
 	// resource in Google Cloud Storage in the form
-	// 'http(s)://storage.googleapis.com/<bucket>/<object>'.
+	// 'http(s)://storage.googleapis.com//'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
@@ -1565,12 +1560,12 @@ type FirewallRule struct {
 	// SourceRange: IP address or range, defined using CIDR notation, of
 	// requests that this rule applies to. You can use the wildcard
 	// character "*" to match all IPs equivalent to "0/0" and "::/0"
-	// together. Examples: 192.168.1.1 or 192.168.0.0/16 or 2001:db8::/32
-	// or 2001:0db8:0000:0042:0000:8a2e:0370:7334.<p>Truncation will be
-	// silently performed on addresses which are not properly truncated. For
-	// example, 1.2.3.4/24 is accepted as the same address as 1.2.3.0/24.
-	// Similarly, for IPv6, 2001:db8::1/32 is accepted as the same address
-	// as 2001:db8::/32.
+	// together. Examples: 192.168.1.1 or 192.168.0.0/16 or 2001:db8::/32 or
+	// 2001:0db8:0000:0042:0000:8a2e:0370:7334. Truncation will be silently
+	// performed on addresses which are not properly truncated. For example,
+	// 1.2.3.4/24 is accepted as the same address as 1.2.3.0/24. Similarly,
+	// for IPv6, 2001:db8::1/32 is accepted as the same address as
+	// 2001:db8::/32.
 	SourceRange string `json:"sourceRange,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2231,10 +2226,8 @@ type Location struct {
 	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Labels: Cross-service attributes for the location. For
-	// example
+	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
-	//
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -2432,19 +2425,18 @@ type Network struct {
 	// SubnetworkName: Google Cloud Platform sub-network where the virtual
 	// machines are created. Specify the short name, not the resource
 	// path.If a subnetwork name is specified, a network name will also be
-	// required unless it is for the default network.
-	// If the network that the instance is being created in is a Legacy
-	// network, then the IP address is allocated from the IPv4Range.
-	// If the network that the instance is being created in is an auto
-	// Subnet Mode Network, then only network name should be specified (not
-	// the subnetwork_name) and the IP address is created from the
-	// IPCidrRange of the subnetwork that exists in that zone for that
-	// network.
-	// If the network that the instance is being created in is a custom
-	// Subnet Mode Network, then the subnetwork_name must be specified and
-	// the IP address is created from the IPCidrRange of the subnetwork.If
-	// specified, the subnetwork must exist in the same region as the App
-	// Engine flexible environment application.
+	// required unless it is for the default network. If the network that
+	// the instance is being created in is a Legacy network, then the IP
+	// address is allocated from the IPv4Range. If the network that the
+	// instance is being created in is an auto Subnet Mode Network, then
+	// only network name should be specified (not the subnetwork_name) and
+	// the IP address is created from the IPCidrRange of the subnetwork that
+	// exists in that zone for that network. If the network that the
+	// instance is being created in is a custom Subnet Mode Network, then
+	// the subnetwork_name must be specified and the IP address is created
+	// from the IPCidrRange of the subnetwork.If specified, the subnetwork
+	// must exist in the same region as the App Engine flexible environment
+	// application.
 	SubnetworkName string `json:"subnetworkName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForwardedPorts") to
@@ -2878,6 +2870,11 @@ type Resources struct {
 
 	// DiskGb: Disk size (GB) needed.
 	DiskGb float64 `json:"diskGb,omitempty"`
+
+	// KmsKeyReference: The name of the encryption key that is stored in
+	// Google Cloud KMS. Only should be used by Cloud Composer to encrypt
+	// the vm disk
+	KmsKeyReference string `json:"kmsKeyReference,omitempty"`
 
 	// MemoryGb: Memory (GB) needed.
 	MemoryGb float64 `json:"memoryGb,omitempty"`
@@ -3531,10 +3528,9 @@ type Version struct {
 	InboundServices []string `json:"inboundServices,omitempty"`
 
 	// InstanceClass: Instance class that is used to run this version. Valid
-	// values are:
-	// AutomaticScaling: F1, F2, F4, F4_1G
-	// ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1
-	// for AutomaticScaling and B1 for ManualScaling or BasicScaling.
+	// values are: AutomaticScaling: F1, F2, F4, F4_1G ManualScaling or
+	// BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for
+	// AutomaticScaling and B1 for ManualScaling or BasicScaling.
 	InstanceClass string `json:"instanceClass,omitempty"`
 
 	// Libraries: Configuration for third-party Python runtime libraries
@@ -3579,7 +3575,7 @@ type Version struct {
 
 	// RuntimeApiVersion: The version of the API in the given runtime
 	// environment. Please see the app.yaml reference for valid values at
-	// https://cloud.google.com/appengine/docs/standard/<language>/config/appref
+	// https://cloud.google.com/appengine/docs/standard//config/appref
 	RuntimeApiVersion string `json:"runtimeApiVersion,omitempty"`
 
 	// RuntimeChannel: The channel of the runtime to use. Only available for
@@ -3738,7 +3734,7 @@ type ZipInfo struct {
 
 	// SourceUrl: URL of the zip file to deploy from. Must be a URL to a
 	// resource in Google Cloud Storage in the form
-	// 'http(s)://storage.googleapis.com/<bucket>/<object>'.
+	// 'http(s)://storage.googleapis.com//'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FilesCount") to
@@ -3775,9 +3771,8 @@ type AppsCreateCall struct {
 }
 
 // Create: Creates an App Engine application for a Google Cloud Platform
-// project. Required fields:
-// id - The ID of the target Cloud Platform project.
-// location - The region
+// project. Required fields: id - The ID of the target Cloud Platform
+// project. location - The region
 // (https://cloud.google.com/appengine/docs/locations) where you want
 // the App Engine application located.For more information about App
 // Engine applications, see Managing Projects, Applications, and Billing
@@ -3815,7 +3810,7 @@ func (c *AppsCreateCall) Header() http.Header {
 
 func (c *AppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3876,7 +3871,7 @@ func (c *AppsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields:\nid - The ID of the target Cloud Platform project.\nlocation - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
+	//   "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields: id - The ID of the target Cloud Platform project. location - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
 	//   "flatPath": "v1beta/apps",
 	//   "httpMethod": "POST",
 	//   "id": "appengine.apps.create",
@@ -3951,7 +3946,7 @@ func (c *AppsGetCall) Header() http.Header {
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4053,11 +4048,9 @@ type AppsPatchCall struct {
 }
 
 // Patch: Updates the specified Application resource. You can update the
-// following fields:
-// auth_domain - Google authentication domain for controlling user
-// access to the application.
-// default_cookie_expiration - Cookie expiration policy for the
-// application.
+// following fields: auth_domain - Google authentication domain for
+// controlling user access to the application. default_cookie_expiration
+// - Cookie expiration policy for the application.
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4099,7 +4092,7 @@ func (c *AppsPatchCall) Header() http.Header {
 
 func (c *AppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4163,7 +4156,7 @@ func (c *AppsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Application resource. You can update the following fields:\nauth_domain - Google authentication domain for controlling user access to the application.\ndefault_cookie_expiration - Cookie expiration policy for the application.",
+	//   "description": "Updates the specified Application resource. You can update the following fields: auth_domain - Google authentication domain for controlling user access to the application. default_cookie_expiration - Cookie expiration policy for the application.",
 	//   "flatPath": "v1beta/apps/{appsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.patch",
@@ -4252,7 +4245,7 @@ func (c *AppsRepairCall) Header() http.Header {
 
 func (c *AppsRepairCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4391,7 +4384,7 @@ func (c *AppsAuthorizedCertificatesCreateCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4530,7 +4523,7 @@ func (c *AppsAuthorizedCertificatesDeleteCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4647,8 +4640,11 @@ func (r *AppsAuthorizedCertificatesService) Get(appsId string, authorizedCertifi
 // returned in the GET response.
 //
 // Possible values:
-//   "BASIC_CERTIFICATE"
-//   "FULL_CERTIFICATE"
+//   "BASIC_CERTIFICATE" - Basic certificate information, including
+// applicable domains and expiration date.
+//   "FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
+// detailed information on the domain mappings that have this
+// certificate mapped.
 func (c *AppsAuthorizedCertificatesGetCall) View(view string) *AppsAuthorizedCertificatesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4691,7 +4687,7 @@ func (c *AppsAuthorizedCertificatesGetCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,6 +4777,10 @@ func (c *AppsAuthorizedCertificatesGetCall) Do(opts ...googleapi.CallOption) (*A
 	//         "BASIC_CERTIFICATE",
 	//         "FULL_CERTIFICATE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Basic certificate information, including applicable domains and expiration date.",
+	//         "The information from BASIC_CERTIFICATE, plus detailed information on the domain mappings that have this certificate mapped."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4835,8 +4835,11 @@ func (c *AppsAuthorizedCertificatesListCall) PageToken(pageToken string) *AppsAu
 // returned in the LIST response.
 //
 // Possible values:
-//   "BASIC_CERTIFICATE"
-//   "FULL_CERTIFICATE"
+//   "BASIC_CERTIFICATE" - Basic certificate information, including
+// applicable domains and expiration date.
+//   "FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
+// detailed information on the domain mappings that have this
+// certificate mapped.
 func (c *AppsAuthorizedCertificatesListCall) View(view string) *AppsAuthorizedCertificatesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4879,7 +4882,7 @@ func (c *AppsAuthorizedCertificatesListCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4972,6 +4975,10 @@ func (c *AppsAuthorizedCertificatesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "enum": [
 	//         "BASIC_CERTIFICATE",
 	//         "FULL_CERTIFICATE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Basic certificate information, including applicable domains and expiration date.",
+	//         "The information from BASIC_CERTIFICATE, plus detailed information on the domain mappings that have this certificate mapped."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5071,7 +5078,7 @@ func (c *AppsAuthorizedCertificatesPatchCall) Header() http.Header {
 
 func (c *AppsAuthorizedCertificatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5247,7 +5254,7 @@ func (c *AppsAuthorizedDomainsListCall) Header() http.Header {
 
 func (c *AppsAuthorizedDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5396,9 +5403,16 @@ func (r *AppsDomainMappingsService) Create(appsId string, domainmapping *DomainM
 // this domain. By default, overrides are rejected.
 //
 // Possible values:
-//   "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY"
-//   "STRICT"
-//   "OVERRIDE"
+//   "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY" - Strategy unspecified.
+// Defaults to STRICT.
+//   "STRICT" - Overrides not allowed. If a mapping already exists for
+// the specified domain, the request will return an ALREADY_EXISTS
+// (409).
+//   "OVERRIDE" - Overrides allowed. If a mapping already exists for the
+// specified domain, the request will overwrite it. Note that this might
+// stop another Google product from serving. For example, if the domain
+// is mapped to another App Engine application, that app will no longer
+// serve from that domain.
 func (c *AppsDomainMappingsCreateCall) OverrideStrategy(overrideStrategy string) *AppsDomainMappingsCreateCall {
 	c.urlParams_.Set("overrideStrategy", overrideStrategy)
 	return c
@@ -5431,7 +5445,7 @@ func (c *AppsDomainMappingsCreateCall) Header() http.Header {
 
 func (c *AppsDomainMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,6 +5530,11 @@ func (c *AppsDomainMappingsCreateCall) Do(opts ...googleapi.CallOption) (*Operat
 	//         "STRICT",
 	//         "OVERRIDE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Strategy unspecified. Defaults to STRICT.",
+	//         "Overrides not allowed. If a mapping already exists for the specified domain, the request will return an ALREADY_EXISTS (409).",
+	//         "Overrides allowed. If a mapping already exists for the specified domain, the request will overwrite it. Note that this might stop another Google product from serving. For example, if the domain is mapped to another App Engine application, that app will no longer serve from that domain."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5582,7 +5601,7 @@ func (c *AppsDomainMappingsDeleteCall) Header() http.Header {
 
 func (c *AppsDomainMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5732,7 +5751,7 @@ func (c *AppsDomainMappingsGetCall) Header() http.Header {
 
 func (c *AppsDomainMappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5899,7 +5918,7 @@ func (c *AppsDomainMappingsListCall) Header() http.Header {
 
 func (c *AppsDomainMappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6080,7 +6099,7 @@ func (c *AppsDomainMappingsPatchCall) Header() http.Header {
 
 func (c *AppsDomainMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6237,7 +6256,7 @@ func (c *AppsFirewallIngressRulesBatchUpdateCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6376,7 +6395,7 @@ func (c *AppsFirewallIngressRulesCreateCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6515,7 +6534,7 @@ func (c *AppsFirewallIngressRulesDeleteCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6665,7 +6684,7 @@ func (c *AppsFirewallIngressRulesGetCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6841,7 +6860,7 @@ func (c *AppsFirewallIngressRulesListCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7023,7 +7042,7 @@ func (c *AppsFirewallIngressRulesPatchCall) Header() http.Header {
 
 func (c *AppsFirewallIngressRulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7187,7 +7206,7 @@ func (c *AppsLocationsGetCall) Header() http.Header {
 
 func (c *AppsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7362,7 +7381,7 @@ func (c *AppsLocationsListCall) Header() http.Header {
 
 func (c *AppsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7548,7 +7567,7 @@ func (c *AppsOperationsGetCall) Header() http.Header {
 
 func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7731,7 +7750,7 @@ func (c *AppsOperationsListCall) Header() http.Header {
 
 func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7904,7 +7923,7 @@ func (c *AppsServicesDeleteCall) Header() http.Header {
 
 func (c *AppsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8054,7 +8073,7 @@ func (c *AppsServicesGetCall) Header() http.Header {
 
 func (c *AppsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8221,7 +8240,7 @@ func (c *AppsServicesListCall) Header() http.Header {
 
 func (c *AppsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8419,7 +8438,7 @@ func (c *AppsServicesPatchCall) Header() http.Header {
 
 func (c *AppsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8579,7 +8598,7 @@ func (c *AppsServicesVersionsCreateCall) Header() http.Header {
 
 func (c *AppsServicesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8728,7 +8747,7 @@ func (c *AppsServicesVersionsDeleteCall) Header() http.Header {
 
 func (c *AppsServicesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8857,8 +8876,11 @@ func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, vers
 // returned in the Get response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//   "BASIC" - Basic version information including scaling and inbound
+// services, but not detailed deployment information.
+//   "FULL" - The information from BASIC, plus detailed information
+// about the deployment. This format is required when creating
+// resources, but is not returned in Get or List by default.
 func (c *AppsServicesVersionsGetCall) View(view string) *AppsServicesVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8901,7 +8923,7 @@ func (c *AppsServicesVersionsGetCall) Header() http.Header {
 
 func (c *AppsServicesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8999,6 +9021,10 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 	//         "BASIC",
 	//         "FULL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Basic version information including scaling and inbound services, but not detailed deployment information.",
+	//         "The information from BASIC, plus detailed information about the deployment. This format is required when creating resources, but is not returned in Get or List by default."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9054,8 +9080,11 @@ func (c *AppsServicesVersionsListCall) PageToken(pageToken string) *AppsServices
 // returned in the List response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//   "BASIC" - Basic version information including scaling and inbound
+// services, but not detailed deployment information.
+//   "FULL" - The information from BASIC, plus detailed information
+// about the deployment. This format is required when creating
+// resources, but is not returned in Get or List by default.
 func (c *AppsServicesVersionsListCall) View(view string) *AppsServicesVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9098,7 +9127,7 @@ func (c *AppsServicesVersionsListCall) Header() http.Header {
 
 func (c *AppsServicesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9199,6 +9228,10 @@ func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVe
 	//         "BASIC",
 	//         "FULL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Basic version information including scaling and inbound services, but not detailed deployment information.",
+	//         "The information from BASIC, plus detailed information about the deployment. This format is required when creating resources, but is not returned in Get or List by default."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -9252,67 +9285,53 @@ type AppsServicesVersionsPatchCall struct {
 
 // Patch: Updates the specified Version resource. You can specify the
 // following fields depending on the App Engine environment and type of
-// scaling that the version resource uses:Standard
-// environment
+// scaling that the version resource uses:Standard environment
 // instance_class
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.instance_class)automatic
-// scaling in the standard
-// environment:
+// scaling in the standard environment:
 // automatic_scaling.min_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)
-// automatic_
-// scaling.max_idle_instances
+// automatic_scaling.max_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)
-// automaticS
-// caling.standard_scheduler_settings.max_instances
+// automaticScaling.standard_scheduler_settings.max_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#StandardSchedulerSettings)
-// automaticScaling.
-// standard_scheduler_settings.min_instances
+// automaticScaling.standard_scheduler_settings.min_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#StandardSchedulerSettings)
-// automaticScaling.
-// standard_scheduler_settings.target_cpu_utilization
+// automaticScaling.standard_scheduler_settings.target_cpu_utilization
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#StandardSchedulerSettings)
-// automaticScaling.
-// standard_scheduler_settings.target_throughput_utilization
+// automaticScaling.standard_scheduler_settings.target_throughput_utiliza
+// tion
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#StandardSchedulerSettings)basic scaling or
-// manual scaling in the standard environment:
-// serving_status
+// manual scaling in the standard environment: serving_status
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.serving_status)
-// manual_scalin
-// g.instances
+// manual_scaling.instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta/apps.services.versions#manualscaling)Flexible
-// environment
+// ta/apps.services.versions#manualscaling)Flexible environment
 // serving_status
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.serving_status)automatic
-// scaling in the flexible
-// environment:
+// scaling in the flexible environment:
 // automatic_scaling.min_total_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)
-// automatic_
-// scaling.max_total_instances
+// automatic_scaling.max_total_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)
-// automatic_
-// scaling.cool_down_period_sec
+// automatic_scaling.cool_down_period_sec
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)
-// automatic_
-// scaling.cpu_utilization.target_utilization
+// automatic_scaling.cpu_utilization.target_utilization
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#Version.FIELDS.automatic_scaling)manual
-// scaling in the flexible environment:
-// manual_scaling.instances
+// scaling in the flexible environment: manual_scaling.instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
 // ta/apps.services.versions#manualscaling)
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
@@ -9358,7 +9377,7 @@ func (c *AppsServicesVersionsPatchCall) Header() http.Header {
 
 func (c *AppsServicesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9424,7 +9443,7 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:Standard environment\ninstance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class)automatic scaling in the standard environment:\nautomatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomaticScaling.standard_scheduler_settings.max_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.min_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.target_cpu_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)\nautomaticScaling.standard_scheduler_settings.target_throughput_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)basic scaling or manual scaling in the standard environment:\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)\nmanual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)Flexible environment\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)automatic scaling in the flexible environment:\nautomatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)\nautomatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)manual scaling in the flexible environment:\nmanual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)",
+	//   "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:Standard environment instance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.instance_class)automatic scaling in the standard environment: automatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automaticScaling.standard_scheduler_settings.max_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.min_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.target_cpu_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings) automaticScaling.standard_scheduler_settings.target_throughput_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#StandardSchedulerSettings)basic scaling or manual scaling in the standard environment: serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status) manual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)Flexible environment serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.serving_status)automatic scaling in the flexible environment: automatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling) automatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#Version.FIELDS.automatic_scaling)manual scaling in the flexible environment: manual_scaling.instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta/apps.services.versions#manualscaling)",
 	//   "flatPath": "v1beta/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "appengine.apps.services.versions.patch",
@@ -9531,7 +9550,7 @@ func (c *AppsServicesVersionsInstancesDebugCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesDebugCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9709,7 +9728,7 @@ func (c *AppsServicesVersionsInstancesDeleteCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9879,7 +9898,7 @@ func (c *AppsServicesVersionsInstancesGetCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10069,7 +10088,7 @@ func (c *AppsServicesVersionsInstancesListCall) Header() http.Header {
 
 func (c *AppsServicesVersionsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

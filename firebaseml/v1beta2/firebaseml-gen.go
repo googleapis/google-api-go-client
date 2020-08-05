@@ -169,17 +169,11 @@ type ProjectsOperationsService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -192,8 +186,7 @@ type ListModelsResponse struct {
 	Models []*Model `json:"models,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -234,14 +227,12 @@ type Model struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Required. The name of the model to create. The name can
-	// be up to 32 characters long
-	// and can consist only of ASCII Latin letters A-Z and a-z,
-	// underscores(_)
-	// and ASCII digits 0-9. It must start with a letter.
+	// be up to 32 characters long and can consist only of ASCII Latin
+	// letters A-Z and a-z, underscores(_) and ASCII digits 0-9. It must
+	// start with a letter.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Etag: Output only. See
-	// RFC7232
+	// Etag: Output only. See RFC7232
 	// https://tools.ietf.org/html/rfc7232#section-2.3
 	Etag string `json:"etag,omitempty"`
 
@@ -249,14 +240,13 @@ type Model struct {
 	// available for download.
 	ModelHash string `json:"modelHash,omitempty"`
 
-	// Name: The resource name of the Model.
-	// Model names have the form
-	// `projects/{project_id}/models/{model_id}`
-	// The name is ignored when creating a model.
+	// Name: The resource name of the Model. Model names have the form
+	// `projects/{project_id}/models/{model_id}` The name is ignored when
+	// creating a model.
 	Name string `json:"name,omitempty"`
 
-	// State: State common to all model types.
-	// Includes publishing and validation information.
+	// State: State common to all model types. Includes publishing and
+	// validation information.
 	State *ModelState `json:"state,omitempty"`
 
 	// Tags: User defined tags which can be used to group/filter models
@@ -299,8 +289,7 @@ func (s *Model) MarshalJSON() ([]byte, error) {
 }
 
 // ModelOperationMetadata: This is returned in the longrunning
-// operations
-// for create/update.
+// operations for create/update.
 type ModelOperationMetadata struct {
 	// Possible values:
 	//   "BASIC_OPERATION_STATUS_UNSPECIFIED" - The status is unspecified
@@ -310,8 +299,8 @@ type ModelOperationMetadata struct {
 	// verified
 	BasicOperationStatus string `json:"basicOperationStatus,omitempty"`
 
-	// Name: The name of the model we are creating/updating
-	// The name must have the form `projects/{project_id}/models/{model_id}`
+	// Name: The name of the model we are creating/updating The name must
+	// have the form `projects/{project_id}/models/{model_id}`
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -339,19 +328,17 @@ func (s *ModelOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ModelState: State common to all model types.
-// Includes publishing and validation information.
+// ModelState: State common to all model types. Includes publishing and
+// validation information.
 type ModelState struct {
 	// Published: Indicates if this model has been published.
 	Published bool `json:"published,omitempty"`
 
 	// ValidationError: Output only. Indicates the latest validation error
-	// on the model if any.
-	// A model may have validation errors if there were problems during
-	// the model creation/update.
-	// e.g. in the case of a TfLiteModel, if a tflite model file was
-	// missing or in the wrong format.
-	// This field will be empty for valid models.
+	// on the model if any. A model may have validation errors if there were
+	// problems during the model creation/update. e.g. in the case of a
+	// TfLiteModel, if a tflite model file was missing or in the wrong
+	// format. This field will be empty for valid models.
 	ValidationError *Status `json:"validationError,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Published") to
@@ -378,52 +365,38 @@ func (s *ModelState) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -454,32 +427,24 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -508,19 +473,14 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // TfLiteModel: Information that is specific to TfLite models.
 type TfLiteModel struct {
 	// GcsTfliteUri: The TfLite file containing the model. (Stored in Google
-	// Cloud).
-	// The gcs_tflite_uri should have form:
-	// gs://some-bucket/some-model.tflite
-	// Note: If you update the file in the original location, it
-	// is
-	// necessary to call UpdateModel for ML to pick up and validate
-	// the
-	// updated file.
+	// Cloud). The gcs_tflite_uri should have form:
+	// gs://some-bucket/some-model.tflite Note: If you update the file in
+	// the original location, it is necessary to call UpdateModel for ML to
+	// pick up and validate the updated file.
 	GcsTfliteUri string `json:"gcsTfliteUri,omitempty"`
 
 	// ManagedUpload: Output only. A boolean indicating that this model was
-	// uploaded from the console.
-	// Read only
+	// uploaded from the console. Read only
 	ManagedUpload bool `json:"managedUpload,omitempty"`
 
 	// SizeBytes: Output only. The size of the TFLite model
@@ -560,8 +520,8 @@ type ProjectsModelsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a model in Firebase ML.
-// The longrunning operation will eventually return a Model
+// Create: Creates a model in Firebase ML. The longrunning operation
+// will eventually return a Model
 func (r *ProjectsModelsService) Create(parent string, model *Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -596,7 +556,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -660,7 +620,7 @@ func (c *ProjectsModelsCreateCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a model in Firebase ML.\nThe longrunning operation will eventually return a Model",
+	//   "description": "Creates a model in Firebase ML. The longrunning operation will eventually return a Model",
 	//   "flatPath": "v1beta2/projects/{projectsId}/models",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseml.projects.models.create",
@@ -669,7 +629,7 @@ func (c *ProjectsModelsCreateCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent project resource where the model is to be created.\nThe parent must have the form `projects/{project_id}`",
+	//       "description": "Required. The parent project resource where the model is to be created. The parent must have the form `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -734,7 +694,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -802,7 +762,7 @@ func (c *ProjectsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the model to delete.\nThe name must have the form `projects/{project_id}/models/{model_id}`",
+	//       "description": "Required. The name of the model to delete. The name must have the form `projects/{project_id}/models/{model_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -875,7 +835,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -946,7 +906,7 @@ func (c *ProjectsModelsGetCall) Do(opts ...googleapi.CallOption) (*Model, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the model to get.\nThe name must have the form `projects/{project_id}/models/{model_id}`",
+	//       "description": "Required. The name of the model to get. The name must have the form `projects/{project_id}/models/{model_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -982,8 +942,7 @@ func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter for the
-// list
+// Filter sets the optional parameter "filter": A filter for the list
 // e.g. 'tags: abc' to list models which are tagged with "abc"
 func (c *ProjectsModelsListCall) Filter(filter string) *ProjectsModelsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -1041,7 +1000,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1112,7 +1071,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsRe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter for the list\ne.g. 'tags: abc' to list models which are tagged with \"abc\"",
+	//       "description": "A filter for the list e.g. 'tags: abc' to list models which are tagged with \"abc\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1128,7 +1087,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent to list models for.\nThe parent must have the form `projects/{project_id}'",
+	//       "description": "Required. The name of the parent to list models for. The parent must have the form `projects/{project_id}'",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1220,7 +1179,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1293,7 +1252,7 @@ func (c *ProjectsModelsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Model.\nModel names have the form `projects/{project_id}/models/{model_id}`\nThe name is ignored when creating a model.",
+	//       "description": "The resource name of the Model. Model names have the form `projects/{project_id}/models/{model_id}` The name is ignored when creating a model.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -1331,11 +1290,9 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1379,7 +1336,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1441,7 +1398,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "firebaseml.projects.operations.get",

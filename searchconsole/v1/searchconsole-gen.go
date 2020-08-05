@@ -176,8 +176,8 @@ func (s *BlockedResource) MarshalJSON() ([]byte, error) {
 // Image: Describe image data.
 type Image struct {
 	// Data: Image data in format determined by the mime type. Currently,
-	// the format
-	// will always be "image/png", but this might change in the future.
+	// the format will always be "image/png", but this might change in the
+	// future.
 	Data string `json:"data,omitempty"`
 
 	// MimeType: The mime-type of the image data.
@@ -212,36 +212,30 @@ type MobileFriendlyIssue struct {
 	//
 	// Possible values:
 	//   "MOBILE_FRIENDLY_RULE_UNSPECIFIED" - Unknown rule. Sorry, we don't
-	// have any description for the rule that was
-	// broken.
+	// have any description for the rule that was broken.
 	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile
-	// devices are being used. [Learn
-	// more]
-	// (https://support.google.com/webmasters/answer/6352293#flash_usag
-	// e).
+	// devices are being used. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#flash_usage).
 	//   "CONFIGURE_VIEWPORT" - Viewsport is not specified using the meta
-	// viewport tag. [Learn
-	// more]
-	// (https://support.google.com/webmasters/answer/6352293#viewport_n
-	// ot_configured).
+	// viewport tag. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#viewport_not_con
+	// figured).
 	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
 	// more]
-	// (https://support.google.com/webmasters/answer/6352293#fixed-widt
-	// h_viewport).
+	// (https://support.google.com/webmasters/answer/6352293#fixed-width_view
+	// port).
 	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn
 	// more]
-	// (https://support.google.com/webmasters/answer/6352293#content_no
-	// t_sized_to_viewport).
+	// (https://support.google.com/webmasters/answer/6352293#content_not_size
+	// d_to_viewport).
 	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading
-	// on a small screen. [Learn
-	// More]
-	// (https://support.google.com/webmasters/answer/6352293#small_font
-	// _size).
+	// on a small screen. [Learn More]
+	// (https://support.google.com/webmasters/answer/6352293#small_font_size)
+	// .
 	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each
-	// other. [Learn
-	// more]
-	// (https://support.google.com/webmasters/answer/6352293#touch_elem
-	// ents_too_close).
+	// other. [Learn more]
+	// (https://support.google.com/webmasters/answer/6352293#touch_elements_t
+	// oo_close).
 	Rule string `json:"rule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Rule") to
@@ -330,8 +324,7 @@ func (s *RunMobileFriendlyTestRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RunMobileFriendlyTestResponse: Mobile-friendly test response,
-// including mobile-friendly issues and resource
-// issues.
+// including mobile-friendly issues and resource issues.
 type RunMobileFriendlyTestResponse struct {
 	// MobileFriendliness: Test verdict, whether the page is mobile friendly
 	// or not.
@@ -397,13 +390,12 @@ type TestStatus struct {
 	// Please try running the test again.
 	//   "COMPLETE" - Inspection has completed without errors.
 	//   "INTERNAL_ERROR" - Inspection terminated in an error state. This
-	// indicates a problem in
-	// Google's infrastructure, not a user error. Please try again later.
+	// indicates a problem in Google's infrastructure, not a user error.
+	// Please try again later.
 	//   "PAGE_UNREACHABLE" - Google can not access the URL because of a
-	// user error such as a robots.txt
-	// blockage, a 403 or 500 code etc. Please make sure that the URL
-	// provided is
-	// accessible by Googlebot and is not password protected.
+	// user error such as a robots.txt blockage, a 403 or 500 code etc.
+	// Please make sure that the URL provided is accessible by Googlebot and
+	// is not password protected.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -473,7 +465,7 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -158,21 +158,14 @@ type PlatformSummary struct {
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 
-	// EnforcementTime: The time at
-	// which
-	// [enforcement](https://support.google.com/webtools/answer/7308033
-	// ) against
-	// the site began or will begin on this platform.
-	//
-	// Not set when the
-	// filter_status
-	// is OFF.
+	// EnforcementTime: The time at which
+	// [enforcement](https://support.google.com/webtools/answer/7308033)
+	// against the site began or will begin on this platform. Not set when
+	// the filter_status is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's
-	// [enforcement
-	// status](https://support.google.com/webtools/answer/730803
-	// 3) on this
+	// FilterStatus: The site's [enforcement
+	// status](https://support.google.com/webtools/answer/7308033) on this
 	// platform.
 	//
 	// Possible values:
@@ -187,11 +180,9 @@ type PlatformSummary struct {
 	// this platform.
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
 
-	// Region: The site's regions on this platform.
-	//
-	// No longer populated, because there is no longer any semantic
-	// difference
-	// between sites in different regions.
+	// Region: The site's regions on this platform. No longer populated,
+	// because there is no longer any semantic difference between sites in
+	// different regions.
 	//
 	// Possible values:
 	//   "REGION_UNKNOWN" - Ad standard not yet defined for your region.
@@ -201,16 +192,10 @@ type PlatformSummary struct {
 	Region []string `json:"region,omitempty"`
 
 	// ReportUrl: A link to the full Ad Experience Report for the site on
-	// this platform..
-	//
-	// Not set in
-	// ViolatingSitesResponse.
-	//
-	// Note that you must complete the [Search Console
-	// verification
-	// process](https://support.google.com/webmasters/answer/900
-	// 8080) for the site
-	// before you can access the full report.
+	// this platform.. Not set in ViolatingSitesResponse. Note that you must
+	// complete the [Search Console verification
+	// process](https://support.google.com/webmasters/answer/9008080) for
+	// the site before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
 	// UnderReview: Whether the site is currently under review on this
@@ -368,7 +353,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -439,7 +424,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the site whose summary to get, e.g.\n`sites/http%3A%2F%2Fwww.google.com%2F`.\n\nFormat: `sites/{site}`",
+	//       "description": "Required. The name of the site whose summary to get, e.g. `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -465,8 +450,7 @@ type ViolatingSitesListCall struct {
 }
 
 // List: Lists sites that are failing in the Ad Experience Report on at
-// least one
-// platform.
+// least one platform.
 func (r *ViolatingSitesService) List() *ViolatingSitesListCall {
 	c := &ViolatingSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -509,7 +493,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -568,7 +552,7 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sites that are failing in the Ad Experience Report on at least one\nplatform.",
+	//   "description": "Lists sites that are failing in the Ad Experience Report on at least one platform.",
 	//   "flatPath": "v1/violatingSites",
 	//   "httpMethod": "GET",
 	//   "id": "adexperiencereport.violatingSites.list",

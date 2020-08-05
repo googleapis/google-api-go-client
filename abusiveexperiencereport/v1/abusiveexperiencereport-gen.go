@@ -155,21 +155,14 @@ type SiteSummaryResponse struct {
 	//   "FAILING" - Failing.
 	AbusiveStatus string `json:"abusiveStatus,omitempty"`
 
-	// EnforcementTime: The time at
-	// which
-	// [enforcement](https://support.google.com/webtools/answer/7538608
-	// ) against
-	// the site began or will begin.
-	//
-	// Not set when the
-	// filter_status
+	// EnforcementTime: The time at which
+	// [enforcement](https://support.google.com/webtools/answer/7538608)
+	// against the site began or will begin. Not set when the filter_status
 	// is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's
-	// [enforcement
-	// status](https://support.google.com/webtools/answer/753860
-	// 8).
+	// FilterStatus: The site's [enforcement
+	// status](https://support.google.com/webtools/answer/7538608).
 	//
 	// Possible values:
 	//   "UNKNOWN" - N/A.
@@ -182,17 +175,11 @@ type SiteSummaryResponse struct {
 	// LastChangeTime: The time at which the site's status last changed.
 	LastChangeTime string `json:"lastChangeTime,omitempty"`
 
-	// ReportUrl: A link to the full Abusive Experience Report for the
-	// site.
-	//
-	// Not set in
-	// ViolatingSitesResponse.
-	//
-	// Note that you must complete the [Search Console
-	// verification
-	// process](https://support.google.com/webmasters/answer/900
-	// 8080) for the site
-	// before you can access the full report.
+	// ReportUrl: A link to the full Abusive Experience Report for the site.
+	// Not set in ViolatingSitesResponse. Note that you must complete the
+	// [Search Console verification
+	// process](https://support.google.com/webmasters/answer/9008080) for
+	// the site before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
 	// ReviewedSite: The name of the reviewed site, e.g. `google.com`.
@@ -316,7 +303,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -387,7 +374,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the site whose summary to get, e.g.\n`sites/http%3A%2F%2Fwww.google.com%2F`.\n\nFormat: `sites/{site}`",
+	//       "description": "Required. The name of the site whose summary to get, e.g. `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -455,7 +442,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

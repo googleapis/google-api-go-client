@@ -134,29 +134,20 @@ type RecordsService struct {
 }
 
 // Bin: A bin is a discrete portion of data spanning from start to end,
-// or if no
-// end is given, then from start to +inf.
-//
-// A bin's start and end values are given in the value type of the
-// metric it
-// represents. For example, "first contentful paint" is measured
-// in
-// milliseconds and exposed as ints, therefore its metric bins will use
-// int32s
-// for its start and end types. However, "cumulative layout shift" is
-// measured
-// in unitless decimals and is exposed as a decimal encoded as a
-// string,
+// or if no end is given, then from start to +inf. A bin's start and end
+// values are given in the value type of the metric it represents. For
+// example, "first contentful paint" is measured in milliseconds and
+// exposed as ints, therefore its metric bins will use int32s for its
+// start and end types. However, "cumulative layout shift" is measured
+// in unitless decimals and is exposed as a decimal encoded as a string,
 // therefore its metric bins will use strings for its value type.
 type Bin struct {
 	// Density: The proportion of users that experienced this bin's value
-	// for the given
-	// metric.
+	// for the given metric.
 	Density float64 `json:"density,omitempty"`
 
 	// End: End is the end of the data bin. If end is not populated, then
-	// the bin has
-	// no end and is valid from start to +inf.
+	// the bin has no end and is valid from start to +inf.
 	End interface{} `json:"end,omitempty"`
 
 	// Start: Start is the beginning of the data bin.
@@ -203,25 +194,18 @@ func (s *Bin) UnmarshalJSON(data []byte) error {
 // unique.
 type Key struct {
 	// EffectiveConnectionType: The effective connection type is the general
-	// connection class that all
-	// users experienced for this record. This field uses the values
-	// ["offline",
-	// "slow-2G", "2G", "3G", "4G"] as specified
-	// in:
-	// https://wicg.github.io/netinfo/#effective-connection-types
-	//
-	// If the effective connection type is unspecified, then aggregated
-	// data
-	// over all effective connection types will be returned.
+	// connection class that all users experienced for this record. This
+	// field uses the values ["offline", "slow-2G", "2G", "3G", "4G"] as
+	// specified in:
+	// https://wicg.github.io/netinfo/#effective-connection-types If the
+	// effective connection type is unspecified, then aggregated data over
+	// all effective connection types will be returned.
 	EffectiveConnectionType string `json:"effectiveConnectionType,omitempty"`
 
 	// FormFactor: The form factor is the device class that all users used
-	// to access the
-	// site for this record.
-	//
-	// If the form factor is unspecified, then aggregated data over all
-	// form
-	// factors will be returned.
+	// to access the site for this record. If the form factor is
+	// unspecified, then aggregated data over all form factors will be
+	// returned.
 	//
 	// Possible values:
 	//   "ALL_FORM_FACTORS" - The default value, representing all device
@@ -233,17 +217,13 @@ type Key struct {
 	//   "TABLET" - The device class representing a "tablet" type client.
 	FormFactor string `json:"formFactor,omitempty"`
 
-	// Origin: Origin specifies the origin that this record is for.
-	//
-	// Note: When specifying an origin, data for loads under this origin
-	// over
-	// all pages are aggregated into origin level user experience data.
+	// Origin: Origin specifies the origin that this record is for. Note:
+	// When specifying an origin, data for loads under this origin over all
+	// pages are aggregated into origin level user experience data.
 	Origin string `json:"origin,omitempty"`
 
-	// Url: Url specifies a specific url that this record is for.
-	//
-	// Note: When specifying a "url" only data for that specific url will
-	// be
+	// Url: Url specifies a specific url that this record is for. Note: When
+	// specifying a "url" only data for that specific url will be
 	// aggregated.
 	Url string `json:"url,omitempty"`
 
@@ -273,21 +253,17 @@ func (s *Key) MarshalJSON() ([]byte, error) {
 }
 
 // Metric: A `metric` is a set of user experience data for a single web
-// performance
-// metric, like "first contentful paint". It contains a summary
-// histogram of
-// real world Chrome usage as a series of `bins`.
+// performance metric, like "first contentful paint". It contains a
+// summary histogram of real world Chrome usage as a series of `bins`.
 type Metric struct {
 	// Histogram: The histogram of user experiences for a metric. The
-	// histogram will have at
-	// least one bin and the densities of all bins will add up to ~1.
+	// histogram will have at least one bin and the densities of all bins
+	// will add up to ~1.
 	Histogram []*Bin `json:"histogram,omitempty"`
 
 	// Percentiles: Common useful percentiles of the Metric. The value type
-	// for the
-	// percentiles will be the same as the value types given for the
-	// Histogram
-	// bins.
+	// for the percentiles will be the same as the value types given for the
+	// Histogram bins.
 	Percentiles *Percentiles `json:"percentiles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Histogram") to
@@ -314,10 +290,9 @@ func (s *Metric) MarshalJSON() ([]byte, error) {
 }
 
 // Percentiles: Percentiles contains synthetic values of a metric at a
-// given statistical
-// percentile. These are used for estimating a metric's value as
-// experienced
-// by a percentage of users out of the total number of users.
+// given statistical percentile. These are used for estimating a
+// metric's value as experienced by a percentage of users out of the
+// total number of users.
 type Percentiles struct {
 	// P75: 75% of users experienced the given metric at or below this
 	// value.
@@ -346,32 +321,23 @@ func (s *Percentiles) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QueryRequest: Request payload sent by a physical web client.
-//
-// This request includes all necessary context to load a particular
-// user experience record.
+// QueryRequest: Request payload sent by a physical web client. This
+// request includes all necessary context to load a particular user
+// experience record.
 type QueryRequest struct {
 	// EffectiveConnectionType: The effective connection type is a query
-	// dimension that specifies the
-	// effective network class that the record's data should belong to. This
-	// field
-	// uses the values ["offline", "slow-2G", "2G", "3G", "4G"] as specified
-	// in:
-	// https://wicg.github.io/netinfo/#effective-connection-types
-	//
-	// Note: If no effective connection type is specified, then a special
-	// record
-	// with aggregated data over all effective connection types will be
-	// returned.
+	// dimension that specifies the effective network class that the
+	// record's data should belong to. This field uses the values
+	// ["offline", "slow-2G", "2G", "3G", "4G"] as specified in:
+	// https://wicg.github.io/netinfo/#effective-connection-types Note: If
+	// no effective connection type is specified, then a special record with
+	// aggregated data over all effective connection types will be returned.
 	EffectiveConnectionType string `json:"effectiveConnectionType,omitempty"`
 
 	// FormFactor: The form factor is a query dimension that specifies the
-	// device class that
-	// the record's data should belong to.
-	//
-	// Note: If no form factor is specified, then a special record
-	// with
-	// aggregated data over all form factors will be returned.
+	// device class that the record's data should belong to. Note: If no
+	// form factor is specified, then a special record with aggregated data
+	// over all form factors will be returned.
 	//
 	// Possible values:
 	//   "ALL_FORM_FACTORS" - The default value, representing all device
@@ -383,28 +349,20 @@ type QueryRequest struct {
 	//   "TABLET" - The device class representing a "tablet" type client.
 	FormFactor string `json:"formFactor,omitempty"`
 
-	// Metrics: The metrics that should be included in the response.
-	// If none are specified then any metrics found will be
-	// returned.
-	//
-	// Allowed values: ["first_contentful_paint",
-	// "first_input_delay",
-	// "largest_contentful_paint",
-	// "cumulative_layout_shift"]
+	// Metrics: The metrics that should be included in the response. If none
+	// are specified then any metrics found will be returned. Allowed
+	// values: ["first_contentful_paint", "first_input_delay",
+	// "largest_contentful_paint", "cumulative_layout_shift"]
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Origin: The url pattern "origin" refers to a url pattern that is the
-	// origin of
-	// a website.
-	//
-	// Examples: "https://example.com", "https://cloud.google.com"
+	// origin of a website. Examples: "https://example.com",
+	// "https://cloud.google.com"
 	Origin string `json:"origin,omitempty"`
 
 	// Url: The url pattern "url" refers to a url pattern that is any
-	// arbitrary url.
-	//
-	// Examples: "https://example.com/",
-	//   "https://cloud.google.com/why-google-cloud/"
+	// arbitrary url. Examples: "https://example.com/",
+	// "https://cloud.google.com/why-google-cloud/"
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -432,23 +390,18 @@ func (s *QueryRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QueryResponse: Response payload sent back to a physical web
-// client.
-//
+// QueryResponse: Response payload sent back to a physical web client.
 // This response contains the record found based on the identiers
-// present in a
-// `QueryRequest`.  The returned response will have a record, and
-// sometimes
-// details on normalization actions taken on the request that were
-// necessary to
-// make the request successful.
+// present in a `QueryRequest`. The returned response will have a
+// record, and sometimes details on normalization actions taken on the
+// request that were necessary to make the request successful.
 type QueryResponse struct {
 	// Record: The record that was found.
 	Record *Record `json:"record,omitempty"`
 
 	// UrlNormalizationDetails: These are details about automated
-	// normalization actions that were taken in
-	// order to make the requested `url_pattern` valid.
+	// normalization actions that were taken in order to make the requested
+	// `url_pattern` valid.
 	UrlNormalizationDetails *UrlNormalization `json:"urlNormalizationDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -479,21 +432,17 @@ func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Record: Record is a single Chrome UX report data record. It contains
-// use experience
-// statistics for a single url pattern and set of dimensions.
+// use experience statistics for a single url pattern and set of
+// dimensions.
 type Record struct {
 	// Key: Key defines all of the unique querying parameters needed to look
-	// up a user
-	// experience record.
+	// up a user experience record.
 	Key *Key `json:"key,omitempty"`
 
 	// Metrics: Metrics is the map of user experience data available for the
-	// record defined
-	// in the key field. Metrics are keyed on the metric name.
-	//
-	// Allowed key values: ["first_contentful_paint",
-	// "first_input_delay",
-	// "largest_contentful_paint",
+	// record defined in the key field. Metrics are keyed on the metric
+	// name. Allowed key values: ["first_contentful_paint",
+	// "first_input_delay", "largest_contentful_paint",
 	// "cumulative_layout_shift"]
 	Metrics map[string]Metric `json:"metrics,omitempty"`
 
@@ -521,17 +470,13 @@ func (s *Record) MarshalJSON() ([]byte, error) {
 }
 
 // UrlNormalization: Object representing the normalization actions taken
-// to normalize a url to
-// achieve a higher chance of successful lookup. These are simple
-// automated
-// changes that are taken when looking up the provided `url_patten`
-// would be
-// known to fail. Complex actions like following redirects are not
-// handled.
+// to normalize a url to achieve a higher chance of successful lookup.
+// These are simple automated changes that are taken when looking up the
+// provided `url_patten` would be known to fail. Complex actions like
+// following redirects are not handled.
 type UrlNormalization struct {
 	// NormalizedUrl: The URL after any normalization actions. This is a
-	// valid user experience
-	// URL that could reasonably be looked up.
+	// valid user experience URL that could reasonably be looked up.
 	NormalizedUrl string `json:"normalizedUrl,omitempty"`
 
 	// OriginalUrl: The original requested URL prior to any normalization
@@ -572,11 +517,8 @@ type RecordsQueryRecordCall struct {
 }
 
 // QueryRecord: Queries the Chrome User Experience for a single `record`
-// for a given site.
-//
-// Returns a `record` that contains one or more `metrics` corresponding
-// to
-// performance data about the requested site.
+// for a given site. Returns a `record` that contains one or more
+// `metrics` corresponding to performance data about the requested site.
 func (r *RecordsService) QueryRecord(queryrequest *QueryRequest) *RecordsQueryRecordCall {
 	c := &RecordsQueryRecordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryrequest = queryrequest
@@ -610,7 +552,7 @@ func (c *RecordsQueryRecordCall) Header() http.Header {
 
 func (c *RecordsQueryRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -671,7 +613,7 @@ func (c *RecordsQueryRecordCall) Do(opts ...googleapi.CallOption) (*QueryRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Queries the Chrome User Experience for a single `record` for a given site.\n\nReturns a `record` that contains one or more `metrics` corresponding to\nperformance data about the requested site.",
+	//   "description": "Queries the Chrome User Experience for a single `record` for a given site. Returns a `record` that contains one or more `metrics` corresponding to performance data about the requested site.",
 	//   "flatPath": "v1/records:queryRecord",
 	//   "httpMethod": "POST",
 	//   "id": "chromeuxreport.records.queryRecord",

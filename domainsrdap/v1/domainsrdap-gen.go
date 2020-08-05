@@ -194,50 +194,22 @@ type V1Service struct {
 }
 
 // HttpBody: Message that represents an arbitrary HTTP body. It should
-// only be used for
-// payload formats that can't be represented as JSON, such as raw binary
-// or
-// an HTML page.
-//
-//
-// This message can be used both in streaming and non-streaming API
-// methods in
-// the request as well as the response.
-//
-// It can be used as a top-level request field, which is convenient if
-// one
-// wants to extract parameters from either the URL or HTTP template into
-// the
-// request fields and also want access to the raw HTTP body.
-//
-// Example:
-//
-//     message GetResourceRequest {
-//       // A unique request id.
-//       string request_id = 1;
-//
-//       // The raw HTTP body is bound to this field.
-//       google.api.HttpBody http_body = 2;
-//     }
-//
-//     service ResourceService {
-//       rpc GetResource(GetResourceRequest) returns
-// (google.api.HttpBody);
-//       rpc UpdateResource(google.api.HttpBody) returns
-//       (google.protobuf.Empty);
-//     }
-//
-// Example with streaming methods:
-//
-//     service CaldavService {
-//       rpc GetCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//       rpc UpdateCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//     }
-//
-// Use of this type only changes how the request and response bodies
-// are
+// only be used for payload formats that can't be represented as JSON,
+// such as raw binary or an HTML page. This message can be used both in
+// streaming and non-streaming API methods in the request as well as the
+// response. It can be used as a top-level request field, which is
+// convenient if one wants to extract parameters from either the URL or
+// HTTP template into the request fields and also want access to the raw
+// HTTP body. Example: message GetResourceRequest { // A unique request
+// id. string request_id = 1; // The raw HTTP body is bound to this
+// field. google.api.HttpBody http_body = 2; } service ResourceService {
+// rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
+// rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); rpc UpdateCalendar(stream
+// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
+// this type only changes how the request and response bodies are
 // handled, all other features will continue to work unchanged.
 type HttpBody struct {
 	// ContentType: The HTTP Content-Type header value specifying the
@@ -248,8 +220,7 @@ type HttpBody struct {
 	Data string `json:"data,omitempty"`
 
 	// Extensions: Application specific response metadata. Must be set in
-	// the first response
-	// for streaming APIs.
+	// the first response for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -279,8 +250,7 @@ func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Link: Links object defined in [section 4.2 of
-// RFC
+// Link: Links object defined in [section 4.2 of RFC
 // 7483](https://tools.ietf.org/html/rfc7483#section-4.2).
 type Link struct {
 	// Href: Target URL of a link. Example: "http://example.com/previous".
@@ -328,8 +298,7 @@ func (s *Link) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Notice: Notices object defined in [section 4.3 of
-// RFC
+// Notice: Notices object defined in [section 4.3 of RFC
 // 7483](https://tools.ietf.org/html/rfc7483#section-4.3).
 type Notice struct {
 	// Description: Description of the notice.
@@ -341,15 +310,11 @@ type Notice struct {
 	// Title: Title of a notice. Example: "Terms of Service".
 	Title string `json:"title,omitempty"`
 
-	// Type: Type values defined in [section 10.2.1 of
-	// RFC
+	// Type: Type values defined in [section 10.2.1 of RFC
 	// 7483](https://tools.ietf.org/html/rfc7483#section-10.2.1) specific to
-	// a
-	// whole response: "result set truncated due to authorization", "result
-	// set
-	// truncated due to excessive load", "result set truncated due
-	// to
-	// unexplainable reasons".
+	// a whole response: "result set truncated due to authorization",
+	// "result set truncated due to excessive load", "result set truncated
+	// due to unexplainable reasons".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -388,8 +353,8 @@ type RdapResponse struct {
 	JsonResponse *HttpBody `json:"jsonResponse,omitempty"`
 
 	// Lang: Error language code. Error response info fields are defined in
-	// [section 6
-	// of RFC 7483](https://tools.ietf.org/html/rfc7483#section-6).
+	// [section 6 of RFC
+	// 7483](https://tools.ietf.org/html/rfc7483#section-6).
 	Lang string `json:"lang,omitempty"`
 
 	// Notices: Notices applying to this response.
@@ -440,8 +405,7 @@ type AutnumGetCall struct {
 }
 
 // Get: The RDAP API recognizes this command from the RDAP specification
-// but
-// does not support it. The response is a formatted 501 error.
+// but does not support it. The response is a formatted 501 error.
 func (r *AutnumService) Get(autnumId string) *AutnumGetCall {
 	c := &AutnumGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.autnumId = autnumId
@@ -485,7 +449,7 @@ func (c *AutnumGetCall) Header() http.Header {
 
 func (c *AutnumGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -547,7 +511,7 @@ func (c *AutnumGetCall) Do(opts ...googleapi.CallOption) (*RdapResponse, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/autnum/{autnumId}",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.autnum.get",
@@ -624,7 +588,7 @@ func (c *DomainGetCall) Header() http.Header {
 
 func (c *DomainGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -722,8 +686,7 @@ type EntityGetCall struct {
 }
 
 // Get: The RDAP API recognizes this command from the RDAP specification
-// but
-// does not support it. The response is a formatted 501 error.
+// but does not support it. The response is a formatted 501 error.
 func (r *EntityService) Get(entityId string) *EntityGetCall {
 	c := &EntityGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityId = entityId
@@ -767,7 +730,7 @@ func (c *EntityGetCall) Header() http.Header {
 
 func (c *EntityGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -829,7 +792,7 @@ func (c *EntityGetCall) Do(opts ...googleapi.CallOption) (*RdapResponse, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/entity/{entityId}",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.entity.get",
@@ -864,8 +827,7 @@ type IpGetCall struct {
 }
 
 // Get: The RDAP API recognizes this command from the RDAP specification
-// but
-// does not support it. The response is a formatted 501 error.
+// but does not support it. The response is a formatted 501 error.
 func (r *IpService) Get(ipId string, ipId1 string) *IpGetCall {
 	c := &IpGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ipId = ipId
@@ -910,7 +872,7 @@ func (c *IpGetCall) Header() http.Header {
 
 func (c *IpGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -973,7 +935,7 @@ func (c *IpGetCall) Do(opts ...googleapi.CallOption) (*RdapResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/ip/{ipId}/{ipId1}",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.ip.get",
@@ -1013,8 +975,7 @@ type NameserverGetCall struct {
 }
 
 // Get: The RDAP API recognizes this command from the RDAP specification
-// but
-// does not support it. The response is a formatted 501 error.
+// but does not support it. The response is a formatted 501 error.
 func (r *NameserverService) Get(nameserverId string) *NameserverGetCall {
 	c := &NameserverGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameserverId = nameserverId
@@ -1058,7 +1019,7 @@ func (c *NameserverGetCall) Header() http.Header {
 
 func (c *NameserverGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1120,7 +1081,7 @@ func (c *NameserverGetCall) Do(opts ...googleapi.CallOption) (*RdapResponse, err
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/nameserver/{nameserverId}",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.nameserver.get",
@@ -1153,8 +1114,8 @@ type V1GetDomainsCall struct {
 }
 
 // GetDomains: The RDAP API recognizes this command from the RDAP
-// specification but
-// does not support it. The response is a formatted 501 error.
+// specification but does not support it. The response is a formatted
+// 501 error.
 func (r *V1Service) GetDomains() *V1GetDomainsCall {
 	c := &V1GetDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1197,7 +1158,7 @@ func (c *V1GetDomainsCall) Header() http.Header {
 
 func (c *V1GetDomainsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1256,7 +1217,7 @@ func (c *V1GetDomainsCall) Do(opts ...googleapi.CallOption) (*RdapResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/domains",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.getDomains",
@@ -1281,8 +1242,8 @@ type V1GetEntitiesCall struct {
 }
 
 // GetEntities: The RDAP API recognizes this command from the RDAP
-// specification but
-// does not support it. The response is a formatted 501 error.
+// specification but does not support it. The response is a formatted
+// 501 error.
 func (r *V1Service) GetEntities() *V1GetEntitiesCall {
 	c := &V1GetEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1325,7 +1286,7 @@ func (c *V1GetEntitiesCall) Header() http.Header {
 
 func (c *V1GetEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1384,7 +1345,7 @@ func (c *V1GetEntitiesCall) Do(opts ...googleapi.CallOption) (*RdapResponse, err
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/entities",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.getEntities",
@@ -1452,7 +1413,7 @@ func (c *V1GetHelpCall) Header() http.Header {
 
 func (c *V1GetHelpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1536,8 +1497,8 @@ type V1GetIpCall struct {
 }
 
 // GetIp: The RDAP API recognizes this command from the RDAP
-// specification but
-// does not support it. The response is a formatted 501 error.
+// specification but does not support it. The response is a formatted
+// 501 error.
 func (r *V1Service) GetIp() *V1GetIpCall {
 	c := &V1GetIpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1580,7 +1541,7 @@ func (c *V1GetIpCall) Header() http.Header {
 
 func (c *V1GetIpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1639,7 +1600,7 @@ func (c *V1GetIpCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/ip",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.getIp",
@@ -1664,8 +1625,8 @@ type V1GetNameserversCall struct {
 }
 
 // GetNameservers: The RDAP API recognizes this command from the RDAP
-// specification but
-// does not support it. The response is a formatted 501 error.
+// specification but does not support it. The response is a formatted
+// 501 error.
 func (r *V1Service) GetNameservers() *V1GetNameserversCall {
 	c := &V1GetNameserversCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1708,7 +1669,7 @@ func (c *V1GetNameserversCall) Header() http.Header {
 
 func (c *V1GetNameserversCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1767,7 +1728,7 @@ func (c *V1GetNameserversCall) Do(opts ...googleapi.CallOption) (*RdapResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "The RDAP API recognizes this command from the RDAP specification but\ndoes not support it. The response is a formatted 501 error.",
+	//   "description": "The RDAP API recognizes this command from the RDAP specification but does not support it. The response is a formatted 501 error.",
 	//   "flatPath": "v1/nameservers",
 	//   "httpMethod": "GET",
 	//   "id": "domainsrdap.getNameservers",

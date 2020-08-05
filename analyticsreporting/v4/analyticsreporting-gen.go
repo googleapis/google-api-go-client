@@ -165,42 +165,32 @@ type UserActivityService struct {
 }
 
 // Activity: An Activity represents data for an activity of a user. Note
-// that an
-// Activity is different from a hit.
-// A hit might result in multiple Activity's. For example, if a
-// hit
-// includes a transaction and a goal completion, there will be
-// two
-// Activity protos for this hit, one for ECOMMERCE and one for
-// GOAL.
-// Conversely, multiple hits can also construct one Activity. In
-// classic
-// e-commerce, data for one transaction might be sent through multiple
-// hits.
-// These hits will be merged into one ECOMMERCE Activity.
+// that an Activity is different from a hit. A hit might result in
+// multiple Activity's. For example, if a hit includes a transaction and
+// a goal completion, there will be two Activity protos for this hit,
+// one for ECOMMERCE and one for GOAL. Conversely, multiple hits can
+// also construct one Activity. In classic e-commerce, data for one
+// transaction might be sent through multiple hits. These hits will be
+// merged into one ECOMMERCE Activity.
 type Activity struct {
 	// ActivityTime: Timestamp of the activity. If activities for a visit
-	// cross midnight and
-	// occur in two separate dates, then two sessions (one per date)
-	// share the session identifier.
-	// For example, say session ID 113472 has activity within 2019-08-20,
-	// and
-	// session ID 243742 has activity within 2019-08-25 and 2019-08-26.
-	// Session ID
-	// 113472 is one session, and session ID 243742 is two sessions.
+	// cross midnight and occur in two separate dates, then two sessions
+	// (one per date) share the session identifier. For example, say session
+	// ID 113472 has activity within 2019-08-20, and session ID 243742 has
+	// activity within 2019-08-25 and 2019-08-26. Session ID 113472 is one
+	// session, and session ID 243742 is two sessions.
 	ActivityTime string `json:"activityTime,omitempty"`
 
 	// ActivityType: Type of this activity.
 	//
 	// Possible values:
 	//   "ACTIVITY_TYPE_UNSPECIFIED" - ActivityType will never have this
-	// value in the response. Using this type in
-	// the request will result in an error.
+	// value in the response. Using this type in the request will result in
+	// an error.
 	//   "PAGEVIEW" - Used when the activity resulted out of a visitor
 	// viewing a page.
 	//   "SCREENVIEW" - Used when the activity resulted out of a visitor
-	// using an application on a
-	// mobile device.
+	// using an application on a mobile device.
 	//   "GOAL" - Used to denote that a goal type activity.
 	//   "ECOMMERCE" - An e-commerce transaction was performed by the
 	// visitor on the page.
@@ -211,17 +201,13 @@ type Activity struct {
 	Appview *ScreenviewData `json:"appview,omitempty"`
 
 	// Campaign: For manual campaign tracking, it is the value of the
-	// utm_campaign campaign
-	// tracking parameter. For AdWords autotagging, it is the name(s) of
-	// the
-	// online ad campaign(s) you use for the property. If you use neither,
-	// its
-	// value is (not set).
+	// utm_campaign campaign tracking parameter. For AdWords autotagging, it
+	// is the name(s) of the online ad campaign(s) you use for the property.
+	// If you use neither, its value is (not set).
 	Campaign string `json:"campaign,omitempty"`
 
 	// ChannelGrouping: The Channel Group associated with an end user's
-	// session for this View
-	// (defined by the View's Channel Groupings).
+	// session for this View (defined by the View's Channel Groupings).
 	ChannelGrouping string `json:"channelGrouping,omitempty"`
 
 	// CustomDimension: A list of all custom dimensions associated with this
@@ -232,31 +218,24 @@ type Activity struct {
 	Ecommerce *EcommerceData `json:"ecommerce,omitempty"`
 
 	// Event: This field contains all the details pertaining to an event and
-	// will be
-	// set if `activity_type` equals `EVENT`.
+	// will be set if `activity_type` equals `EVENT`.
 	Event *EventData `json:"event,omitempty"`
 
 	// Goals: This field contains a list of all the goals that were reached
-	// in this
-	// activity when `activity_type` equals `GOAL`.
+	// in this activity when `activity_type` equals `GOAL`.
 	Goals *GoalSetData `json:"goals,omitempty"`
 
 	// Hostname: The hostname from which the tracking request was made.
 	Hostname string `json:"hostname,omitempty"`
 
 	// Keyword: For manual campaign tracking, it is the value of the
-	// utm_term campaign
-	// tracking parameter. For AdWords traffic, it contains the best
-	// matching
-	// targeting criteria. For the display network, where multiple
-	// targeting
-	// criteria could have caused the ad to show up, it returns the best
-	// matching
-	// targeting criteria as selected by Ads. This could be display_keyword,
-	// site
-	// placement, boomuserlist, user_interest, age, or gender. Otherwise its
-	// value
-	// is (not set).
+	// utm_term campaign tracking parameter. For AdWords traffic, it
+	// contains the best matching targeting criteria. For the display
+	// network, where multiple targeting criteria could have caused the ad
+	// to show up, it returns the best matching targeting criteria as
+	// selected by Ads. This could be display_keyword, site placement,
+	// boomuserlist, user_interest, age, or gender. Otherwise its value is
+	// (not set).
 	Keyword string `json:"keyword,omitempty"`
 
 	// LandingPagePath: The first page in users' sessions, or the landing
@@ -264,32 +243,24 @@ type Activity struct {
 	LandingPagePath string `json:"landingPagePath,omitempty"`
 
 	// Medium: The type of referrals. For manual campaign tracking, it is
-	// the value of the
-	// utm_medium campaign tracking parameter. For AdWords autotagging, it
-	// is cpc.
-	// If users came from a search engine detected by Google Analytics, it
-	// is
-	// organic. If the referrer is not a search engine, it is referral. If
-	// users
-	// came directly to the property and document.referrer is empty, its
-	// value is
-	// (none).
+	// the value of the utm_medium campaign tracking parameter. For AdWords
+	// autotagging, it is cpc. If users came from a search engine detected
+	// by Google Analytics, it is organic. If the referrer is not a search
+	// engine, it is referral. If users came directly to the property and
+	// document.referrer is empty, its value is (none).
 	Medium string `json:"medium,omitempty"`
 
 	// Pageview: This will be set if `activity_type` equals `PAGEVIEW`. This
-	// field
-	// contains all the details about the visitor and the page that was
-	// visited.
+	// field contains all the details about the visitor and the page that
+	// was visited.
 	Pageview *PageviewData `json:"pageview,omitempty"`
 
 	// Source: The source of referrals. For manual campaign tracking, it is
-	// the value of
-	// the utm_source campaign tracking parameter. For AdWords autotagging,
-	// it is
-	// google. If you use neither, it is the domain of the source
-	// (e.g., document.referrer) referring the users. It may also contain a
-	// port
-	// address. If users arrived without a referrer, its value is (direct).
+	// the value of the utm_source campaign tracking parameter. For AdWords
+	// autotagging, it is google. If you use neither, it is the domain of
+	// the source (e.g., document.referrer) referring the users. It may also
+	// contain a port address. If users arrived without a referrer, its
+	// value is (direct).
 	Source string `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTime") to
@@ -316,42 +287,28 @@ func (s *Activity) MarshalJSON() ([]byte, error) {
 }
 
 // Cohort: Defines a cohort. A cohort is a group of users who share a
-// common
-// characteristic. For example, all users with the same acquisition
-// date
-// belong to the same cohort.
+// common characteristic. For example, all users with the same
+// acquisition date belong to the same cohort.
 type Cohort struct {
 	// DateRange: This is used for `FIRST_VISIT_DATE` cohort, the cohort
-	// selects users
-	// whose first visit date is between start date and end date defined in
-	// the
-	// DateRange. The date ranges should be aligned for cohort requests. If
-	// the
-	// request contains `ga:cohortNthDay` it should be exactly one day
-	// long,
-	// if `ga:cohortNthWeek` it should be aligned to the week boundary
-	// (starting
-	// at Sunday and ending Saturday), and for `ga:cohortNthMonth` the date
-	// range
-	// should be aligned to the month (starting at the first and ending on
-	// the
-	// last day of the month).
-	// For LTV requests there are no such restrictions.
-	// You do not need to supply a date range for
-	// the
-	// `reportsRequest.dateRanges` field.
+	// selects users whose first visit date is between start date and end
+	// date defined in the DateRange. The date ranges should be aligned for
+	// cohort requests. If the request contains `ga:cohortNthDay` it should
+	// be exactly one day long, if `ga:cohortNthWeek` it should be aligned
+	// to the week boundary (starting at Sunday and ending Saturday), and
+	// for `ga:cohortNthMonth` the date range should be aligned to the month
+	// (starting at the first and ending on the last day of the month). For
+	// LTV requests there are no such restrictions. You do not need to
+	// supply a date range for the `reportsRequest.dateRanges` field.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// Name: A unique name for the cohort. If not defined name will be
-	// auto-generated
-	// with values cohort_[1234...].
+	// auto-generated with values cohort_[1234...].
 	Name string `json:"name,omitempty"`
 
-	// Type: Type of the cohort. The only supported type as of now
-	// is
+	// Type: Type of the cohort. The only supported type as of now is
 	// `FIRST_VISIT_DATE`. If this field is unspecified the cohort is
-	// treated
-	// as `FIRST_VISIT_DATE` type cohort.
+	// treated as `FIRST_VISIT_DATE` type cohort.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_COHORT_TYPE" - If unspecified it's treated as
@@ -383,69 +340,36 @@ func (s *Cohort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CohortGroup: Defines a cohort group.
-// For example:
-//
-//     "cohortGroup": {
-//       "cohorts": [{
-//         "name": "cohort 1",
-//         "type": "FIRST_VISIT_DATE",
-//         "dateRange": { "startDate": "2015-08-01", "endDate":
-// "2015-08-01" }
-//       },{
-//         "name": "cohort 2"
-//          "type": "FIRST_VISIT_DATE"
-//          "dateRange": { "startDate": "2015-07-01", "endDate":
-// "2015-07-01" }
-//       }]
-//     }
+// CohortGroup: Defines a cohort group. For example: "cohortGroup": {
+// "cohorts": [{ "name": "cohort 1", "type": "FIRST_VISIT_DATE",
+// "dateRange": { "startDate": "2015-08-01", "endDate": "2015-08-01" }
+// },{ "name": "cohort 2" "type": "FIRST_VISIT_DATE" "dateRange": {
+// "startDate": "2015-07-01", "endDate": "2015-07-01" } }] }
 type CohortGroup struct {
 	// Cohorts: The definition for the cohort.
 	Cohorts []*Cohort `json:"cohorts,omitempty"`
 
-	// LifetimeValue: Enable Life Time Value (LTV).  LTV measures lifetime
-	// value for users
-	// acquired through different channels.
-	// Please see:
+	// LifetimeValue: Enable Life Time Value (LTV). LTV measures lifetime
+	// value for users acquired through different channels. Please see:
 	// [Cohort
-	// Analysis](https://support.google.com/analytics/answer/6074676)
-	// and
-	// [Lifetime
-	// Value](https://support.google.com/analytics/answer/6182550)
-	// If the value of lifetimeValue is false:
-	//
-	// - The metric values are similar to the values in the web interface
-	// cohort
-	//   report.
-	// - The cohort definition date ranges must be aligned to the calendar
-	// week
-	//   and month. i.e. while requesting `ga:cohortNthWeek` the `startDate`
-	// in
-	//   the cohort definition should be a Sunday and the `endDate` should
-	// be the
-	//   following Saturday, and for `ga:cohortNthMonth`, the `startDate`
-	//   should be the 1st of the month and `endDate` should be the last
-	// day
-	//   of the month.
-	//
-	// When the lifetimeValue is true:
-	//
-	// - The metric values will correspond to the values in the web
-	// interface
-	//   LifeTime value report.
-	// - The Lifetime Value report shows you how user value (Revenue) and
-	//   engagement (Appviews, Goal Completions, Sessions, and Session
-	// Duration)
-	//   grow during the 90 days after a user is acquired.
-	// - The metrics are calculated as a cumulative average per user per the
-	// time
-	//   increment.
-	// - The cohort definition date ranges need not be aligned to the
-	// calendar
-	//   week and month boundaries.
-	// - The `viewId` must be an
-	//   [app view
-	//
+	// Analysis](https://support.google.com/analytics/answer/6074676) and
+	// [Lifetime Value](https://support.google.com/analytics/answer/6182550)
+	// If the value of lifetimeValue is false: - The metric values are
+	// similar to the values in the web interface cohort report. - The
+	// cohort definition date ranges must be aligned to the calendar week
+	// and month. i.e. while requesting `ga:cohortNthWeek` the `startDate`
+	// in the cohort definition should be a Sunday and the `endDate` should
+	// be the following Saturday, and for `ga:cohortNthMonth`, the
+	// `startDate` should be the 1st of the month and `endDate` should be
+	// the last day of the month. When the lifetimeValue is true: - The
+	// metric values will correspond to the values in the web interface
+	// LifeTime value report. - The Lifetime Value report shows you how user
+	// value (Revenue) and engagement (Appviews, Goal Completions, Sessions,
+	// and Session Duration) grow during the 90 days after a user is
+	// acquired. - The metrics are calculated as a cumulative average per
+	// user per the time increment. - The cohort definition date ranges need
+	// not be aligned to the calendar week and month boundaries. - The
+	// `viewId` must be an [app view
 	// ID](https://support.google.com/analytics/answer/2649553#WebVersusAppVi
 	// ews)
 	LifetimeValue bool `json:"lifetimeValue,omitempty"`
@@ -510,8 +434,8 @@ type CustomDimension struct {
 	Index int64 `json:"index,omitempty"`
 
 	// Value: Value of the custom dimension. Default value (i.e. empty
-	// string) indicates
-	// clearing sesion/visitor scope custom dimension value.
+	// string) indicates clearing sesion/visitor scope custom dimension
+	// value.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Index") to
@@ -538,9 +462,7 @@ func (s *CustomDimension) MarshalJSON() ([]byte, error) {
 }
 
 // DateRange: A contiguous set of days: startDate, startDate + 1 day,
-// ..., endDate.
-// The start and end dates are specified
-// in
+// ..., endDate. The start and end dates are specified in
 // [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) date format
 // `YYYY-MM-DD`.
 type DateRange struct {
@@ -574,8 +496,7 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 }
 
 // DateRangeValues: Used to return a list of metrics for a single
-// DateRange / dimension
-// combination
+// DateRange / dimension combination
 type DateRangeValues struct {
 	// PivotValueRegions: The values of each pivot region.
 	PivotValueRegions []*PivotValueRegion `json:"pivotValueRegions,omitempty"`
@@ -608,56 +529,33 @@ func (s *DateRangeValues) MarshalJSON() ([]byte, error) {
 }
 
 // Dimension:
-// [Dimensions](https://support.google.com/analytics/answer/1033861)
-// are attributes of your data. For example, the dimension
-// `ga:city`
-// indicates the city, for example, "Paris" or "New York", from which
-// a session originates.
+// [Dimensions](https://support.google.com/analytics/answer/1033861) are
+// attributes of your data. For example, the dimension `ga:city`
+// indicates the city, for example, "Paris" or "New York", from which a
+// session originates.
 type Dimension struct {
 	// HistogramBuckets: If non-empty, we place dimension values into
-	// buckets after string to
-	// int64. Dimension values that are not the string representation of
-	// an
-	// integral value will be converted to zero.  The bucket values have to
-	// be in
-	// increasing order.  Each bucket is closed on the lower end, and open
-	// on the
-	// upper end. The "first" bucket includes all values less than the
-	// first
-	// boundary, the "last" bucket includes all values up to infinity.
-	// Dimension
-	// values that fall in a bucket get transformed to a new dimension
-	// value. For
-	// example, if one gives a list of "0, 1, 3, 4, 7", then we return
-	// the
-	// following buckets:
-	//
-	// - bucket #1: values < 0, dimension value "<0"
-	// - bucket #2: values in [0,1), dimension value "0"
-	// - bucket #3: values in [1,3), dimension value "1-2"
-	// - bucket #4: values in [3,4), dimension value "3"
-	// - bucket #5: values in [4,7), dimension value "4-6"
-	// - bucket #6: values >= 7, dimension value "7+"
-	//
-	// NOTE: If you are applying histogram mutation on any dimension, and
-	// using
-	// that dimension in sort, you will want to use the sort
-	// type
-	// `HISTOGRAM_BUCKET` for that purpose. Without that the dimension
-	// values
-	// will be sorted according to dictionary
-	// (lexicographic) order. For example the ascending dictionary order
-	// is:
-	//
-	//    "<50", "1001+", "121-1000", "50-120"
-	//
-	// And the ascending `HISTOGRAM_BUCKET` order is:
-	//
-	//    "<50", "50-120", "121-1000", "1001+"
-	//
-	// The client has to explicitly request "orderType":
-	// "HISTOGRAM_BUCKET"
-	// for a histogram-mutated dimension.
+	// buckets after string to int64. Dimension values that are not the
+	// string representation of an integral value will be converted to zero.
+	// The bucket values have to be in increasing order. Each bucket is
+	// closed on the lower end, and open on the upper end. The "first"
+	// bucket includes all values less than the first boundary, the "last"
+	// bucket includes all values up to infinity. Dimension values that fall
+	// in a bucket get transformed to a new dimension value. For example, if
+	// one gives a list of "0, 1, 3, 4, 7", then we return the following
+	// buckets: - bucket #1: values < 0, dimension value "<0" - bucket #2:
+	// values in [0,1), dimension value "0" - bucket #3: values in [1,3),
+	// dimension value "1-2" - bucket #4: values in [3,4), dimension value
+	// "3" - bucket #5: values in [4,7), dimension value "4-6" - bucket #6:
+	// values >= 7, dimension value "7+" NOTE: If you are applying histogram
+	// mutation on any dimension, and using that dimension in sort, you will
+	// want to use the sort type `HISTOGRAM_BUCKET` for that purpose.
+	// Without that the dimension values will be sorted according to
+	// dictionary (lexicographic) order. For example the ascending
+	// dictionary order is: "<50", "1001+", "121-1000", "50-120" And the
+	// ascending `HISTOGRAM_BUCKET` order is: "<50", "50-120", "121-1000",
+	// "1001+" The client has to explicitly request "orderType":
+	// "HISTOGRAM_BUCKET" for a histogram-mutated dimension.
 	HistogramBuckets googleapi.Int64s `json:"histogramBuckets,omitempty"`
 
 	// Name: Name of the dimension to fetch, for example `ga:browser`.
@@ -698,17 +596,15 @@ type DimensionFilter struct {
 	DimensionName string `json:"dimensionName,omitempty"`
 
 	// Expressions: Strings or regular expression to match against. Only the
-	// first value of
-	// the list is used for comparison unless the operator is `IN_LIST`.
-	// If `IN_LIST` operator, then the entire list is used to filter
-	// the
-	// dimensions as explained in the description of the `IN_LIST` operator.
+	// first value of the list is used for comparison unless the operator is
+	// `IN_LIST`. If `IN_LIST` operator, then the entire list is used to
+	// filter the dimensions as explained in the description of the
+	// `IN_LIST` operator.
 	Expressions []string `json:"expressions,omitempty"`
 
 	// Not: Logical `NOT` operator. If this boolean is set to true, then the
-	// matching
-	// dimension values will be excluded in the report. The default is
-	// false.
+	// matching dimension values will be excluded in the report. The default
+	// is false.
 	Not bool `json:"not,omitempty"`
 
 	// Operator: How to match the dimension to the expression. The default
@@ -718,44 +614,30 @@ type DimensionFilter struct {
 	//   "OPERATOR_UNSPECIFIED" - If the match type is unspecified, it is
 	// treated as a `REGEXP`.
 	//   "REGEXP" - The match expression is treated as a regular expression.
-	// All match types
-	// are not treated as regular expressions.
+	// All match types are not treated as regular expressions.
 	//   "BEGINS_WITH" - Matches the value which begin with the match
 	// expression provided.
 	//   "ENDS_WITH" - Matches the values which end with the match
 	// expression provided.
 	//   "PARTIAL" - Substring match.
 	//   "EXACT" - The value should match the match expression entirely.
-	//   "NUMERIC_EQUAL" - Integer comparison filters.
-	// case sensitivity is ignored for these and the expression
-	// is assumed to be a string representing an integer.
-	// Failure conditions:
-	//
-	// - If expression is not a valid int64, the client should expect
-	//   an error.
-	// - Input dimensions that are not valid int64 values will never match
-	// the
-	//   filter.
+	//   "NUMERIC_EQUAL" - Integer comparison filters. case sensitivity is
+	// ignored for these and the expression is assumed to be a string
+	// representing an integer. Failure conditions: - If expression is not a
+	// valid int64, the client should expect an error. - Input dimensions
+	// that are not valid int64 values will never match the filter.
 	//   "NUMERIC_GREATER_THAN" - Checks if the dimension is numerically
-	// greater than the match
-	// expression. Read the description for `NUMERIC_EQUALS` for
-	// restrictions.
+	// greater than the match expression. Read the description for
+	// `NUMERIC_EQUALS` for restrictions.
 	//   "NUMERIC_LESS_THAN" - Checks if the dimension is numerically less
-	// than the match expression.
-	// Read the description for `NUMERIC_EQUALS` for restrictions.
+	// than the match expression. Read the description for `NUMERIC_EQUALS`
+	// for restrictions.
 	//   "IN_LIST" - This option is used to specify a dimension filter whose
-	// expression can
-	// take any value from a selected list of values. This helps
-	// avoiding
-	// evaluating multiple exact match dimension filters which are OR'ed
-	// for
-	// every single response row. For example:
-	//
-	//     expressions: ["A", "B", "C"]
-	//
-	// Any response row whose dimension has it is value as A, B or C,
-	// matches
-	// this DimensionFilter.
+	// expression can take any value from a selected list of values. This
+	// helps avoiding evaluating multiple exact match dimension filters
+	// which are OR'ed for every single response row. For example:
+	// expressions: ["A", "B", "C"] Any response row whose dimension has it
+	// is value as A, B or C, matches this DimensionFilter.
 	Operator string `json:"operator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
@@ -782,17 +664,14 @@ func (s *DimensionFilter) MarshalJSON() ([]byte, error) {
 }
 
 // DimensionFilterClause: A group of dimension filters. Set the operator
-// value to specify how
-// the filters are logically combined.
+// value to specify how the filters are logically combined.
 type DimensionFilterClause struct {
 	// Filters: The repeated set of filters. They are logically combined
-	// based on the
-	// operator specified.
+	// based on the operator specified.
 	Filters []*DimensionFilter `json:"filters,omitempty"`
 
 	// Operator: The operator for combining multiple dimension filters. If
-	// unspecified, it
-	// is treated as an `OR`.
+	// unspecified, it is treated as an `OR`.
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified operator. It is treated as an
@@ -825,8 +704,7 @@ func (s *DimensionFilterClause) MarshalJSON() ([]byte, error) {
 }
 
 // DynamicSegment: Dynamic segment definition for defining the segment
-// within the request.
-// A segment can select users, sessions or both.
+// within the request. A segment can select users, sessions or both.
 type DynamicSegment struct {
 	// Name: The name of the dynamic segment.
 	Name string `json:"name,omitempty"`
@@ -961,29 +839,21 @@ func (s *EventData) MarshalJSON() ([]byte, error) {
 // GetReportsRequest: The batch request containing multiple report
 // request.
 type GetReportsRequest struct {
-	// ReportRequests: Requests, each request will have a separate
-	// response.
+	// ReportRequests: Requests, each request will have a separate response.
 	// There can be a maximum of 5 requests. All requests should have the
-	// same
-	// `dateRanges`, `viewId`, `segments`, `samplingLevel`, and
+	// same `dateRanges`, `viewId`, `segments`, `samplingLevel`, and
 	// `cohortGroup`.
 	ReportRequests []*ReportRequest `json:"reportRequests,omitempty"`
 
-	// UseResourceQuotas: Enables
-	// [resource
-	// based
-	// quotas](/analytics/devguides/reporting/core/v4/limits-quotas#ana
-	// lytics_reporting_api_v4),
-	// (defaults to `False`). If this field is set to `True` the
-	// per view (profile) quotas are governed by the computational
-	// cost of the request. Note that using cost based quotas will
-	// higher enable sampling rates. (10 Million for `SMALL`,
-	// 100M for `LARGE`. See the
-	// [limits and
-	// quotas
-	// documentation](/analytics/devguides/reporting/core/v4/limits-qu
-	// otas#analytics_reporting_api_v4)
-	// for details.
+	// UseResourceQuotas: Enables [resource based
+	// quotas](/analytics/devguides/reporting/core/v4/limits-quotas#analytics
+	// _reporting_api_v4), (defaults to `False`). If this field is set to
+	// `True` the per view (profile) quotas are governed by the
+	// computational cost of the request. Note that using cost based quotas
+	// will higher enable sampling rates. (10 Million for `SMALL`, 100M for
+	// `LARGE`. See the [limits and quotas
+	// documentation](/analytics/devguides/reporting/core/v4/limits-quotas#an
+	// alytics_reporting_api_v4) for details.
 	UseResourceQuotas bool `json:"useResourceQuotas,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReportRequests") to
@@ -1011,12 +881,10 @@ func (s *GetReportsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GetReportsResponse: The main response class which holds the reports
-// from the Reporting API
-// `batchGet` call.
+// from the Reporting API `batchGet` call.
 type GetReportsResponse struct {
 	// QueryCost: The amount of resource quota tokens deducted to execute
-	// the query. Includes
-	// all responses.
+	// the query. Includes all responses.
 	QueryCost int64 `json:"queryCost,omitempty"`
 
 	// Reports: Responses corresponding to each of the request.
@@ -1152,42 +1020,30 @@ func (s *GoalSetData) MarshalJSON() ([]byte, error) {
 }
 
 // Metric:
-// [Metrics](https://support.google.com/analytics/answer/1033861)
-// are the quantitative measurements. For example, the metric
-// `ga:users`
+// [Metrics](https://support.google.com/analytics/answer/1033861) are
+// the quantitative measurements. For example, the metric `ga:users`
 // indicates the total number of users for the requested time period.
 type Metric struct {
 	// Alias: An alias for the metric expression is an alternate name for
-	// the
-	// expression. The alias can be used for filtering and sorting. This
-	// field
-	// is optional and is useful if the expression is not a single metric
-	// but
-	// a complex expression which cannot be used in filtering and
-	// sorting.
-	// The alias is also used in the response column header.
+	// the expression. The alias can be used for filtering and sorting. This
+	// field is optional and is useful if the expression is not a single
+	// metric but a complex expression which cannot be used in filtering and
+	// sorting. The alias is also used in the response column header.
 	Alias string `json:"alias,omitempty"`
 
 	// Expression: A metric expression in the request. An expression is
-	// constructed from one
-	// or more metrics and numbers. Accepted operators include: Plus (+),
-	// Minus
-	// (-), Negation (Unary -), Divided by (/), Multiplied by (*),
-	// Parenthesis,
-	// Positive cardinal numbers (0-9), can include decimals and is limited
-	// to
-	// 1024 characters. Example `ga:totalRefunds/ga:users`, in most cases
-	// the
-	// metric expression is just a single metric name like
-	// `ga:users`.
-	// Adding mixed `MetricType` (E.g., `CURRENCY` + `PERCENTAGE`)
-	// metrics
-	// will result in unexpected results.
+	// constructed from one or more metrics and numbers. Accepted operators
+	// include: Plus (+), Minus (-), Negation (Unary -), Divided by (/),
+	// Multiplied by (*), Parenthesis, Positive cardinal numbers (0-9), can
+	// include decimals and is limited to 1024 characters. Example
+	// `ga:totalRefunds/ga:users`, in most cases the metric expression is
+	// just a single metric name like `ga:users`. Adding mixed `MetricType`
+	// (E.g., `CURRENCY` + `PERCENTAGE`) metrics will result in unexpected
+	// results.
 	Expression string `json:"expression,omitempty"`
 
 	// FormattingType: Specifies how the metric expression should be
-	// formatted, for example
-	// `INTEGER`.
+	// formatted, for example `INTEGER`.
 	//
 	// Possible values:
 	//   "METRIC_TYPE_UNSPECIFIED" - Metric type is unspecified.
@@ -1227,23 +1083,18 @@ type MetricFilter struct {
 	ComparisonValue string `json:"comparisonValue,omitempty"`
 
 	// MetricName: The metric that will be filtered on. A metricFilter must
-	// contain a metric
-	// name. A metric name can be an alias earlier defined as a metric or it
-	// can
-	// also be a metric expression.
+	// contain a metric name. A metric name can be an alias earlier defined
+	// as a metric or it can also be a metric expression.
 	MetricName string `json:"metricName,omitempty"`
 
 	// Not: Logical `NOT` operator. If this boolean is set to true, then the
-	// matching
-	// metric values will be excluded in the report. The default is false.
+	// matching metric values will be excluded in the report. The default is
+	// false.
 	Not bool `json:"not,omitempty"`
 
-	// Operator: Is the metric `EQUAL`, `LESS_THAN` or `GREATER_THAN`
-	// the
-	// comparisonValue, the default is `EQUAL`. If the operator
-	// is
-	// `IS_MISSING`, checks if the metric is missing and would ignore
-	// the
+	// Operator: Is the metric `EQUAL`, `LESS_THAN` or `GREATER_THAN` the
+	// comparisonValue, the default is `EQUAL`. If the operator is
+	// `IS_MISSING`, checks if the metric is missing and would ignore the
 	// comparisonValue.
 	//
 	// Possible values:
@@ -1255,8 +1106,8 @@ type MetricFilter struct {
 	// comparison value.
 	//   "GREATER_THAN" - Should the value of the metric be greater than to
 	// the comparison value.
-	//   "IS_MISSING" - Validates if the metric is missing.
-	// Doesn't take comparisonValue into account.
+	//   "IS_MISSING" - Validates if the metric is missing. Doesn't take
+	// comparisonValue into account.
 	Operator string `json:"operator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComparisonValue") to
@@ -1283,18 +1134,15 @@ func (s *MetricFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MetricFilterClause: Represents a group of metric filters.
-// Set the operator value to specify how the filters are logically
-// combined.
+// MetricFilterClause: Represents a group of metric filters. Set the
+// operator value to specify how the filters are logically combined.
 type MetricFilterClause struct {
 	// Filters: The repeated set of filters. They are logically combined
-	// based on the
-	// operator specified.
+	// based on the operator specified.
 	Filters []*MetricFilter `json:"filters,omitempty"`
 
 	// Operator: The operator for combining multiple metric filters. If
-	// unspecified, it is
-	// treated as an `OR`.
+	// unspecified, it is treated as an `OR`.
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified operator. It is treated as an
@@ -1398,8 +1246,7 @@ func (s *MetricHeaderEntry) MarshalJSON() ([]byte, error) {
 }
 
 // OrFiltersForSegment: A list of segment filters in the `OR` group are
-// combined with the logical OR
-// operator.
+// combined with the logical OR operator.
 type OrFiltersForSegment struct {
 	// SegmentFilterClauses: List of segment filters to be combined with a
 	// `OR` operator.
@@ -1433,11 +1280,8 @@ func (s *OrFiltersForSegment) MarshalJSON() ([]byte, error) {
 // OrderBy: Specifies the sorting options.
 type OrderBy struct {
 	// FieldName: The field which to sort by. The default sort order is
-	// ascending. Example:
-	// `ga:browser`.
-	// Note, that you can only specify one field for sort here. For
-	// example,
-	// `ga:browser, ga:city` is not valid.
+	// ascending. Example: `ga:browser`. Note, that you can only specify one
+	// field for sort here. For example, `ga:browser, ga:city` is not valid.
 	FieldName string `json:"fieldName,omitempty"`
 
 	// OrderType: The order type. The default orderType is `VALUE`.
@@ -1446,27 +1290,19 @@ type OrderBy struct {
 	//   "ORDER_TYPE_UNSPECIFIED" - Unspecified order type will be treated
 	// as sort based on value.
 	//   "VALUE" - The sort order is based on the value of the chosen
-	// column; looks only at
-	// the first date range.
+	// column; looks only at the first date range.
 	//   "DELTA" - The sort order is based on the difference of the values
-	// of the chosen
-	// column between the first two date ranges.  Usable only if there
-	// are
-	// exactly two date ranges.
+	// of the chosen column between the first two date ranges. Usable only
+	// if there are exactly two date ranges.
 	//   "SMART" - The sort order is based on weighted value of the chosen
-	// column.  If
-	// column has n/d format, then weighted value of this ratio will
-	// be `(n + totals.n)/(d + totals.d)` Usable only for metrics
-	// that
+	// column. If column has n/d format, then weighted value of this ratio
+	// will be `(n + totals.n)/(d + totals.d)` Usable only for metrics that
 	// represent ratios.
 	//   "HISTOGRAM_BUCKET" - Histogram order type is applicable only to
-	// dimension columns with
-	// non-empty histogram-buckets.
+	// dimension columns with non-empty histogram-buckets.
 	//   "DIMENSION_AS_INTEGER" - If the dimensions are fixed length
-	// numbers, ordinary sort would just
-	// work fine. `DIMENSION_AS_INTEGER` can be used if the dimensions
-	// are
-	// variable length numbers.
+	// numbers, ordinary sort would just work fine. `DIMENSION_AS_INTEGER`
+	// can be used if the dimensions are variable length numbers.
 	OrderType string `json:"orderType,omitempty"`
 
 	// SortOrder: The sorting order for the field.
@@ -1535,64 +1371,45 @@ func (s *PageviewData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Pivot: The Pivot describes the pivot section in the request.
-// The Pivot helps rearrange the information in the table for certain
-// reports
-// by pivoting your data on a second dimension.
+// Pivot: The Pivot describes the pivot section in the request. The
+// Pivot helps rearrange the information in the table for certain
+// reports by pivoting your data on a second dimension.
 type Pivot struct {
 	// DimensionFilterClauses: DimensionFilterClauses are logically combined
-	// with an `AND` operator: only
-	// data that is included by all these DimensionFilterClauses contributes
-	// to
-	// the values in this pivot region. Dimension filters can be used to
-	// restrict
-	// the columns shown in the pivot region. For example if you
-	// have
-	// `ga:browser` as the requested dimension in the pivot region, and
-	// you
-	// specify key filters to restrict `ga:browser` to only "IE" or
-	// "Firefox",
-	// then only those two browsers would show up as columns.
+	// with an `AND` operator: only data that is included by all these
+	// DimensionFilterClauses contributes to the values in this pivot
+	// region. Dimension filters can be used to restrict the columns shown
+	// in the pivot region. For example if you have `ga:browser` as the
+	// requested dimension in the pivot region, and you specify key filters
+	// to restrict `ga:browser` to only "IE" or "Firefox", then only those
+	// two browsers would show up as columns.
 	DimensionFilterClauses []*DimensionFilterClause `json:"dimensionFilterClauses,omitempty"`
 
 	// Dimensions: A list of dimensions to show as pivot columns. A Pivot
-	// can have a maximum
-	// of 4 dimensions. Pivot dimensions are part of the restriction on
-	// the
-	// total number of dimensions allowed in the request.
+	// can have a maximum of 4 dimensions. Pivot dimensions are part of the
+	// restriction on the total number of dimensions allowed in the request.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
-	// MaxGroupCount: Specifies the maximum number of groups to return.
-	// The default value is 10, also the maximum value is 1,000.
+	// MaxGroupCount: Specifies the maximum number of groups to return. The
+	// default value is 10, also the maximum value is 1,000.
 	MaxGroupCount int64 `json:"maxGroupCount,omitempty"`
 
-	// Metrics: The pivot metrics. Pivot metrics are part of the
-	// restriction on total number of metrics allowed in the request.
+	// Metrics: The pivot metrics. Pivot metrics are part of the restriction
+	// on total number of metrics allowed in the request.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// StartGroup: If k metrics were requested, then the response will
-	// contain some
-	// data-dependent multiple of k columns in the report.  E.g., if you
-	// pivoted
-	// on the dimension `ga:browser` then you'd get k columns for "Firefox",
-	// k
-	// columns for "IE", k columns for "Chrome", etc. The ordering of the
-	// groups
-	// of columns is determined by descending order of "total" for the first
-	// of
-	// the k values.  Ties are broken by lexicographic ordering of the
-	// first
-	// pivot dimension, then lexicographic ordering of the second
-	// pivot
-	// dimension, and so on.  E.g., if the totals for the first value
-	// for
-	// Firefox, IE, and Chrome were 8, 2, 8, respectively, the order of
-	// columns
-	// would be Chrome, Firefox, IE.
-	//
-	// The following let you choose which of the groups of k columns
-	// are
-	// included in the response.
+	// contain some data-dependent multiple of k columns in the report.
+	// E.g., if you pivoted on the dimension `ga:browser` then you'd get k
+	// columns for "Firefox", k columns for "IE", k columns for "Chrome",
+	// etc. The ordering of the groups of columns is determined by
+	// descending order of "total" for the first of the k values. Ties are
+	// broken by lexicographic ordering of the first pivot dimension, then
+	// lexicographic ordering of the second pivot dimension, and so on.
+	// E.g., if the totals for the first value for Firefox, IE, and Chrome
+	// were 8, 2, 8, respectively, the order of columns would be Chrome,
+	// Firefox, IE. The following let you choose which of the groups of k
+	// columns are included in the response.
 	StartGroup int64 `json:"startGroup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1654,8 +1471,8 @@ func (s *PivotHeader) MarshalJSON() ([]byte, error) {
 }
 
 // PivotHeaderEntry: The headers for the each of the metric column
-// corresponding to the metrics
-// requested in the pivots section of the response.
+// corresponding to the metrics requested in the pivots section of the
+// response.
 type PivotHeaderEntry struct {
 	// DimensionNames: The name of the dimensions in the pivot response.
 	DimensionNames []string `json:"dimensionNames,omitempty"`
@@ -1724,8 +1541,7 @@ type ProductData struct {
 	ItemRevenue float64 `json:"itemRevenue,omitempty"`
 
 	// ProductName: The product name, supplied by the e-commerce tracking
-	// application, for
-	// the purchased items.
+	// application, for the purchased items.
 	ProductName string `json:"productName,omitempty"`
 
 	// ProductQuantity: Total number of this product units in the
@@ -1810,29 +1626,23 @@ func (s *Report) MarshalJSON() ([]byte, error) {
 // ReportData: The data part of the report.
 type ReportData struct {
 	// DataLastRefreshed: The last time the data in the report was
-	// refreshed. All the hits received
-	// before this timestamp are included in the calculation of the report.
+	// refreshed. All the hits received before this timestamp are included
+	// in the calculation of the report.
 	DataLastRefreshed string `json:"dataLastRefreshed,omitempty"`
 
 	// IsDataGolden: Indicates if response to this request is golden or not.
-	// Data is
-	// golden when the exact same request will not produce any new results
-	// if
-	// asked at a later point in time.
+	// Data is golden when the exact same request will not produce any new
+	// results if asked at a later point in time.
 	IsDataGolden bool `json:"isDataGolden,omitempty"`
 
 	// Maximums: Minimum and maximum values seen over all matching rows.
-	// These are both
-	// empty when `hideValueRanges` in the request is false, or
-	// when
-	// rowCount is zero.
+	// These are both empty when `hideValueRanges` in the request is false,
+	// or when rowCount is zero.
 	Maximums []*DateRangeValues `json:"maximums,omitempty"`
 
 	// Minimums: Minimum and maximum values seen over all matching rows.
-	// These are both
-	// empty when `hideValueRanges` in the request is false, or
-	// when
-	// rowCount is zero.
+	// These are both empty when `hideValueRanges` in the request is false,
+	// or when rowCount is zero.
 	Minimums []*DateRangeValues `json:"minimums,omitempty"`
 
 	// RowCount: Total number of matching rows for this query.
@@ -1842,42 +1652,31 @@ type ReportData struct {
 	// dimensions.
 	Rows []*ReportRow `json:"rows,omitempty"`
 
-	// SamplesReadCounts: If the results
-	// are
-	// [sampled](https://support.google.com/analytics/answer/2637192),
-	// th
-	// is returns the total number of samples read, one entry per date
-	// range.
-	// If the results are not sampled this field will not be defined.
-	// See
+	// SamplesReadCounts: If the results are
+	// [sampled](https://support.google.com/analytics/answer/2637192), this
+	// returns the total number of samples read, one entry per date range.
+	// If the results are not sampled this field will not be defined. See
 	// [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
-	// for details.
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// details.
 	SamplesReadCounts googleapi.Int64s `json:"samplesReadCounts,omitempty"`
 
-	// SamplingSpaceSizes: If the results
-	// are
-	// [sampled](https://support.google.com/analytics/answer/2637192),
-	// th
-	// is returns the total number of
-	// samples present, one entry per date range. If the results are not
-	// sampled
-	// this field will not be defined. See
-	// [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
-	// for details.
+	// SamplingSpaceSizes: If the results are
+	// [sampled](https://support.google.com/analytics/answer/2637192), this
+	// returns the total number of samples present, one entry per date
+	// range. If the results are not sampled this field will not be defined.
+	// See [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// details.
 	SamplingSpaceSizes googleapi.Int64s `json:"samplingSpaceSizes,omitempty"`
 
 	// Totals: For each requested date range, for the set of all rows that
-	// match
-	// the query, every requested value format gets a total. The total
-	// for a value format is computed by first totaling the
-	// metrics
-	// mentioned in the value format and then evaluating the value
-	// format as a scalar expression.  E.g., The "totals" for
-	// `3 / (ga:sessions + 2)` we compute
-	// `3 / ((sum of all relevant ga:sessions) + 2)`.
-	// Totals are computed before pagination.
+	// match the query, every requested value format gets a total. The total
+	// for a value format is computed by first totaling the metrics
+	// mentioned in the value format and then evaluating the value format as
+	// a scalar expression. E.g., The "totals" for `3 / (ga:sessions + 2)`
+	// we compute `3 / ((sum of all relevant ga:sessions) + 2)`. Totals are
+	// computed before pagination.
 	Totals []*DateRangeValues `json:"totals,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataLastRefreshed")
@@ -1908,174 +1707,128 @@ func (s *ReportData) MarshalJSON() ([]byte, error) {
 // API request.
 type ReportRequest struct {
 	// CohortGroup: Cohort group associated with this request. If there is a
-	// cohort group
-	// in the request the `ga:cohort` dimension must be present.
-	// Every [ReportRequest](#ReportRequest) within a `batchGet` method
-	// must
-	// contain the same `cohortGroup` definition.
+	// cohort group in the request the `ga:cohort` dimension must be
+	// present. Every [ReportRequest](#ReportRequest) within a `batchGet`
+	// method must contain the same `cohortGroup` definition.
 	CohortGroup *CohortGroup `json:"cohortGroup,omitempty"`
 
 	// DateRanges: Date ranges in the request. The request can have a
-	// maximum of 2 date
-	// ranges. The response will contain a set of metric values for
-	// each
-	// combination of the dimensions for each date range in the request. So,
-	// if
-	// there are two date ranges, there will be two set of metric values,
-	// one for
-	// the original date range and one for the second date range.
-	// The `reportRequest.dateRanges` field should not be specified for
-	// cohorts
-	// or Lifetime value requests.
-	// If a date range is not provided, the default date range is
-	// (startDate:
-	// current date - 7 days, endDate: current date - 1 day).
-	// Every
-	// [ReportRequest](#ReportRequest) within a `batchGet` method
-	// must
+	// maximum of 2 date ranges. The response will contain a set of metric
+	// values for each combination of the dimensions for each date range in
+	// the request. So, if there are two date ranges, there will be two set
+	// of metric values, one for the original date range and one for the
+	// second date range. The `reportRequest.dateRanges` field should not be
+	// specified for cohorts or Lifetime value requests. If a date range is
+	// not provided, the default date range is (startDate: current date - 7
+	// days, endDate: current date - 1 day). Every
+	// [ReportRequest](#ReportRequest) within a `batchGet` method must
 	// contain the same `dateRanges` definition.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
 	// DimensionFilterClauses: The dimension filter clauses for filtering
-	// Dimension Values. They are
-	// logically combined with the `AND` operator. Note that filtering
-	// occurs
-	// before any dimensions are aggregated, so that the returned
-	// metrics
-	// represent the total for only the relevant dimensions.
+	// Dimension Values. They are logically combined with the `AND`
+	// operator. Note that filtering occurs before any dimensions are
+	// aggregated, so that the returned metrics represent the total for only
+	// the relevant dimensions.
 	DimensionFilterClauses []*DimensionFilterClause `json:"dimensionFilterClauses,omitempty"`
 
-	// Dimensions: The dimensions requested.
-	// Requests can have a total of 9 dimensions.
+	// Dimensions: The dimensions requested. Requests can have a total of 9
+	// dimensions.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
 	// FiltersExpression: Dimension or metric filters that restrict the data
-	// returned for your
-	// request. To use the `filtersExpression`, supply a dimension or metric
-	// on
-	// which to filter, followed by the filter expression. For example,
-	// the
-	// following expression selects `ga:browser` dimension which starts
-	// with
-	// Firefox; `ga:browser=~^Firefox`. For more information on
-	// dimensions
-	// and metric filters,
-	// see
-	// [Filters
-	// reference](https://developers.google.com/analytics/devgui
-	// des/reporting/core/v3/reference#filters).
+	// returned for your request. To use the `filtersExpression`, supply a
+	// dimension or metric on which to filter, followed by the filter
+	// expression. For example, the following expression selects
+	// `ga:browser` dimension which starts with Firefox;
+	// `ga:browser=~^Firefox`. For more information on dimensions and metric
+	// filters, see [Filters
+	// reference](https://developers.google.com/analytics/devguides/reporting
+	// /core/v3/reference#filters).
 	FiltersExpression string `json:"filtersExpression,omitempty"`
 
 	// HideTotals: If set to true, hides the total of all metrics for all
-	// the matching rows,
-	// for every date range. The default false and will return the totals.
+	// the matching rows, for every date range. The default false and will
+	// return the totals.
 	HideTotals bool `json:"hideTotals,omitempty"`
 
 	// HideValueRanges: If set to true, hides the minimum and maximum across
-	// all matching rows.
-	// The default is false and the value ranges are returned.
+	// all matching rows. The default is false and the value ranges are
+	// returned.
 	HideValueRanges bool `json:"hideValueRanges,omitempty"`
 
 	// IncludeEmptyRows: If set to false, the response does not include rows
-	// if all the retrieved
-	// metrics are equal to zero. The default is false which will exclude
-	// these
-	// rows.
+	// if all the retrieved metrics are equal to zero. The default is false
+	// which will exclude these rows.
 	IncludeEmptyRows bool `json:"includeEmptyRows,omitempty"`
 
 	// MetricFilterClauses: The metric filter clauses. They are logically
-	// combined with the `AND`
-	// operator.  Metric filters look at only the first date range and not
-	// the
-	// comparing date range. Note that filtering on metrics occurs after
-	// the
-	// metrics are aggregated.
+	// combined with the `AND` operator. Metric filters look at only the
+	// first date range and not the comparing date range. Note that
+	// filtering on metrics occurs after the metrics are aggregated.
 	MetricFilterClauses []*MetricFilterClause `json:"metricFilterClauses,omitempty"`
 
-	// Metrics: The metrics requested.
-	// Requests must specify at least one metric. Requests can have a
-	// total of 10 metrics.
+	// Metrics: The metrics requested. Requests must specify at least one
+	// metric. Requests can have a total of 10 metrics.
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// OrderBys: Sort order on output rows. To compare two rows, the
-	// elements of the
-	// following are applied in order until a difference is found.  All
-	// date
-	// ranges in the output get the same row order.
+	// elements of the following are applied in order until a difference is
+	// found. All date ranges in the output get the same row order.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 
 	// PageSize: Page size is for paging and specifies the maximum number of
-	// returned rows.
-	// Page size should be >= 0. A query returns the default of 1,000
-	// rows.
-	// The Analytics Core Reporting API returns a maximum of 100,000 rows
-	// per
-	// request, no matter how many you ask for. It can also return fewer
-	// rows
-	// than requested, if there aren't as many dimension segments as you
-	// expect.
-	// For instance, there are fewer than 300 possible values for
-	// `ga:country`,
-	// so when segmenting only by country, you can't get more than 300
-	// rows,
-	// even if you set `pageSize` to a higher value.
+	// returned rows. Page size should be >= 0. A query returns the default
+	// of 1,000 rows. The Analytics Core Reporting API returns a maximum of
+	// 100,000 rows per request, no matter how many you ask for. It can also
+	// return fewer rows than requested, if there aren't as many dimension
+	// segments as you expect. For instance, there are fewer than 300
+	// possible values for `ga:country`, so when segmenting only by country,
+	// you can't get more than 300 rows, even if you set `pageSize` to a
+	// higher value.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: A continuation token to get the next page of the results.
-	// Adding this to
-	// the request will return the rows after the pageToken. The pageToken
-	// should
-	// be the value returned in the nextPageToken parameter in the response
-	// to
-	// the GetReports request.
+	// Adding this to the request will return the rows after the pageToken.
+	// The pageToken should be the value returned in the nextPageToken
+	// parameter in the response to the GetReports request.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Pivots: The pivot definitions. Requests can have a maximum of 2
 	// pivots.
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
-	// SamplingLevel: The desired
-	// report
-	// [sample](https://support.google.com/analytics/answer/2637192)
-	// size.
+	// SamplingLevel: The desired report
+	// [sample](https://support.google.com/analytics/answer/2637192) size.
 	// If the the `samplingLevel` field is unspecified the `DEFAULT`
-	// sampling
-	// level is used. Every [ReportRequest](#ReportRequest) within
-	// a
-	// `batchGet` method must contain the same `samplingLevel` definition.
-	// See
-	// [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
-	//  for details.
+	// sampling level is used. Every [ReportRequest](#ReportRequest) within
+	// a `batchGet` method must contain the same `samplingLevel` definition.
+	// See [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// details.
 	//
 	// Possible values:
 	//   "SAMPLING_UNSPECIFIED" - If the `samplingLevel` field is
-	// unspecified the `DEFAULT` sampling level
-	// is used.
+	// unspecified the `DEFAULT` sampling level is used.
 	//   "DEFAULT" - Returns response with a sample size that balances speed
-	// and
-	// accuracy.
+	// and accuracy.
 	//   "SMALL" - It returns a fast response with a smaller sampling size.
 	//   "LARGE" - Returns a more accurate response using a large sampling
-	// size. But this
-	// may result in response being slower.
+	// size. But this may result in response being slower.
 	SamplingLevel string `json:"samplingLevel,omitempty"`
 
 	// Segments: Segment the data returned for the request. A segment
-	// definition helps look
-	// at a subset of the segment request. A request can contain up to
-	// four
-	// segments. Every [ReportRequest](#ReportRequest) within a
-	// `batchGet` method must contain the same `segments` definition.
-	// Requests
-	// with segments must have the `ga:segment` dimension.
+	// definition helps look at a subset of the segment request. A request
+	// can contain up to four segments. Every
+	// [ReportRequest](#ReportRequest) within a `batchGet` method must
+	// contain the same `segments` definition. Requests with segments must
+	// have the `ga:segment` dimension.
 	Segments []*Segment `json:"segments,omitempty"`
 
-	// ViewId: The Analytics
-	// [view ID](https://support.google.com/analytics/answer/1009618)
-	// from which to retrieve data. Every
-	// [ReportRequest](#ReportRequest)
-	// within a `batchGet` method must contain the same `viewId`.
+	// ViewId: The Analytics [view
+	// ID](https://support.google.com/analytics/answer/1009618) from which
+	// to retrieve data. Every [ReportRequest](#ReportRequest) within a
+	// `batchGet` method must contain the same `viewId`.
 	ViewId string `json:"viewId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortGroup") to
@@ -2133,8 +1886,7 @@ func (s *ReportRow) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceQuotasRemaining: The resource quota tokens remaining for the
-// property after the request is
-// completed.
+// property after the request is completed.
 type ResourceQuotasRemaining struct {
 	// DailyQuotaTokensRemaining: Daily resource quota remaining remaining.
 	DailyQuotaTokensRemaining int64 `json:"dailyQuotaTokensRemaining,omitempty"`
@@ -2208,20 +1960,17 @@ func (s *ScreenviewData) MarshalJSON() ([]byte, error) {
 // Reporting API `userActivity:get` call.
 type SearchUserActivityRequest struct {
 	// ActivityTypes: Set of all activity types being requested. Only
-	// acvities matching these
-	// types will be returned in the response. If empty, all activies will
-	// be
-	// returned.
+	// acvities matching these types will be returned in the response. If
+	// empty, all activies will be returned.
 	//
 	// Possible values:
 	//   "ACTIVITY_TYPE_UNSPECIFIED" - ActivityType will never have this
-	// value in the response. Using this type in
-	// the request will result in an error.
+	// value in the response. Using this type in the request will result in
+	// an error.
 	//   "PAGEVIEW" - Used when the activity resulted out of a visitor
 	// viewing a page.
 	//   "SCREENVIEW" - Used when the activity resulted out of a visitor
-	// using an application on a
-	// mobile device.
+	// using an application on a mobile device.
 	//   "GOAL" - Used to denote that a goal type activity.
 	//   "ECOMMERCE" - An e-commerce transaction was performed by the
 	// visitor on the page.
@@ -2229,42 +1978,33 @@ type SearchUserActivityRequest struct {
 	ActivityTypes []string `json:"activityTypes,omitempty"`
 
 	// DateRange: Date range for which to retrieve the user activity. If a
-	// date range is not
-	// provided, the default date range is (startDate: current date - 7
-	// days,
-	// endDate: current date - 1 day).
+	// date range is not provided, the default date range is (startDate:
+	// current date - 7 days, endDate: current date - 1 day).
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// PageSize: Page size is for paging and specifies the maximum number of
-	// returned rows.
-	// Page size should be > 0. If the value is 0 or if the field isn't
-	// specified,
-	// the request returns the default of 1000 rows per page.
+	// returned rows. Page size should be > 0. If the value is 0 or if the
+	// field isn't specified, the request returns the default of 1000 rows
+	// per page.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: A continuation token to get the next page of the results.
-	// Adding this to
-	// the request will return the rows after the pageToken. The pageToken
-	// should
-	// be the value returned in the nextPageToken parameter in the response
-	// to
-	// the [SearchUserActivityRequest](#SearchUserActivityRequest) request.
+	// Adding this to the request will return the rows after the pageToken.
+	// The pageToken should be the value returned in the nextPageToken
+	// parameter in the response to the
+	// [SearchUserActivityRequest](#SearchUserActivityRequest) request.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// User: Required. Unique user Id to query for.
-	// Every
+	// User: Required. Unique user Id to query for. Every
 	// [SearchUserActivityRequest](#SearchUserActivityRequest) must contain
-	// this
-	// field.
+	// this field.
 	User *User `json:"user,omitempty"`
 
-	// ViewId: Required. The Analytics
-	// [view ID](https://support.google.com/analytics/answer/1009618)
-	// from which to retrieve data.
-	// Every
+	// ViewId: Required. The Analytics [view
+	// ID](https://support.google.com/analytics/answer/1009618) from which
+	// to retrieve data. Every
 	// [SearchUserActivityRequest](#SearchUserActivityRequest) must contain
-	// the
-	// `viewId`.
+	// the `viewId`.
 	ViewId string `json:"viewId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTypes") to
@@ -2293,20 +2033,16 @@ func (s *SearchUserActivityRequest) MarshalJSON() ([]byte, error) {
 // SearchUserActivityResponse: The response from `userActivity:get`
 // call.
 type SearchUserActivityResponse struct {
-	// NextPageToken: This token should be passed
-	// to
+	// NextPageToken: This token should be passed to
 	// [SearchUserActivityRequest](#SearchUserActivityRequest) to retrieve
-	// the
-	// next page.
+	// the next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SampleRate: This field represents the
-	// [sampling rate](https://support.google.com/analytics/answer/2637192)
-	// for
-	// the given request and is a number between 0.0 to 1.0. See
-	// [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling)
-	// for details.
+	// SampleRate: This field represents the [sampling
+	// rate](https://support.google.com/analytics/answer/2637192) for the
+	// given request and is a number between 0.0 to 1.0. See [developer
+	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// details.
 	SampleRate float64 `json:"sampleRate,omitempty"`
 
 	// Sessions: Each record represents a session (device details, duration,
@@ -2358,12 +2094,10 @@ func (s *SearchUserActivityResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Segment: The segment definition, if the report needs to be
-// segmented.
+// Segment: The segment definition, if the report needs to be segmented.
 // A Segment is a subset of the Analytics data. For example, of the
-// entire
-// set of users, one Segment might be users from a particular country or
-// city.
+// entire set of users, one Segment might be users from a particular
+// country or city.
 type Segment struct {
 	// DynamicSegment: A dynamic segment definition in the request.
 	DynamicSegment *DynamicSegment `json:"dynamicSegment,omitempty"`
@@ -2397,12 +2131,11 @@ func (s *Segment) MarshalJSON() ([]byte, error) {
 }
 
 // SegmentDefinition: SegmentDefinition defines the segment to be a set
-// of SegmentFilters which
-// are combined together with a logical `AND` operation.
+// of SegmentFilters which are combined together with a logical `AND`
+// operation.
 type SegmentDefinition struct {
 	// SegmentFilters: A segment is defined by a set of segment filters
-	// which are combined
-	// together with a logical `AND` operation.
+	// which are combined together with a logical `AND` operation.
 	SegmentFilters []*SegmentFilter `json:"segmentFilters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SegmentFilters") to
@@ -2459,8 +2192,7 @@ type SegmentDimensionFilter struct {
 	//   "OPERATOR_UNSPECIFIED" - If the match type is unspecified, it is
 	// treated as a REGEXP.
 	//   "REGEXP" - The match expression is treated as a regular expression.
-	// All other match
-	// types are not treated as regular expressions.
+	// All other match types are not treated as regular expressions.
 	//   "BEGINS_WITH" - Matches the values which begin with the match
 	// expression provided.
 	//   "ENDS_WITH" - Matches the values which end with the match
@@ -2468,37 +2200,21 @@ type SegmentDimensionFilter struct {
 	//   "PARTIAL" - Substring match.
 	//   "EXACT" - The value should match the match expression entirely.
 	//   "IN_LIST" - This option is used to specify a dimension filter whose
-	// expression can
-	// take any value from a selected list of values. This helps
-	// avoiding
-	// evaluating multiple exact match dimension filters which are OR'ed
-	// for
-	// every single response row. For example:
-	//
-	//     expressions: ["A", "B", "C"]
-	//
-	// Any response row whose dimension has it is value as A, B or C,
-	// matches
-	// this DimensionFilter.
-	//   "NUMERIC_LESS_THAN" - Integer comparison filters.
-	// case sensitivity is ignored for these and the expression
-	// is assumed to be a string representing an integer.
-	// Failure conditions:
-	//
-	// - if expression is not a valid int64, the client should expect
-	//   an error.
-	// - input dimensions that are not valid int64 values will never match
-	// the
-	//   filter.
-	//
-	// Checks if the dimension is numerically less than the match
-	// expression.
+	// expression can take any value from a selected list of values. This
+	// helps avoiding evaluating multiple exact match dimension filters
+	// which are OR'ed for every single response row. For example:
+	// expressions: ["A", "B", "C"] Any response row whose dimension has it
+	// is value as A, B or C, matches this DimensionFilter.
+	//   "NUMERIC_LESS_THAN" - Integer comparison filters. case sensitivity
+	// is ignored for these and the expression is assumed to be a string
+	// representing an integer. Failure conditions: - if expression is not a
+	// valid int64, the client should expect an error. - input dimensions
+	// that are not valid int64 values will never match the filter. Checks
+	// if the dimension is numerically less than the match expression.
 	//   "NUMERIC_GREATER_THAN" - Checks if the dimension is numerically
-	// greater than the match
-	// expression.
+	// greater than the match expression.
 	//   "NUMERIC_BETWEEN" - Checks if the dimension is numerically between
-	// the minimum and maximum
-	// of the match expression, boundaries excluded.
+	// the minimum and maximum of the match expression, boundaries excluded.
 	Operator string `json:"operator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
@@ -2525,45 +2241,27 @@ func (s *SegmentDimensionFilter) MarshalJSON() ([]byte, error) {
 }
 
 // SegmentFilter: SegmentFilter defines the segment to be either a
-// simple or a sequence
-// segment. A simple segment condition contains dimension and metric
-// conditions
-// to select the sessions or users. A sequence segment condition can be
-// used to
-// select users or sessions based on sequential conditions.
+// simple or a sequence segment. A simple segment condition contains
+// dimension and metric conditions to select the sessions or users. A
+// sequence segment condition can be used to select users or sessions
+// based on sequential conditions.
 type SegmentFilter struct {
-	// Not: If true, match the complement of simple or sequence segment.
-	// For example, to match all visits not from "New York", we can define
-	// the
-	// segment as follows:
-	//
-	//       "sessionSegment": {
-	//         "segmentFilters": [{
-	//           "simpleSegment" :{
-	//             "orFiltersForSegment": [{
-	//               "segmentFilterClauses":[{
-	//                 "dimensionFilter": {
-	//                   "dimensionName": "ga:city",
-	//                   "expressions": ["New York"]
-	//                 }
-	//               }]
-	//             }]
-	//           },
-	//           "not": "True"
-	//         }]
-	//       },
+	// Not: If true, match the complement of simple or sequence segment. For
+	// example, to match all visits not from "New York", we can define the
+	// segment as follows: "sessionSegment": { "segmentFilters": [{
+	// "simpleSegment" :{ "orFiltersForSegment": [{
+	// "segmentFilterClauses":[{ "dimensionFilter": { "dimensionName":
+	// "ga:city", "expressions": ["New York"] } }] }] }, "not": "True" }] },
 	Not bool `json:"not,omitempty"`
 
 	// SequenceSegment: Sequence conditions consist of one or more steps,
-	// where each step is
-	// defined by one or more dimension/metric conditions. Multiple steps
-	// can
-	// be combined with special sequence operators.
+	// where each step is defined by one or more dimension/metric
+	// conditions. Multiple steps can be combined with special sequence
+	// operators.
 	SequenceSegment *SequenceSegment `json:"sequenceSegment,omitempty"`
 
 	// SimpleSegment: A Simple segment conditions consist of one or more
-	// dimension/metric
-	// conditions that can be combined
+	// dimension/metric conditions that can be combined
 	SimpleSegment *SimpleSegment `json:"simpleSegment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Not") to
@@ -2590,8 +2288,7 @@ func (s *SegmentFilter) MarshalJSON() ([]byte, error) {
 }
 
 // SegmentFilterClause: Filter Clause to be used in a segment
-// definition, can be wither a metric or
-// a dimension filter.
+// definition, can be wither a metric or a dimension filter.
 type SegmentFilterClause struct {
 	// DimensionFilter: Dimension Filter for the segment definition.
 	DimensionFilter *SegmentDimensionFilter `json:"dimensionFilter,omitempty"`
@@ -2630,8 +2327,7 @@ func (s *SegmentFilterClause) MarshalJSON() ([]byte, error) {
 // clause.
 type SegmentMetricFilter struct {
 	// ComparisonValue: The value to compare against. If the operator is
-	// `BETWEEN`, this value is
-	// treated as minimum comparison value.
+	// `BETWEEN`, this value is treated as minimum comparison value.
 	ComparisonValue string `json:"comparisonValue,omitempty"`
 
 	// MaxComparisonValue: Max comparison value is only used for `BETWEEN`
@@ -2639,13 +2335,11 @@ type SegmentMetricFilter struct {
 	MaxComparisonValue string `json:"maxComparisonValue,omitempty"`
 
 	// MetricName: The metric that will be filtered on. A `metricFilter`
-	// must contain a
-	// metric name.
+	// must contain a metric name.
 	MetricName string `json:"metricName,omitempty"`
 
 	// Operator: Specifies is the operation to perform to compare the
-	// metric. The default
-	// is `EQUAL`.
+	// metric. The default is `EQUAL`.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_OPERATOR" - Unspecified operator is treated as
@@ -2656,24 +2350,18 @@ type SegmentMetricFilter struct {
 	// comparison value.
 	//   "EQUAL" - Equals operator.
 	//   "BETWEEN" - For between operator, both the minimum and maximum are
-	// exclusive.
-	// We will use `LT` and `GT` for comparison.
+	// exclusive. We will use `LT` and `GT` for comparison.
 	Operator string `json:"operator,omitempty"`
 
 	// Scope: Scope for a metric defines the level at which that metric is
-	// defined.  The
-	// specified metric scope must be equal to or greater than its primary
-	// scope
-	// as defined in the data model. The primary scope is defined by if
-	// the
-	// segment is selecting users or sessions.
+	// defined. The specified metric scope must be equal to or greater than
+	// its primary scope as defined in the data model. The primary scope is
+	// defined by if the segment is selecting users or sessions.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_SCOPE" - If the scope is unspecified, it defaults to
-	// the condition scope,
-	// `USER` or `SESSION` depending on if the segment is trying to
-	// choose
-	// users or sessions.
+	// the condition scope, `USER` or `SESSION` depending on if the segment
+	// is trying to choose users or sessions.
 	//   "PRODUCT" - Product scope.
 	//   "HIT" - Hit scope.
 	//   "SESSION" - Session scope.
@@ -2707,8 +2395,7 @@ func (s *SegmentMetricFilter) MarshalJSON() ([]byte, error) {
 // SegmentSequenceStep: A segment sequence definition.
 type SegmentSequenceStep struct {
 	// MatchType: Specifies if the step immediately precedes or can be any
-	// time before the
-	// next step.
+	// time before the next step.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_MATCH_TYPE" - Unspecified match type is treated as
@@ -2716,13 +2403,11 @@ type SegmentSequenceStep struct {
 	//   "PRECEDES" - Operator indicates that the previous step precedes the
 	// next step.
 	//   "IMMEDIATELY_PRECEDES" - Operator indicates that the previous step
-	// immediately precedes the next
-	// step.
+	// immediately precedes the next step.
 	MatchType string `json:"matchType,omitempty"`
 
 	// OrFiltersForSegment: A sequence is specified with a list of Or
-	// grouped filters which are
-	// combined with `AND` operator.
+	// grouped filters which are combined with `AND` operator.
 	OrFiltersForSegment []*OrFiltersForSegment `json:"orFiltersForSegment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MatchType") to
@@ -2749,14 +2434,12 @@ func (s *SegmentSequenceStep) MarshalJSON() ([]byte, error) {
 }
 
 // SequenceSegment: Sequence conditions consist of one or more steps,
-// where each step is defined
-// by one or more dimension/metric conditions. Multiple steps can be
-// combined
-// with special sequence operators.
+// where each step is defined by one or more dimension/metric
+// conditions. Multiple steps can be combined with special sequence
+// operators.
 type SequenceSegment struct {
 	// FirstStepShouldMatchFirstHit: If set, first step condition must match
-	// the first hit of the visitor (in
-	// the date range).
+	// the first hit of the visitor (in the date range).
 	FirstStepShouldMatchFirstHit bool `json:"firstStepShouldMatchFirstHit,omitempty"`
 
 	// SegmentSequenceSteps: The list of steps in the sequence.
@@ -2788,12 +2471,10 @@ func (s *SequenceSegment) MarshalJSON() ([]byte, error) {
 }
 
 // SimpleSegment: A Simple segment conditions consist of one or more
-// dimension/metric
-// conditions that can be combined.
+// dimension/metric conditions that can be combined.
 type SimpleSegment struct {
 	// OrFiltersForSegment: A list of segment filters groups which are
-	// combined with logical `AND`
-	// operator.
+	// combined with logical `AND` operator.
 	OrFiltersForSegment []*OrFiltersForSegment `json:"orFiltersForSegment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OrFiltersForSegment")
@@ -2821,12 +2502,10 @@ func (s *SimpleSegment) MarshalJSON() ([]byte, error) {
 }
 
 // TransactionData: Represents details collected when the visitor
-// performs a transaction on the
-// page.
+// performs a transaction on the page.
 type TransactionData struct {
 	// TransactionId: The transaction ID, supplied by the e-commerce
-	// tracking method, for the
-	// purchase in the shopping cart.
+	// tracking method, for the purchase in the shopping cart.
 	TransactionId string `json:"transactionId,omitempty"`
 
 	// TransactionRevenue: The total sale revenue (excluding shipping and
@@ -2883,16 +2562,14 @@ func (s *TransactionData) UnmarshalJSON(data []byte) error {
 // User: Contains information to identify a particular user uniquely.
 type User struct {
 	// Type: Type of the user in the request. The field `userId` is
-	// associated with this
-	// type.
+	// associated with this type.
 	//
 	// Possible values:
 	//   "USER_ID_TYPE_UNSPECIFIED" - When the User Id Type is not
-	// specified, the default type used will be
-	// CLIENT_ID.
+	// specified, the default type used will be CLIENT_ID.
 	//   "USER_ID" - A single user, like a signed-in user account, that may
-	// interact with
-	// content across one or more devices and / or browser instances.
+	// interact with content across one or more devices and / or browser
+	// instances.
 	//   "CLIENT_ID" - Analytics assigned client_id.
 	Type string `json:"type,omitempty"`
 
@@ -2923,18 +2600,16 @@ func (s *User) MarshalJSON() ([]byte, error) {
 }
 
 // UserActivitySession: This represents a user session performed on a
-// specific device at a certain
-// time over a period of time.
+// specific device at a certain time over a period of time.
 type UserActivitySession struct {
 	// Activities: Represents a detailed view into each of the activity in
 	// this session.
 	Activities []*Activity `json:"activities,omitempty"`
 
 	// DataSource: The data source of a hit. By default, hits sent from
-	// analytics.js are
-	// reported as "web" and hits sent from the mobile SDKs are reported as
-	// "app".
-	// These values can be overridden in the Measurement Protocol.
+	// analytics.js are reported as "web" and hits sent from the mobile SDKs
+	// are reported as "app". These values can be overridden in the
+	// Measurement Protocol.
 	DataSource string `json:"dataSource,omitempty"`
 
 	// DeviceCategory: The type of device used: "mobile", "tablet" etc.
@@ -3017,7 +2692,7 @@ func (c *ReportsBatchGetCall) Header() http.Header {
 
 func (c *ReportsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3143,7 +2818,7 @@ func (c *UserActivitySearchCall) Header() http.Header {
 
 func (c *UserActivitySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

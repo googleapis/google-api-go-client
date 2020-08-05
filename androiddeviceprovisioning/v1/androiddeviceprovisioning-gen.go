@@ -293,8 +293,7 @@ type ClaimDeviceResponse struct {
 	// DeviceId: The device ID of the claimed device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
-	// DeviceName: The resource name of the device in the
-	// format
+	// DeviceName: The resource name of the device in the format
 	// `partners/[PARTNER_ID]/devices/[DEVICE_ID]`.
 	DeviceName string `json:"deviceName,omitempty"`
 
@@ -326,10 +325,8 @@ func (s *ClaimDeviceResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ClaimDevicesRequest: Request to claim devices asynchronously in
-// batch. Claiming a device adds the
-// device to zero-touch enrollment and shows the device in the
-// customer's view
-// of the portal.
+// batch. Claiming a device adds the device to zero-touch enrollment and
+// shows the device in the customer's view of the portal.
 type ClaimDevicesRequest struct {
 	// Claims: Required. A list of device claims.
 	Claims []*PartnerClaim `json:"claims,omitempty"`
@@ -361,8 +358,7 @@ func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
 // and customer APIs.
 type Company struct {
 	// AdminEmails: Optional. Email address of customer's users in the admin
-	// role.
-	// Each email address must be associated with a Google Account.
+	// role. Each email address must be associated with a Google Account.
 	AdminEmails []string `json:"adminEmails,omitempty"`
 
 	// CompanyId: Output only. The ID of the company. Assigned by the
@@ -370,36 +366,27 @@ type Company struct {
 	CompanyId int64 `json:"companyId,omitempty,string"`
 
 	// CompanyName: Required. The name of the company. For example _XYZ
-	// Corp_. Displayed to the
-	// company's employees in the zero-touch enrollment portal.
+	// Corp_. Displayed to the company's employees in the zero-touch
+	// enrollment portal.
 	CompanyName string `json:"companyName,omitempty"`
 
 	// Name: Output only. The API resource name of the company. The resource
-	// name is one
-	// of the following formats:
-	//
-	// * `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`
-	// * `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`
-	// *
+	// name is one of the following formats: *
+	// `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]` *
+	// `partners/[PARTNER_ID]/vendors/[VENDOR_ID]` *
 	// `partners/[PARTNER_ID]/vendors/[VENDOR_ID]/customers/[CUSTOMER_ID]`
-	//
-	// A
-	// ssigned by the server.
+	// Assigned by the server.
 	Name string `json:"name,omitempty"`
 
 	// OwnerEmails: Required. Input only. Email address of customer's users
-	// in the owner role. At least
-	// one `owner_email` is required. Each email address must be associated
-	// with a
-	// Google Account. Owners share the same access as admins but can also
-	// add,
-	// delete, and edit your organization's portal users.
+	// in the owner role. At least one `owner_email` is required. Each email
+	// address must be associated with a Google Account. Owners share the
+	// same access as admins but can also add, delete, and edit your
+	// organization's portal users.
 	OwnerEmails []string `json:"ownerEmails,omitempty"`
 
 	// TermsStatus: Output only. Whether any user from the company has
-	// accepted the latest
-	// Terms of Service (ToS). See
-	// TermsStatus.
+	// accepted the latest Terms of Service (ToS). See TermsStatus.
 	//
 	// Possible values:
 	//   "TERMS_STATUS_UNSPECIFIED" - Default value. This value should never
@@ -409,8 +396,7 @@ type Company struct {
 	//   "TERMS_STATUS_ACCEPTED" - One (or more) of the company's users has
 	// accepted the ToS.
 	//   "TERMS_STATUS_STALE" - None of the company's users has accepted the
-	// current ToS but at least one
-	// user accepted a previous ToS.
+	// current ToS but at least one user accepted a previous ToS.
 	TermsStatus string `json:"termsStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -441,23 +427,17 @@ func (s *Company) MarshalJSON() ([]byte, error) {
 }
 
 // Configuration: A configuration collects the provisioning options for
-// Android devices. Each
-// configuration combines the following:
-//
-// * The EMM device policy controller (DPC) installed on the devices.
-// * EMM policies enforced on the devices.
-// * Metadata displayed on the device to help users during
-// setup.
-//
-// Customers can add as many configurations as they need. However,
-// zero-touch
-// enrollment works best when a customer sets a default configuration
-// that's
-// applied to any new devices the organization purchases.
+// Android devices. Each configuration combines the following: * The EMM
+// device policy controller (DPC) installed on the devices. * EMM
+// policies enforced on the devices. * Metadata displayed on the device
+// to help users during setup. Customers can add as many configurations
+// as they need. However, zero-touch enrollment works best when a
+// customer sets a default configuration that's applied to any new
+// devices the organization purchases.
 type Configuration struct {
 	// CompanyName: Required. The name of the organization. Zero-touch
-	// enrollment shows this
-	// organization name to device users during device provisioning.
+	// enrollment shows this organization name to device users during device
+	// provisioning.
 	CompanyName string `json:"companyName,omitempty"`
 
 	// ConfigurationId: Output only. The ID of the configuration. Assigned
@@ -465,34 +445,27 @@ type Configuration struct {
 	ConfigurationId int64 `json:"configurationId,omitempty,string"`
 
 	// ConfigurationName: Required. A short name that describes the
-	// configuration's purpose. For
-	// example, _Sales team_ or _Temporary employees_. The zero-touch
-	// enrollment
-	// portal displays this name to IT admins.
+	// configuration's purpose. For example, _Sales team_ or _Temporary
+	// employees_. The zero-touch enrollment portal displays this name to IT
+	// admins.
 	ConfigurationName string `json:"configurationName,omitempty"`
 
 	// ContactEmail: Required. The email address that device users can
-	// contact to get help.
-	// Zero-touch enrollment shows this email address to device users
-	// before
-	// device provisioning. The value is validated on input.
+	// contact to get help. Zero-touch enrollment shows this email address
+	// to device users before device provisioning. The value is validated on
+	// input.
 	ContactEmail string `json:"contactEmail,omitempty"`
 
 	// ContactPhone: Required. The telephone number that device users can
-	// call, using another
-	// device, to get help. Zero-touch enrollment shows this number to
-	// device
-	// users before device provisioning. Accepts numerals, spaces, the plus
-	// sign,
-	// hyphens, and parentheses.
+	// call, using another device, to get help. Zero-touch enrollment shows
+	// this number to device users before device provisioning. Accepts
+	// numerals, spaces, the plus sign, hyphens, and parentheses.
 	ContactPhone string `json:"contactPhone,omitempty"`
 
 	// CustomMessage: A message, containing one or two sentences, to help
-	// device users get help
-	// or give them more details about what’s happening to their
-	// device.
-	// Zero-touch enrollment shows this message before the device is
-	// provisioned.
+	// device users get help or give them more details about what’s
+	// happening to their device. Zero-touch enrollment shows this message
+	// before the device is provisioned.
 	CustomMessage string `json:"customMessage,omitempty"`
 
 	// DpcExtras: The JSON-formatted EMM provisioning extras that are passed
@@ -500,29 +473,21 @@ type Configuration struct {
 	DpcExtras string `json:"dpcExtras,omitempty"`
 
 	// DpcResourcePath: Required. The resource name of the selected DPC
-	// (device policy controller)
-	// in the format `customers/[CUSTOMER_ID]/dpcs/*`. To list the supported
-	// DPCs,
-	// call
+	// (device policy controller) in the format
+	// `customers/[CUSTOMER_ID]/dpcs/*`. To list the supported DPCs, call
 	// `customers.dpcs.list`.
 	DpcResourcePath string `json:"dpcResourcePath,omitempty"`
 
 	// IsDefault: Required. Whether this is the default configuration that
-	// zero-touch
-	// enrollment applies to any new devices the organization purchases in
-	// the
-	// future. Only one customer configuration can be the default. Setting
-	// this
-	// value to `true`, changes the previous default configuration's
-	// `isDefault`
-	// value to `false`.
+	// zero-touch enrollment applies to any new devices the organization
+	// purchases in the future. Only one customer configuration can be the
+	// default. Setting this value to `true`, changes the previous default
+	// configuration's `isDefault` value to `false`.
 	IsDefault bool `json:"isDefault,omitempty"`
 
-	// Name: Output only. The API resource name in the
-	// format
+	// Name: Output only. The API resource name in the format
 	// `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. Assigned
-	// by
-	// the server.
+	// by the server.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -555,11 +520,9 @@ func (s *Configuration) MarshalJSON() ([]byte, error) {
 // CreateCustomerRequest: Request message to create a customer.
 type CreateCustomerRequest struct {
 	// Customer: Required. The company data to populate the new customer.
-	// Must contain a
-	// value for `companyName` and at least one `owner_email` that's
-	// associated
-	// with a Google Account. The values for `companyId` and `name` must be
-	// empty.
+	// Must contain a value for `companyName` and at least one `owner_email`
+	// that's associated with a Google Account. The values for `companyId`
+	// and `name` must be empty.
 	Customer *Company `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
@@ -589,8 +552,7 @@ func (s *CreateCustomerRequest) MarshalJSON() ([]byte, error) {
 // assign a configuration to device.
 type CustomerApplyConfigurationRequest struct {
 	// Configuration: Required. The configuration applied to the device in
-	// the
-	// format
+	// the format
 	// `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
 	Configuration string `json:"configuration,omitempty"`
 
@@ -661,8 +623,7 @@ type CustomerListCustomersResponse struct {
 	Customers []*Company `json:"customers,omitempty"`
 
 	// NextPageToken: A token used to access the next page of results.
-	// Omitted if no further
-	// results are available.
+	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -699,8 +660,7 @@ type CustomerListDevicesResponse struct {
 	Devices []*Device `json:"devices,omitempty"`
 
 	// NextPageToken: A token used to access the next page of results.
-	// Omitted if no further
-	// results are available.
+	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -734,8 +694,7 @@ func (s *CustomerListDevicesResponse) MarshalJSON() ([]byte, error) {
 // DPCs.
 type CustomerListDpcsResponse struct {
 	// Dpcs: The list of DPCs available to the customer that support
-	// zero-touch
-	// enrollment.
+	// zero-touch enrollment.
 	Dpcs []*Dpc `json:"dpcs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -826,15 +785,10 @@ func (s *CustomerUnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
 // Device: An Android device registered for zero-touch enrollment.
 type Device struct {
 	// Claims: Output only. The provisioning claims for a device. Devices
-	// claimed for
-	// zero-touch enrollment have a claim with the type
-	// `SECTION_TYPE_ZERO_TOUCH`.
-	// Call
-	// `partners.devices.unclaim`
-	// or
-	// `partner
-	// s.devices.unclaimAsync`
-	// to remove the device from zero-touch enrollment.
+	// claimed for zero-touch enrollment have a claim with the type
+	// `SECTION_TYPE_ZERO_TOUCH`. Call `partners.devices.unclaim` or
+	// `partners.devices.unclaimAsync` to remove the device from zero-touch
+	// enrollment.
 	Claims []*DeviceClaim `json:"claims,omitempty"`
 
 	// Configuration: Not available to resellers.
@@ -844,22 +798,17 @@ type Device struct {
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
 	// DeviceIdentifier: The hardware IDs that identify a manufactured
-	// device. To learn more,
-	// read
-	// [Identifiers](https://developers.google.com/zero-touch/guides/ide
-	// ntifiers).
+	// device. To learn more, read
+	// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
+	// ers).
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: The metadata attached to the device. Structured as
-	// key-value pairs. To
-	// learn more, read
-	// [Device
-	// metadata](https://developers.google.com/zero-touch/guides/meta
-	// data).
+	// key-value pairs. To learn more, read [Device
+	// metadata](https://developers.google.com/zero-touch/guides/metadata).
 	DeviceMetadata *DeviceMetadata `json:"deviceMetadata,omitempty"`
 
-	// Name: Output only. The API resource name in the
-	// format
+	// Name: Output only. The API resource name in the format
 	// `partners/[PARTNER_ID]/devices/[DEVICE_ID]`. Assigned by the server.
 	Name string `json:"name,omitempty"`
 
@@ -891,11 +840,9 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceClaim: A record of a device claimed by a reseller for a
-// customer. Devices claimed
-// for zero-touch enrollment have a claim with the
-// type
-// `SECTION_TYPE_ZERO_TOUCH`. To learn more, read
-// [Claim devices for customers](/zero-touch/guides/how-it-works#claim).
+// customer. Devices claimed for zero-touch enrollment have a claim with
+// the type `SECTION_TYPE_ZERO_TOUCH`. To learn more, read [Claim
+// devices for customers](/zero-touch/guides/how-it-works#claim).
 type DeviceClaim struct {
 	// OwnerCompanyId: The ID of the Customer that purchased the device.
 	OwnerCompanyId int64 `json:"ownerCompanyId,omitempty,string"`
@@ -912,13 +859,13 @@ type DeviceClaim struct {
 	SectionType string `json:"sectionType,omitempty"`
 
 	// VacationModeExpireTime: The timestamp when the device will exit
-	// ‘vacation mode’. This value is
-	// present iff the device is in 'vacation mode'.
+	// ‘vacation mode’. This value is present iff the device is in
+	// 'vacation mode'.
 	VacationModeExpireTime string `json:"vacationModeExpireTime,omitempty"`
 
 	// VacationModeStartTime: The timestamp when the device was put into
-	// ‘vacation mode’. This value is
-	// present iff the device is in 'vacation mode'.
+	// ‘vacation mode’. This value is present iff the device is in
+	// 'vacation mode'.
 	VacationModeStartTime string `json:"vacationModeStartTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OwnerCompanyId") to
@@ -946,38 +893,31 @@ func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceIdentifier: Encapsulates hardware and product IDs to identify a
-// manufactured device.
-// To understand requirements on identifier sets,
+// manufactured device. To understand requirements on identifier sets,
 // read
-// [Identifiers](https://developers.google.com/zero-touch/guides/ide
-// ntifiers).
+// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
+// ers).
 type DeviceIdentifier struct {
 	// Imei: The device’s IMEI number. Validated on input.
 	Imei string `json:"imei,omitempty"`
 
 	// Manufacturer: The device manufacturer’s name. Matches the device's
-	// built-in
-	// value returned from `android.os.Build.MANUFACTURER`. Allowed values
-	// are
-	// listed
-	// in
-	// [manufacturers](/zero-touch/resources/manufacturer-names#manufactur
-	// ers-names).
+	// built-in value returned from `android.os.Build.MANUFACTURER`. Allowed
+	// values are listed in
+	// [manufacturers](/zero-touch/resources/manufacturer-names#manufacturers
+	// -names).
 	Manufacturer string `json:"manufacturer,omitempty"`
 
 	// Meid: The device’s MEID number.
 	Meid string `json:"meid,omitempty"`
 
 	// Model: The device model's name. Matches the device's built-in value
-	// returned from
-	// `android.os.Build.MODEL`. Allowed values are listed
-	// in
+	// returned from `android.os.Build.MODEL`. Allowed values are listed in
 	// [models](/zero-touch/resources/manufacturer-names#model-names).
 	Model string `json:"model,omitempty"`
 
 	// SerialNumber: The manufacturer's serial number for the device. This
-	// value might not be
-	// unique across different device models.
+	// value might not be unique across different device models.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Imei") to
@@ -1004,8 +944,7 @@ func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceMetadata: Metadata entries that can be attached to a `Device`.
-// To learn more, read
-// [Device
+// To learn more, read [Device
 // metadata](https://developers.google.com/zero-touch/guides/metadata).
 type DeviceMetadata struct {
 	// Entries: Metadata entries recorded as key-value pairs.
@@ -1039,22 +978,14 @@ func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceReference: A `DeviceReference` is an API abstraction that lets
-// you supply a _device_
-// argument to a method using one of the following identifier types:
-//
-// * A numeric API resource ID.
-// * Real-world hardware IDs, such as IMEI number, belonging to the
-// manufactured
-//   device.
-//
+// you supply a _device_ argument to a method using one of the following
+// identifier types: * A numeric API resource ID. * Real-world hardware
+// IDs, such as IMEI number, belonging to the manufactured device.
 // Methods that operate on devices take a `DeviceReference` as a
-// parameter type
-// because it's more flexible for the caller. To learn more about
-// device
-// identifiers,
-// read
-// [Identifiers](https://developers.google.com/zero-touch/guides/ide
-// ntifiers).
+// parameter type because it's more flexible for the caller. To learn
+// more about device identifiers, read
+// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
+// ers).
 type DeviceReference struct {
 	// DeviceId: The ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
@@ -1086,17 +1017,13 @@ func (s *DeviceReference) MarshalJSON() ([]byte, error) {
 }
 
 // DevicesLongRunningOperationMetadata: Tracks the status of a
-// long-running operation to asynchronously update a
-// batch of reseller metadata attached to devices. To learn more,
-// read
-// [Long‑running batch
-// operations](/zero-touch/guides/how-it-works#operations).
+// long-running operation to asynchronously update a batch of reseller
+// metadata attached to devices. To learn more, read [Long‑running
+// batch operations](/zero-touch/guides/how-it-works#operations).
 type DevicesLongRunningOperationMetadata struct {
 	// DevicesCount: The number of metadata updates in the operation. This
-	// might be different
-	// from the number of updates in the request if the API can't parse some
-	// of
-	// the updates.
+	// might be different from the number of updates in the request if the
+	// API can't parse some of the updates.
 	DevicesCount int64 `json:"devicesCount,omitempty"`
 
 	// ProcessingStatus: The processing status of the operation.
@@ -1106,17 +1033,14 @@ type DevicesLongRunningOperationMetadata struct {
 	// used.
 	//   "BATCH_PROCESS_PENDING" - Pending.
 	//   "BATCH_PROCESS_IN_PROGRESS" - In progress.
-	//   "BATCH_PROCESS_PROCESSED" - Processed.
-	// This doesn't mean all items were processed successfully, you
-	// should
-	// check the `response` field for the result of every item.
+	//   "BATCH_PROCESS_PROCESSED" - Processed. This doesn't mean all items
+	// were processed successfully, you should check the `response` field
+	// for the result of every item.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
 
 	// Progress: The processing progress of the operation. Measured as a
-	// number from 0 to
-	// 100. A value of 10O doesnt always mean the operation
-	// completed—check for
-	// the inclusion of a `done` field.
+	// number from 0 to 100. A value of 10O doesnt always mean the operation
+	// completed—check for the inclusion of a `done` field.
 	Progress int64 `json:"progress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DevicesCount") to
@@ -1143,21 +1067,17 @@ func (s *DevicesLongRunningOperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // DevicesLongRunningOperationResponse: Tracks the status of a
-// long-running operation to claim, unclaim, or attach
-// metadata to devices. To learn more, read
-// [Long‑running batch
+// long-running operation to claim, unclaim, or attach metadata to
+// devices. To learn more, read [Long‑running batch
 // operations](/zero-touch/guides/how-it-works#operations).
 type DevicesLongRunningOperationResponse struct {
 	// PerDeviceStatus: The processing status for each device in the
-	// operation.
-	// One `PerDeviceStatus` per device. The list order matches the items in
-	// the
-	// original request.
+	// operation. One `PerDeviceStatus` per device. The list order matches
+	// the items in the original request.
 	PerDeviceStatus []*OperationPerDevice `json:"perDeviceStatus,omitempty"`
 
 	// SuccessCount: A summary of how many items in the operation the server
-	// processed
-	// successfully. Updated as the operation progresses.
+	// processed successfully. Updated as the operation progresses.
 	SuccessCount int64 `json:"successCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PerDeviceStatus") to
@@ -1184,34 +1104,27 @@ func (s *DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dpc: An EMM's DPC ([device
-// policy
-// controller](http://developer.android.com/work/dpc/build-dpc.htm
-// l)).
+// Dpc: An EMM's DPC ([device policy
+// controller](http://developer.android.com/work/dpc/build-dpc.html)).
 // Zero-touch enrollment installs a DPC (listed in the `Configuration`)
-// on a
-// device to maintain the customer's mobile policies. All the DPCs
-// listed by the
-// API support zero-touch enrollment and are available in Google Play.
+// on a device to maintain the customer's mobile policies. All the DPCs
+// listed by the API support zero-touch enrollment and are available in
+// Google Play.
 type Dpc struct {
 	// DpcName: Output only. The title of the DPC app in Google Play. For
-	// example, _Google
-	// Apps Device Policy_. Useful in an application's user interface.
+	// example, _Google Apps Device Policy_. Useful in an application's user
+	// interface.
 	DpcName string `json:"dpcName,omitempty"`
 
-	// Name: Output only. The API resource name in the
-	// format
-	// `customers/[CUSTOMER_ID]/dpcs/[DPC_ID]`. Assigned by
-	// the server. To maintain a reference to a DPC across customer
-	// accounts,
-	// persist and match the last path component (`DPC_ID`).
+	// Name: Output only. The API resource name in the format
+	// `customers/[CUSTOMER_ID]/dpcs/[DPC_ID]`. Assigned by the server. To
+	// maintain a reference to a DPC across customer accounts, persist and
+	// match the last path component (`DPC_ID`).
 	Name string `json:"name,omitempty"`
 
 	// PackageName: Output only. The DPC's Android application ID that looks
-	// like a Java
-	// package name. Zero-touch enrollment installs the DPC app onto a
-	// device
-	// using this identifier.
+	// like a Java package name. Zero-touch enrollment installs the DPC app
+	// onto a device using this identifier.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DpcName") to
@@ -1238,17 +1151,11 @@ func (s *Dpc) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1262,8 +1169,7 @@ type FindDevicesByDeviceIdentifierRequest struct {
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// Limit: Required. The maximum number of devices to show in a page of
-	// results. Must
-	// be between 1 and 100 inclusive.
+	// results. Must be between 1 and 100 inclusive.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// PageToken: A token specifying which result page to return.
@@ -1300,8 +1206,7 @@ type FindDevicesByDeviceIdentifierResponse struct {
 	Devices []*Device `json:"devices,omitempty"`
 
 	// NextPageToken: A token used to access the next page of results.
-	// Omitted if no further
-	// results are available.
+	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The total count of items in the list irrespective of
@@ -1341,8 +1246,7 @@ type FindDevicesByOwnerRequest struct {
 	CustomerId googleapi.Int64s `json:"customerId,omitempty"`
 
 	// Limit: Required. The maximum number of devices to show in a page of
-	// results. Must
-	// be between 1 and 100 inclusive.
+	// results. Must be between 1 and 100 inclusive.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// PageToken: A token specifying which result page to return.
@@ -1385,8 +1289,7 @@ type FindDevicesByOwnerResponse struct {
 	// Devices: The customer's devices.
 	Devices []*Device `json:"devices,omitempty"`
 
-	// NextPageToken: A token used to access the next page of
-	// results.
+	// NextPageToken: A token used to access the next page of results.
 	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1428,8 +1331,7 @@ type ListCustomersResponse struct {
 	Customers []*Company `json:"customers,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. Omitted
-	// if no further results
-	// are available.
+	// if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The total count of items in the list irrespective of
@@ -1470,8 +1372,7 @@ type ListVendorCustomersResponse struct {
 	Customers []*Company `json:"customers,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. Omitted
-	// if no further results
-	// are available.
+	// if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The total count of items in the list irrespective of
@@ -1508,8 +1409,7 @@ func (s *ListVendorCustomersResponse) MarshalJSON() ([]byte, error) {
 // ListVendorsResponse: Response message to list vendors of the partner.
 type ListVendorsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Omitted
-	// if no further results
-	// are available.
+	// if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The total count of items in the list irrespective of
@@ -1517,8 +1417,7 @@ type ListVendorsResponse struct {
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// Vendors: List of vendors of the reseller partner. Fields `name`,
-	// `companyId` and
-	// `companyName` are populated to the Company object.
+	// `companyId` and `companyName` are populated to the Company object.
 	Vendors []*Company `json:"vendors,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1549,14 +1448,11 @@ func (s *ListVendorsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: This field will always be not set if the operation is created
@@ -1571,10 +1467,8 @@ type Operation struct {
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
@@ -1611,8 +1505,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // OperationPerDevice: A task for each device in the operation.
-// Corresponds to each device
-// change in the request.
+// Corresponds to each device change in the request.
 type OperationPerDevice struct {
 	// Claim: A copy of the original device-claim request received by the
 	// server.
@@ -1716,8 +1609,8 @@ type PartnerUnclaim struct {
 	SectionType string `json:"sectionType,omitempty"`
 
 	// VacationModeDays: Optional. The duration of the vacation unlock
-	// starting from when the request is
-	// processed. (1 day is treated as 24 hours)
+	// starting from when the request is processed. (1 day is treated as 24
+	// hours)
 	VacationModeDays int64 `json:"vacationModeDays,omitempty"`
 
 	// VacationModeExpireTime: Optional. The expiration time of the vacation
@@ -1765,12 +1658,10 @@ type PerDeviceStatusInBatch struct {
 	// Possible values:
 	//   "SINGLE_DEVICE_STATUS_UNSPECIFIED" - Invalid code. Shouldn't be
 	// used.
-	//   "SINGLE_DEVICE_STATUS_UNKNOWN_ERROR" - Unknown error.
-	// We don't expect this error to occur here.
-	//   "SINGLE_DEVICE_STATUS_OTHER_ERROR" - Other error.
-	// We know/expect this error, but there's no defined error code for
-	// the
-	// error.
+	//   "SINGLE_DEVICE_STATUS_UNKNOWN_ERROR" - Unknown error. We don't
+	// expect this error to occur here.
+	//   "SINGLE_DEVICE_STATUS_OTHER_ERROR" - Other error. We know/expect
+	// this error, but there's no defined error code for the error.
 	//   "SINGLE_DEVICE_STATUS_SUCCESS" - Success.
 	//   "SINGLE_DEVICE_STATUS_PERMISSION_DENIED" - Permission denied.
 	//   "SINGLE_DEVICE_STATUS_INVALID_DEVICE_IDENTIFIER" - Invalid device
@@ -1804,32 +1695,24 @@ func (s *PerDeviceStatusInBatch) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1874,8 +1757,7 @@ type UnclaimDeviceRequest struct {
 	SectionType string `json:"sectionType,omitempty"`
 
 	// VacationModeDays: The duration of the vacation unlock starting from
-	// when the request is
-	// processed. (1 day is treated as 24 hours)
+	// when the request is processed. (1 day is treated as 24 hours)
 	VacationModeDays int64 `json:"vacationModeDays,omitempty"`
 
 	// VacationModeExpireTime: The expiration time of the vacation unlock.
@@ -2042,8 +1924,8 @@ func (r *CustomersService) List() *CustomersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of customers to show in a page of results.
-// A number between 1 and 100 (inclusive).
+// of customers to show in a page of results. A number between 1 and 100
+// (inclusive).
 func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2093,7 +1975,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2159,7 +2041,7 @@ func (c *CustomersListCall) Do(opts ...googleapi.CallOption) (*CustomerListCusto
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of customers to show in a page of results.\nA number between 1 and 100 (inclusive).",
+	//       "description": "The maximum number of customers to show in a page of results. A number between 1 and 100 (inclusive).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2211,8 +2093,7 @@ type CustomersConfigurationsCreateCall struct {
 }
 
 // Create: Creates a new configuration. Once created, a customer can
-// apply the
-// configuration to devices.
+// apply the configuration to devices.
 func (r *CustomersConfigurationsService) Create(parent string, configuration *Configuration) *CustomersConfigurationsCreateCall {
 	c := &CustomersConfigurationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2247,7 +2128,7 @@ func (c *CustomersConfigurationsCreateCall) Header() http.Header {
 
 func (c *CustomersConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2311,7 +2192,7 @@ func (c *CustomersConfigurationsCreateCall) Do(opts ...googleapi.CallOption) (*C
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new configuration. Once created, a customer can apply the\nconfiguration to devices.",
+	//   "description": "Creates a new configuration. Once created, a customer can apply the configuration to devices.",
 	//   "flatPath": "v1/customers/{customersId}/configurations",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.customers.configurations.create",
@@ -2320,7 +2201,7 @@ func (c *CustomersConfigurationsCreateCall) Do(opts ...googleapi.CallOption) (*C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer that manages the configuration. An API resource name\nin the format `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer that manages the configuration. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -2349,8 +2230,7 @@ type CustomersConfigurationsDeleteCall struct {
 }
 
 // Delete: Deletes an unused configuration. The API call fails if the
-// customer has
-// devices with the configuration applied.
+// customer has devices with the configuration applied.
 func (r *CustomersConfigurationsService) Delete(name string) *CustomersConfigurationsDeleteCall {
 	c := &CustomersConfigurationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2384,7 +2264,7 @@ func (c *CustomersConfigurationsDeleteCall) Header() http.Header {
 
 func (c *CustomersConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2443,7 +2323,7 @@ func (c *CustomersConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an unused configuration. The API call fails if the customer has\ndevices with the configuration applied.",
+	//   "description": "Deletes an unused configuration. The API call fails if the customer has devices with the configuration applied.",
 	//   "flatPath": "v1/customers/{customersId}/configurations/{configurationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androiddeviceprovisioning.customers.configurations.delete",
@@ -2452,7 +2332,7 @@ func (c *CustomersConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The configuration to delete. An API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. If the\nconfiguration is applied to any devices, the API call fails.",
+	//       "description": "Required. The configuration to delete. An API resource name in the format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. If the configuration is applied to any devices, the API call fails.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -2522,7 +2402,7 @@ func (c *CustomersConfigurationsGetCall) Header() http.Header {
 
 func (c *CustomersConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2593,7 +2473,7 @@ func (c *CustomersConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Conf
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The configuration to get. An API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.",
+	//       "description": "Required. The configuration to get. An API resource name in the format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/configurations/[^/]+$",
 	//       "required": true,
@@ -2663,7 +2543,7 @@ func (c *CustomersConfigurationsListCall) Header() http.Header {
 
 func (c *CustomersConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2735,7 +2615,7 @@ func (c *CustomersConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Cus
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer that manages the listed configurations. An API\nresource name in the format `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer that manages the listed configurations. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -2770,12 +2650,10 @@ func (r *CustomersConfigurationsService) Patch(name string, configuration *Confi
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// field mask applied to the target `Configuration` before
-// updating the fields. To learn more about using field masks,
-// read
-// [FieldMask](/protocol-buffers/docs/reference/google.protobuf#fiel
-// dmask) in
-// the Protocol Buffers documentation.
+// field mask applied to the target `Configuration` before updating the
+// fields. To learn more about using field masks, read
+// [FieldMask](/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// ) in the Protocol Buffers documentation.
 func (c *CustomersConfigurationsPatchCall) UpdateMask(updateMask string) *CustomersConfigurationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2808,7 +2686,7 @@ func (c *CustomersConfigurationsPatchCall) Header() http.Header {
 
 func (c *CustomersConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2881,14 +2759,14 @@ func (c *CustomersConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*Co
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. Assigned by\nthe server.",
+	//       "description": "Output only. The API resource name in the format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. Assigned by the server.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/configurations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field mask applied to the target `Configuration` before\nupdating the fields. To learn more about using field masks, read\n[FieldMask](/protocol-buffers/docs/reference/google.protobuf#fieldmask) in\nthe Protocol Buffers documentation.",
+	//       "description": "Required. The field mask applied to the target `Configuration` before updating the fields. To learn more about using field masks, read [FieldMask](/protocol-buffers/docs/reference/google.protobuf#fieldmask) in the Protocol Buffers documentation.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2917,10 +2795,9 @@ type CustomersDevicesApplyConfigurationCall struct {
 }
 
 // ApplyConfiguration: Applies a Configuration to the device to register
-// the device for zero-touch
-// enrollment. After applying a configuration to a device, the
-// device
-// automatically provisions itself on first boot, or next factory reset.
+// the device for zero-touch enrollment. After applying a configuration
+// to a device, the device automatically provisions itself on first
+// boot, or next factory reset.
 func (r *CustomersDevicesService) ApplyConfiguration(parent string, customerapplyconfigurationrequest *CustomerApplyConfigurationRequest) *CustomersDevicesApplyConfigurationCall {
 	c := &CustomersDevicesApplyConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2955,7 +2832,7 @@ func (c *CustomersDevicesApplyConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesApplyConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3019,7 +2896,7 @@ func (c *CustomersDevicesApplyConfigurationCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Applies a Configuration to the device to register the device for zero-touch\nenrollment. After applying a configuration to a device, the device\nautomatically provisions itself on first boot, or next factory reset.",
+	//   "description": "Applies a Configuration to the device to register the device for zero-touch enrollment. After applying a configuration to a device, the device automatically provisions itself on first boot, or next factory reset.",
 	//   "flatPath": "v1/customers/{customersId}/devices:applyConfiguration",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.customers.devices.applyConfiguration",
@@ -3028,7 +2905,7 @@ func (c *CustomersDevicesApplyConfigurationCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer managing the device. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -3101,7 +2978,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3172,7 +3049,7 @@ func (c *CustomersDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The device to get. An API resource name in the format\n`customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.",
+	//       "description": "Required. The device to get. An API resource name in the format `customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -3206,8 +3083,8 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to show in a page of results.
-// Must be between 1 and 100 inclusive.
+// of devices to show in a page of results. Must be between 1 and 100
+// inclusive.
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3257,7 +3134,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3328,7 +3205,7 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*CustomerLi
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to show in a page of results.\nMust be between 1 and 100 inclusive.",
+	//       "description": "The maximum number of devices to show in a page of results. Must be between 1 and 100 inclusive.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -3339,7 +3216,7 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*CustomerLi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The customer managing the devices. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer managing the devices. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -3421,7 +3298,7 @@ func (c *CustomersDevicesRemoveConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesRemoveConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3371,7 @@ func (c *CustomersDevicesRemoveConfigurationCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer managing the device in the format\n`customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer managing the device in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -3524,12 +3401,9 @@ type CustomersDevicesUnclaimCall struct {
 }
 
 // Unclaim: Unclaims a device from a customer and removes it from
-// zero-touch
-// enrollment.
-//
-// After removing a device, a customer must contact their reseller to
-// register
-// the device into zero-touch enrollment again.
+// zero-touch enrollment. After removing a device, a customer must
+// contact their reseller to register the device into zero-touch
+// enrollment again.
 func (r *CustomersDevicesService) Unclaim(parent string, customerunclaimdevicerequest *CustomerUnclaimDeviceRequest) *CustomersDevicesUnclaimCall {
 	c := &CustomersDevicesUnclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3564,7 +3438,7 @@ func (c *CustomersDevicesUnclaimCall) Header() http.Header {
 
 func (c *CustomersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3628,7 +3502,7 @@ func (c *CustomersDevicesUnclaimCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Unclaims a device from a customer and removes it from zero-touch\nenrollment.\n\nAfter removing a device, a customer must contact their reseller to register\nthe device into zero-touch enrollment again.",
+	//   "description": "Unclaims a device from a customer and removes it from zero-touch enrollment. After removing a device, a customer must contact their reseller to register the device into zero-touch enrollment again.",
 	//   "flatPath": "v1/customers/{customersId}/devices:unclaim",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.customers.devices.unclaim",
@@ -3637,7 +3511,7 @@ func (c *CustomersDevicesUnclaimCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer managing the device. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -3667,8 +3541,7 @@ type CustomersDpcsListCall struct {
 }
 
 // List: Lists the DPCs (device policy controllers) that support
-// zero-touch
-// enrollment.
+// zero-touch enrollment.
 func (r *CustomersDpcsService) List(parent string) *CustomersDpcsListCall {
 	c := &CustomersDpcsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3712,7 +3585,7 @@ func (c *CustomersDpcsListCall) Header() http.Header {
 
 func (c *CustomersDpcsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3774,7 +3647,7 @@ func (c *CustomersDpcsListCall) Do(opts ...googleapi.CallOption) (*CustomerListD
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the DPCs (device policy controllers) that support zero-touch\nenrollment.",
+	//   "description": "Lists the DPCs (device policy controllers) that support zero-touch enrollment.",
 	//   "flatPath": "v1/customers/{customersId}/dpcs",
 	//   "httpMethod": "GET",
 	//   "id": "androiddeviceprovisioning.customers.dpcs.list",
@@ -3783,7 +3656,7 @@ func (c *CustomersDpcsListCall) Do(opts ...googleapi.CallOption) (*CustomerListD
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The customer that can use the DPCs in configurations. An API\nresource name in the format `customers/[CUSTOMER_ID]`.",
+	//       "description": "Required. The customer that can use the DPCs in configurations. An API resource name in the format `customers/[CUSTOMER_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+$",
 	//       "required": true,
@@ -3809,11 +3682,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3857,7 +3728,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3919,7 +3790,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "androiddeviceprovisioning.operations.get",
@@ -3955,14 +3826,10 @@ type PartnersCustomersCreateCall struct {
 }
 
 // Create: Creates a customer for zero-touch enrollment. After the
-// method returns
-// successfully, admin and owner roles can manage devices and EMM
-// configs
-// by calling API methods or using their zero-touch enrollment
-// portal.
-// The customer receives an email that welcomes them to zero-touch
-// enrollment
-// and explains how to sign into the portal.
+// method returns successfully, admin and owner roles can manage devices
+// and EMM configs by calling API methods or using their zero-touch
+// enrollment portal. The customer receives an email that welcomes them
+// to zero-touch enrollment and explains how to sign into the portal.
 func (r *PartnersCustomersService) Create(parent string, createcustomerrequest *CreateCustomerRequest) *PartnersCustomersCreateCall {
 	c := &PartnersCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3997,7 +3864,7 @@ func (c *PartnersCustomersCreateCall) Header() http.Header {
 
 func (c *PartnersCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4061,7 +3928,7 @@ func (c *PartnersCustomersCreateCall) Do(opts ...googleapi.CallOption) (*Company
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a customer for zero-touch enrollment. After the method returns\nsuccessfully, admin and owner roles can manage devices and EMM configs\nby calling API methods or using their zero-touch enrollment portal.\nThe customer receives an email that welcomes them to zero-touch enrollment\nand explains how to sign into the portal.",
+	//   "description": "Creates a customer for zero-touch enrollment. After the method returns successfully, admin and owner roles can manage devices and EMM configs by calling API methods or using their zero-touch enrollment portal. The customer receives an email that welcomes them to zero-touch enrollment and explains how to sign into the portal.",
 	//   "flatPath": "v1/partners/{partnersId}/customers",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.customers.create",
@@ -4070,7 +3937,7 @@ func (c *PartnersCustomersCreateCall) Do(opts ...googleapi.CallOption) (*Company
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource ID in the format `partners/[PARTNER_ID]` that\nidentifies the reseller.",
+	//       "description": "Required. The parent resource ID in the format `partners/[PARTNER_ID]` that identifies the reseller.",
 	//       "location": "path",
 	//       "pattern": "^partners/[^/]+$",
 	//       "required": true,
@@ -4100,10 +3967,9 @@ type PartnersCustomersListCall struct {
 }
 
 // List: Lists the customers that are enrolled to the reseller
-// identified by the
-// `partnerId` argument. This list includes customers that the
-// reseller
-// created and customers that enrolled themselves using the portal.
+// identified by the `partnerId` argument. This list includes customers
+// that the reseller created and customers that enrolled themselves
+// using the portal.
 func (r *PartnersCustomersService) List(partnerId int64) *PartnersCustomersListCall {
 	c := &PartnersCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4111,8 +3977,8 @@ func (r *PartnersCustomersService) List(partnerId int64) *PartnersCustomersListC
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to be returned. If not specified or 0, all
-// the records are returned.
+// of results to be returned. If not specified or 0, all the records are
+// returned.
 func (c *PartnersCustomersListCall) PageSize(pageSize int64) *PartnersCustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4162,7 +4028,7 @@ func (c *PartnersCustomersListCall) Header() http.Header {
 
 func (c *PartnersCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4224,7 +4090,7 @@ func (c *PartnersCustomersListCall) Do(opts ...googleapi.CallOption) (*ListCusto
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the customers that are enrolled to the reseller identified by the\n`partnerId` argument. This list includes customers that the reseller\ncreated and customers that enrolled themselves using the portal.",
+	//   "description": "Lists the customers that are enrolled to the reseller identified by the `partnerId` argument. This list includes customers that the reseller created and customers that enrolled themselves using the portal.",
 	//   "flatPath": "v1/partners/{partnersId}/customers",
 	//   "httpMethod": "GET",
 	//   "id": "androiddeviceprovisioning.partners.customers.list",
@@ -4233,7 +4099,7 @@ func (c *PartnersCustomersListCall) Do(opts ...googleapi.CallOption) (*ListCusto
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of results to be returned. If not specified or 0, all\nthe records are returned.",
+	//       "description": "The maximum number of results to be returned. If not specified or 0, all the records are returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4293,9 +4159,8 @@ type PartnersDevicesClaimCall struct {
 }
 
 // Claim: Claims a device for a customer and adds it to zero-touch
-// enrollment. If the
-// device is already claimed by another customer, the call returns an
-// error.
+// enrollment. If the device is already claimed by another customer, the
+// call returns an error.
 func (r *PartnersDevicesService) Claim(partnerId int64, claimdevicerequest *ClaimDeviceRequest) *PartnersDevicesClaimCall {
 	c := &PartnersDevicesClaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4330,7 +4195,7 @@ func (c *PartnersDevicesClaimCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4394,7 +4259,7 @@ func (c *PartnersDevicesClaimCall) Do(opts ...googleapi.CallOption) (*ClaimDevic
 	}
 	return ret, nil
 	// {
-	//   "description": "Claims a device for a customer and adds it to zero-touch enrollment. If the\ndevice is already claimed by another customer, the call returns an error.",
+	//   "description": "Claims a device for a customer and adds it to zero-touch enrollment. If the device is already claimed by another customer, the call returns an error.",
 	//   "flatPath": "v1/partners/{partnersId}/devices:claim",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.claim",
@@ -4434,9 +4299,8 @@ type PartnersDevicesClaimAsyncCall struct {
 }
 
 // ClaimAsync: Claims a batch of devices for a customer asynchronously.
-// Adds the devices
-// to zero-touch enrollment. To learn more, read [Long‑running
-// batch
+// Adds the devices to zero-touch enrollment. To learn more, read
+// [Long‑running batch
 // operations](/zero-touch/guides/how-it-works#operations).
 func (r *PartnersDevicesService) ClaimAsync(partnerId int64, claimdevicesrequest *ClaimDevicesRequest) *PartnersDevicesClaimAsyncCall {
 	c := &PartnersDevicesClaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4472,7 +4336,7 @@ func (c *PartnersDevicesClaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4536,7 +4400,7 @@ func (c *PartnersDevicesClaimAsyncCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Claims a batch of devices for a customer asynchronously. Adds the devices\nto zero-touch enrollment. To learn more, read [Long‑running batch\noperations](/zero-touch/guides/how-it-works#operations).",
+	//   "description": "Claims a batch of devices for a customer asynchronously. Adds the devices to zero-touch enrollment. To learn more, read [Long‑running batch operations](/zero-touch/guides/how-it-works#operations).",
 	//   "flatPath": "v1/partners/{partnersId}/devices:claimAsync",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.claimAsync",
@@ -4611,7 +4475,7 @@ func (c *PartnersDevicesFindByIdentifierCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByIdentifierCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4737,12 +4601,9 @@ type PartnersDevicesFindByOwnerCall struct {
 }
 
 // FindByOwner: Finds devices claimed for customers. The results only
-// contain devices
-// registered to the reseller that's identified by the `partnerId`
-// argument.
-// The customer's devices purchased from other resellers don't appear in
-// the
-// results.
+// contain devices registered to the reseller that's identified by the
+// `partnerId` argument. The customer's devices purchased from other
+// resellers don't appear in the results.
 func (r *PartnersDevicesService) FindByOwner(partnerId int64, finddevicesbyownerrequest *FindDevicesByOwnerRequest) *PartnersDevicesFindByOwnerCall {
 	c := &PartnersDevicesFindByOwnerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4777,7 +4638,7 @@ func (c *PartnersDevicesFindByOwnerCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByOwnerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4841,7 +4702,7 @@ func (c *PartnersDevicesFindByOwnerCall) Do(opts ...googleapi.CallOption) (*Find
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds devices claimed for customers. The results only contain devices\nregistered to the reseller that's identified by the `partnerId` argument.\nThe customer's devices purchased from other resellers don't appear in the\nresults.",
+	//   "description": "Finds devices claimed for customers. The results only contain devices registered to the reseller that's identified by the `partnerId` argument. The customer's devices purchased from other resellers don't appear in the results.",
 	//   "flatPath": "v1/partners/{partnersId}/devices:findByOwner",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.findByOwner",
@@ -4945,7 +4806,7 @@ func (c *PartnersDevicesGetCall) Header() http.Header {
 
 func (c *PartnersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5016,7 +4877,7 @@ func (c *PartnersDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The device API resource name in the format\n`partners/[PARTNER_ID]/devices/[DEVICE_ID]`.",
+	//       "description": "Required. The device API resource name in the format `partners/[PARTNER_ID]/devices/[DEVICE_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^partners/[^/]+/devices/[^/]+$",
 	//       "required": true,
@@ -5079,7 +4940,7 @@ func (c *PartnersDevicesMetadataCall) Header() http.Header {
 
 func (c *PartnersDevicesMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5193,8 +5054,7 @@ type PartnersDevicesUnclaimCall struct {
 }
 
 // Unclaim: Unclaims a device from a customer and removes it from
-// zero-touch
-// enrollment.
+// zero-touch enrollment.
 func (r *PartnersDevicesService) Unclaim(partnerId int64, unclaimdevicerequest *UnclaimDeviceRequest) *PartnersDevicesUnclaimCall {
 	c := &PartnersDevicesUnclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5229,7 +5089,7 @@ func (c *PartnersDevicesUnclaimCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5293,7 +5153,7 @@ func (c *PartnersDevicesUnclaimCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Unclaims a device from a customer and removes it from zero-touch\nenrollment.",
+	//   "description": "Unclaims a device from a customer and removes it from zero-touch enrollment.",
 	//   "flatPath": "v1/partners/{partnersId}/devices:unclaim",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.unclaim",
@@ -5333,10 +5193,8 @@ type PartnersDevicesUnclaimAsyncCall struct {
 }
 
 // UnclaimAsync: Unclaims a batch of devices for a customer
-// asynchronously. Removes the
-// devices from zero-touch enrollment. To learn more, read
-// [Long‑running
-// batch
+// asynchronously. Removes the devices from zero-touch enrollment. To
+// learn more, read [Long‑running batch
 // operations](/zero-touch/guides/how-it-works#operations).
 func (r *PartnersDevicesService) UnclaimAsync(partnerId int64, unclaimdevicesrequest *UnclaimDevicesRequest) *PartnersDevicesUnclaimAsyncCall {
 	c := &PartnersDevicesUnclaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5372,7 +5230,7 @@ func (c *PartnersDevicesUnclaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5436,7 +5294,7 @@ func (c *PartnersDevicesUnclaimAsyncCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Unclaims a batch of devices for a customer asynchronously. Removes the\ndevices from zero-touch enrollment. To learn more, read [Long‑running batch\noperations](/zero-touch/guides/how-it-works#operations).",
+	//   "description": "Unclaims a batch of devices for a customer asynchronously. Removes the devices from zero-touch enrollment. To learn more, read [Long‑running batch operations](/zero-touch/guides/how-it-works#operations).",
 	//   "flatPath": "v1/partners/{partnersId}/devices:unclaimAsync",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.unclaimAsync",
@@ -5476,11 +5334,9 @@ type PartnersDevicesUpdateMetadataAsyncCall struct {
 }
 
 // UpdateMetadataAsync: Updates the reseller metadata attached to a
-// batch of devices. This method
-// updates devices asynchronously and returns an `Operation` that can be
-// used
-// to track progress. Read [Long‑running
-// batch
+// batch of devices. This method updates devices asynchronously and
+// returns an `Operation` that can be used to track progress. Read
+// [Long‑running batch
 // operations](/zero-touch/guides/how-it-works#operations).
 func (r *PartnersDevicesService) UpdateMetadataAsync(partnerId int64, updatedevicemetadatainbatchrequest *UpdateDeviceMetadataInBatchRequest) *PartnersDevicesUpdateMetadataAsyncCall {
 	c := &PartnersDevicesUpdateMetadataAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5516,7 +5372,7 @@ func (c *PartnersDevicesUpdateMetadataAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUpdateMetadataAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5580,7 +5436,7 @@ func (c *PartnersDevicesUpdateMetadataAsyncCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the reseller metadata attached to a batch of devices. This method\nupdates devices asynchronously and returns an `Operation` that can be used\nto track progress. Read [Long‑running batch\noperations](/zero-touch/guides/how-it-works#operations).",
+	//   "description": "Updates the reseller metadata attached to a batch of devices. This method updates devices asynchronously and returns an `Operation` that can be used to track progress. Read [Long‑running batch operations](/zero-touch/guides/how-it-works#operations).",
 	//   "flatPath": "v1/partners/{partnersId}/devices:updateMetadataAsync",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.devices.updateMetadataAsync",
@@ -5677,7 +5533,7 @@ func (c *PartnersVendorsListCall) Header() http.Header {
 
 func (c *PartnersVendorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5864,7 +5720,7 @@ func (c *PartnersVendorsCustomersListCall) Header() http.Header {
 
 func (c *PartnersVendorsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5946,7 +5802,7 @@ func (c *PartnersVendorsCustomersListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name in the format\n`partners/[PARTNER_ID]/vendors/[VENDOR_ID]`.",
+	//       "description": "Required. The resource name in the format `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^partners/[^/]+/vendors/[^/]+$",
 	//       "required": true,

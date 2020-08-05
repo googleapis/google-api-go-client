@@ -155,17 +155,15 @@ type ActivityService struct {
 // Action: Information about the action.
 type Action struct {
 	// Actor: The actor responsible for this action (or empty if all actors
-	// are
-	// responsible).
+	// are responsible).
 	Actor *Actor `json:"actor,omitempty"`
 
 	// Detail: The type and detailed information about the action.
 	Detail *ActionDetail `json:"detail,omitempty"`
 
 	// Target: The target this action affects (or empty if affecting all
-	// targets). This
-	// represents the state of the target immediately after this action
-	// occurred.
+	// targets). This represents the state of the target immediately after
+	// this action occurred.
 	Target *Target `json:"target,omitempty"`
 
 	// TimeRange: The action occurred over this time range.
@@ -302,8 +300,7 @@ type Administrator struct {
 }
 
 // AnonymousUser: Empty message representing an anonymous user or
-// indicating the authenticated
-// user should be anonymized.
+// indicating the authenticated user should be anonymized.
 type AnonymousUser struct {
 }
 
@@ -423,13 +420,10 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 }
 
 // ConsolidationStrategy: How the individual activities are
-// consolidated. A set of activities may be
-// consolidated into one combined activity if they are related in some
-// way, such
-// as one actor performing the same action on multiple targets, or
-// multiple
-// actors performing the same action on a single target. The strategy
-// defines
+// consolidated. A set of activities may be consolidated into one
+// combined activity if they are related in some way, such as one actor
+// performing the same action on multiple targets, or multiple actors
+// performing the same action on a single target. The strategy defines
 // the rules for which activities are related.
 type ConsolidationStrategy struct {
 	// Legacy: The individual activities are consolidated using the legacy
@@ -494,18 +488,15 @@ func (s *Copy) MarshalJSON() ([]byte, error) {
 // Create: An object was created.
 type Create struct {
 	// Copy: If present, indicates the object was created by copying an
-	// existing Drive
-	// object.
+	// existing Drive object.
 	Copy *Copy `json:"copy,omitempty"`
 
 	// New: If present, indicates the object was newly created (e.g. as a
-	// blank
-	// document), not derived from a Drive object or external object.
+	// blank document), not derived from a Drive object or external object.
 	New *New1 `json:"new,omitempty"`
 
 	// Upload: If present, indicates the object originated externally and
-	// was uploaded
-	// to Drive.
+	// was uploaded to Drive.
 	Upload *Upload `json:"upload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Copy") to
@@ -638,11 +629,9 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 
 // Drive: Information about a shared drive.
 type Drive struct {
-	// Name: The resource name of the shared drive. The format
-	// is
+	// Name: The resource name of the shared drive. The format is
 	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
-	// collection
-	// ID for this resource name.
+	// collection ID for this resource name.
 	Name string `json:"name,omitempty"`
 
 	// Root: The root of this shared drive.
@@ -675,16 +664,12 @@ func (s *Drive) MarshalJSON() ([]byte, error) {
 }
 
 // DriveActivity: A single Drive activity comprising one or more Actions
-// by one or more
-// Actors on one or more Targets. Some Action groupings occur
-// spontaneously,
-// such as moving an item into a shared folder triggering a permission
-// change.
-// Other groupings of related Actions, such as multiple Actors editing
-// one item
-// or moving multiple files into a new folder, are controlled by the
-// selection
-// of a ConsolidationStrategy in the QueryDriveActivityRequest.
+// by one or more Actors on one or more Targets. Some Action groupings
+// occur spontaneously, such as moving an item into a shared folder
+// triggering a permission change. Other groupings of related Actions,
+// such as multiple Actors editing one item or moving multiple files
+// into a new folder, are controlled by the selection of a
+// ConsolidationStrategy in the QueryDriveActivityRequest.
 type DriveActivity struct {
 	// Actions: Details on all actions in this activity.
 	Actions []*Action `json:"actions,omitempty"`
@@ -693,17 +678,14 @@ type DriveActivity struct {
 	Actors []*Actor `json:"actors,omitempty"`
 
 	// PrimaryActionDetail: Key information about the primary action for
-	// this activity. This is either
-	// representative, or the most important, of all actions in the
-	// activity,
-	// according to the ConsolidationStrategy in the request.
+	// this activity. This is either representative, or the most important,
+	// of all actions in the activity, according to the
+	// ConsolidationStrategy in the request.
 	PrimaryActionDetail *ActionDetail `json:"primaryActionDetail,omitempty"`
 
 	// Targets: All Google Drive objects this activity is about (e.g. file,
-	// folder, drive).
-	// This represents the state of the target immediately after the
-	// actions
-	// occurred.
+	// folder, drive). This represents the state of the target immediately
+	// after the actions occurred.
 	Targets []*Target `json:"targets,omitempty"`
 
 	// TimeRange: The activity occurred over this time range.
@@ -779,8 +761,7 @@ type DriveItem struct {
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
 
 	// DriveFolder: The Drive item is a folder. Includes information about
-	// the type of
-	// folder.
+	// the type of folder.
 	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
 
 	// File: This field is deprecated; please use the `driveFile` field
@@ -791,8 +772,7 @@ type DriveItem struct {
 	// instead.
 	Folder *Folder `json:"folder,omitempty"`
 
-	// MimeType: The MIME type of the Drive item.
-	// See
+	// MimeType: The MIME type of the Drive item. See
 	// https://developers.google.com/drive/v3/web/mime-types.
 	MimeType string `json:"mimeType,omitempty"`
 
@@ -835,8 +815,7 @@ type DriveItemReference struct {
 	DriveFile *DriveFile `json:"driveFile,omitempty"`
 
 	// DriveFolder: The Drive item is a folder. Includes information about
-	// the type of
-	// folder.
+	// the type of folder.
 	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
 
 	// File: This field is deprecated; please use the `driveFile` field
@@ -878,11 +857,9 @@ func (s *DriveItemReference) MarshalJSON() ([]byte, error) {
 
 // DriveReference: A lightweight reference to a shared drive.
 type DriveReference struct {
-	// Name: The resource name of the shared drive. The format
-	// is
+	// Name: The resource name of the shared drive. The format is
 	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
-	// collection
-	// ID for this resource name.
+	// collection ID for this resource name.
 	Name string `json:"name,omitempty"`
 
 	// Title: The title of the shared drive.
@@ -922,24 +899,18 @@ type File struct {
 // FileComment: A comment on a file.
 type FileComment struct {
 	// LegacyCommentId: The comment in the discussion thread. This
-	// identifier is an opaque string
-	// compatible with the Drive API;
-	// see
+	// identifier is an opaque string compatible with the Drive API; see
 	// https://developers.google.com/drive/v3/reference/comments/get
 	LegacyCommentId string `json:"legacyCommentId,omitempty"`
 
 	// LegacyDiscussionId: The discussion thread to which the comment was
-	// added. This identifier is an
-	// opaque string compatible with the Drive API and references the
-	// first
-	// comment in a discussion;
-	// see
+	// added. This identifier is an opaque string compatible with the Drive
+	// API and references the first comment in a discussion; see
 	// https://developers.google.com/drive/v3/reference/comments/get
 	LegacyDiscussionId string `json:"legacyDiscussionId,omitempty"`
 
 	// LinkToDiscussion: The link to the discussion thread containing this
-	// comment, for
-	// example,
+	// comment, for example,
 	// "https://docs.google.com/DOCUMENT_ID/edit?disco=THREAD_ID".
 	LinkToDiscussion string `json:"linkToDiscussion,omitempty"`
 
@@ -1041,8 +1012,8 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 }
 
 // Impersonation: Information about an impersonation, where an admin
-// acts on behalf of an end
-// user. Information about the acting admin is not currently available.
+// acts on behalf of an end user. Information about the acting admin is
+// not currently available.
 type Impersonation struct {
 	// ImpersonatedUser: The impersonated user.
 	ImpersonatedUser *User `json:"impersonatedUser,omitempty"`
@@ -1077,10 +1048,8 @@ type KnownUser struct {
 	IsCurrentUser bool `json:"isCurrentUser,omitempty"`
 
 	// PersonName: The identifier for this user that can be used with the
-	// People API to get
-	// more information. The format is "people/ACCOUNT_ID".
-	// See
-	// https://developers.google.com/people/.
+	// People API to get more information. The format is
+	// "people/ACCOUNT_ID". See https://developers.google.com/people/.
 	PersonName string `json:"personName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsCurrentUser") to
@@ -1107,14 +1076,11 @@ func (s *KnownUser) MarshalJSON() ([]byte, error) {
 }
 
 // Legacy: A strategy which consolidates activities using the grouping
-// rules from the
-// legacy V1 Activity API. Similar actions occurring within a window of
-// time
-// can be grouped across multiple targets (such as moving a set of files
-// at
-// once) or multiple actors (such as several users editing the same
-// item).
-// Grouping rules for this strategy are specific to each type of action.
+// rules from the legacy V1 Activity API. Similar actions occurring
+// within a window of time can be grouped across multiple targets (such
+// as moving a set of files at once) or multiple actors (such as several
+// users editing the same item). Grouping rules for this strategy are
+// specific to each type of action.
 type Legacy struct {
 }
 
@@ -1199,8 +1165,8 @@ func (s *Owner) MarshalJSON() ([]byte, error) {
 // Permission: The permission setting of an object.
 type Permission struct {
 	// AllowDiscovery: If true, the item can be discovered (e.g. in the
-	// user's "Shared with me"
-	// collection) without needing a link to the item.
+	// user's "Shared with me" collection) without needing a link to the
+	// item.
 	AllowDiscovery bool `json:"allowDiscovery,omitempty"`
 
 	// Anyone: If set, this permission applies to anyone, even logged out
@@ -1213,12 +1179,8 @@ type Permission struct {
 	// Group: The group to whom this permission applies.
 	Group *Group `json:"group,omitempty"`
 
-	// Role: Indicates the
-	// <a href="/drive/web/manage-sharing#roles">Google Drive
-	// permissions
-	// role</a>. The role determines a user's ability to read, write,
-	// and
-	// comment on items.
+	// Role: Indicates the Google Drive permissions role. The role
+	// determines a user's ability to read, write, and comment on items.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - The role is not available.
@@ -1228,20 +1190,15 @@ type Permission struct {
 	//   "FILE_ORGANIZER" - A role granting the ability to contribute and
 	// manage content.
 	//   "EDITOR" - A role granting the ability to contribute content. This
-	// role is sometimes
-	// also known as "writer".
+	// role is sometimes also known as "writer".
 	//   "COMMENTER" - A role granting the ability to view and comment on
 	// content.
 	//   "VIEWER" - A role granting the ability to view content. This role
-	// is sometimes also
-	// known as "reader".
+	// is sometimes also known as "reader".
 	//   "PUBLISHED_VIEWER" - A role granting the ability to view content
-	// only after it has been
-	// published to the web. This role is sometimes also known as
-	// "published
-	// reader". See https://support.google.com/sites/answer/6372880 for
-	// more
-	// information.
+	// only after it has been published to the web. This role is sometimes
+	// also known as "published reader". See
+	// https://support.google.com/sites/answer/6372880 for more information.
 	Role string `json:"role,omitempty"`
 
 	// User: The user to whom this permission applies.
@@ -1344,62 +1301,42 @@ func (s *Post) MarshalJSON() ([]byte, error) {
 // activity.
 type QueryDriveActivityRequest struct {
 	// AncestorName: Return activities for this Drive folder and all
-	// children and descendants.
-	// The format is "items/ITEM_ID".
+	// children and descendants. The format is "items/ITEM_ID".
 	AncestorName string `json:"ancestorName,omitempty"`
 
 	// ConsolidationStrategy: Details on how to consolidate related actions
-	// that make up the activity. If
-	// not set, then related actions are not consolidated.
+	// that make up the activity. If not set, then related actions are not
+	// consolidated.
 	ConsolidationStrategy *ConsolidationStrategy `json:"consolidationStrategy,omitempty"`
 
 	// Filter: The filtering for items returned from this query request. The
-	// format of the
-	// filter string is a sequence of expressions, joined by an optional
-	// "AND",
-	// where each expression is of the form "field operator
-	// value".
-	//
-	// Supported fields:
-	//
-	//   - <tt>time</tt>: Uses numerical operators on date values either in
-	//     terms of milliseconds since Jan 1, 1970 or in RFC 3339 format.
-	//     Examples:
-	//       - <tt>time > 1452409200000 AND time <= 1492812924310</tt>
-	//       - <tt>time >= "2016-01-10T01:02:03-05:00"</tt>
-	//
-	//   - <tt>detail.action_detail_case</tt>: Uses the "has" operator (:)
-	// and
-	//     either a singular value or a list of allowed action types
-	// enclosed in
-	//     parentheses.
-	//     Examples:
-	//       - <tt>detail.action_detail_case: RENAME</tt>
-	//       - <tt>detail.action_detail_case:(CREATE EDIT)</tt>
-	//       - <tt>-detail.action_detail_case:MOVE</tt>
+	// format of the filter string is a sequence of expressions, joined by
+	// an optional "AND", where each expression is of the form "field
+	// operator value". Supported fields: - time: Uses numerical operators
+	// on date values either in terms of milliseconds since Jan 1, 1970 or
+	// in RFC 3339 format. Examples: - time > 1452409200000 AND time <=
+	// 1492812924310 - time >= "2016-01-10T01:02:03-05:00" -
+	// detail.action_detail_case: Uses the "has" operator (:) and either a
+	// singular value or a list of allowed action types enclosed in
+	// parentheses. Examples: - detail.action_detail_case: RENAME -
+	// detail.action_detail_case:(CREATE EDIT) -
+	// -detail.action_detail_case:MOVE
 	Filter string `json:"filter,omitempty"`
 
-	// ItemName: Return activities for this Drive item. The format
-	// is
+	// ItemName: Return activities for this Drive item. The format is
 	// "items/ITEM_ID".
 	ItemName string `json:"itemName,omitempty"`
 
 	// PageSize: The miminum number of activities desired in the response;
-	// the server will
-	// attempt to return at least this quanitity. The server may also return
-	// fewer
-	// activities if it has a partial response ready before the request
-	// times out.
-	// If not set, a default value is used.
+	// the server will attempt to return at least this quanitity. The server
+	// may also return fewer activities if it has a partial response ready
+	// before the request times out. If not set, a default value is used.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The token identifying which page of results to return. Set
-	// this to the
-	// next_page_token value returned from a previous query to obtain
-	// the
-	// following page of results. If not set, the first page of results will
-	// be
-	// returned.
+	// this to the next_page_token value returned from a previous query to
+	// obtain the following page of results. If not set, the first page of
+	// results will be returned.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AncestorName") to
@@ -1431,8 +1368,8 @@ type QueryDriveActivityResponse struct {
 	// Activities: List of activity requested.
 	Activities []*DriveActivity `json:"activities,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results, or
-	// empty if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1534,13 +1471,12 @@ type RestrictionChange struct {
 	//   "FEATURE_UNSPECIFIED" - The feature which changed restriction
 	// settings was not available.
 	//   "SHARING_OUTSIDE_DOMAIN" - When restricted, this prevents items
-	// from being shared outside the
-	// domain.
+	// from being shared outside the domain.
 	//   "DIRECT_SHARING" - When restricted, this prevents direct sharing of
 	// individual items.
 	//   "ITEM_DUPLICATION" - When restricted, this prevents actions like
-	// copy, download, and print
-	// that might result in uncontrolled duplicates of items.
+	// copy, download, and print that might result in uncontrolled
+	// duplicates of items.
 	//   "DRIVE_FILE_STREAM" - When restricted, this prevents use of Drive
 	// File Stream.
 	Feature string `json:"feature,omitempty"`
@@ -1939,7 +1875,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

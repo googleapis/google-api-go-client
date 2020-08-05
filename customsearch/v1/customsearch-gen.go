@@ -148,11 +148,9 @@ type CseSiterestrictService struct {
 // Promotion: Promotion result.
 type Promotion struct {
 	// BodyLines: An array of block objects for this promotion. See [Google
-	// WebSearch
-	// Protocol
-	// reference](https://developers.google.com/custom-sea
-	// rch/docs/xml_results)
-	// for more information.
+	// WebSearch Protocol
+	// reference](https://developers.google.com/custom-search/docs/xml_result
+	// s) for more information.
 	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
 
 	// DisplayLink: An abridged version of this search's result URL, e.g.
@@ -296,29 +294,23 @@ type Result struct {
 	Image *ResultImage `json:"image,omitempty"`
 
 	// Kind: A unique identifier for the type of current object. For this
-	// API, it is
-	// `customsearch#result.`
+	// API, it is `customsearch#result.`
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: Encapsulates all information about
-	// [refinement
-	// labels](https://developers.google.com/custom-search/docs/x
-	// ml_results).
+	// Labels: Encapsulates all information about [refinement
+	// labels](https://developers.google.com/custom-search/docs/xml_results).
 	Labels []*ResultLabels `json:"labels,omitempty"`
 
-	// Link: The full URL to which the search result is pointing,
-	// e.g.
+	// Link: The full URL to which the search result is pointing, e.g.
 	// http://www.example.com/foo/bar.
 	Link string `json:"link,omitempty"`
 
 	// Mime: The MIME type of the search result.
 	Mime string `json:"mime,omitempty"`
 
-	// Pagemap:
-	// Contains
-	// [PageMap](https://developers.google.com/custom-search/docs/st
-	// ructured_data#pagemaps)
-	// information for this search result.
+	// Pagemap: Contains
+	// [PageMap](https://developers.google.com/custom-search/docs/structured_
+	// data#pagemaps) information for this search result.
 	Pagemap googleapi.RawMessage `json:"pagemap,omitempty"`
 
 	// Snippet: The snippet of the search result, in plain text.
@@ -400,8 +392,7 @@ func (s *ResultImage) MarshalJSON() ([]byte, error) {
 // result.
 type ResultLabels struct {
 	// DisplayName: The display name of a refinement label. This is the name
-	// you should
-	// display in your user interface.
+	// you should display in your user interface.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LabelWithOp: Refinement label and the associated refinement
@@ -409,8 +400,8 @@ type ResultLabels struct {
 	LabelWithOp string `json:"label_with_op,omitempty"`
 
 	// Name: The name of a refinement label, which you can use to refine
-	// searches.
-	// Don't display this in your user interface; instead, use displayName.
+	// searches. Don't display this in your user interface; instead, use
+	// displayName.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -439,33 +430,23 @@ func (s *ResultLabels) MarshalJSON() ([]byte, error) {
 // Search: Response to a custom search request.
 type Search struct {
 	// Context: Metadata and refinements associated with the given search
-	// engine,
-	// including:
-	//
-	// * The name of the search engine that was used for the query.
-	//
-	// *   A set of
-	// [facet
-	// objects](https://developers.google.com/custom-search/docs/refin
-	// ements#create)
-	// (refinements) you can use for refining a search.
+	// engine, including: * The name of the search engine that was used for
+	// the query. * A set of [facet
+	// objects](https://developers.google.com/custom-search/docs/refinements#
+	// create) (refinements) you can use for refining a search.
 	Context googleapi.RawMessage `json:"context,omitempty"`
 
 	// Items: The current set of custom search results.
 	Items []*Result `json:"items,omitempty"`
 
 	// Kind: Unique identifier for the type of current object. For this API,
-	// it is
-	// customsearch#search.
+	// it is customsearch#search.
 	Kind string `json:"kind,omitempty"`
 
-	// Promotions: The set
-	// of
-	// [promotions](https://developers.google.com/custom-search/docs/promo
-	// tions).
-	// Present only if the custom search engine's configuration files define
-	// any
-	// promotions for the given query.
+	// Promotions: The set of
+	// [promotions](https://developers.google.com/custom-search/docs/promotio
+	// ns). Present only if the custom search engine's configuration files
+	// define any promotions for the given query.
 	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// Queries: Query metadata for the previous, current, and next pages of
@@ -550,256 +531,124 @@ type SearchQueriesNextPage struct {
 	// Count: Number of search results returned in this set.
 	Count int64 `json:"count,omitempty"`
 
-	// Cr: Restricts search results to documents originating in a
-	// particular
-	// country. You may use
-	// [Boolean
-	// operators](https://developers.google.com/custom-search/docs/x
-	// ml_results#booleanOperators)
-	// in the `cr` parameter's value.
-	//
-	// Google WebSearch determines the country of a document by analyzing
-	// the
-	// following:
-	//
-	// * The top-level domain (TLD) of the document's URL.
-	//
-	// * The geographic location of the web server's IP address.
-	//
-	// See [Country (cr)
-	// Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml
-	// _results#countryCollections)
-	// for a list of valid values for this parameter.
+	// Cr: Restricts search results to documents originating in a particular
+	// country. You may use [Boolean
+	// operators](https://developers.google.com/custom-search/docs/xml_result
+	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
+	// determines the country of a document by analyzing the following: *
+	// The top-level domain (TLD) of the document's URL. * The geographic
+	// location of the web server's IP address. See [Country (cr) Parameter
+	// Values](https://developers.google.com/custom-search/docs/xml_results#c
+	// ountryCollections) for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine
-	// [Control Panel](https://programmablesearchengine.google.com/). This
-	// is a
-	// custom property not defined in the OpenSearch spec. This parameter
-	// is
-	// **required**.
+	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// This is a custom property not defined in the OpenSearch spec. This
+	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
-	// values include:
-	//
-	// * `d[number]`: requests results from the specified number of past
-	// days.
-	//
-	// * `w[number]`: requests results from the specified number of past
-	// weeks.
-	//
-	// * `m[number]`: requests results from the specified number of past
-	// months.
-	//
-	// * `y[number]`: requests results from the specified number of past
-	// years.
+	// values include: * `d[number]`: requests results from the specified
+	// number of past days. * `w[number]`: requests results from the
+	// specified number of past weeks. * `m[number]`: requests results from
+	// the specified number of past months. * `y[number]`: requests results
+	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
 	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional
-	// Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_r
-	// esults#chineseSearch)
-	// feature.
-	//
-	// Supported values are:
-	//
-	// * `0`: enabled (default)
-	//
+	// Traditional Chinese
+	// Search](https://developers.google.com/custom-search/docs/xml_results#c
+	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
 	// * `1`: disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
-	// results must
-	// contain.
+	// results must contain.
 	ExactTerms string `json:"exactTerms,omitempty"`
 
 	// ExcludeTerms: Identifies a word or phrase that should not appear in
-	// any documents in
-	// the search results.
+	// any documents in the search results.
 	ExcludeTerms string `json:"excludeTerms,omitempty"`
 
 	// FileType: Restricts results to files of a specified extension.
-	// Filetypes supported
-	// by Google include:
-	//
-	// * Adobe Portable Document Format (`pdf`)
-	//
-	// * Adobe PostScript (`ps`)
-	//
-	// * Lotus 1-2-3 (`wk1`, `wk2`, `wk3`, `wk4`, `wk5`, `wki`, `wks`,
-	// `wku`)
-	//
-	// * Lotus WordPro (`lwp`)
-	//
-	// * Macwrite (`mw`)
-	//
-	// * Microsoft Excel (`xls`)
-	//
-	// * Microsoft PowerPoint (`ppt`)
-	//
-	// * Microsoft Word (`doc`)
-	//
-	// * Microsoft Works (`wks`, `wps`, `wdb`)
-	//
-	// * Microsoft Write (`wri`)
-	//
-	// * Rich Text Format (`rtf`)
-	//
-	// * Shockwave Flash (`swf`)
-	//
-	// * Text (`ans`, `txt`).
-	//
-	// Additional filetypes may be added in the future. An up-to-date list
-	// can
-	// always be found in Google's [file
-	// type
+	// Filetypes supported by Google include: * Adobe Portable Document
+	// Format (`pdf`) * Adobe PostScript (`ps`) * Lotus 1-2-3 (`wk1`, `wk2`,
+	// `wk3`, `wk4`, `wk5`, `wki`, `wks`, `wku`) * Lotus WordPro (`lwp`) *
+	// Macwrite (`mw`) * Microsoft Excel (`xls`) * Microsoft PowerPoint
+	// (`ppt`) * Microsoft Word (`doc`) * Microsoft Works (`wks`, `wps`,
+	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
+	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
+	// may be added in the future. An up-to-date list can always be found in
+	// Google's [file type
 	// FAQ](https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search
-	// results. See
-	// [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs
-	// /xml_results#automaticFiltering)
-	// for more information about Google's search results filters. Valid
-	// values
-	// for this parameter are:
-	//
-	// * `0`: Disabled
-	//
-	// * `1`: Enabled (default)
-	//
-	// **Note**: By default, Google applies filtering to all search results
-	// to
-	// improve the quality of those results.
+	// search results. See [Automatic
+	// Filtering](https://developers.google.com/custom-search/docs/xml_result
+	// s#automaticFiltering) for more information about Google's search
+	// results filters. Valid values for this parameter are: * `0`: Disabled
+	// * `1`: Enabled (default) **Note**: By default, Google applies
+	// filtering to all search results to improve the quality of those
+	// results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter
-	// value. See
-	// [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_r
-	// esults#countryCodes)
-	// for a list of valid values.
-	//
-	// Specifying a `gl` parameter value in WebSearch requests should
-	// improve
-	// the relevance of results. This is particularly true for
-	// international
-	// customers and, even more specifically, for customers in
-	// English-speaking
-	// countries other than the United States.
+	// parameter value. See [Country
+	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
+	// untryCodes) for a list of valid values. Specifying a `gl` parameter
+	// value in WebSearch requests should improve the relevance of results.
+	// This is particularly true for international customers and, even more
+	// specifically, for customers in English-speaking countries other than
+	// the United States.
 	Gl string `json:"gl,omitempty"`
 
 	// GoogleHost: Specifies the Google domain (for example, google.com,
-	// google.de, or
-	// google.fr) to which the search should be limited.
+	// google.de, or google.fr) to which the search should be limited.
 	GoogleHost string `json:"googleHost,omitempty"`
 
 	// HighRange: Specifies the ending value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	HighRange string `json:"highRange,omitempty"`
 
 	// Hl: Specifies the interface language (host language) of your user
-	// interface.
-	// Explicitly setting this parameter improves the performance and
-	// the
-	// quality of your search results.
-	//
-	// See the
-	// [Interface
-	// Languages](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInterfaceLanguages)
-	// section of [Internationalizing Queries and
+	// interface. Explicitly setting this parameter improves the performance
+	// and the quality of your search results. See the [Interface
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
 	// Results
-	// Presentation](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInternationalizing)
-	// for more information, and [Supported
+	// Presentation](https://developers.google.com/custom-search/docs/xml_res
+	// ults#wsInternationalizing) for more information, and [Supported
 	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/
-	// xml_results_appendices#interfaceLanguages)
-	// for a list of supported languages.
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s_appendices#interfaceLanguages) for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
-	// combined
-	// with a logical `AND` operator.
+	// combined with a logical `AND` operator.
 	Hq string `json:"hq,omitempty"`
 
 	// ImgColorType: Restricts results to images of a specified color type.
-	// Supported values
-	//   are:
-	//
-	// * `mono` (black and white)
-	//
-	// * `gray` (grayscale)
-	//
+	// Supported values are: * `mono` (black and white) * `gray` (grayscale)
 	// * `color` (color)
 	ImgColorType string `json:"imgColorType,omitempty"`
 
 	// ImgDominantColor: Restricts results to images with a specific
-	// dominant color. Supported
-	// values are:
-	//
-	// * `red`
-	//
-	// * `orange`
-	//
-	// * `yellow`
-	//
-	// * `green`
-	//
-	// * `teal`
-	//
-	// * `blue`
-	//
-	// * `purple`
-	//
-	// * `pink`
-	//
-	// * `white`
-	//
-	// * `gray`
-	//
-	// * `black`
-	//
-	// * `brown`
+	// dominant color. Supported values are: * `red` * `orange` * `yellow` *
+	// `green` * `teal` * `blue` * `purple` * `pink` * `white` * `gray` *
+	// `black` * `brown`
 	ImgDominantColor string `json:"imgDominantColor,omitempty"`
 
 	// ImgSize: Restricts results to images of a specified size. Supported
-	// values are:
-	//
-	// * `icon` (small)
-	//
-	// * `small | medium | large | xlarge` (medium)
-	//
-	// * `xxlarge` (large)
-	//
-	// * `huge` (extra-large)
+	// values are: * `icon` (small) * `small | medium | large | xlarge`
+	// (medium) * `xxlarge` (large) * `huge` (extra-large)
 	ImgSize string `json:"imgSize,omitempty"`
 
 	// ImgType: Restricts results to images of a specified type. Supported
-	// values are:
-	//
-	// * `clipart` (Clip art)
-	//
-	// * `face` (Face)
-	//
-	// * `lineart` (Line drawing)
-	//
-	// * `photo` (Photo)
-	//
-	// * `animated` (Animated)
-	//
-	// * `stock` (Stock)
+	// values are: * `clipart` (Clip art) * `face` (Face) * `lineart` (Line
+	// drawing) * `photo` (Photo) * `animated` (Animated) * `stock` (Stock)
 	ImgType string `json:"imgType,omitempty"`
 
 	// InputEncoding: The character encoding supported for search requests.
@@ -813,90 +662,64 @@ type SearchQueriesNextPage struct {
 	LinkSite string `json:"linkSite,omitempty"`
 
 	// LowRange: Specifies the starting value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	LowRange string `json:"lowRange,omitempty"`
 
 	// OrTerms: Provides additional search terms to check for in a document,
-	// where each
-	// document in the search results must contain at least one of
-	// the
-	// additional search terms. You can also use the
-	// [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_resu
-	// lts#BooleanOrqt)
-	// query term for this type of query.
+	// where each document in the search results must contain at least one
+	// of the additional search terms. You can also use the [Boolean
+	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
+	// anOrqt) query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
 	OutputEncoding string `json:"outputEncoding,omitempty"`
 
 	// RelatedSite: Specifies that all search results should be pages that
-	// are related to the
-	// specified URL. The parameter value should be a URL.
+	// are related to the specified URL. The parameter value should be a
+	// URL.
 	RelatedSite string `json:"relatedSite,omitempty"`
 
-	// Rights: Filters based on licensing. Supported values include:
-	//
-	// * `cc_publicdomain`
-	//
-	// * `cc_attribute`
-	//
-	// * `cc_sharealike`
-	//
-	// * `cc_noncommercial`
-	//
-	// * `cc_nonderived`
+	// Rights: Filters based on licensing. Supported values include: *
+	// `cc_publicdomain` * `cc_attribute` * `cc_sharealike` *
+	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the
-	// [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xm
-	// l_results#safeSearchLevels)
-	// used for filtering out adult results. This is a custom property
-	// not
-	// defined in the OpenSearch spec. Valid parameter values are:
-	//
-	// * "off": Disable SafeSearch
-	//
-	// * "active": Enable SafeSearch
+	// Safe: Specifies the [SafeSearch
+	// level](https://developers.google.com/custom-search/docs/xml_results#sa
+	// feSearchLevels) used for filtering out adult results. This is a
+	// custom property not defined in the OpenSearch spec. Valid parameter
+	// values are: * "off": Disable SafeSearch * "active": Enable
+	// SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
 	SearchTerms string `json:"searchTerms,omitempty"`
 
 	// SearchType: Allowed values are `web` or `image`. If unspecified,
-	// results are limited
-	// to webpages.
+	// results are limited to webpages.
 	SearchType string `json:"searchType,omitempty"`
 
 	// SiteSearch: Restricts results to URLs from a specified site.
 	SiteSearch string `json:"siteSearch,omitempty"`
 
 	// SiteSearchFilter: Specifies whether to include or exclude results
-	// from the site named in
-	// the `sitesearch` parameter. Supported values are:
-	//
-	// * `i`: include content from site
-	//
-	// * `e`: exclude content from site
+	// from the site named in the `sitesearch` parameter. Supported values
+	// are: * `i`: include content from site * `e`: exclude content from
+	// site
 	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
 
 	// Sort: Specifies that results should be sorted according to the
-	// specified
-	// expression. For example, sort by date.
+	// specified expression. For example, sort by date.
 	Sort string `json:"sort,omitempty"`
 
 	// StartIndex: The index of the current set of search results into the
-	// total set of
-	// results, where the index of the first result is 1.
+	// total set of results, where the index of the first result is 1.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// StartPage: The page number of this set of results, where the page
-	// length is set by
-	// the `count` property.
+	// length is set by the `count` property.
 	StartPage int64 `json:"startPage,omitempty"`
 
 	// Title: A description of the query.
@@ -934,256 +757,124 @@ type SearchQueriesPreviousPage struct {
 	// Count: Number of search results returned in this set.
 	Count int64 `json:"count,omitempty"`
 
-	// Cr: Restricts search results to documents originating in a
-	// particular
-	// country. You may use
-	// [Boolean
-	// operators](https://developers.google.com/custom-search/docs/x
-	// ml_results#booleanOperators)
-	// in the `cr` parameter's value.
-	//
-	// Google WebSearch determines the country of a document by analyzing
-	// the
-	// following:
-	//
-	// * The top-level domain (TLD) of the document's URL.
-	//
-	// * The geographic location of the web server's IP address.
-	//
-	// See [Country (cr)
-	// Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml
-	// _results#countryCollections)
-	// for a list of valid values for this parameter.
+	// Cr: Restricts search results to documents originating in a particular
+	// country. You may use [Boolean
+	// operators](https://developers.google.com/custom-search/docs/xml_result
+	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
+	// determines the country of a document by analyzing the following: *
+	// The top-level domain (TLD) of the document's URL. * The geographic
+	// location of the web server's IP address. See [Country (cr) Parameter
+	// Values](https://developers.google.com/custom-search/docs/xml_results#c
+	// ountryCollections) for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine
-	// [Control Panel](https://programmablesearchengine.google.com/). This
-	// is a
-	// custom property not defined in the OpenSearch spec. This parameter
-	// is
-	// **required**.
+	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// This is a custom property not defined in the OpenSearch spec. This
+	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
-	// values include:
-	//
-	// * `d[number]`: requests results from the specified number of past
-	// days.
-	//
-	// * `w[number]`: requests results from the specified number of past
-	// weeks.
-	//
-	// * `m[number]`: requests results from the specified number of past
-	// months.
-	//
-	// * `y[number]`: requests results from the specified number of past
-	// years.
+	// values include: * `d[number]`: requests results from the specified
+	// number of past days. * `w[number]`: requests results from the
+	// specified number of past weeks. * `m[number]`: requests results from
+	// the specified number of past months. * `y[number]`: requests results
+	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
 	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional
-	// Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_r
-	// esults#chineseSearch)
-	// feature.
-	//
-	// Supported values are:
-	//
-	// * `0`: enabled (default)
-	//
+	// Traditional Chinese
+	// Search](https://developers.google.com/custom-search/docs/xml_results#c
+	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
 	// * `1`: disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
-	// results must
-	// contain.
+	// results must contain.
 	ExactTerms string `json:"exactTerms,omitempty"`
 
 	// ExcludeTerms: Identifies a word or phrase that should not appear in
-	// any documents in
-	// the search results.
+	// any documents in the search results.
 	ExcludeTerms string `json:"excludeTerms,omitempty"`
 
 	// FileType: Restricts results to files of a specified extension.
-	// Filetypes supported
-	// by Google include:
-	//
-	// * Adobe Portable Document Format (`pdf`)
-	//
-	// * Adobe PostScript (`ps`)
-	//
-	// * Lotus 1-2-3 (`wk1`, `wk2`, `wk3`, `wk4`, `wk5`, `wki`, `wks`,
-	// `wku`)
-	//
-	// * Lotus WordPro (`lwp`)
-	//
-	// * Macwrite (`mw`)
-	//
-	// * Microsoft Excel (`xls`)
-	//
-	// * Microsoft PowerPoint (`ppt`)
-	//
-	// * Microsoft Word (`doc`)
-	//
-	// * Microsoft Works (`wks`, `wps`, `wdb`)
-	//
-	// * Microsoft Write (`wri`)
-	//
-	// * Rich Text Format (`rtf`)
-	//
-	// * Shockwave Flash (`swf`)
-	//
-	// * Text (`ans`, `txt`).
-	//
-	// Additional filetypes may be added in the future. An up-to-date list
-	// can
-	// always be found in Google's [file
-	// type
+	// Filetypes supported by Google include: * Adobe Portable Document
+	// Format (`pdf`) * Adobe PostScript (`ps`) * Lotus 1-2-3 (`wk1`, `wk2`,
+	// `wk3`, `wk4`, `wk5`, `wki`, `wks`, `wku`) * Lotus WordPro (`lwp`) *
+	// Macwrite (`mw`) * Microsoft Excel (`xls`) * Microsoft PowerPoint
+	// (`ppt`) * Microsoft Word (`doc`) * Microsoft Works (`wks`, `wps`,
+	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
+	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
+	// may be added in the future. An up-to-date list can always be found in
+	// Google's [file type
 	// FAQ](https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search
-	// results. See
-	// [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs
-	// /xml_results#automaticFiltering)
-	// for more information about Google's search results filters. Valid
-	// values
-	// for this parameter are:
-	//
-	// * `0`: Disabled
-	//
-	// * `1`: Enabled (default)
-	//
-	// **Note**: By default, Google applies filtering to all search results
-	// to
-	// improve the quality of those results.
+	// search results. See [Automatic
+	// Filtering](https://developers.google.com/custom-search/docs/xml_result
+	// s#automaticFiltering) for more information about Google's search
+	// results filters. Valid values for this parameter are: * `0`: Disabled
+	// * `1`: Enabled (default) **Note**: By default, Google applies
+	// filtering to all search results to improve the quality of those
+	// results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter
-	// value. See
-	// [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_r
-	// esults#countryCodes)
-	// for a list of valid values.
-	//
-	// Specifying a `gl` parameter value in WebSearch requests should
-	// improve
-	// the relevance of results. This is particularly true for
-	// international
-	// customers and, even more specifically, for customers in
-	// English-speaking
-	// countries other than the United States.
+	// parameter value. See [Country
+	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
+	// untryCodes) for a list of valid values. Specifying a `gl` parameter
+	// value in WebSearch requests should improve the relevance of results.
+	// This is particularly true for international customers and, even more
+	// specifically, for customers in English-speaking countries other than
+	// the United States.
 	Gl string `json:"gl,omitempty"`
 
 	// GoogleHost: Specifies the Google domain (for example, google.com,
-	// google.de, or
-	// google.fr) to which the search should be limited.
+	// google.de, or google.fr) to which the search should be limited.
 	GoogleHost string `json:"googleHost,omitempty"`
 
 	// HighRange: Specifies the ending value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	HighRange string `json:"highRange,omitempty"`
 
 	// Hl: Specifies the interface language (host language) of your user
-	// interface.
-	// Explicitly setting this parameter improves the performance and
-	// the
-	// quality of your search results.
-	//
-	// See the
-	// [Interface
-	// Languages](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInterfaceLanguages)
-	// section of [Internationalizing Queries and
+	// interface. Explicitly setting this parameter improves the performance
+	// and the quality of your search results. See the [Interface
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
 	// Results
-	// Presentation](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInternationalizing)
-	// for more information, and [Supported
+	// Presentation](https://developers.google.com/custom-search/docs/xml_res
+	// ults#wsInternationalizing) for more information, and [Supported
 	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/
-	// xml_results_appendices#interfaceLanguages)
-	// for a list of supported languages.
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s_appendices#interfaceLanguages) for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
-	// combined
-	// with a logical `AND` operator.
+	// combined with a logical `AND` operator.
 	Hq string `json:"hq,omitempty"`
 
 	// ImgColorType: Restricts results to images of a specified color type.
-	// Supported values
-	//   are:
-	//
-	// * `mono` (black and white)
-	//
-	// * `gray` (grayscale)
-	//
+	// Supported values are: * `mono` (black and white) * `gray` (grayscale)
 	// * `color` (color)
 	ImgColorType string `json:"imgColorType,omitempty"`
 
 	// ImgDominantColor: Restricts results to images with a specific
-	// dominant color. Supported
-	// values are:
-	//
-	// * `red`
-	//
-	// * `orange`
-	//
-	// * `yellow`
-	//
-	// * `green`
-	//
-	// * `teal`
-	//
-	// * `blue`
-	//
-	// * `purple`
-	//
-	// * `pink`
-	//
-	// * `white`
-	//
-	// * `gray`
-	//
-	// * `black`
-	//
-	// * `brown`
+	// dominant color. Supported values are: * `red` * `orange` * `yellow` *
+	// `green` * `teal` * `blue` * `purple` * `pink` * `white` * `gray` *
+	// `black` * `brown`
 	ImgDominantColor string `json:"imgDominantColor,omitempty"`
 
 	// ImgSize: Restricts results to images of a specified size. Supported
-	// values are:
-	//
-	// * `icon` (small)
-	//
-	// * `small | medium | large | xlarge` (medium)
-	//
-	// * `xxlarge` (large)
-	//
-	// * `huge` (extra-large)
+	// values are: * `icon` (small) * `small | medium | large | xlarge`
+	// (medium) * `xxlarge` (large) * `huge` (extra-large)
 	ImgSize string `json:"imgSize,omitempty"`
 
 	// ImgType: Restricts results to images of a specified type. Supported
-	// values are:
-	//
-	// * `clipart` (Clip art)
-	//
-	// * `face` (Face)
-	//
-	// * `lineart` (Line drawing)
-	//
-	// * `photo` (Photo)
-	//
-	// * `animated` (Animated)
-	//
-	// * `stock` (Stock)
+	// values are: * `clipart` (Clip art) * `face` (Face) * `lineart` (Line
+	// drawing) * `photo` (Photo) * `animated` (Animated) * `stock` (Stock)
 	ImgType string `json:"imgType,omitempty"`
 
 	// InputEncoding: The character encoding supported for search requests.
@@ -1197,90 +888,64 @@ type SearchQueriesPreviousPage struct {
 	LinkSite string `json:"linkSite,omitempty"`
 
 	// LowRange: Specifies the starting value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	LowRange string `json:"lowRange,omitempty"`
 
 	// OrTerms: Provides additional search terms to check for in a document,
-	// where each
-	// document in the search results must contain at least one of
-	// the
-	// additional search terms. You can also use the
-	// [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_resu
-	// lts#BooleanOrqt)
-	// query term for this type of query.
+	// where each document in the search results must contain at least one
+	// of the additional search terms. You can also use the [Boolean
+	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
+	// anOrqt) query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
 	OutputEncoding string `json:"outputEncoding,omitempty"`
 
 	// RelatedSite: Specifies that all search results should be pages that
-	// are related to the
-	// specified URL. The parameter value should be a URL.
+	// are related to the specified URL. The parameter value should be a
+	// URL.
 	RelatedSite string `json:"relatedSite,omitempty"`
 
-	// Rights: Filters based on licensing. Supported values include:
-	//
-	// * `cc_publicdomain`
-	//
-	// * `cc_attribute`
-	//
-	// * `cc_sharealike`
-	//
-	// * `cc_noncommercial`
-	//
-	// * `cc_nonderived`
+	// Rights: Filters based on licensing. Supported values include: *
+	// `cc_publicdomain` * `cc_attribute` * `cc_sharealike` *
+	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the
-	// [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xm
-	// l_results#safeSearchLevels)
-	// used for filtering out adult results. This is a custom property
-	// not
-	// defined in the OpenSearch spec. Valid parameter values are:
-	//
-	// * "off": Disable SafeSearch
-	//
-	// * "active": Enable SafeSearch
+	// Safe: Specifies the [SafeSearch
+	// level](https://developers.google.com/custom-search/docs/xml_results#sa
+	// feSearchLevels) used for filtering out adult results. This is a
+	// custom property not defined in the OpenSearch spec. Valid parameter
+	// values are: * "off": Disable SafeSearch * "active": Enable
+	// SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
 	SearchTerms string `json:"searchTerms,omitempty"`
 
 	// SearchType: Allowed values are `web` or `image`. If unspecified,
-	// results are limited
-	// to webpages.
+	// results are limited to webpages.
 	SearchType string `json:"searchType,omitempty"`
 
 	// SiteSearch: Restricts results to URLs from a specified site.
 	SiteSearch string `json:"siteSearch,omitempty"`
 
 	// SiteSearchFilter: Specifies whether to include or exclude results
-	// from the site named in
-	// the `sitesearch` parameter. Supported values are:
-	//
-	// * `i`: include content from site
-	//
-	// * `e`: exclude content from site
+	// from the site named in the `sitesearch` parameter. Supported values
+	// are: * `i`: include content from site * `e`: exclude content from
+	// site
 	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
 
 	// Sort: Specifies that results should be sorted according to the
-	// specified
-	// expression. For example, sort by date.
+	// specified expression. For example, sort by date.
 	Sort string `json:"sort,omitempty"`
 
 	// StartIndex: The index of the current set of search results into the
-	// total set of
-	// results, where the index of the first result is 1.
+	// total set of results, where the index of the first result is 1.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// StartPage: The page number of this set of results, where the page
-	// length is set by
-	// the `count` property.
+	// length is set by the `count` property.
 	StartPage int64 `json:"startPage,omitempty"`
 
 	// Title: A description of the query.
@@ -1318,256 +983,124 @@ type SearchQueriesRequest struct {
 	// Count: Number of search results returned in this set.
 	Count int64 `json:"count,omitempty"`
 
-	// Cr: Restricts search results to documents originating in a
-	// particular
-	// country. You may use
-	// [Boolean
-	// operators](https://developers.google.com/custom-search/docs/x
-	// ml_results#booleanOperators)
-	// in the `cr` parameter's value.
-	//
-	// Google WebSearch determines the country of a document by analyzing
-	// the
-	// following:
-	//
-	// * The top-level domain (TLD) of the document's URL.
-	//
-	// * The geographic location of the web server's IP address.
-	//
-	// See [Country (cr)
-	// Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml
-	// _results#countryCollections)
-	// for a list of valid values for this parameter.
+	// Cr: Restricts search results to documents originating in a particular
+	// country. You may use [Boolean
+	// operators](https://developers.google.com/custom-search/docs/xml_result
+	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
+	// determines the country of a document by analyzing the following: *
+	// The top-level domain (TLD) of the document's URL. * The geographic
+	// location of the web server's IP address. See [Country (cr) Parameter
+	// Values](https://developers.google.com/custom-search/docs/xml_results#c
+	// ountryCollections) for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine
-	// [Control Panel](https://programmablesearchengine.google.com/). This
-	// is a
-	// custom property not defined in the OpenSearch spec. This parameter
-	// is
-	// **required**.
+	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// This is a custom property not defined in the OpenSearch spec. This
+	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
 
 	// DateRestrict: Restricts results to URLs based on date. Supported
-	// values include:
-	//
-	// * `d[number]`: requests results from the specified number of past
-	// days.
-	//
-	// * `w[number]`: requests results from the specified number of past
-	// weeks.
-	//
-	// * `m[number]`: requests results from the specified number of past
-	// months.
-	//
-	// * `y[number]`: requests results from the specified number of past
-	// years.
+	// values include: * `d[number]`: requests results from the specified
+	// number of past days. * `w[number]`: requests results from the
+	// specified number of past weeks. * `m[number]`: requests results from
+	// the specified number of past months. * `y[number]`: requests results
+	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
 	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional
-	// Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_r
-	// esults#chineseSearch)
-	// feature.
-	//
-	// Supported values are:
-	//
-	// * `0`: enabled (default)
-	//
+	// Traditional Chinese
+	// Search](https://developers.google.com/custom-search/docs/xml_results#c
+	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
 	// * `1`: disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
-	// results must
-	// contain.
+	// results must contain.
 	ExactTerms string `json:"exactTerms,omitempty"`
 
 	// ExcludeTerms: Identifies a word or phrase that should not appear in
-	// any documents in
-	// the search results.
+	// any documents in the search results.
 	ExcludeTerms string `json:"excludeTerms,omitempty"`
 
 	// FileType: Restricts results to files of a specified extension.
-	// Filetypes supported
-	// by Google include:
-	//
-	// * Adobe Portable Document Format (`pdf`)
-	//
-	// * Adobe PostScript (`ps`)
-	//
-	// * Lotus 1-2-3 (`wk1`, `wk2`, `wk3`, `wk4`, `wk5`, `wki`, `wks`,
-	// `wku`)
-	//
-	// * Lotus WordPro (`lwp`)
-	//
-	// * Macwrite (`mw`)
-	//
-	// * Microsoft Excel (`xls`)
-	//
-	// * Microsoft PowerPoint (`ppt`)
-	//
-	// * Microsoft Word (`doc`)
-	//
-	// * Microsoft Works (`wks`, `wps`, `wdb`)
-	//
-	// * Microsoft Write (`wri`)
-	//
-	// * Rich Text Format (`rtf`)
-	//
-	// * Shockwave Flash (`swf`)
-	//
-	// * Text (`ans`, `txt`).
-	//
-	// Additional filetypes may be added in the future. An up-to-date list
-	// can
-	// always be found in Google's [file
-	// type
+	// Filetypes supported by Google include: * Adobe Portable Document
+	// Format (`pdf`) * Adobe PostScript (`ps`) * Lotus 1-2-3 (`wk1`, `wk2`,
+	// `wk3`, `wk4`, `wk5`, `wki`, `wks`, `wku`) * Lotus WordPro (`lwp`) *
+	// Macwrite (`mw`) * Microsoft Excel (`xls`) * Microsoft PowerPoint
+	// (`ppt`) * Microsoft Word (`doc`) * Microsoft Works (`wks`, `wps`,
+	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
+	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
+	// may be added in the future. An up-to-date list can always be found in
+	// Google's [file type
 	// FAQ](https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search
-	// results. See
-	// [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs
-	// /xml_results#automaticFiltering)
-	// for more information about Google's search results filters. Valid
-	// values
-	// for this parameter are:
-	//
-	// * `0`: Disabled
-	//
-	// * `1`: Enabled (default)
-	//
-	// **Note**: By default, Google applies filtering to all search results
-	// to
-	// improve the quality of those results.
+	// search results. See [Automatic
+	// Filtering](https://developers.google.com/custom-search/docs/xml_result
+	// s#automaticFiltering) for more information about Google's search
+	// results filters. Valid values for this parameter are: * `0`: Disabled
+	// * `1`: Enabled (default) **Note**: By default, Google applies
+	// filtering to all search results to improve the quality of those
+	// results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter
-	// value. See
-	// [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_r
-	// esults#countryCodes)
-	// for a list of valid values.
-	//
-	// Specifying a `gl` parameter value in WebSearch requests should
-	// improve
-	// the relevance of results. This is particularly true for
-	// international
-	// customers and, even more specifically, for customers in
-	// English-speaking
-	// countries other than the United States.
+	// parameter value. See [Country
+	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
+	// untryCodes) for a list of valid values. Specifying a `gl` parameter
+	// value in WebSearch requests should improve the relevance of results.
+	// This is particularly true for international customers and, even more
+	// specifically, for customers in English-speaking countries other than
+	// the United States.
 	Gl string `json:"gl,omitempty"`
 
 	// GoogleHost: Specifies the Google domain (for example, google.com,
-	// google.de, or
-	// google.fr) to which the search should be limited.
+	// google.de, or google.fr) to which the search should be limited.
 	GoogleHost string `json:"googleHost,omitempty"`
 
 	// HighRange: Specifies the ending value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	HighRange string `json:"highRange,omitempty"`
 
 	// Hl: Specifies the interface language (host language) of your user
-	// interface.
-	// Explicitly setting this parameter improves the performance and
-	// the
-	// quality of your search results.
-	//
-	// See the
-	// [Interface
-	// Languages](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInterfaceLanguages)
-	// section of [Internationalizing Queries and
+	// interface. Explicitly setting this parameter improves the performance
+	// and the quality of your search results. See the [Interface
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
 	// Results
-	// Presentation](https://developers.google.com/custom-search/docs
-	// /xml_results#wsInternationalizing)
-	// for more information, and [Supported
+	// Presentation](https://developers.google.com/custom-search/docs/xml_res
+	// ults#wsInternationalizing) for more information, and [Supported
 	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/
-	// xml_results_appendices#interfaceLanguages)
-	// for a list of supported languages.
+	// Languages](https://developers.google.com/custom-search/docs/xml_result
+	// s_appendices#interfaceLanguages) for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
-	// combined
-	// with a logical `AND` operator.
+	// combined with a logical `AND` operator.
 	Hq string `json:"hq,omitempty"`
 
 	// ImgColorType: Restricts results to images of a specified color type.
-	// Supported values
-	//   are:
-	//
-	// * `mono` (black and white)
-	//
-	// * `gray` (grayscale)
-	//
+	// Supported values are: * `mono` (black and white) * `gray` (grayscale)
 	// * `color` (color)
 	ImgColorType string `json:"imgColorType,omitempty"`
 
 	// ImgDominantColor: Restricts results to images with a specific
-	// dominant color. Supported
-	// values are:
-	//
-	// * `red`
-	//
-	// * `orange`
-	//
-	// * `yellow`
-	//
-	// * `green`
-	//
-	// * `teal`
-	//
-	// * `blue`
-	//
-	// * `purple`
-	//
-	// * `pink`
-	//
-	// * `white`
-	//
-	// * `gray`
-	//
-	// * `black`
-	//
-	// * `brown`
+	// dominant color. Supported values are: * `red` * `orange` * `yellow` *
+	// `green` * `teal` * `blue` * `purple` * `pink` * `white` * `gray` *
+	// `black` * `brown`
 	ImgDominantColor string `json:"imgDominantColor,omitempty"`
 
 	// ImgSize: Restricts results to images of a specified size. Supported
-	// values are:
-	//
-	// * `icon` (small)
-	//
-	// * `small | medium | large | xlarge` (medium)
-	//
-	// * `xxlarge` (large)
-	//
-	// * `huge` (extra-large)
+	// values are: * `icon` (small) * `small | medium | large | xlarge`
+	// (medium) * `xxlarge` (large) * `huge` (extra-large)
 	ImgSize string `json:"imgSize,omitempty"`
 
 	// ImgType: Restricts results to images of a specified type. Supported
-	// values are:
-	//
-	// * `clipart` (Clip art)
-	//
-	// * `face` (Face)
-	//
-	// * `lineart` (Line drawing)
-	//
-	// * `photo` (Photo)
-	//
-	// * `animated` (Animated)
-	//
-	// * `stock` (Stock)
+	// values are: * `clipart` (Clip art) * `face` (Face) * `lineart` (Line
+	// drawing) * `photo` (Photo) * `animated` (Animated) * `stock` (Stock)
 	ImgType string `json:"imgType,omitempty"`
 
 	// InputEncoding: The character encoding supported for search requests.
@@ -1581,90 +1114,64 @@ type SearchQueriesRequest struct {
 	LinkSite string `json:"linkSite,omitempty"`
 
 	// LowRange: Specifies the starting value for a search range. Use
-	// `cse:lowRange` and
-	// `cse:highrange` to append an inclusive search range
-	// of
-	// `lowRange...highRange` to the query.
+	// `cse:lowRange` and `cse:highrange` to append an inclusive search
+	// range of `lowRange...highRange` to the query.
 	LowRange string `json:"lowRange,omitempty"`
 
 	// OrTerms: Provides additional search terms to check for in a document,
-	// where each
-	// document in the search results must contain at least one of
-	// the
-	// additional search terms. You can also use the
-	// [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_resu
-	// lts#BooleanOrqt)
-	// query term for this type of query.
+	// where each document in the search results must contain at least one
+	// of the additional search terms. You can also use the [Boolean
+	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
+	// anOrqt) query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
 	OutputEncoding string `json:"outputEncoding,omitempty"`
 
 	// RelatedSite: Specifies that all search results should be pages that
-	// are related to the
-	// specified URL. The parameter value should be a URL.
+	// are related to the specified URL. The parameter value should be a
+	// URL.
 	RelatedSite string `json:"relatedSite,omitempty"`
 
-	// Rights: Filters based on licensing. Supported values include:
-	//
-	// * `cc_publicdomain`
-	//
-	// * `cc_attribute`
-	//
-	// * `cc_sharealike`
-	//
-	// * `cc_noncommercial`
-	//
-	// * `cc_nonderived`
+	// Rights: Filters based on licensing. Supported values include: *
+	// `cc_publicdomain` * `cc_attribute` * `cc_sharealike` *
+	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the
-	// [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xm
-	// l_results#safeSearchLevels)
-	// used for filtering out adult results. This is a custom property
-	// not
-	// defined in the OpenSearch spec. Valid parameter values are:
-	//
-	// * "off": Disable SafeSearch
-	//
-	// * "active": Enable SafeSearch
+	// Safe: Specifies the [SafeSearch
+	// level](https://developers.google.com/custom-search/docs/xml_results#sa
+	// feSearchLevels) used for filtering out adult results. This is a
+	// custom property not defined in the OpenSearch spec. Valid parameter
+	// values are: * "off": Disable SafeSearch * "active": Enable
+	// SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
 	SearchTerms string `json:"searchTerms,omitempty"`
 
 	// SearchType: Allowed values are `web` or `image`. If unspecified,
-	// results are limited
-	// to webpages.
+	// results are limited to webpages.
 	SearchType string `json:"searchType,omitempty"`
 
 	// SiteSearch: Restricts results to URLs from a specified site.
 	SiteSearch string `json:"siteSearch,omitempty"`
 
 	// SiteSearchFilter: Specifies whether to include or exclude results
-	// from the site named in
-	// the `sitesearch` parameter. Supported values are:
-	//
-	// * `i`: include content from site
-	//
-	// * `e`: exclude content from site
+	// from the site named in the `sitesearch` parameter. Supported values
+	// are: * `i`: include content from site * `e`: exclude content from
+	// site
 	SiteSearchFilter string `json:"siteSearchFilter,omitempty"`
 
 	// Sort: Specifies that results should be sorted according to the
-	// specified
-	// expression. For example, sort by date.
+	// specified expression. For example, sort by date.
 	Sort string `json:"sort,omitempty"`
 
 	// StartIndex: The index of the current set of search results into the
-	// total set of
-	// results, where the index of the first result is 1.
+	// total set of results, where the index of the first result is 1.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// StartPage: The page number of this set of results, where the page
-	// length is set by
-	// the `count` property.
+	// length is set by the `count` property.
 	StartPage int64 `json:"startPage,omitempty"`
 
 	// Title: A description of the query.
@@ -1700,8 +1207,7 @@ func (s *SearchQueriesRequest) MarshalJSON() ([]byte, error) {
 // SearchSearchInformation: Metadata about a search operation.
 type SearchSearchInformation struct {
 	// FormattedSearchTime: The time taken for the server to return search
-	// results, formatted
-	// according to locale style.
+	// results, formatted according to locale style.
 	FormattedSearchTime string `json:"formattedSearchTime,omitempty"`
 
 	// FormattedTotalResults: The total number of search results, formatted
@@ -1787,16 +1293,13 @@ func (s *SearchSpelling) MarshalJSON() ([]byte, error) {
 
 // SearchUrl: OpenSearch template and URL.
 type SearchUrl struct {
-	// Template: The actual
-	// [OpenSearch
-	// template](http://www.opensearch.org/specifications/opensea
-	// rch/1.1#opensearch_url_template_syntax)
-	// for this API.
+	// Template: The actual [OpenSearch
+	// template](http://www.opensearch.org/specifications/opensearch/1.1#open
+	// search_url_template_syntax) for this API.
 	Template string `json:"template,omitempty"`
 
 	// Type: The MIME type of the OpenSearch URL template for the Custom
-	// Search JSON
-	// API.
+	// Search JSON API.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Template") to
@@ -1832,8 +1335,7 @@ type CseListCall struct {
 	header_      http.Header
 }
 
-// List: Returns metadata about the search performed, metadata about
-// the
+// List: Returns metadata about the search performed, metadata about the
 // engine used for the search, and the search results.
 func (r *CseService) List() *CseListCall {
 	c := &CseListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1841,42 +1343,26 @@ func (r *CseService) List() *CseListCall {
 }
 
 // C2coff sets the optional parameter "c2coff": Enables or disables
-// [Simplified and Traditional
-// Chinese
-// Search](https://developers.google.com/custom-search/docs/xml_r
-// esults#chineseSearch).
-//
-// The default value for this parameter is 0 (zero), meaning that the
-// feature
-// is enabled. Supported values are:
-//
-// * `1`: Disabled
-//
-// * `0`: Enabled (default)
+// [Simplified and Traditional Chinese
+// Search](https://developers.google.com/custom-search/docs/xml_results#c
+// hineseSearch). The default value for this parameter is 0 (zero),
+// meaning that the feature is enabled. Supported values are: * `1`:
+// Disabled * `0`: Enabled (default)
 func (c *CseListCall) C2coff(c2coff string) *CseListCall {
 	c.urlParams_.Set("c2coff", c2coff)
 	return c
 }
 
 // Cr sets the optional parameter "cr": Restricts search results to
-// documents originating in a particular country.
-// You may use
-// [Boolean
-// operators](https://developers.google.com/custom-search/docs/x
-// ml_results_appendices#booleanOperators)
-// in the cr parameter's value.
-//
-// Google Search determines the country of a document by analyzing:
-//
-// * the top-level domain (TLD) of the document's URL
-//
-// * the geographic location of the Web server's IP address
-//
-// See the [Country
-// Parameter
-// Values](https://developers.google.com/custom-search/docs/xml
-// _results_appendices#countryCollections)
-// page for a list of valid values for this parameter.
+// documents originating in a particular country. You may use [Boolean
+// operators](https://developers.google.com/custom-search/docs/xml_result
+// s_appendices#booleanOperators) in the cr parameter's value. Google
+// Search determines the country of a document by analyzing: * the
+// top-level domain (TLD) of the document's URL * the geographic
+// location of the Web server's IP address See the [Country Parameter
+// Values](https://developers.google.com/custom-search/docs/xml_results_a
+// ppendices#countryCollections) page for a list of valid values for
+// this parameter.
 func (c *CseListCall) Cr(cr string) *CseListCall {
 	c.urlParams_.Set("cr", cr)
 	return c
@@ -1890,19 +1376,12 @@ func (c *CseListCall) Cx(cx string) *CseListCall {
 }
 
 // DateRestrict sets the optional parameter "dateRestrict": Restricts
-// results to URLs based on date. Supported values include:
-//
-// * `d[number]`: requests results from the specified number of past
-// days.
-//
+// results to URLs based on date. Supported values include: *
+// `d[number]`: requests results from the specified number of past days.
 // * `w[number]`: requests results from the specified number of past
-// weeks.
-//
-// * `m[number]`: requests results from the specified number of past
-// months.
-//
-// * `y[number]`: requests results from the specified number of past
-// years.
+// weeks. * `m[number]`: requests results from the specified number of
+// past months. * `y[number]`: requests results from the specified
+// number of past years.
 func (c *CseListCall) DateRestrict(dateRestrict string) *CseListCall {
 	c.urlParams_.Set("dateRestrict", dateRestrict)
 	return c
@@ -1916,17 +1395,16 @@ func (c *CseListCall) ExactTerms(exactTerms string) *CseListCall {
 }
 
 // ExcludeTerms sets the optional parameter "excludeTerms": Identifies a
-// word or phrase that should not appear in any documents in the
-// search results.
+// word or phrase that should not appear in any documents in the search
+// results.
 func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
 	c.urlParams_.Set("excludeTerms", excludeTerms)
 	return c
 }
 
 // FileType sets the optional parameter "fileType": Restricts results to
-// files of a specified extension. A list of file types
-// indexable by Google can be found in Search Console
-// [Help
+// files of a specified extension. A list of file types indexable by
+// Google can be found in Search Console [Help
 // Center](https://support.google.com/webmasters/answer/35287).
 func (c *CseListCall) FileType(fileType string) *CseListCall {
 	c.urlParams_.Set("fileType", fileType)
@@ -1934,351 +1412,200 @@ func (c *CseListCall) FileType(fileType string) *CseListCall {
 }
 
 // Filter sets the optional parameter "filter": Controls turning on or
-// off the duplicate content filter.
-//
-// * See
-// [Automatic
-// Filtering](https://developers.google.com/custom-search/docs
-// /xml_results#automaticFiltering)
-// for more information about Google's search results filters. Note that
-// host
-// crowding filtering applies only to multi-site searches.
-//
-// * By default, Google applies filtering to all search results to
-// improve the
-// quality of those results.
-//
-// Acceptable values are:
-//
-// * `0`: Turns off duplicate content filter.
-//
-// * `1`: Turns on duplicate content filter.
+// off the duplicate content filter. * See [Automatic
+// Filtering](https://developers.google.com/custom-search/docs/xml_result
+// s#automaticFiltering) for more information about Google's search
+// results filters. Note that host crowding filtering applies only to
+// multi-site searches. * By default, Google applies filtering to all
+// search results to improve the quality of those results. Acceptable
+// values are: * `0`: Turns off duplicate content filter. * `1`: Turns
+// on duplicate content filter.
 func (c *CseListCall) Filter(filter string) *CseListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// Gl sets the optional parameter "gl": Geolocation of end user.
-//
-// * The `gl` parameter value is a two-letter country code. The `gl`
-// parameter
+// Gl sets the optional parameter "gl": Geolocation of end user. * The
+// `gl` parameter value is a two-letter country code. The `gl` parameter
 // boosts search results whose country of origin matches the parameter
-// value.
-// See the
-// [Country
-// Codes](https://developers.google.com/custom-search/docs/xml_r
-// esults_appendices#countryCodes)
-// page for a list of valid values.
-//
-// * Specifying a `gl` parameter value should lead to more relevant
-// results.
-// This is particularly true for international customers and, even
-// more
+// value. See the [Country
+// Codes](https://developers.google.com/custom-search/docs/xml_results_ap
+// pendices#countryCodes) page for a list of valid values. * Specifying
+// a `gl` parameter value should lead to more relevant results. This is
+// particularly true for international customers and, even more
 // specifically, for customers in English- speaking countries other than
-// the
-// United States.
+// the United States.
 func (c *CseListCall) Gl(gl string) *CseListCall {
 	c.urlParams_.Set("gl", gl)
 	return c
 }
 
 // Googlehost sets the optional parameter "googlehost": **Deprecated**.
-// Use the `gl` parameter for a similar effect.
-//
-// The local Google domain (for example, google.com, google.de,
-// or
-// google.fr) to use to perform the search.
+// Use the `gl` parameter for a similar effect. The local Google domain
+// (for example, google.com, google.de, or google.fr) to use to perform
+// the search.
 func (c *CseListCall) Googlehost(googlehost string) *CseListCall {
 	c.urlParams_.Set("googlehost", googlehost)
 	return c
 }
 
 // HighRange sets the optional parameter "highRange": Specifies the
-// ending value for a search range.
-//
-// * Use `lowRange` and `highRange` to append an inclusive search range
-// of
-// `lowRange...highRange` to the query.
+// ending value for a search range. * Use `lowRange` and `highRange` to
+// append an inclusive search range of `lowRange...highRange` to the
+// query.
 func (c *CseListCall) HighRange(highRange string) *CseListCall {
 	c.urlParams_.Set("highRange", highRange)
 	return c
 }
 
 // Hl sets the optional parameter "hl": Sets the user interface
-// language.
-//
-// * Explicitly setting this parameter improves the performance and
-// the
-// quality of your search results.
-//
-// * See the
+// language. * Explicitly setting this parameter improves the
+// performance and the quality of your search results. * See the
 // [Interface
-// Languages](https://developers.google.com/custom-search/docs
-// /xml_results#wsInterfaceLanguages)
-// section of [Internationalizing Queries and
+// Languages](https://developers.google.com/custom-search/docs/xml_result
+// s#wsInterfaceLanguages) section of [Internationalizing Queries and
 // Results
-// Presentation](https://developers.google.com/custom-search/docs
-// /xml_results#wsInternationalizing)
-// for more information, and (Supported
+// Presentation](https://developers.google.com/custom-search/docs/xml_res
+// ults#wsInternationalizing) for more information, and (Supported
 // Interface
-// Languages)[https://developers.google.com/custom-search/docs/
-// xml_results_appendices#interfaceLanguages]
-// for a list of supported languages.
+// Languages)[https://developers.google.com/custom-search/docs/xml_result
+// s_appendices#interfaceLanguages] for a list of supported languages.
 func (c *CseListCall) Hl(hl string) *CseListCall {
 	c.urlParams_.Set("hl", hl)
 	return c
 }
 
 // Hq sets the optional parameter "hq": Appends the specified query
-// terms to the query, as if they were combined
-// with a logical AND operator.
+// terms to the query, as if they were combined with a logical AND
+// operator.
 func (c *CseListCall) Hq(hq string) *CseListCall {
 	c.urlParams_.Set("hq", hq)
 	return c
 }
 
 // ImgColorType sets the optional parameter "imgColorType": Returns
-// black and white, grayscale, transparent, or color images.
-// Acceptable values are:
-//
-// * "color"
-//
-// * "gray"
-//
-// * "mono": black and white
-//
-// * "trans": transparent background
+// black and white, grayscale, transparent, or color images. Acceptable
+// values are: * "color" * "gray" * "mono": black and white *
+// "trans": transparent background
 //
 // Possible values:
-//   "imgColorTypeUndefined"
-//   "mono"
-//   "gray"
-//   "color"
-//   "trans"
+//   "imgColorTypeUndefined" - No image color type specified.
+//   "mono" - Black and white images only.
+//   "gray" - Grayscale images only.
+//   "color" - Color images only.
+//   "trans" - Images with transparent background
 func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
 	c.urlParams_.Set("imgColorType", imgColorType)
 	return c
 }
 
 // ImgDominantColor sets the optional parameter "imgDominantColor":
-// Returns images of a specific dominant color. Acceptable values
-// are:
-//
-// * "black"
-//
-// * "blue"
-//
-// * "brown"
-//
-// * "gray"
-//
-// * "green"
-//
-// * "orange"
-//
-// * "pink"
-//
-// * "purple"
-//
-// * "red"
-//
-// * "teal"
-//
-// * "white"
-//
-// * "yellow"
+// Returns images of a specific dominant color. Acceptable values are: *
+// "black" * "blue" * "brown" * "gray" * "green" * "orange"
+// * "pink" * "purple" * "red" * "teal" * "white" * "yellow"
 //
 // Possible values:
-//   "imgDominantColorUndefined"
-//   "black"
-//   "blue"
-//   "brown"
-//   "gray"
-//   "green"
-//   "orange"
-//   "pink"
-//   "purple"
-//   "red"
-//   "teal"
-//   "white"
-//   "yellow"
+//   "imgDominantColorUndefined" - No dominant color specified.
+//   "black" - Predominantly black images only.
+//   "blue" - Predominantly blue images only.
+//   "brown" - Predominantly brown images only.
+//   "gray" - Predominantly gray images only.
+//   "green" - Predominantly green images only.
+//   "orange" - Predominantly orange images only.
+//   "pink" - Predominantly pink images only.
+//   "purple" - Predominantly purple images only.
+//   "red" - Predominantly red images only.
+//   "teal" - Predominantly teal images only.
+//   "white" - Predominantly white images only.
+//   "yellow" - Predominantly yellow images only.
 func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
 	c.urlParams_.Set("imgDominantColor", imgDominantColor)
 	return c
 }
 
 // ImgSize sets the optional parameter "imgSize": Returns images of a
-// specified size. Acceptable values are:
-//
-// * "huge"
-//
-// * "icon"
-//
-// * "large"
-//
-// * "medium"
-//
-// * "small"
-//
-// * "xlarge"
-//
-// * "xxlarge"
+// specified size. Acceptable values are: * "huge" * "icon" *
+// "large" * "medium" * "small" * "xlarge" * "xxlarge"
 //
 // Possible values:
-//   "imgSizeUndefined"
-//   "HUGE"
-//   "ICON"
-//   "LARGE"
-//   "MEDIUM"
-//   "SMALL"
-//   "XLARGE"
-//   "XXLARGE"
+//   "imgSizeUndefined" - No image size specified.
+//   "HUGE" - Only the largest possible images.
+//   "ICON" - Only very small icon-sized images.
+//   "LARGE" - Only large images.
+//   "MEDIUM" - Only medium images.
+//   "SMALL" - Only small images.
+//   "XLARGE" - Only very large images.
+//   "XXLARGE" - Only extremely large images.
 func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
 	c.urlParams_.Set("imgSize", imgSize)
 	return c
 }
 
 // ImgType sets the optional parameter "imgType": Returns images of a
-// type. Acceptable values are:
-//
-// * "clipart"
-//
-// * "face"
-//
-// * "lineart"
-//
-// * "stock"
-//
-// * "photo"
-//
-// * "animated"
+// type. Acceptable values are: * "clipart" * "face" * "lineart" *
+// "stock" * "photo" * "animated"
 //
 // Possible values:
-//   "imgTypeUndefined"
-//   "clipart"
-//   "face"
-//   "lineart"
-//   "stock"
-//   "photo"
-//   "animated"
+//   "imgTypeUndefined" - No image type specified.
+//   "clipart" - Clipart-style images only.
+//   "face" - Images of faces only.
+//   "lineart" - Line art images only.
+//   "stock" - Stock images only.
+//   "photo" - Photo images only.
+//   "animated" - Animated images only.
 func (c *CseListCall) ImgType(imgType string) *CseListCall {
 	c.urlParams_.Set("imgType", imgType)
 	return c
 }
 
 // LinkSite sets the optional parameter "linkSite": Specifies that all
-// search results should contain a link to a particular
-// URL.
+// search results should contain a link to a particular URL.
 func (c *CseListCall) LinkSite(linkSite string) *CseListCall {
 	c.urlParams_.Set("linkSite", linkSite)
 	return c
 }
 
 // LowRange sets the optional parameter "lowRange": Specifies the
-// starting value for a search range. Use `lowRange` and
-// `highRange` to append an inclusive search range of
-// `lowRange...highRange`
-// to the query.
+// starting value for a search range. Use `lowRange` and `highRange` to
+// append an inclusive search range of `lowRange...highRange` to the
+// query.
 func (c *CseListCall) LowRange(lowRange string) *CseListCall {
 	c.urlParams_.Set("lowRange", lowRange)
 	return c
 }
 
 // Lr sets the optional parameter "lr": Restricts the search to
-// documents written in a particular language
-// (e.g.,
-// `lr=lang_ja`).
-//
-// Acceptable values are:
-//
-// * "lang_ar": Arabic
-//
-// * "lang_bg": Bulgarian
-//
-// * "lang_ca": Catalan
-//
-// * "lang_cs": Czech
-//
-// * "lang_da": Danish
-//
-// * "lang_de": German
-//
-// * "lang_el": Greek
-//
-// * "lang_en": English
-//
-// * "lang_es": Spanish
-//
-// * "lang_et": Estonian
-//
-// * "lang_fi": Finnish
-//
-// * "lang_fr": French
-//
-// * "lang_hr": Croatian
-//
-// * "lang_hu": Hungarian
-//
-// * "lang_id": Indonesian
-//
-// * "lang_is": Icelandic
-//
-// * "lang_it": Italian
-//
-// * "lang_iw": Hebrew
-//
-// * "lang_ja": Japanese
-//
-// * "lang_ko": Korean
-//
-// * "lang_lt": Lithuanian
-//
-// * "lang_lv": Latvian
-//
-// * "lang_nl": Dutch
-//
-// * "lang_no": Norwegian
-//
-// * "lang_pl": Polish
-//
-// * "lang_pt": Portuguese
-//
-// * "lang_ro": Romanian
-//
-// * "lang_ru": Russian
-//
-// * "lang_sk": Slovak
-//
-// * "lang_sl": Slovenian
-//
-// * "lang_sr": Serbian
-//
-// * "lang_sv": Swedish
-//
-// * "lang_tr": Turkish
-//
-// * "lang_zh-CN": Chinese (Simplified)
-//
-// * "lang_zh-TW": Chinese (Traditional)
+// documents written in a particular language (e.g., `lr=lang_ja`).
+// Acceptable values are: * "lang_ar": Arabic * "lang_bg": Bulgarian
+// * "lang_ca": Catalan * "lang_cs": Czech * "lang_da": Danish *
+// "lang_de": German * "lang_el": Greek * "lang_en": English *
+// "lang_es": Spanish * "lang_et": Estonian * "lang_fi": Finnish *
+// "lang_fr": French * "lang_hr": Croatian * "lang_hu": Hungarian
+// * "lang_id": Indonesian * "lang_is": Icelandic * "lang_it":
+// Italian * "lang_iw": Hebrew * "lang_ja": Japanese * "lang_ko":
+// Korean * "lang_lt": Lithuanian * "lang_lv": Latvian *
+// "lang_nl": Dutch * "lang_no": Norwegian * "lang_pl": Polish *
+// "lang_pt": Portuguese * "lang_ro": Romanian * "lang_ru":
+// Russian * "lang_sk": Slovak * "lang_sl": Slovenian * "lang_sr":
+// Serbian * "lang_sv": Swedish * "lang_tr": Turkish *
+// "lang_zh-CN": Chinese (Simplified) * "lang_zh-TW": Chinese
+// (Traditional)
 func (c *CseListCall) Lr(lr string) *CseListCall {
 	c.urlParams_.Set("lr", lr)
 	return c
 }
 
 // Num sets the optional parameter "num": Number of search results to
-// return.
-//
-// * Valid values are integers between 1 and 10, inclusive.
+// return. * Valid values are integers between 1 and 10, inclusive.
 func (c *CseListCall) Num(num int64) *CseListCall {
 	c.urlParams_.Set("num", fmt.Sprint(num))
 	return c
 }
 
 // OrTerms sets the optional parameter "orTerms": Provides additional
-// search terms to check for in a document, where each
-// document in the search results must contain at least one of the
-// additional
-// search terms.
+// search terms to check for in a document, where each document in the
+// search results must contain at least one of the additional search
+// terms.
 func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
 	c.urlParams_.Set("orTerms", orTerms)
 	return c
@@ -2291,65 +1618,56 @@ func (c *CseListCall) Q(q string) *CseListCall {
 }
 
 // RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the
-// specified URL.
+// all search results should be pages that are related to the specified
+// URL.
 func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
 }
 
 // Rights sets the optional parameter "rights": Filters based on
-// licensing. Supported values include:
-// `cc_publicdomain`,
+// licensing. Supported values include: `cc_publicdomain`,
 // `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived`
-// and
-// combinations of these. See
-// [typical
-// combinations](https://wiki.creativecommons.org/wiki/CC_Search
-// _integration).
+// and combinations of these. See [typical
+// combinations](https://wiki.creativecommons.org/wiki/CC_Search_integrat
+// ion).
 func (c *CseListCall) Rights(rights string) *CseListCall {
 	c.urlParams_.Set("rights", rights)
 	return c
 }
 
 // Safe sets the optional parameter "safe": Search safety level.
-// Acceptable values are:
-//
-// * "active": Enables SafeSearch filtering.
-//
-// * "off": Disables SafeSearch filtering. (default)
+// Acceptable values are: * "active": Enables SafeSearch filtering. *
+// "off": Disables SafeSearch filtering. (default)
 //
 // Possible values:
-//   "safeUndefined"
-//   "active"
-//   "high"
-//   "medium"
-//   "off"
+//   "safeUndefined" - SafeSearch mode unspecified. (Falls back to
+// engine's configuration.)
+//   "active" - Turn SafeSearch on.
+//   "high" - Deprecated, equivalent to "active".
+//   "medium" - Deprecated, equivalent to "active".
+//   "off" - Turn SafeSearch off.
 func (c *CseListCall) Safe(safe string) *CseListCall {
 	c.urlParams_.Set("safe", safe)
 	return c
 }
 
 // SearchType sets the optional parameter "searchType": Specifies the
-// search type: `image`. If unspecified, results are limited
-// to
-// webpages.
-//
-// Acceptable values are:
-//
-// * "image": custom image search.
+// search type: `image`. If unspecified, results are limited to
+// webpages. Acceptable values are: * "image": custom image search.
 //
 // Possible values:
-//   "searchTypeUndefined"
-//   "image"
+//   "searchTypeUndefined" - Search type unspecified (defaults to web
+// search).
+//   "image" - Image search.
 func (c *CseListCall) SearchType(searchType string) *CseListCall {
 	c.urlParams_.Set("searchType", searchType)
 	return c
 }
 
 // SiteSearch sets the optional parameter "siteSearch": Specifies a
-// given site which should always be included or excluded from
-// results (see `siteSearchFilter` parameter, below).
+// given site which should always be included or excluded from results
+// (see `siteSearchFilter` parameter, below).
 func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
 	c.urlParams_.Set("siteSearch", siteSearch)
 	return c
@@ -2357,49 +1675,36 @@ func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
 
 // SiteSearchFilter sets the optional parameter "siteSearchFilter":
 // Controls whether to include or exclude results from the site named in
-// the
-// `siteSearch` parameter.
-//
-// Acceptable values are:
-//
-// * "e": exclude
-//
-// * "i": include
+// the `siteSearch` parameter. Acceptable values are: * "e": exclude *
+// "i": include
 //
 // Possible values:
-//   "siteSearchFilterUndefined"
-//   "e"
-//   "i"
+//   "siteSearchFilterUndefined" - Filter mode unspecified.
+//   "e" - Exclude results from the listed sites.
+//   "i" - Include only results from the listed sites.
 func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
 	c.urlParams_.Set("siteSearchFilter", siteSearchFilter)
 	return c
 }
 
 // Sort sets the optional parameter "sort": The sort expression to apply
-// to the results. The sort parameter specifies
-// that the results be sorted according to the specified expression i.e.
-// sort
-// by
-// date.
+// to the results. The sort parameter specifies that the results be
+// sorted according to the specified expression i.e. sort by date.
 // [Example:
-// sort=date](https://developers.google.com/custom-search
-// /docs/structured_search#sort-by-attribute).
+// sort=date](https://developers.google.com/custom-search/docs/structured
+// _search#sort-by-attribute).
 func (c *CseListCall) Sort(sort string) *CseListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
 }
 
 // Start sets the optional parameter "start": The index of the first
-// result to return. The default number of results per
-// page is 10, so `&start=11` would start at the top of the second page
-// of
-// results. **Note**: The JSON API will never return more than 100
-// results,
-// even if more than 100 documents match the query, so setting the sum
-// of
+// result to return. The default number of results per page is 10, so
+// `&start=11` would start at the top of the second page of results.
+// **Note**: The JSON API will never return more than 100 results, even
+// if more than 100 documents match the query, so setting the sum of
 // `start + num` to a number greater than 100 will produce an error.
-// Also note
-// that the maximum value for `num` is 10.
+// Also note that the maximum value for `num` is 10.
 func (c *CseListCall) Start(start int64) *CseListCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
@@ -2442,7 +1747,7 @@ func (c *CseListCall) Header() http.Header {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2501,19 +1806,19 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns metadata about the search performed, metadata about the\nengine used for the search, and the search results.",
+	//   "description": "Returns metadata about the search performed, metadata about the engine used for the search, and the search results.",
 	//   "flatPath": "customsearch/v1",
 	//   "httpMethod": "GET",
 	//   "id": "search.cse.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "c2coff": {
-	//       "description": "Enables or disables [Simplified and Traditional Chinese\nSearch](https://developers.google.com/custom-search/docs/xml_results#chineseSearch).\n\nThe default value for this parameter is 0 (zero), meaning that the feature\nis enabled. Supported values are:\n\n* `1`: Disabled\n\n* `0`: Enabled (default)",
+	//       "description": "Enables or disables [Simplified and Traditional Chinese Search](https://developers.google.com/custom-search/docs/xml_results#chineseSearch). The default value for this parameter is 0 (zero), meaning that the feature is enabled. Supported values are: * `1`: Disabled * `0`: Enabled (default)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "cr": {
-	//       "description": "Restricts search results to documents originating in a particular country.\nYou may use [Boolean\noperators](https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators)\nin the cr parameter's value.\n\nGoogle Search determines the country of a document by analyzing:\n\n* the top-level domain (TLD) of the document's URL\n\n* the geographic location of the Web server's IP address\n\nSee the [Country Parameter\nValues](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections)\npage for a list of valid values for this parameter.",
+	//       "description": "Restricts search results to documents originating in a particular country. You may use [Boolean operators](https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators) in the cr parameter's value. Google Search determines the country of a document by analyzing: * the top-level domain (TLD) of the document's URL * the geographic location of the Web server's IP address See the [Country Parameter Values](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections) page for a list of valid values for this parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2523,7 +1828,7 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "dateRestrict": {
-	//       "description": "Restricts results to URLs based on date. Supported values include:\n\n* `d[number]`: requests results from the specified number of past days.\n\n* `w[number]`: requests results from the specified number of past weeks.\n\n* `m[number]`: requests results from the specified number of past months.\n\n* `y[number]`: requests results from the specified number of past years.",
+	//       "description": "Restricts results to URLs based on date. Supported values include: * `d[number]`: requests results from the specified number of past days. * `w[number]`: requests results from the specified number of past weeks. * `m[number]`: requests results from the specified number of past months. * `y[number]`: requests results from the specified number of past years.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2533,47 +1838,47 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "excludeTerms": {
-	//       "description": "Identifies a word or phrase that should not appear in any documents in the\nsearch results.",
+	//       "description": "Identifies a word or phrase that should not appear in any documents in the search results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "fileType": {
-	//       "description": "Restricts results to files of a specified extension. A list of file types\nindexable by Google can be found in Search Console [Help\nCenter](https://support.google.com/webmasters/answer/35287).",
+	//       "description": "Restricts results to files of a specified extension. A list of file types indexable by Google can be found in Search Console [Help Center](https://support.google.com/webmasters/answer/35287).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Controls turning on or off the duplicate content filter.\n\n* See [Automatic\nFiltering](https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)\nfor more information about Google's search results filters. Note that host\ncrowding filtering applies only to multi-site searches.\n\n* By default, Google applies filtering to all search results to improve the\nquality of those results.\n\nAcceptable values are:\n\n* `0`: Turns off duplicate content filter.\n\n* `1`: Turns on duplicate content filter.",
+	//       "description": "Controls turning on or off the duplicate content filter. * See [Automatic Filtering](https://developers.google.com/custom-search/docs/xml_results#automaticFiltering) for more information about Google's search results filters. Note that host crowding filtering applies only to multi-site searches. * By default, Google applies filtering to all search results to improve the quality of those results. Acceptable values are: * `0`: Turns off duplicate content filter. * `1`: Turns on duplicate content filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gl": {
-	//       "description": "Geolocation of end user.\n\n* The `gl` parameter value is a two-letter country code. The `gl` parameter\nboosts search results whose country of origin matches the parameter value.\nSee the [Country\nCodes](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes)\npage for a list of valid values.\n\n* Specifying a `gl` parameter value should lead to more relevant results.\nThis is particularly true for international customers and, even more\nspecifically, for customers in English- speaking countries other than the\nUnited States.",
+	//       "description": "Geolocation of end user. * The `gl` parameter value is a two-letter country code. The `gl` parameter boosts search results whose country of origin matches the parameter value. See the [Country Codes](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes) page for a list of valid values. * Specifying a `gl` parameter value should lead to more relevant results. This is particularly true for international customers and, even more specifically, for customers in English- speaking countries other than the United States.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "googlehost": {
-	//       "description": "**Deprecated**. Use the `gl` parameter for a similar effect.\n\nThe local Google domain (for example, google.com, google.de, or\ngoogle.fr) to use to perform the search.",
+	//       "description": "**Deprecated**. Use the `gl` parameter for a similar effect. The local Google domain (for example, google.com, google.de, or google.fr) to use to perform the search.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "highRange": {
-	//       "description": "Specifies the ending value for a search range.\n\n* Use `lowRange` and `highRange` to append an inclusive search range of\n`lowRange...highRange` to the query.",
+	//       "description": "Specifies the ending value for a search range. * Use `lowRange` and `highRange` to append an inclusive search range of `lowRange...highRange` to the query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "hl": {
-	//       "description": "Sets the user interface language.\n\n* Explicitly setting this parameter improves the performance and the\nquality of your search results.\n\n* See the [Interface\nLanguages](https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)\nsection of [Internationalizing Queries and Results\nPresentation](https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)\nfor more information, and (Supported Interface\nLanguages)[https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages]\nfor a list of supported languages.",
+	//       "description": "Sets the user interface language. * Explicitly setting this parameter improves the performance and the quality of your search results. * See the [Interface Languages](https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages) section of [Internationalizing Queries and Results Presentation](https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing) for more information, and (Supported Interface Languages)[https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages] for a list of supported languages.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "hq": {
-	//       "description": "Appends the specified query terms to the query, as if they were combined\nwith a logical AND operator.",
+	//       "description": "Appends the specified query terms to the query, as if they were combined with a logical AND operator.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgColorType": {
-	//       "description": "Returns black and white, grayscale, transparent, or color images.\nAcceptable values are:\n\n* `\"color\"`\n\n* `\"gray\"`\n\n* `\"mono\"`: black and white\n\n* `\"trans\"`: transparent background",
+	//       "description": "Returns black and white, grayscale, transparent, or color images. Acceptable values are: * `\"color\"` * `\"gray\"` * `\"mono\"`: black and white * `\"trans\"`: transparent background",
 	//       "enum": [
 	//         "imgColorTypeUndefined",
 	//         "mono",
@@ -2581,11 +1886,18 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "color",
 	//         "trans"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image color type specified.",
+	//         "Black and white images only.",
+	//         "Grayscale images only.",
+	//         "Color images only.",
+	//         "Images with transparent background"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgDominantColor": {
-	//       "description": "Returns images of a specific dominant color. Acceptable values are:\n\n* `\"black\"`\n\n* `\"blue\"`\n\n* `\"brown\"`\n\n* `\"gray\"`\n\n* `\"green\"`\n\n* `\"orange\"`\n\n* `\"pink\"`\n\n* `\"purple\"`\n\n* `\"red\"`\n\n* `\"teal\"`\n\n* `\"white\"`\n\n* `\"yellow\"`",
+	//       "description": "Returns images of a specific dominant color. Acceptable values are: * `\"black\"` * `\"blue\"` * `\"brown\"` * `\"gray\"` * `\"green\"` * `\"orange\"` * `\"pink\"` * `\"purple\"` * `\"red\"` * `\"teal\"` * `\"white\"` * `\"yellow\"`",
 	//       "enum": [
 	//         "imgDominantColorUndefined",
 	//         "black",
@@ -2601,11 +1913,26 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "white",
 	//         "yellow"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No dominant color specified.",
+	//         "Predominantly black images only.",
+	//         "Predominantly blue images only.",
+	//         "Predominantly brown images only.",
+	//         "Predominantly gray images only.",
+	//         "Predominantly green images only.",
+	//         "Predominantly orange images only.",
+	//         "Predominantly pink images only.",
+	//         "Predominantly purple images only.",
+	//         "Predominantly red images only.",
+	//         "Predominantly teal images only.",
+	//         "Predominantly white images only.",
+	//         "Predominantly yellow images only."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgSize": {
-	//       "description": "Returns images of a specified size. Acceptable values are:\n\n* `\"huge\"`\n\n* `\"icon\"`\n\n* `\"large\"`\n\n* `\"medium\"`\n\n* `\"small\"`\n\n* `\"xlarge\"`\n\n* `\"xxlarge\"`",
+	//       "description": "Returns images of a specified size. Acceptable values are: * `\"huge\"` * `\"icon\"` * `\"large\"` * `\"medium\"` * `\"small\"` * `\"xlarge\"` * `\"xxlarge\"`",
 	//       "enum": [
 	//         "imgSizeUndefined",
 	//         "HUGE",
@@ -2616,11 +1943,21 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "XLARGE",
 	//         "XXLARGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image size specified.",
+	//         "Only the largest possible images.",
+	//         "Only very small icon-sized images.",
+	//         "Only large images.",
+	//         "Only medium images.",
+	//         "Only small images.",
+	//         "Only very large images.",
+	//         "Only extremely large images."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgType": {
-	//       "description": "Returns images of a type. Acceptable values are:\n\n* `\"clipart\"`\n\n* `\"face\"`\n\n* `\"lineart\"`\n\n* `\"stock\"`\n\n* `\"photo\"`\n\n* `\"animated\"`",
+	//       "description": "Returns images of a type. Acceptable values are: * `\"clipart\"` * `\"face\"` * `\"lineart\"` * `\"stock\"` * `\"photo\"` * `\"animated\"`",
 	//       "enum": [
 	//         "imgTypeUndefined",
 	//         "clipart",
@@ -2630,32 +1967,41 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "photo",
 	//         "animated"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image type specified.",
+	//         "Clipart-style images only.",
+	//         "Images of faces only.",
+	//         "Line art images only.",
+	//         "Stock images only.",
+	//         "Photo images only.",
+	//         "Animated images only."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "linkSite": {
-	//       "description": "Specifies that all search results should contain a link to a particular\nURL.",
+	//       "description": "Specifies that all search results should contain a link to a particular URL.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "lowRange": {
-	//       "description": "Specifies the starting value for a search range. Use `lowRange` and\n`highRange` to append an inclusive search range of `lowRange...highRange`\nto the query.",
+	//       "description": "Specifies the starting value for a search range. Use `lowRange` and `highRange` to append an inclusive search range of `lowRange...highRange` to the query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "lr": {
-	//       "description": "Restricts the search to documents written in a particular language (e.g.,\n`lr=lang_ja`).\n\nAcceptable values are:\n\n* `\"lang_ar\"`: Arabic\n\n* `\"lang_bg\"`: Bulgarian\n\n* `\"lang_ca\"`: Catalan\n\n* `\"lang_cs\"`: Czech\n\n* `\"lang_da\"`: Danish\n\n* `\"lang_de\"`: German\n\n* `\"lang_el\"`: Greek\n\n* `\"lang_en\"`: English\n\n* `\"lang_es\"`: Spanish\n\n* `\"lang_et\"`: Estonian\n\n* `\"lang_fi\"`: Finnish\n\n* `\"lang_fr\"`: French\n\n* `\"lang_hr\"`: Croatian\n\n* `\"lang_hu\"`: Hungarian\n\n* `\"lang_id\"`: Indonesian\n\n* `\"lang_is\"`: Icelandic\n\n* `\"lang_it\"`: Italian\n\n* `\"lang_iw\"`: Hebrew\n\n* `\"lang_ja\"`: Japanese\n\n* `\"lang_ko\"`: Korean\n\n* `\"lang_lt\"`: Lithuanian\n\n* `\"lang_lv\"`: Latvian\n\n* `\"lang_nl\"`: Dutch\n\n* `\"lang_no\"`: Norwegian\n\n* `\"lang_pl\"`: Polish\n\n* `\"lang_pt\"`: Portuguese\n\n* `\"lang_ro\"`: Romanian\n\n* `\"lang_ru\"`: Russian\n\n* `\"lang_sk\"`: Slovak\n\n* `\"lang_sl\"`: Slovenian\n\n* `\"lang_sr\"`: Serbian\n\n* `\"lang_sv\"`: Swedish\n\n* `\"lang_tr\"`: Turkish\n\n* `\"lang_zh-CN\"`: Chinese (Simplified)\n\n* `\"lang_zh-TW\"`: Chinese (Traditional)",
+	//       "description": "Restricts the search to documents written in a particular language (e.g., `lr=lang_ja`). Acceptable values are: * `\"lang_ar\"`: Arabic * `\"lang_bg\"`: Bulgarian * `\"lang_ca\"`: Catalan * `\"lang_cs\"`: Czech * `\"lang_da\"`: Danish * `\"lang_de\"`: German * `\"lang_el\"`: Greek * `\"lang_en\"`: English * `\"lang_es\"`: Spanish * `\"lang_et\"`: Estonian * `\"lang_fi\"`: Finnish * `\"lang_fr\"`: French * `\"lang_hr\"`: Croatian * `\"lang_hu\"`: Hungarian * `\"lang_id\"`: Indonesian * `\"lang_is\"`: Icelandic * `\"lang_it\"`: Italian * `\"lang_iw\"`: Hebrew * `\"lang_ja\"`: Japanese * `\"lang_ko\"`: Korean * `\"lang_lt\"`: Lithuanian * `\"lang_lv\"`: Latvian * `\"lang_nl\"`: Dutch * `\"lang_no\"`: Norwegian * `\"lang_pl\"`: Polish * `\"lang_pt\"`: Portuguese * `\"lang_ro\"`: Romanian * `\"lang_ru\"`: Russian * `\"lang_sk\"`: Slovak * `\"lang_sl\"`: Slovenian * `\"lang_sr\"`: Serbian * `\"lang_sv\"`: Swedish * `\"lang_tr\"`: Turkish * `\"lang_zh-CN\"`: Chinese (Simplified) * `\"lang_zh-TW\"`: Chinese (Traditional)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "num": {
-	//       "description": "Number of search results to return.\n\n* Valid values are integers between 1 and 10, inclusive.",
+	//       "description": "Number of search results to return. * Valid values are integers between 1 and 10, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "orTerms": {
-	//       "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the additional\nsearch terms.",
+	//       "description": "Provides additional search terms to check for in a document, where each document in the search results must contain at least one of the additional search terms.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2665,17 +2011,17 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the\nspecified URL.",
+	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "rights": {
-	//       "description": "Filters based on licensing. Supported values include: `cc_publicdomain`,\n`cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived` and\ncombinations of these. See [typical\ncombinations](https://wiki.creativecommons.org/wiki/CC_Search_integration).",
+	//       "description": "Filters based on licensing. Supported values include: `cc_publicdomain`, `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived` and combinations of these. See [typical combinations](https://wiki.creativecommons.org/wiki/CC_Search_integration).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "safe": {
-	//       "description": "Search safety level. Acceptable values are:\n\n* `\"active\"`: Enables SafeSearch filtering.\n\n* `\"off\"`: Disables SafeSearch filtering. (default)",
+	//       "description": "Search safety level. Acceptable values are: * `\"active\"`: Enables SafeSearch filtering. * `\"off\"`: Disables SafeSearch filtering. (default)",
 	//       "enum": [
 	//         "safeUndefined",
 	//         "active",
@@ -2683,40 +2029,56 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//         "medium",
 	//         "off"
 	//       ],
+	//       "enumDescriptions": [
+	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
+	//         "Turn SafeSearch on.",
+	//         "Deprecated, equivalent to \"active\".",
+	//         "Deprecated, equivalent to \"active\".",
+	//         "Turn SafeSearch off."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "searchType": {
-	//       "description": "Specifies the search type: `image`. If unspecified, results are limited to\nwebpages.\n\nAcceptable values are:\n\n* `\"image\"`: custom image search.",
+	//       "description": "Specifies the search type: `image`. If unspecified, results are limited to webpages. Acceptable values are: * `\"image\"`: custom image search.",
 	//       "enum": [
 	//         "searchTypeUndefined",
 	//         "image"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Search type unspecified (defaults to web search).",
+	//         "Image search."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "siteSearch": {
-	//       "description": "Specifies a given site which should always be included or excluded from\nresults (see `siteSearchFilter` parameter, below).",
+	//       "description": "Specifies a given site which should always be included or excluded from results (see `siteSearchFilter` parameter, below).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "siteSearchFilter": {
-	//       "description": "Controls whether to include or exclude results from the site named in the\n`siteSearch` parameter.\n\nAcceptable values are:\n\n* `\"e\"`: exclude\n\n* `\"i\"`: include",
+	//       "description": "Controls whether to include or exclude results from the site named in the `siteSearch` parameter. Acceptable values are: * `\"e\"`: exclude * `\"i\"`: include",
 	//       "enum": [
 	//         "siteSearchFilterUndefined",
 	//         "e",
 	//         "i"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Filter mode unspecified.",
+	//         "Exclude results from the listed sites.",
+	//         "Include only results from the listed sites."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sort": {
-	//       "description": "The sort expression to apply to the results. The sort parameter specifies\nthat the results be sorted according to the specified expression i.e. sort\nby date.\n[Example:\nsort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
+	//       "description": "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "start": {
-	//       "description": "The index of the first result to return. The default number of results per\npage is 10, so `\u0026start=11` would start at the top of the second page of\nresults. **Note**: The JSON API will never return more than 100 results,\neven if more than 100 documents match the query, so setting the sum of\n`start + num` to a number greater than 100 will produce an error. Also note\nthat the maximum value for `num` is 10.",
+	//       "description": "The index of the first result to return. The default number of results per page is 10, so `\u0026start=11` would start at the top of the second page of results. **Note**: The JSON API will never return more than 100 results, even if more than 100 documents match the query, so setting the sum of `start + num` to a number greater than 100 will produce an error. Also note that the maximum value for `num` is 10.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2740,10 +2102,8 @@ type CseSiterestrictListCall struct {
 	header_      http.Header
 }
 
-// List: Returns metadata about the search performed, metadata about
-// the
-// engine used for the search, and the search results. Uses a small
-// set
+// List: Returns metadata about the search performed, metadata about the
+// engine used for the search, and the search results. Uses a small set
 // of url patterns.
 func (r *CseSiterestrictService) List() *CseSiterestrictListCall {
 	c := &CseSiterestrictListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2751,42 +2111,26 @@ func (r *CseSiterestrictService) List() *CseSiterestrictListCall {
 }
 
 // C2coff sets the optional parameter "c2coff": Enables or disables
-// [Simplified and Traditional
-// Chinese
-// Search](https://developers.google.com/custom-search/docs/xml_r
-// esults#chineseSearch).
-//
-// The default value for this parameter is 0 (zero), meaning that the
-// feature
-// is enabled. Supported values are:
-//
-// * `1`: Disabled
-//
-// * `0`: Enabled (default)
+// [Simplified and Traditional Chinese
+// Search](https://developers.google.com/custom-search/docs/xml_results#c
+// hineseSearch). The default value for this parameter is 0 (zero),
+// meaning that the feature is enabled. Supported values are: * `1`:
+// Disabled * `0`: Enabled (default)
 func (c *CseSiterestrictListCall) C2coff(c2coff string) *CseSiterestrictListCall {
 	c.urlParams_.Set("c2coff", c2coff)
 	return c
 }
 
 // Cr sets the optional parameter "cr": Restricts search results to
-// documents originating in a particular country.
-// You may use
-// [Boolean
-// operators](https://developers.google.com/custom-search/docs/x
-// ml_results_appendices#booleanOperators)
-// in the cr parameter's value.
-//
-// Google Search determines the country of a document by analyzing:
-//
-// * the top-level domain (TLD) of the document's URL
-//
-// * the geographic location of the Web server's IP address
-//
-// See the [Country
-// Parameter
-// Values](https://developers.google.com/custom-search/docs/xml
-// _results_appendices#countryCollections)
-// page for a list of valid values for this parameter.
+// documents originating in a particular country. You may use [Boolean
+// operators](https://developers.google.com/custom-search/docs/xml_result
+// s_appendices#booleanOperators) in the cr parameter's value. Google
+// Search determines the country of a document by analyzing: * the
+// top-level domain (TLD) of the document's URL * the geographic
+// location of the Web server's IP address See the [Country Parameter
+// Values](https://developers.google.com/custom-search/docs/xml_results_a
+// ppendices#countryCollections) page for a list of valid values for
+// this parameter.
 func (c *CseSiterestrictListCall) Cr(cr string) *CseSiterestrictListCall {
 	c.urlParams_.Set("cr", cr)
 	return c
@@ -2800,19 +2144,12 @@ func (c *CseSiterestrictListCall) Cx(cx string) *CseSiterestrictListCall {
 }
 
 // DateRestrict sets the optional parameter "dateRestrict": Restricts
-// results to URLs based on date. Supported values include:
-//
-// * `d[number]`: requests results from the specified number of past
-// days.
-//
+// results to URLs based on date. Supported values include: *
+// `d[number]`: requests results from the specified number of past days.
 // * `w[number]`: requests results from the specified number of past
-// weeks.
-//
-// * `m[number]`: requests results from the specified number of past
-// months.
-//
-// * `y[number]`: requests results from the specified number of past
-// years.
+// weeks. * `m[number]`: requests results from the specified number of
+// past months. * `y[number]`: requests results from the specified
+// number of past years.
 func (c *CseSiterestrictListCall) DateRestrict(dateRestrict string) *CseSiterestrictListCall {
 	c.urlParams_.Set("dateRestrict", dateRestrict)
 	return c
@@ -2826,17 +2163,16 @@ func (c *CseSiterestrictListCall) ExactTerms(exactTerms string) *CseSiterestrict
 }
 
 // ExcludeTerms sets the optional parameter "excludeTerms": Identifies a
-// word or phrase that should not appear in any documents in the
-// search results.
+// word or phrase that should not appear in any documents in the search
+// results.
 func (c *CseSiterestrictListCall) ExcludeTerms(excludeTerms string) *CseSiterestrictListCall {
 	c.urlParams_.Set("excludeTerms", excludeTerms)
 	return c
 }
 
 // FileType sets the optional parameter "fileType": Restricts results to
-// files of a specified extension. A list of file types
-// indexable by Google can be found in Search Console
-// [Help
+// files of a specified extension. A list of file types indexable by
+// Google can be found in Search Console [Help
 // Center](https://support.google.com/webmasters/answer/35287).
 func (c *CseSiterestrictListCall) FileType(fileType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("fileType", fileType)
@@ -2844,351 +2180,200 @@ func (c *CseSiterestrictListCall) FileType(fileType string) *CseSiterestrictList
 }
 
 // Filter sets the optional parameter "filter": Controls turning on or
-// off the duplicate content filter.
-//
-// * See
-// [Automatic
-// Filtering](https://developers.google.com/custom-search/docs
-// /xml_results#automaticFiltering)
-// for more information about Google's search results filters. Note that
-// host
-// crowding filtering applies only to multi-site searches.
-//
-// * By default, Google applies filtering to all search results to
-// improve the
-// quality of those results.
-//
-// Acceptable values are:
-//
-// * `0`: Turns off duplicate content filter.
-//
-// * `1`: Turns on duplicate content filter.
+// off the duplicate content filter. * See [Automatic
+// Filtering](https://developers.google.com/custom-search/docs/xml_result
+// s#automaticFiltering) for more information about Google's search
+// results filters. Note that host crowding filtering applies only to
+// multi-site searches. * By default, Google applies filtering to all
+// search results to improve the quality of those results. Acceptable
+// values are: * `0`: Turns off duplicate content filter. * `1`: Turns
+// on duplicate content filter.
 func (c *CseSiterestrictListCall) Filter(filter string) *CseSiterestrictListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// Gl sets the optional parameter "gl": Geolocation of end user.
-//
-// * The `gl` parameter value is a two-letter country code. The `gl`
-// parameter
+// Gl sets the optional parameter "gl": Geolocation of end user. * The
+// `gl` parameter value is a two-letter country code. The `gl` parameter
 // boosts search results whose country of origin matches the parameter
-// value.
-// See the
-// [Country
-// Codes](https://developers.google.com/custom-search/docs/xml_r
-// esults_appendices#countryCodes)
-// page for a list of valid values.
-//
-// * Specifying a `gl` parameter value should lead to more relevant
-// results.
-// This is particularly true for international customers and, even
-// more
+// value. See the [Country
+// Codes](https://developers.google.com/custom-search/docs/xml_results_ap
+// pendices#countryCodes) page for a list of valid values. * Specifying
+// a `gl` parameter value should lead to more relevant results. This is
+// particularly true for international customers and, even more
 // specifically, for customers in English- speaking countries other than
-// the
-// United States.
+// the United States.
 func (c *CseSiterestrictListCall) Gl(gl string) *CseSiterestrictListCall {
 	c.urlParams_.Set("gl", gl)
 	return c
 }
 
 // Googlehost sets the optional parameter "googlehost": **Deprecated**.
-// Use the `gl` parameter for a similar effect.
-//
-// The local Google domain (for example, google.com, google.de,
-// or
-// google.fr) to use to perform the search.
+// Use the `gl` parameter for a similar effect. The local Google domain
+// (for example, google.com, google.de, or google.fr) to use to perform
+// the search.
 func (c *CseSiterestrictListCall) Googlehost(googlehost string) *CseSiterestrictListCall {
 	c.urlParams_.Set("googlehost", googlehost)
 	return c
 }
 
 // HighRange sets the optional parameter "highRange": Specifies the
-// ending value for a search range.
-//
-// * Use `lowRange` and `highRange` to append an inclusive search range
-// of
-// `lowRange...highRange` to the query.
+// ending value for a search range. * Use `lowRange` and `highRange` to
+// append an inclusive search range of `lowRange...highRange` to the
+// query.
 func (c *CseSiterestrictListCall) HighRange(highRange string) *CseSiterestrictListCall {
 	c.urlParams_.Set("highRange", highRange)
 	return c
 }
 
 // Hl sets the optional parameter "hl": Sets the user interface
-// language.
-//
-// * Explicitly setting this parameter improves the performance and
-// the
-// quality of your search results.
-//
-// * See the
+// language. * Explicitly setting this parameter improves the
+// performance and the quality of your search results. * See the
 // [Interface
-// Languages](https://developers.google.com/custom-search/docs
-// /xml_results#wsInterfaceLanguages)
-// section of [Internationalizing Queries and
+// Languages](https://developers.google.com/custom-search/docs/xml_result
+// s#wsInterfaceLanguages) section of [Internationalizing Queries and
 // Results
-// Presentation](https://developers.google.com/custom-search/docs
-// /xml_results#wsInternationalizing)
-// for more information, and (Supported
+// Presentation](https://developers.google.com/custom-search/docs/xml_res
+// ults#wsInternationalizing) for more information, and (Supported
 // Interface
-// Languages)[https://developers.google.com/custom-search/docs/
-// xml_results_appendices#interfaceLanguages]
-// for a list of supported languages.
+// Languages)[https://developers.google.com/custom-search/docs/xml_result
+// s_appendices#interfaceLanguages] for a list of supported languages.
 func (c *CseSiterestrictListCall) Hl(hl string) *CseSiterestrictListCall {
 	c.urlParams_.Set("hl", hl)
 	return c
 }
 
 // Hq sets the optional parameter "hq": Appends the specified query
-// terms to the query, as if they were combined
-// with a logical AND operator.
+// terms to the query, as if they were combined with a logical AND
+// operator.
 func (c *CseSiterestrictListCall) Hq(hq string) *CseSiterestrictListCall {
 	c.urlParams_.Set("hq", hq)
 	return c
 }
 
 // ImgColorType sets the optional parameter "imgColorType": Returns
-// black and white, grayscale, transparent, or color images.
-// Acceptable values are:
-//
-// * "color"
-//
-// * "gray"
-//
-// * "mono": black and white
-//
-// * "trans": transparent background
+// black and white, grayscale, transparent, or color images. Acceptable
+// values are: * "color" * "gray" * "mono": black and white *
+// "trans": transparent background
 //
 // Possible values:
-//   "imgColorTypeUndefined"
-//   "mono"
-//   "gray"
-//   "color"
-//   "trans"
+//   "imgColorTypeUndefined" - No image color type specified.
+//   "mono" - Black and white images only.
+//   "gray" - Grayscale images only.
+//   "color" - Color images only.
+//   "trans" - Images with transparent background
 func (c *CseSiterestrictListCall) ImgColorType(imgColorType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgColorType", imgColorType)
 	return c
 }
 
 // ImgDominantColor sets the optional parameter "imgDominantColor":
-// Returns images of a specific dominant color. Acceptable values
-// are:
-//
-// * "black"
-//
-// * "blue"
-//
-// * "brown"
-//
-// * "gray"
-//
-// * "green"
-//
-// * "orange"
-//
-// * "pink"
-//
-// * "purple"
-//
-// * "red"
-//
-// * "teal"
-//
-// * "white"
-//
-// * "yellow"
+// Returns images of a specific dominant color. Acceptable values are: *
+// "black" * "blue" * "brown" * "gray" * "green" * "orange"
+// * "pink" * "purple" * "red" * "teal" * "white" * "yellow"
 //
 // Possible values:
-//   "imgDominantColorUndefined"
-//   "black"
-//   "blue"
-//   "brown"
-//   "gray"
-//   "green"
-//   "orange"
-//   "pink"
-//   "purple"
-//   "red"
-//   "teal"
-//   "white"
-//   "yellow"
+//   "imgDominantColorUndefined" - No dominant color specified.
+//   "black" - Predominantly black images only.
+//   "blue" - Predominantly blue images only.
+//   "brown" - Predominantly brown images only.
+//   "gray" - Predominantly gray images only.
+//   "green" - Predominantly green images only.
+//   "orange" - Predominantly orange images only.
+//   "pink" - Predominantly pink images only.
+//   "purple" - Predominantly purple images only.
+//   "red" - Predominantly red images only.
+//   "teal" - Predominantly teal images only.
+//   "white" - Predominantly white images only.
+//   "yellow" - Predominantly yellow images only.
 func (c *CseSiterestrictListCall) ImgDominantColor(imgDominantColor string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgDominantColor", imgDominantColor)
 	return c
 }
 
 // ImgSize sets the optional parameter "imgSize": Returns images of a
-// specified size. Acceptable values are:
-//
-// * "huge"
-//
-// * "icon"
-//
-// * "large"
-//
-// * "medium"
-//
-// * "small"
-//
-// * "xlarge"
-//
-// * "xxlarge"
+// specified size. Acceptable values are: * "huge" * "icon" *
+// "large" * "medium" * "small" * "xlarge" * "xxlarge"
 //
 // Possible values:
-//   "imgSizeUndefined"
-//   "HUGE"
-//   "ICON"
-//   "LARGE"
-//   "MEDIUM"
-//   "SMALL"
-//   "XLARGE"
-//   "XXLARGE"
+//   "imgSizeUndefined" - No image size specified.
+//   "HUGE" - Only the largest possible images.
+//   "ICON" - Only very small icon-sized images.
+//   "LARGE" - Only large images.
+//   "MEDIUM" - Only medium images.
+//   "SMALL" - Only small images.
+//   "XLARGE" - Only very large images.
+//   "XXLARGE" - Only extremely large images.
 func (c *CseSiterestrictListCall) ImgSize(imgSize string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgSize", imgSize)
 	return c
 }
 
 // ImgType sets the optional parameter "imgType": Returns images of a
-// type. Acceptable values are:
-//
-// * "clipart"
-//
-// * "face"
-//
-// * "lineart"
-//
-// * "stock"
-//
-// * "photo"
-//
-// * "animated"
+// type. Acceptable values are: * "clipart" * "face" * "lineart" *
+// "stock" * "photo" * "animated"
 //
 // Possible values:
-//   "imgTypeUndefined"
-//   "clipart"
-//   "face"
-//   "lineart"
-//   "stock"
-//   "photo"
-//   "animated"
+//   "imgTypeUndefined" - No image type specified.
+//   "clipart" - Clipart-style images only.
+//   "face" - Images of faces only.
+//   "lineart" - Line art images only.
+//   "stock" - Stock images only.
+//   "photo" - Photo images only.
+//   "animated" - Animated images only.
 func (c *CseSiterestrictListCall) ImgType(imgType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgType", imgType)
 	return c
 }
 
 // LinkSite sets the optional parameter "linkSite": Specifies that all
-// search results should contain a link to a particular
-// URL.
+// search results should contain a link to a particular URL.
 func (c *CseSiterestrictListCall) LinkSite(linkSite string) *CseSiterestrictListCall {
 	c.urlParams_.Set("linkSite", linkSite)
 	return c
 }
 
 // LowRange sets the optional parameter "lowRange": Specifies the
-// starting value for a search range. Use `lowRange` and
-// `highRange` to append an inclusive search range of
-// `lowRange...highRange`
-// to the query.
+// starting value for a search range. Use `lowRange` and `highRange` to
+// append an inclusive search range of `lowRange...highRange` to the
+// query.
 func (c *CseSiterestrictListCall) LowRange(lowRange string) *CseSiterestrictListCall {
 	c.urlParams_.Set("lowRange", lowRange)
 	return c
 }
 
 // Lr sets the optional parameter "lr": Restricts the search to
-// documents written in a particular language
-// (e.g.,
-// `lr=lang_ja`).
-//
-// Acceptable values are:
-//
-// * "lang_ar": Arabic
-//
-// * "lang_bg": Bulgarian
-//
-// * "lang_ca": Catalan
-//
-// * "lang_cs": Czech
-//
-// * "lang_da": Danish
-//
-// * "lang_de": German
-//
-// * "lang_el": Greek
-//
-// * "lang_en": English
-//
-// * "lang_es": Spanish
-//
-// * "lang_et": Estonian
-//
-// * "lang_fi": Finnish
-//
-// * "lang_fr": French
-//
-// * "lang_hr": Croatian
-//
-// * "lang_hu": Hungarian
-//
-// * "lang_id": Indonesian
-//
-// * "lang_is": Icelandic
-//
-// * "lang_it": Italian
-//
-// * "lang_iw": Hebrew
-//
-// * "lang_ja": Japanese
-//
-// * "lang_ko": Korean
-//
-// * "lang_lt": Lithuanian
-//
-// * "lang_lv": Latvian
-//
-// * "lang_nl": Dutch
-//
-// * "lang_no": Norwegian
-//
-// * "lang_pl": Polish
-//
-// * "lang_pt": Portuguese
-//
-// * "lang_ro": Romanian
-//
-// * "lang_ru": Russian
-//
-// * "lang_sk": Slovak
-//
-// * "lang_sl": Slovenian
-//
-// * "lang_sr": Serbian
-//
-// * "lang_sv": Swedish
-//
-// * "lang_tr": Turkish
-//
-// * "lang_zh-CN": Chinese (Simplified)
-//
-// * "lang_zh-TW": Chinese (Traditional)
+// documents written in a particular language (e.g., `lr=lang_ja`).
+// Acceptable values are: * "lang_ar": Arabic * "lang_bg": Bulgarian
+// * "lang_ca": Catalan * "lang_cs": Czech * "lang_da": Danish *
+// "lang_de": German * "lang_el": Greek * "lang_en": English *
+// "lang_es": Spanish * "lang_et": Estonian * "lang_fi": Finnish *
+// "lang_fr": French * "lang_hr": Croatian * "lang_hu": Hungarian
+// * "lang_id": Indonesian * "lang_is": Icelandic * "lang_it":
+// Italian * "lang_iw": Hebrew * "lang_ja": Japanese * "lang_ko":
+// Korean * "lang_lt": Lithuanian * "lang_lv": Latvian *
+// "lang_nl": Dutch * "lang_no": Norwegian * "lang_pl": Polish *
+// "lang_pt": Portuguese * "lang_ro": Romanian * "lang_ru":
+// Russian * "lang_sk": Slovak * "lang_sl": Slovenian * "lang_sr":
+// Serbian * "lang_sv": Swedish * "lang_tr": Turkish *
+// "lang_zh-CN": Chinese (Simplified) * "lang_zh-TW": Chinese
+// (Traditional)
 func (c *CseSiterestrictListCall) Lr(lr string) *CseSiterestrictListCall {
 	c.urlParams_.Set("lr", lr)
 	return c
 }
 
 // Num sets the optional parameter "num": Number of search results to
-// return.
-//
-// * Valid values are integers between 1 and 10, inclusive.
+// return. * Valid values are integers between 1 and 10, inclusive.
 func (c *CseSiterestrictListCall) Num(num int64) *CseSiterestrictListCall {
 	c.urlParams_.Set("num", fmt.Sprint(num))
 	return c
 }
 
 // OrTerms sets the optional parameter "orTerms": Provides additional
-// search terms to check for in a document, where each
-// document in the search results must contain at least one of the
-// additional
-// search terms.
+// search terms to check for in a document, where each document in the
+// search results must contain at least one of the additional search
+// terms.
 func (c *CseSiterestrictListCall) OrTerms(orTerms string) *CseSiterestrictListCall {
 	c.urlParams_.Set("orTerms", orTerms)
 	return c
@@ -3201,65 +2386,56 @@ func (c *CseSiterestrictListCall) Q(q string) *CseSiterestrictListCall {
 }
 
 // RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the
-// specified URL.
+// all search results should be pages that are related to the specified
+// URL.
 func (c *CseSiterestrictListCall) RelatedSite(relatedSite string) *CseSiterestrictListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
 }
 
 // Rights sets the optional parameter "rights": Filters based on
-// licensing. Supported values include:
-// `cc_publicdomain`,
+// licensing. Supported values include: `cc_publicdomain`,
 // `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived`
-// and
-// combinations of these. See
-// [typical
-// combinations](https://wiki.creativecommons.org/wiki/CC_Search
-// _integration).
+// and combinations of these. See [typical
+// combinations](https://wiki.creativecommons.org/wiki/CC_Search_integrat
+// ion).
 func (c *CseSiterestrictListCall) Rights(rights string) *CseSiterestrictListCall {
 	c.urlParams_.Set("rights", rights)
 	return c
 }
 
 // Safe sets the optional parameter "safe": Search safety level.
-// Acceptable values are:
-//
-// * "active": Enables SafeSearch filtering.
-//
-// * "off": Disables SafeSearch filtering. (default)
+// Acceptable values are: * "active": Enables SafeSearch filtering. *
+// "off": Disables SafeSearch filtering. (default)
 //
 // Possible values:
-//   "safeUndefined"
-//   "active"
-//   "high"
-//   "medium"
-//   "off"
+//   "safeUndefined" - SafeSearch mode unspecified. (Falls back to
+// engine's configuration.)
+//   "active" - Turn SafeSearch on.
+//   "high" - Deprecated, equivalent to "active".
+//   "medium" - Deprecated, equivalent to "active".
+//   "off" - Turn SafeSearch off.
 func (c *CseSiterestrictListCall) Safe(safe string) *CseSiterestrictListCall {
 	c.urlParams_.Set("safe", safe)
 	return c
 }
 
 // SearchType sets the optional parameter "searchType": Specifies the
-// search type: `image`. If unspecified, results are limited
-// to
-// webpages.
-//
-// Acceptable values are:
-//
-// * "image": custom image search.
+// search type: `image`. If unspecified, results are limited to
+// webpages. Acceptable values are: * "image": custom image search.
 //
 // Possible values:
-//   "searchTypeUndefined"
-//   "image"
+//   "searchTypeUndefined" - Search type unspecified (defaults to web
+// search).
+//   "image" - Image search.
 func (c *CseSiterestrictListCall) SearchType(searchType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("searchType", searchType)
 	return c
 }
 
 // SiteSearch sets the optional parameter "siteSearch": Specifies a
-// given site which should always be included or excluded from
-// results (see `siteSearchFilter` parameter, below).
+// given site which should always be included or excluded from results
+// (see `siteSearchFilter` parameter, below).
 func (c *CseSiterestrictListCall) SiteSearch(siteSearch string) *CseSiterestrictListCall {
 	c.urlParams_.Set("siteSearch", siteSearch)
 	return c
@@ -3267,49 +2443,36 @@ func (c *CseSiterestrictListCall) SiteSearch(siteSearch string) *CseSiterestrict
 
 // SiteSearchFilter sets the optional parameter "siteSearchFilter":
 // Controls whether to include or exclude results from the site named in
-// the
-// `siteSearch` parameter.
-//
-// Acceptable values are:
-//
-// * "e": exclude
-//
-// * "i": include
+// the `siteSearch` parameter. Acceptable values are: * "e": exclude *
+// "i": include
 //
 // Possible values:
-//   "siteSearchFilterUndefined"
-//   "e"
-//   "i"
+//   "siteSearchFilterUndefined" - Filter mode unspecified.
+//   "e" - Exclude results from the listed sites.
+//   "i" - Include only results from the listed sites.
 func (c *CseSiterestrictListCall) SiteSearchFilter(siteSearchFilter string) *CseSiterestrictListCall {
 	c.urlParams_.Set("siteSearchFilter", siteSearchFilter)
 	return c
 }
 
 // Sort sets the optional parameter "sort": The sort expression to apply
-// to the results. The sort parameter specifies
-// that the results be sorted according to the specified expression i.e.
-// sort
-// by
-// date.
+// to the results. The sort parameter specifies that the results be
+// sorted according to the specified expression i.e. sort by date.
 // [Example:
-// sort=date](https://developers.google.com/custom-search
-// /docs/structured_search#sort-by-attribute).
+// sort=date](https://developers.google.com/custom-search/docs/structured
+// _search#sort-by-attribute).
 func (c *CseSiterestrictListCall) Sort(sort string) *CseSiterestrictListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
 }
 
 // Start sets the optional parameter "start": The index of the first
-// result to return. The default number of results per
-// page is 10, so `&start=11` would start at the top of the second page
-// of
-// results. **Note**: The JSON API will never return more than 100
-// results,
-// even if more than 100 documents match the query, so setting the sum
-// of
+// result to return. The default number of results per page is 10, so
+// `&start=11` would start at the top of the second page of results.
+// **Note**: The JSON API will never return more than 100 results, even
+// if more than 100 documents match the query, so setting the sum of
 // `start + num` to a number greater than 100 will produce an error.
-// Also note
-// that the maximum value for `num` is 10.
+// Also note that the maximum value for `num` is 10.
 func (c *CseSiterestrictListCall) Start(start int64) *CseSiterestrictListCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
@@ -3352,7 +2515,7 @@ func (c *CseSiterestrictListCall) Header() http.Header {
 
 func (c *CseSiterestrictListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3411,19 +2574,19 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns metadata about the search performed, metadata about the\nengine used for the search, and the search results. Uses a small set\nof url patterns.",
+	//   "description": "Returns metadata about the search performed, metadata about the engine used for the search, and the search results. Uses a small set of url patterns.",
 	//   "flatPath": "customsearch/v1/siterestrict",
 	//   "httpMethod": "GET",
 	//   "id": "search.cse.siterestrict.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "c2coff": {
-	//       "description": "Enables or disables [Simplified and Traditional Chinese\nSearch](https://developers.google.com/custom-search/docs/xml_results#chineseSearch).\n\nThe default value for this parameter is 0 (zero), meaning that the feature\nis enabled. Supported values are:\n\n* `1`: Disabled\n\n* `0`: Enabled (default)",
+	//       "description": "Enables or disables [Simplified and Traditional Chinese Search](https://developers.google.com/custom-search/docs/xml_results#chineseSearch). The default value for this parameter is 0 (zero), meaning that the feature is enabled. Supported values are: * `1`: Disabled * `0`: Enabled (default)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "cr": {
-	//       "description": "Restricts search results to documents originating in a particular country.\nYou may use [Boolean\noperators](https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators)\nin the cr parameter's value.\n\nGoogle Search determines the country of a document by analyzing:\n\n* the top-level domain (TLD) of the document's URL\n\n* the geographic location of the Web server's IP address\n\nSee the [Country Parameter\nValues](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections)\npage for a list of valid values for this parameter.",
+	//       "description": "Restricts search results to documents originating in a particular country. You may use [Boolean operators](https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators) in the cr parameter's value. Google Search determines the country of a document by analyzing: * the top-level domain (TLD) of the document's URL * the geographic location of the Web server's IP address See the [Country Parameter Values](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections) page for a list of valid values for this parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3433,7 +2596,7 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "dateRestrict": {
-	//       "description": "Restricts results to URLs based on date. Supported values include:\n\n* `d[number]`: requests results from the specified number of past days.\n\n* `w[number]`: requests results from the specified number of past weeks.\n\n* `m[number]`: requests results from the specified number of past months.\n\n* `y[number]`: requests results from the specified number of past years.",
+	//       "description": "Restricts results to URLs based on date. Supported values include: * `d[number]`: requests results from the specified number of past days. * `w[number]`: requests results from the specified number of past weeks. * `m[number]`: requests results from the specified number of past months. * `y[number]`: requests results from the specified number of past years.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3443,47 +2606,47 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "excludeTerms": {
-	//       "description": "Identifies a word or phrase that should not appear in any documents in the\nsearch results.",
+	//       "description": "Identifies a word or phrase that should not appear in any documents in the search results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "fileType": {
-	//       "description": "Restricts results to files of a specified extension. A list of file types\nindexable by Google can be found in Search Console [Help\nCenter](https://support.google.com/webmasters/answer/35287).",
+	//       "description": "Restricts results to files of a specified extension. A list of file types indexable by Google can be found in Search Console [Help Center](https://support.google.com/webmasters/answer/35287).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Controls turning on or off the duplicate content filter.\n\n* See [Automatic\nFiltering](https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)\nfor more information about Google's search results filters. Note that host\ncrowding filtering applies only to multi-site searches.\n\n* By default, Google applies filtering to all search results to improve the\nquality of those results.\n\nAcceptable values are:\n\n* `0`: Turns off duplicate content filter.\n\n* `1`: Turns on duplicate content filter.",
+	//       "description": "Controls turning on or off the duplicate content filter. * See [Automatic Filtering](https://developers.google.com/custom-search/docs/xml_results#automaticFiltering) for more information about Google's search results filters. Note that host crowding filtering applies only to multi-site searches. * By default, Google applies filtering to all search results to improve the quality of those results. Acceptable values are: * `0`: Turns off duplicate content filter. * `1`: Turns on duplicate content filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gl": {
-	//       "description": "Geolocation of end user.\n\n* The `gl` parameter value is a two-letter country code. The `gl` parameter\nboosts search results whose country of origin matches the parameter value.\nSee the [Country\nCodes](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes)\npage for a list of valid values.\n\n* Specifying a `gl` parameter value should lead to more relevant results.\nThis is particularly true for international customers and, even more\nspecifically, for customers in English- speaking countries other than the\nUnited States.",
+	//       "description": "Geolocation of end user. * The `gl` parameter value is a two-letter country code. The `gl` parameter boosts search results whose country of origin matches the parameter value. See the [Country Codes](https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes) page for a list of valid values. * Specifying a `gl` parameter value should lead to more relevant results. This is particularly true for international customers and, even more specifically, for customers in English- speaking countries other than the United States.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "googlehost": {
-	//       "description": "**Deprecated**. Use the `gl` parameter for a similar effect.\n\nThe local Google domain (for example, google.com, google.de, or\ngoogle.fr) to use to perform the search.",
+	//       "description": "**Deprecated**. Use the `gl` parameter for a similar effect. The local Google domain (for example, google.com, google.de, or google.fr) to use to perform the search.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "highRange": {
-	//       "description": "Specifies the ending value for a search range.\n\n* Use `lowRange` and `highRange` to append an inclusive search range of\n`lowRange...highRange` to the query.",
+	//       "description": "Specifies the ending value for a search range. * Use `lowRange` and `highRange` to append an inclusive search range of `lowRange...highRange` to the query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "hl": {
-	//       "description": "Sets the user interface language.\n\n* Explicitly setting this parameter improves the performance and the\nquality of your search results.\n\n* See the [Interface\nLanguages](https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)\nsection of [Internationalizing Queries and Results\nPresentation](https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)\nfor more information, and (Supported Interface\nLanguages)[https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages]\nfor a list of supported languages.",
+	//       "description": "Sets the user interface language. * Explicitly setting this parameter improves the performance and the quality of your search results. * See the [Interface Languages](https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages) section of [Internationalizing Queries and Results Presentation](https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing) for more information, and (Supported Interface Languages)[https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages] for a list of supported languages.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "hq": {
-	//       "description": "Appends the specified query terms to the query, as if they were combined\nwith a logical AND operator.",
+	//       "description": "Appends the specified query terms to the query, as if they were combined with a logical AND operator.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgColorType": {
-	//       "description": "Returns black and white, grayscale, transparent, or color images.\nAcceptable values are:\n\n* `\"color\"`\n\n* `\"gray\"`\n\n* `\"mono\"`: black and white\n\n* `\"trans\"`: transparent background",
+	//       "description": "Returns black and white, grayscale, transparent, or color images. Acceptable values are: * `\"color\"` * `\"gray\"` * `\"mono\"`: black and white * `\"trans\"`: transparent background",
 	//       "enum": [
 	//         "imgColorTypeUndefined",
 	//         "mono",
@@ -3491,11 +2654,18 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "color",
 	//         "trans"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image color type specified.",
+	//         "Black and white images only.",
+	//         "Grayscale images only.",
+	//         "Color images only.",
+	//         "Images with transparent background"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgDominantColor": {
-	//       "description": "Returns images of a specific dominant color. Acceptable values are:\n\n* `\"black\"`\n\n* `\"blue\"`\n\n* `\"brown\"`\n\n* `\"gray\"`\n\n* `\"green\"`\n\n* `\"orange\"`\n\n* `\"pink\"`\n\n* `\"purple\"`\n\n* `\"red\"`\n\n* `\"teal\"`\n\n* `\"white\"`\n\n* `\"yellow\"`",
+	//       "description": "Returns images of a specific dominant color. Acceptable values are: * `\"black\"` * `\"blue\"` * `\"brown\"` * `\"gray\"` * `\"green\"` * `\"orange\"` * `\"pink\"` * `\"purple\"` * `\"red\"` * `\"teal\"` * `\"white\"` * `\"yellow\"`",
 	//       "enum": [
 	//         "imgDominantColorUndefined",
 	//         "black",
@@ -3511,11 +2681,26 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "white",
 	//         "yellow"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No dominant color specified.",
+	//         "Predominantly black images only.",
+	//         "Predominantly blue images only.",
+	//         "Predominantly brown images only.",
+	//         "Predominantly gray images only.",
+	//         "Predominantly green images only.",
+	//         "Predominantly orange images only.",
+	//         "Predominantly pink images only.",
+	//         "Predominantly purple images only.",
+	//         "Predominantly red images only.",
+	//         "Predominantly teal images only.",
+	//         "Predominantly white images only.",
+	//         "Predominantly yellow images only."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgSize": {
-	//       "description": "Returns images of a specified size. Acceptable values are:\n\n* `\"huge\"`\n\n* `\"icon\"`\n\n* `\"large\"`\n\n* `\"medium\"`\n\n* `\"small\"`\n\n* `\"xlarge\"`\n\n* `\"xxlarge\"`",
+	//       "description": "Returns images of a specified size. Acceptable values are: * `\"huge\"` * `\"icon\"` * `\"large\"` * `\"medium\"` * `\"small\"` * `\"xlarge\"` * `\"xxlarge\"`",
 	//       "enum": [
 	//         "imgSizeUndefined",
 	//         "HUGE",
@@ -3526,11 +2711,21 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "XLARGE",
 	//         "XXLARGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image size specified.",
+	//         "Only the largest possible images.",
+	//         "Only very small icon-sized images.",
+	//         "Only large images.",
+	//         "Only medium images.",
+	//         "Only small images.",
+	//         "Only very large images.",
+	//         "Only extremely large images."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "imgType": {
-	//       "description": "Returns images of a type. Acceptable values are:\n\n* `\"clipart\"`\n\n* `\"face\"`\n\n* `\"lineart\"`\n\n* `\"stock\"`\n\n* `\"photo\"`\n\n* `\"animated\"`",
+	//       "description": "Returns images of a type. Acceptable values are: * `\"clipart\"` * `\"face\"` * `\"lineart\"` * `\"stock\"` * `\"photo\"` * `\"animated\"`",
 	//       "enum": [
 	//         "imgTypeUndefined",
 	//         "clipart",
@@ -3540,32 +2735,41 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "photo",
 	//         "animated"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No image type specified.",
+	//         "Clipart-style images only.",
+	//         "Images of faces only.",
+	//         "Line art images only.",
+	//         "Stock images only.",
+	//         "Photo images only.",
+	//         "Animated images only."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "linkSite": {
-	//       "description": "Specifies that all search results should contain a link to a particular\nURL.",
+	//       "description": "Specifies that all search results should contain a link to a particular URL.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "lowRange": {
-	//       "description": "Specifies the starting value for a search range. Use `lowRange` and\n`highRange` to append an inclusive search range of `lowRange...highRange`\nto the query.",
+	//       "description": "Specifies the starting value for a search range. Use `lowRange` and `highRange` to append an inclusive search range of `lowRange...highRange` to the query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "lr": {
-	//       "description": "Restricts the search to documents written in a particular language (e.g.,\n`lr=lang_ja`).\n\nAcceptable values are:\n\n* `\"lang_ar\"`: Arabic\n\n* `\"lang_bg\"`: Bulgarian\n\n* `\"lang_ca\"`: Catalan\n\n* `\"lang_cs\"`: Czech\n\n* `\"lang_da\"`: Danish\n\n* `\"lang_de\"`: German\n\n* `\"lang_el\"`: Greek\n\n* `\"lang_en\"`: English\n\n* `\"lang_es\"`: Spanish\n\n* `\"lang_et\"`: Estonian\n\n* `\"lang_fi\"`: Finnish\n\n* `\"lang_fr\"`: French\n\n* `\"lang_hr\"`: Croatian\n\n* `\"lang_hu\"`: Hungarian\n\n* `\"lang_id\"`: Indonesian\n\n* `\"lang_is\"`: Icelandic\n\n* `\"lang_it\"`: Italian\n\n* `\"lang_iw\"`: Hebrew\n\n* `\"lang_ja\"`: Japanese\n\n* `\"lang_ko\"`: Korean\n\n* `\"lang_lt\"`: Lithuanian\n\n* `\"lang_lv\"`: Latvian\n\n* `\"lang_nl\"`: Dutch\n\n* `\"lang_no\"`: Norwegian\n\n* `\"lang_pl\"`: Polish\n\n* `\"lang_pt\"`: Portuguese\n\n* `\"lang_ro\"`: Romanian\n\n* `\"lang_ru\"`: Russian\n\n* `\"lang_sk\"`: Slovak\n\n* `\"lang_sl\"`: Slovenian\n\n* `\"lang_sr\"`: Serbian\n\n* `\"lang_sv\"`: Swedish\n\n* `\"lang_tr\"`: Turkish\n\n* `\"lang_zh-CN\"`: Chinese (Simplified)\n\n* `\"lang_zh-TW\"`: Chinese (Traditional)",
+	//       "description": "Restricts the search to documents written in a particular language (e.g., `lr=lang_ja`). Acceptable values are: * `\"lang_ar\"`: Arabic * `\"lang_bg\"`: Bulgarian * `\"lang_ca\"`: Catalan * `\"lang_cs\"`: Czech * `\"lang_da\"`: Danish * `\"lang_de\"`: German * `\"lang_el\"`: Greek * `\"lang_en\"`: English * `\"lang_es\"`: Spanish * `\"lang_et\"`: Estonian * `\"lang_fi\"`: Finnish * `\"lang_fr\"`: French * `\"lang_hr\"`: Croatian * `\"lang_hu\"`: Hungarian * `\"lang_id\"`: Indonesian * `\"lang_is\"`: Icelandic * `\"lang_it\"`: Italian * `\"lang_iw\"`: Hebrew * `\"lang_ja\"`: Japanese * `\"lang_ko\"`: Korean * `\"lang_lt\"`: Lithuanian * `\"lang_lv\"`: Latvian * `\"lang_nl\"`: Dutch * `\"lang_no\"`: Norwegian * `\"lang_pl\"`: Polish * `\"lang_pt\"`: Portuguese * `\"lang_ro\"`: Romanian * `\"lang_ru\"`: Russian * `\"lang_sk\"`: Slovak * `\"lang_sl\"`: Slovenian * `\"lang_sr\"`: Serbian * `\"lang_sv\"`: Swedish * `\"lang_tr\"`: Turkish * `\"lang_zh-CN\"`: Chinese (Simplified) * `\"lang_zh-TW\"`: Chinese (Traditional)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "num": {
-	//       "description": "Number of search results to return.\n\n* Valid values are integers between 1 and 10, inclusive.",
+	//       "description": "Number of search results to return. * Valid values are integers between 1 and 10, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "orTerms": {
-	//       "description": "Provides additional search terms to check for in a document, where each\ndocument in the search results must contain at least one of the additional\nsearch terms.",
+	//       "description": "Provides additional search terms to check for in a document, where each document in the search results must contain at least one of the additional search terms.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3575,17 +2779,17 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the\nspecified URL.",
+	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "rights": {
-	//       "description": "Filters based on licensing. Supported values include: `cc_publicdomain`,\n`cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived` and\ncombinations of these. See [typical\ncombinations](https://wiki.creativecommons.org/wiki/CC_Search_integration).",
+	//       "description": "Filters based on licensing. Supported values include: `cc_publicdomain`, `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived` and combinations of these. See [typical combinations](https://wiki.creativecommons.org/wiki/CC_Search_integration).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "safe": {
-	//       "description": "Search safety level. Acceptable values are:\n\n* `\"active\"`: Enables SafeSearch filtering.\n\n* `\"off\"`: Disables SafeSearch filtering. (default)",
+	//       "description": "Search safety level. Acceptable values are: * `\"active\"`: Enables SafeSearch filtering. * `\"off\"`: Disables SafeSearch filtering. (default)",
 	//       "enum": [
 	//         "safeUndefined",
 	//         "active",
@@ -3593,40 +2797,56 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//         "medium",
 	//         "off"
 	//       ],
+	//       "enumDescriptions": [
+	//         "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
+	//         "Turn SafeSearch on.",
+	//         "Deprecated, equivalent to \"active\".",
+	//         "Deprecated, equivalent to \"active\".",
+	//         "Turn SafeSearch off."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "searchType": {
-	//       "description": "Specifies the search type: `image`. If unspecified, results are limited to\nwebpages.\n\nAcceptable values are:\n\n* `\"image\"`: custom image search.",
+	//       "description": "Specifies the search type: `image`. If unspecified, results are limited to webpages. Acceptable values are: * `\"image\"`: custom image search.",
 	//       "enum": [
 	//         "searchTypeUndefined",
 	//         "image"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Search type unspecified (defaults to web search).",
+	//         "Image search."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "siteSearch": {
-	//       "description": "Specifies a given site which should always be included or excluded from\nresults (see `siteSearchFilter` parameter, below).",
+	//       "description": "Specifies a given site which should always be included or excluded from results (see `siteSearchFilter` parameter, below).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "siteSearchFilter": {
-	//       "description": "Controls whether to include or exclude results from the site named in the\n`siteSearch` parameter.\n\nAcceptable values are:\n\n* `\"e\"`: exclude\n\n* `\"i\"`: include",
+	//       "description": "Controls whether to include or exclude results from the site named in the `siteSearch` parameter. Acceptable values are: * `\"e\"`: exclude * `\"i\"`: include",
 	//       "enum": [
 	//         "siteSearchFilterUndefined",
 	//         "e",
 	//         "i"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Filter mode unspecified.",
+	//         "Exclude results from the listed sites.",
+	//         "Include only results from the listed sites."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sort": {
-	//       "description": "The sort expression to apply to the results. The sort parameter specifies\nthat the results be sorted according to the specified expression i.e. sort\nby date.\n[Example:\nsort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
+	//       "description": "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "start": {
-	//       "description": "The index of the first result to return. The default number of results per\npage is 10, so `\u0026start=11` would start at the top of the second page of\nresults. **Note**: The JSON API will never return more than 100 results,\neven if more than 100 documents match the query, so setting the sum of\n`start + num` to a number greater than 100 will produce an error. Also note\nthat the maximum value for `num` is 10.",
+	//       "description": "The index of the first result to return. The default number of results per page is 10, so `\u0026start=11` would start at the top of the second page of results. **Note**: The JSON API will never return more than 100 results, even if more than 100 documents match the query, so setting the sum of `start + num` to a number greater than 100 will produce an error. Also note that the maximum value for `num` is 10.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

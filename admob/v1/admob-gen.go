@@ -158,36 +158,26 @@ type AccountsNetworkReportService struct {
 }
 
 // Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day
-// and time zone are either specified elsewhere or are not significant.
-// The date
-// is relative to the Proleptic Gregorian Calendar. This can
-// represent:
-//
-// * A full date, with non-zero year, month and day values
-// * A month and day value, with a zero year, e.g. an anniversary
-// * A year on its own, with zero month and day values
-// * A year and month value, with a zero day, e.g. a credit card
-// expiration date
-//
-// Related types are google.type.TimeOfDay and
+// The time of day and time zone are either specified elsewhere or are
+// not significant. The date is relative to the Proleptic Gregorian
+// Calendar. This can represent: * A full date, with non-zero year,
+// month and day values * A month and day value, with a zero year, e.g.
+// an anniversary * A year on its own, with zero month and day values *
+// A year and month value, with a zero day, e.g. a credit card
+// expiration date Related types are google.type.TimeOfDay and
 // `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0
-	// if specifying a year by itself or a year and month where the day is
-	// not
-	// significant.
+	// month, or 0 if specifying a year by itself or a year and month where
+	// the day is not significant.
 	Day int64 `json:"day,omitempty"`
 
 	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
-	// without a
-	// month and day.
+	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without
-	// a year.
+	// without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -217,13 +207,11 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // inclusive.
 type DateRange struct {
 	// EndDate: End date of the date range, inclusive. Must be greater than
-	// or equal to the
-	// start date.
+	// or equal to the start date.
 	EndDate *Date `json:"endDate,omitempty"`
 
 	// StartDate: Start date of the date range, inclusive. Must be less than
-	// or equal to the
-	// end date.
+	// or equal to the end date.
 	StartDate *Date `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
@@ -279,51 +267,24 @@ func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
-// Mediation report where the first
-// response contains the report header, then a stream of row responses,
-// and
-// finally a footer as the last response message.
-//
-// For example:
-//
-//     [{
-//       "header": {
-//         "date_range": {
-//           "start_date": {"year": 2018, "month": 9, "day": 1},
-//           "end_date": {"year": 2018, "month": 9, "day": 1}
-//         },
-//         "localization_settings": {
-//           "currency_code": "USD",
-//           "language_code": "en-US"
-//         }
-//       }
-//     },
-//     {
-//       "row": {
-//         "dimension_values": {
-//           "DATE": {"value": "20180918"},
-//           "APP": {
-//             "value": "ca-app-pub-8123415297019784~1001342552",
-//              "display_label": "My app name!"
-//           }
-//         },
-//         "metric_values": {
-//           "ESTIMATED_EARNINGS": {"decimal_value": "1324746"}
-//         }
-//       }
-//     },
-//     {
-//       "footer": {"matching_row_count": 1}
-//     }]
+// Mediation report where the first response contains the report header,
+// then a stream of row responses, and finally a footer as the last
+// response message. For example: [{ "header": { "date_range": {
+// "start_date": {"year": 2018, "month": 9, "day": 1}, "end_date":
+// {"year": 2018, "month": 9, "day": 1} }, "localization_settings": {
+// "currency_code": "USD", "language_code": "en-US" } } }, { "row": {
+// "dimension_values": { "DATE": {"value": "20180918"}, "APP": {
+// "value": "ca-app-pub-8123415297019784~1001342552", "display_label":
+// "My app name!" } }, "metric_values": { "ESTIMATED_EARNINGS":
+// {"decimal_value": "1324746"} } } }, { "footer":
+// {"matching_row_count": 1} }]
 type GenerateMediationReportResponse struct {
 	// Footer: Additional information about the generated report, such as
-	// warnings about
-	// the data.
+	// warnings about the data.
 	Footer *ReportFooter `json:"footer,omitempty"`
 
 	// Header: Report generation settings that describes the report
-	// contents, such as
-	// the report date range and localization settings.
+	// contents, such as the report date range and localization settings.
 	Header *ReportHeader `json:"header,omitempty"`
 
 	// Row: Actual report data.
@@ -386,51 +347,23 @@ func (s *GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateNetworkReportResponse: The streaming response for the AdMob
-// Network report where the first response
-// contains the report header, then a stream of row responses, and
-// finally a
-// footer as the last response message.
-//
-// For example:
-//
-//     [{
-//       "header": {
-//         "dateRange": {
-//           "startDate": {"year": 2018, "month": 9, "day": 1},
-//           "endDate": {"year": 2018, "month": 9, "day": 1}
-//         },
-//         "localizationSettings": {
-//           "currencyCode": "USD",
-//           "languageCode": "en-US"
-//         }
-//       }
-//     },
-//     {
-//       "row": {
-//         "dimensionValues": {
-//           "DATE": {"value": "20180918"},
-//           "APP": {
-//             "value": "ca-app-pub-8123415297019784~1001342552",
-//              displayLabel: "My app name!"
-//           }
-//         },
-//         "metricValues": {
-//           "ESTIMATED_EARNINGS": {"microsValue": 6500000}
-//         }
-//       }
-//     },
-//     {
-//       "footer": {"matchingRowCount": 1}
-//     }]
+// Network report where the first response contains the report header,
+// then a stream of row responses, and finally a footer as the last
+// response message. For example: [{ "header": { "dateRange": {
+// "startDate": {"year": 2018, "month": 9, "day": 1}, "endDate":
+// {"year": 2018, "month": 9, "day": 1} }, "localizationSettings": {
+// "currencyCode": "USD", "languageCode": "en-US" } } }, { "row": {
+// "dimensionValues": { "DATE": {"value": "20180918"}, "APP": { "value":
+// "ca-app-pub-8123415297019784~1001342552", displayLabel: "My app
+// name!" } }, "metricValues": { "ESTIMATED_EARNINGS": {"microsValue":
+// 6500000} } } }, { "footer": {"matchingRowCount": 1} }]
 type GenerateNetworkReportResponse struct {
 	// Footer: Additional information about the generated report, such as
-	// warnings about
-	// the data.
+	// warnings about the data.
 	Footer *ReportFooter `json:"footer,omitempty"`
 
 	// Header: Report generation settings that describes the report
-	// contents, such as
-	// the report date range and localization settings.
+	// contents, such as the report date range and localization settings.
 	Header *ReportHeader `json:"header,omitempty"`
 
 	// Row: Actual report data.
@@ -470,8 +403,8 @@ type ListPublisherAccountsResponse struct {
 	Account []*PublisherAccount `json:"account,omitempty"`
 
 	// NextPageToken: If not empty, indicates that there might be more
-	// accounts for the request;
-	// you must pass this value in a new `ListPublisherAccountsRequest`.
+	// accounts for the request; you must pass this value in a new
+	// `ListPublisherAccountsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -502,21 +435,17 @@ func (s *ListPublisherAccountsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LocalizationSettings: Localization settings for reports, such as
-// currency and language. It affects
-// how metrics are calculated.
+// currency and language. It affects how metrics are calculated.
 type LocalizationSettings struct {
 	// CurrencyCode: Currency code of the earning related metrics, which is
-	// the 3-letter code
-	// defined in ISO 4217. The daily average rate is used for the
-	// currency
-	// conversion. Defaults to the account currency code if unspecified.
+	// the 3-letter code defined in ISO 4217. The daily average rate is used
+	// for the currency conversion. Defaults to the account currency code if
+	// unspecified.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// LanguageCode: Language used for any localized text, such as some
-	// dimension value display
-	// labels. The language tag defined in the IETF BCP47. Defaults to
-	// 'en-US' if
-	// unspecified.
+	// dimension value display labels. The language tag defined in the IETF
+	// BCP47. Defaults to 'en-US' if unspecified.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
@@ -543,45 +472,20 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 }
 
 // MediationReportSpec: The specification for generating an AdMob
-// Mediation report.
-// For example, the specification to get observed ECPM sliced by ad
-// source and
-// app for the 'US' and 'CN' countries can look like the following
-// example:
-//
-//     {
-//       "date_range": {
-//         "start_date": {"year": 2018, "month": 9, "day": 1},
-//         "end_date": {"year": 2018, "month": 9, "day": 30}
-//       },
-//       "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
-//       "metrics": ["OBSERVED_ECPM"],
-//       "dimension_filters": [
-//         {
-//           "dimension": "COUNTRY",
-//           "matches_any": {"values": [{"value": "US", "value":
-// "CN"}]}
-//         }
-//       ],
-//       "sort_conditions": [
-//         {"dimension":"APP", order: "ASCENDING"}
-//       ],
-//       "localization_settings": {
-//         "currency_code": "USD",
-//         "language_code": "en-US"
-//       }
-//     }
-//
-// For a better understanding, you can treat the preceding specification
-// like
-// the following pseudo SQL:
-//
-//     SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM
-//     FROM MEDIATION_REPORT
-//     WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30'
-//         AND COUNTRY IN ('US', 'CN')
-//     GROUP BY AD_SOURCE, APP, COUNTRY
-//     ORDER BY APP ASC;
+// Mediation report. For example, the specification to get observed ECPM
+// sliced by ad source and app for the 'US' and 'CN' countries can look
+// like the following example: { "date_range": { "start_date": {"year":
+// 2018, "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9,
+// "day": 30} }, "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
+// "metrics": ["OBSERVED_ECPM"], "dimension_filters": [ { "dimension":
+// "COUNTRY", "matches_any": {"values": [{"value": "US", "value":
+// "CN"}]} } ], "sort_conditions": [ {"dimension":"APP", order:
+// "ASCENDING"} ], "localization_settings": { "currency_code": "USD",
+// "language_code": "en-US" } } For a better understanding, you can
+// treat the preceding specification like the following pseudo SQL:
+// SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT
+// WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN
+// ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
 type MediationReportSpec struct {
 	// DateRange: The date range for which the report is generated.
 	DateRange *DateRange `json:"dateRange,omitempty"`
@@ -591,62 +495,38 @@ type MediationReportSpec struct {
 	DimensionFilters []*MediationReportSpecDimensionFilter `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: List of dimensions of the report. The value combination
-	// of these dimensions
-	// determines the row of the report. If no dimensions are specified,
-	// the
-	// report returns a single row of requested metrics for the entire
-	// account.
+	// of these dimensions determines the row of the report. If no
+	// dimensions are specified, the report returns a single row of
+	// requested metrics for the entire account.
 	//
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and
-	// "AdMob Network" as label value).
+	// "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example,
-	// "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example,
-	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimensions []string `json:"dimensions,omitempty"`
@@ -655,10 +535,9 @@ type MediationReportSpec struct {
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
-	// value is not set, the
-	// API returns as many rows as possible, up to 100000. Acceptable values
-	// are
-	// 1-100000, inclusive. Any other values are treated as 100000.
+	// value is not set, the API returns as many rows as possible, up to
+	// 100000. Acceptable values are 1-100000, inclusive. Any other values
+	// are treated as 100000.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -671,62 +550,42 @@ type MediationReportSpec struct {
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
 	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD,
-	// EUR, or other) of the earning metrics are determined by the
-	// localization
-	// setting for currency. The amount is in micros. For example, $6.50
-	// would
-	// be represented as 6500000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
-	// [AD_SOURCE_INSTANCE](#Dimension.ENUM_VALUES.AD_SOURCE_INSTANCE)
-	// and
-	// [MEDIATION_GROUP](#Dimension.ENUM_VALUES.MEDIATION_GROUP) dimensions.
+	// publisher. The currency unit (USD, EUR, or other) of the earning
+	// metrics are determined by the localization setting for currency. The
+	// amount is in micros. For example, $6.50 would be represented as
+	// 6500000. Estimated earnings per mediation group and per ad source
+	// instance level is supported dating back to October 20, 2019.
+	// Third-party estimated earnings will show 0 for dates prior to October
+	// 20, 2019.
 	//   "IMPRESSIONS" - The total number of ads shown to users. The value
 	// is an integer.
 	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision
-	// (approximate) decimal value.
+	// is a double precision (approximate) decimal value.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value
-	// is an integer.
+	// response to a request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is
-	// a double precision (approximate) decimal value.
+	// requests. The value is a double precision (approximate) decimal
+	// value.
 	//   "OBSERVED_ECPM" - The third-party ad network's estimated average
-	// eCPM. The currency unit
-	// (USD, EUR, or other) of the earning metrics are determined by
-	// the
-	// localization setting for currency. The amount is in micros. For
-	// example,
-	// $2.30 would be represented as 2300000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
-	// [AD_SOURCE_INSTANCE](#Dimension.ENUM_VALUES.AD_SOURCE_INSTANCE)
-	// and
-	// [MEDIATION_GROUP](#Dimension.ENUM_VALUES.MEDIATION_GROUP) dimensions.
+	// eCPM. The currency unit (USD, EUR, or other) of the earning metrics
+	// are determined by the localization setting for currency. The amount
+	// is in micros. For example, $2.30 would be represented as 2300000. The
+	// estimated average eCPM per mediation group and per ad source instance
+	// level is supported dating back to October 20, 2019. Third-party
+	// estimated average eCPM will show 0 for dates prior to October 20,
+	// 2019.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// SortConditions: Describes the sorting of report rows. The order of
-	// the condition in the
-	// list defines its precedence; the earlier the condition, the higher
-	// its
-	// precedence. If no sort conditions are specified, the row ordering
-	// is
-	// undefined.
+	// the condition in the list defines its precedence; the earlier the
+	// condition, the higher its precedence. If no sort conditions are
+	// specified, the row ordering is undefined.
 	SortConditions []*MediationReportSpecSortCondition `json:"sortConditions,omitempty"`
 
-	// TimeZone: A report time zone. Accepts an IANA TZ name values, such
-	// as
-	// "America/Los_Angeles."  If no time zone is defined, the account
-	// default
-	// takes effect. Check default value by the get account
-	// action.
-	//
-	// **Warning:** The "America/Los_Angeles" is the only supported value
-	// at
+	// TimeZone: A report time zone. Accepts an IANA TZ name values, such as
+	// "America/Los_Angeles." If no time zone is defined, the account
+	// default takes effect. Check default value by the get account action.
+	// **Warning:** The "America/Los_Angeles" is the only supported value at
 	// the moment.
 	TimeZone string `json:"timeZone,omitempty"`
 
@@ -762,59 +621,36 @@ type MediationReportSpecDimensionFilter struct {
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and
-	// "AdMob Network" as label value).
+	// "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example,
-	// "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example,
-	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
-	// in one of the
-	// values specified in this condition.
+	// in one of the values specified in this condition.
 	MatchesAny *StringList `json:"matchesAny,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
@@ -849,52 +685,30 @@ type MediationReportSpecSortCondition struct {
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and
-	// "AdMob Network" as label value).
+	// "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example,
-	// "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example,
-	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
 	// value).
-	//
-	// **Warning:** The dimension is incompatible
-	// with
-	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
-	// and
-	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimension string `json:"dimension,omitempty"`
@@ -908,42 +722,30 @@ type MediationReportSpecSortCondition struct {
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
 	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD,
-	// EUR, or other) of the earning metrics are determined by the
-	// localization
-	// setting for currency. The amount is in micros. For example, $6.50
-	// would
-	// be represented as 6500000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
-	// [AD_SOURCE_INSTANCE](#Dimension.ENUM_VALUES.AD_SOURCE_INSTANCE)
-	// and
-	// [MEDIATION_GROUP](#Dimension.ENUM_VALUES.MEDIATION_GROUP) dimensions.
+	// publisher. The currency unit (USD, EUR, or other) of the earning
+	// metrics are determined by the localization setting for currency. The
+	// amount is in micros. For example, $6.50 would be represented as
+	// 6500000. Estimated earnings per mediation group and per ad source
+	// instance level is supported dating back to October 20, 2019.
+	// Third-party estimated earnings will show 0 for dates prior to October
+	// 20, 2019.
 	//   "IMPRESSIONS" - The total number of ads shown to users. The value
 	// is an integer.
 	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision
-	// (approximate) decimal value.
+	// is a double precision (approximate) decimal value.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value
-	// is an integer.
+	// response to a request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is
-	// a double precision (approximate) decimal value.
+	// requests. The value is a double precision (approximate) decimal
+	// value.
 	//   "OBSERVED_ECPM" - The third-party ad network's estimated average
-	// eCPM. The currency unit
-	// (USD, EUR, or other) of the earning metrics are determined by
-	// the
-	// localization setting for currency. The amount is in micros. For
-	// example,
-	// $2.30 would be represented as 2300000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
-	// [AD_SOURCE_INSTANCE](#Dimension.ENUM_VALUES.AD_SOURCE_INSTANCE)
-	// and
-	// [MEDIATION_GROUP](#Dimension.ENUM_VALUES.MEDIATION_GROUP) dimensions.
+	// eCPM. The currency unit (USD, EUR, or other) of the earning metrics
+	// are determined by the localization setting for currency. The amount
+	// is in micros. For example, $2.30 would be represented as 2300000. The
+	// estimated average eCPM per mediation group and per ad source instance
+	// level is supported dating back to October 20, 2019. Third-party
+	// estimated average eCPM will show 0 for dates prior to October 20,
+	// 2019.
 	Metric string `json:"metric,omitempty"`
 
 	// Order: Sorting order of the dimension or metric.
@@ -981,45 +783,21 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkReportSpec: The specification for generating an AdMob Network
-// report.
-// For example, the specification to get clicks and estimated earnings
-// for only
-// the 'US' and 'CN' countries can look like the following example:
-//
-//     {
-//       'date_range': {
-//         'start_date': {'year': 2018, 'month': 9, 'day': 1},
-//         'end_date': {'year': 2018, 'month': 9, 'day': 30}
-//       },
-//       'dimensions': ['DATE', 'APP', 'COUNTRY'],
-//       'metrics': ['CLICKS', 'ESTIMATED_EARNINGS'],
-//       'dimension_filters': [
-//         {
-//           'dimension': 'COUNTRY',
-//           'matches_any': {'values': [{'value': 'US', 'value':
-// 'CN'}]}
-//         }
-//       ],
-//       'sort_conditions': [
-//         {'dimension':'APP', order: 'ASCENDING'},
-//         {'metric':'CLICKS', order: 'DESCENDING'}
-//       ],
-//       'localization_settings': {
-//         'currency_code': 'USD',
-//         'language_code': 'en-US'
-//       }
-//     }
-//
-// For a better understanding, you can treat the preceding specification
-// like
-// the following pseudo SQL:
-//
-//     SELECT DATE, APP, COUNTRY, CLICKS, ESTIMATED_EARNINGS
-//     FROM NETWORK_REPORT
-//     WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30'
-//         AND COUNTRY IN ('US', 'CN')
-//     GROUP BY DATE, APP, COUNTRY
-//     ORDER BY APP ASC, CLICKS DESC;
+// report. For example, the specification to get clicks and estimated
+// earnings for only the 'US' and 'CN' countries can look like the
+// following example: { 'date_range': { 'start_date': {'year': 2018,
+// 'month': 9, 'day': 1}, 'end_date': {'year': 2018, 'month': 9, 'day':
+// 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics':
+// ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ {
+// 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US',
+// 'value': 'CN'}]} } ], 'sort_conditions': [ {'dimension':'APP', order:
+// 'ASCENDING'}, {'metric':'CLICKS', order: 'DESCENDING'} ],
+// 'localization_settings': { 'currency_code': 'USD', 'language_code':
+// 'en-US' } } For a better understanding, you can treat the preceding
+// specification like the following pseudo SQL: SELECT DATE, APP,
+// COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE >=
+// '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN ('US', 'CN')
+// GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
 type NetworkReportSpec struct {
 	// DateRange: The date range for which the report is generated.
 	DateRange *DateRange `json:"dateRange,omitempty"`
@@ -1029,50 +807,35 @@ type NetworkReportSpec struct {
 	DimensionFilters []*NetworkReportSpecDimensionFilter `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: List of dimensions of the report. The value combination
-	// of these dimensions
-	// determines the row of the report. If no dimensions are specified,
-	// the
-	// report returns a single row of requested metrics for the entire
-	// account.
+	// of these dimensions determines the row of the report. If no
+	// dimensions are specified, the report returns a single row of
+	// requested metrics for the entire account.
 	//
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
-	// delivery
-	// dimension.
-	//
-	// **Warning:** The dimension is incompatible
-	// with
+	// delivery dimension. **Warning:** The dimension is incompatible with
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
-	// [MATCH_RATE](#Met
-	// ric.ENUM_VALUES.MATCH_RATE)
-	// and
+	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimensions []string `json:"dimensions,omitempty"`
@@ -1081,10 +844,9 @@ type NetworkReportSpec struct {
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
-	// value is not set, the
-	// API returns as many rows as possible, up to 100000. Acceptable values
-	// are
-	// 1-100000, inclusive. Any other values are treated as 100000.
+	// value is not set, the API returns as many rows as possible, up to
+	// 100000. Acceptable values are 1-100000, inclusive. Any other values
+	// are treated as 100000.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -1093,69 +855,45 @@ type NetworkReportSpec struct {
 	// Possible values:
 	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "AD_REQUESTS" - The number of ad requests. The value is an
-	// integer.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	//   "AD_REQUESTS" - The number of ad requests. The value is an integer.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
 	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD,
-	// EUR, or other) of the earning metrics are determined by the
-	// localization
-	// setting for currency. The amount is in micros. For example, $6.50
-	// would
-	// be represented as 6500000.
+	// publisher. The currency unit (USD, EUR, or other) of the earning
+	// metrics are determined by the localization setting for currency. The
+	// amount is in micros. For example, $6.50 would be represented as
+	// 6500000.
 	//   "IMPRESSIONS" - The total number of ads shown to users. The value
 	// is an integer.
 	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision
-	// (approximate) decimal value.
+	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
-	// impressions. The value is in
-	// micros. For example, $1.03 would be represented as
-	// 1030000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	// impressions. The value is in micros. For example, $1.03 would be
+	// represented as 1030000. **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value
-	// is an integer.
+	// response to a request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is
-	// a double precision (approximate) decimal value.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	// requests. The value is a double precision (approximate) decimal
+	// value. **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "SHOW_RATE" - The ratio of ads that are displayed over ads that are
-	// returned, defined
-	// as impressions / matched requests. The value is a double
-	// precision
-	// (approximate) decimal value.
+	// returned, defined as impressions / matched requests. The value is a
+	// double precision (approximate) decimal value.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// SortConditions: Describes the sorting of report rows. The order of
-	// the condition in the
-	// list defines its precedence; the earlier the condition, the higher
-	// its
-	// precedence. If no sort conditions are specified, the row ordering
-	// is
-	// undefined.
+	// the condition in the list defines its precedence; the earlier the
+	// condition, the higher its precedence. If no sort conditions are
+	// specified, the row ordering is undefined.
 	SortConditions []*NetworkReportSpecSortCondition `json:"sortConditions,omitempty"`
 
-	// TimeZone: A report time zone. Accepts an IANA TZ name values, such
-	// as
-	// "America/Los_Angeles."  If no time zone is defined, the account
-	// default
-	// takes effect. Check default value by the get account
-	// action.
-	//
-	// **Warning:** The "America/Los_Angeles" is the only supported value
-	// at
+	// TimeZone: A report time zone. Accepts an IANA TZ name values, such as
+	// "America/Los_Angeles." If no time zone is defined, the account
+	// default takes effect. Check default value by the get account action.
+	// **Warning:** The "America/Los_Angeles" is the only supported value at
 	// the moment.
 	TimeZone string `json:"timeZone,omitempty"`
 
@@ -1191,47 +929,33 @@ type NetworkReportSpecDimensionFilter struct {
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
-	// delivery
-	// dimension.
-	//
-	// **Warning:** The dimension is incompatible
-	// with
+	// delivery dimension. **Warning:** The dimension is incompatible with
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
-	// [MATCH_RATE](#Met
-	// ric.ENUM_VALUES.MATCH_RATE)
-	// and
+	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
-	// in one of the
-	// values specified in this condition.
+	// in one of the values specified in this condition.
 	MatchesAny *StringList `json:"matchesAny,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
@@ -1266,40 +990,27 @@ type NetworkReportSpecSortCondition struct {
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
 	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can
-	// specify at most one time dimension.
+	// "2018-12-21"). Requests can specify at most one time dimension.
 	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
-	// Requests can
-	// specify at most one time dimension.
+	// Requests can specify at most one time dimension.
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format
-	// (for example, "2018-12-21"). Requests can specify at most one
-	// time
-	// dimension.
+	// format (for example, "2018-12-21"). Requests can specify at most one
+	// time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234").
-	// If AD_UNIT dimension is specified, then APP is included
-	// automatically.
-	//   "APP" - The unique ID of the mobile application (for
-	// example,
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
+	// is included automatically.
+	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
-	// delivery
-	// dimension.
-	//
-	// **Warning:** The dimension is incompatible
-	// with
+	// delivery dimension. **Warning:** The dimension is incompatible with
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
-	// [MATCH_RATE](#Met
-	// ric.ENUM_VALUES.MATCH_RATE)
-	// and
+	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
 	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for
-	// example, "US" or "FR"). This is a geography dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery
+	// views/clicks occur (for example, "US" or "FR"). This is a geography
 	// dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
+	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
 	Dimension string `json:"dimension,omitempty"`
@@ -1309,49 +1020,33 @@ type NetworkReportSpecSortCondition struct {
 	// Possible values:
 	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "AD_REQUESTS" - The number of ad requests. The value is an
-	// integer.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	//   "AD_REQUESTS" - The number of ad requests. The value is an integer.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
 	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD,
-	// EUR, or other) of the earning metrics are determined by the
-	// localization
-	// setting for currency. The amount is in micros. For example, $6.50
-	// would
-	// be represented as 6500000.
+	// publisher. The currency unit (USD, EUR, or other) of the earning
+	// metrics are determined by the localization setting for currency. The
+	// amount is in micros. For example, $6.50 would be represented as
+	// 6500000.
 	//   "IMPRESSIONS" - The total number of ads shown to users. The value
 	// is an integer.
 	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision
-	// (approximate) decimal value.
+	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
-	// impressions. The value is in
-	// micros. For example, $1.03 would be represented as
-	// 1030000.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	// impressions. The value is in micros. For example, $1.03 would be
+	// represented as 1030000. **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value
-	// is an integer.
+	// response to a request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is
-	// a double precision (approximate) decimal value.
-	//
-	// **Warning:** The metric is incompatible
-	// with
+	// requests. The value is a double precision (approximate) decimal
+	// value. **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "SHOW_RATE" - The ratio of ads that are displayed over ads that are
-	// returned, defined
-	// as impressions / matched requests. The value is a double
-	// precision
-	// (approximate) decimal value.
+	// returned, defined as impressions / matched requests. The value is a
+	// double precision (approximate) decimal value.
 	Metric string `json:"metric,omitempty"`
 
 	// Order: Sorting order of the dimension or metric.
@@ -1389,29 +1084,24 @@ func (s *NetworkReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 }
 
 // PublisherAccount: A publisher account contains information relevant
-// to the use of this API,
-// such as the time zone used for the reports.
+// to the use of this API, such as the time zone used for the reports.
 type PublisherAccount struct {
 	// CurrencyCode: Currency code of the earning-related metrics, which is
-	// the 3-letter code
-	// defined in ISO 4217. The daily average rate is used for the
-	// currency
-	// conversion.
+	// the 3-letter code defined in ISO 4217. The daily average rate is used
+	// for the currency conversion.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Name: Resource name of this account.
-	// Format is accounts/{publisher_id}.
+	// Name: Resource name of this account. Format is
+	// accounts/{publisher_id}.
 	Name string `json:"name,omitempty"`
 
 	// PublisherId: The unique ID by which this publisher account can be
-	// identified
-	// in the API requests (for example, pub-1234567890).
+	// identified in the API requests (for example, pub-1234567890).
 	PublisherId string `json:"publisherId,omitempty"`
 
 	// ReportingTimeZone: The time zone that is used in reports that are
-	// generated for this account.
-	// The value is a time-zone ID as specified by the CLDR project,
-	// for example, "America/Los_Angeles".
+	// generated for this account. The value is a time-zone ID as specified
+	// by the CLDR project, for example, "America/Los_Angeles".
 	ReportingTimeZone string `json:"reportingTimeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1442,14 +1132,11 @@ func (s *PublisherAccount) MarshalJSON() ([]byte, error) {
 }
 
 // ReportFooter: Groups data available after report generation, for
-// example, warnings and row
-// counts. Always sent as the last message in the stream response.
+// example, warnings and row counts. Always sent as the last message in
+// the stream response.
 type ReportFooter struct {
-	// MatchingRowCount: Total number of rows that matched the
-	// request.
-	//
-	// Warning: This count does NOT always match the number of rows in
-	// the
+	// MatchingRowCount: Total number of rows that matched the request.
+	// Warning: This count does NOT always match the number of rows in the
 	// response. Do not make that assumption when processing the response.
 	MatchingRowCount int64 `json:"matchingRowCount,omitempty,string"`
 
@@ -1481,22 +1168,18 @@ func (s *ReportFooter) MarshalJSON() ([]byte, error) {
 }
 
 // ReportHeader: Groups data helps to treat the generated report. Always
-// sent as a first
-// message in the stream response.
+// sent as a first message in the stream response.
 type ReportHeader struct {
 	// DateRange: The date range for which the report is generated. This is
-	// identical to the
-	// range specified in the report request.
+	// identical to the range specified in the report request.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report. This is
-	// identical to the settings
-	// in the report request.
+	// identical to the settings in the report request.
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
 
 	// ReportingTimeZone: The report time zone. The value is a time-zone ID
-	// as specified by the CLDR
-	// project, for example, "America/Los_Angeles".
+	// as specified by the CLDR project, for example, "America/Los_Angeles".
 	ReportingTimeZone string `json:"reportingTimeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
@@ -1529,10 +1212,8 @@ type ReportRow struct {
 	DimensionValues map[string]ReportRowDimensionValue `json:"dimensionValues,omitempty"`
 
 	// MetricValues: Map of metric values in a row, with keys as enum name
-	// of the metrics. If
-	// a metric being requested has no value returned, the map will not
-	// include
-	// it.
+	// of the metrics. If a metric being requested has no value returned,
+	// the map will not include it.
 	MetricValues map[string]ReportRowMetricValue `json:"metricValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
@@ -1562,13 +1243,11 @@ func (s *ReportRow) MarshalJSON() ([]byte, error) {
 // ReportRowDimensionValue: Representation of a dimension value.
 type ReportRowDimensionValue struct {
 	// DisplayLabel: The localized string representation of the value. If
-	// unspecified, the
-	// display label should be derived from the value.
+	// unspecified, the display label should be derived from the value.
 	DisplayLabel string `json:"displayLabel,omitempty"`
 
 	// Value: Dimension value in the format specified in the report's spec
-	// Dimension
-	// enum.
+	// Dimension enum.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayLabel") to
@@ -1604,9 +1283,8 @@ type ReportRowMetricValue struct {
 	IntegerValue int64 `json:"integerValue,omitempty,string"`
 
 	// MicrosValue: Amount in micros. One million is equivalent to one unit.
-	// Currency value
-	// is in the unit (USD, EUR or other) specified by the request.
-	// For example, $6.50 whould be represented as 6500000 micros.
+	// Currency value is in the unit (USD, EUR or other) specified by the
+	// request. For example, $6.50 whould be represented as 6500000 micros.
 	MicrosValue int64 `json:"microsValue,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
@@ -1657,31 +1335,20 @@ type ReportWarning struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "DATA_BEFORE_ACCOUNT_TIMEZONE_CHANGE" - Some data in this report is
-	// aggregated based on a time zone different
-	// from the requested time zone. This could happen if a local
-	// time-zone
-	// report has the start time before the last time this time zone
-	// changed.
-	// The description field will contain the date of the last time
-	// zone
-	// change.
+	// aggregated based on a time zone different from the requested time
+	// zone. This could happen if a local time-zone report has the start
+	// time before the last time this time zone changed. The description
+	// field will contain the date of the last time zone change.
 	//   "DATA_DELAYED" - There is an unusual delay in processing the source
-	// data for the
-	// requested date range. The report results might be less up to date
-	// than
-	// usual. AdMob is aware of the issue and is actively working to
-	// resolve
-	// it.
+	// data for the requested date range. The report results might be less
+	// up to date than usual. AdMob is aware of the issue and is actively
+	// working to resolve it.
 	//   "OTHER" - Warnings that are exposed without a specific type. Useful
-	// when new
-	// warning types are added but the API is not changed yet.
+	// when new warning types are added but the API is not changed yet.
 	//   "REPORT_CURRENCY_NOT_ACCOUNT_CURRENCY" - The currency being
-	// requested is not the account currency. The earning
-	// metrics will be based on the requested currency, and thus not a
-	// good
-	// estimation of the final payment anymore, due to the currency
-	// rate
-	// fluctuation.
+	// requested is not the account currency. The earning metrics will be
+	// based on the requested currency, and thus not a good estimation of
+	// the final payment anymore, due to the currency rate fluctuation.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1790,7 +1457,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1861,7 +1528,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the publisher account to retrieve.\nExample: accounts/pub-9876543210987654",
+	//       "description": "Resource name of the publisher account to retrieve. Example: accounts/pub-9876543210987654",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -1887,8 +1554,8 @@ type AccountsListCall struct {
 }
 
 // List: Lists the AdMob publisher account accessible with the client
-// credential.
-// Currently, all credentials have access to at most one AdMob account.
+// credential. Currently, all credentials have access to at most one
+// AdMob account.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1902,10 +1569,9 @@ func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListPublisherAccountsResponse`; indicates
-// that this is a continuation of a prior `ListPublisherAccounts` call,
-// and
-// that the system should return the next page of data.
+// by the last `ListPublisherAccountsResponse`; indicates that this is a
+// continuation of a prior `ListPublisherAccounts` call, and that the
+// system should return the next page of data.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1948,7 +1614,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2007,7 +1673,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the AdMob publisher account accessible with the client credential.\nCurrently, all credentials have access to at most one AdMob account.",
+	//   "description": "Lists the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
 	//   "flatPath": "v1/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "admob.accounts.list",
@@ -2020,7 +1686,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListPublisherAccountsResponse`; indicates\nthat this is a continuation of a prior `ListPublisherAccounts` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListPublisherAccountsResponse`; indicates that this is a continuation of a prior `ListPublisherAccounts` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2066,8 +1732,7 @@ type AccountsMediationReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Mediation report based on the provided
-// report
-// specification.
+// report specification.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2102,7 +1767,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2166,7 +1831,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Mediation report based on the provided report\nspecification.",
+	//   "description": "Generates an AdMob Mediation report based on the provided report specification.",
 	//   "flatPath": "v1/accounts/{accountsId}/mediationReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.mediationReport.generate",
@@ -2175,7 +1840,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Resource name of the account to generate the report for.\nExample: accounts/pub-9876543210987654",
+	//       "description": "Resource name of the account to generate the report for. Example: accounts/pub-9876543210987654",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -2205,8 +1870,7 @@ type AccountsNetworkReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Network report based on the provided
-// report
-// specification.
+// report specification.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2241,7 +1905,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2305,7 +1969,7 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Network report based on the provided report\nspecification.",
+	//   "description": "Generates an AdMob Network report based on the provided report specification.",
 	//   "flatPath": "v1/accounts/{accountsId}/networkReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.networkReport.generate",
@@ -2314,7 +1978,7 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Resource name of the account to generate the report for.\nExample: accounts/pub-9876543210987654",
+	//       "description": "Resource name of the account to generate the report for. Example: accounts/pub-9876543210987654",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,

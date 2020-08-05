@@ -196,44 +196,28 @@ type BuyersUserListsService struct {
 // AdTechnologyProviders: Detected ad technology provider information.
 type AdTechnologyProviders struct {
 	// DetectedProviderIds: The detected ad technology provider IDs for this
-	// creative.
-	// See https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv
-	// for
+	// creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv for
 	// mapping of provider ID to provided name, a privacy policy URL, and a
-	// list
-	// of domains which can be attributed to the provider.
-	//
-	// If the creative contains provider IDs that are outside of those
-	// listed in
+	// list of domains which can be attributed to the provider. If the
+	// creative contains provider IDs that are outside of those listed in
 	// the
 	// `BidRequest.adslot.consented_providers_settings.consented_providers`
-	// f
-	// ield on the [Google
-	// bid
-	// protocol](https://developers.google.com/authorized-buyers/rtb/down
-	// loads/realtime-bidding-proto)
-	// and
-	// the
-	// `BidRequest.user.ext.consented_providers_settings.consented_provid
-	// ers`
-	// field on the
-	// [OpenRTB
-	// protocol](https://developers.google.com/authorized-buyers/rtb
-	// /downloads/openrtb-adx-proto),
-	// and a bid is submitted with that creative for an impression
-	// that will serve to an EEA user, the bid will be filtered before
-	// the
-	// auction.
+	// field on the [Google bid
+	// protocol](https://developers.google.com/authorized-buyers/rtb/download
+	// s/realtime-bidding-proto) and the
+	// `BidRequest.user.ext.consented_providers_settings.consented_providers`
+	//  field on the [OpenRTB
+	// protocol](https://developers.google.com/authorized-buyers/rtb/download
+	// s/openrtb-adx-proto), and a bid is submitted with that creative for
+	// an impression that will serve to an EEA user, the bid will be
+	// filtered before the auction.
 	DetectedProviderIds googleapi.Int64s `json:"detectedProviderIds,omitempty"`
 
 	// HasUnidentifiedProvider: Whether the creative contains an
-	// unidentified ad technology provider.
-	//
-	// If true for a given creative, any bid submitted with that creative
-	// for an
-	// impression that will serve to an EEA user will be filtered before
-	// the
-	// auction.
+	// unidentified ad technology provider. If true for a given creative,
+	// any bid submitted with that creative for an impression that will
+	// serve to an EEA user will be filtered before the auction.
 	HasUnidentifiedProvider bool `json:"hasUnidentifiedProvider,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DetectedProviderIds")
@@ -264,32 +248,22 @@ func (s *AdTechnologyProviders) MarshalJSON() ([]byte, error) {
 type AdvertiserAndBrand struct {
 	// AdvertiserId: See
 	// https://storage.googleapis.com/adx-rtb-dictionaries/advertisers.txt
-	// fo
-	// r the list of possible values.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// for the list of possible values. Can be used to filter the response
+	// of the creatives.list method.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// AdvertiserName: Advertiser name.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// AdvertiserName: Advertiser name. Can be used to filter the response
+	// of the creatives.list method.
 	AdvertiserName string `json:"advertiserName,omitempty"`
 
-	// BrandId: Detected brand ID or zero if no brand has been detected.
-	// See https://storage.googleapis.com/adx-rtb-dictionaries/brands.txt
-	// for
-	// the list of possible values.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// BrandId: Detected brand ID or zero if no brand has been detected. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/brands.txt for
+	// the list of possible values. Can be used to filter the response of
+	// the creatives.list method.
 	BrandId int64 `json:"brandId,omitempty,string"`
 
-	// BrandName: Brand name.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// BrandName: Brand name. Can be used to filter the response of the
+	// creatives.list method.
 	BrandName string `json:"brandName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -322,21 +296,16 @@ type CloseUserListRequest struct {
 // Creative: A creative and its classification data.
 type Creative struct {
 	// AccountId: Output only. ID of the buyer account that this creative is
-	// owned by.
-	// Can be used to filter the response of the
-	// creatives.list
+	// owned by. Can be used to filter the response of the creatives.list
 	// method with equality and inequality check.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
 	// AdChoicesDestinationUrl: The link to AdChoices destination page. This
-	// is only supported for native
-	// ads.
+	// is only supported for native ads.
 	AdChoicesDestinationUrl string `json:"adChoicesDestinationUrl,omitempty"`
 
 	// AdvertiserName: The name of the company being advertised in the
-	// creative.
-	// Can be used to filter the response of the
-	// creatives.list
+	// creative. Can be used to filter the response of the creatives.list
 	// method.
 	AdvertiserName string `json:"advertiserName,omitempty"`
 
@@ -347,10 +316,8 @@ type Creative struct {
 	// via API.
 	ApiUpdateTime string `json:"apiUpdateTime,omitempty"`
 
-	// CreativeFormat: Output only. The format of this creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// CreativeFormat: Output only. The format of this creative. Can be used
+	// to filter the response of the creatives.list method.
 	//
 	// Possible values:
 	//   "CREATIVE_FORMAT_UNSPECIFIED" - The format is unknown.
@@ -360,45 +327,29 @@ type Creative struct {
 	CreativeFormat string `json:"creativeFormat,omitempty"`
 
 	// CreativeId: Buyer-specific creative ID that references this creative
-	// in bid responses.
-	// This field is Ignored in update operations. Can be used to filter
-	// the
-	// response of the
-	// creatives.list
-	// method.
-	// The maximum length of the creative ID is 128 bytes.
+	// in bid responses. This field is Ignored in update operations. Can be
+	// used to filter the response of the creatives.list method. The maximum
+	// length of the creative ID is 128 bytes.
 	CreativeId string `json:"creativeId,omitempty"`
 
 	// CreativeServingDecision: Output only. Top level status and detected
-	// attributes of a creative (for example domain,
-	// language, advertiser, product category, etc.) that affect whether
-	// (status)
-	// and where (context) a creative will be allowed to serve.
+	// attributes of a creative (for example domain, language, advertiser,
+	// product category, etc.) that affect whether (status) and where
+	// (context) a creative will be allowed to serve.
 	CreativeServingDecision *CreativeServingDecision `json:"creativeServingDecision,omitempty"`
 
 	// DealIds: Output only. IDs of all of the deals with which this
-	// creative has been used
-	// in bidding.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// creative has been used in bidding. Can be used to filter the response
+	// of the creatives.list method.
 	DealIds []string `json:"dealIds,omitempty"`
 
 	// DeclaredAttributes: All declared attributes for the ads that may be
-	// shown from this creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
-	//
-	// If the `excluded_attribute` field of a
-	// [bid
-	// request](https://developers.google.com/authorized-buyers/rtb/down
-	// loads/realtime-bidding-proto")
-	// contains one of the attributes that were declared or detected for a
-	// given
-	// creative, and a bid is submitted with that creative, the bid will
-	// be
-	// filtered before the auction.
+	// shown from this creative. Can be used to filter the response of the
+	// creatives.list method. If the `excluded_attribute` field of a [bid
+	// request](https://developers.google.com/authorized-buyers/rtb/downloads
+	// /realtime-bidding-proto") contains one of the attributes that were
+	// declared or detected for a given creative, and a bid is submitted
+	// with that creative, the bid will be filtered before the auction.
 	//
 	// Possible values:
 	//   "ATTRIBUTE_UNSPECIFIED" - Do not use. This is a placeholder value
@@ -437,28 +388,23 @@ type Creative struct {
 	//   "RICH_MEDIA_CAPABILITY_TYPE_FLASH" - The creative is Flash.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_HTML5" - The creative is HTML5.
 	//   "SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of skippable instream video.
-	// For pretargeting.
+	// video type of skippable instream video. For pretargeting.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_SSL" - The creative is SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL" - The creative is non-SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL" - The creative is an
 	// interstitial.
 	//   "NON_SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of non-skippable instream
-	// video. For pretargeting.
+	// video type of non-skippable instream video. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_ELIGIBLE" - The creative is eligible for
 	// native.
 	//   "NON_VPAID" - The creative has an instream VAST video type of
-	// non-VPAID. For
-	// pretargeting.
+	// non-VPAID. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_NOT_ELIGIBLE" - The creative is not eligible
 	// for native.
 	//   "ANY_INTERSTITIAL" - The creative has an interstitial size of any
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "NON_INTERSTITIAL" - The creative has an interstitial size of non
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "IN_BANNER_VIDEO" - The video type is in-banner video.
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
@@ -466,18 +412,13 @@ type Creative struct {
 	DeclaredAttributes []string `json:"declaredAttributes,omitempty"`
 
 	// DeclaredClickThroughUrls: The set of declared destination URLs for
-	// the creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// the creative. Can be used to filter the response of the
+	// creatives.list method.
 	DeclaredClickThroughUrls []string `json:"declaredClickThroughUrls,omitempty"`
 
 	// DeclaredRestrictedCategories: All declared restricted categories for
-	// the ads that may be shown from this
-	// creative. Can be used to filter the response of
-	// the
-	// creatives.list
-	// method.
+	// the ads that may be shown from this creative. Can be used to filter
+	// the response of the creatives.list method.
 	//
 	// Possible values:
 	//   "RESTRICTED_CATEGORY_UNSPECIFIED" - Default value that should never
@@ -486,15 +427,10 @@ type Creative struct {
 	DeclaredRestrictedCategories []string `json:"declaredRestrictedCategories,omitempty"`
 
 	// DeclaredVendorIds: IDs for the declared ad technology vendors that
-	// may be used by this
-	// creative.
-	// See
-	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt
-	// for
-	// possible values.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// may be used by this creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt for
+	// possible values. Can be used to filter the response of the
+	// creatives.list method.
 	DeclaredVendorIds []int64 `json:"declaredVendorIds,omitempty"`
 
 	// Html: An HTML creative.
@@ -504,14 +440,11 @@ type Creative struct {
 	// impression.
 	ImpressionTrackingUrls []string `json:"impressionTrackingUrls,omitempty"`
 
-	// Name: Output only. Name of the creative.
-	// Follows the pattern `buyers/{buyer}/creatives/{creative}`,
-	// where
-	// `{buyer}` represents the account ID of the buyer who owns the
-	// creative,
-	// and `{creative}` is the buyer-specific creative ID that references
-	// this
-	// creative in the bid response.
+	// Name: Output only. Name of the creative. Follows the pattern
+	// `buyers/{buyer}/creatives/{creative}`, where `{buyer}` represents the
+	// account ID of the buyer who owns the creative, and `{creative}` is
+	// the buyer-specific creative ID that references this creative in the
+	// bid response.
 	Name string `json:"name,omitempty"`
 
 	// Native: A native creative.
@@ -526,10 +459,8 @@ type Creative struct {
 	//   "ALCOHOL" - The alcohol restricted category.
 	RestrictedCategories []string `json:"restrictedCategories,omitempty"`
 
-	// Version: Output only. The version of this creative.
-	// Version for a new creative is 1 and it increments during
-	// subsequent
-	// creative updates.
+	// Version: Output only. The version of this creative. Version for a new
+	// creative is 1 and it increments during subsequent creative updates.
 	Version int64 `json:"version,omitempty"`
 
 	// Video: A video creative.
@@ -568,38 +499,26 @@ type CreativeServingDecision struct {
 	// AdTechnologyProviders: The detected ad technology providers.
 	AdTechnologyProviders *AdTechnologyProviders `json:"adTechnologyProviders,omitempty"`
 
-	// ChinaServingStatus: The serving status of this creative in
-	// China.
+	// ChinaServingStatus: The serving status of this creative in China.
 	// When approved or disapproved, this status applies to both deals and
-	// open
-	// auction in China. When pending review, this creative is allowed to
-	// serve
-	// for deals but not for open auction.
+	// open auction in China. When pending review, this creative is allowed
+	// to serve for deals but not for open auction.
 	ChinaServingStatus *ServingStatus `json:"chinaServingStatus,omitempty"`
 
 	// DealsServingStatus: Status of this creative when bidding on PG and PD
-	// deals (outside of
-	// Russia and China).
+	// deals (outside of Russia and China).
 	DealsServingStatus *ServingStatus `json:"dealsServingStatus,omitempty"`
 
 	// DetectedAdvertisers: Detected advertisers and brands.
 	DetectedAdvertisers []*AdvertiserAndBrand `json:"detectedAdvertisers,omitempty"`
 
 	// DetectedAttributes: Publisher-excludable attributes that were
-	// detected for this creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
-	//
-	// If the `excluded_attribute` field of a
-	// [bid
-	// request](https://developers.google.com/authorized-buyers/rtb/down
-	// loads/realtime-bidding-proto)
-	// contains one of the attributes that were declared or detected for a
-	// given
-	// creative, and a bid is submitted with that creative, the bid will
-	// be
-	// filtered before the auction.
+	// detected for this creative. Can be used to filter the response of the
+	// creatives.list method. If the `excluded_attribute` field of a [bid
+	// request](https://developers.google.com/authorized-buyers/rtb/downloads
+	// /realtime-bidding-proto) contains one of the attributes that were
+	// declared or detected for a given creative, and a bid is submitted
+	// with that creative, the bid will be filtered before the auction.
 	//
 	// Possible values:
 	//   "ATTRIBUTE_UNSPECIFIED" - Do not use. This is a placeholder value
@@ -638,28 +557,23 @@ type CreativeServingDecision struct {
 	//   "RICH_MEDIA_CAPABILITY_TYPE_FLASH" - The creative is Flash.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_HTML5" - The creative is HTML5.
 	//   "SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of skippable instream video.
-	// For pretargeting.
+	// video type of skippable instream video. For pretargeting.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_SSL" - The creative is SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL" - The creative is non-SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL" - The creative is an
 	// interstitial.
 	//   "NON_SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
-	// video type of non-skippable instream
-	// video. For pretargeting.
+	// video type of non-skippable instream video. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_ELIGIBLE" - The creative is eligible for
 	// native.
 	//   "NON_VPAID" - The creative has an instream VAST video type of
-	// non-VPAID. For
-	// pretargeting.
+	// non-VPAID. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_NOT_ELIGIBLE" - The creative is not eligible
 	// for native.
 	//   "ANY_INTERSTITIAL" - The creative has an interstitial size of any
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "NON_INTERSTITIAL" - The creative has an interstitial size of non
-	// interstitial. For
-	// pretargeting.
+	// interstitial. For pretargeting.
 	//   "IN_BANNER_VIDEO" - The video type is in-banner video.
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
@@ -667,89 +581,59 @@ type CreativeServingDecision struct {
 	DetectedAttributes []string `json:"detectedAttributes,omitempty"`
 
 	// DetectedClickThroughUrls: The set of detected destination URLs for
-	// the creative.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// the creative. Can be used to filter the response of the
+	// creatives.list method.
 	DetectedClickThroughUrls []string `json:"detectedClickThroughUrls,omitempty"`
 
 	// DetectedDomains: The detected domains for this creative.
 	DetectedDomains []string `json:"detectedDomains,omitempty"`
 
 	// DetectedLanguages: The detected languages for this creative. The
-	// order is
-	// arbitrary. The codes are 2 or 5 characters and are documented
-	// at
-	// https://developers.google.com/adwords/api/docs/appendix/languagecod
-	// es.
-	// Can be used to filter the response of the
-	// creatives.list
+	// order is arbitrary. The codes are 2 or 5 characters and are
+	// documented at
+	// https://developers.google.com/adwords/api/docs/appendix/languagecodes. Can be used to filter the response of the creatives.list
 	// method.
 	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
 
-	// DetectedProductCategories: Detected product categories, if any.
-	// See the ad-product-categories.txt file in the technical
-	// documentation
-	// for a list of IDs.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// DetectedProductCategories: Detected product categories, if any. See
+	// the ad-product-categories.txt file in the technical documentation for
+	// a list of IDs. Can be used to filter the response of the
+	// creatives.list method.
 	DetectedProductCategories []int64 `json:"detectedProductCategories,omitempty"`
 
-	// DetectedSensitiveCategories: Detected sensitive categories, if
-	// any.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
-	//
-	// See the ad-sensitive-categories.txt file in the technical
-	// documentation
-	// for a list of IDs. You should use these IDs along with
-	// the
+	// DetectedSensitiveCategories: Detected sensitive categories, if any.
+	// Can be used to filter the response of the creatives.list method. See
+	// the ad-sensitive-categories.txt file in the technical documentation
+	// for a list of IDs. You should use these IDs along with the
 	// excluded-sensitive-category field in the bid request to filter your
 	// bids.
 	DetectedSensitiveCategories []int64 `json:"detectedSensitiveCategories,omitempty"`
 
 	// DetectedVendorIds: IDs of the ad technology vendors that were
-	// detected to be
-	// used by this creative.
-	// See
-	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt
-	// for
-	// possible values.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
-	//
-	// If the `allowed_vendor_type` field of a
-	// [bid
-	// request](https://developers.google.com/authorized-buyers/rtb/down
-	// loads/realtime-bidding-proto)
-	// does not contain one of the vendor type IDs that were declared
-	// or
-	// detected for a given creative, and a bid is submitted with that
-	// creative,
-	// the bid will be filtered before the auction.
+	// detected to be used by this creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt for
+	// possible values. Can be used to filter the response of the
+	// creatives.list method. If the `allowed_vendor_type` field of a [bid
+	// request](https://developers.google.com/authorized-buyers/rtb/downloads
+	// /realtime-bidding-proto) does not contain one of the vendor type IDs
+	// that were declared or detected for a given creative, and a bid is
+	// submitted with that creative, the bid will be filtered before the
+	// auction.
 	DetectedVendorIds []int64 `json:"detectedVendorIds,omitempty"`
 
-	// LastStatusUpdate: The last time the creative status was updated.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// LastStatusUpdate: The last time the creative status was updated. Can
+	// be used to filter the response of the creatives.list method.
 	LastStatusUpdate string `json:"lastStatusUpdate,omitempty"`
 
 	// OpenAuctionServingStatus: Status of this creative when bidding in
-	// open auction, private auction, or
-	// auction packages (outside of Russia and China).
+	// open auction, private auction, or auction packages (outside of Russia
+	// and China).
 	OpenAuctionServingStatus *ServingStatus `json:"openAuctionServingStatus,omitempty"`
 
-	// RussiaServingStatus: The serving status of this creative in
-	// Russia.
+	// RussiaServingStatus: The serving status of this creative in Russia.
 	// When approved or disapproved, this status applies to both deals and
-	// open
-	// auction in Russia. When pending review, this creative is allowed to
-	// serve
-	// for deals but not for open auction.
+	// open auction in Russia. When pending review, this creative is allowed
+	// to serve for deals but not for open auction.
 	RussiaServingStatus *ServingStatus `json:"russiaServingStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -778,36 +662,26 @@ func (s *CreativeServingDecision) MarshalJSON() ([]byte, error) {
 }
 
 // Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day
-// and time zone are either specified elsewhere or are not significant.
-// The date
-// is relative to the Proleptic Gregorian Calendar. This can
-// represent:
-//
-// * A full date, with non-zero year, month and day values
-// * A month and day value, with a zero year, e.g. an anniversary
-// * A year on its own, with zero month and day values
-// * A year and month value, with a zero day, e.g. a credit card
-// expiration date
-//
-// Related types are google.type.TimeOfDay and
+// The time of day and time zone are either specified elsewhere or are
+// not significant. The date is relative to the Proleptic Gregorian
+// Calendar. This can represent: * A full date, with non-zero year,
+// month and day values * A month and day value, with a zero year, e.g.
+// an anniversary * A year on its own, with zero month and day values *
+// A year and month value, with a zero day, e.g. a credit card
+// expiration date Related types are google.type.TimeOfDay and
 // `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0
-	// if specifying a year by itself or a year and month where the day is
-	// not
-	// significant.
+	// month, or 0 if specifying a year by itself or a year and month where
+	// the day is not significant.
 	Day int64 `json:"day,omitempty"`
 
 	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
-	// without a
-	// month and day.
+	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without
-	// a year.
+	// without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -851,8 +725,7 @@ type DestinationNotCrawlableEvidence struct {
 	//   "TIMEOUT_ROBOTS" - Timed out reading site's robots exclusion file
 	// (e.g., robots.txt).
 	//   "ROBOTED_DENIED" - Crawler was disallowed by the site's robots
-	// exclusion file (e.g.,
-	// robots.txt).
+	// exclusion file (e.g., robots.txt).
 	//   "UNKNOWN" - Unknown reason.
 	Reason string `json:"reason,omitempty"`
 
@@ -880,8 +753,7 @@ func (s *DestinationNotCrawlableEvidence) MarshalJSON() ([]byte, error) {
 }
 
 // DestinationNotWorkingEvidence: Evidence of the creative's destination
-// URL not functioning properly or
-// having been incorrectly set up.
+// URL not functioning properly or having been incorrectly set up.
 type DestinationNotWorkingEvidence struct {
 	// DnsError: DNS lookup errors.
 	//
@@ -889,10 +761,9 @@ type DestinationNotWorkingEvidence struct {
 	//   "DNS_ERROR_UNSPECIFIED" - Default value that should never be used.
 	//   "ERROR_DNS" - DNS name was not found.
 	//   "GOOGLE_CRAWLER_DNS_ISSUE" - An internal issue occurred when
-	// Google's crawler tried to resolve the
-	// DNS entry. This is a Google-internal issue and may not be the
-	// result
-	// of an issue with the landing page.
+	// Google's crawler tried to resolve the DNS entry. This is a
+	// Google-internal issue and may not be the result of an issue with the
+	// landing page.
 	DnsError string `json:"dnsError,omitempty"`
 
 	// ExpandedUrl: The full non-working URL.
@@ -902,8 +773,7 @@ type DestinationNotWorkingEvidence struct {
 	HttpError int64 `json:"httpError,omitempty"`
 
 	// InvalidPage: Page was crawled successfully, but was detected as
-	// either a page with
-	// no content or an error page.
+	// either a page with no content or an error page.
 	//
 	// Possible values:
 	//   "INVALID_PAGE_UNSPECIFIED" - Default value that should never be
@@ -1005,8 +875,8 @@ type DomainCallEvidence struct {
 	TopHttpCallDomains []*DomainCalls `json:"topHttpCallDomains,omitempty"`
 
 	// TotalHttpCallCount: The total number of HTTP calls made by the
-	// creative, including but not
-	// limited to the number of calls in the top_http_call_domains.
+	// creative, including but not limited to the number of calls in the
+	// top_http_call_domains.
 	TotalHttpCallCount int64 `json:"totalHttpCallCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TopHttpCallDomains")
@@ -1065,8 +935,7 @@ func (s *DomainCalls) MarshalJSON() ([]byte, error) {
 }
 
 // DownloadSizeEvidence: Total download size and URL-level download size
-// breakdown for resources in
-// a creative.
+// breakdown for resources in a creative.
 type DownloadSizeEvidence struct {
 	// TopUrlDownloadSizeBreakdowns: Download size broken down by URLs with
 	// the top download size.
@@ -1105,12 +974,9 @@ func (s *DownloadSizeEvidence) MarshalJSON() ([]byte, error) {
 // tag.
 type GetRemarketingTagResponse struct {
 	// Snippet: A HTML tag that can be placed on the advertiser's page to
-	// add users to a
-	// user list. For more information and code samples on using snippet on
-	// your
-	// website refer to [Tag your site for
-	// remarketing](
-	// https://support.google.com/google-ads/answer/2476688).
+	// add users to a user list. For more information and code samples on
+	// using snippet on your website refer to [Tag your site for
+	// remarketing]( https://support.google.com/google-ads/answer/2476688).
 	Snippet string `json:"snippet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1142,20 +1008,16 @@ func (s *GetRemarketingTagResponse) MarshalJSON() ([]byte, error) {
 
 // HtmlContent: HTML content for a creative.
 type HtmlContent struct {
-	// Height: The height of the HTML snippet in pixels.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// Height: The height of the HTML snippet in pixels. Can be used to
+	// filter the response of the creatives.list method.
 	Height int64 `json:"height,omitempty"`
 
 	// Snippet: The HTML snippet that displays the ad when inserted in the
 	// web page.
 	Snippet string `json:"snippet,omitempty"`
 
-	// Width: The width of the HTML snippet in pixels.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// Width: The width of the HTML snippet in pixels. Can be used to filter
+	// the response of the creatives.list method.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
@@ -1213,20 +1075,16 @@ func (s *HttpCallEvidence) MarshalJSON() ([]byte, error) {
 // HttpCookieEvidence: Evidence for HTTP cookie-related policy
 // violations.
 type HttpCookieEvidence struct {
-	// CookieNames: Names of cookies that violate Google policies.
-	// For TOO_MANY_COOKIES policy, this will be the cookie names of top
-	// domains
+	// CookieNames: Names of cookies that violate Google policies. For
+	// TOO_MANY_COOKIES policy, this will be the cookie names of top domains
 	// with the largest number of cookies. For other policies, this will be
-	// all
-	// the cookie names that violate the policy.
+	// all the cookie names that violate the policy.
 	CookieNames []string `json:"cookieNames,omitempty"`
 
 	// MaxCookieCount: The largest number of cookies set by a creative. If
-	// this field is set,
-	// cookie_names above will be set to the cookie names of top domains
-	// with
-	// the largest number of cookies.
-	// This field will only be set for TOO_MANY_COOKIES policy.
+	// this field is set, cookie_names above will be set to the cookie names
+	// of top domains with the largest number of cookies. This field will
+	// only be set for TOO_MANY_COOKIES policy.
 	MaxCookieCount int64 `json:"maxCookieCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CookieNames") to
@@ -1253,8 +1111,7 @@ func (s *HttpCookieEvidence) MarshalJSON() ([]byte, error) {
 }
 
 // Image: An image resource. You may provide a larger image than was
-// requested,
-// so long as the aspect ratio is preserved.
+// requested, so long as the aspect ratio is preserved.
 type Image struct {
 	// Height: Image height in pixels.
 	Height int64 `json:"height,omitempty"`
@@ -1293,12 +1150,10 @@ type ListCreativesResponse struct {
 	// Creatives: The list of creatives.
 	Creatives []*Creative `json:"creatives,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// ListCreativesRequest.pageToken
-	// field in the subsequent call to the `ListCreatives` method to
-	// retrieve the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the ListCreativesRequest.pageToken field in the
+	// subsequent call to the `ListCreatives` method to retrieve the next
+	// page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1331,13 +1186,10 @@ func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
 // ListUserListsResponse: The list user list response.
 type ListUserListsResponse struct {
 	// NextPageToken: The continuation page token to send back to the server
-	// in a subsequent
-	// request.
-	// Due to a currently known issue, it is recommended that the caller
-	// keep
-	// invoking the list method till the time a next page token is not
-	// returned
-	// (even if the result set is empty).
+	// in a subsequent request. Due to a currently known issue, it is
+	// recommended that the caller keep invoking the list method till the
+	// time a next page token is not returned (even if the result set is
+	// empty).
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// UserLists: List of user lists from the search.
@@ -1372,16 +1224,12 @@ func (s *ListUserListsResponse) MarshalJSON() ([]byte, error) {
 
 // MediaFile: Information about each media file in the VAST.
 type MediaFile struct {
-	// Bitrate: Bitrate of the video file, in Kbps.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// Bitrate: Bitrate of the video file, in Kbps. Can be used to filter
+	// the response of the creatives.list method.
 	Bitrate int64 `json:"bitrate,omitempty,string"`
 
-	// MimeType: The MIME type of this media file.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// MimeType: The MIME type of this media file. Can be used to filter the
+	// response of the creatives.list method.
 	//
 	// Possible values:
 	//   "VIDEO_MIME_TYPE_UNSPECIFIED" - Default value that should never be
@@ -1515,10 +1363,8 @@ type OpenUserListRequest struct {
 }
 
 // PolicyTopicEntry: Each policy topic entry will represent a violation
-// of a policy topic for a
-// creative, with the policy topic information and optional evidence for
-// the
-// policy violation.
+// of a policy topic for a creative, with the policy topic information
+// and optional evidence for the policy violation.
 type PolicyTopicEntry struct {
 	// Evidences: Pieces of evidence associated with this policy topic
 	// entry.
@@ -1529,15 +1375,10 @@ type PolicyTopicEntry struct {
 	HelpCenterUrl string `json:"helpCenterUrl,omitempty"`
 
 	// PolicyTopic: Policy topic this entry refers to. For example,
-	// "ALCOHOL",
-	// "TRADEMARKS_IN_AD_TEXT", or "DESTINATION_NOT_WORKING". The set of
-	// possible
-	// policy topics is not fixed for a particular API version and may
-	// change at
-	// any time.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method
+	// "ALCOHOL", "TRADEMARKS_IN_AD_TEXT", or "DESTINATION_NOT_WORKING". The
+	// set of possible policy topics is not fixed for a particular API
+	// version and may change at any time. Can be used to filter the
+	// response of the creatives.list method
 	PolicyTopic string `json:"policyTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Evidences") to
@@ -1570,8 +1411,7 @@ type PolicyTopicEvidence struct {
 	DestinationNotCrawlable *DestinationNotCrawlableEvidence `json:"destinationNotCrawlable,omitempty"`
 
 	// DestinationNotWorking: The creative's destination URL did not
-	// function properly or was
-	// incorrectly set up.
+	// function properly or was incorrectly set up.
 	DestinationNotWorking *DestinationNotWorkingEvidence `json:"destinationNotWorking,omitempty"`
 
 	// DestinationUrl: URL of the actual landing page.
@@ -1582,8 +1422,7 @@ type PolicyTopicEvidence struct {
 	DomainCall *DomainCallEvidence `json:"domainCall,omitempty"`
 
 	// DownloadSize: Total download size and URL-level download size
-	// breakdown for resources
-	// in a creative.
+	// breakdown for resources in a creative.
 	DownloadSize *DownloadSizeEvidence `json:"downloadSize,omitempty"`
 
 	// HttpCall: HTTP calls made by the creative that resulted in policy
@@ -1622,11 +1461,8 @@ func (s *PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 // or a region.
 type ServingStatus struct {
 	// Status: Serving status for the given transaction type (e.g., open
-	// auction,
-	// deals) or region (e.g., China, Russia).
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// auction, deals) or region (e.g., China, Russia). Can be used to
+	// filter the response of the creatives.list method.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Default value that should never be used.
@@ -1636,9 +1472,8 @@ type ServingStatus struct {
 	Status string `json:"status,omitempty"`
 
 	// Topics: Policy topics related to the serving decision for this
-	// transaction type
-	// (e.g., open auction, deals) or region (e.g., China, Russia).
-	// Topics may be present only if status is DISAPPROVED.
+	// transaction type (e.g., open auction, deals) or region (e.g., China,
+	// Russia). Topics may be present only if status is DISAPPROVED.
 	Topics []*PolicyTopicEntry `json:"topics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Status") to
@@ -1698,13 +1533,10 @@ func (s *UrlDownloadSize) MarshalJSON() ([]byte, error) {
 }
 
 // UrlRestriction: Represents the URL restriction (for the URL captured
-// by the pixel callback)
-// for a user list.
+// by the pixel callback) for a user list.
 type UrlRestriction struct {
-	// EndDate: End date (if specified) of the URL restriction.
-	// End date should be later than the start date for the date range to
-	// be
-	// valid.
+	// EndDate: End date (if specified) of the URL restriction. End date
+	// should be later than the start date for the date range to be valid.
 	EndDate *Date `json:"endDate,omitempty"`
 
 	// RestrictionType: The restriction type for the specified URL.
@@ -1713,29 +1545,21 @@ type UrlRestriction struct {
 	//   "RESTRICTION_TYPE_UNSPECIFIED" - Default value that should never be
 	// used.
 	//   "CONTAINS" - The tag URL (as recorded by the pixel callback)
-	// contains the specified
-	// URL.
+	// contains the specified URL.
 	//   "EQUALS" - The tag URL (as recorded by the pixel callback) exactly
-	// matches the
-	// specified URL.
+	// matches the specified URL.
 	//   "STARTS_WITH" - The tag URL (as recorded by the pixel callback)
-	// starts with the specified
-	// URL.
+	// starts with the specified URL.
 	//   "ENDS_WITH" - The tag URL (as recorded by the pixel callback) ends
-	// with the specified
-	// URL.
+	// with the specified URL.
 	//   "DOES_NOT_EQUAL" - The tag URL (as recorded by the pixel callback)
-	// does not equal the
-	// specified URL.
+	// does not equal the specified URL.
 	//   "DOES_NOT_CONTAIN" - The tag URL (as recorded by the pixel
-	// callback) does not contain the
-	// specified URL.
+	// callback) does not contain the specified URL.
 	//   "DOES_NOT_START_WITH" - The tag URL (as recorded by the pixel
-	// callback) does not start with the
-	// specified URL.
+	// callback) does not start with the specified URL.
 	//   "DOES_NOT_END_WITH" - The tag URL (as recorded by the pixel
-	// callback) does not end with the
-	// specified URL.
+	// callback) does not end with the specified URL.
 	RestrictionType string `json:"restrictionType,omitempty"`
 
 	// StartDate: Start date (if specified) of the URL restriction.
@@ -1769,37 +1593,30 @@ func (s *UrlRestriction) MarshalJSON() ([]byte, error) {
 }
 
 // UserList: Represents an Authorized Buyers user list. Authorized
-// Buyers can
-// create/update/list user lists. Once a user list is created
-// in the system, Authorized Buyers can add users to the user list
-// using
-// the bulk uploader API. Alternatively, users can be added by hosting
-// a
+// Buyers can create/update/list user lists. Once a user list is created
+// in the system, Authorized Buyers can add users to the user list using
+// the bulk uploader API. Alternatively, users can be added by hosting a
 // tag on the advertiser's page.
 type UserList struct {
 	// Description: The description for the user list.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Required. Display name of the user list. This must be
-	// unique across all user lists
-	// for a given account.
+	// unique across all user lists for a given account.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MembershipDurationDays: Required. The number of days a user's cookie
-	// stays on the user list.
-	// The field must be between 0 and 540 inclusive.
+	// stays on the user list. The field must be between 0 and 540
+	// inclusive.
 	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty,string"`
 
-	// Name: Output only. Name of the user list that must follow the
-	// pattern
-	// `buyers/{buyer}/userLists/{user_list}`, where `{buyer}`
-	// represents
+	// Name: Output only. Name of the user list that must follow the pattern
+	// `buyers/{buyer}/userLists/{user_list}`, where `{buyer}` represents
 	// the account ID of the buyer who owns the user list. For a bidder
-	// accessing
-	// user lists on behalf of a child seat buyer, `{buyer}` represents
-	// the account ID of the child seat buyer. `{user_list}` is an
-	// int64
-	// identifier assigned by Google to uniquely identify a user list.
+	// accessing user lists on behalf of a child seat buyer, `{buyer}`
+	// represents the account ID of the child seat buyer. `{user_list}` is
+	// an int64 identifier assigned by Google to uniquely identify a user
+	// list.
 	Name string `json:"name,omitempty"`
 
 	// Status: Output only. The status of the user list. A new user list
@@ -1849,8 +1666,8 @@ type VideoContent struct {
 	// VideoUrl: The URL to fetch a video ad.
 	VideoUrl string `json:"videoUrl,omitempty"`
 
-	// VideoVastXml: The contents of a VAST document for a video ad.
-	// This document should conform to the VAST 2.0 or 3.0 standard.
+	// VideoVastXml: The contents of a VAST document for a video ad. This
+	// document should conform to the VAST 2.0 or 3.0 standard.
 	VideoVastXml string `json:"videoVastXml,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "VideoMetadata") to
@@ -1878,45 +1695,31 @@ func (s *VideoContent) MarshalJSON() ([]byte, error) {
 
 // VideoMetadata: Video metadata for a creative.
 type VideoMetadata struct {
-	// Duration: The duration of the ad.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// Duration: The duration of the ad. Can be used to filter the response
+	// of the creatives.list method.
 	Duration string `json:"duration,omitempty"`
 
-	// IsValidVast: Is this a valid VAST ad?
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// IsValidVast: Is this a valid VAST ad? Can be used to filter the
+	// response of the creatives.list method.
 	IsValidVast bool `json:"isValidVast,omitempty"`
 
-	// IsVpaid: Is this a VPAID ad?
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// IsVpaid: Is this a VPAID ad? Can be used to filter the response of
+	// the creatives.list method.
 	IsVpaid bool `json:"isVpaid,omitempty"`
 
 	// MediaFiles: The list of all media files declared in the VAST. If
-	// there are multiple
-	// VASTs in a wrapper chain, this includes the media files from the
-	// deepest
-	// one in the chain.
+	// there are multiple VASTs in a wrapper chain, this includes the media
+	// files from the deepest one in the chain.
 	MediaFiles []*MediaFile `json:"mediaFiles,omitempty"`
 
 	// SkipOffset: The minimum duration that the user has to watch before
-	// being able to
-	// skip this ad. If the field is not set, the ad is not skippable.
-	// If
-	// the field is set, the ad is skippable.
-	// Can be used to filter the response of the
-	// creatives.list
-	// method.
+	// being able to skip this ad. If the field is not set, the ad is not
+	// skippable. If the field is set, the ad is skippable. Can be used to
+	// filter the response of the creatives.list method.
 	SkipOffset string `json:"skipOffset,omitempty"`
 
 	// VastVersion: The maximum VAST version across all wrapped VAST
-	// documents.
-	// Can be used to filter the response of the
-	// creatives.list
+	// documents. Can be used to filter the response of the creatives.list
 	// method.
 	//
 	// Possible values:
@@ -1952,36 +1755,24 @@ func (s *VideoMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // WatchCreativesRequest: A request to receive push notifications when
-// any of the creatives belonging
-// to the bidder changes status.
+// any of the creatives belonging to the bidder changes status.
 type WatchCreativesRequest struct {
 }
 
 // WatchCreativesResponse: A response for the request to receive push
-// notification when a bidder's
-// creatives change status.
+// notification when a bidder's creatives change status.
 type WatchCreativesResponse struct {
 	// Subscription: The Pub/Sub subscription that can be used to pull
-	// creative status
-	// notifications. This would be of the
-	// format
-	// `projects/{project_id}/subscriptions/{subscription_id}`.
-	// Subscr
-	// iption is created with pull delivery. All service accounts
-	// belonging
-	// to the bidder will have read access to this
-	// subscription.
-	// Subscriptions that are inactive for more than 90 days will be
-	// disabled.
-	// Please use
-	// watchCreatives to
-	// re-enable the subscription.
+	// creative status notifications. This would be of the format
+	// `projects/{project_id}/subscriptions/{subscription_id}`. Subscription
+	// is created with pull delivery. All service accounts belonging to the
+	// bidder will have read access to this subscription. Subscriptions that
+	// are inactive for more than 90 days will be disabled. Please use
+	// watchCreatives to re-enable the subscription.
 	Subscription string `json:"subscription,omitempty"`
 
 	// Topic: The Pub/Sub topic that will be used to publish creative
-	// serving
-	// status notifications. This would be of the
-	// format
+	// serving status notifications. This would be of the format
 	// `projects/{project_id}/topics/{topic_id}`.
 	Topic string `json:"topic,omitempty"`
 
@@ -2031,13 +1822,9 @@ func (r *BiddersCreativesService) List(parent string) *BiddersCreativesListCall 
 }
 
 // Filter sets the optional parameter "filter": Query string to filter
-// creatives. If no filter is specified,
-// all active creatives will be returned.
-//
-// Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED
-// AND
-// disapprovalReason:UNACCEPTABLE_CONTENT)
-// OR
+// creatives. If no filter is specified, all active creatives will be
+// returned. Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND
+// disapprovalReason:UNACCEPTABLE_CONTENT) OR
 // declaredAttributes:IS_COOKIE_TARGETED'
 func (c *BiddersCreativesListCall) Filter(filter string) *BiddersCreativesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -2045,39 +1832,37 @@ func (c *BiddersCreativesListCall) Filter(filter string) *BiddersCreativesListCa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer creatives than requested
-// (due to timeout constraint) even if more are available via another
-// call.
-// If unspecified, server will pick an appropriate default.
-// Acceptable values are 1 to 1000, inclusive.
+// The server may return fewer creatives than requested (due to timeout
+// constraint) even if more are available via another call. If
+// unspecified, server will pick an appropriate default. Acceptable
+// values are 1 to 1000, inclusive.
 func (c *BiddersCreativesListCall) PageSize(pageSize int64) *BiddersCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativesResponse.nextPageToken
-// returned from the previous call to the 'ListCreatives' method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListCreativesResponse.nextPageToken returned
+// from the previous call to the 'ListCreatives' method.
 func (c *BiddersCreativesListCall) PageToken(pageToken string) *BiddersCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // View sets the optional parameter "view": Controls the amount of
-// information included in the response.
-// By default only
-// creativeServingDecision
-// is included. To retrieve the entire creative
-// resource (including the declared
-// fields and the creative content) specify the view as "FULL".
+// information included in the response. By default only
+// creativeServingDecision is included. To retrieve the entire creative
+// resource (including the declared fields and the creative content)
+// specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED"
-//   "SERVING_DECISION_ONLY"
-//   "FULL"
+//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+// SERVING_DECISION_ONLY.
+//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+// in the response.
+//   "FULL" - The entire creative resource (including the declared
+// fields and the creative content) is included in the response.
 func (c *BiddersCreativesListCall) View(view string) *BiddersCreativesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2120,7 +1905,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2191,34 +1976,39 @@ func (c *BiddersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreati
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Query string to filter creatives. If no filter is specified,\nall active creatives will be returned.\n\nExample: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND\ndisapprovalReason:UNACCEPTABLE_CONTENT) OR\ndeclaredAttributes:IS_COOKIE_TARGETED'",
+	//       "description": "Query string to filter creatives. If no filter is specified, all active creatives will be returned. Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND disapprovalReason:UNACCEPTABLE_CONTENT) OR declaredAttributes:IS_COOKIE_TARGETED'",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested\n(due to timeout constraint) even if more are available via another call.\nIf unspecified, server will pick an appropriate default.\nAcceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available via another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativesResponse.nextPageToken\nreturned from the previous call to the 'ListCreatives' method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativesResponse.nextPageToken returned from the previous call to the 'ListCreatives' method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent buyer that owns the creatives.\n\nThe pattern for this resource is either `buyers/{buyerAccountId}` or\n`bidders/{bidderAccountId}`.\n\nFor `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the\nfollowing:\n1. The ID of the buyer that is accessing their own creatives.\n2. The ID of the child seat buyer under a bidder account.\n   So for listing creatives pertaining to the child seat buyer (`456`)\n   under bidder account (`123`), you would use the pattern: `buyers/456`.\n3. The ID of the bidder itself.\n   So for listing creatives pertaining to bidder (`123`),\n   you would use `buyers/123`.\n\nIf you want to access all creatives pertaining to both the bidder and all\nof its child seat accounts, you would use `bidders/{bidderAccountId}`,\ne.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
+	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, e.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Controls the amount of information included in the response.\nBy default only\ncreativeServingDecision\nis included. To retrieve the entire creative\nresource (including the declared\nfields and the creative content) specify the view as \"FULL\".",
+	//       "description": "Controls the amount of information included in the response. By default only creativeServingDecision is included. To retrieve the entire creative resource (including the declared fields and the creative content) specify the view as \"FULL\".",
 	//       "enum": [
 	//         "CREATIVE_VIEW_UNSPECIFIED",
 	//         "SERVING_DECISION_ONLY",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to SERVING_DECISION_ONLY.",
+	//         "Only creativeServingDecision is included in the response.",
+	//         "The entire creative resource (including the declared fields and the creative content) is included in the response."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2268,17 +2058,12 @@ type BiddersCreativesWatchCall struct {
 }
 
 // Watch: Watches all creatives pertaining to a bidder. It is sufficient
-// to invoke
-// this endpoint once per bidder. A Pub/Sub topic will be created
-// and
-// notifications will be pushed to the topic when any of the
-// bidder's
-// creatives change status. All of the bidder's service accounts will
-// have
-// access to read from the topic.
-// Subsequent invocations of this method will return the
-// existing
-// Pub/Sub configuration.
+// to invoke this endpoint once per bidder. A Pub/Sub topic will be
+// created and notifications will be pushed to the topic when any of the
+// bidder's creatives change status. All of the bidder's service
+// accounts will have access to read from the topic. Subsequent
+// invocations of this method will return the existing Pub/Sub
+// configuration.
 func (r *BiddersCreativesService) Watch(parent string, watchcreativesrequest *WatchCreativesRequest) *BiddersCreativesWatchCall {
 	c := &BiddersCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2313,7 +2098,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2377,7 +2162,7 @@ func (c *BiddersCreativesWatchCall) Do(opts ...googleapi.CallOption) (*WatchCrea
 	}
 	return ret, nil
 	// {
-	//   "description": "Watches all creatives pertaining to a bidder. It is sufficient to invoke\nthis endpoint once per bidder. A Pub/Sub topic will be created and\nnotifications will be pushed to the topic when any of the bidder's\ncreatives change status. All of the bidder's service accounts will have\naccess to read from the topic.\nSubsequent invocations of this method will return the existing\nPub/Sub configuration.",
+	//   "description": "Watches all creatives pertaining to a bidder. It is sufficient to invoke this endpoint once per bidder. A Pub/Sub topic will be created and notifications will be pushed to the topic when any of the bidder's creatives change status. All of the bidder's service accounts will have access to read from the topic. Subsequent invocations of this method will return the existing Pub/Sub configuration.",
 	//   "flatPath": "v1/bidders/{biddersId}/creatives:watch",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.bidders.creatives.watch",
@@ -2386,7 +2171,7 @@ func (c *BiddersCreativesWatchCall) Do(opts ...googleapi.CallOption) (*WatchCrea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. To watch all creatives pertaining to the bidder and all its child seat\naccounts, the bidder must follow the pattern `bidders/{bidderAccountId}`.",
+	//       "description": "Required. To watch all creatives pertaining to the bidder and all its child seat accounts, the bidder must follow the pattern `bidders/{bidderAccountId}`.",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
@@ -2419,11 +2204,9 @@ type BuyersGetRemarketingTagCall struct {
 }
 
 // GetRemarketingTag: Gets remarketing tag for a buyer. A remarketing
-// tag is a piece of
-// JavaScript code that can be placed on a web page. When a user
-// visits a page containing a remarketing tag, Google adds the user to a
-// user
-// list.
+// tag is a piece of JavaScript code that can be placed on a web page.
+// When a user visits a page containing a remarketing tag, Google adds
+// the user to a user list.
 func (r *BuyersService) GetRemarketingTag(name string) *BuyersGetRemarketingTagCall {
 	c := &BuyersGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2467,7 +2250,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2529,7 +2312,7 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of\nJavaScript code that can be placed on a web page. When a user\nvisits a page containing a remarketing tag, Google adds the user to a user\nlist.",
+	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.getRemarketingTag",
@@ -2538,7 +2321,7 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern\n`buyers/{accountId}` where `{accountId}`\nrepresents ID of a buyer that owns the remarketing tag. For a\nbidder accessing remarketing tag on behalf of a child seat buyer,\n`{accountId}` should represent the ID of the child seat buyer.\nTo fetch remarketing tag for a specific user list, name\nmust follow the pattern\n`buyers/{accountId}/userLists/{userListId}`. See\nUserList.name.",
+	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -2602,7 +2385,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2675,7 +2458,7 @@ func (c *BuyersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Creative,
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the parent buyer that the new creative belongs to that must\nfollow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}`\nrepresents the account ID of the buyer who owns a creative. For a bidder\naccessing creatives on behalf of a child seat buyer, `{buyerAccountId}`\nshould represent the account ID of the child seat buyer.",
+	//       "description": "Required. The name of the parent buyer that the new creative belongs to that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns a creative. For a bidder accessing creatives on behalf of a child seat buyer, `{buyerAccountId}` should represent the account ID of the child seat buyer.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -2715,17 +2498,18 @@ func (r *BuyersCreativesService) Get(name string) *BuyersCreativesGetCall {
 }
 
 // View sets the optional parameter "view": Controls the amount of
-// information included in the response.
-// By default only
-// creativeServingDecision
-// is included. To retrieve the entire creative
-// resource (including the declared
-// fields and the creative content) specify the view as "FULL".
+// information included in the response. By default only
+// creativeServingDecision is included. To retrieve the entire creative
+// resource (including the declared fields and the creative content)
+// specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED"
-//   "SERVING_DECISION_ONLY"
-//   "FULL"
+//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+// SERVING_DECISION_ONLY.
+//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+// in the response.
+//   "FULL" - The entire creative resource (including the declared
+// fields and the creative content) is included in the response.
 func (c *BuyersCreativesGetCall) View(view string) *BuyersCreativesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2768,7 +2552,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2839,18 +2623,23 @@ func (c *BuyersCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the creative to retrieve. See\ncreative.name.",
+	//       "description": "Required. Name of the creative to retrieve. See creative.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/creatives/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Controls the amount of information included in the response.\nBy default only\ncreativeServingDecision\nis included. To retrieve the entire creative\nresource (including the declared\nfields and the creative content) specify the view as \"FULL\".",
+	//       "description": "Controls the amount of information included in the response. By default only creativeServingDecision is included. To retrieve the entire creative resource (including the declared fields and the creative content) specify the view as \"FULL\".",
 	//       "enum": [
 	//         "CREATIVE_VIEW_UNSPECIFIED",
 	//         "SERVING_DECISION_ONLY",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to SERVING_DECISION_ONLY.",
+	//         "Only creativeServingDecision is included in the response.",
+	//         "The entire creative resource (including the declared fields and the creative content) is included in the response."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2886,13 +2675,9 @@ func (r *BuyersCreativesService) List(parent string) *BuyersCreativesListCall {
 }
 
 // Filter sets the optional parameter "filter": Query string to filter
-// creatives. If no filter is specified,
-// all active creatives will be returned.
-//
-// Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED
-// AND
-// disapprovalReason:UNACCEPTABLE_CONTENT)
-// OR
+// creatives. If no filter is specified, all active creatives will be
+// returned. Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND
+// disapprovalReason:UNACCEPTABLE_CONTENT) OR
 // declaredAttributes:IS_COOKIE_TARGETED'
 func (c *BuyersCreativesListCall) Filter(filter string) *BuyersCreativesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -2900,39 +2685,37 @@ func (c *BuyersCreativesListCall) Filter(filter string) *BuyersCreativesListCall
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer creatives than requested
-// (due to timeout constraint) even if more are available via another
-// call.
-// If unspecified, server will pick an appropriate default.
-// Acceptable values are 1 to 1000, inclusive.
+// The server may return fewer creatives than requested (due to timeout
+// constraint) even if more are available via another call. If
+// unspecified, server will pick an appropriate default. Acceptable
+// values are 1 to 1000, inclusive.
 func (c *BuyersCreativesListCall) PageSize(pageSize int64) *BuyersCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value
-// of
-// ListCreativesResponse.nextPageToken
-// returned from the previous call to the 'ListCreatives' method.
+// identifying a page of results the server should return. Typically,
+// this is the value of ListCreativesResponse.nextPageToken returned
+// from the previous call to the 'ListCreatives' method.
 func (c *BuyersCreativesListCall) PageToken(pageToken string) *BuyersCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // View sets the optional parameter "view": Controls the amount of
-// information included in the response.
-// By default only
-// creativeServingDecision
-// is included. To retrieve the entire creative
-// resource (including the declared
-// fields and the creative content) specify the view as "FULL".
+// information included in the response. By default only
+// creativeServingDecision is included. To retrieve the entire creative
+// resource (including the declared fields and the creative content)
+// specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED"
-//   "SERVING_DECISION_ONLY"
-//   "FULL"
+//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+// SERVING_DECISION_ONLY.
+//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+// in the response.
+//   "FULL" - The entire creative resource (including the declared
+// fields and the creative content) is included in the response.
 func (c *BuyersCreativesListCall) View(view string) *BuyersCreativesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2975,7 +2758,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3046,34 +2829,39 @@ func (c *BuyersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativ
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Query string to filter creatives. If no filter is specified,\nall active creatives will be returned.\n\nExample: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND\ndisapprovalReason:UNACCEPTABLE_CONTENT) OR\ndeclaredAttributes:IS_COOKIE_TARGETED'",
+	//       "description": "Query string to filter creatives. If no filter is specified, all active creatives will be returned. Example: 'accountId=12345 AND (dealsStatus:DISAPPROVED AND disapprovalReason:UNACCEPTABLE_CONTENT) OR declaredAttributes:IS_COOKIE_TARGETED'",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested\n(due to timeout constraint) even if more are available via another call.\nIf unspecified, server will pick an appropriate default.\nAcceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available via another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListCreativesResponse.nextPageToken\nreturned from the previous call to the 'ListCreatives' method.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativesResponse.nextPageToken returned from the previous call to the 'ListCreatives' method.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent buyer that owns the creatives.\n\nThe pattern for this resource is either `buyers/{buyerAccountId}` or\n`bidders/{bidderAccountId}`.\n\nFor `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the\nfollowing:\n1. The ID of the buyer that is accessing their own creatives.\n2. The ID of the child seat buyer under a bidder account.\n   So for listing creatives pertaining to the child seat buyer (`456`)\n   under bidder account (`123`), you would use the pattern: `buyers/456`.\n3. The ID of the bidder itself.\n   So for listing creatives pertaining to bidder (`123`),\n   you would use `buyers/123`.\n\nIf you want to access all creatives pertaining to both the bidder and all\nof its child seat accounts, you would use `bidders/{bidderAccountId}`,\ne.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
+	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, e.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Controls the amount of information included in the response.\nBy default only\ncreativeServingDecision\nis included. To retrieve the entire creative\nresource (including the declared\nfields and the creative content) specify the view as \"FULL\".",
+	//       "description": "Controls the amount of information included in the response. By default only creativeServingDecision is included. To retrieve the entire creative resource (including the declared fields and the creative content) specify the view as \"FULL\".",
 	//       "enum": [
 	//         "CREATIVE_VIEW_UNSPECIFIED",
 	//         "SERVING_DECISION_ONLY",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Not specified, equivalent to SERVING_DECISION_ONLY.",
+	//         "Only creativeServingDecision is included in the response.",
+	//         "The entire creative resource (including the declared fields and the creative content) is included in the response."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3164,7 +2952,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3237,7 +3025,7 @@ func (c *BuyersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the creative to update. See\ncreative.name.",
+	//       "description": "Name of the creative to update. See creative.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/creatives/[^/]+$",
 	//       "required": true,
@@ -3276,8 +3064,7 @@ type BuyersUserListsCloseCall struct {
 }
 
 // Close: Change the status of a user list to CLOSED. This prevents new
-// users from
-// being added to the user list.
+// users from being added to the user list.
 func (r *BuyersUserListsService) Close(name string, closeuserlistrequest *CloseUserListRequest) *BuyersUserListsCloseCall {
 	c := &BuyersUserListsCloseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3312,7 +3099,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3376,7 +3163,7 @@ func (c *BuyersUserListsCloseCall) Do(opts ...googleapi.CallOption) (*UserList, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Change the status of a user list to CLOSED. This prevents new users from\nbeing added to the user list.",
+	//   "description": "Change the status of a user list to CLOSED. This prevents new users from being added to the user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:close",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.buyers.userLists.close",
@@ -3385,7 +3172,7 @@ func (c *BuyersUserListsCloseCall) Do(opts ...googleapi.CallOption) (*UserList, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the user list to close.\nSee UserList.name",
+	//       "description": "Required. The name of the user list to close. See UserList.name",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,
@@ -3452,7 +3239,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3525,7 +3312,7 @@ func (c *BuyersUserListsCreateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the parent buyer of the user list to be retrieved that\nmust follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}`\nrepresents the account ID of the buyer who owns user lists. For a bidder\naccessing user lists on behalf of a child seat buyer , `{buyerAccountId}`\nshould represent the account ID of the child seat buyer.",
+	//       "description": "Required. The name of the parent buyer of the user list to be retrieved that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns user lists. For a bidder accessing user lists on behalf of a child seat buyer , `{buyerAccountId}` should represent the account ID of the child seat buyer.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -3601,7 +3388,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3672,7 +3459,7 @@ func (c *BuyersUserListsGetCall) Do(opts ...googleapi.CallOption) (*UserList, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the user list to be retrieved. See\nUserList.name.",
+	//       "description": "Required. The name of the user list to be retrieved. See UserList.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,
@@ -3702,11 +3489,9 @@ type BuyersUserListsGetRemarketingTagCall struct {
 }
 
 // GetRemarketingTag: Gets remarketing tag for a buyer. A remarketing
-// tag is a piece of
-// JavaScript code that can be placed on a web page. When a user
-// visits a page containing a remarketing tag, Google adds the user to a
-// user
-// list.
+// tag is a piece of JavaScript code that can be placed on a web page.
+// When a user visits a page containing a remarketing tag, Google adds
+// the user to a user list.
 func (r *BuyersUserListsService) GetRemarketingTag(name string) *BuyersUserListsGetRemarketingTagCall {
 	c := &BuyersUserListsGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3750,7 +3535,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3812,7 +3597,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of\nJavaScript code that can be placed on a web page. When a user\nvisits a page containing a remarketing tag, Google adds the user to a user\nlist.",
+	//   "description": "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:getRemarketingTag",
 	//   "httpMethod": "GET",
 	//   "id": "realtimebidding.buyers.userLists.getRemarketingTag",
@@ -3821,7 +3606,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern\n`buyers/{accountId}` where `{accountId}`\nrepresents ID of a buyer that owns the remarketing tag. For a\nbidder accessing remarketing tag on behalf of a child seat buyer,\n`{accountId}` should represent the ID of the child seat buyer.\nTo fetch remarketing tag for a specific user list, name\nmust follow the pattern\n`buyers/{accountId}/userLists/{userListId}`. See\nUserList.name.",
+	//       "description": "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,
@@ -3908,7 +3693,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3990,7 +3775,7 @@ func (c *BuyersUserListsListCall) Do(opts ...googleapi.CallOption) (*ListUserLis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent buyer for the user lists to be returned that must\nfollow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}`\nrepresents the account ID of the buyer who owns user lists. For a bidder\naccessing user lists on behalf of a child seat buyer , `{buyerAccountId}`\nshould represent the account ID of the child seat buyer.",
+	//       "description": "Required. The name of the parent buyer for the user lists to be returned that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns user lists. For a bidder accessing user lists on behalf of a child seat buyer , `{buyerAccountId}` should represent the account ID of the child seat buyer.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,
@@ -4041,8 +3826,7 @@ type BuyersUserListsOpenCall struct {
 }
 
 // Open: Change the status of a user list to OPEN. This allows new users
-// to be added
-// to the user list.
+// to be added to the user list.
 func (r *BuyersUserListsService) Open(name string, openuserlistrequest *OpenUserListRequest) *BuyersUserListsOpenCall {
 	c := &BuyersUserListsOpenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4077,7 +3861,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4141,7 +3925,7 @@ func (c *BuyersUserListsOpenCall) Do(opts ...googleapi.CallOption) (*UserList, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Change the status of a user list to OPEN. This allows new users to be added\nto the user list.",
+	//   "description": "Change the status of a user list to OPEN. This allows new users to be added to the user list.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}:open",
 	//   "httpMethod": "POST",
 	//   "id": "realtimebidding.buyers.userLists.open",
@@ -4150,7 +3934,7 @@ func (c *BuyersUserListsOpenCall) Do(opts ...googleapi.CallOption) (*UserList, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the user list to open.\nSee UserList.name",
+	//       "description": "Required. The name of the user list to open. See UserList.name",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,
@@ -4183,8 +3967,7 @@ type BuyersUserListsUpdateCall struct {
 }
 
 // Update: Update the given user list. Only user lists with
-// URLRestrictions can be
-// updated.
+// URLRestrictions can be updated.
 func (r *BuyersUserListsService) Update(nameid string, userlist *UserList) *BuyersUserListsUpdateCall {
 	c := &BuyersUserListsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4219,7 +4002,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4283,7 +4066,7 @@ func (c *BuyersUserListsUpdateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the given user list. Only user lists with URLRestrictions can be\nupdated.",
+	//   "description": "Update the given user list. Only user lists with URLRestrictions can be updated.",
 	//   "flatPath": "v1/buyers/{buyersId}/userLists/{userListsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "realtimebidding.buyers.userLists.update",
@@ -4292,7 +4075,7 @@ func (c *BuyersUserListsUpdateCall) Do(opts ...googleapi.CallOption) (*UserList,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Name of the user list that must follow the pattern\n`buyers/{buyer}/userLists/{user_list}`, where `{buyer}` represents\nthe account ID of the buyer who owns the user list. For a bidder accessing\nuser lists on behalf of a child seat buyer, `{buyer}` represents\nthe account ID of the child seat buyer. `{user_list}` is an int64\nidentifier assigned by Google to uniquely identify a user list.",
+	//       "description": "Output only. Name of the user list that must follow the pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyer}` represents the account ID of the child seat buyer. `{user_list}` is an int64 identifier assigned by Google to uniquely identify a user list.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+/userLists/[^/]+$",
 	//       "required": true,

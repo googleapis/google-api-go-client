@@ -267,14 +267,10 @@ type PoliciesService struct {
 // SasPortalAssignment: Associates `members` with a `role`.
 type SasPortalAssignment struct {
 	// Members: The identities the role is assigned to. It can have the
-	// following
-	// values:
-	//
-	// * `{user_email}`: An email address that represents a specific
-	//    Google account. For example: `alice@gmail.com`.
-	//
-	// * `{group_email}`: An email address that represents a Google
-	//    group.  For example, `viewers@gmail.com`.
+	// following values: * `{user_email}`: An email address that represents
+	// a specific Google account. For example: `alice@gmail.com`. *
+	// `{group_email}`: An email address that represents a Google group. For
+	// example, `viewers@gmail.com`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Required. Role that is assigned to `members`.
@@ -307,9 +303,8 @@ func (s *SasPortalAssignment) MarshalJSON() ([]byte, error) {
 // method.
 type SasPortalBulkCreateDeviceRequest struct {
 	// Csv: Required. A csv with each row representing a [device]. Each row
-	// must
-	// conform to the regulations described on CreateDeviceRequest's device
-	// field.
+	// must conform to the regulations described on CreateDeviceRequest's
+	// device field.
 	Csv string `json:"csv,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Csv") to
@@ -372,14 +367,12 @@ func (s *SasPortalBulkCreateDeviceResponse) MarshalJSON() ([]byte, error) {
 // method.
 type SasPortalCreateSignedDeviceRequest struct {
 	// EncodedDevice: Required. JSON Web Token signed using a CPI private
-	// key. Payload
-	// must be the JSON encoding of the [Device]. The user_id field must be
-	// set.
+	// key. Payload must be the JSON encoding of the [Device]. The user_id
+	// field must be set.
 	EncodedDevice string `json:"encodedDevice,omitempty"`
 
 	// InstallerId: Required. Unique installer id (cpiId) from the Certified
-	// Professional
-	// Installers database.
+	// Professional Installers database.
 	InstallerId string `json:"installerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncodedDevice") to
@@ -450,8 +443,7 @@ type SasPortalDevice struct {
 	ActiveConfig *SasPortalDeviceConfig `json:"activeConfig,omitempty"`
 
 	// DeviceMetadata: Device parameters that can be overridden by both SAS
-	// Portal and SAS
-	// registration requests.
+	// Portal and SAS registration requests.
 	DeviceMetadata *SasPortalDeviceMetadata `json:"deviceMetadata,omitempty"`
 
 	// DisplayName: Device display name.
@@ -470,8 +462,7 @@ type SasPortalDevice struct {
 	// Portal API.
 	PreloadedConfig *SasPortalDeviceConfig `json:"preloadedConfig,omitempty"`
 
-	// SerialNumber: A serial number assigned to the device by the
-	// device
+	// SerialNumber: A serial number assigned to the device by the device
 	// manufacturer.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
@@ -480,8 +471,7 @@ type SasPortalDevice struct {
 	// Possible values:
 	//   "DEVICE_STATE_UNSPECIFIED" - Unspecified state.
 	//   "RESERVED" - Device created in the SAS Portal, however, not yet
-	// registered
-	// with SAS.
+	// registered with SAS.
 	//   "REGISTERED" - Device registered with SAS.
 	//   "DEREGISTERED" - Device de-registered with SAS.
 	State string `json:"state,omitempty"`
@@ -517,9 +507,7 @@ func (s *SasPortalDevice) MarshalJSON() ([]byte, error) {
 // interface.
 type SasPortalDeviceAirInterface struct {
 	// RadioTechnology: This field specifies the radio access technology
-	// that is used for the CBSD.
-	//
-	// Conditional
+	// that is used for the CBSD. Conditional
 	//
 	// Possible values:
 	//   "RADIO_TECHNOLOGY_UNSPECIFIED"
@@ -534,12 +522,8 @@ type SasPortalDeviceAirInterface struct {
 	RadioTechnology string `json:"radioTechnology,omitempty"`
 
 	// SupportedSpec: This field is related to the radioTechnology field and
-	// provides the air
-	// interface specification that the CBSD is compliant with at the time
-	// of
-	// registration.
-	//
-	// Optional
+	// provides the air interface specification that the CBSD is compliant
+	// with at the time of registration. Optional
 	SupportedSpec string `json:"supportedSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RadioTechnology") to
@@ -640,10 +624,8 @@ func (s *SasPortalDeviceConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalDeviceGrant: Device grant. It is an authorization provided
-// by the Spectrum
-// Access System to a device to transmit using specified
-// operating
-// parameters after a successful heartbeat by the device.
+// by the Spectrum Access System to a device to transmit using specified
+// operating parameters after a successful heartbeat by the device.
 type SasPortalDeviceGrant struct {
 	// ChannelType: Type of channel used.
 	//
@@ -660,10 +642,8 @@ type SasPortalDeviceGrant struct {
 	FrequencyRange *SasPortalFrequencyRange `json:"frequencyRange,omitempty"`
 
 	// MaxEirp: Maximum Equivalent Isotropically Radiated Power (EIRP)
-	// permitted
-	// by the grant. The maximum EIRP is in units of dBm/MHz. The
-	// value of maxEirp represents the average (RMS) EIRP that would
-	// be
+	// permitted by the grant. The maximum EIRP is in units of dBm/MHz. The
+	// value of maxEirp represents the average (RMS) EIRP that would be
 	// measured by the procedure defined in FCC part 96.41(e)(3).
 	MaxEirp float64 `json:"maxEirp,omitempty"`
 
@@ -802,17 +782,11 @@ func (s *SasPortalDpaMoveList) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalEmpty: A generic empty message that you can re-use to avoid
-// defining duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// defining duplicated empty messages in your APIs. A typical example is
+// to use it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type SasPortalEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -869,16 +843,14 @@ func (s *SasPortalFrequencyRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SasPortalGenerateSecretRequest: Request for GenerateSecret
-// method]
+// SasPortalGenerateSecretRequest: Request for GenerateSecret method]
 // [spectrum.sas.portal.v1alpha1.DeviceManager.GenerateSecret].
 type SasPortalGenerateSecretRequest struct {
 }
 
 // SasPortalGenerateSecretResponse: Response for GenerateSecret method.
 type SasPortalGenerateSecretResponse struct {
-	// Secret: The secret generated by the string and used
-	// by
+	// Secret: The secret generated by the string and used by
 	// [ValidateInstaller] method.
 	Secret string `json:"secret,omitempty"`
 
@@ -942,41 +914,32 @@ func (s *SasPortalGetPolicyRequest) MarshalJSON() ([]byte, error) {
 // installation parameters.
 type SasPortalInstallationParams struct {
 	// AntennaAzimuth: Boresight direction of the horizontal plane of the
-	// antenna in
-	// degrees with respect to true north. The value of this parameter
-	// is an integer with a value between 0 and 359 inclusive. A value
-	// of 0 degrees means true north; a value of 90 degrees means
-	// east. This parameter is optional for Category A devices
-	// and
+	// antenna in degrees with respect to true north. The value of this
+	// parameter is an integer with a value between 0 and 359 inclusive. A
+	// value of 0 degrees means true north; a value of 90 degrees means
+	// east. This parameter is optional for Category A devices and
 	// conditional for Category B devices.
 	AntennaAzimuth int64 `json:"antennaAzimuth,omitempty"`
 
 	// AntennaBeamwidth: 3-dB antenna beamwidth of the antenna in the
-	// horizontal-plane in
-	// degrees.  This parameter is an unsigned integer having a
-	// value
-	// between 0 and 360 (degrees) inclusive; it is optional for
-	// Category A devices and conditional for Category B devices.
+	// horizontal-plane in degrees. This parameter is an unsigned integer
+	// having a value between 0 and 360 (degrees) inclusive; it is optional
+	// for Category A devices and conditional for Category B devices.
 	AntennaBeamwidth int64 `json:"antennaBeamwidth,omitempty"`
 
 	// AntennaDowntilt: Antenna downtilt in degrees and is an integer with a
-	// value
-	// between -90 and +90 inclusive; a negative value means the antenna
-	// is tilted up (above horizontal). This parameter is optional
-	// for
-	// Category A devices and conditional for Category B devices.
+	// value between -90 and +90 inclusive; a negative value means the
+	// antenna is tilted up (above horizontal). This parameter is optional
+	// for Category A devices and conditional for Category B devices.
 	AntennaDowntilt int64 `json:"antennaDowntilt,omitempty"`
 
 	// AntennaGain: Peak antenna gain in dBi. This parameter is an integer
-	// with a
-	// value between -127 and +128 (dBi) inclusive.
+	// with a value between -127 and +128 (dBi) inclusive.
 	AntennaGain int64 `json:"antennaGain,omitempty"`
 
 	// AntennaModel: If an external antenna is used, the antenna model is
-	// optionally
-	// provided in this field. The string has a maximum length of
-	// 128
-	// octets.
+	// optionally provided in this field. The string has a maximum length of
+	// 128 octets.
 	AntennaModel string `json:"antennaModel,omitempty"`
 
 	// CpeCbsdIndication: If present, this parameter specifies whether the
@@ -984,18 +947,15 @@ type SasPortalInstallationParams struct {
 	CpeCbsdIndication bool `json:"cpeCbsdIndication,omitempty"`
 
 	// EirpCapability: This parameter is the maximum device EIRP in units of
-	// dBm/10MHz
-	// and is an integer with a value between -127 and +47 (dBm/10
-	// MHz)
-	// inclusive. If not included, SAS interprets it as maximum
+	// dBm/10MHz and is an integer with a value between -127 and +47 (dBm/10
+	// MHz) inclusive. If not included, SAS interprets it as maximum
 	// allowable EIRP in units of dBm/10MHz for device category.
 	EirpCapability int64 `json:"eirpCapability,omitempty"`
 
 	// Height: Device antenna height in meters. When the heightType
-	// parameter
-	// value is "AGL", the antenna height should be given relative to
-	// ground level. When the heightType parameter value is "AMSL", it
-	// is given with respect to WGS84 datum.
+	// parameter value is "AGL", the antenna height should be given relative
+	// to ground level. When the heightType parameter value is "AMSL", it is
+	// given with respect to WGS84 datum.
 	Height float64 `json:"height,omitempty"`
 
 	// HeightType: Specifies how the height is measured.
@@ -1009,39 +969,30 @@ type SasPortalInstallationParams struct {
 	HeightType string `json:"heightType,omitempty"`
 
 	// HorizontalAccuracy: A positive number in meters to indicate accuracy
-	// of the device
-	// antenna horizontal location. This optional parameter should only
-	// be present if its value is less than the FCC requirement of
-	// 50
-	// meters.
+	// of the device antenna horizontal location. This optional parameter
+	// should only be present if its value is less than the FCC requirement
+	// of 50 meters.
 	HorizontalAccuracy float64 `json:"horizontalAccuracy,omitempty"`
 
 	// IndoorDeployment: Whether the device antenna is indoor or not. True:
-	// indoor. False:
-	// outdoor.
+	// indoor. False: outdoor.
 	IndoorDeployment bool `json:"indoorDeployment,omitempty"`
 
 	// Latitude: Latitude of the device antenna location in degrees relative
-	// to
-	// the WGS 84 datum. The allowed range is from -90.000000 to
-	// +90.000000. Positive values represent latitudes north of the
-	// equator; negative values south of the equator.
+	// to the WGS 84 datum. The allowed range is from -90.000000 to
+	// +90.000000. Positive values represent latitudes north of the equator;
+	// negative values south of the equator.
 	Latitude float64 `json:"latitude,omitempty"`
 
 	// Longitude: Longitude of the device antenna location. in degrees
-	// relative to
-	// the WGS 84 datum. The allowed range is from -180.000000
-	// to
-	// +180.000000. Positive values represent longitudes east of the
-	// prime meridian; negative values west of the prime
-	// meridian.
+	// relative to the WGS 84 datum. The allowed range is from -180.000000
+	// to +180.000000. Positive values represent longitudes east of the
+	// prime meridian; negative values west of the prime meridian.
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// VerticalAccuracy: A positive number in meters to indicate accuracy of
-	// the device
-	// antenna vertical location. This optional parameter should only
-	// be
-	// present if its value is less than the FCC requirement of 3
+	// the device antenna vertical location. This optional parameter should
+	// only be present if its value is less than the FCC requirement of 3
 	// meters.
 	VerticalAccuracy float64 `json:"verticalAccuracy,omitempty"`
 
@@ -1093,15 +1044,13 @@ func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
 
 // SasPortalListCustomersResponse: Response for `ListCustomers`.
 type SasPortalListCustomersResponse struct {
-	// Customers: The list of customers that
-	// match the request.
+	// Customers: The list of customers that match the request.
 	Customers []*SasPortalCustomer `json:"customers,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListCustomers method that indicates from
-	// where listing should continue. If the field is missing or empty, it
-	// means
-	// there are no more customers.
+	// ListCustomers method that indicates from where listing should
+	// continue. If the field is missing or empty, it means there are no
+	// more customers.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1137,9 +1086,8 @@ type SasPortalListDevicesResponse struct {
 	Devices []*SasPortalDevice `json:"devices,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListDevices method
-	// that indicates from where listing should continue. If the field
-	// is missing or empty, it means there is no more devices.
+	// ListDevices method that indicates from where listing should continue.
+	// If the field is missing or empty, it means there is no more devices.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1171,12 +1119,9 @@ func (s *SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
 
 // SasPortalListNodesResponse: Response for ListNodes method.
 type SasPortalListNodesResponse struct {
-	// NextPageToken: A pagination token returned from a previous call
-	// to
-	// ListNodes method
-	// that indicates from where listing should continue. If the field is
-	// missing
-	// or empty, it means there is no more nodes.
+	// NextPageToken: A pagination token returned from a previous call to
+	// ListNodes method that indicates from where listing should continue.
+	// If the field is missing or empty, it means there is no more nodes.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Nodes: The nodes that match the request.
@@ -1212,8 +1157,7 @@ func (s *SasPortalListNodesResponse) MarshalJSON() ([]byte, error) {
 // SasPortalMoveDeviceRequest: Request for MoveDevice method.
 type SasPortalMoveDeviceRequest struct {
 	// Destination: Required. The name of the new parent resource (Node or
-	// Customer) to
-	// reparent the device under.
+	// Customer) to reparent the device under.
 	Destination string `json:"destination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
@@ -1307,52 +1251,38 @@ func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalOperation: This resource represents a long-running operation
-// that is the result of a
-// network API call.
+// that is the result of a network API call.
 type SasPortalOperation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *SasPortalStatus `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1387,18 +1317,14 @@ type SasPortalPolicy struct {
 	Assignments []*SasPortalAssignment `json:"assignments,omitempty"`
 
 	// Etag: The [etag] is used for optimistic concurrency control as a way
-	// to
-	// help prevent simultaneous updates of a policy from overwriting
-	// each other.  It is strongly suggested that systems make use of
-	// the [etag] in the read-modify-write cycle to perform policy
-	// updates in order to avoid race conditions: An [etag] is returned
-	// in the response to [GetPolicy], and systems are expected to put
-	// that etag in the request to [SetPolicy] to ensure that their
-	// change will be applied to the same version of the policy.
-	//
-	// If no [etag] is provided in the call to [SetPolicy], then
-	// the
-	// existing policy is overwritten blindly.
+	// to help prevent simultaneous updates of a policy from overwriting
+	// each other. It is strongly suggested that systems make use of the
+	// [etag] in the read-modify-write cycle to perform policy updates in
+	// order to avoid race conditions: An [etag] is returned in the response
+	// to [GetPolicy], and systems are expected to put that etag in the
+	// request to [SetPolicy] to ensure that their change will be applied to
+	// the same version of the policy. If no [etag] is provided in the call
+	// to [SetPolicy], then the existing policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1434,8 +1360,7 @@ type SasPortalSetPolicyRequest struct {
 	Policy *SasPortalPolicy `json:"policy,omitempty"`
 
 	// Resource: Required. The resource for which the policy is being
-	// specified. This policy
-	// replaces any existing policy.
+	// specified. This policy replaces any existing policy.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1463,9 +1388,8 @@ func (s *SasPortalSetPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // SasPortalSignDeviceRequest: Request for SignDevice method.
 type SasPortalSignDeviceRequest struct {
-	// Device: Required. The device to sign.
-	// The device fields name, fcc_id and serial_number must be set.
-	// The user_id field must be set.
+	// Device: Required. The device to sign. The device fields name, fcc_id
+	// and serial_number must be set. The user_id field must be set.
 	Device *SasPortalDevice `json:"device,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
@@ -1492,32 +1416,24 @@ func (s *SasPortalSignDeviceRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SasPortalStatus: The `Status` type defines a logical error model that
-// is suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// is suitable for different programming environments, including REST
+// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
+// Each `Status` message contains three pieces of data: error code,
+// error message, and error details. You can find out more about this
+// error model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type SasPortalStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1613,14 +1529,12 @@ func (s *SasPortalTestPermissionsResponse) MarshalJSON() ([]byte, error) {
 // method.
 type SasPortalUpdateSignedDeviceRequest struct {
 	// EncodedDevice: Required. The JSON Web Token signed using a CPI
-	// private key. Payload
-	// must be the JSON encoding
-	// of the device. The user_id field must be set.
+	// private key. Payload must be the JSON encoding of the device. The
+	// user_id field must be set.
 	EncodedDevice string `json:"encodedDevice,omitempty"`
 
 	// InstallerId: Required. Unique installer ID (CPI ID) from the
-	// Certified Professional
-	// Installers database.
+	// Certified Professional Installers database.
 	InstallerId string `json:"installerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncodedDevice") to
@@ -1650,12 +1564,10 @@ func (s *SasPortalUpdateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
 // method.
 type SasPortalValidateInstallerRequest struct {
 	// EncodedSecret: Required. JSON Web Token signed using a CPI private
-	// key. Payload
-	// must include a "secret" claim whose value is the secret.
+	// key. Payload must include a "secret" claim whose value is the secret.
 	EncodedSecret string `json:"encodedSecret,omitempty"`
 
-	// InstallerId: Required. Unique installer id (cpiId) from the
-	// Certified
+	// InstallerId: Required. Unique installer id (cpiId) from the Certified
 	// Professional Installers database.
 	InstallerId string `json:"installerId,omitempty"`
 
@@ -1687,8 +1599,7 @@ func (s *SasPortalValidateInstallerRequest) MarshalJSON() ([]byte, error) {
 
 // SasPortalValidateInstallerResponse: Response for ValidateInstaller
 // method]
-// [spectrum.sas.portal.v1alpha1.DeviceManager.ValidateInstaller]
-// .
+// [spectrum.sas.portal.v1alpha1.DeviceManager.ValidateInstaller].
 type SasPortalValidateInstallerResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1750,7 +1661,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,8 +1767,7 @@ func (r *CustomersService) List() *CustomersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of customers
-// to return in the response.
+// of customers to return in the response.
 func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1865,8 +1775,7 @@ func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to ListCustomers method that indicates
-// where
-// this listing should continue from.
+// where this listing should continue from.
 func (c *CustomersListCall) PageToken(pageToken string) *CustomersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1909,7 +1818,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1975,13 +1884,13 @@ func (c *CustomersListCall) Do(opts ...googleapi.CallOption) (*SasPortalListCust
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of customers\nto return in the response.",
+	//       "description": "The maximum number of customers to return in the response.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListCustomers method that indicates where\nthis listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListCustomers method that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2071,7 +1980,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2218,7 +2127,7 @@ func (c *CustomersDevicesBulkCall) Header() http.Header {
 
 func (c *CustomersDevicesBulkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2359,7 +2268,7 @@ func (c *CustomersDevicesCreateCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2464,8 +2373,7 @@ type CustomersDevicesCreateSignedCall struct {
 	header_                            http.Header
 }
 
-// CreateSigned: Creates a signed device under a
-// node or customer.
+// CreateSigned: Creates a signed device under a node or customer.
 func (r *CustomersDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *CustomersDevicesCreateSignedCall {
 	c := &CustomersDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2500,7 +2408,7 @@ func (c *CustomersDevicesCreateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2564,7 +2472,7 @@ func (c *CustomersDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*Sa
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a signed device under a\nnode or customer.",
+	//   "description": "Creates a signed device under a node or customer.",
 	//   "flatPath": "v1alpha1/customers/{customersId}/devices:createSigned",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.customers.devices.createSigned",
@@ -2638,7 +2546,7 @@ func (c *CustomersDevicesDeleteCall) Header() http.Header {
 
 func (c *CustomersDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2779,7 +2687,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2887,27 +2795,25 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 }
 
 // Filter sets the optional parameter "filter": The filter expression.
-// The filter should have one of the following
-// formats: "sn=123454" or "display_name=MyDevice". sn
-// corresponds to serial_number of the device. The filter is case
-// insensitive.
+// The filter should have one of the following formats: "sn=123454" or
+// "display_name=MyDevice". sn corresponds to serial_number of the
+// device. The filter is case insensitive.
 func (c *CustomersDevicesListCall) Filter(filter string) *CustomersDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to return in the response.
-// If empty or zero, all devices will be listed.
-// Must be in the range [0, 1000].
+// of devices to return in the response. If empty or zero, all devices
+// will be listed. Must be in the range [0, 1000].
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDevices
-// that indicates where this listing should continue from.
+// returned from a previous call to ListDevices that indicates where
+// this listing should continue from.
 func (c *CustomersDevicesListCall) PageToken(pageToken string) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2950,7 +2856,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3021,18 +2927,18 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following\nformats: \"sn=123454\" or \"display_name=MyDevice\". sn\ncorresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
+	//       "description": "The maximum number of devices to return in the response. If empty or zero, all devices will be listed. Must be in the range [0, 1000].",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDevices\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDevices that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3122,7 +3028,7 @@ func (c *CustomersDevicesMoveCall) Header() http.Header {
 
 func (c *CustomersDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3269,7 +3175,7 @@ func (c *CustomersDevicesPatchCall) Header() http.Header {
 
 func (c *CustomersDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3415,7 +3321,7 @@ func (c *CustomersDevicesSignDeviceCall) Header() http.Header {
 
 func (c *CustomersDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3555,7 +3461,7 @@ func (c *CustomersDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3695,7 +3601,7 @@ func (c *CustomersNodesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3833,7 +3739,7 @@ func (c *CustomersNodesDeleteCall) Header() http.Header {
 
 func (c *CustomersNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3974,7 +3880,7 @@ func (c *CustomersNodesGetCall) Header() http.Header {
 
 func (c *CustomersNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4089,8 +3995,8 @@ func (c *CustomersNodesListCall) PageSize(pageSize int64) *CustomersNodesListCal
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method
-// that indicates where this listing should continue from.
+// returned from a previous call to ListNodes method that indicates
+// where this listing should continue from.
 func (c *CustomersNodesListCall) PageToken(pageToken string) *CustomersNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4133,7 +4039,7 @@ func (c *CustomersNodesListCall) Header() http.Header {
 
 func (c *CustomersNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4210,7 +4116,7 @@ func (c *CustomersNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLis
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4300,7 +4206,7 @@ func (c *CustomersNodesMoveCall) Header() http.Header {
 
 func (c *CustomersNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4373,7 +4279,7 @@ func (c *CustomersNodesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalOpe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the node to\nmove.",
+	//       "description": "Required. The name of the node to move.",
 	//       "location": "path",
 	//       "pattern": "^customers/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -4447,7 +4353,7 @@ func (c *CustomersNodesPatchCall) Header() http.Header {
 
 func (c *CustomersNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4593,7 +4499,7 @@ func (c *CustomersNodesNodesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4713,8 +4619,8 @@ func (c *CustomersNodesNodesListCall) PageSize(pageSize int64) *CustomersNodesNo
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method
-// that indicates where this listing should continue from.
+// returned from a previous call to ListNodes method that indicates
+// where this listing should continue from.
 func (c *CustomersNodesNodesListCall) PageToken(pageToken string) *CustomersNodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4757,7 +4663,7 @@ func (c *CustomersNodesNodesListCall) Header() http.Header {
 
 func (c *CustomersNodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4834,7 +4740,7 @@ func (c *CustomersNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4923,7 +4829,7 @@ func (c *InstallerGenerateSecretCall) Header() http.Header {
 
 func (c *InstallerGenerateSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5049,7 +4955,7 @@ func (c *InstallerValidateCall) Header() http.Header {
 
 func (c *InstallerValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5186,7 +5092,7 @@ func (c *NodesGetCall) Header() http.Header {
 
 func (c *NodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5322,7 +5228,7 @@ func (c *NodesDevicesBulkCall) Header() http.Header {
 
 func (c *NodesDevicesBulkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5463,7 +5369,7 @@ func (c *NodesDevicesCreateCall) Header() http.Header {
 
 func (c *NodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5568,8 +5474,7 @@ type NodesDevicesCreateSignedCall struct {
 	header_                            http.Header
 }
 
-// CreateSigned: Creates a signed device under a
-// node or customer.
+// CreateSigned: Creates a signed device under a node or customer.
 func (r *NodesDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *NodesDevicesCreateSignedCall {
 	c := &NodesDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5604,7 +5509,7 @@ func (c *NodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5668,7 +5573,7 @@ func (c *NodesDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*SasPor
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a signed device under a\nnode or customer.",
+	//   "description": "Creates a signed device under a node or customer.",
 	//   "flatPath": "v1alpha1/nodes/{nodesId}/devices:createSigned",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.nodes.devices.createSigned",
@@ -5742,7 +5647,7 @@ func (c *NodesDevicesDeleteCall) Header() http.Header {
 
 func (c *NodesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5883,7 +5788,7 @@ func (c *NodesDevicesGetCall) Header() http.Header {
 
 func (c *NodesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5991,27 +5896,25 @@ func (r *NodesDevicesService) List(parent string) *NodesDevicesListCall {
 }
 
 // Filter sets the optional parameter "filter": The filter expression.
-// The filter should have one of the following
-// formats: "sn=123454" or "display_name=MyDevice". sn
-// corresponds to serial_number of the device. The filter is case
-// insensitive.
+// The filter should have one of the following formats: "sn=123454" or
+// "display_name=MyDevice". sn corresponds to serial_number of the
+// device. The filter is case insensitive.
 func (c *NodesDevicesListCall) Filter(filter string) *NodesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to return in the response.
-// If empty or zero, all devices will be listed.
-// Must be in the range [0, 1000].
+// of devices to return in the response. If empty or zero, all devices
+// will be listed. Must be in the range [0, 1000].
 func (c *NodesDevicesListCall) PageSize(pageSize int64) *NodesDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDevices
-// that indicates where this listing should continue from.
+// returned from a previous call to ListDevices that indicates where
+// this listing should continue from.
 func (c *NodesDevicesListCall) PageToken(pageToken string) *NodesDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6054,7 +5957,7 @@ func (c *NodesDevicesListCall) Header() http.Header {
 
 func (c *NodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6125,18 +6028,18 @@ func (c *NodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListD
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following\nformats: \"sn=123454\" or \"display_name=MyDevice\". sn\ncorresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
+	//       "description": "The maximum number of devices to return in the response. If empty or zero, all devices will be listed. Must be in the range [0, 1000].",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDevices\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDevices that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6226,7 +6129,7 @@ func (c *NodesDevicesMoveCall) Header() http.Header {
 
 func (c *NodesDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6373,7 +6276,7 @@ func (c *NodesDevicesPatchCall) Header() http.Header {
 
 func (c *NodesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6519,7 +6422,7 @@ func (c *NodesDevicesSignDeviceCall) Header() http.Header {
 
 func (c *NodesDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6659,7 +6562,7 @@ func (c *NodesDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6799,7 +6702,7 @@ func (c *NodesNodesCreateCall) Header() http.Header {
 
 func (c *NodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6937,7 +6840,7 @@ func (c *NodesNodesDeleteCall) Header() http.Header {
 
 func (c *NodesNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7078,7 +6981,7 @@ func (c *NodesNodesGetCall) Header() http.Header {
 
 func (c *NodesNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7193,8 +7096,8 @@ func (c *NodesNodesListCall) PageSize(pageSize int64) *NodesNodesListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method
-// that indicates where this listing should continue from.
+// returned from a previous call to ListNodes method that indicates
+// where this listing should continue from.
 func (c *NodesNodesListCall) PageToken(pageToken string) *NodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7237,7 +7140,7 @@ func (c *NodesNodesListCall) Header() http.Header {
 
 func (c *NodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7314,7 +7217,7 @@ func (c *NodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListNod
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7404,7 +7307,7 @@ func (c *NodesNodesMoveCall) Header() http.Header {
 
 func (c *NodesNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7477,7 +7380,7 @@ func (c *NodesNodesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalOperati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the node to\nmove.",
+	//       "description": "Required. The name of the node to move.",
 	//       "location": "path",
 	//       "pattern": "^nodes/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -7551,7 +7454,7 @@ func (c *NodesNodesPatchCall) Header() http.Header {
 
 func (c *NodesNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7698,7 +7601,7 @@ func (c *NodesNodesDevicesBulkCall) Header() http.Header {
 
 func (c *NodesNodesDevicesBulkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7839,7 +7742,7 @@ func (c *NodesNodesDevicesCreateCall) Header() http.Header {
 
 func (c *NodesNodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7944,8 +7847,7 @@ type NodesNodesDevicesCreateSignedCall struct {
 	header_                            http.Header
 }
 
-// CreateSigned: Creates a signed device under a
-// node or customer.
+// CreateSigned: Creates a signed device under a node or customer.
 func (r *NodesNodesDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *NodesNodesDevicesCreateSignedCall {
 	c := &NodesNodesDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7980,7 +7882,7 @@ func (c *NodesNodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesNodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8044,7 +7946,7 @@ func (c *NodesNodesDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a signed device under a\nnode or customer.",
+	//   "description": "Creates a signed device under a node or customer.",
 	//   "flatPath": "v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices:createSigned",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.nodes.nodes.devices.createSigned",
@@ -8093,27 +7995,25 @@ func (r *NodesNodesDevicesService) List(parent string) *NodesNodesDevicesListCal
 }
 
 // Filter sets the optional parameter "filter": The filter expression.
-// The filter should have one of the following
-// formats: "sn=123454" or "display_name=MyDevice". sn
-// corresponds to serial_number of the device. The filter is case
-// insensitive.
+// The filter should have one of the following formats: "sn=123454" or
+// "display_name=MyDevice". sn corresponds to serial_number of the
+// device. The filter is case insensitive.
 func (c *NodesNodesDevicesListCall) Filter(filter string) *NodesNodesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to return in the response.
-// If empty or zero, all devices will be listed.
-// Must be in the range [0, 1000].
+// of devices to return in the response. If empty or zero, all devices
+// will be listed. Must be in the range [0, 1000].
 func (c *NodesNodesDevicesListCall) PageSize(pageSize int64) *NodesNodesDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDevices
-// that indicates where this listing should continue from.
+// returned from a previous call to ListDevices that indicates where
+// this listing should continue from.
 func (c *NodesNodesDevicesListCall) PageToken(pageToken string) *NodesNodesDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8156,7 +8056,7 @@ func (c *NodesNodesDevicesListCall) Header() http.Header {
 
 func (c *NodesNodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8227,18 +8127,18 @@ func (c *NodesNodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following\nformats: \"sn=123454\" or \"display_name=MyDevice\". sn\ncorresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response.\nIf empty or zero, all devices will be listed.\nMust be in the range [0, 1000].",
+	//       "description": "The maximum number of devices to return in the response. If empty or zero, all devices will be listed. Must be in the range [0, 1000].",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDevices\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDevices that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8328,7 +8228,7 @@ func (c *NodesNodesNodesCreateCall) Header() http.Header {
 
 func (c *NodesNodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8448,8 +8348,8 @@ func (c *NodesNodesNodesListCall) PageSize(pageSize int64) *NodesNodesNodesListC
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method
-// that indicates where this listing should continue from.
+// returned from a previous call to ListNodes method that indicates
+// where this listing should continue from.
 func (c *NodesNodesNodesListCall) PageToken(pageToken string) *NodesNodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8492,7 +8392,7 @@ func (c *NodesNodesNodesListCall) Header() http.Header {
 
 func (c *NodesNodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8569,7 +8469,7 @@ func (c *NodesNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLi
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8623,10 +8523,8 @@ type PoliciesGetCall struct {
 	header_                   http.Header
 }
 
-// Get: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
-// set.
+// Get: Gets the access control policy for a resource. Returns an empty
+// policy if the resource exists and does not have a policy set.
 func (r *PoliciesService) Get(sasportalgetpolicyrequest *SasPortalGetPolicyRequest) *PoliciesGetCall {
 	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sasportalgetpolicyrequest = sasportalgetpolicyrequest
@@ -8660,7 +8558,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8721,7 +8619,7 @@ func (c *PoliciesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalPolicy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1alpha1/policies:get",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.policies.get",
@@ -8752,8 +8650,7 @@ type PoliciesSetCall struct {
 }
 
 // Set: Sets the access control policy on the specified resource.
-// Replaces any
-// existing policy.
+// Replaces any existing policy.
 func (r *PoliciesService) Set(sasportalsetpolicyrequest *SasPortalSetPolicyRequest) *PoliciesSetCall {
 	c := &PoliciesSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sasportalsetpolicyrequest = sasportalsetpolicyrequest
@@ -8787,7 +8684,7 @@ func (c *PoliciesSetCall) Header() http.Header {
 
 func (c *PoliciesSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8848,7 +8745,7 @@ func (c *PoliciesSetCall) Do(opts ...googleapi.CallOption) (*SasPortalPolicy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
 	//   "flatPath": "v1alpha1/policies:set",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.policies.set",
@@ -8913,7 +8810,7 @@ func (c *PoliciesTestCall) Header() http.Header {
 
 func (c *PoliciesTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

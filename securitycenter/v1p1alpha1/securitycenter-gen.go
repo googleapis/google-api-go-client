@@ -157,39 +157,27 @@ type OrganizationsOperationsService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Finding: Security Command Center finding.
-//
-// A finding is a record of assessment data like security, risk, health,
-// or
-// privacy, that is ingested into Security Command Center for
-// presentation,
-// notification, analysis, policy testing, and enforcement. For example,
-// a
-// cross-site scripting (XSS) vulnerability in an App Engine application
-// is a
+// Finding: Security Command Center finding. A finding is a record of
+// assessment data like security, risk, health, or privacy, that is
+// ingested into Security Command Center for presentation, notification,
+// analysis, policy testing, and enforcement. For example, a cross-site
+// scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
 	// Category: The additional taxonomy group within findings from a given
-	// source.
-	// This field is immutable after creation time.
-	// Example: "XSS_FLASH_INJECTION"
+	// source. This field is immutable after creation time. Example:
+	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
@@ -197,65 +185,45 @@ type Finding struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// EventTime: The time at which the event took place. For example, if
-	// the finding
-	// represents an open firewall it would capture the time the detector
-	// believes
-	// the firewall became open. The accuracy is determined by the detector.
+	// the finding represents an open firewall it would capture the time the
+	// detector believes the firewall became open. The accuracy is
+	// determined by the detector.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
-	// of Security
-	// Command Center where additional information about the finding can be
-	// found.
-	// This field is guaranteed to be either empty or a well formed URL.
+	// of Security Command Center where additional information about the
+	// finding can be found. This field is guaranteed to be either empty or
+	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
-	// Name: The relative resource name of this finding.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id
-	// }/findings/{finding_id}"
+	// Name: The relative resource name of this finding. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
-	// to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// This field is immutable after creation time.
-	// For example:
+	// to. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
-	// resource
-	// name of the Google Cloud resource this finding is for.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
-	// When the finding is for a non-Google Cloud resource, the resourceName
-	// can
-	// be a customer or partner defined string. This field is immutable
-	// after
-	// creation time.
+	// resource name of the Google Cloud resource this finding is for. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
+	// time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
-	// marks are entirely
-	// managed by the user and come from the SecurityMarks resource that
-	// belongs
-	// to the finding.
+	// marks are entirely managed by the user and come from the
+	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
 
 	// SourceProperties: Source specific properties. These properties are
-	// managed by the source
-	// that writes the finding. The key names in the source_properties map
-	// must be
-	// between 1 and 255 characters, and must start with a letter and
-	// contain
-	// alphanumeric characters or underscores only.
+	// managed by the source that writes the finding. The key names in the
+	// source_properties map must be between 1 and 255 characters, and must
+	// start with a letter and contain alphanumeric characters or
+	// underscores only.
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
 
 	// State: The state of the finding.
@@ -265,8 +233,7 @@ type Finding struct {
 	//   "ACTIVE" - The finding requires attention and has not been
 	// addressed yet.
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed
-	// and is no longer active.
+	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
@@ -296,8 +263,7 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 // Notification
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
 	// Finding: If it's a Finding based notification config, this field will
-	// be
-	// populated.
+	// be populated.
 	Finding *Finding `json:"finding,omitempty"`
 
 	// NotificationConfigName: Name of the notification config that
@@ -330,28 +296,25 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Resource:
-// Information related to the Google Cloud resource.
+// GoogleCloudSecuritycenterV1Resource:  Information related to the
+// Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
-	// Name: The full resource name of the resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// Name: The full resource name of the resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
 
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:
-	// The human readable name of resource's parent.
+	// ParentDisplayName:  The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:
-	// The human readable name of project that the resource belongs to.
+	// ProjectDisplayName:  The human readable name of project that the
+	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -389,8 +352,8 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -429,8 +392,8 @@ type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -458,57 +421,44 @@ func (s *GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON(
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Asset: Security Command Center
-// representation of a Google Cloud
-// resource.
-//
-// The Asset is a Security Command Center resource that captures
-// information
-// about a single Google Cloud resource. All modifications to an Asset
-// are only
-// within the context of Security Command Center and don't affect the
-// referenced
-// Google Cloud resource.
+// representation of a Google Cloud resource. The Asset is a Security
+// Command Center resource that captures information about a single
+// Google Cloud resource. All modifications to an Asset are only within
+// the context of Security Command Center and don't affect the
+// referenced Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Asset struct {
 	// CreateTime: The time at which the asset was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// IamPolicy: Cloud IAM Policy information associated with the Google
-	// Cloud resource
-	// described by the Security Command Center asset. This information is
-	// managed
-	// and defined by the Google Cloud resource and cannot be modified by
-	// the
-	// user.
+	// Cloud resource described by the Security Command Center asset. This
+	// information is managed and defined by the Google Cloud resource and
+	// cannot be modified by the user.
 	IamPolicy *GoogleCloudSecuritycenterV1p1beta1IamPolicy `json:"iamPolicy,omitempty"`
 
-	// Name: The relative resource name of this asset.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/assets/{asset_id}"
-	// .
+	// Name: The relative resource name of this asset. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/assets/{asset_id}".
 	Name string `json:"name,omitempty"`
 
 	// ResourceProperties: Resource managed properties. These properties are
-	// managed and defined by
-	// the Google Cloud resource and cannot be modified by the user.
+	// managed and defined by the Google Cloud resource and cannot be
+	// modified by the user.
 	ResourceProperties googleapi.RawMessage `json:"resourceProperties,omitempty"`
 
 	// SecurityCenterProperties: Security Command Center managed properties.
-	// These properties are managed by
-	// Security Command Center and cannot be modified by the user.
+	// These properties are managed by Security Command Center and cannot be
+	// modified by the user.
 	SecurityCenterProperties *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties `json:"securityCenterProperties,omitempty"`
 
 	// SecurityMarks: User specified security marks. These marks are
-	// entirely managed by the user
-	// and come from the SecurityMarks resource that belongs to the asset.
+	// entirely managed by the user and come from the SecurityMarks resource
+	// that belongs to the asset.
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
 
 	// UpdateTime: The time at which the asset was last updated, added, or
-	// deleted in Cloud
-	// SCC.
+	// deleted in Cloud SCC.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -535,20 +485,15 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Asset) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudSecuritycenterV1p1beta1Finding: Security Command Center
-// finding.
-//
-// A finding is a record of assessment data (security, risk, health or
-// privacy)
-// ingested into Security Command Center for presentation,
-// notification,
-// analysis, policy testing, and enforcement. For example, an XSS
-// vulnerability
-// in an App Engine application is a finding.
+// finding. A finding is a record of assessment data (security, risk,
+// health or privacy) ingested into Security Command Center for
+// presentation, notification, analysis, policy testing, and
+// enforcement. For example, an XSS vulnerability in an App Engine
+// application is a finding.
 type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// Category: The additional taxonomy group within findings from a given
-	// source.
-	// This field is immutable after creation time.
-	// Example: "XSS_FLASH_INJECTION"
+	// source. This field is immutable after creation time. Example:
+	// "XSS_FLASH_INJECTION"
 	Category string `json:"category,omitempty"`
 
 	// CreateTime: The time at which the finding was created in Security
@@ -556,65 +501,45 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// EventTime: The time at which the event took place. For example, if
-	// the finding
-	// represents an open firewall it would capture the time the detector
-	// believes
-	// the firewall became open. The accuracy is determined by the detector.
+	// the finding represents an open firewall it would capture the time the
+	// detector believes the firewall became open. The accuracy is
+	// determined by the detector.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
-	// of Security
-	// Command Center where additional information about the finding can be
-	// found.
-	// This field is guaranteed to be either empty or a well formed URL.
+	// of Security Command Center where additional information about the
+	// finding can be found. This field is guaranteed to be either empty or
+	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
-	// Name: The relative resource name of this finding.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Example:
-	// "organizations/{organization_id}/sources/{source_id
-	// }/findings/{finding_id}"
+	// Name: The relative resource name of this finding. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
-	// to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// This field is immutable after creation time.
-	// For example:
+	// to. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
-	// resource
-	// name of the Google Cloud resource this finding is for.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
-	// When the finding is for a non-Google Cloud resource, the resourceName
-	// can
-	// be a customer or partner defined string. This field is immutable
-	// after
-	// creation time.
+	// resource name of the Google Cloud resource this finding is for. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
+	// time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
-	// marks are entirely
-	// managed by the user and come from the SecurityMarks resource that
-	// belongs
-	// to the finding.
+	// marks are entirely managed by the user and come from the
+	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
 
 	// SourceProperties: Source specific properties. These properties are
-	// managed by the source
-	// that writes the finding. The key names in the source_properties map
-	// must be
-	// between 1 and 255 characters, and must start with a letter and
-	// contain
-	// alphanumeric characters or underscores only.
+	// managed by the source that writes the finding. The key names in the
+	// source_properties map must be between 1 and 255 characters, and must
+	// start with a letter and contain alphanumeric characters or
+	// underscores only.
 	SourceProperties googleapi.RawMessage `json:"sourceProperties,omitempty"`
 
 	// State: The state of the finding.
@@ -624,8 +549,7 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	//   "ACTIVE" - The finding requires attention and has not been
 	// addressed yet.
 	//   "INACTIVE" - The finding has been fixed, triaged as a non-issue or
-	// otherwise addressed
-	// and is no longer active.
+	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
@@ -652,18 +576,14 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudSecuritycenterV1p1beta1IamPolicy: Cloud IAM Policy
-// information associated with the Google Cloud resource
-// described by the Security Command Center asset. This information is
-// managed
-// and defined by the Google Cloud resource and cannot be modified by
-// the
+// information associated with the Google Cloud resource described by
+// the Security Command Center asset. This information is managed and
+// defined by the Google Cloud resource and cannot be modified by the
 // user.
 type GoogleCloudSecuritycenterV1p1beta1IamPolicy struct {
 	// PolicyBlob: The JSON representation of the Policy associated with the
-	// asset.
-	// See https://cloud.google.com/iam/docs/reference/rest/v1/Policy
-	// for
-	// format details.
+	// asset. See https://cloud.google.com/iam/docs/reference/rest/v1/Policy
+	// for format details.
 	PolicyBlob string `json:"policyBlob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBlob") to
@@ -693,8 +613,7 @@ func (s *GoogleCloudSecuritycenterV1p1beta1IamPolicy) MarshalJSON() ([]byte, err
 // Command Center's Notification
 type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 	// Finding: If it's a Finding based notification config, this field will
-	// be
-	// populated.
+	// be populated.
 	Finding *GoogleCloudSecuritycenterV1p1beta1Finding `json:"finding,omitempty"`
 
 	// NotificationConfigName: Name of the notification config that
@@ -705,8 +624,7 @@ type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 	Resource *GoogleCloudSecuritycenterV1p1beta1Resource `json:"resource,omitempty"`
 
 	// TemporalAsset: If it's an asset based notification config, this field
-	// will be
-	// populated.
+	// will be populated.
 	TemporalAsset *GoogleCloudSecuritycenterV1p1beta1TemporalAsset `json:"temporalAsset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
@@ -732,28 +650,25 @@ func (s *GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Resource:
-// Information related to the Google Cloud resource.
+// GoogleCloudSecuritycenterV1p1beta1Resource:  Information related to
+// the Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Resource struct {
-	// Name: The full resource name of the resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// Name: The full resource name of the resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
 
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:
-	// The human readable name of resource's parent.
+	// ParentDisplayName:  The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:
-	// The human readable name of project that the resource belongs to.
+	// ProjectDisplayName:  The human readable name of project that the
+	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -791,8 +706,8 @@ type GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse struct {
 	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
 	//   "COMPLETED" - Asset discovery run completed successfully.
 	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
-	// pending, as another
-	// run for the same organization was started with a higher priority.
+	// pending, as another run for the same organization was started with a
+	// higher priority.
 	//   "TERMINATED" - Asset discovery run was killed and terminated.
 	State string `json:"state,omitempty"`
 
@@ -820,29 +735,24 @@ func (s *GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSO
 }
 
 // GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties: Security
-// Command Center managed properties. These properties are managed
-// by
+// Command Center managed properties. These properties are managed by
 // Security Command Center and cannot be modified by the user.
 type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	// ResourceDisplayName: The user defined display name for this resource.
 	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
 
 	// ResourceName: The full resource name of the Google Cloud resource
-	// this asset
-	// represents. This field is immutable after create time.
+	// this asset represents. This field is immutable after create time.
 	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ResourceOwners: Owners of the Google Cloud resource.
 	ResourceOwners []string `json:"resourceOwners,omitempty"`
 
 	// ResourceParent: The full resource name of the immediate parent of the
-	// resource.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// resource. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceParent string `json:"resourceParent,omitempty"`
 
 	// ResourceParentDisplayName: The user defined display name for the
@@ -850,10 +760,8 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	ResourceParentDisplayName string `json:"resourceParentDisplayName,omitempty"`
 
 	// ResourceProject: The full resource name of the project the resource
-	// belongs to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name
+	// belongs to. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	ResourceProject string `json:"resourceProject,omitempty"`
 
 	// ResourceProjectDisplayName: The user defined display name for the
@@ -861,12 +769,9 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
 	ResourceProjectDisplayName string `json:"resourceProjectDisplayName,omitempty"`
 
 	// ResourceType: The type of the Google Cloud resource. Examples
-	// include: APPLICATION,
-	// PROJECT, and ORGANIZATION. This is a case insensitive field defined
-	// by
-	// Security Command Center and/or the producer of the resource and
-	// is
-	// immutable after create time.
+	// include: APPLICATION, PROJECT, and ORGANIZATION. This is a case
+	// insensitive field defined by Security Command Center and/or the
+	// producer of the resource and is immutable after create time.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
@@ -894,33 +799,23 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties) MarshalJSON
 }
 
 // GoogleCloudSecuritycenterV1p1beta1SecurityMarks: User specified
-// security marks that are attached to the parent Security
-// Command Center resource. Security marks are scoped within a Security
-// Command
+// security marks that are attached to the parent Security Command
+// Center resource. Security marks are scoped within a Security Command
 // Center organization -- they can be modified and viewed by all users
-// who have
-// proper permissions on the organization.
+// who have proper permissions on the organization.
 type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 	// Marks: Mutable user specified security marks belonging to the parent
-	// resource.
-	// Constraints are as follows:
-	//
-	//   * Keys and values are treated as case insensitive
-	//   * Keys must be between 1 - 256 characters (inclusive)
-	//   * Keys must be letters, numbers, underscores, or dashes
-	//   * Values have leading and trailing whitespace trimmed, remaining
-	//     characters must be between 1 - 4096 characters (inclusive)
+	// resource. Constraints are as follows: * Keys and values are treated
+	// as case insensitive * Keys must be between 1 - 256 characters
+	// (inclusive) * Keys must be letters, numbers, underscores, or dashes *
+	// Values have leading and trailing whitespace trimmed, remaining
+	// characters must be between 1 - 4096 characters (inclusive)
 	Marks map[string]string `json:"marks,omitempty"`
 
-	// Name: The relative resource name of the SecurityMarks.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Examples:
-	// "organizations/{organization_id}/assets/{asset_id}
-	// /securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/f
-	// indings/{finding_id}/securityMarks".
+	// Name: The relative resource name of the SecurityMarks. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Marks") to
@@ -947,8 +842,8 @@ func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudSecuritycenterV1p1beta1TemporalAsset: Wrapper over asset
-// object that also captures the state change for the asset
-// e.g. if it was a newly created asset vs updated or deleted asset.
+// object that also captures the state change for the asset e.g. if it
+// was a newly created asset vs updated or deleted asset.
 type GoogleCloudSecuritycenterV1p1beta1TemporalAsset struct {
 	// Asset: Asset data that includes attributes, properties and marks
 	// about the asset.
@@ -1024,52 +919,38 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1100,33 +981,23 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // SecurityMarks: User specified security marks that are attached to the
-// parent Security
-// Command Center resource. Security marks are scoped within a Security
-// Command
-// Center organization -- they can be modified and viewed by all users
-// who have
-// proper permissions on the organization.
+// parent Security Command Center resource. Security marks are scoped
+// within a Security Command Center organization -- they can be modified
+// and viewed by all users who have proper permissions on the
+// organization.
 type SecurityMarks struct {
 	// Marks: Mutable user specified security marks belonging to the parent
-	// resource.
-	// Constraints are as follows:
-	//
-	//   * Keys and values are treated as case insensitive
-	//   * Keys must be between 1 - 256 characters (inclusive)
-	//   * Keys must be letters, numbers, underscores, or dashes
-	//   * Values have leading and trailing whitespace trimmed, remaining
-	//     characters must be between 1 - 4096 characters (inclusive)
+	// resource. Constraints are as follows: * Keys and values are treated
+	// as case insensitive * Keys must be between 1 - 256 characters
+	// (inclusive) * Keys must be letters, numbers, underscores, or dashes *
+	// Values have leading and trailing whitespace trimmed, remaining
+	// characters must be between 1 - 4096 characters (inclusive)
 	Marks map[string]string `json:"marks,omitempty"`
 
-	// Name: The relative resource name of the SecurityMarks.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#relative_reso
-	// urce_name
-	// Examples:
-	// "organizations/{organization_id}/assets/{asset_id}
-	// /securityMarks"
-	// "organizations/{organization_id}/sources/{source_id}/f
-	// indings/{finding_id}/securityMarks".
+	// Name: The relative resource name of the SecurityMarks. See:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Marks") to
@@ -1153,32 +1024,24 @@ func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1215,23 +1078,15 @@ type OrganizationsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *OrganizationsOperationsService) Cancel(name string) *OrganizationsOperationsCancelCall {
 	c := &OrganizationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1265,7 +1120,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1324,7 +1179,7 @@ func (c *OrganizationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1p1alpha1/organizations/{organizationsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.operations.cancel",
@@ -1362,12 +1217,9 @@ type OrganizationsOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *OrganizationsOperationsService) Delete(name string) *OrganizationsOperationsDeleteCall {
 	c := &OrganizationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1401,7 +1253,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1460,7 +1312,7 @@ func (c *OrganizationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1p1alpha1/organizations/{organizationsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.organizations.operations.delete",
@@ -1498,11 +1350,9 @@ type OrganizationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1546,7 +1396,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1608,7 +1458,7 @@ func (c *OrganizationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1p1alpha1/organizations/{organizationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.operations.get",
@@ -1647,22 +1497,15 @@ type OrganizationsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
 	c := &OrganizationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1727,7 +1570,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1789,7 +1632,7 @@ func (c *OrganizationsOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1p1alpha1/organizations/{organizationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.operations.list",

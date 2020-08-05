@@ -211,8 +211,8 @@ type AndroidInfo struct {
 	AndroidLink string `json:"androidLink,omitempty"`
 
 	// AndroidMinPackageVersionCode: Minimum version code for the Android
-	// app. If the installed app’s version
-	// code is lower, then the user is taken to the Play Store.
+	// app. If the installed app’s version code is lower, then the user is
+	// taken to the Play Store.
 	AndroidMinPackageVersionCode string `json:"androidMinPackageVersionCode,omitempty"`
 
 	// AndroidPackageName: Android package name of the app.
@@ -245,30 +245,24 @@ func (s *AndroidInfo) MarshalJSON() ([]byte, error) {
 // CreateManagedShortLinkRequest: Request to create a managed Short
 // Dynamic Link.
 type CreateManagedShortLinkRequest struct {
-	// DynamicLinkInfo: Information about the Dynamic Link to be
-	// shortened.
+	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dyn
-	// amic-links/link-shortener).
+	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
+	// ortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
-	// parameters specified.
-	// For
-	// example,
-	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=co
-	// m.sample",
-	// [Learn
-	// more](https://firebase.google.com/docs/reference/dyn
-	// amic-links/link-shortener).
+	// parameters specified. For example,
+	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
+	// , [Learn
+	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
+	// ortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// Name: Link name to associate with the link. It's used for marketer to
-	// identify
-	// manually-created links in the Firebase
-	// console
-	// (https://console.firebase.google.com/).
-	// Links must be named to be tracked.
+	// identify manually-created links in the Firebase console
+	// (https://console.firebase.google.com/). Links must be named to be
+	// tracked.
 	Name string `json:"name,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -346,22 +340,18 @@ func (s *CreateManagedShortLinkResponse) MarshalJSON() ([]byte, error) {
 // CreateShortDynamicLinkRequest: Request to create a short Dynamic
 // Link.
 type CreateShortDynamicLinkRequest struct {
-	// DynamicLinkInfo: Information about the Dynamic Link to be
-	// shortened.
+	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dyn
-	// amic-links/link-shortener).
+	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
+	// ortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
-	// parameters specified.
-	// For
-	// example,
-	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=co
-	// m.sample",
-	// [Learn
-	// more](https://firebase.google.com/docs/reference/dyn
-	// amic-links/link-shortener).
+	// parameters specified. For example,
+	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
+	// , [Learn
+	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
+	// ortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -473,15 +463,13 @@ type DeviceInfo struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// LanguageCodeFromWebview: Device language code setting obtained by
-	// executing JavaScript code in
-	// WebView.
+	// executing JavaScript code in WebView.
 	LanguageCodeFromWebview string `json:"languageCodeFromWebview,omitempty"`
 
-	// LanguageCodeRaw: Device language code raw setting.
-	// iOS does returns language code in different format than iOS
-	// WebView.
-	// For example WebView returns en_US, but iOS returns en-US.
-	// Field below will return raw value returned by iOS.
+	// LanguageCodeRaw: Device language code raw setting. iOS does returns
+	// language code in different format than iOS WebView. For example
+	// WebView returns en_US, but iOS returns en-US. Field below will return
+	// raw value returned by iOS.
 	LanguageCodeRaw string `json:"languageCodeRaw,omitempty"`
 
 	// ScreenResolutionHeight: Device display resolution height.
@@ -530,11 +518,9 @@ type DynamicLinkEventStat struct {
 	//   "REDIRECT" - Indicates that an FDL redirects users to fallback
 	// link.
 	//   "APP_INSTALL" - Indicates that an FDL triggers an app install from
-	// Play store, currently
-	// it's impossible to get stats from App store.
+	// Play store, currently it's impossible to get stats from App store.
 	//   "APP_FIRST_OPEN" - Indicates that the app is opened for the first
-	// time after an install
-	// triggered by FDLs
+	// time after an install triggered by FDLs
 	//   "APP_RE_OPEN" - Indicates that the app is opened via an FDL for
 	// non-first time.
 	Event string `json:"event,omitempty"`
@@ -543,10 +529,10 @@ type DynamicLinkEventStat struct {
 	//
 	// Possible values:
 	//   "DYNAMIC_LINK_PLATFORM_UNSPECIFIED" - Unspecified platform.
-	//   "ANDROID" - Represents Android platform.
-	// All apps and browsers on Android are classfied in this category.
-	//   "IOS" - Represents iOS platform.
-	// All apps and browsers on iOS are classfied in this category.
+	//   "ANDROID" - Represents Android platform. All apps and browsers on
+	// Android are classfied in this category.
+	//   "IOS" - Represents iOS platform. All apps and browsers on iOS are
+	// classfied in this category.
 	//   "DESKTOP" - Represents desktop.
 	//   "OTHER" - Platforms are not categorized as Android/iOS/Destop fall
 	// into here.
@@ -578,70 +564,56 @@ func (s *DynamicLinkEventStat) MarshalJSON() ([]byte, error) {
 // DynamicLinkInfo: Information about a Dynamic Link.
 type DynamicLinkInfo struct {
 	// AnalyticsInfo: Parameters used for tracking. See all tracking
-	// parameters in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
-	// ate-manually).
+	// parameters in the
+	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
+	// manually).
 	AnalyticsInfo *AnalyticsInfo `json:"analyticsInfo,omitempty"`
 
 	// AndroidInfo: Android related information. See Android related
-	// parameters in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
-	// ate-manually).
+	// parameters in the
+	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
+	// manually).
 	AndroidInfo *AndroidInfo `json:"androidInfo,omitempty"`
 
 	// DesktopInfo: Desktop related information. See desktop related
-	// parameters in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
-	// ate-manually).
+	// parameters in the
+	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
+	// manually).
 	DesktopInfo *DesktopInfo `json:"desktopInfo,omitempty"`
 
 	// DomainUriPrefix: E.g. https://maps.app.goo.gl,
-	// https://maps.page.link, https://g.co/maps
-	// More examples can be found in description of getNormalizedUriPrefix
-	// in
-	// j/c/g/firebase/dynamiclinks/uri/DdlDomain.java
-	//
-	// Will fallback to dynamic_link_domain is this field is missing
+	// https://maps.page.link, https://g.co/maps More examples can be found
+	// in description of getNormalizedUriPrefix in
+	// j/c/g/firebase/dynamiclinks/uri/DdlDomain.java Will fallback to
+	// dynamic_link_domain is this field is missing
 	DomainUriPrefix string `json:"domainUriPrefix,omitempty"`
 
 	// DynamicLinkDomain: Dynamic Links domain that the project owns, e.g.
-	// abcd.app.goo.gl
-	// [Learn
-	// more](https://firebase.google.com/docs/dynamic-
-	// links/android/receive) on
-	// how to set up Dynamic Link domain associated with your Firebase
-	// project.
-	//
-	// Required if missing domain_uri_prefix.
+	// abcd.app.goo.gl [Learn
+	// more](https://firebase.google.com/docs/dynamic-links/android/receive)
+	// on how to set up Dynamic Link domain associated with your Firebase
+	// project. Required if missing domain_uri_prefix.
 	DynamicLinkDomain string `json:"dynamicLinkDomain,omitempty"`
 
-	// IosInfo: iOS related information. See iOS related parameters in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
-	// ate-manually).
+	// IosInfo: iOS related information. See iOS related parameters in the
+	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
+	// manually).
 	IosInfo *IosInfo `json:"iosInfo,omitempty"`
 
 	// Link: The link your app will open, You can specify any URL your app
-	// can handle.
-	// This link must be a well-formatted URL, be properly URL-encoded, and
-	// use
-	// the HTTP or HTTPS scheme. See 'link' parameters in
-	// the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
-	// ate-manually).
-	//
-	// Required.
+	// can handle. This link must be a well-formatted URL, be properly
+	// URL-encoded, and use the HTTP or HTTPS scheme. See 'link' parameters
+	// in the
+	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
+	// manually). Required.
 	Link string `json:"link,omitempty"`
 
 	// NavigationInfo: Information of navigation behavior of a Firebase
 	// Dynamic Links.
 	NavigationInfo *NavigationInfo `json:"navigationInfo,omitempty"`
 
-	// SocialMetaTagInfo: Parameters for social meta tag params.
-	// Used to set meta tag data for link previews on social sites.
+	// SocialMetaTagInfo: Parameters for social meta tag params. Used to set
+	// meta tag data for link previews on social sites.
 	SocialMetaTagInfo *SocialMetaTagInfo `json:"socialMetaTagInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalyticsInfo") to
@@ -712,12 +684,10 @@ type DynamicLinkWarning struct {
 	//   "NOT_INTEGER_ANDROID_PACKAGE_MIN_VERSION" - The Android minimum
 	// version code has to be a valid integer.
 	//   "UNNECESSARY_ANDROID_PACKAGE_MIN_VERSION" - Android package min
-	// version param is not needed, e.g. when
-	// 'apn' is missing.
+	// version param is not needed, e.g. when 'apn' is missing.
 	//   "NOT_URI_ANDROID_LINK" - Android link is not a valid URI.
 	//   "UNNECESSARY_ANDROID_LINK" - Android link param is not needed, e.g.
-	// when param 'al' and 'link' have
-	// the same value..
+	// when param 'al' and 'link' have the same value..
 	//   "NOT_URI_ANDROID_FALLBACK_LINK" - Android fallback link is not a
 	// valid URI.
 	//   "BAD_URI_SCHEME_ANDROID_FALLBACK_LINK" - Android fallback link has
@@ -788,14 +758,12 @@ func (s *DynamicLinkWarning) MarshalJSON() ([]byte, error) {
 }
 
 // GetIosPostInstallAttributionRequest: Request for iSDK to execute
-// strong match flow for post-install attribution.
-// This is meant for iOS requests only. Requests from other platforms
-// will
-// not be honored.
+// strong match flow for post-install attribution. This is meant for iOS
+// requests only. Requests from other platforms will not be honored.
 type GetIosPostInstallAttributionRequest struct {
 	// AppInstallationTime: App installation epoch time
-	// (https://en.wikipedia.org/wiki/Unix_time).
-	// This is a client signal for a more accurate weak match.
+	// (https://en.wikipedia.org/wiki/Unix_time). This is a client signal
+	// for a more accurate weak match.
 	AppInstallationTime int64 `json:"appInstallationTime,omitempty,string"`
 
 	// BundleId: APP bundle ID.
@@ -804,26 +772,22 @@ type GetIosPostInstallAttributionRequest struct {
 	// Device: Device information.
 	Device *DeviceInfo `json:"device,omitempty"`
 
-	// IosVersion: iOS version, ie: 9.3.5.
-	// Consider adding "build".
+	// IosVersion: iOS version, ie: 9.3.5. Consider adding "build".
 	IosVersion string `json:"iosVersion,omitempty"`
 
 	// RetrievalMethod: App post install attribution retrieval information.
-	// Disambiguates
-	// mechanism (iSDK or developer invoked) to retrieve payload
-	// from
-	// clicked link.
+	// Disambiguates mechanism (iSDK or developer invoked) to retrieve
+	// payload from clicked link.
 	//
 	// Possible values:
 	//   "UNKNOWN_PAYLOAD_RETRIEVAL_METHOD" - Unknown method.
 	//   "IMPLICIT_WEAK_MATCH" - iSDK performs a server lookup by device
-	// fingerprint in the background
-	// when app is first-opened; no API called by developer.
+	// fingerprint in the background when app is first-opened; no API called
+	// by developer.
 	//   "EXPLICIT_WEAK_MATCH" - iSDK performs a server lookup by device
 	// fingerprint upon a dev API call.
 	//   "EXPLICIT_STRONG_AFTER_WEAK_MATCH" - iSDK performs a strong match
-	// only if weak match is found upon a dev
-	// API call.
+	// only if weak match is found upon a dev API call.
 	RetrievalMethod string `json:"retrievalMethod,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -831,16 +795,14 @@ type GetIosPostInstallAttributionRequest struct {
 	SdkVersion string `json:"sdkVersion,omitempty"`
 
 	// UniqueMatchLinkToCheck: Possible unique matched link that server need
-	// to check before performing
-	// fingerprint match. If passed link is short server need to expand the
-	// link.
-	// If link is long server need to vslidate the link.
+	// to check before performing fingerprint match. If passed link is short
+	// server need to expand the link. If link is long server need to
+	// vslidate the link.
 	UniqueMatchLinkToCheck string `json:"uniqueMatchLinkToCheck,omitempty"`
 
 	// VisualStyle: Strong match page information. Disambiguates between
-	// default UI and
-	// custom page to present when strong match succeeds/fails to find
-	// cookie.
+	// default UI and custom page to present when strong match
+	// succeeds/fails to find cookie.
 	//
 	// Possible values:
 	//   "UNKNOWN_VISUAL_STYLE" - Unknown style.
@@ -876,9 +838,8 @@ func (s *GetIosPostInstallAttributionRequest) MarshalJSON() ([]byte, error) {
 // strong match flow for post-install attribution.
 type GetIosPostInstallAttributionResponse struct {
 	// AppMinimumVersion: The minimum version for app, specified by dev
-	// through ?imv= parameter.
-	// Return to iSDK to allow app to evaluate if current version meets
-	// this.
+	// through ?imv= parameter. Return to iSDK to allow app to evaluate if
+	// current version meets this.
 	AppMinimumVersion string `json:"appMinimumVersion,omitempty"`
 
 	// AttributionConfidence: The confidence of the returned attribution.
@@ -886,53 +847,42 @@ type GetIosPostInstallAttributionResponse struct {
 	// Possible values:
 	//   "UNKNOWN_ATTRIBUTION_CONFIDENCE" - Unset.
 	//   "WEAK" - Weak confidence, more than one matching link found or link
-	// suspected to
-	// be false positive
+	// suspected to be false positive
 	//   "DEFAULT" - Default confidence, match based on fingerprint
 	//   "UNIQUE" - Unique confidence, match based on "unique match link to
-	// check" or other
-	// means
+	// check" or other means
 	AttributionConfidence string `json:"attributionConfidence,omitempty"`
 
 	// DeepLink: The deep-link attributed post-install via one of several
-	// techniques
-	// (fingerprint, copy unique).
+	// techniques (fingerprint, copy unique).
 	DeepLink string `json:"deepLink,omitempty"`
 
 	// ExternalBrowserDestinationLink: User-agent specific custom-scheme
-	// URIs for iSDK to open. This will be set
-	// according to the user-agent tha the click was originally made in.
-	// There is
-	// no Safari-equivalent custom-scheme open URLs.
-	// ie: googlechrome://www.example.com
-	// ie: firefox://open-url?url=http://www.example.com
-	// ie: opera-http://example.com
+	// URIs for iSDK to open. This will be set according to the user-agent
+	// tha the click was originally made in. There is no Safari-equivalent
+	// custom-scheme open URLs. ie: googlechrome://www.example.com ie:
+	// firefox://open-url?url=http://www.example.com ie:
+	// opera-http://example.com
 	ExternalBrowserDestinationLink string `json:"externalBrowserDestinationLink,omitempty"`
 
 	// FallbackLink: The link to navigate to update the app if min version
-	// is not met.
-	// This is either (in order): 1) fallback link (from ?ifl= parameter,
-	// if
-	// specified by developer) or 2) AppStore URL (from ?isi= parameter,
-	// if
-	// specified), or 3) the payload link (from required link= parameter).
+	// is not met. This is either (in order): 1) fallback link (from ?ifl=
+	// parameter, if specified by developer) or 2) AppStore URL (from ?isi=
+	// parameter, if specified), or 3) the payload link (from required link=
+	// parameter).
 	FallbackLink string `json:"fallbackLink,omitempty"`
 
 	// InvitationId: Invitation ID attributed post-install via one of
-	// several techniques
-	// (fingerprint, copy unique).
+	// several techniques (fingerprint, copy unique).
 	InvitationId string `json:"invitationId,omitempty"`
 
 	// IsStrongMatchExecutable: Instruction for iSDK to attemmpt to perform
-	// strong match. For instance,
-	// if browser does not support/allow cookie or outside of support
-	// browsers,
-	// this will be false.
+	// strong match. For instance, if browser does not support/allow cookie
+	// or outside of support browsers, this will be false.
 	IsStrongMatchExecutable bool `json:"isStrongMatchExecutable,omitempty"`
 
 	// MatchMessage: Describes why match failed, ie: "discarded due to low
-	// confidence".
-	// This message will be publicly visible.
+	// confidence". This message will be publicly visible.
 	MatchMessage string `json:"matchMessage,omitempty"`
 
 	// RequestIpVersion: Which IP version the request was made from.
@@ -944,18 +894,15 @@ type GetIosPostInstallAttributionResponse struct {
 	RequestIpVersion string `json:"requestIpVersion,omitempty"`
 
 	// RequestedLink: Entire FDL (short or long) attributed post-install via
-	// one of several
-	// techniques (fingerprint, copy unique).
+	// one of several techniques (fingerprint, copy unique).
 	RequestedLink string `json:"requestedLink,omitempty"`
 
 	// ResolvedLink: The entire FDL, expanded from a short link. It is the
-	// same as the
-	// requested_link, if it is long. Parameters from this should not
-	// be
-	// used directly (ie: server can default utm_[campaign|medium|source]
-	// to a value when requested_link lack them, server determine the
-	// best
-	// fallback_link when requested_link specifies >1 fallback links).
+	// same as the requested_link, if it is long. Parameters from this
+	// should not be used directly (ie: server can default
+	// utm_[campaign|medium|source] to a value when requested_link lack
+	// them, server determine the best fallback_link when requested_link
+	// specifies >1 fallback links).
 	ResolvedLink string `json:"resolvedLink,omitempty"`
 
 	// UtmCampaign: Scion campaign value to be propagated by iSDK to Scion
@@ -1007,21 +954,16 @@ func (s *GetIosPostInstallAttributionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GetIosReopenAttributionRequest: Request for iSDK to get reopen
-// attribution for app universal link open
-// deeplinking. This endpoint is meant for only iOS requests.
+// attribution for app universal link open deeplinking. This endpoint is
+// meant for only iOS requests.
 type GetIosReopenAttributionRequest struct {
 	// BundleId: APP bundle ID.
 	BundleId string `json:"bundleId,omitempty"`
 
 	// RequestedLink: FDL link to be verified from an app universal link
-	// open.
-	// The FDL link can be one of:
-	// 1) short FDL.
-	// e.g. <app_code>.page.link/<ddl_id>, or
-	// 2) long FDL.
-	// e.g. <app_code>.page.link/?{query params}, or
-	// 3) Invite FDL.
-	// e.g. <app_code>.page.link/i/<invite_id_or_alias>
+	// open. The FDL link can be one of: 1) short FDL. e.g. .page.link/, or
+	// 2) long FDL. e.g. .page.link/?{query params}, or 3) Invite FDL. e.g.
+	// .page.link/i/
 	RequestedLink string `json:"requestedLink,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -1052,12 +994,11 @@ func (s *GetIosReopenAttributionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GetIosReopenAttributionResponse: Response for iSDK to get reopen
-// attribution for app universal link open
-// deeplinking. This endpoint is meant for only iOS requests.
+// attribution for app universal link open deeplinking. This endpoint is
+// meant for only iOS requests.
 type GetIosReopenAttributionResponse struct {
 	// DeepLink: The deep-link attributed the app universal link open. For
-	// both regular
-	// FDL links and invite FDL links.
+	// both regular FDL links and invite FDL links.
 	DeepLink string `json:"deepLink,omitempty"`
 
 	// InvitationId: Optional invitation ID, for only invite typed requested
@@ -1065,13 +1006,11 @@ type GetIosReopenAttributionResponse struct {
 	InvitationId string `json:"invitationId,omitempty"`
 
 	// IosMinAppVersion: FDL input value of the "&imv=" parameter, minimum
-	// app version to be
-	// returned to Google Firebase SDK running on iOS-9.
+	// app version to be returned to Google Firebase SDK running on iOS-9.
 	IosMinAppVersion string `json:"iosMinAppVersion,omitempty"`
 
 	// ResolvedLink: The entire FDL, expanded from a short link. It is the
-	// same as the
-	// requested_link, if it is long.
+	// same as the requested_link, if it is long.
 	ResolvedLink string `json:"resolvedLink,omitempty"`
 
 	// UtmCampaign: Scion campaign value to be propagated by iSDK to Scion
@@ -1122,28 +1061,23 @@ func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePlayAnalytics: Parameters for Google Play Campaign
-// Measurements.
-// [Learn
-// more](https://developers.google.com/analytics/dev
-// guides/collection/android/v4/campaigns#campaign-params)
+// Measurements. [Learn
+// more](https://developers.google.com/analytics/devguides/collection/and
+// roid/v4/campaigns#campaign-params)
 type GooglePlayAnalytics struct {
-	// Gclid: [AdWords
-	// autotagging
-	// parameter](https://support.google.com/analytics/answer/103
-	// 3981?hl=en); used
-	// to measure Google AdWords ads. This value is generated dynamically
-	// and
-	// should never be modified.
+	// Gclid: [AdWords autotagging
+	// parameter](https://support.google.com/analytics/answer/1033981?hl=en);
+	//  used to measure Google AdWords ads. This value is generated
+	// dynamically and should never be modified.
 	Gclid string `json:"gclid,omitempty"`
 
 	// UtmCampaign: Campaign name; used for keyword analysis to identify a
-	// specific product
-	// promotion or strategic campaign.
+	// specific product promotion or strategic campaign.
 	UtmCampaign string `json:"utmCampaign,omitempty"`
 
 	// UtmContent: Campaign content; used for A/B testing and
-	// content-targeted ads to
-	// differentiate ads or links that point to the same URL.
+	// content-targeted ads to differentiate ads or links that point to the
+	// same URL.
 	UtmContent string `json:"utmContent,omitempty"`
 
 	// UtmMedium: Campaign medium; used to identify a medium such as email
@@ -1151,8 +1085,7 @@ type GooglePlayAnalytics struct {
 	UtmMedium string `json:"utmMedium,omitempty"`
 
 	// UtmSource: Campaign source; used to identify a search engine,
-	// newsletter, or other
-	// source.
+	// newsletter, or other source.
 	UtmSource string `json:"utmSource,omitempty"`
 
 	// UtmTerm: Campaign term; used with paid search to supply the keywords
@@ -1188,8 +1121,7 @@ type ITunesConnectAnalytics struct {
 	At string `json:"at,omitempty"`
 
 	// Ct: Campaign text that developers can optionally add to any link in
-	// order to
-	// track sales from a specific marketing campaign.
+	// order to track sales from a specific marketing campaign.
 	Ct string `json:"ct,omitempty"`
 
 	// Mt: iTune media types, including music, podcasts, audiobooks and so
@@ -1197,8 +1129,7 @@ type ITunesConnectAnalytics struct {
 	Mt string `json:"mt,omitempty"`
 
 	// Pt: Provider token that enables analytics for Dynamic Links from
-	// within iTunes
-	// Connect.
+	// within iTunes Connect.
 	Pt string `json:"pt,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "At") to
@@ -1233,10 +1164,8 @@ type IosInfo struct {
 	IosBundleId string `json:"iosBundleId,omitempty"`
 
 	// IosCustomScheme: Custom (destination) scheme to use for iOS. By
-	// default, we’ll use the
-	// bundle ID as the custom scheme. Developer can override this behavior
-	// using
-	// this param.
+	// default, we’ll use the bundle ID as the custom scheme. Developer
+	// can override this behavior using this param.
 	IosCustomScheme string `json:"iosCustomScheme,omitempty"`
 
 	// IosFallbackLink: Link to open on iOS if the app is not installed.
@@ -1294,14 +1223,10 @@ type ManagedShortLink struct {
 	Info *DynamicLinkInfo `json:"info,omitempty"`
 
 	// Link: Short durable link url, for example,
-	// "https://sample.app.goo.gl/xyz123".
-	//
-	// Required.
+	// "https://sample.app.goo.gl/xyz123". Required.
 	Link string `json:"link,omitempty"`
 
-	// LinkName: Link name defined by the creator.
-	//
-	// Required.
+	// LinkName: Link name defined by the creator. Required.
 	LinkName string `json:"linkName,omitempty"`
 
 	// Visibility: Visibility status of link.
@@ -1311,8 +1236,7 @@ type ManagedShortLink struct {
 	//   "UNARCHIVED" - Link created in console and should be shown in
 	// console.
 	//   "ARCHIVED" - Link created in console and should not be shown in
-	// console (but can
-	// be shown in the console again if it is unarchived).
+	// console (but can be shown in the console again if it is unarchived).
 	//   "NEVER_SHOWN" - Link created outside of console and should never be
 	// shown in console.
 	Visibility string `json:"visibility,omitempty"`
@@ -1343,8 +1267,7 @@ func (s *ManagedShortLink) MarshalJSON() ([]byte, error) {
 // NavigationInfo: Information of navigation behavior.
 type NavigationInfo struct {
 	// EnableForcedRedirect: If this option is on, FDL click will be forced
-	// to redirect rather than
-	// show an interstitial page.
+	// to redirect rather than show an interstitial page.
 	EnableForcedRedirect bool `json:"enableForcedRedirect,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1372,8 +1295,8 @@ func (s *NavigationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SocialMetaTagInfo: Parameters for social meta tag params.
-// Used to set meta tag data for link previews on social sites.
+// SocialMetaTagInfo: Parameters for social meta tag params. Used to set
+// meta tag data for link previews on social sites.
 type SocialMetaTagInfo struct {
 	// SocialDescription: A short description of the link. Optional.
 	SocialDescription string `json:"socialDescription,omitempty"`
@@ -1419,24 +1342,16 @@ type Suffix struct {
 	//   "OPTION_UNSPECIFIED" - The suffix option is not specified, performs
 	// as UNGUESSABLE .
 	//   "UNGUESSABLE" - Short Dynamic Link suffix is a base62 [0-9A-Za-z]
-	// encoded string of
-	// a random generated 96 bit random number, which has a length of 17
-	// chars.
-	// For example, "nlAR8U4SlKRZw1cb2".
-	// It prevents other people from guessing and crawling short Dynamic
-	// Links
-	// that contain personal identifiable information.
+	// encoded string of a random generated 96 bit random number, which has
+	// a length of 17 chars. For example, "nlAR8U4SlKRZw1cb2". It prevents
+	// other people from guessing and crawling short Dynamic Links that
+	// contain personal identifiable information.
 	//   "SHORT" - Short Dynamic Link suffix is a base62 [0-9A-Za-z] string
-	// starting with a
-	// length of 4 chars. the length will increase when all the space
-	// is
-	// occupied.
+	// starting with a length of 4 chars. the length will increase when all
+	// the space is occupied.
 	//   "CUSTOM" - Custom DDL suffix is a client specified string, for
-	// example,
-	// "buy2get1free".
-	// NOTE: custom suffix should only be available to managed short
-	// link
-	// creation
+	// example, "buy2get1free". NOTE: custom suffix should only be available
+	// to managed short link creation
 	Option string `json:"option,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomSuffix") to
@@ -1473,24 +1388,15 @@ type ManagedShortLinksCreateCall struct {
 }
 
 // Create: Creates a managed short Dynamic Link given either a valid
-// long Dynamic Link
-// or details such as Dynamic Link domain, Android and iOS app
-// information.
-// The created short Dynamic Link will not expire.
-//
-// This differs from CreateShortDynamicLink in the following ways:
-//   - The request will also contain a name for the link (non unique
-// name
-//     for the front end).
-//   - The response must be authenticated with an auth token (generated
-// with
-//     the admin service account).
-//   - The link will appear in the FDL list of links in the console
-// front end.
-//
-// The Dynamic Link domain in the request must be owned by
-// requester's
-// Firebase project.
+// long Dynamic Link or details such as Dynamic Link domain, Android and
+// iOS app information. The created short Dynamic Link will not expire.
+// This differs from CreateShortDynamicLink in the following ways: - The
+// request will also contain a name for the link (non unique name for
+// the front end). - The response must be authenticated with an auth
+// token (generated with the admin service account). - The link will
+// appear in the FDL list of links in the console front end. The Dynamic
+// Link domain in the request must be owned by requester's Firebase
+// project.
 func (r *ManagedShortLinksService) Create(createmanagedshortlinkrequest *CreateManagedShortLinkRequest) *ManagedShortLinksCreateCall {
 	c := &ManagedShortLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createmanagedshortlinkrequest = createmanagedshortlinkrequest
@@ -1524,7 +1430,7 @@ func (c *ManagedShortLinksCreateCall) Header() http.Header {
 
 func (c *ManagedShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1585,7 +1491,7 @@ func (c *ManagedShortLinksCreateCall) Do(opts ...googleapi.CallOption) (*CreateM
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a managed short Dynamic Link given either a valid long Dynamic Link\nor details such as Dynamic Link domain, Android and iOS app information.\nThe created short Dynamic Link will not expire.\n\nThis differs from CreateShortDynamicLink in the following ways:\n  - The request will also contain a name for the link (non unique name\n    for the front end).\n  - The response must be authenticated with an auth token (generated with\n    the admin service account).\n  - The link will appear in the FDL list of links in the console front end.\n\nThe Dynamic Link domain in the request must be owned by requester's\nFirebase project.",
+	//   "description": "Creates a managed short Dynamic Link given either a valid long Dynamic Link or details such as Dynamic Link domain, Android and iOS app information. The created short Dynamic Link will not expire. This differs from CreateShortDynamicLink in the following ways: - The request will also contain a name for the link (non unique name for the front end). - The response must be authenticated with an auth token (generated with the admin service account). - The link will appear in the FDL list of links in the console front end. The Dynamic Link domain in the request must be owned by requester's Firebase project.",
 	//   "flatPath": "v1/managedShortLinks:create",
 	//   "httpMethod": "POST",
 	//   "id": "firebasedynamiclinks.managedShortLinks.create",
@@ -1616,18 +1522,12 @@ type ShortLinksCreateCall struct {
 }
 
 // Create: Creates a short Dynamic Link given either a valid long
-// Dynamic Link or
-// details such as Dynamic Link domain, Android and iOS app
-// information.
-// The created short Dynamic Link will not expire.
-//
+// Dynamic Link or details such as Dynamic Link domain, Android and iOS
+// app information. The created short Dynamic Link will not expire.
 // Repeated calls with the same long Dynamic Link or Dynamic Link
-// information
-// will produce the same short Dynamic Link.
-//
-// The Dynamic Link domain in the request must be owned by
-// requester's
-// Firebase project.
+// information will produce the same short Dynamic Link. The Dynamic
+// Link domain in the request must be owned by requester's Firebase
+// project.
 func (r *ShortLinksService) Create(createshortdynamiclinkrequest *CreateShortDynamicLinkRequest) *ShortLinksCreateCall {
 	c := &ShortLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createshortdynamiclinkrequest = createshortdynamiclinkrequest
@@ -1661,7 +1561,7 @@ func (c *ShortLinksCreateCall) Header() http.Header {
 
 func (c *ShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1722,7 +1622,7 @@ func (c *ShortLinksCreateCall) Do(opts ...googleapi.CallOption) (*CreateShortDyn
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a short Dynamic Link given either a valid long Dynamic Link or\ndetails such as Dynamic Link domain, Android and iOS app information.\nThe created short Dynamic Link will not expire.\n\nRepeated calls with the same long Dynamic Link or Dynamic Link information\nwill produce the same short Dynamic Link.\n\nThe Dynamic Link domain in the request must be owned by requester's\nFirebase project.",
+	//   "description": "Creates a short Dynamic Link given either a valid long Dynamic Link or details such as Dynamic Link domain, Android and iOS app information. The created short Dynamic Link will not expire. Repeated calls with the same long Dynamic Link or Dynamic Link information will produce the same short Dynamic Link. The Dynamic Link domain in the request must be owned by requester's Firebase project.",
 	//   "flatPath": "v1/shortLinks",
 	//   "httpMethod": "POST",
 	//   "id": "firebasedynamiclinks.shortLinks.create",
@@ -1754,9 +1654,8 @@ type V1GetLinkStatsCall struct {
 }
 
 // GetLinkStats: Fetches analytics stats of a short Dynamic Link for a
-// given
-// duration. Metrics include number of clicks, redirects, installs,
-// app first opens, and app reopens.
+// given duration. Metrics include number of clicks, redirects,
+// installs, app first opens, and app reopens.
 func (r *V1Service) GetLinkStats(dynamicLink string) *V1GetLinkStatsCall {
 	c := &V1GetLinkStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dynamicLink = dynamicLink
@@ -1814,7 +1713,7 @@ func (c *V1GetLinkStatsCall) Header() http.Header {
 
 func (c *V1GetLinkStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1876,7 +1775,7 @@ func (c *V1GetLinkStatsCall) Do(opts ...googleapi.CallOption) (*DynamicLinkStats
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches analytics stats of a short Dynamic Link for a given\nduration. Metrics include number of clicks, redirects, installs,\napp first opens, and app reopens.",
+	//   "description": "Fetches analytics stats of a short Dynamic Link for a given duration. Metrics include number of clicks, redirects, installs, app first opens, and app reopens.",
 	//   "flatPath": "v1/{dynamicLink}/linkStats",
 	//   "httpMethod": "GET",
 	//   "id": "firebasedynamiclinks.getLinkStats",
@@ -1958,7 +1857,7 @@ func (c *V1InstallAttributionCall) Header() http.Header {
 
 func (c *V1InstallAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2085,7 +1984,7 @@ func (c *V1ReopenAttributionCall) Header() http.Header {
 
 func (c *V1ReopenAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

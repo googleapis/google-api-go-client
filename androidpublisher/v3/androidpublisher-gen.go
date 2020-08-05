@@ -411,13 +411,11 @@ func (s *Apk) MarshalJSON() ([]byte, error) {
 // ApkBinary: Represents the binary payload of an APK.
 type ApkBinary struct {
 	// Sha1: A sha1 hash of the APK payload, encoded as a hex string and
-	// matching the
-	// output of the sha1sum command.
+	// matching the output of the sha1sum command.
 	Sha1 string `json:"sha1,omitempty"`
 
 	// Sha256: A sha256 hash of the APK payload, encoded as a hex string and
-	// matching
-	// the output of the sha256sum command.
+	// matching the output of the sha256sum command.
 	Sha256 string `json:"sha256,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Sha1") to
@@ -590,8 +588,7 @@ func (s *AppDetails) MarshalJSON() ([]byte, error) {
 // AppEdit: An app edit. The resource for EditsService.
 type AppEdit struct {
 	// ExpiryTimeSeconds: Output only. The time (as seconds since Epoch) at
-	// which the edit will expire and
-	// will be no longer valid for use.
+	// which the edit will expire and will be no longer valid for use.
 	ExpiryTimeSeconds string `json:"expiryTimeSeconds,omitempty"`
 
 	// Id: Output only. Identifier of the edit. Can be used in subsequent
@@ -629,18 +626,15 @@ func (s *AppEdit) MarshalJSON() ([]byte, error) {
 // Bundle: Information about a bundle. The resource for BundlesService.
 type Bundle struct {
 	// Sha1: A sha1 hash of the upload payload, encoded as a hex string and
-	// matching
-	// the output of the sha1sum command.
+	// matching the output of the sha1sum command.
 	Sha1 string `json:"sha1,omitempty"`
 
 	// Sha256: A sha256 hash of the upload payload, encoded as a hex string
-	// and matching
-	// the output of the sha256sum command.
+	// and matching the output of the sha256sum command.
 	Sha256 string `json:"sha256,omitempty"`
 
 	// VersionCode: The version code of the Android App Bundle, as specified
-	// in the Android App
-	// Bundle's base module APK manifest file.
+	// in the Android App Bundle's base module APK manifest file.
 	VersionCode int64 `json:"versionCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -740,10 +734,9 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 
 // CountryTargeting: Country targeting specification.
 type CountryTargeting struct {
-	// Countries: Countries to target, specified as two letter
-	// [CLDR
-	// codes](https://unicode.org/cldr/charts/latest/supplemental/terri
-	// tory_containment_un_m_49.html).
+	// Countries: Countries to target, specified as two letter [CLDR
+	// codes](https://unicode.org/cldr/charts/latest/supplemental/territory_c
+	// ontainment_un_m_49.html).
 	Countries []string `json:"countries,omitempty"`
 
 	// IncludeRestOfWorld: Include "rest of world" as well as explicitly
@@ -937,10 +930,8 @@ type DeviceSpec struct {
 	ScreenDensity int64 `json:"screenDensity,omitempty"`
 
 	// SupportedAbis: Supported ABI architectures in the order of
-	// preference.
-	// The values should be the string as reported by the platform,
-	// e.g.
-	// "armeabi-v7a", "x86_64".
+	// preference. The values should be the string as reported by the
+	// platform, e.g. "armeabi-v7a", "x86_64".
 	SupportedAbis []string `json:"supportedAbis,omitempty"`
 
 	// SupportedLocales: All installed locales represented as BCP-47
@@ -974,15 +965,13 @@ func (s *DeviceSpec) MarshalJSON() ([]byte, error) {
 // ExpansionFilesService.
 type ExpansionFile struct {
 	// FileSize: If set, this field indicates that this APK has an expansion
-	// file uploaded
-	// to it: this APK does not reference another APK's expansion file.
-	// The field's value is the size of the uploaded expansion file in
-	// bytes.
+	// file uploaded to it: this APK does not reference another APK's
+	// expansion file. The field's value is the size of the uploaded
+	// expansion file in bytes.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// ReferencesVersion: If set, this APK's expansion file references
-	// another APK's expansion file.
-	// The file_size field will not be set.
+	// another APK's expansion file. The file_size field will not be set.
 	ReferencesVersion int64 `json:"referencesVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1046,10 +1035,8 @@ func (s *ExpansionFilesUploadResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ExternallyHostedApk: Defines an APK available for this application
-// that is hosted externally
-// and not uploaded to Google Play.
-// This function is only available to organizations using Managed Play
-// whose
+// that is hosted externally and not uploaded to Google Play. This
+// function is only available to organizations using Managed Play whose
 // application is configured to restrict distribution to the
 // organizations.
 type ExternallyHostedApk struct {
@@ -1057,8 +1044,8 @@ type ExternallyHostedApk struct {
 	ApplicationLabel string `json:"applicationLabel,omitempty"`
 
 	// CertificateBase64s: A certificate (or array of certificates if a
-	// certificate-chain is used)
-	// used to sign this APK, represented as a base64 encoded byte array.
+	// certificate-chain is used) used to sign this APK, represented as a
+	// base64 encoded byte array.
 	CertificateBase64s []string `json:"certificateBase64s,omitempty"`
 
 	// ExternallyHostedUrl: The URL at which the APK is hosted. This must be
@@ -1066,13 +1053,11 @@ type ExternallyHostedApk struct {
 	ExternallyHostedUrl string `json:"externallyHostedUrl,omitempty"`
 
 	// FileSha1Base64: The sha1 checksum of this APK, represented as a
-	// base64 encoded byte
-	// array.
+	// base64 encoded byte array.
 	FileSha1Base64 string `json:"fileSha1Base64,omitempty"`
 
 	// FileSha256Base64: The sha256 checksum of this APK, represented as a
-	// base64 encoded byte
-	// array.
+	// base64 encoded byte array.
 	FileSha256Base64 string `json:"fileSha256Base64,omitempty"`
 
 	// FileSize: The file size in bytes of this APK.
@@ -1272,31 +1257,27 @@ type InAppProduct struct {
 	DefaultLanguage string `json:"defaultLanguage,omitempty"`
 
 	// DefaultPrice: Default price. Cannot be zero, as in-app products are
-	// never free.
-	// Always in the developer's Checkout merchant currency.
+	// never free. Always in the developer's Checkout merchant currency.
 	DefaultPrice *Price `json:"defaultPrice,omitempty"`
 
 	// GracePeriod: Grace period of the subscription, specified in ISO 8601
-	// format. Allows
-	// developers to give their subscribers a grace period when the
-	// payment
-	// for the new recurrence period is declined.
+	// format. Allows developers to give their subscribers a grace period
+	// when the payment for the new recurrence period is declined.
 	// Acceptable values are P0D (zero days), P3D (three days), P7D (seven
-	// days),
-	// P14D (14 days), and P30D (30 days).
+	// days), P14D (14 days), and P30D (30 days).
 	GracePeriod string `json:"gracePeriod,omitempty"`
 
 	// Listings: List of localized title and description data. Map key is
-	// the language of
-	// the localized data, as defined by BCP-47, e.g. "en-US".
+	// the language of the localized data, as defined by BCP-47, e.g.
+	// "en-US".
 	Listings map[string]InAppProductListing `json:"listings,omitempty"`
 
 	// PackageName: Package name of the parent app.
 	PackageName string `json:"packageName,omitempty"`
 
 	// Prices: Prices per buyer region. None of these can be zero, as in-app
-	// products are
-	// never free. Map key is region code, as defined by ISO 3166-2.
+	// products are never free. Map key is region code, as defined by ISO
+	// 3166-2.
 	Prices map[string]Price `json:"prices,omitempty"`
 
 	// PurchaseType: The type of the product, e.g. a recurring subscription.
@@ -1320,15 +1301,12 @@ type InAppProduct struct {
 	Status string `json:"status,omitempty"`
 
 	// SubscriptionPeriod: Subscription period, specified in ISO 8601
-	// format. Acceptable values are
-	// P1W (one week), P1M (one month), P3M (three months), P6M (six
-	// months),
-	// and P1Y (one year).
+	// format. Acceptable values are P1W (one week), P1M (one month), P3M
+	// (three months), P6M (six months), and P1Y (one year).
 	SubscriptionPeriod string `json:"subscriptionPeriod,omitempty"`
 
 	// TrialPeriod: Trial period, specified in ISO 8601 format. Acceptable
-	// values are anything
-	// between P7D (seven days) and P999D (999 days).
+	// values are anything between P7D (seven days) and P999D (999 days).
 	TrialPeriod string `json:"trialPeriod,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1437,24 +1415,20 @@ func (s *InappproductsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // InternalAppSharingArtifact: An artifact resource which gets created
-// when uploading an APK or Android
-// App Bundle through internal app sharing.
+// when uploading an APK or Android App Bundle through internal app
+// sharing.
 type InternalAppSharingArtifact struct {
 	// CertificateFingerprint: The sha256 fingerprint of the certificate
-	// used to sign the generated
-	// artifact.
+	// used to sign the generated artifact.
 	CertificateFingerprint string `json:"certificateFingerprint,omitempty"`
 
-	// DownloadUrl: The download URL generated for the uploaded
-	// artifact.
-	// Users that are authorized to download can follow the link to the
-	// Play
+	// DownloadUrl: The download URL generated for the uploaded artifact.
+	// Users that are authorized to download can follow the link to the Play
 	// Store app to install it.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Sha256: The sha256 hash of the artifact represented as a lowercase
-	// hexadecimal
-	// number, matching the output of the sha256sum command.
+	// hexadecimal number, matching the output of the sha256sum command.
 	Sha256 string `json:"sha256,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1490,20 +1464,16 @@ func (s *InternalAppSharingArtifact) MarshalJSON() ([]byte, error) {
 // for a subscription.
 type IntroductoryPriceInfo struct {
 	// IntroductoryPriceAmountMicros: Introductory price of the
-	// subscription, not including tax.
-	// The currency is the same as price_currency_code. Price is
-	// expressed in micro-units, where 1,000,000 micro-units represents one
-	// unit
-	// of the currency. For example, if the subscription price is
-	// €1.99,
-	// price_amount_micros is 1990000.
+	// subscription, not including tax. The currency is the same as
+	// price_currency_code. Price is expressed in micro-units, where
+	// 1,000,000 micro-units represents one unit of the currency. For
+	// example, if the subscription price is €1.99, price_amount_micros is
+	// 1990000.
 	IntroductoryPriceAmountMicros int64 `json:"introductoryPriceAmountMicros,omitempty,string"`
 
 	// IntroductoryPriceCurrencyCode: ISO 4217 currency code for the
-	// introductory subscription price.
-	// For example, if the price is specified in British pounds
-	// sterling,
-	// price_currency_code is "GBP".
+	// introductory subscription price. For example, if the price is
+	// specified in British pounds sterling, price_currency_code is "GBP".
 	IntroductoryPriceCurrencyCode string `json:"introductoryPriceCurrencyCode,omitempty"`
 
 	// IntroductoryPriceCycles: The number of billing period to offer
@@ -1511,11 +1481,9 @@ type IntroductoryPriceInfo struct {
 	IntroductoryPriceCycles int64 `json:"introductoryPriceCycles,omitempty"`
 
 	// IntroductoryPricePeriod: Introductory price period, specified in ISO
-	// 8601 format.
-	// Common values are (but not limited to) "P1W" (one
-	// week), "P1M" (one month), "P3M" (three months), "P6M" (six
-	// months),
-	// and "P1Y" (one year).
+	// 8601 format. Common values are (but not limited to) "P1W" (one week),
+	// "P1M" (one month), "P3M" (three months), "P6M" (six months), and
+	// "P1Y" (one year).
 	IntroductoryPricePeriod string `json:"introductoryPricePeriod,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1549,8 +1517,7 @@ type Listing struct {
 	FullDescription string `json:"fullDescription,omitempty"`
 
 	// Language: Language localization code (a BCP-47 language tag; for
-	// example, "de-AT"
-	// for Austrian German).
+	// example, "de-AT" for Austrian German).
 	Language string `json:"language,omitempty"`
 
 	// ShortDescription: Short description of the app.
@@ -1629,8 +1596,7 @@ func (s *ListingsListResponse) MarshalJSON() ([]byte, error) {
 // LocalizedText: Release notes specification, i.e. language and text.
 type LocalizedText struct {
 	// Language: Language localization code (a BCP-47 language tag; for
-	// example, "de-AT"
-	// for Austrian German).
+	// example, "de-AT" for Austrian German).
 	Language string `json:"language,omitempty"`
 
 	// Text: The text in the given language.
@@ -1659,21 +1625,19 @@ func (s *LocalizedText) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PageInfo: Information about the current page.
-//
-// List operations that supports paging return only one "page" of
-// results. This
-// protocol buffer message describes the page that has been returned.
+// PageInfo: Information about the current page. List operations that
+// supports paging return only one "page" of results. This protocol
+// buffer message describes the page that has been returned.
 type PageInfo struct {
-	// ResultPerPage: Maximum number of results returned in one page.
-	// ! The number of results included in the API response.
+	// ResultPerPage: Maximum number of results returned in one page. ! The
+	// number of results included in the API response.
 	ResultPerPage int64 `json:"resultPerPage,omitempty"`
 
 	// StartIndex: Index of the first result returned in the current page.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
-	// TotalResults: Total number of results available on the backend
-	// ! The total number of results in the result set.
+	// TotalResults: Total number of results available on the backend ! The
+	// total number of results in the result set.
 	TotalResults int64 `json:"totalResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResultPerPage") to
@@ -1701,8 +1665,8 @@ func (s *PageInfo) MarshalJSON() ([]byte, error) {
 
 // Price: Definition of a price, i.e. currency and units.
 type Price struct {
-	// Currency: 3 letter Currency code, as defined by ISO 4217.
-	// See java/com/google/common/money/CurrencyCode.java
+	// Currency: 3 letter Currency code, as defined by ISO 4217. See
+	// java/com/google/common/money/CurrencyCode.java
 	Currency string `json:"currency,omitempty"`
 
 	// PriceMicros: Price in 1/million of the currency base unit,
@@ -1733,47 +1697,36 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 }
 
 // ProductPurchase: A ProductPurchase resource indicates the status of a
-// user's inapp
-// product purchase.
+// user's inapp product purchase.
 type ProductPurchase struct {
 	// AcknowledgementState: The acknowledgement state of the inapp product.
-	// Possible values are:
-	// 0. Yet to be acknowledged
-	// 1. Acknowledged
+	// Possible values are: 0. Yet to be acknowledged 1. Acknowledged
 	AcknowledgementState int64 `json:"acknowledgementState,omitempty"`
 
 	// ConsumptionState: The consumption state of the inapp product.
-	// Possible values are:
-	// 0. Yet to be consumed
-	// 1. Consumed
+	// Possible values are: 0. Yet to be consumed 1. Consumed
 	ConsumptionState int64 `json:"consumptionState,omitempty"`
 
 	// DeveloperPayload: A developer-specified string that contains
-	// supplemental
-	// information about an order.
+	// supplemental information about an order.
 	DeveloperPayload string `json:"developerPayload,omitempty"`
 
 	// Kind: This kind represents an inappPurchase object in the
-	// androidpublisher
-	// service.
+	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
 
 	// ObfuscatedExternalAccountId: An obfuscated version of the id that is
-	// uniquely associated with the
-	// user's account in your app. Only present if specified
-	// using
-	// https://developer.android.com/reference/com/android/billingclien
-	// t/api/BillingFlowParams.Builder#setobfuscatedaccountid
-	// when the purchase was made.
+	// uniquely associated with the user's account in your app. Only present
+	// if specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid when the purchase was
+	// made.
 	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
 
 	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
-	// uniquely associated with the
-	// user's profile in your app. Only present if specified
-	// using
-	// https://developer.android.com/reference/com/android/billingclien
-	// t/api/BillingFlowParams.Builder#setobfuscatedprofileid
-	// when the purchase was made.
+	// uniquely associated with the user's profile in your app. Only present
+	// if specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid when the purchase was
+	// made.
 	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
 
 	// OrderId: The order id associated with the purchase of the inapp
@@ -1783,16 +1736,12 @@ type ProductPurchase struct {
 	// ProductId: The inapp product SKU.
 	ProductId string `json:"productId,omitempty"`
 
-	// PurchaseState: The purchase state of the order. Possible values
-	// are:
-	// 0. Purchased
-	// 1. Canceled
-	// 2. Pending
+	// PurchaseState: The purchase state of the order. Possible values are:
+	// 0. Purchased 1. Canceled 2. Pending
 	PurchaseState int64 `json:"purchaseState,omitempty"`
 
 	// PurchaseTimeMillis: The time the product was purchased, in
-	// milliseconds since the
-	// epoch (Jan 1, 1970).
+	// milliseconds since the epoch (Jan 1, 1970).
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
 	// PurchaseToken: The purchase token generated to identify this
@@ -1800,12 +1749,9 @@ type ProductPurchase struct {
 	PurchaseToken string `json:"purchaseToken,omitempty"`
 
 	// PurchaseType: The type of purchase of the inapp product. This field
-	// is only set if
-	// this purchase was not made using the standard in-app billing
-	// flow.
-	// Possible values are:
-	// 0. Test (i.e. purchased from a license testing account)
-	// 1. Promo (i.e. purchased using a promo code)
+	// is only set if this purchase was not made using the standard in-app
+	// billing flow. Possible values are: 0. Test (i.e. purchased from a
+	// license testing account) 1. Promo (i.e. purchased using a promo code)
 	// 2. Rewarded (i.e. from watching a video ad instead of paying)
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
@@ -1984,8 +1930,8 @@ func (s *ReviewsListResponse) MarshalJSON() ([]byte, error) {
 // reply.
 type ReviewsReplyRequest struct {
 	// ReplyText: The text to set as the reply. Replies of more than
-	// approximately 350
-	// characters will be rejected. HTML tags will be stripped.
+	// approximately 350 characters will be rejected. HTML tags will be
+	// stripped.
 	ReplyText string `json:"replyText,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReplyText") to
@@ -2044,22 +1990,17 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionCancelSurveyResult: Information provided by the user when
-// they complete the subscription
-// cancellation flow (cancellation reason survey).
+// they complete the subscription cancellation flow (cancellation reason
+// survey).
 type SubscriptionCancelSurveyResult struct {
 	// CancelSurveyReason: The cancellation reason the user chose in the
-	// survey.
-	// Possible values are:
-	// 0. Other
-	// 1. I don't use this service enough
-	// 2. Technical issues
-	// 3. Cost-related reasons
-	// 4. I found a better app
+	// survey. Possible values are: 0. Other 1. I don't use this service
+	// enough 2. Technical issues 3. Cost-related reasons 4. I found a
+	// better app
 	CancelSurveyReason int64 `json:"cancelSurveyReason,omitempty"`
 
 	// UserInputCancelReason: The customized input cancel reason from the
-	// user. Only present when
-	// cancelReason is 0.
+	// user. Only present when cancelReason is 0.
 	UserInputCancelReason string `json:"userInputCancelReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelSurveyReason")
@@ -2087,20 +2028,17 @@ func (s *SubscriptionCancelSurveyResult) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the
-// data needed to defer a
-// subscription purchase to a future expiry time.
+// data needed to defer a subscription purchase to a future expiry time.
 type SubscriptionDeferralInfo struct {
 	// DesiredExpiryTimeMillis: The desired next expiry time to assign to
-	// the subscription, in
-	// milliseconds since the Epoch. The given time must be
-	// later/greater
-	// than the current expiry time for the subscription.
+	// the subscription, in milliseconds since the Epoch. The given time
+	// must be later/greater than the current expiry time for the
+	// subscription.
 	DesiredExpiryTimeMillis int64 `json:"desiredExpiryTimeMillis,omitempty,string"`
 
 	// ExpectedExpiryTimeMillis: The expected expiry time for the
-	// subscription.  If the current
-	// expiry time for the subscription is not the value specified
-	// here, the deferral will not occur.
+	// subscription. If the current expiry time for the subscription is not
+	// the value specified here, the deferral will not occur.
 	ExpectedExpiryTimeMillis int64 `json:"expectedExpiryTimeMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2129,31 +2067,23 @@ func (s *SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionPriceChange: Contains the price change information for a
-// subscription that can be used to
-// control the user journey for the price change in the app. This can be
-// in the
-// form of seeking confirmation from the user or tailoring the
-// experience for a
+// subscription that can be used to control the user journey for the
+// price change in the app. This can be in the form of seeking
+// confirmation from the user or tailoring the experience for a
 // successful conversion.
 type SubscriptionPriceChange struct {
 	// NewPrice: The new price the subscription will renew with if the price
-	// change is
-	// accepted by the user.
+	// change is accepted by the user.
 	NewPrice *Price `json:"newPrice,omitempty"`
 
-	// State: The current state of the price change. Possible values are:
-	// 0. Outstanding: State for a pending price change waiting for the user
-	// to
-	//     agree. In this state, you can optionally seek confirmation from
-	// the
-	//     user using the In-App API.
-	// 1. Accepted: State for an accepted price change that the
-	// subscription
-	//     will renew with unless it's canceled. The price change takes
-	// effect on
-	//     a future date when the subscription renews. Note that the change
-	// might
-	//     not occur when the subscription is renewed next.
+	// State: The current state of the price change. Possible values are: 0.
+	// Outstanding: State for a pending price change waiting for the user to
+	// agree. In this state, you can optionally seek confirmation from the
+	// user using the In-App API. 1. Accepted: State for an accepted price
+	// change that the subscription will renew with unless it's canceled.
+	// The price change takes effect on a future date when the subscription
+	// renews. Note that the change might not occur when the subscription is
+	// renewed next.
 	State int64 `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NewPrice") to
@@ -2180,217 +2110,164 @@ func (s *SubscriptionPriceChange) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionPurchase: A SubscriptionPurchase resource indicates the
-// status of a user's
-// subscription purchase.
+// status of a user's subscription purchase.
 type SubscriptionPurchase struct {
 	// AcknowledgementState: The acknowledgement state of the subscription
-	// product. Possible values
-	// are:
-	// 0. Yet to be acknowledged
-	// 1. Acknowledged
+	// product. Possible values are: 0. Yet to be acknowledged 1.
+	// Acknowledged
 	AcknowledgementState int64 `json:"acknowledgementState,omitempty"`
 
 	// AutoRenewing: Whether the subscription will automatically be renewed
-	// when it
-	// reaches its current expiry time.
+	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
 
 	// AutoResumeTimeMillis: Time at which the subscription will be
-	// automatically resumed, in
-	// milliseconds since the Epoch. Only present if the user has requested
-	// to
-	// pause the subscription.
+	// automatically resumed, in milliseconds since the Epoch. Only present
+	// if the user has requested to pause the subscription.
 	AutoResumeTimeMillis int64 `json:"autoResumeTimeMillis,omitempty,string"`
 
 	// CancelReason: The reason why a subscription was canceled or is not
-	// auto-renewing.
-	// Possible values are:
-	// 0. User canceled the subscription
-	// 1. Subscription was canceled by the system,
-	//       for example because of a billing problem
-	// 2. Subscription was replaced with a new subscription
+	// auto-renewing. Possible values are: 0. User canceled the subscription
+	// 1. Subscription was canceled by the system, for example because of a
+	// billing problem 2. Subscription was replaced with a new subscription
 	// 3. Subscription was canceled by the developer
 	CancelReason int64 `json:"cancelReason,omitempty"`
 
 	// CancelSurveyResult: Information provided by the user when they
-	// complete the subscription
-	// cancellation flow (cancellation reason survey).
+	// complete the subscription cancellation flow (cancellation reason
+	// survey).
 	CancelSurveyResult *SubscriptionCancelSurveyResult `json:"cancelSurveyResult,omitempty"`
 
 	// CountryCode: ISO 3166-1 alpha-2 billing country/region code of the
-	// user at the time
-	// the subscription was granted.
+	// user at the time the subscription was granted.
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// DeveloperPayload: A developer-specified string that contains
-	// supplemental
-	// information about an order.
+	// supplemental information about an order.
 	DeveloperPayload string `json:"developerPayload,omitempty"`
 
 	// EmailAddress: The email address of the user when the subscription was
-	// purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
+	// purchased. Only present for purchases made with 'Subscribe with
+	// Google'.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// ExpiryTimeMillis: Time at which the subscription will expire, in
-	// milliseconds
-	// since the Epoch.
+	// milliseconds since the Epoch.
 	ExpiryTimeMillis int64 `json:"expiryTimeMillis,omitempty,string"`
 
 	// ExternalAccountId: User account identifier in the third-party
-	// service.
-	// Only present if account linking happened as part of the
-	// subscription
-	// purchase flow.
+	// service. Only present if account linking happened as part of the
+	// subscription purchase flow.
 	ExternalAccountId string `json:"externalAccountId,omitempty"`
 
 	// FamilyName: The family name of the user when the subscription was
-	// purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
+	// purchased. Only present for purchases made with 'Subscribe with
+	// Google'.
 	FamilyName string `json:"familyName,omitempty"`
 
 	// GivenName: The given name of the user when the subscription was
-	// purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
+	// purchased. Only present for purchases made with 'Subscribe with
+	// Google'.
 	GivenName string `json:"givenName,omitempty"`
 
 	// IntroductoryPriceInfo: Introductory price information of the
-	// subscription. This is only present
-	// when the subscription was purchased with an introductory price.
-	//
-	// This field does not indicate the subscription is currently in
-	// introductory
-	// price period.
+	// subscription. This is only present when the subscription was
+	// purchased with an introductory price. This field does not indicate
+	// the subscription is currently in introductory price period.
 	IntroductoryPriceInfo *IntroductoryPriceInfo `json:"introductoryPriceInfo,omitempty"`
 
 	// Kind: This kind represents a subscriptionPurchase object in the
-	// androidpublisher
-	// service.
+	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
 
 	// LinkedPurchaseToken: The purchase token of the originating purchase
-	// if this subscription
-	// is one of the following:
-	// 0. Re-signup of a canceled but non-lapsed subscription
-	// 1. Upgrade/downgrade from a previous subscription
-	//
-	// For example, suppose a user originally signs up and you
-	// receive
-	// purchase token X, then the user cancels and goes through the
-	// resignup flow (before their subscription lapses) and you
-	// receive
-	// purchase token Y, and finally the user upgrades their
-	// subscription
-	// and you receive purchase token Z. If you call this API with
-	// purchase
-	// token Z, this field will be set to Y. If you call this API
-	// with
-	// purchase token Y, this field will be set to X. If you call this
-	// API
-	// with purchase token X, this field will not be set.
+	// if this subscription is one of the following: 0. Re-signup of a
+	// canceled but non-lapsed subscription 1. Upgrade/downgrade from a
+	// previous subscription For example, suppose a user originally signs up
+	// and you receive purchase token X, then the user cancels and goes
+	// through the resignup flow (before their subscription lapses) and you
+	// receive purchase token Y, and finally the user upgrades their
+	// subscription and you receive purchase token Z. If you call this API
+	// with purchase token Z, this field will be set to Y. If you call this
+	// API with purchase token Y, this field will be set to X. If you call
+	// this API with purchase token X, this field will not be set.
 	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
 
 	// ObfuscatedExternalAccountId: An obfuscated version of the id that is
-	// uniquely associated with the
-	// user's account in your app. Present for the following purchases:
-	//   * If account linking happened as part of the subscription purchase
-	// flow.
-	//   * It was specified using
-	//
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
-	//     when the purchase was made.
+	// uniquely associated with the user's account in your app. Present for
+	// the following purchases: * If account linking happened as part of the
+	// subscription purchase flow. * It was specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid when the purchase was
+	// made.
 	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
 
 	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
-	// uniquely associated with the
-	// user's profile in your app. Only present if specified
-	// using
-	// https://developer.android.com/reference/com/android/billingclien
-	// t/api/BillingFlowParams.Builder#setobfuscatedprofileid
-	// when the purchase was made.
+	// uniquely associated with the user's profile in your app. Only present
+	// if specified using
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid when the purchase was
+	// made.
 	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
 
-	// OrderId: The order id of the latest recurring order associated
-	// with
+	// OrderId: The order id of the latest recurring order associated with
 	// the purchase of the subscription.
 	OrderId string `json:"orderId,omitempty"`
 
 	// PaymentState: The payment state of the subscription. Possible values
-	// are:
-	// 0. Payment pending
-	// 1. Payment received
-	// 2. Free trial
-	// 3. Pending deferred upgrade/downgrade
+	// are: 0. Payment pending 1. Payment received 2. Free trial 3. Pending
+	// deferred upgrade/downgrade
 	PaymentState int64 `json:"paymentState,omitempty"`
 
 	// PriceAmountMicros: Price of the subscription, not including tax.
-	// Price is expressed
-	// in micro-units, where 1,000,000 micro-units represents one unit
-	// of
-	// the currency. For example, if the subscription price is
-	// &euro;1.99,
-	// price_amount_micros is 1990000.
+	// Price is expressed in micro-units, where 1,000,000 micro-units
+	// represents one unit of the currency. For example, if the subscription
+	// price is €1.99, price_amount_micros is 1990000.
 	PriceAmountMicros int64 `json:"priceAmountMicros,omitempty,string"`
 
 	// PriceChange: The latest price change information available. This is
-	// present only when
-	// there is an upcoming price change for the subscription yet to be
-	// applied.
-	//
-	// Once the subscription renews with the new price or the subscription
-	// is
-	// canceled, no price change information will be returned.
+	// present only when there is an upcoming price change for the
+	// subscription yet to be applied. Once the subscription renews with the
+	// new price or the subscription is canceled, no price change
+	// information will be returned.
 	PriceChange *SubscriptionPriceChange `json:"priceChange,omitempty"`
 
 	// PriceCurrencyCode: ISO 4217 currency code for the subscription price.
-	// For example,
-	// if the price is specified in British pounds
-	// sterling,
+	// For example, if the price is specified in British pounds sterling,
 	// price_currency_code is "GBP".
 	PriceCurrencyCode string `json:"priceCurrencyCode,omitempty"`
 
 	// ProfileId: The Google profile id of the user when the subscription
-	// was purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
+	// was purchased. Only present for purchases made with 'Subscribe with
+	// Google'.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ProfileName: The profile name of the user when the subscription was
-	// purchased.
-	// Only present for purchases made with 'Subscribe with Google'.
+	// purchased. Only present for purchases made with 'Subscribe with
+	// Google'.
 	ProfileName string `json:"profileName,omitempty"`
 
 	// PromotionCode: The promotion code applied on this purchase. This
-	// field is only set if
-	// a vanity code promotion is applied when the subscription was
-	// purchased.
+	// field is only set if a vanity code promotion is applied when the
+	// subscription was purchased.
 	PromotionCode string `json:"promotionCode,omitempty"`
 
 	// PromotionType: The type of promotion applied on this purchase. This
-	// field is only set if
-	// a promotion is applied when the subscription was purchased.
-	// Possible
-	// values are:
-	// 0. One time code
-	// 1. Vanity code
+	// field is only set if a promotion is applied when the subscription was
+	// purchased. Possible values are: 0. One time code 1. Vanity code
 	PromotionType int64 `json:"promotionType,omitempty"`
 
 	// PurchaseType: The type of purchase of the subscription. This field is
-	// only set if
-	// this purchase was not made using the standard in-app billing
-	// flow.
-	// Possible values are:
-	// 0. Test (i.e. purchased from a license testing account)
-	// 1. Promo (i.e. purchased using a promo code)
+	// only set if this purchase was not made using the standard in-app
+	// billing flow. Possible values are: 0. Test (i.e. purchased from a
+	// license testing account) 1. Promo (i.e. purchased using a promo code)
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// StartTimeMillis: Time at which the subscription was granted, in
-	// milliseconds
-	// since the Epoch.
+	// milliseconds since the Epoch.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
 
 	// UserCancellationTimeMillis: The time at which the subscription was
-	// canceled by the user, in
-	// milliseconds since the epoch. Only present if cancelReason is 0.
+	// canceled by the user, in milliseconds since the epoch. Only present
+	// if cancelReason is 0.
 	UserCancellationTimeMillis int64 `json:"userCancellationTimeMillis,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2583,15 +2460,11 @@ func (s *Testers) MarshalJSON() ([]byte, error) {
 }
 
 // Timestamp: A Timestamp represents a point in time independent of any
-// time zone or local
-// calendar, encoded as a count of seconds and fractions of seconds
-// at
-// nanosecond resolution. The count is relative to an epoch at UTC
-// midnight on
-// January 1, 1970.
+// time zone or local calendar, encoded as a count of seconds and
+// fractions of seconds at nanosecond resolution. The count is relative
+// to an epoch at UTC midnight on January 1, 1970.
 type Timestamp struct {
-	// Nanos: Non-negative fractions of a second at nanosecond
-	// resolution.
+	// Nanos: Non-negative fractions of a second at nanosecond resolution.
 	// Must be from 0 to 999,999,999 inclusive.
 	Nanos int64 `json:"nanos,omitempty"`
 
@@ -2622,27 +2495,18 @@ func (s *Timestamp) MarshalJSON() ([]byte, error) {
 }
 
 // TokenPagination: Pagination information returned by a List operation
-// when token pagination
-// is enabled.
-//
-// List operations that supports paging return only one "page" of
-// results. This
-// protocol buffer message describes the page that has been
-// returned.
-//
-// When using token pagination, clients should use the next/previous
-// token
-// to get another page of the result. The presence or absence of
-// next/previous
-// token indicates whether a next/previous page is available and
-// provides a
+// when token pagination is enabled. List operations that supports
+// paging return only one "page" of results. This protocol buffer
+// message describes the page that has been returned. When using token
+// pagination, clients should use the next/previous token to get another
+// page of the result. The presence or absence of next/previous token
+// indicates whether a next/previous page is available and provides a
 // mean of accessing this page. ListRequest.page_token should be set to
-// either
-// next_page_token or previous_page_token to access another page.
+// either next_page_token or previous_page_token to access another page.
 type TokenPagination struct {
 	// NextPageToken: Tokens to pass to the standard list field
-	// 'page_token'. Whenever available,
-	// tokens are preferred over manipulating start_index.
+	// 'page_token'. Whenever available, tokens are preferred over
+	// manipulating start_index.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	PreviousPageToken string `json:"previousPageToken,omitempty"`
@@ -2673,8 +2537,7 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 // Track: A track configuration. The resource for TracksService.
 type Track struct {
 	// Releases: In a read request, represents all active releases in the
-	// track.
-	// In an update request, represents desired changes.
+	// track. In an update request, represents desired changes.
 	Releases []*TrackRelease `json:"releases,omitempty"`
 
 	// Track: Identifier of the track.
@@ -2713,21 +2576,16 @@ type TrackRelease struct {
 	CountryTargeting *CountryTargeting `json:"countryTargeting,omitempty"`
 
 	// InAppUpdatePriority: In-app update priority of the release. All newly
-	// added APKs in the
-	// release will be considered at this priority. Can take values in the
-	// range
-	// [0, 5], with 5 the highest priority. Defaults to
-	// 0.
-	// in_app_update_priority can not be updated once the release is rolled
-	// out.
-	// See https://developer.android.com/guide/playcore/in-app-updates.
+	// added APKs in the release will be considered at this priority. Can
+	// take values in the range [0, 5], with 5 the highest priority.
+	// Defaults to 0. in_app_update_priority can not be updated once the
+	// release is rolled out. See
+	// https://developer.android.com/guide/playcore/in-app-updates.
 	InAppUpdatePriority int64 `json:"inAppUpdatePriority,omitempty"`
 
 	// Name: The release name. Not required to be unique. If not set, the
-	// name is
-	// generated from the APK's version_name. If the release contains
-	// multiple
-	// APKs, the name is generated from the date.
+	// name is generated from the APK's version_name. If the release
+	// contains multiple APKs, the name is generated from the date.
 	Name string `json:"name,omitempty"`
 
 	// ReleaseNotes: A description of what is new in this release.
@@ -2739,24 +2597,21 @@ type TrackRelease struct {
 	//   "statusUnspecified" - Unspecified status.
 	//   "draft" - The release's APKs are not being served to users.
 	//   "inProgress" - The release's APKs are being served to a fraction of
-	// users, determined by
-	// 'user_fraction'.
+	// users, determined by 'user_fraction'.
 	//   "halted" - The release's APKs will no longer be served to users.
-	// Users who already
-	// have these APKs are unaffected.
+	// Users who already have these APKs are unaffected.
 	//   "completed" - The release will have no further changes. Its APKs
-	// are being served to
-	// all users, unless they are eligible to APKs of a more recent release.
+	// are being served to all users, unless they are eligible to APKs of a
+	// more recent release.
 	Status string `json:"status,omitempty"`
 
 	// UserFraction: Fraction of users who are eligible for a staged
-	// release. 0 < fraction < 1.
-	// Can only be set when status is "inProgress" or "halted".
+	// release. 0 < fraction < 1. Can only be set when status is
+	// "inProgress" or "halted".
 	UserFraction float64 `json:"userFraction,omitempty"`
 
 	// VersionCodes: Version codes of all APKs in the release. Must include
-	// version codes to
-	// retain from previous releases.
+	// version codes to retain from previous releases.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CountryTargeting") to
@@ -2836,18 +2691,16 @@ func (s *TracksListResponse) MarshalJSON() ([]byte, error) {
 // UserComment: User entry from conversation between user and developer.
 type UserComment struct {
 	// AndroidOsVersion: Integer Android SDK version of the user's device at
-	// the time the
-	// review was written, e.g. 23 is Marshmallow. May be absent.
+	// the time the review was written, e.g. 23 is Marshmallow. May be
+	// absent.
 	AndroidOsVersion int64 `json:"androidOsVersion,omitempty"`
 
 	// AppVersionCode: Integer version code of the app as installed at the
-	// time the
-	// review was written. May be absent.
+	// time the review was written. May be absent.
 	AppVersionCode int64 `json:"appVersionCode,omitempty"`
 
 	// AppVersionName: String version name of the app as installed at the
-	// time the
-	// review was written. May be absent.
+	// time the review was written. May be absent.
 	AppVersionName string `json:"appVersionName,omitempty"`
 
 	// Device: Codename for the reviewer's device, e.g. klte, flounder. May
@@ -2862,25 +2715,21 @@ type UserComment struct {
 	LastModified *Timestamp `json:"lastModified,omitempty"`
 
 	// OriginalText: Untranslated text of the review, where the review was
-	// translated.
-	// If the review was not translated this is left blank.
+	// translated. If the review was not translated this is left blank.
 	OriginalText string `json:"originalText,omitempty"`
 
 	// ReviewerLanguage: Language code for the reviewer. This is taken from
-	// the device
-	// settings so is not guaranteed to match the language the review
-	// is written in. May be absent.
+	// the device settings so is not guaranteed to match the language the
+	// review is written in. May be absent.
 	ReviewerLanguage string `json:"reviewerLanguage,omitempty"`
 
 	// StarRating: The star rating associated with the review, from 1 to 5.
 	StarRating int64 `json:"starRating,omitempty"`
 
-	// Text: The content of the comment, i.e. review body. In some
-	// cases
-	// users have been able to write a review with separate title and
-	// body; in those cases the title and body are concatenated
-	// and
-	// separated by a tab character.
+	// Text: The content of the comment, i.e. review body. In some cases
+	// users have been able to write a review with separate title and body;
+	// in those cases the title and body are concatenated and separated by a
+	// tab character.
 	Text string `json:"text,omitempty"`
 
 	// ThumbsDownCount: Number of users who have given this review a thumbs
@@ -2918,8 +2767,7 @@ func (s *UserComment) MarshalJSON() ([]byte, error) {
 // UsesPermission: A permission used by this APK.
 type UsesPermission struct {
 	// MaxSdkVersion: Optionally, the maximum SDK version for which the
-	// permission is
-	// required.
+	// permission is required.
 	MaxSdkVersion int64 `json:"maxSdkVersion,omitempty"`
 
 	// Name: The name of the permission requested.
@@ -2949,8 +2797,7 @@ func (s *UsesPermission) MarshalJSON() ([]byte, error) {
 }
 
 // Variant: APK that is suitable for inclusion in a system image. The
-// resource of
-// SystemApksService.
+// resource of SystemApksService.
 type Variant struct {
 	// DeviceSpec: The device spec used to generate the APK.
 	DeviceSpec *DeviceSpec `json:"deviceSpec,omitempty"`
@@ -2987,53 +2834,37 @@ func (s *Variant) MarshalJSON() ([]byte, error) {
 }
 
 // VoidedPurchase: A VoidedPurchase resource indicates a purchase that
-// was either
-// canceled/refunded/charged-back.
+// was either canceled/refunded/charged-back.
 type VoidedPurchase struct {
 	// Kind: This kind represents a voided purchase object in the
-	// androidpublisher
-	// service.
+	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
 
 	// OrderId: The order id which uniquely identifies a one-time purchase,
-	// subscription
-	// purchase, or subscription renewal.
+	// subscription purchase, or subscription renewal.
 	OrderId string `json:"orderId,omitempty"`
 
 	// PurchaseTimeMillis: The time at which the purchase was made, in
-	// milliseconds since the
-	// epoch (Jan 1, 1970).
+	// milliseconds since the epoch (Jan 1, 1970).
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
 	// PurchaseToken: The token which uniquely identifies a one-time
-	// purchase or subscription.
-	// To uniquely identify subscription renewals use order_id
-	// (available
-	// starting from version 3 of the API).
+	// purchase or subscription. To uniquely identify subscription renewals
+	// use order_id (available starting from version 3 of the API).
 	PurchaseToken string `json:"purchaseToken,omitempty"`
 
 	// VoidedReason: The reason why the purchase was voided, possible values
-	// are:
-	// 0. Other
-	// 1. Remorse
-	// 2. Not_received
-	// 3. Defective
-	// 4. Accidental_purchase
-	// 5. Fraud
-	// 6. Friendly_fraud
-	// 7. Chargeback
+	// are: 0. Other 1. Remorse 2. Not_received 3. Defective 4.
+	// Accidental_purchase 5. Fraud 6. Friendly_fraud 7. Chargeback
 	VoidedReason int64 `json:"voidedReason,omitempty"`
 
-	// VoidedSource: The initiator of voided purchase, possible values
-	// are:
-	// 0. User
-	// 1. Developer
-	// 2. Google
+	// VoidedSource: The initiator of voided purchase, possible values are:
+	// 0. User 1. Developer 2. Google
 	VoidedSource int64 `json:"voidedSource,omitempty"`
 
 	// VoidedTimeMillis: The time at which the purchase was
-	// canceled/refunded/charged-back,
-	// in milliseconds since the epoch (Jan 1, 1970).
+	// canceled/refunded/charged-back, in milliseconds since the epoch (Jan
+	// 1, 1970).
 	VoidedTimeMillis int64 `json:"voidedTimeMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -3143,7 +2974,7 @@ func (c *EditsCommitCall) Header() http.Header {
 
 func (c *EditsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3282,7 +3113,7 @@ func (c *EditsDeleteCall) Header() http.Header {
 
 func (c *EditsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3404,7 +3235,7 @@ func (c *EditsGetCall) Header() http.Header {
 
 func (c *EditsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3546,7 +3377,7 @@ func (c *EditsInsertCall) Header() http.Header {
 
 func (c *EditsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3685,7 +3516,7 @@ func (c *EditsValidateCall) Header() http.Header {
 
 func (c *EditsValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3791,12 +3622,10 @@ type EditsApksAddexternallyhostedCall struct {
 }
 
 // Addexternallyhosted: Creates a new APK without uploading the APK
-// itself to Google Play, instead
-// hosting the APK at a specified URL. This function is only available
-// to
-// organizations using Managed Play whose application is configured
-// to
-// restrict distribution to the organizations.
+// itself to Google Play, instead hosting the APK at a specified URL.
+// This function is only available to organizations using Managed Play
+// whose application is configured to restrict distribution to the
+// organizations.
 func (r *EditsApksService) Addexternallyhosted(packageName string, editId string, apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest) *EditsApksAddexternallyhostedCall {
 	c := &EditsApksAddexternallyhostedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3832,7 +3661,7 @@ func (c *EditsApksAddexternallyhostedCall) Header() http.Header {
 
 func (c *EditsApksAddexternallyhostedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3897,7 +3726,7 @@ func (c *EditsApksAddexternallyhostedCall) Do(opts ...googleapi.CallOption) (*Ap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead\nhosting the APK at a specified URL. This function is only available to\norganizations using Managed Play whose application is configured to\nrestrict distribution to the organizations.",
+	//   "description": "Creates a new APK without uploading the APK itself to Google Play, instead hosting the APK at a specified URL. This function is only available to organizations using Managed Play whose application is configured to restrict distribution to the organizations.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/externallyHosted",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.apks.addexternallyhosted",
@@ -3990,7 +3819,7 @@ func (c *EditsApksListCall) Header() http.Header {
 
 func (c *EditsApksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4172,7 +4001,7 @@ func (c *EditsApksUploadCall) Header() http.Header {
 
 func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4364,7 +4193,7 @@ func (c *EditsBundlesListCall) Header() http.Header {
 
 func (c *EditsBundlesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4472,16 +4301,12 @@ type EditsBundlesUploadCall struct {
 	header_     http.Header
 }
 
-// Upload: Uploads a new Android App Bundle to this edit.
-// If you are using the Google API client libraries, please increase
-// the
-// timeout of the http request before calling this endpoint
-// (a timeout of 2 minutes is recommended).
-// See [Timeouts
-// and
-// Errors](https://developers.google.com/api-client-library/java/goog
-// le-api-java-client/errors)
-// for an example in java.
+// Upload: Uploads a new Android App Bundle to this edit. If you are
+// using the Google API client libraries, please increase the timeout of
+// the http request before calling this endpoint (a timeout of 2 minutes
+// is recommended). See [Timeouts and
+// Errors](https://developers.google.com/api-client-library/java/google-a
+// pi-java-client/errors) for an example in java.
 func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBundlesUploadCall {
 	c := &EditsBundlesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4491,10 +4316,8 @@ func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBu
 
 // AckBundleInstallationWarning sets the optional parameter
 // "ackBundleInstallationWarning": Must be set to true if the bundle
-// installation may trigger a warning on
-// user devices (for example, if installation size may be over a
-// threshold,
-// typically 100 MB).
+// installation may trigger a warning on user devices (for example, if
+// installation size may be over a threshold, typically 100 MB).
 func (c *EditsBundlesUploadCall) AckBundleInstallationWarning(ackBundleInstallationWarning bool) *EditsBundlesUploadCall {
 	c.urlParams_.Set("ackBundleInstallationWarning", fmt.Sprint(ackBundleInstallationWarning))
 	return c
@@ -4566,7 +4389,7 @@ func (c *EditsBundlesUploadCall) Header() http.Header {
 
 func (c *EditsBundlesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4654,7 +4477,7 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads a new Android App Bundle to this edit.\nIf you are using the Google API client libraries, please increase the\ntimeout of the http request before calling this endpoint\n(a timeout of 2 minutes is recommended).\nSee [Timeouts and\nErrors](https://developers.google.com/api-client-library/java/google-api-java-client/errors)\nfor an example in java.",
+	//   "description": "Uploads a new Android App Bundle to this edit. If you are using the Google API client libraries, please increase the timeout of the http request before calling this endpoint (a timeout of 2 minutes is recommended). See [Timeouts and Errors](https://developers.google.com/api-client-library/java/google-api-java-client/errors) for an example in java.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.bundles.upload",
@@ -4676,7 +4499,7 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 	//   ],
 	//   "parameters": {
 	//     "ackBundleInstallationWarning": {
-	//       "description": "Must be set to true if the bundle installation may trigger a warning on\nuser devices (for example, if installation size may be over a threshold,\ntypically 100 MB).",
+	//       "description": "Must be set to true if the bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4796,7 +4619,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Header() http.Header {
 
 func (c *EditsDeobfuscationfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4910,7 +4733,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Do(opts ...googleapi.CallOption) (*D
 	//   ],
 	//   "parameters": {
 	//     "apkVersionCode": {
-	//       "description": "The version code of the APK whose Deobfuscation File is being\nuploaded.",
+	//       "description": "The version code of the APK whose Deobfuscation File is being uploaded.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -4922,6 +4745,11 @@ func (c *EditsDeobfuscationfilesUploadCall) Do(opts ...googleapi.CallOption) (*D
 	//         "deobfuscationFileTypeUnspecified",
 	//         "proguard",
 	//         "nativeCode"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified deobfuscation file type.",
+	//         "Proguard deobfuscation file type.",
+	//         "Native debugging symbols file type."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -5009,7 +4837,7 @@ func (c *EditsDetailsGetCall) Header() http.Header {
 
 func (c *EditsDetailsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5153,7 +4981,7 @@ func (c *EditsDetailsPatchCall) Header() http.Header {
 
 func (c *EditsDetailsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5302,7 +5130,7 @@ func (c *EditsDetailsUpdateCall) Header() http.Header {
 
 func (c *EditsDetailsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5464,7 +5292,7 @@ func (c *EditsExpansionfilesGetCall) Header() http.Header {
 
 func (c *EditsExpansionfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5541,7 +5369,7 @@ func (c *EditsExpansionfilesGetCall) Do(opts ...googleapi.CallOption) (*Expansio
 	//   ],
 	//   "parameters": {
 	//     "apkVersionCode": {
-	//       "description": "The version code of the APK whose expansion file configuration is being\nread or modified.",
+	//       "description": "The version code of the APK whose expansion file configuration is being read or modified.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -5559,6 +5387,11 @@ func (c *EditsExpansionfilesGetCall) Do(opts ...googleapi.CallOption) (*Expansio
 	//         "expansionFileTypeUnspecified",
 	//         "main",
 	//         "patch"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified expansion file type.",
+	//         "Main expansion file.",
+	//         "Patch expansion file."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -5597,9 +5430,8 @@ type EditsExpansionfilesPatchCall struct {
 }
 
 // Patch: Patches the APK's expansion file configuration to reference
-// another APK's
-// expansion file.
-// To add a new expansion file use the Upload method.
+// another APK's expansion file. To add a new expansion file use the
+// Upload method.
 func (r *EditsExpansionfilesService) Patch(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesPatchCall {
 	c := &EditsExpansionfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5637,7 +5469,7 @@ func (c *EditsExpansionfilesPatchCall) Header() http.Header {
 
 func (c *EditsExpansionfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5704,7 +5536,7 @@ func (c *EditsExpansionfilesPatchCall) Do(opts ...googleapi.CallOption) (*Expans
 	}
 	return ret, nil
 	// {
-	//   "description": "Patches the APK's expansion file configuration to reference another APK's\nexpansion file.\nTo add a new expansion file use the Upload method.",
+	//   "description": "Patches the APK's expansion file configuration to reference another APK's expansion file. To add a new expansion file use the Upload method.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.expansionfiles.patch",
@@ -5716,7 +5548,7 @@ func (c *EditsExpansionfilesPatchCall) Do(opts ...googleapi.CallOption) (*Expans
 	//   ],
 	//   "parameters": {
 	//     "apkVersionCode": {
-	//       "description": "The version code of the APK whose expansion file configuration is being\nread or modified.",
+	//       "description": "The version code of the APK whose expansion file configuration is being read or modified.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -5734,6 +5566,11 @@ func (c *EditsExpansionfilesPatchCall) Do(opts ...googleapi.CallOption) (*Expans
 	//         "expansionFileTypeUnspecified",
 	//         "main",
 	//         "patch"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified expansion file type.",
+	//         "Main expansion file.",
+	//         "Patch expansion file."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -5775,9 +5612,8 @@ type EditsExpansionfilesUpdateCall struct {
 }
 
 // Update: Updates the APK's expansion file configuration to reference
-// another APK's
-// expansion file.
-// To add a new expansion file use the Upload method.
+// another APK's expansion file. To add a new expansion file use the
+// Upload method.
 func (r *EditsExpansionfilesService) Update(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesUpdateCall {
 	c := &EditsExpansionfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5815,7 +5651,7 @@ func (c *EditsExpansionfilesUpdateCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5882,7 +5718,7 @@ func (c *EditsExpansionfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Expan
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the APK's expansion file configuration to reference another APK's\nexpansion file.\nTo add a new expansion file use the Upload method.",
+	//   "description": "Updates the APK's expansion file configuration to reference another APK's expansion file. To add a new expansion file use the Upload method.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.expansionfiles.update",
@@ -5894,7 +5730,7 @@ func (c *EditsExpansionfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Expan
 	//   ],
 	//   "parameters": {
 	//     "apkVersionCode": {
-	//       "description": "The version code of the APK whose expansion file configuration is being\nread or modified.",
+	//       "description": "The version code of the APK whose expansion file configuration is being read or modified.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -5912,6 +5748,11 @@ func (c *EditsExpansionfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Expan
 	//         "expansionFileTypeUnspecified",
 	//         "main",
 	//         "patch"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified expansion file type.",
+	//         "Main expansion file.",
+	//         "Patch expansion file."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -6029,7 +5870,7 @@ func (c *EditsExpansionfilesUploadCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6143,7 +5984,7 @@ func (c *EditsExpansionfilesUploadCall) Do(opts ...googleapi.CallOption) (*Expan
 	//   ],
 	//   "parameters": {
 	//     "apkVersionCode": {
-	//       "description": "The version code of the APK whose expansion file configuration is being\nread or modified.",
+	//       "description": "The version code of the APK whose expansion file configuration is being read or modified.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -6161,6 +6002,11 @@ func (c *EditsExpansionfilesUploadCall) Do(opts ...googleapi.CallOption) (*Expan
 	//         "expansionFileTypeUnspecified",
 	//         "main",
 	//         "patch"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified expansion file type.",
+	//         "Main expansion file.",
+	//         "Patch expansion file."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -6237,7 +6083,7 @@ func (c *EditsImagesDeleteCall) Header() http.Header {
 
 func (c *EditsImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6313,12 +6159,24 @@ func (c *EditsImagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//         "promoGraphic",
 	//         "tvBanner"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type. Do not use.",
+	//         "Phone screenshot.",
+	//         "Seven inch screenshot.",
+	//         "Ten inch screenshot.",
+	//         "TV screenshot.",
+	//         "Wear screenshot.",
+	//         "Icon.",
+	//         "Feature graphic.",
+	//         "Promo graphic.",
+	//         "TV banner."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6352,8 +6210,7 @@ type EditsImagesDeleteallCall struct {
 }
 
 // Deleteall: Deletes all images for the specified language and image
-// type.
-// Returns an empty response if no images are found.
+// type. Returns an empty response if no images are found.
 func (r *EditsImagesService) Deleteall(packageName string, editId string, language string, imageType string) *EditsImagesDeleteallCall {
 	c := &EditsImagesDeleteallCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6390,7 +6247,7 @@ func (c *EditsImagesDeleteallCall) Header() http.Header {
 
 func (c *EditsImagesDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6452,7 +6309,7 @@ func (c *EditsImagesDeleteallCall) Do(opts ...googleapi.CallOption) (*ImagesDele
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all images for the specified language and image type.\nReturns an empty response if no images are found.",
+	//   "description": "Deletes all images for the specified language and image type. Returns an empty response if no images are found.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidpublisher.edits.images.deleteall",
@@ -6470,7 +6327,7 @@ func (c *EditsImagesDeleteallCall) Do(opts ...googleapi.CallOption) (*ImagesDele
 	//       "type": "string"
 	//     },
 	//     "imageType": {
-	//       "description": "Type of the Image.\nProviding an image type that refers to no images is a no-op.",
+	//       "description": "Type of the Image. Providing an image type that refers to no images is a no-op.",
 	//       "enum": [
 	//         "appImageTypeUnspecified",
 	//         "phoneScreenshots",
@@ -6483,12 +6340,24 @@ func (c *EditsImagesDeleteallCall) Do(opts ...googleapi.CallOption) (*ImagesDele
 	//         "promoGraphic",
 	//         "tvBanner"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type. Do not use.",
+	//         "Phone screenshot.",
+	//         "Seven inch screenshot.",
+	//         "Ten inch screenshot.",
+	//         "TV screenshot.",
+	//         "Wear screenshot.",
+	//         "Icon.",
+	//         "Feature graphic.",
+	//         "Promo graphic.",
+	//         "TV banner."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).\nProviding a language that is not supported by the App is a no-op.",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German). Providing a language that is not supported by the App is a no-op.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6572,7 +6441,7 @@ func (c *EditsImagesListCall) Header() http.Header {
 
 func (c *EditsImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6655,7 +6524,7 @@ func (c *EditsImagesListCall) Do(opts ...googleapi.CallOption) (*ImagesListRespo
 	//       "type": "string"
 	//     },
 	//     "imageType": {
-	//       "description": "Type of the Image. Providing an image type that refers to no images will\nreturn an empty response.",
+	//       "description": "Type of the Image. Providing an image type that refers to no images will return an empty response.",
 	//       "enum": [
 	//         "appImageTypeUnspecified",
 	//         "phoneScreenshots",
@@ -6668,12 +6537,24 @@ func (c *EditsImagesListCall) Do(opts ...googleapi.CallOption) (*ImagesListRespo
 	//         "promoGraphic",
 	//         "tvBanner"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type. Do not use.",
+	//         "Phone screenshot.",
+	//         "Seven inch screenshot.",
+	//         "Ten inch screenshot.",
+	//         "TV screenshot.",
+	//         "Wear screenshot.",
+	//         "Icon.",
+	//         "Feature graphic.",
+	//         "Promo graphic.",
+	//         "TV banner."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).\nThere must be a store listing for the specified language.",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German). There must be a store listing for the specified language.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6711,8 +6592,7 @@ type EditsImagesUploadCall struct {
 }
 
 // Upload: Uploads an image of the specified language and image type,
-// and adds to the
-// edit.
+// and adds to the edit.
 func (r *EditsImagesService) Upload(packageName string, editId string, language string, imageType string) *EditsImagesUploadCall {
 	c := &EditsImagesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6788,7 +6668,7 @@ func (c *EditsImagesUploadCall) Header() http.Header {
 
 func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6878,7 +6758,7 @@ func (c *EditsImagesUploadCall) Do(opts ...googleapi.CallOption) (*ImagesUploadR
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads an image of the specified language and image type, and adds to the\nedit.",
+	//   "description": "Uploads an image of the specified language and image type, and adds to the edit.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.images.upload",
@@ -6921,12 +6801,24 @@ func (c *EditsImagesUploadCall) Do(opts ...googleapi.CallOption) (*ImagesUploadR
 	//         "promoGraphic",
 	//         "tvBanner"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified type. Do not use.",
+	//         "Phone screenshot.",
+	//         "Seven inch screenshot.",
+	//         "Ten inch screenshot.",
+	//         "TV screenshot.",
+	//         "Wear screenshot.",
+	//         "Icon.",
+	//         "Feature graphic.",
+	//         "Promo graphic.",
+	//         "TV banner."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).\nProviding a language that is not supported by the App is a no-op.",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German). Providing a language that is not supported by the App is a no-op.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6998,7 +6890,7 @@ func (c *EditsListingsDeleteCall) Header() http.Header {
 
 func (c *EditsListingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7051,7 +6943,7 @@ func (c *EditsListingsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7117,7 +7009,7 @@ func (c *EditsListingsDeleteallCall) Header() http.Header {
 
 func (c *EditsListingsDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7241,7 +7133,7 @@ func (c *EditsListingsGetCall) Header() http.Header {
 
 func (c *EditsListingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7322,7 +7214,7 @@ func (c *EditsListingsGetCall) Do(opts ...googleapi.CallOption) (*Listing, error
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7402,7 +7294,7 @@ func (c *EditsListingsListCall) Header() http.Header {
 
 func (c *EditsListingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7548,7 +7440,7 @@ func (c *EditsListingsPatchCall) Header() http.Header {
 
 func (c *EditsListingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7631,7 +7523,7 @@ func (c *EditsListingsPatchCall) Do(opts ...googleapi.CallOption) (*Listing, err
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7707,7 +7599,7 @@ func (c *EditsListingsUpdateCall) Header() http.Header {
 
 func (c *EditsListingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7790,7 +7682,7 @@ func (c *EditsListingsUpdateCall) Do(opts ...googleapi.CallOption) (*Listing, er
 	//       "type": "string"
 	//     },
 	//     "language": {
-	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\"\nfor Austrian German).",
+	//       "description": "Language localization code (a BCP-47 language tag; for example, \"de-AT\" for Austrian German).",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7875,7 +7767,7 @@ func (c *EditsTestersGetCall) Header() http.Header {
 
 func (c *EditsTestersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8029,7 +7921,7 @@ func (c *EditsTestersPatchCall) Header() http.Header {
 
 func (c *EditsTestersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8188,7 +8080,7 @@ func (c *EditsTestersUpdateCall) Header() http.Header {
 
 func (c *EditsTestersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8356,7 +8248,7 @@ func (c *EditsTracksGetCall) Header() http.Header {
 
 func (c *EditsTracksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8517,7 +8409,7 @@ func (c *EditsTracksListCall) Header() http.Header {
 
 func (c *EditsTracksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8663,7 +8555,7 @@ func (c *EditsTracksPatchCall) Header() http.Header {
 
 func (c *EditsTracksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8822,7 +8714,7 @@ func (c *EditsTracksUpdateCall) Header() http.Header {
 
 func (c *EditsTracksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8978,7 +8870,7 @@ func (c *InappproductsDeleteCall) Header() http.Header {
 
 func (c *InappproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9101,7 +8993,7 @@ func (c *InappproductsGetCall) Header() http.Header {
 
 func (c *InappproductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9219,10 +9111,9 @@ func (r *InappproductsService) Insert(packageName string, inappproduct *InAppPro
 
 // AutoConvertMissingPrices sets the optional parameter
 // "autoConvertMissingPrices": If true the prices for all regions
-// targeted by the parent app that don't
-// have a price specified for this in-app product will be auto converted
-// to
-// the target currency based on the default price. Defaults to false.
+// targeted by the parent app that don't have a price specified for this
+// in-app product will be auto converted to the target currency based on
+// the default price. Defaults to false.
 func (c *InappproductsInsertCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsInsertCall {
 	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
@@ -9255,7 +9146,7 @@ func (c *InappproductsInsertCall) Header() http.Header {
 
 func (c *InappproductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9328,7 +9219,7 @@ func (c *InappproductsInsertCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	//   ],
 	//   "parameters": {
 	//     "autoConvertMissingPrices": {
-	//       "description": "If true the prices for all regions targeted by the parent app that don't\nhave a price specified for this in-app product will be auto converted to\nthe target currency based on the default price. Defaults to false.",
+	//       "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9430,7 +9321,7 @@ func (c *InappproductsListCall) Header() http.Header {
 
 func (c *InappproductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9559,10 +9450,9 @@ func (r *InappproductsService) Patch(packageName string, skuid string, inappprod
 
 // AutoConvertMissingPrices sets the optional parameter
 // "autoConvertMissingPrices": If true the prices for all regions
-// targeted by the parent app that don't
-// have a price specified for this in-app product will be auto converted
-// to
-// the target currency based on the default price. Defaults to false.
+// targeted by the parent app that don't have a price specified for this
+// in-app product will be auto converted to the target currency based on
+// the default price. Defaults to false.
 func (c *InappproductsPatchCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsPatchCall {
 	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
@@ -9595,7 +9485,7 @@ func (c *InappproductsPatchCall) Header() http.Header {
 
 func (c *InappproductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9670,7 +9560,7 @@ func (c *InappproductsPatchCall) Do(opts ...googleapi.CallOption) (*InAppProduct
 	//   ],
 	//   "parameters": {
 	//     "autoConvertMissingPrices": {
-	//       "description": "If true the prices for all regions targeted by the parent app that don't\nhave a price specified for this in-app product will be auto converted to\nthe target currency based on the default price. Defaults to false.",
+	//       "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9725,10 +9615,9 @@ func (r *InappproductsService) Update(packageName string, skuid string, inapppro
 
 // AutoConvertMissingPrices sets the optional parameter
 // "autoConvertMissingPrices": If true the prices for all regions
-// targeted by the parent app that don't
-// have a price specified for this in-app product will be auto converted
-// to
-// the target currency based on the default price. Defaults to false.
+// targeted by the parent app that don't have a price specified for this
+// in-app product will be auto converted to the target currency based on
+// the default price. Defaults to false.
 func (c *InappproductsUpdateCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsUpdateCall {
 	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
@@ -9761,7 +9650,7 @@ func (c *InappproductsUpdateCall) Header() http.Header {
 
 func (c *InappproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9836,7 +9725,7 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	//   ],
 	//   "parameters": {
 	//     "autoConvertMissingPrices": {
-	//       "description": "If true the prices for all regions targeted by the parent app that don't\nhave a price specified for this in-app product will be auto converted to\nthe target currency based on the default price. Defaults to false.",
+	//       "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -9878,17 +9767,12 @@ type InternalappsharingartifactsUploadapkCall struct {
 	header_     http.Header
 }
 
-// Uploadapk: Uploads an APK to internal app sharing.
-// If you are using the Google API client libraries, please increase
-// the
-// timeout of the http request before calling this endpoint
-// (a timeout of 2 minutes is recommended).
-//
-// See [Timeouts
-// and
-// Errors](https://developers.google.com/api-client-library/java/goog
-// le-api-java-client/errors)
-// for an example in java.
+// Uploadapk: Uploads an APK to internal app sharing. If you are using
+// the Google API client libraries, please increase the timeout of the
+// http request before calling this endpoint (a timeout of 2 minutes is
+// recommended). See [Timeouts and
+// Errors](https://developers.google.com/api-client-library/java/google-a
+// pi-java-client/errors) for an example in java.
 func (r *InternalappsharingartifactsService) Uploadapk(packageName string) *InternalappsharingartifactsUploadapkCall {
 	c := &InternalappsharingartifactsUploadapkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9961,7 +9845,7 @@ func (c *InternalappsharingartifactsUploadapkCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadapkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10048,7 +9932,7 @@ func (c *InternalappsharingartifactsUploadapkCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads an APK to internal app sharing.\nIf you are using the Google API client libraries, please increase the\ntimeout of the http request before calling this endpoint\n(a timeout of 2 minutes is recommended).\n\nSee [Timeouts and\nErrors](https://developers.google.com/api-client-library/java/google-api-java-client/errors)\nfor an example in java.",
+	//   "description": "Uploads an APK to internal app sharing. If you are using the Google API client libraries, please increase the timeout of the http request before calling this endpoint (a timeout of 2 minutes is recommended). See [Timeouts and Errors](https://developers.google.com/api-client-library/java/google-api-java-client/errors) for an example in java.",
 	//   "flatPath": "androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/apk",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.internalappsharingartifacts.uploadapk",
@@ -10099,17 +9983,12 @@ type InternalappsharingartifactsUploadbundleCall struct {
 	header_     http.Header
 }
 
-// Uploadbundle: Uploads an app bundle to internal app sharing.
-// If you are using the Google API client libraries, please increase
-// the
-// timeout of the http request before calling this endpoint
-// (a timeout of 2 minutes is recommended).
-//
-// See [Timeouts
-// and
-// Errors](https://developers.google.com/api-client-library/java/goog
-// le-api-java-client/errors)
-// for an example in java.
+// Uploadbundle: Uploads an app bundle to internal app sharing. If you
+// are using the Google API client libraries, please increase the
+// timeout of the http request before calling this endpoint (a timeout
+// of 2 minutes is recommended). See [Timeouts and
+// Errors](https://developers.google.com/api-client-library/java/google-a
+// pi-java-client/errors) for an example in java.
 func (r *InternalappsharingartifactsService) Uploadbundle(packageName string) *InternalappsharingartifactsUploadbundleCall {
 	c := &InternalappsharingartifactsUploadbundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10182,7 +10061,7 @@ func (c *InternalappsharingartifactsUploadbundleCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadbundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10269,7 +10148,7 @@ func (c *InternalappsharingartifactsUploadbundleCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads an app bundle to internal app sharing.\nIf you are using the Google API client libraries, please increase the\ntimeout of the http request before calling this endpoint\n(a timeout of 2 minutes is recommended).\n\nSee [Timeouts and\nErrors](https://developers.google.com/api-client-library/java/google-api-java-client/errors)\nfor an example in java.",
+	//   "description": "Uploads an app bundle to internal app sharing. If you are using the Google API client libraries, please increase the timeout of the http request before calling this endpoint (a timeout of 2 minutes is recommended). See [Timeouts and Errors](https://developers.google.com/api-client-library/java/google-api-java-client/errors) for an example in java.",
 	//   "flatPath": "androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/bundle",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.internalappsharingartifacts.uploadbundle",
@@ -10328,13 +10207,10 @@ func (r *OrdersService) Refund(packageName string, orderId string) *OrdersRefund
 }
 
 // Revoke sets the optional parameter "revoke": Whether to revoke the
-// purchased item. If set to true, access to the
-// subscription or in-app item will be terminated immediately. If the
-// item is
-// a recurring subscription, all future payments will also be
-// terminated.
-// Consumed in-app items need to be handled by developer's app.
-// (optional).
+// purchased item. If set to true, access to the subscription or in-app
+// item will be terminated immediately. If the item is a recurring
+// subscription, all future payments will also be terminated. Consumed
+// in-app items need to be handled by developer's app. (optional).
 func (c *OrdersRefundCall) Revoke(revoke bool) *OrdersRefundCall {
 	c.urlParams_.Set("revoke", fmt.Sprint(revoke))
 	return c
@@ -10367,7 +10243,7 @@ func (c *OrdersRefundCall) Header() http.Header {
 
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10412,19 +10288,19 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "orderId": {
-	//       "description": "The order ID provided to the user when the subscription or in-app order was\npurchased.",
+	//       "description": "The order ID provided to the user when the subscription or in-app order was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription or in-app\nitem was purchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription or in-app item was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "revoke": {
-	//       "description": "Whether to revoke the purchased item. If set to true, access to the\nsubscription or in-app item will be terminated immediately. If the item is\na recurring subscription, all future payments will also be terminated.\nConsumed in-app items need to be handled by developer's app. (optional).",
+	//       "description": "Whether to revoke the purchased item. If set to true, access to the subscription or in-app item will be terminated immediately. If the item is a recurring subscription, all future payments will also be terminated. Consumed in-app items need to be handled by developer's app. (optional).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -10487,7 +10363,7 @@ func (c *PurchasesProductsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesProductsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10539,7 +10415,7 @@ func (c *PurchasesProductsAcknowledgeCall) Do(opts ...googleapi.CallOption) erro
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application the inapp product was sold in (for\nexample, 'com.some.thing').",
+	//       "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10551,7 +10427,7 @@ func (c *PurchasesProductsAcknowledgeCall) Do(opts ...googleapi.CallOption) erro
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the inapp product was\npurchased.",
+	//       "description": "The token provided to the user's device when the inapp product was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10627,7 +10503,7 @@ func (c *PurchasesProductsGetCall) Header() http.Header {
 
 func (c *PurchasesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10702,7 +10578,7 @@ func (c *PurchasesProductsGetCall) Do(opts ...googleapi.CallOption) (*ProductPur
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application the inapp product was sold in (for\nexample, 'com.some.thing').",
+	//       "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10714,7 +10590,7 @@ func (c *PurchasesProductsGetCall) Do(opts ...googleapi.CallOption) (*ProductPur
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the inapp product was\npurchased.",
+	//       "description": "The token provided to the user's device when the inapp product was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10781,7 +10657,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10833,7 +10709,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10845,7 +10721,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10875,8 +10751,7 @@ type PurchasesSubscriptionsCancelCall struct {
 }
 
 // Cancel: Cancels a user's subscription purchase. The subscription
-// remains valid
-// until its expiration time.
+// remains valid until its expiration time.
 func (r *PurchasesSubscriptionsService) Cancel(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsCancelCall {
 	c := &PurchasesSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10912,7 +10787,7 @@ func (c *PurchasesSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10948,7 +10823,7 @@ func (c *PurchasesSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) erro
 	}
 	return nil
 	// {
-	//   "description": "Cancels a user's subscription purchase. The subscription remains valid\nuntil its expiration time.",
+	//   "description": "Cancels a user's subscription purchase. The subscription remains valid until its expiration time.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.purchases.subscriptions.cancel",
@@ -10959,7 +10834,7 @@ func (c *PurchasesSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) erro
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10971,7 +10846,7 @@ func (c *PurchasesSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) erro
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -10999,8 +10874,7 @@ type PurchasesSubscriptionsDeferCall struct {
 }
 
 // Defer: Defers a user's subscription purchase until a specified future
-// expiration
-// time.
+// expiration time.
 func (r *PurchasesSubscriptionsService) Defer(packageName string, subscriptionId string, token string, subscriptionpurchasesdeferrequest *SubscriptionPurchasesDeferRequest) *PurchasesSubscriptionsDeferCall {
 	c := &PurchasesSubscriptionsDeferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11037,7 +10911,7 @@ func (c *PurchasesSubscriptionsDeferCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsDeferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11104,7 +10978,7 @@ func (c *PurchasesSubscriptionsDeferCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Defers a user's subscription purchase until a specified future expiration\ntime.",
+	//   "description": "Defers a user's subscription purchase until a specified future expiration time.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:defer",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.purchases.subscriptions.defer",
@@ -11115,7 +10989,7 @@ func (c *PurchasesSubscriptionsDeferCall) Do(opts ...googleapi.CallOption) (*Sub
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11127,7 +11001,7 @@ func (c *PurchasesSubscriptionsDeferCall) Do(opts ...googleapi.CallOption) (*Sub
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11161,8 +11035,7 @@ type PurchasesSubscriptionsGetCall struct {
 }
 
 // Get: Checks whether a user's subscription purchase is valid and
-// returns its
-// expiry time.
+// returns its expiry time.
 func (r *PurchasesSubscriptionsService) Get(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsGetCall {
 	c := &PurchasesSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11208,7 +11081,7 @@ func (c *PurchasesSubscriptionsGetCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11272,7 +11145,7 @@ func (c *PurchasesSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subsc
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether a user's subscription purchase is valid and returns its\nexpiry time.",
+	//   "description": "Checks whether a user's subscription purchase is valid and returns its expiry time.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.purchases.subscriptions.get",
@@ -11283,7 +11156,7 @@ func (c *PurchasesSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subsc
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11295,7 +11168,7 @@ func (c *PurchasesSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subsc
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11325,8 +11198,8 @@ type PurchasesSubscriptionsRefundCall struct {
 }
 
 // Refund: Refunds a user's subscription purchase, but the subscription
-// remains valid
-// until its expiration time and it will continue to recur.
+// remains valid until its expiration time and it will continue to
+// recur.
 func (r *PurchasesSubscriptionsService) Refund(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRefundCall {
 	c := &PurchasesSubscriptionsRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11362,7 +11235,7 @@ func (c *PurchasesSubscriptionsRefundCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11398,7 +11271,7 @@ func (c *PurchasesSubscriptionsRefundCall) Do(opts ...googleapi.CallOption) erro
 	}
 	return nil
 	// {
-	//   "description": "Refunds a user's subscription purchase, but the subscription remains valid\nuntil its expiration time and it will continue to recur.",
+	//   "description": "Refunds a user's subscription purchase, but the subscription remains valid until its expiration time and it will continue to recur.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:refund",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.purchases.subscriptions.refund",
@@ -11409,7 +11282,7 @@ func (c *PurchasesSubscriptionsRefundCall) Do(opts ...googleapi.CallOption) erro
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11421,7 +11294,7 @@ func (c *PurchasesSubscriptionsRefundCall) Do(opts ...googleapi.CallOption) erro
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11448,9 +11321,8 @@ type PurchasesSubscriptionsRevokeCall struct {
 }
 
 // Revoke: Refunds and immediately revokes a user's subscription
-// purchase. Access to
-// the subscription will be terminated immediately and it will stop
-// recurring.
+// purchase. Access to the subscription will be terminated immediately
+// and it will stop recurring.
 func (r *PurchasesSubscriptionsService) Revoke(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRevokeCall {
 	c := &PurchasesSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11486,7 +11358,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11522,7 +11394,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) erro
 	}
 	return nil
 	// {
-	//   "description": "Refunds and immediately revokes a user's subscription purchase. Access to\nthe subscription will be terminated immediately and it will stop recurring.",
+	//   "description": "Refunds and immediately revokes a user's subscription purchase. Access to the subscription will be terminated immediately and it will stop recurring.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptions/{subscriptionId}/tokens/{token}:revoke",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.purchases.subscriptions.revoke",
@@ -11533,7 +11405,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) erro
 	//   ],
 	//   "parameters": {
 	//     "packageName": {
-	//       "description": "The package name of the application for which this subscription was\npurchased (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which this subscription was purchased (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11545,7 +11417,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Do(opts ...googleapi.CallOption) erro
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "The token provided to the user's device when the subscription was\npurchased.",
+	//       "description": "The token provided to the user's device when the subscription was purchased.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11579,80 +11451,62 @@ func (r *PurchasesVoidedpurchasesService) List(packageName string) *PurchasesVoi
 }
 
 // EndTime sets the optional parameter "endTime": The time, in
-// milliseconds since the Epoch, of the newest voided purchase
-// that you want to see in the response. The value of this parameter
-// cannot
-// be greater than the current time and is ignored if a pagination token
-// is
-// set. Default value is current time.
-// Note: This filter is applied on the time at which the record is seen
-// as
-// voided by our systems and not the actual voided time returned in
-// the
-// response.
+// milliseconds since the Epoch, of the newest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// greater than the current time and is ignored if a pagination token is
+// set. Default value is current time. Note: This filter is applied on
+// the time at which the record is seen as voided by our systems and not
+// the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) EndTime(endTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("endTime", fmt.Sprint(endTime))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Defines how many
-// results the list operation should return.
-// The default number depends on the resource collection.
+// results the list operation should return. The default number depends
+// on the resource collection.
 func (c *PurchasesVoidedpurchasesListCall) MaxResults(maxResults int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Defines the
-// index of the first element to return.
-// This can only be used if indexed paging is enabled.
+// index of the first element to return. This can only be used if
+// indexed paging is enabled.
 func (c *PurchasesVoidedpurchasesListCall) StartIndex(startIndex int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": The time, in
-// milliseconds since the Epoch, of the oldest voided purchase
-// that you want to see in the response. The value of this parameter
-// cannot
-// be older than 30 days and is ignored if a pagination token is
-// set.
-// Default value is current time minus 30 days.
-// Note: This filter is applied on the time at which the record is seen
-// as
-// voided by our systems and not the actual voided time returned in
-// the
-// response.
+// milliseconds since the Epoch, of the oldest voided purchase that you
+// want to see in the response. The value of this parameter cannot be
+// older than 30 days and is ignored if a pagination token is set.
+// Default value is current time minus 30 days. Note: This filter is
+// applied on the time at which the record is seen as voided by our
+// systems and not the actual voided time returned in the response.
 func (c *PurchasesVoidedpurchasesListCall) StartTime(startTime int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
 	return c
 }
 
 // Token sets the optional parameter "token": Defines the token of the
-// page to return, usually taken from
-// TokenPagination.
-// This can only be used if token paging is enabled.
+// page to return, usually taken from TokenPagination. This can only be
+// used if token paging is enabled.
 func (c *PurchasesVoidedpurchasesListCall) Token(token string) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("token", token)
 	return c
 }
 
 // Type sets the optional parameter "type": The type of voided purchases
-// that you want to see in the response.
-// Possible values are:
-// 0. Only voided in-app product purchases will be returned in the
-//    response. This is the default value.
-// 1. Both voided in-app purchases and voided subscription purchases
-//    will be returned in the response.
-//
-// Note: Before requesting to receive voided subscription purchases,
-// you
-// must switch to use orderId in the response which uniquely
-// identifies
-// one-time purchases and subscriptions. Otherwise, you will receive
-// multiple
-// subscription orders with the same PurchaseToken, because
-// subscription
+// that you want to see in the response. Possible values are: 0. Only
+// voided in-app product purchases will be returned in the response.
+// This is the default value. 1. Both voided in-app purchases and voided
+// subscription purchases will be returned in the response. Note: Before
+// requesting to receive voided subscription purchases, you must switch
+// to use orderId in the response which uniquely identifies one-time
+// purchases and subscriptions. Otherwise, you will receive multiple
+// subscription orders with the same PurchaseToken, because subscription
 // renewal orders share the same PurchaseToken.
 func (c *PurchasesVoidedpurchasesListCall) Type(type_ int64) *PurchasesVoidedpurchasesListCall {
 	c.urlParams_.Set("type", fmt.Sprint(type_))
@@ -11696,7 +11550,7 @@ func (c *PurchasesVoidedpurchasesListCall) Header() http.Header {
 
 func (c *PurchasesVoidedpurchasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11767,42 +11621,42 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the newest voided purchase\nthat you want to see in the response. The value of this parameter cannot\nbe greater than the current time and is ignored if a pagination token is\nset. Default value is current time.\nNote: This filter is applied on the time at which the record is seen as\nvoided by our systems and not the actual voided time returned in the\nresponse.",
+	//       "description": "The time, in milliseconds since the Epoch, of the newest voided purchase that you want to see in the response. The value of this parameter cannot be greater than the current time and is ignored if a pagination token is set. Default value is current time. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Defines how many results the list operation should return.\nThe default number depends on the resource collection.",
+	//       "description": "Defines how many results the list operation should return. The default number depends on the resource collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "packageName": {
-	//       "description": "The package name of the application for which voided purchases need to be\nreturned (for example, 'com.some.thing').",
+	//       "description": "The package name of the application for which voided purchases need to be returned (for example, 'com.some.thing').",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
-	//       "description": "Defines the index of the first element to return.\nThis can only be used if indexed paging is enabled.",
+	//       "description": "Defines the index of the first element to return. This can only be used if indexed paging is enabled.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startTime": {
-	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided purchase\nthat you want to see in the response. The value of this parameter cannot\nbe older than 30 days and is ignored if a pagination token is set.\nDefault value is current time minus 30 days.\nNote: This filter is applied on the time at which the record is seen as\nvoided by our systems and not the actual voided time returned in the\nresponse.",
+	//       "description": "The time, in milliseconds since the Epoch, of the oldest voided purchase that you want to see in the response. The value of this parameter cannot be older than 30 days and is ignored if a pagination token is set. Default value is current time minus 30 days. Note: This filter is applied on the time at which the record is seen as voided by our systems and not the actual voided time returned in the response.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "Defines the token of the page to return, usually taken from\nTokenPagination.\nThis can only be used if token paging is enabled.",
+	//       "description": "Defines the token of the page to return, usually taken from TokenPagination. This can only be used if token paging is enabled.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The type of voided purchases that you want to see in the response.\nPossible values are:\n0. Only voided in-app product purchases will be returned in the\n   response. This is the default value.\n1. Both voided in-app purchases and voided subscription purchases\n   will be returned in the response.\n\nNote: Before requesting to receive voided subscription purchases, you\nmust switch to use orderId in the response which uniquely identifies\none-time purchases and subscriptions. Otherwise, you will receive multiple\nsubscription orders with the same PurchaseToken, because subscription\nrenewal orders share the same PurchaseToken.",
+	//       "description": "The type of voided purchases that you want to see in the response. Possible values are: 0. Only voided in-app product purchases will be returned in the response. This is the default value. 1. Both voided in-app purchases and voided subscription purchases will be returned in the response. Note: Before requesting to receive voided subscription purchases, you must switch to use orderId in the response which uniquely identifies one-time purchases and subscriptions. Otherwise, you will receive multiple subscription orders with the same PurchaseToken, because subscription renewal orders share the same PurchaseToken.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11883,7 +11737,7 @@ func (c *ReviewsGetCall) Header() http.Header {
 
 func (c *ReviewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12067,7 +11921,7 @@ func (c *ReviewsListCall) Header() http.Header {
 
 func (c *ReviewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12225,7 +12079,7 @@ func (c *ReviewsReplyCall) Header() http.Header {
 
 func (c *ReviewsReplyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12339,8 +12193,7 @@ type SystemapksVariantsCreateCall struct {
 }
 
 // Create: Creates an APK which is suitable for inclusion in a system
-// image from an
-// already uploaded Android App Bundle.
+// image from an already uploaded Android App Bundle.
 func (r *SystemapksVariantsService) Create(packageNameid string, versionCode int64, variant *Variant) *SystemapksVariantsCreateCall {
 	c := &SystemapksVariantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -12376,7 +12229,7 @@ func (c *SystemapksVariantsCreateCall) Header() http.Header {
 
 func (c *SystemapksVariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12441,7 +12294,7 @@ func (c *SystemapksVariantsCreateCall) Do(opts ...googleapi.CallOption) (*Varian
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an APK which is suitable for inclusion in a system image from an\nalready uploaded Android App Bundle.",
+	//   "description": "Creates an APK which is suitable for inclusion in a system image from an already uploaded Android App Bundle.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.systemapks.variants.create",
@@ -12492,8 +12345,7 @@ type SystemapksVariantsDownloadCall struct {
 }
 
 // Download: Downloads a previously created system APK which is suitable
-// for inclusion
-// in a system image.
+// for inclusion in a system image.
 func (r *SystemapksVariantsService) Download(packageNameid string, versionCode int64, variantId int64) *SystemapksVariantsDownloadCall {
 	c := &SystemapksVariantsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -12539,7 +12391,7 @@ func (c *SystemapksVariantsDownloadCall) Header() http.Header {
 
 func (c *SystemapksVariantsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12594,7 +12446,7 @@ func (c *SystemapksVariantsDownloadCall) Do(opts ...googleapi.CallOption) error 
 	}
 	return nil
 	// {
-	//   "description": "Downloads a previously created system APK which is suitable for inclusion\nin a system image.",
+	//   "description": "Downloads a previously created system APK which is suitable for inclusion in a system image.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/systemApks/{versionCode}/variants/{variantId}:download",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.systemapks.variants.download",
@@ -12694,7 +12546,7 @@ func (c *SystemapksVariantsGetCall) Header() http.Header {
 
 func (c *SystemapksVariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12857,7 +12709,7 @@ func (c *SystemapksVariantsListCall) Header() http.Header {
 
 func (c *SystemapksVariantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200728")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

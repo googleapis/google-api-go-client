@@ -2165,14 +2165,7 @@ func (s *Method) MarshalJSON() ([]byte, error) {
 
 // MetricDescriptor: Defines a metric type and its schema. Once a metric
 // descriptor is created, deleting or altering it stops data collection
-// and makes the metric type's existing data unusable. The following are
-// specific rules for service defined Monitoring metric descriptors: *
-// `type`, `metric_kind`, `value_type` and `description` fields are all
-// required. The `unit` field must be specified if the `value_type` is
-// any of DOUBLE, INT64, DISTRIBUTION. * Maximum of default 500 metric
-// descriptors per service is allowed. * Maximum of default 10 labels
-// per metric descriptor is allowed. The default maximum limit can be
-// overridden. Please follow https://cloud.google.com/monitoring/quotas
+// and makes the metric type's existing data unusable.
 type MetricDescriptor struct {
 	// Description: A detailed description of the metric, which can be used
 	// in documentation.
@@ -2186,10 +2179,7 @@ type MetricDescriptor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: The set of labels that can be used to describe a specific
-	// instance of this metric type. The label key name must follow: * Only
-	// upper and lower-case letters, digits and underscores (_) are allowed.
-	// * Label name must start with a letter or digit. * The maximum length
-	// of a label name is 100 characters. For example, the
+	// instance of this metric type. For example, the
 	// `appengine.googleapis.com/http/server/response_latencies` metric type
 	// has a label for the HTTP response code, `response_code`, so you can
 	// look at latencies for successful responses or just for responses that
@@ -2262,15 +2252,9 @@ type MetricDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: The metric type, including its DNS name prefix. The type is not
-	// URL-encoded. All service defined metrics must be prefixed with the
-	// service name, in the format of `{service name}/{relative metric
-	// name}`, such as `cloudsql.googleapis.com/database/cpu/utilization`.
-	// The relative metric name must follow: * Only upper and lower-case
-	// letters, digits, '/' and underscores '_' are allowed. * The maximum
-	// number of characters allowed for the relative_metric_name is 100. All
-	// user-defined metric types have the DNS name `custom.googleapis.com`,
-	// `external.googleapis.com`, or `logging.googleapis.com/user/`. Metric
-	// types should use a natural hierarchical grouping. For example:
+	// URL-encoded. All user-defined metric types have the DNS name
+	// `custom.googleapis.com` or `external.googleapis.com`. Metric types
+	// should use a natural hierarchical grouping. For example:
 	// "custom.googleapis.com/invoice/paid/amount"
 	// "external.googleapis.com/prometheus/up"
 	// "appengine.googleapis.com/http/server/response_latencies"
@@ -2554,17 +2538,9 @@ func (s *Mixin) MarshalJSON() ([]byte, error) {
 // example, the monitored resource descriptor for Google Compute Engine
 // VM instances has a type of "gce_instance" and specifies the use of
 // the labels "instance_id" and "zone" to identify particular VM
-// instances. Different services can support different monitored
-// resource types. The following are specific rules to service defined
-// monitored resources for Monitoring and Logging: * The `type`,
-// `display_name`, `description`, `labels` and `launch_stage` fields are
-// all required. * The first label of the monitored resource descriptor
-// must be `resource_container`. There are legacy monitored resource
-// descritptors start with `project_id`. * It must include a `location`
-// label. * Maximum of default 5 service defined monitored resource
-// descriptors is allowed per service. * Maximum of default 10 labels
-// per monitored resource is allowed. The default maximum limit can be
-// overridden. Please follow https://cloud.google.com/monitoring/quotas
+// instances. Different APIs can support different monitored resource
+// types. APIs generally provide a `list` method that returns the
+// monitored resource descriptors used by the API.
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might be used in documentation.
@@ -2577,12 +2553,9 @@ type MonitoredResourceDescriptor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Required. A set of labels used to describe instances of this
-	// monitored resource type. The label key name must follow: * Only upper
-	// and lower-case letters, digits and underscores (_) are allowed. *
-	// Label name must start with a letter or digit. * The maximum length of
-	// a label name is 100 characters. For example, an individual Google
-	// Cloud SQL database is identified by values for the labels
-	// `database_id` and `location`.
+	// monitored resource type. For example, an individual Google Cloud SQL
+	// database is identified by values for the labels "database_id" and
+	// "zone".
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// LaunchStage: Optional. The launch stage of the monitored resource
@@ -2633,15 +2606,7 @@ type MonitoredResourceDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
-	// `cloudsql_database` represents databases in Google Cloud SQL. All
-	// service defined monitored resource types must be prefixed with the
-	// service name, in the format of `{service name}/{relative resource
-	// name}`. The relative resource name must follow: * Only upper and
-	// lower-case letters and digits are allowed. * It must start with upper
-	// case character and is recommended to use Upper Camel Case style. *
-	// The maximum number of characters allowed for the
-	// relative_resource_name is 100. Note there are legacy service
-	// monitored resources not following this rule.
+	// "cloudsql_database" represents databases in Google Cloud SQL.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -3956,7 +3921,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4101,7 +4066,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4248,7 +4213,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4406,7 +4371,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4566,7 +4531,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4729,7 +4694,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

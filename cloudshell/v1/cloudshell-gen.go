@@ -150,145 +150,15 @@ type CancelOperationRequest struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// Environment: A Cloud Shell environment, which is defined as the
-// combination of a Docker
-// image specifying what is installed on the environment and a home
-// directory
-// containing the user's data that will remain across sessions. Each
-// user has a
-// single environment with the ID "default".
-type Environment struct {
-	// DockerImage: Required. Full path to the Docker image used to run this
-	// environment, e.g.
-	// "gcr.io/dev-con/cloud-devshell:latest".
-	DockerImage string `json:"dockerImage,omitempty"`
-
-	// Id: Output only. The environment's identifier, unique among the
-	// user's
-	// environments.
-	Id string `json:"id,omitempty"`
-
-	// Name: Output only. Full name of this resource, in the
-	// format
-	// `users/{owner_email}/environments/{environment_id}`. `{owner_email}`
-	// is the
-	// email address of the user to whom this environment belongs,
-	// and
-	// `{environment_id}` is the identifier of this environment. For
-	// example,
-	// `users/someone@example.com/environments/default`.
-	Name string `json:"name,omitempty"`
-
-	// PublicKeys: Output only. Public keys associated with the environment.
-	// Clients can
-	// connect to this environment via SSH only if they possess a private
-	// key
-	// corresponding to at least one of these public keys. Keys can be added
-	// to or
-	// removed from the environment using the CreatePublicKey and
-	// DeletePublicKey
-	// methods.
-	PublicKeys []*PublicKey `json:"publicKeys,omitempty"`
-
-	// Size: Indicates the size of the backing VM running the environment.
-	// If set to
-	// something other than DEFAULT, it will be reverted to the default VM
-	// size
-	// after vm_size_expire_time.
-	//
-	// Possible values:
-	//   "VM_SIZE_UNSPECIFIED" - The VM size is unknown.
-	//   "DEFAULT" - The default VM size.
-	//   "BOOSTED" - The boosted VM size.
-	Size string `json:"size,omitempty"`
-
-	// SshHost: Output only. Host to which clients can connect to initiate
-	// SSH sessions
-	// with the environment.
-	SshHost string `json:"sshHost,omitempty"`
-
-	// SshPort: Output only. Port to which clients can connect to initiate
-	// SSH sessions
-	// with the environment.
-	SshPort int64 `json:"sshPort,omitempty"`
-
-	// SshUsername: Output only. Username that clients should use when
-	// initiating SSH sessions
-	// with the environment.
-	SshUsername string `json:"sshUsername,omitempty"`
-
-	// State: Output only. Current execution state of this environment.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The environment's states is unknown.
-	//   "DISABLED" - The environment is not running and can't be connected
-	// to. Starting the
-	// environment will transition it to the STARTING state.
-	//   "STARTING" - The environment is being started but is not yet ready
-	// to accept
-	// connections.
-	//   "RUNNING" - The environment is running and ready to accept
-	// connections. It will
-	// automatically transition back to DISABLED after a period of
-	// inactivity or
-	// if another environment is started.
-	//   "DELETING" - The environment is being deleted and can't be
-	// connected to.
-	State string `json:"state,omitempty"`
-
-	// VmSizeExpireTime: Output only. The time when the Environment will
-	// expire back to the default
-	// VM size.
-	VmSizeExpireTime string `json:"vmSizeExpireTime,omitempty"`
-
-	// WebHost: Output only. Host to which clients can connect to initiate
-	// HTTPS or WSS
-	// connections with the environment.
-	WebHost string `json:"webHost,omitempty"`
-
-	// WebPorts: Output only. Ports to which clients can connect to initiate
-	// HTTPS or WSS
-	// connections with the environment.
-	WebPorts []int64 `json:"webPorts,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DockerImage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DockerImage") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Environment) MarshalJSON() ([]byte, error) {
-	type NoMethod Environment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -329,52 +199,38 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -404,181 +260,25 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PublicKey: A public SSH key, corresponding to a private SSH key held
-// by the client.
-type PublicKey struct {
-	// Format: Required. Format of this key's content.
-	//
-	// Possible values:
-	//   "FORMAT_UNSPECIFIED" - Unknown format. Do not use.
-	//   "SSH_DSS" - `ssh-dss` key format (see RFC4253).
-	//   "SSH_RSA" - `ssh-rsa` key format (see RFC4253).
-	//   "ECDSA_SHA2_NISTP256" - `ecdsa-sha2-nistp256` key format (see
-	// RFC5656).
-	//   "ECDSA_SHA2_NISTP384" - `ecdsa-sha2-nistp384` key format (see
-	// RFC5656).
-	//   "ECDSA_SHA2_NISTP521" - `ecdsa-sha2-nistp521` key format (see
-	// RFC5656).
-	Format string `json:"format,omitempty"`
-
-	// Key: Required. Content of this key.
-	Key string `json:"key,omitempty"`
-
-	// Name: Output only. Full name of this resource, in the
-	// format
-	// `users/{owner_email}/environments/{environment_id}/publicKeys/{
-	// key_id}`.
-	// `{owner_email}` is the email address of the user to whom the key
-	// belongs.
-	// `{environment_id}` is the identifier of the environment to which the
-	// key
-	// grants access. `{key_id}` is the unique identifier of the key. For
-	// example,
-	// `users/someone@example.com/environments/default/publicKeys/my
-	// Key`.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Format") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Format") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PublicKey) MarshalJSON() ([]byte, error) {
-	type NoMethod PublicKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StartEnvironmentMetadata: Message included in the metadata field of
-// operations returned from
-// StartEnvironment.
-type StartEnvironmentMetadata struct {
-	// State: Current state of the environment being started.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The environment's start state is unknown.
-	//   "STARTING" - The environment is in the process of being started,
-	// but no additional
-	// details are available.
-	//   "UNARCHIVING_DISK" - Startup is waiting for the user's disk to be
-	// unarchived. This can happen
-	// when the user returns to Cloud Shell after not having used it for
-	// a
-	// while, and suggests that startup will take longer than normal.
-	//   "AWAITING_VM" - Startup is waiting for a VM to be assigned to the
-	// environment. This
-	// should normally happen very quickly, but an environment might stay
-	// in
-	// this state for an extended period of time if the system is
-	// experiencing
-	// heavy load.
-	//   "AWAITING_COMPUTE_RESOURCES" - Startup is waiting for compute
-	// resources to be assigned to the
-	// environment. This should normally happen very quickly, but an
-	// environment
-	// might stay in this state for an extended period of time if the system
-	// is
-	// experiencing heavy load.
-	//   "FINISHED" - Startup has completed. If the start operation was
-	// successful, the user
-	// should be able to establish an SSH connection to their
-	// environment.
-	// Otherwise, the operation will contain details of the failure.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "State") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "State") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StartEnvironmentMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod StartEnvironmentMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StartEnvironmentResponse: Message included in the response field of
-// operations returned from
-// StartEnvironment
-// once the operation is complete.
-type StartEnvironmentResponse struct {
-	// Environment: Environment that was started.
-	Environment *Environment `json:"environment,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Environment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environment") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *StartEnvironmentResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod StartEnvironmentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -616,23 +316,15 @@ type OperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -667,7 +359,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -731,7 +423,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "cloudshell.operations.cancel",
@@ -772,12 +464,9 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -811,7 +500,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -870,7 +559,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudshell.operations.delete",
@@ -908,11 +597,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -956,7 +643,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1018,7 +705,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudshell.operations.get",
@@ -1057,22 +744,15 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1137,7 +817,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1199,7 +879,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "cloudshell.operations.list",

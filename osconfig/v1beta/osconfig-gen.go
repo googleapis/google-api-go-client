@@ -642,6 +642,96 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExecResource: A resource that contains custom validation and
+// enforcement steps.
+type ExecResource struct {
+	// Enforce: What to run to bring this resource into the desired
+	// state.
+	// Optional if policy is in validate only mode.
+	Enforce *ExecResourceExec `json:"enforce,omitempty"`
+
+	// Validate: What to run to validate this resource is in the desired
+	// state.
+	// A successful exit code indicates resource is in the desired state.
+	Validate *ExecResourceExec `json:"validate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enforce") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enforce") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExecResourceExec: A file or script to execute.
+type ExecResourceExec struct {
+	// AllowedSuccessCodes: Exit codes that indicate success.
+	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
+
+	// Args: Arguments to use.
+	Args []string `json:"args,omitempty"`
+
+	// File: A remote or local file.
+	File *File `json:"file,omitempty"`
+
+	// Interpreter: The script interpreter to use.
+	//
+	// Possible values:
+	//   "INTERPRETER_UNSPECIFIED" - Defaults to NONE.
+	//   "NONE" - If no interpreter is specified the
+	// source will be executed directly, which will likely only succeed
+	// for
+	// executables and scripts with shebang lines.
+	// [Wikipedia shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+	//   "SHELL" - Indicates that the script will be run with /bin/sh on
+	// Linux and cmd.exe
+	// on windows.
+	//   "POWERSHELL" - Indicates that the script will be run with
+	// powershell.
+	Interpreter string `json:"interpreter,omitempty"`
+
+	// Script: An inline script.
+	Script string `json:"script,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedSuccessCodes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedSuccessCodes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecResourceExec) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecResourceExec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExecStep: A step that runs an executable for a PatchJob.
 type ExecStep struct {
 	// LinuxExecStepConfig: The ExecStepConfig for all Linux VMs targeted by
@@ -789,6 +879,244 @@ type ExecutePatchJobRequest struct {
 
 func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutePatchJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExtractArchiveResource: A resource that extracts an archive
+type ExtractArchiveResource struct {
+	// Creates: Local file path that signals this resource is in the desired
+	// state.
+	// The absence of this file will indicate whether the archive needs to
+	// be
+	// extracted.
+	Creates string `json:"creates,omitempty"`
+
+	// Destination: Directory to extract archive to.
+	Destination string `json:"destination,omitempty"`
+
+	// Overwrite: Whether to overwrite existing files during extraction. If
+	// this is set to
+	// true, any existing files in the destination location will be
+	// overwritten by
+	// the extraction.
+	Overwrite bool `json:"overwrite,omitempty"`
+
+	// Source: The source archive to extract.
+	Source *File `json:"source,omitempty"`
+
+	// Type: The type of the archive to extract.
+	//
+	// Possible values:
+	//   "ARCHIVE_TYPE_UNSPECIFIED" - Unspecified is invalid.
+	//   "TAR" - Indicates that the archive is a tar archive with no
+	// encryption.
+	//   "TAR_GZIP" - Indicates that the archive is a tar archive with gzip
+	// encryption.
+	//   "TAR_BZIP" - Indicates that the archive is a tar archive with bzip
+	// encryption.
+	//   "TAR_LZMA" - Indicates that the archive is a tar archive with lzma
+	// encryption.
+	//   "TAR_XZ" - Indicates that the archive is a tar archive with xz
+	// encryption.
+	//   "ZIP" - Indicates that the archive is a zip archive.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Creates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Creates") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExtractArchiveResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtractArchiveResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// File: A remote or local file.
+type File struct {
+	// AllowInsecure: Defaults to false. When false, files will be subject
+	// to validations
+	// based on the file type:
+	//
+	// Remote: A checksum must be specified.
+	// GCS:    An object generation number must be specified.
+	AllowInsecure bool `json:"allowInsecure,omitempty"`
+
+	// Gcs: A GCS object.
+	Gcs *FileGcs `json:"gcs,omitempty"`
+
+	// LocalPath: A local path to use.
+	LocalPath string `json:"localPath,omitempty"`
+
+	// Remote: A generic remote file.
+	Remote *FileRemote `json:"remote,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowInsecure") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowInsecure") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *File) MarshalJSON() ([]byte, error) {
+	type NoMethod File
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileGcs: Specifies a file available as a GCS Object.
+type FileGcs struct {
+	// Bucket: Bucket of the GCS object.
+	Bucket string `json:"bucket,omitempty"`
+
+	// Generation: Generation number of the GCS object.
+	Generation int64 `json:"generation,omitempty,string"`
+
+	// Object: Name of the GCS object.
+	Object string `json:"object,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileGcs) MarshalJSON() ([]byte, error) {
+	type NoMethod FileGcs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileRemote: Specifies a file available via some URI.
+type FileRemote struct {
+	// Sha256Checksum: SHA256 checksum of the remote file.
+	Sha256Checksum string `json:"sha256Checksum,omitempty"`
+
+	// Uri: URI from which to fetch the object. It should contain both the
+	// protocol
+	// and path following the format {protocol}://{location}.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sha256Checksum") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sha256Checksum") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileRemote) MarshalJSON() ([]byte, error) {
+	type NoMethod FileRemote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileResource: A resource that manages the state of a file.
+type FileResource struct {
+	// Content: A a file with this content.
+	Content string `json:"content,omitempty"`
+
+	// File: A remote or local source.
+	File *File `json:"file,omitempty"`
+
+	// Path: The absolute path of the file.
+	Path string `json:"path,omitempty"`
+
+	// Permissions: Consists of three octal digits which represent,
+	// in
+	// order, the permissions of the owner, group, and other users for
+	// the
+	// file (similarly to the numeric mode used in the linux chmod
+	// utility).
+	// Each digit represents a three bit number with the 4 bit
+	// corresponding to the read permissions, the 2 bit corresponds to
+	// the
+	// write bit, and the one bit corresponds to the execute
+	// permission.
+	// Default behavior is 755.
+	//
+	// Below are some examples of permissions and their associated
+	// values:
+	// read, write, and execute: 7
+	// read and execute: 5
+	// read and write: 6
+	// read only: 4
+	Permissions string `json:"permissions,omitempty"`
+
+	// State: Desired state of the file.
+	//
+	// Possible values:
+	//   "DESIRED_STATE_UNSPECIFIED" - Unspecified is invalid.
+	//   "PRESENT" - Ensure file at path is present.
+	//   "ABSENT" - Ensure file at path is absent.
+	//   "CONTENTS_MATCH" - Ensure the contents of the file at path matches.
+	// If the file does not
+	// exist it will be created.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileResource) MarshalJSON() ([]byte, error) {
+	type NoMethod FileResource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1396,6 +1724,293 @@ type PackageRepository struct {
 
 func (s *PackageRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResource: A resource that manages a system package.
+type PackageResource struct {
+	// Apt: A package managed by Apt.
+	Apt *PackageResourceAPT `json:"apt,omitempty"`
+
+	// Deb: A deb package file.
+	Deb *PackageResourceDeb `json:"deb,omitempty"`
+
+	// DesiredState: The desired_state the agent should maintain for this
+	// package. The
+	// default is to ensure the package is installed.
+	//
+	// Possible values:
+	//   "DESIRED_STATE_UNSPECIFIED" - Unspecified is invalid.
+	//   "INSTALLED" - Ensure that the package is installed.
+	//   "REMOVED" - The agent will ensure that the package is not installed
+	// and uninstall it
+	// if detected.
+	DesiredState string `json:"desiredState,omitempty"`
+
+	// Googet: A package managed by GooGet.
+	Googet *PackageResourceGooGet `json:"googet,omitempty"`
+
+	// Msi: An MSI package.
+	Msi *PackageResourceMSI `json:"msi,omitempty"`
+
+	// Rpm: An rpm package file.
+	Rpm *PackageResourceRPM `json:"rpm,omitempty"`
+
+	// Yum: A package managed by YUM.
+	Yum *PackageResourceYUM `json:"yum,omitempty"`
+
+	// Zypper: A package managed by Zypper.
+	Zypper *PackageResourceZypper `json:"zypper,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Apt") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apt") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResource) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceAPT: A package managed by APT.
+// install: `apt-get update && apt-get -y install [name]`
+// remove: `apt-get -y remove [name]`
+type PackageResourceAPT struct {
+	// Name: Package name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceAPT) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceAPT
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceDeb: A deb package file. dpkg packages only support
+// INSTALLED state.
+type PackageResourceDeb struct {
+	// PullDeps: Whether dependencies should also be installed.
+	// install when false: `dpkg -i package`
+	// install when true: `apt-get update && apt-get -y install package.deb`
+	PullDeps bool `json:"pullDeps,omitempty"`
+
+	// Source: A deb package.
+	Source *File `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PullDeps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PullDeps") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceDeb) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceDeb
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceGooGet: A package managed by GooGet.
+// install: `googet -noconfirm install package`
+// remove: `googet -noconfirm remove package`
+type PackageResourceGooGet struct {
+	// Name: Package name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceGooGet) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceGooGet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceMSI: An MSI package. MSI packages only support
+// INSTALLED state.
+// Install msiexec /i /qn /norestart
+type PackageResourceMSI struct {
+	// AllowedSuccessCodes: Return codes that indicate that the software
+	// installed or updated
+	// successfully. Behaviour defaults to [0]
+	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
+
+	// Flags: Flags to use during package install.
+	// Appended to the defalts of "/i /qn /norestart"
+	Flags []string `json:"flags,omitempty"`
+
+	// Source: The MSI package.
+	Source *File `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedSuccessCodes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedSuccessCodes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceMSI) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceMSI
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceRPM: An RPM package file. RPM packages only support
+// INSTALLED state.
+type PackageResourceRPM struct {
+	// PullDeps: Whether dependencies should also be installed.
+	// install when false: `rpm --upgrade --replacepkgs package.rpm`
+	// install when true: `yum -y install package.rpm` or
+	// `zypper -y install package.rpm`
+	PullDeps bool `json:"pullDeps,omitempty"`
+
+	// Source: An rpm package.
+	Source *File `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PullDeps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PullDeps") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceRPM) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceRPM
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceYUM: A package managed by YUM.
+// install: `yum -y install package`
+// remove: `yum -y remove package`
+type PackageResourceYUM struct {
+	// Name: Package name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceYUM) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceYUM
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageResourceZypper: A package managed by Zypper.
+// install: `zypper -y install package`
+// remove: `zypper -y rm package`
+type PackageResourceZypper struct {
+	// Name: Package name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageResourceZypper) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageResourceZypper
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2101,6 +2716,223 @@ func (s *RecurringSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringSchedule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepositoryResource: A resource that manages a package repository.
+type RepositoryResource struct {
+	// Apt: An Apt Repository.
+	Apt *RepositoryResourceAptRepository `json:"apt,omitempty"`
+
+	// Goo: A Goo Repository.
+	Goo *RepositoryResourceGooRepository `json:"goo,omitempty"`
+
+	// Yum: A Yum Repository.
+	Yum *RepositoryResourceYumRepository `json:"yum,omitempty"`
+
+	// Zypper: A Zypper Repository.
+	Zypper *RepositoryResourceZypperRepository `json:"zypper,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Apt") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apt") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryResource) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepositoryResourceAptRepository: Represents a single apt package
+// repository. These will be added to a repo
+// file that will be managed at
+// /etc/apt/sources.list.d/google_osconfig.list.
+type RepositoryResourceAptRepository struct {
+	// ArchiveType: Type of archive files in this repository. The default
+	// behavior is DEB.
+	//
+	// Possible values:
+	//   "ARCHIVE_TYPE_UNSPECIFIED" - Unspecified is invalid.
+	//   "DEB" - Deb indicates that the archive contains binary files.
+	//   "DEB_SRC" - Deb-src indicates that the archive contains source
+	// files.
+	ArchiveType string `json:"archiveType,omitempty"`
+
+	// Components: List of components for this repository. Must contain at
+	// least one item.
+	Components []string `json:"components,omitempty"`
+
+	// Distribution: Distribution of this repository.
+	Distribution string `json:"distribution,omitempty"`
+
+	// GpgKey: URI of the key file for this repository. The agent will
+	// maintain
+	// a keyring at /etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg.
+	GpgKey string `json:"gpgKey,omitempty"`
+
+	// Uri: URI for this repository.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryResourceAptRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryResourceAptRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepositoryResourceGooRepository: Represents a Goo package repository.
+// These will be added to a repo file
+// that will be managed at
+// C:/ProgramData/GooGet/repos/google_osconfig.repo.
+type RepositoryResourceGooRepository struct {
+	// Name: The name of the repository.
+	Name string `json:"name,omitempty"`
+
+	// Url: The url of the repository.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryResourceGooRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryResourceGooRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepositoryResourceYumRepository: Represents a single yum package
+// repository. These will be added to a repo
+// file that will be managed at /etc/yum.repos.d/google_osconfig.repo.
+type RepositoryResourceYumRepository struct {
+	// BaseUrl: The location of the repository directory.
+	BaseUrl string `json:"baseUrl,omitempty"`
+
+	// DisplayName: The display name of the repository.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GpgKeys: URIs of GPG keys.
+	GpgKeys []string `json:"gpgKeys,omitempty"`
+
+	// Id: A one word, unique name for this repository. This will be
+	// the `repo id` in the yum config file and also the `display_name`
+	// if
+	// `display_name` is omitted. This id is also used as the unique
+	// identifier
+	// when checking for resource conflicts.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryResourceYumRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryResourceYumRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RepositoryResourceZypperRepository: Represents a single zypper
+// package repository. These will be added to a
+// repo file that will be managed at
+// /etc/zypp/repos.d/google_osconfig.repo.
+type RepositoryResourceZypperRepository struct {
+	// BaseUrl: The location of the repository directory.
+	BaseUrl string `json:"baseUrl,omitempty"`
+
+	// DisplayName: The display name of the repository.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// GpgKeys: URIs of GPG keys.
+	GpgKeys []string `json:"gpgKeys,omitempty"`
+
+	// Id: A one word, unique name for this repository. This will be
+	// the `repo id` in the zypper config file and also the `display_name`
+	// if
+	// `display_name` is omitted. This id is also used as the unique
+	// identifier
+	// when checking for GuestPolicy conflicts.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RepositoryResourceZypperRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod RepositoryResourceZypperRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceResource: A resource that manages a system service.
+type ServiceResource struct {
 }
 
 // SoftwareRecipe: A software recipe is a set of instructions for
@@ -3207,7 +4039,7 @@ func (c *ProjectsGuestPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3350,7 +4182,7 @@ func (c *ProjectsGuestPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3491,7 +4323,7 @@ func (c *ProjectsGuestPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3650,7 +4482,7 @@ func (c *ProjectsGuestPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3825,7 +4657,7 @@ func (c *ProjectsGuestPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3985,7 +4817,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4128,7 +4960,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4269,7 +5101,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4428,7 +5260,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4597,7 +5429,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4737,7 +5569,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4888,7 +5720,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5056,7 +5888,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,7 +6094,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5438,7 +6270,7 @@ func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) Header() http.Hea
 
 func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

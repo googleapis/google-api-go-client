@@ -208,10 +208,9 @@ type ProjectsLocationsRecommendersRecommendationsService struct {
 // how much money a recommendation can save or incur.
 type GoogleCloudRecommenderV1beta1CostProjection struct {
 	// Cost: An approximate projection on amount saved or amount incurred.
-	// Negative cost
-	// units indicate cost savings and positive cost units indicate
-	// increase.
-	// See google.type.Money documentation for positive/negative units.
+	// Negative cost units indicate cost savings and positive cost units
+	// indicate increase. See google.type.Money documentation for
+	// positive/negative units.
 	Cost *GoogleTypeMoney `json:"cost,omitempty"`
 
 	// Duration: Duration for which this cost applies.
@@ -284,8 +283,8 @@ func (s *GoogleCloudRecommenderV1beta1Impact) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRecommenderV1beta1Insight: An insight along with the
-// information used to derive the insight. The insight
-// may have associated recomendations as well.
+// information used to derive the insight. The insight may have
+// associated recomendations as well.
 type GoogleCloudRecommenderV1beta1Insight struct {
 	// AssociatedRecommendations: Recommendations derived from this insight.
 	AssociatedRecommendations []*GoogleCloudRecommenderV1beta1InsightRecommendationReference `json:"associatedRecommendations,omitempty"`
@@ -300,18 +299,16 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 	//   "MANAGEABILITY" - This insight is related to manageability.
 	Category string `json:"category,omitempty"`
 
-	// Content: A struct of custom fields to explain the insight.
-	// Example: "grantedPermissionsCount": "1000"
+	// Content: A struct of custom fields to explain the insight. Example:
+	// "grantedPermissionsCount": "1000"
 	Content googleapi.RawMessage `json:"content,omitempty"`
 
 	// Description: Free-form human readable summary in English. The maximum
-	// length is 500
-	// characters.
+	// length is 500 characters.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Fingerprint of the Insight. Provides optimistic locking when
-	// updating
-	// states.
+	// updating states.
 	Etag string `json:"etag,omitempty"`
 
 	// InsightSubtype: Insight subtype. Insight content schema will be
@@ -326,10 +323,8 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 	Name string `json:"name,omitempty"`
 
 	// ObservationPeriod: Observation period that led to the insight. The
-	// source data used to
-	// generate the insight ends at last_refresh_time and begins
-	// at
-	// (last_refresh_time - observation_period).
+	// source data used to generate the insight ends at last_refresh_time
+	// and begins at (last_refresh_time - observation_period).
 	ObservationPeriod string `json:"observationPeriod,omitempty"`
 
 	// StateInfo: Information state and metadata.
@@ -371,10 +366,9 @@ func (s *GoogleCloudRecommenderV1beta1Insight) MarshalJSON() ([]byte, error) {
 // GoogleCloudRecommenderV1beta1InsightRecommendationReference:
 // Reference to an associated recommendation.
 type GoogleCloudRecommenderV1beta1InsightRecommendationReference struct {
-	// Recommendation: Recommendation resource name,
-	// e.g.
-	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECO
-	// MMENDER_ID]/recommendations/[RECOMMENDATION_ID]
+	// Recommendation: Recommendation resource name, e.g.
+	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMEND
+	// ER_ID]/recommendations/[RECOMMENDATION_ID]
 	Recommendation string `json:"recommendation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Recommendation") to
@@ -409,21 +403,16 @@ type GoogleCloudRecommenderV1beta1InsightStateInfo struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - Insight is active. Content for ACTIVE insights can be
-	// updated by Google.
-	// ACTIVE insights can be marked DISMISSED OR ACCEPTED.
+	// updated by Google. ACTIVE insights can be marked DISMISSED OR
+	// ACCEPTED.
 	//   "ACCEPTED" - Some action has been taken based on this insight.
-	// Insights become
-	// accepted when a recommendation derived from the insight has been
-	// marked
-	// CLAIMED, SUCCEEDED, or FAILED. ACTIVE insights can also be
-	// marked
-	// ACCEPTED explicitly. Content for ACCEPTED insights is immutable.
-	// ACCEPTED
-	// insights can only be marked ACCEPTED (which may update state
-	// metadata).
+	// Insights become accepted when a recommendation derived from the
+	// insight has been marked CLAIMED, SUCCEEDED, or FAILED. ACTIVE
+	// insights can also be marked ACCEPTED explicitly. Content for ACCEPTED
+	// insights is immutable. ACCEPTED insights can only be marked ACCEPTED
+	// (which may update state metadata).
 	//   "DISMISSED" - Insight is dismissed. Content for DISMISSED insights
-	// can be updated by
-	// Google. DISMISSED insights can be marked as ACTIVE.
+	// can be updated by Google. DISMISSED insights can be marked as ACTIVE.
 	State string `json:"state,omitempty"`
 
 	// StateMetadata: A map of metadata for the state, provided by user or
@@ -460,8 +449,7 @@ type GoogleCloudRecommenderV1beta1ListInsightsResponse struct {
 	Insights []*GoogleCloudRecommenderV1beta1Insight `json:"insights,omitempty"`
 
 	// NextPageToken: A token that can be used to request the next page of
-	// results. This field is
-	// empty if there are no additional results.
+	// results. This field is empty if there are no additional results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -495,8 +483,7 @@ func (s *GoogleCloudRecommenderV1beta1ListInsightsResponse) MarshalJSON() ([]byt
 // the `ListRecommendations` method.
 type GoogleCloudRecommenderV1beta1ListRecommendationsResponse struct {
 	// NextPageToken: A token that can be used to request the next page of
-	// results. This field is
-	// empty if there are no additional results.
+	// results. This field is empty if there are no additional results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Recommendations: The set of recommendations for the `parent`
@@ -538,8 +525,7 @@ type GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest struct {
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: Optional. State properties user wish to include with
-	// this state.  Full replace of the
-	// current state_metadata.
+	// this state. Full replace of the current state_metadata.
 	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -573,10 +559,9 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest struct {
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
-	// Overwrites any existing
-	// `state_metadata`.
-	// Keys must match the regex /^a-z0-9{0,62}$/.
-	// Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.
+	// Overwrites any existing `state_metadata`. Keys must match the regex
+	// /^a-z0-9{0,62}$/. Values must match the regex
+	// /^[a-zA-Z0-9_./-]{0,255}$/.
 	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -610,10 +595,9 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest struct {
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
-	// Overwrites any existing
-	// `state_metadata`.
-	// Keys must match the regex /^a-z0-9{0,62}$/.
-	// Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.
+	// Overwrites any existing `state_metadata`. Keys must match the regex
+	// /^a-z0-9{0,62}$/. Values must match the regex
+	// /^[a-zA-Z0-9_./-]{0,255}$/.
 	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -647,10 +631,9 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest struct {
 	Etag string `json:"etag,omitempty"`
 
 	// StateMetadata: State properties to include with this state.
-	// Overwrites any existing
-	// `state_metadata`.
-	// Keys must match the regex /^a-z0-9{0,62}$/.
-	// Values must match the regex /^[a-zA-Z0-9_./-]{0,255}$/.
+	// Overwrites any existing `state_metadata`. Keys must match the regex
+	// /^a-z0-9{0,62}$/. Values must match the regex
+	// /^[a-zA-Z0-9_./-]{0,255}$/.
 	StateMetadata map[string]string `json:"stateMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -677,107 +660,74 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) Marsha
 }
 
 // GoogleCloudRecommenderV1beta1Operation: Contains an operation for a
-// resource loosely based on the JSON-PATCH format
-// with support for:
-//
-// * Custom filters for describing partial array patch.
-// * Extended path values for describing nested arrays.
-// * Custom fields for describing the resource for which the operation
-// is being
-//   described.
-// * Allows extension to custom operations not natively supported by
-// RFC6902.
-// See https://tools.ietf.org/html/rfc6902 for details on the original
-// RFC.
+// resource loosely based on the JSON-PATCH format with support for: *
+// Custom filters for describing partial array patch. * Extended path
+// values for describing nested arrays. * Custom fields for describing
+// the resource for which the operation is being described. * Allows
+// extension to custom operations not natively supported by RFC6902. See
+// https://tools.ietf.org/html/rfc6902 for details on the original RFC.
 type GoogleCloudRecommenderV1beta1Operation struct {
 	// Action: Type of this operation. Contains one of 'and', 'remove',
-	// 'replace', 'move',
-	// 'copy', 'test' and 'custom' operations. This field is
-	// case-insensitive and
-	// always populated.
+	// 'replace', 'move', 'copy', 'test' and 'custom' operations. This field
+	// is case-insensitive and always populated.
 	Action string `json:"action,omitempty"`
 
 	// Path: Path to the target field being operated on. If the operation is
-	// at the
-	// resource level, then path should be "/". This field is always
+	// at the resource level, then path should be "/". This field is always
 	// populated.
 	Path string `json:"path,omitempty"`
 
 	// PathFilters: Set of filters to apply if `path` refers to array
-	// elements or nested array
-	// elements in order to narrow down to a single unique element that is
-	// being
-	// tested/modified.
-	// This is intended to be an exact match per filter. To perform
-	// advanced
-	// matching, use path_value_matchers.
-	//
-	// * Example: {
-	//   "/versions/*/name" : "it-123"
-	//   "/versions/*/targetSize/percent": 20
-	//   }
-	// * Example: {
-	//   "/bindings/*/role": "roles/admin"
-	//   "/bindings/*/condition" : null
-	//   }
-	// * Example: {
-	//   "/bindings/*/role": "roles/admin"
-	//   "/bindings/*/members/*" : ["x@google.com", "y@google.com"]
-	//   }
-	// When both path_filters and path_value_matchers are set, an implicit
-	// AND
-	// must be performed.
+	// elements or nested array elements in order to narrow down to a single
+	// unique element that is being tested/modified. This is intended to be
+	// an exact match per filter. To perform advanced matching, use
+	// path_value_matchers. * Example: { "/versions/*/name" : "it-123"
+	// "/versions/*/targetSize/percent": 20 } * Example: {
+	// "/bindings/*/role": "roles/admin" "/bindings/*/condition" : null } *
+	// Example: { "/bindings/*/role": "roles/admin" "/bindings/*/members/*"
+	// : ["x@google.com", "y@google.com"] } When both path_filters and
+	// path_value_matchers are set, an implicit AND must be performed.
 	PathFilters googleapi.RawMessage `json:"pathFilters,omitempty"`
 
 	// PathValueMatchers: Similar to path_filters, this contains set of
-	// filters to apply if `path`
-	// field referes to array elements. This is meant to support value
-	// matching
-	// beyond exact match. To perform exact match, use path_filters.
-	// When both path_filters and path_value_matchers are set, an implicit
-	// AND
-	// must be performed.
+	// filters to apply if `path` field referes to array elements. This is
+	// meant to support value matching beyond exact match. To perform exact
+	// match, use path_filters. When both path_filters and
+	// path_value_matchers are set, an implicit AND must be performed.
 	PathValueMatchers map[string]GoogleCloudRecommenderV1beta1ValueMatcher `json:"pathValueMatchers,omitempty"`
 
 	// Resource: Contains the fully qualified resource name. This field is
-	// always populated.
-	// ex: //cloudresourcemanager.googleapis.com/projects/foo.
+	// always populated. ex:
+	// //cloudresourcemanager.googleapis.com/projects/foo.
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceType: Type of GCP resource being modified/tested. This field
-	// is always populated.
-	// Example:
+	// is always populated. Example:
 	// cloudresourcemanager.googleapis.com/Project,
-	// compute.googleapis.com/In
-	// stance
+	// compute.googleapis.com/Instance
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// SourcePath: Can be set with action 'copy' or 'move' to indicate the
-	// source field within
-	// resource or source_resource, ignored if provided for other operation
-	// types.
+	// source field within resource or source_resource, ignored if provided
+	// for other operation types.
 	SourcePath string `json:"sourcePath,omitempty"`
 
 	// SourceResource: Can be set with action 'copy' to copy resource
-	// configuration across
-	// different resources of the same type. Example: A resource clone can
-	// be
-	// done via action = 'copy', path = "/", from = "/",
-	// source_resource = <source> and resource_name = <target>.
-	// This field is empty for all other values of `action`.
+	// configuration across different resources of the same type. Example: A
+	// resource clone can be done via action = 'copy', path = "/", from =
+	// "/", source_resource = and resource_name = . This field is empty for
+	// all other values of `action`.
 	SourceResource string `json:"sourceResource,omitempty"`
 
 	// Value: Value for the `path` field. Will be set for
-	// actions:'add'/'replace'.
-	// Maybe set for action: 'test'. Either this or `value_matcher` will be
-	// set
-	// for 'test' operation. An exact match must be performed.
+	// actions:'add'/'replace'. Maybe set for action: 'test'. Either this or
+	// `value_matcher` will be set for 'test' operation. An exact match must
+	// be performed.
 	Value interface{} `json:"value,omitempty"`
 
 	// ValueMatcher: Can be set for action 'test' for advanced matching for
-	// the value of
-	// 'path' field. Either this or `value` will be set for 'test'
-	// operation.
+	// the value of 'path' field. Either this or `value` will be set for
+	// 'test' operation.
 	ValueMatcher *GoogleCloudRecommenderV1beta1ValueMatcher `json:"valueMatcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -807,9 +757,8 @@ func (s *GoogleCloudRecommenderV1beta1Operation) MarshalJSON() ([]byte, error) {
 // need to be performed atomically.
 type GoogleCloudRecommenderV1beta1OperationGroup struct {
 	// Operations: List of operations across one or more resources that
-	// belong to this group.
-	// Loosely based on RFC6902 and should be performed in the order they
-	// appear.
+	// belong to this group. Loosely based on RFC6902 and should be
+	// performed in the order they appear.
 	Operations []*GoogleCloudRecommenderV1beta1Operation `json:"operations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
@@ -836,13 +785,12 @@ func (s *GoogleCloudRecommenderV1beta1OperationGroup) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudRecommenderV1beta1Recommendation: A recommendation along
-// with a suggested action. E.g., a rightsizing
-// recommendation for an underutilized VM, IAM role recommendations, etc
+// with a suggested action. E.g., a rightsizing recommendation for an
+// underutilized VM, IAM role recommendations, etc
 type GoogleCloudRecommenderV1beta1Recommendation struct {
 	// AdditionalImpact: Optional set of additional impact that this
-	// recommendation may have when
-	// trying to optimize for the primary category. These may be positive
-	// or negative.
+	// recommendation may have when trying to optimize for the primary
+	// category. These may be positive or negative.
 	AdditionalImpact []*GoogleCloudRecommenderV1beta1Impact `json:"additionalImpact,omitempty"`
 
 	// AssociatedInsights: Insights that led to this recommendation.
@@ -853,41 +801,32 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 	Content *GoogleCloudRecommenderV1beta1RecommendationContent `json:"content,omitempty"`
 
 	// Description: Free-form human readable summary in English. The maximum
-	// length is 500
-	// characters.
+	// length is 500 characters.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Fingerprint of the Recommendation. Provides optimistic locking
-	// when
-	// updating states.
+	// when updating states.
 	Etag string `json:"etag,omitempty"`
 
 	// LastRefreshTime: Last time this recommendation was refreshed by the
-	// system that created it
-	// in the first place.
+	// system that created it in the first place.
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 
 	// Name: Name of recommendation.
 	Name string `json:"name,omitempty"`
 
 	// PrimaryImpact: The primary impact that this recommendation can have
-	// while trying to
-	// optimize for one category.
+	// while trying to optimize for one category.
 	PrimaryImpact *GoogleCloudRecommenderV1beta1Impact `json:"primaryImpact,omitempty"`
 
 	// RecommenderSubtype: Contains an identifier for a subtype of
-	// recommendations produced for the
-	// same recommender. Subtype is a function of content and impact,
-	// meaning a
-	// new subtype might be added when significant changes to `content`
-	// or
-	// `primary_impact.category` are introduced. See the Recommenders
-	// section
-	// to see a list of subtypes for a given Recommender.
-	//
-	// Examples:
-	//   For recommender = "google.iam.policy.Recommender",
-	//   recommender_subtype can be one of "REMOVE_ROLE"/"REPLACE_ROLE"
+	// recommendations produced for the same recommender. Subtype is a
+	// function of content and impact, meaning a new subtype might be added
+	// when significant changes to `content` or `primary_impact.category`
+	// are introduced. See the Recommenders section to see a list of
+	// subtypes for a given Recommender. Examples: For recommender =
+	// "google.iam.policy.Recommender", recommender_subtype can be one of
+	// "REMOVE_ROLE"/"REPLACE_ROLE"
 	RecommenderSubtype string `json:"recommenderSubtype,omitempty"`
 
 	// StateInfo: Information for state. Contains state and metadata.
@@ -925,10 +864,8 @@ func (s *GoogleCloudRecommenderV1beta1Recommendation) MarshalJSON() ([]byte, err
 // resources are changing and how they are changing.
 type GoogleCloudRecommenderV1beta1RecommendationContent struct {
 	// OperationGroups: Operations to one or more Google Cloud resources
-	// grouped in such a way
-	// that, all operations within one group are expected to be
-	// performed
-	// atomically and in an order.
+	// grouped in such a way that, all operations within one group are
+	// expected to be performed atomically and in an order.
 	OperationGroups []*GoogleCloudRecommenderV1beta1OperationGroup `json:"operationGroups,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OperationGroups") to
@@ -958,10 +895,9 @@ func (s *GoogleCloudRecommenderV1beta1RecommendationContent) MarshalJSON() ([]by
 // GoogleCloudRecommenderV1beta1RecommendationInsightReference:
 // Reference to an associated insight.
 type GoogleCloudRecommenderV1beta1RecommendationInsightReference struct {
-	// Insight: Insight resource name,
-	// e.g.
-	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSI
-	// GHT_TYPE_ID]/insights/[INSIGHT_ID]
+	// Insight: Insight resource name, e.g.
+	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_T
+	// YPE_ID]/insights/[INSIGHT_ID]
 	Insight string `json:"insight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Insight") to
@@ -995,32 +931,20 @@ type GoogleCloudRecommenderV1beta1RecommendationStateInfo struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default state. Don't use directly.
 	//   "ACTIVE" - Recommendation is active and can be applied.
-	// Recommendations content can
-	// be updated by Google.
-	//
-	// ACTIVE recommendations can be marked as CLAIMED, SUCCEEDED, or
-	// FAILED.
+	// Recommendations content can be updated by Google. ACTIVE
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
 	//   "CLAIMED" - Recommendation is in claimed state. Recommendations
-	// content is
-	// immutable and cannot be updated by Google.
-	//
-	// CLAIMED recommendations can be marked as CLAIMED, SUCCEEDED, or
-	// FAILED.
+	// content is immutable and cannot be updated by Google. CLAIMED
+	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
 	//   "SUCCEEDED" - Recommendation is in succeeded state. Recommendations
-	// content is
-	// immutable and cannot be updated by Google.
-	//
-	// SUCCEEDED recommendations can be marked as SUCCEEDED, or FAILED.
+	// content is immutable and cannot be updated by Google. SUCCEEDED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
 	//   "FAILED" - Recommendation is in failed state. Recommendations
-	// content is immutable
-	// and cannot be updated by Google.
-	//
-	// FAILED recommendations can be marked as SUCCEEDED, or FAILED.
+	// content is immutable and cannot be updated by Google. FAILED
+	// recommendations can be marked as SUCCEEDED, or FAILED.
 	//   "DISMISSED" - Recommendation is in dismissed state. Recommendation
-	// content can be
-	// updated by Google.
-	//
-	// DISMISSED recommendations can be marked as ACTIVE.
+	// content can be updated by Google. DISMISSED recommendations can be
+	// marked as ACTIVE.
 	State string `json:"state,omitempty"`
 
 	// StateMetadata: A map of metadata for the state, provided by user or
@@ -1054,10 +978,9 @@ func (s *GoogleCloudRecommenderV1beta1RecommendationStateInfo) MarshalJSON() ([]
 // options for values for a GCP resource field.
 type GoogleCloudRecommenderV1beta1ValueMatcher struct {
 	// MatchesPattern: To be used for full regex matching. The regular
-	// expression is using the
-	// Google RE2 syntax (https://github.com/google/re2/wiki/Syntax), so to
-	// be
-	// used with RE2::FullMatch
+	// expression is using the Google RE2 syntax
+	// (https://github.com/google/re2/wiki/Syntax), so to be used with
+	// RE2::FullMatch
 	MatchesPattern string `json:"matchesPattern,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MatchesPattern") to
@@ -1090,18 +1013,16 @@ type GoogleTypeMoney struct {
 	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Number of nano (10^-9) units of the amount.
-	// The value must be between -999,999,999 and +999,999,999 inclusive.
-	// If `units` is positive, `nanos` must be positive or zero.
-	// If `units` is zero, `nanos` can be positive, zero, or negative.
-	// If `units` is negative, `nanos` must be negative or zero.
-	// For example $-1.75 is represented as `units`=-1 and
-	// `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Units: The whole units of the amount.
-	// For example if `currencyCode` is "USD", then 1 unit is one US
-	// dollar.
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
@@ -1139,8 +1060,7 @@ type ProjectsLocationsInsightTypesInsightsGetCall struct {
 }
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
-// permission
-// for the specified insight type.
+// permission for the specified insight type.
 func (r *ProjectsLocationsInsightTypesInsightsService) Get(name string) *ProjectsLocationsInsightTypesInsightsGetCall {
 	c := &ProjectsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1184,7 +1104,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1247,7 +1167,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the requested insight. Requires the recommender.*.get IAM permission\nfor the specified insight type.",
+	//   "description": "Gets the requested insight. Requires the recommender.*.get IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights/{insightsId}",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.insightTypes.insights.get",
@@ -1286,8 +1206,7 @@ type ProjectsLocationsInsightTypesInsightsListCall struct {
 }
 
 // List: Lists insights for a Cloud project. Requires the
-// recommender.*.list IAM
-// permission for the specified insight type.
+// recommender.*.list IAM permission for the specified insight type.
 func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1295,31 +1214,27 @@ func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *Proj
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported
-// filter fields: state
-// Eg: `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: state Eg:
+// `state:"DISMISSED" or state:"ACTIVE"
 func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return from this request.  Non-positive
-// values are ignored. If not specified, the server will determine the
-// number
-// of results to return.
+// of results to return from this request. Non-positive values are
+// ignored. If not specified, the server will determine the number of
+// results to return.
 func (c *ProjectsLocationsInsightTypesInsightsListCall) PageSize(pageSize int64) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If present,
-// retrieves the next batch of results from the preceding call to
-// this method. `page_token` must be the value of `next_page_token` from
-// the
+// retrieves the next batch of results from the preceding call to this
+// method. `page_token` must be the value of `next_page_token` from the
 // previous response. The values of other method parameters must be
-// identical
-// to those in the previous call.
+// identical to those in the previous call.
 func (c *ProjectsLocationsInsightTypesInsightsListCall) PageToken(pageToken string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1362,7 +1277,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1426,7 +1341,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM\npermission for the specified insight type.",
+	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.insightTypes.insights.list",
@@ -1435,23 +1350,23 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported\nfilter fields: state\nEg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request.  Non-positive\nvalues are ignored. If not specified, the server will determine the number\nof results to return.",
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. If not specified, the server will determine the number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to\nthis method. `page_token` must be the value of `next_page_token` from the\nprevious response. The values of other method parameters must be identical\nto those in the previous call.",
+	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to this method. `page_token` must be the value of `next_page_token` from the previous response. The values of other method parameters must be identical to those in the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request.\nAcceptable formats:\n\n1.\n\"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\",\n\nLOCATION here refers to GCP Locations:\nhttps://cloud.google.com/about/locations/",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
 	//       "required": true,
@@ -1502,15 +1417,11 @@ type ProjectsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 }
 
 // MarkAccepted: Marks the Insight State as Accepted. Users can use this
-// method to
-// indicate to the Recommender API that they have applied some action
-// based
-// on the insight. This stops the insight content from being
-// updated.
-//
-// MarkInsightAccepted can be applied to insights in ACTIVE state.
-// Requires
-// the recommender.*.update IAM permission for the specified insight.
+// method to indicate to the Recommender API that they have applied some
+// action based on the insight. This stops the insight content from
+// being updated. MarkInsightAccepted can be applied to insights in
+// ACTIVE state. Requires the recommender.*.update IAM permission for
+// the specified insight.
 func (r *ProjectsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &ProjectsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1545,7 +1456,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.He
 
 func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1610,7 +1521,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Insight State as Accepted. Users can use this method to\nindicate to the Recommender API that they have applied some action based\non the insight. This stops the insight content from being updated.\n\nMarkInsightAccepted can be applied to insights in ACTIVE state. Requires\nthe recommender.*.update IAM permission for the specified insight.",
+	//   "description": "Marks the Insight State as Accepted. Users can use this method to indicate to the Recommender API that they have applied some action based on the insight. This stops the insight content from being updated. MarkInsightAccepted can be applied to insights in ACTIVE state. Requires the recommender.*.update IAM permission for the specified insight.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights/{insightsId}:markAccepted",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.insightTypes.insights.markAccepted",
@@ -1652,8 +1563,7 @@ type ProjectsLocationsRecommendersRecommendationsGetCall struct {
 }
 
 // Get: Gets the requested recommendation. Requires the
-// recommender.*.get
-// IAM permission for the specified recommender.
+// recommender.*.get IAM permission for the specified recommender.
 func (r *ProjectsLocationsRecommendersRecommendationsService) Get(name string) *ProjectsLocationsRecommendersRecommendationsGetCall {
 	c := &ProjectsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1697,7 +1607,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1761,7 +1671,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the requested recommendation. Requires the recommender.*.get\nIAM permission for the specified recommender.",
+	//   "description": "Gets the requested recommendation. Requires the recommender.*.get IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.get",
@@ -1800,8 +1710,7 @@ type ProjectsLocationsRecommendersRecommendationsListCall struct {
 }
 
 // List: Lists recommendations for a Cloud project. Requires the
-// recommender.*.list
-// IAM permission for the specified recommender.
+// recommender.*.list IAM permission for the specified recommender.
 func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c := &ProjectsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1809,31 +1718,28 @@ func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported
-// filter fields: state_info.state
-// Eg: `state_info.state:"DISMISSED" or state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields:
+// state_info.state Eg: `state_info.state:"DISMISSED" or
+// state_info.state:"FAILED"
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return from this request.  Non-positive
-// values are ignored. If not specified, the server will determine the
-// number
-// of results to return.
+// of results to return from this request. Non-positive values are
+// ignored. If not specified, the server will determine the number of
+// results to return.
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) PageSize(pageSize int64) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If present,
-// retrieves the next batch of results from the preceding call to
-// this method. `page_token` must be the value of `next_page_token` from
-// the
+// retrieves the next batch of results from the preceding call to this
+// method. `page_token` must be the value of `next_page_token` from the
 // previous response. The values of other method parameters must be
-// identical
-// to those in the previous call.
+// identical to those in the previous call.
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) PageToken(pageToken string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1876,7 +1782,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1941,7 +1847,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list\nIAM permission for the specified recommender.",
+	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.list",
@@ -1950,23 +1856,23 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported\nfilter fields: state_info.state\nEg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request.  Non-positive\nvalues are ignored. If not specified, the server will determine the number\nof results to return.",
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. If not specified, the server will determine the number of results to return.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to\nthis method. `page_token` must be the value of `next_page_token` from the\nprevious response. The values of other method parameters must be identical\nto those in the previous call.",
+	//       "description": "Optional. If present, retrieves the next batch of results from the preceding call to this method. `page_token` must be the value of `next_page_token` from the previous response. The values of other method parameters must be identical to those in the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request.\nAcceptable formats:\n\n1.\n\"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\",\n\nLOCATION here refers to GCP Locations:\nhttps://cloud.google.com/about/locations/",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+$",
 	//       "required": true,
@@ -2017,21 +1923,12 @@ type ProjectsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 }
 
 // MarkClaimed: Marks the Recommendation State as Claimed. Users can use
-// this method to
-// indicate to the Recommender API that they are starting to apply
-// the
-// recommendation themselves. This stops the recommendation content from
-// being
-// updated. Associated insights are frozen and placed in the ACCEPTED
-// state.
-//
-// MarkRecommendationClaimed can be applied to recommendations in
-// CLAIMED or
-// ACTIVE state.
-//
-// Requires the recommender.*.update IAM permission for the
-// specified
-// recommender.
+// this method to indicate to the Recommender API that they are starting
+// to apply the recommendation themselves. This stops the recommendation
+// content from being updated. Associated insights are frozen and placed
+// in the ACCEPTED state. MarkRecommendationClaimed can be applied to
+// recommendations in CLAIMED or ACTIVE state. Requires the
+// recommender.*.update IAM permission for the specified recommender.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1beta1markrecommendationclaimedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2066,7 +1963,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2132,7 +2029,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Recommendation State as Claimed. Users can use this method to\nindicate to the Recommender API that they are starting to apply the\nrecommendation themselves. This stops the recommendation content from being\nupdated. Associated insights are frozen and placed in the ACCEPTED state.\n\nMarkRecommendationClaimed can be applied to recommendations in CLAIMED or\nACTIVE state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Claimed. Users can use this method to indicate to the Recommender API that they are starting to apply the recommendation themselves. This stops the recommendation content from being updated. Associated insights are frozen and placed in the ACCEPTED state. MarkRecommendationClaimed can be applied to recommendations in CLAIMED or ACTIVE state. Requires the recommender.*.update IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markClaimed",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markClaimed",
@@ -2174,22 +2071,13 @@ type ProjectsLocationsRecommendersRecommendationsMarkFailedCall struct {
 }
 
 // MarkFailed: Marks the Recommendation State as Failed. Users can use
-// this method to
-// indicate to the Recommender API that they have applied the
-// recommendation
-// themselves, and the operation failed. This stops the recommendation
-// content
-// from being updated. Associated insights are frozen and placed in
-// the
-// ACCEPTED state.
-//
-// MarkRecommendationFailed can be applied to recommendations in
-// ACTIVE,
-// CLAIMED, SUCCEEDED, or FAILED state.
-//
-// Requires the recommender.*.update IAM permission for the
-// specified
-// recommender.
+// this method to indicate to the Recommender API that they have applied
+// the recommendation themselves, and the operation failed. This stops
+// the recommendation content from being updated. Associated insights
+// are frozen and placed in the ACCEPTED state. MarkRecommendationFailed
+// can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
+// FAILED state. Requires the recommender.*.update IAM permission for
+// the specified recommender.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1beta1markrecommendationfailedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) *ProjectsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2224,7 +2112,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2290,7 +2178,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Recommendation State as Failed. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation failed. This stops the recommendation content\nfrom being updated. Associated insights are frozen and placed in the\nACCEPTED state.\n\nMarkRecommendationFailed can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Failed. Users can use this method to indicate to the Recommender API that they have applied the recommendation themselves, and the operation failed. This stops the recommendation content from being updated. Associated insights are frozen and placed in the ACCEPTED state. MarkRecommendationFailed can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the recommender.*.update IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markFailed",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markFailed",
@@ -2332,22 +2220,13 @@ type ProjectsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 }
 
 // MarkSucceeded: Marks the Recommendation State as Succeeded. Users can
-// use this method to
-// indicate to the Recommender API that they have applied the
-// recommendation
-// themselves, and the operation was successful. This stops the
-// recommendation
-// content from being updated. Associated insights are frozen and placed
-// in
-// the ACCEPTED state.
-//
+// use this method to indicate to the Recommender API that they have
+// applied the recommendation themselves, and the operation was
+// successful. This stops the recommendation content from being updated.
+// Associated insights are frozen and placed in the ACCEPTED state.
 // MarkRecommendationSucceeded can be applied to recommendations in
-// ACTIVE,
-// CLAIMED, SUCCEEDED, or FAILED state.
-//
-// Requires the recommender.*.update IAM permission for the
-// specified
-// recommender.
+// ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
+// recommender.*.update IAM permission for the specified recommender.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1beta1markrecommendationsucceededrequest *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2382,7 +2261,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2448,7 +2327,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the Recommendation State as Succeeded. Users can use this method to\nindicate to the Recommender API that they have applied the recommendation\nthemselves, and the operation was successful. This stops the recommendation\ncontent from being updated. Associated insights are frozen and placed in\nthe ACCEPTED state.\n\nMarkRecommendationSucceeded can be applied to recommendations in ACTIVE,\nCLAIMED, SUCCEEDED, or FAILED state.\n\nRequires the recommender.*.update IAM permission for the specified\nrecommender.",
+	//   "description": "Marks the Recommendation State as Succeeded. Users can use this method to indicate to the Recommender API that they have applied the recommendation themselves, and the operation was successful. This stops the recommendation content from being updated. Associated insights are frozen and placed in the ACCEPTED state. MarkRecommendationSucceeded can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the recommender.*.update IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations/{recommendationsId}:markSucceeded",
 	//   "httpMethod": "POST",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.markSucceeded",

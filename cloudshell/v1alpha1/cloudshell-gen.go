@@ -168,8 +168,7 @@ type UsersEnvironmentsPublicKeysService struct {
 	s *Service
 }
 
-// AuthorizeEnvironmentRequest: Request message
-// for
+// AuthorizeEnvironmentRequest: Request message for
 // AuthorizeEnvironment.
 type AuthorizeEnvironmentRequest struct {
 	// AccessToken: The OAuth access token that should be sent to the
@@ -177,8 +176,7 @@ type AuthorizeEnvironmentRequest struct {
 	AccessToken string `json:"accessToken,omitempty"`
 
 	// ExpireTime: The time when the credentials expire. If not set,
-	// defaults to one hour from
-	// when the server received the request.
+	// defaults to one hour from when the server received the request.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// IdToken: The OAuth ID token that should be sent to the environment.
@@ -207,8 +205,7 @@ func (s *AuthorizeEnvironmentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreatePublicKeyRequest: Request message for
-// CreatePublicKey.
+// CreatePublicKeyRequest: Request message for CreatePublicKey.
 type CreatePublicKeyRequest struct {
 	// Key: Key that should be added to the environment.
 	Key *PublicKey `json:"key,omitempty"`
@@ -237,17 +234,11 @@ func (s *CreatePublicKeyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -255,50 +246,36 @@ type Empty struct {
 }
 
 // Environment: A Cloud Shell environment, which is defined as the
-// combination of a Docker
-// image specifying what is installed on the environment and a home
-// directory
-// containing the user's data that will remain across sessions. Each
-// user has a
-// single environment with the ID "default".
+// combination of a Docker image specifying what is installed on the
+// environment and a home directory containing the user's data that will
+// remain across sessions. Each user has a single environment with the
+// ID "default".
 type Environment struct {
 	// DockerImage: Required. Full path to the Docker image used to run this
-	// environment, e.g.
-	// "gcr.io/dev-con/cloud-devshell:latest".
+	// environment, e.g. "gcr.io/dev-con/cloud-devshell:latest".
 	DockerImage string `json:"dockerImage,omitempty"`
 
 	// Id: Output only. The environment's identifier, unique among the
-	// user's
-	// environments.
+	// user's environments.
 	Id string `json:"id,omitempty"`
 
-	// Name: Output only. Full name of this resource, in the
-	// format
+	// Name: Output only. Full name of this resource, in the format
 	// `users/{owner_email}/environments/{environment_id}`. `{owner_email}`
-	// is the
-	// email address of the user to whom this environment belongs,
-	// and
-	// `{environment_id}` is the identifier of this environment. For
-	// example,
-	// `users/someone@example.com/environments/default`.
+	// is the email address of the user to whom this environment belongs,
+	// and `{environment_id}` is the identifier of this environment. For
+	// example, `users/someone@example.com/environments/default`.
 	Name string `json:"name,omitempty"`
 
 	// PublicKeys: Output only. Public keys associated with the environment.
-	// Clients can
-	// connect to this environment via SSH only if they possess a private
-	// key
-	// corresponding to at least one of these public keys. Keys can be added
-	// to or
-	// removed from the environment using the CreatePublicKey and
-	// DeletePublicKey
-	// methods.
+	// Clients can connect to this environment via SSH only if they possess
+	// a private key corresponding to at least one of these public keys.
+	// Keys can be added to or removed from the environment using the
+	// CreatePublicKey and DeletePublicKey methods.
 	PublicKeys []*PublicKey `json:"publicKeys,omitempty"`
 
 	// Size: Indicates the size of the backing VM running the environment.
-	// If set to
-	// something other than DEFAULT, it will be reverted to the default VM
-	// size
-	// after vm_size_expire_time.
+	// If set to something other than DEFAULT, it will be reverted to the
+	// default VM size after vm_size_expire_time.
 	//
 	// Possible values:
 	//   "VM_SIZE_UNSPECIFIED" - The VM size is unknown.
@@ -307,18 +284,15 @@ type Environment struct {
 	Size string `json:"size,omitempty"`
 
 	// SshHost: Output only. Host to which clients can connect to initiate
-	// SSH sessions
-	// with the environment.
+	// SSH sessions with the environment.
 	SshHost string `json:"sshHost,omitempty"`
 
 	// SshPort: Output only. Port to which clients can connect to initiate
-	// SSH sessions
-	// with the environment.
+	// SSH sessions with the environment.
 	SshPort int64 `json:"sshPort,omitempty"`
 
 	// SshUsername: Output only. Username that clients should use when
-	// initiating SSH sessions
-	// with the environment.
+	// initiating SSH sessions with the environment.
 	SshUsername string `json:"sshUsername,omitempty"`
 
 	// State: Output only. Current execution state of this environment.
@@ -326,33 +300,27 @@ type Environment struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The environment's states is unknown.
 	//   "DISABLED" - The environment is not running and can't be connected
-	// to. Starting the
-	// environment will transition it to the STARTING state.
+	// to. Starting the environment will transition it to the STARTING
+	// state.
 	//   "STARTING" - The environment is being started but is not yet ready
-	// to accept
-	// connections.
+	// to accept connections.
 	//   "RUNNING" - The environment is running and ready to accept
-	// connections. It will
-	// automatically transition back to DISABLED after a period of
-	// inactivity or
-	// if another environment is started.
+	// connections. It will automatically transition back to DISABLED after
+	// a period of inactivity or if another environment is started.
 	//   "DELETING" - The environment is being deleted and can't be
 	// connected to.
 	State string `json:"state,omitempty"`
 
 	// VmSizeExpireTime: Output only. The time when the Environment will
-	// expire back to the default
-	// VM size.
+	// expire back to the default VM size.
 	VmSizeExpireTime string `json:"vmSizeExpireTime,omitempty"`
 
 	// WebHost: Output only. Host to which clients can connect to initiate
-	// HTTPS or WSS
-	// connections with the environment.
+	// HTTPS or WSS connections with the environment.
 	WebHost string `json:"webHost,omitempty"`
 
 	// WebPorts: Output only. Ports to which clients can connect to initiate
-	// HTTPS or WSS
-	// connections with the environment.
+	// HTTPS or WSS connections with the environment.
 	WebPorts []int64 `json:"webPorts,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -383,52 +351,38 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -478,18 +432,13 @@ type PublicKey struct {
 	// Key: Required. Content of this key.
 	Key string `json:"key,omitempty"`
 
-	// Name: Output only. Full name of this resource, in the
-	// format
-	// `users/{owner_email}/environments/{environment_id}/publicKeys/{
-	// key_id}`.
-	// `{owner_email}` is the email address of the user to whom the key
-	// belongs.
-	// `{environment_id}` is the identifier of the environment to which the
-	// key
-	// grants access. `{key_id}` is the unique identifier of the key. For
-	// example,
-	// `users/someone@example.com/environments/default/publicKeys/my
-	// Key`.
+	// Name: Output only. Full name of this resource, in the format
+	// `users/{owner_email}/environments/{environment_id}/publicKeys/{key_id}
+	// `. `{owner_email}` is the email address of the user to whom the key
+	// belongs. `{environment_id}` is the identifier of the environment to
+	// which the key grants access. `{key_id}` is the unique identifier of
+	// the key. For example,
+	// `users/someone@example.com/environments/default/publicKeys/myKey`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -520,40 +469,30 @@ func (s *PublicKey) MarshalJSON() ([]byte, error) {
 }
 
 // StartEnvironmentMetadata: Message included in the metadata field of
-// operations returned from
-// StartEnvironment.
+// operations returned from StartEnvironment.
 type StartEnvironmentMetadata struct {
 	// State: Current state of the environment being started.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The environment's start state is unknown.
 	//   "STARTING" - The environment is in the process of being started,
-	// but no additional
-	// details are available.
+	// but no additional details are available.
 	//   "UNARCHIVING_DISK" - Startup is waiting for the user's disk to be
-	// unarchived. This can happen
-	// when the user returns to Cloud Shell after not having used it for
-	// a
-	// while, and suggests that startup will take longer than normal.
+	// unarchived. This can happen when the user returns to Cloud Shell
+	// after not having used it for a while, and suggests that startup will
+	// take longer than normal.
 	//   "AWAITING_VM" - Startup is waiting for a VM to be assigned to the
-	// environment. This
-	// should normally happen very quickly, but an environment might stay
-	// in
-	// this state for an extended period of time if the system is
-	// experiencing
-	// heavy load.
-	//   "AWAITING_COMPUTE_RESOURCES" - Startup is waiting for compute
-	// resources to be assigned to the
 	// environment. This should normally happen very quickly, but an
-	// environment
-	// might stay in this state for an extended period of time if the system
-	// is
-	// experiencing heavy load.
+	// environment might stay in this state for an extended period of time
+	// if the system is experiencing heavy load.
+	//   "AWAITING_COMPUTE_RESOURCES" - Startup is waiting for compute
+	// resources to be assigned to the environment. This should normally
+	// happen very quickly, but an environment might stay in this state for
+	// an extended period of time if the system is experiencing heavy load.
 	//   "FINISHED" - Startup has completed. If the start operation was
-	// successful, the user
-	// should be able to establish an SSH connection to their
-	// environment.
-	// Otherwise, the operation will contain details of the failure.
+	// successful, the user should be able to establish an SSH connection to
+	// their environment. Otherwise, the operation will contain details of
+	// the failure.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "State") to
@@ -579,16 +518,13 @@ func (s *StartEnvironmentMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StartEnvironmentRequest: Request message for
-// StartEnvironment.
+// StartEnvironmentRequest: Request message for StartEnvironment.
 type StartEnvironmentRequest struct {
 	// AccessToken: The initial access token passed to the environment. If
-	// this is present and
-	// valid, the environment will be pre-authenticated with gcloud so that
-	// the
-	// user can run gcloud commands in Cloud Shell without having to log in.
-	// This
-	// code can be updated later by calling AuthorizeEnvironment.
+	// this is present and valid, the environment will be pre-authenticated
+	// with gcloud so that the user can run gcloud commands in Cloud Shell
+	// without having to log in. This code can be updated later by calling
+	// AuthorizeEnvironment.
 	AccessToken string `json:"accessToken,omitempty"`
 
 	// PublicKeys: Public keys that should be added to the environment
@@ -619,9 +555,8 @@ func (s *StartEnvironmentRequest) MarshalJSON() ([]byte, error) {
 }
 
 // StartEnvironmentResponse: Message included in the response field of
-// operations returned from
-// StartEnvironment
-// once the operation is complete.
+// operations returned from StartEnvironment once the operation is
+// complete.
 type StartEnvironmentResponse struct {
 	// Environment: Environment that was started.
 	Environment *Environment `json:"environment,omitempty"`
@@ -650,32 +585,24 @@ func (s *StartEnvironmentResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -713,12 +640,9 @@ type UsersEnvironmentsAuthorizeCall struct {
 }
 
 // Authorize: Sends OAuth credentials to a running environment on behalf
-// of a user. When
-// this completes, the environment will be authorized to run various
-// Google
-// Cloud command line tools without requiring the user to
-// manually
-// authenticate.
+// of a user. When this completes, the environment will be authorized to
+// run various Google Cloud command line tools without requiring the
+// user to manually authenticate.
 func (r *UsersEnvironmentsService) Authorize(name string, authorizeenvironmentrequest *AuthorizeEnvironmentRequest) *UsersEnvironmentsAuthorizeCall {
 	c := &UsersEnvironmentsAuthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -753,7 +677,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Header() http.Header {
 
 func (c *UsersEnvironmentsAuthorizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -817,7 +741,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends OAuth credentials to a running environment on behalf of a user. When\nthis completes, the environment will be authorized to run various Google\nCloud command line tools without requiring the user to manually\nauthenticate.",
+	//   "description": "Sends OAuth credentials to a running environment on behalf of a user. When this completes, the environment will be authorized to run various Google Cloud command line tools without requiring the user to manually authenticate.",
 	//   "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}:authorize",
 	//   "httpMethod": "POST",
 	//   "id": "cloudshell.users.environments.authorize",
@@ -826,7 +750,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Do(opts ...googleapi.CallOption) (*Empt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the resource that should receive the credentials, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
+	//       "description": "Name of the resource that should receive the credentials, for example `users/me/environments/default` or `users/someone@example.com/environments/default`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -903,7 +827,7 @@ func (c *UsersEnvironmentsGetCall) Header() http.Header {
 
 func (c *UsersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -974,7 +898,7 @@ func (c *UsersEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environmen
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the requested resource, for example `users/me/environments/default`\nor `users/someone@example.com/environments/default`.",
+	//       "description": "Name of the requested resource, for example `users/me/environments/default` or `users/someone@example.com/environments/default`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -1045,7 +969,7 @@ func (c *UsersEnvironmentsPatchCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1118,7 +1042,7 @@ func (c *UsersEnvironmentsPatchCall) Do(opts ...googleapi.CallOption) (*Environm
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the resource to be updated, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
+	//       "description": "Name of the resource to be updated, for example `users/me/environments/default` or `users/someone@example.com/environments/default`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -1157,16 +1081,12 @@ type UsersEnvironmentsStartCall struct {
 }
 
 // Start: Starts an existing environment, allowing clients to connect to
-// it. The
-// returned operation will contain an instance of
-// StartEnvironmentMetadata in
-// its metadata field. Users can wait for the environment to start by
-// polling
-// this operation via GetOperation. Once the environment has finished
-// starting
-// and is ready to accept connections, the operation will contain
-// a
-// StartEnvironmentResponse in its response field.
+// it. The returned operation will contain an instance of
+// StartEnvironmentMetadata in its metadata field. Users can wait for
+// the environment to start by polling this operation via GetOperation.
+// Once the environment has finished starting and is ready to accept
+// connections, the operation will contain a StartEnvironmentResponse in
+// its response field.
 func (r *UsersEnvironmentsService) Start(name string, startenvironmentrequest *StartEnvironmentRequest) *UsersEnvironmentsStartCall {
 	c := &UsersEnvironmentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1201,7 +1121,7 @@ func (c *UsersEnvironmentsStartCall) Header() http.Header {
 
 func (c *UsersEnvironmentsStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1265,7 +1185,7 @@ func (c *UsersEnvironmentsStartCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts an existing environment, allowing clients to connect to it. The\nreturned operation will contain an instance of StartEnvironmentMetadata in\nits metadata field. Users can wait for the environment to start by polling\nthis operation via GetOperation. Once the environment has finished starting\nand is ready to accept connections, the operation will contain a\nStartEnvironmentResponse in its response field.",
+	//   "description": "Starts an existing environment, allowing clients to connect to it. The returned operation will contain an instance of StartEnvironmentMetadata in its metadata field. Users can wait for the environment to start by polling this operation via GetOperation. Once the environment has finished starting and is ready to accept connections, the operation will contain a StartEnvironmentResponse in its response field.",
 	//   "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}:start",
 	//   "httpMethod": "POST",
 	//   "id": "cloudshell.users.environments.start",
@@ -1274,7 +1194,7 @@ func (c *UsersEnvironmentsStartCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the resource that should be started, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
+	//       "description": "Name of the resource that should be started, for example `users/me/environments/default` or `users/someone@example.com/environments/default`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+$",
 	//       "required": true,
@@ -1307,12 +1227,9 @@ type UsersEnvironmentsPublicKeysCreateCall struct {
 }
 
 // Create: Adds a public SSH key to an environment, allowing clients
-// with the
-// corresponding private key to connect to that environment via SSH. If
-// a key
-// with the same format and content already exists, this will return
-// the
-// existing key.
+// with the corresponding private key to connect to that environment via
+// SSH. If a key with the same format and content already exists, this
+// will return the existing key.
 func (r *UsersEnvironmentsPublicKeysService) Create(parent string, createpublickeyrequest *CreatePublicKeyRequest) *UsersEnvironmentsPublicKeysCreateCall {
 	c := &UsersEnvironmentsPublicKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1347,7 +1264,7 @@ func (c *UsersEnvironmentsPublicKeysCreateCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPublicKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1328,7 @@ func (c *UsersEnvironmentsPublicKeysCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a public SSH key to an environment, allowing clients with the\ncorresponding private key to connect to that environment via SSH. If a key\nwith the same format and content already exists, this will return the\nexisting key.",
+	//   "description": "Adds a public SSH key to an environment, allowing clients with the corresponding private key to connect to that environment via SSH. If a key with the same format and content already exists, this will return the existing key.",
 	//   "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}/publicKeys",
 	//   "httpMethod": "POST",
 	//   "id": "cloudshell.users.environments.publicKeys.create",
@@ -1452,9 +1369,8 @@ type UsersEnvironmentsPublicKeysDeleteCall struct {
 }
 
 // Delete: Removes a public SSH key from an environment. Clients will no
-// longer be
-// able to connect to the environment using the corresponding private
-// key.
+// longer be able to connect to the environment using the corresponding
+// private key.
 func (r *UsersEnvironmentsPublicKeysService) Delete(name string) *UsersEnvironmentsPublicKeysDeleteCall {
 	c := &UsersEnvironmentsPublicKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1488,7 +1404,7 @@ func (c *UsersEnvironmentsPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersEnvironmentsPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200801")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1547,7 +1463,7 @@ func (c *UsersEnvironmentsPublicKeysDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes a public SSH key from an environment. Clients will no longer be\nable to connect to the environment using the corresponding private key.",
+	//   "description": "Removes a public SSH key from an environment. Clients will no longer be able to connect to the environment using the corresponding private key.",
 	//   "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}/publicKeys/{publicKeysId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudshell.users.environments.publicKeys.delete",
@@ -1556,7 +1472,7 @@ func (c *UsersEnvironmentsPublicKeysDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the resource to be deleted, e.g.\n`users/me/environments/default/publicKeys/my-key`.",
+	//       "description": "Name of the resource to be deleted, e.g. `users/me/environments/default/publicKeys/my-key`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+/publicKeys/[^/]+$",
 	//       "required": true,

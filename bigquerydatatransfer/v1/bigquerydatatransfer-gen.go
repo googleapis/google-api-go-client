@@ -269,15 +269,11 @@ type ProjectsTransferConfigsRunsTransferLogsService struct {
 }
 
 // CheckValidCredsRequest: A request to determine whether the user has
-// valid credentials. This method
-// is used to limit the number of OAuth popups in the user interface.
-// The
-// user id is inferred from the API call context.
-// If the data source has the Google+ authorization type, this
-// method
-// returns false, as it cannot be determined whether the credentials
-// are
-// already valid merely based on the user id.
+// valid credentials. This method is used to limit the number of OAuth
+// popups in the user interface. The user id is inferred from the API
+// call context. If the data source has the Google+ authorization type,
+// this method returns false, as it cannot be determined whether the
+// credentials are already valid merely based on the user id.
 type CheckValidCredsRequest struct {
 }
 
@@ -315,24 +311,21 @@ func (s *CheckValidCredsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DataSource: Represents data source metadata. Metadata is sufficient
-// to
-// render UI and request proper OAuth tokens.
+// to render UI and request proper OAuth tokens.
 type DataSource struct {
 	// AuthorizationType: Indicates the type of authorization.
 	//
 	// Possible values:
 	//   "AUTHORIZATION_TYPE_UNSPECIFIED" - Type unspecified.
 	//   "AUTHORIZATION_CODE" - Use OAuth 2 authorization codes that can be
-	// exchanged
-	// for a refresh token on the backend.
-	//   "GOOGLE_PLUS_AUTHORIZATION_CODE" - Return an authorization code for
-	// a given Google+ page that can then be
 	// exchanged for a refresh token on the backend.
+	//   "GOOGLE_PLUS_AUTHORIZATION_CODE" - Return an authorization code for
+	// a given Google+ page that can then be exchanged for a refresh token
+	// on the backend.
 	//   "FIRST_PARTY_OAUTH" - Use First Party OAuth based on Loas Owned
-	// Clients. First Party OAuth
-	// doesn't require a refresh token to get an offline access token.
-	// Instead,
-	// it uses a client-signed JWT assertion to retrieve an access token.
+	// Clients. First Party OAuth doesn't require a refresh token to get an
+	// offline access token. Instead, it uses a client-signed JWT assertion
+	// to retrieve an access token.
 	AuthorizationType string `json:"authorizationType,omitempty"`
 
 	// ClientId: Data source client id which should be used to receive
@@ -340,40 +333,31 @@ type DataSource struct {
 	ClientId string `json:"clientId,omitempty"`
 
 	// DataRefreshType: Specifies whether the data source supports automatic
-	// data refresh for the
-	// past few days, and how it's supported.
-	// For some data sources, data might not be complete until a few days
-	// later,
-	// so it's useful to refresh data automatically.
+	// data refresh for the past few days, and how it's supported. For some
+	// data sources, data might not be complete until a few days later, so
+	// it's useful to refresh data automatically.
 	//
 	// Possible values:
 	//   "DATA_REFRESH_TYPE_UNSPECIFIED" - The data source won't support
 	// data auto refresh, which is default value.
 	//   "SLIDING_WINDOW" - The data source supports data auto refresh, and
-	// runs will be scheduled
-	// for the past few days. Does not allow custom values to be set for
-	// each
-	// transfer config.
+	// runs will be scheduled for the past few days. Does not allow custom
+	// values to be set for each transfer config.
 	//   "CUSTOM_SLIDING_WINDOW" - The data source supports data auto
-	// refresh, and runs will be scheduled
-	// for the past few days. Allows custom values to be set for each
-	// transfer
-	// config.
+	// refresh, and runs will be scheduled for the past few days. Allows
+	// custom values to be set for each transfer config.
 	DataRefreshType string `json:"dataRefreshType,omitempty"`
 
 	// DataSourceId: Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`
 
-	// DefaultDataRefreshWindowDays: Default data refresh window on
-	// days.
+	// DefaultDataRefreshWindowDays: Default data refresh window on days.
 	// Only meaningful when `data_refresh_type` = `SLIDING_WINDOW`.
 	DefaultDataRefreshWindowDays int64 `json:"defaultDataRefreshWindowDays,omitempty"`
 
-	// DefaultSchedule: Default data transfer schedule.
-	// Examples of valid schedules include:
-	// `1st,3rd monday of month 15:30`,
-	// `every wed,fri of jan,jun 13:15`, and
-	// `first sunday of quarter 00:00`.
+	// DefaultSchedule: Default data transfer schedule. Examples of valid
+	// schedules include: `1st,3rd monday of month 15:30`, `every wed,fri of
+	// jan,jun 13:15`, and `first sunday of quarter 00:00`.
 	DefaultSchedule string `json:"defaultSchedule,omitempty"`
 
 	// Description: User friendly data source description string.
@@ -385,8 +369,7 @@ type DataSource struct {
 	// HelpUrl: Url for the help document for this data source.
 	HelpUrl string `json:"helpUrl,omitempty"`
 
-	// ManualRunsDisabled: Disables backfilling and manual run
-	// scheduling
+	// ManualRunsDisabled: Disables backfilling and manual run scheduling
 	// for the data source.
 	ManualRunsDisabled bool `json:"manualRunsDisabled,omitempty"`
 
@@ -401,16 +384,13 @@ type DataSource struct {
 	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
 
 	// Scopes: Api auth scopes for which refresh token needs to be obtained.
-	// These are
-	// scopes needed by a data source to prepare data and ingest them
-	// into
-	// BigQuery, e.g., https://www.googleapis.com/auth/bigquery
+	// These are scopes needed by a data source to prepare data and ingest
+	// them into BigQuery, e.g., https://www.googleapis.com/auth/bigquery
 	Scopes []string `json:"scopes,omitempty"`
 
 	// SupportsCustomSchedule: Specifies whether the data source supports a
-	// user defined schedule, or
-	// operates on the default schedule.
-	// When set to `true`, user can override default schedule.
+	// user defined schedule, or operates on the default schedule. When set
+	// to `true`, user can override default schedule.
 	SupportsCustomSchedule bool `json:"supportsCustomSchedule,omitempty"`
 
 	// SupportsMultipleTransfers: Deprecated. This field has no effect.
@@ -423,13 +403,12 @@ type DataSource struct {
 	// placeholder.
 	//   "BATCH" - Batch data transfer.
 	//   "STREAMING" - Streaming data transfer. Streaming data source
-	// currently doesn't
-	// support multiple transfer configs per project.
+	// currently doesn't support multiple transfer configs per project.
 	TransferType string `json:"transferType,omitempty"`
 
 	// UpdateDeadlineSeconds: The number of seconds to wait for an update
-	// from the data source
-	// before the Data Transfer Service marks the transfer as FAILED.
+	// from the data source before the Data Transfer Service marks the
+	// transfer as FAILED.
 	UpdateDeadlineSeconds int64 `json:"updateDeadlineSeconds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -461,22 +440,17 @@ func (s *DataSource) MarshalJSON() ([]byte, error) {
 }
 
 // DataSourceParameter: Represents a data source parameter with
-// validation rules, so that
-// parameters can be rendered in the UI. These parameters are given to
-// us by
-// supported data sources, and include all needed information for
-// rendering
-// and validation.
-// Thus, whoever uses this api can decide to generate either generic
-// ui,
-// or custom data source specific forms.
+// validation rules, so that parameters can be rendered in the UI. These
+// parameters are given to us by supported data sources, and include all
+// needed information for rendering and validation. Thus, whoever uses
+// this api can decide to generate either generic ui, or custom data
+// source specific forms.
 type DataSourceParameter struct {
 	// AllowedValues: All possible values for the parameter.
 	AllowedValues []string `json:"allowedValues,omitempty"`
 
 	// Deprecated: If true, it should not be used in new transfers, and it
-	// should not be
-	// visible to users.
+	// should not be visible to users.
 	Deprecated bool `json:"deprecated,omitempty"`
 
 	// Description: Parameter description.
@@ -516,8 +490,8 @@ type DataSourceParameter struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type unspecified.
 	//   "STRING" - String parameter.
-	//   "INTEGER" - Integer parameter (64-bits).
-	// Will be serialized to json as string.
+	//   "INTEGER" - Integer parameter (64-bits). Will be serialized to json
+	// as string.
 	//   "DOUBLE" - Double precision floating point parameter.
 	//   "BOOLEAN" - Boolean parameter.
 	//   "RECORD" - Deprecated. This field has no effect.
@@ -525,8 +499,8 @@ type DataSourceParameter struct {
 	Type string `json:"type,omitempty"`
 
 	// ValidationDescription: Description of the requirements for this
-	// field, in case the user input does
-	// not fulfill the regex pattern or min/max values.
+	// field, in case the user input does not fulfill the regex pattern or
+	// min/max values.
 	ValidationDescription string `json:"validationDescription,omitempty"`
 
 	// ValidationHelpUrl: URL to a help document to further explain the
@@ -577,8 +551,7 @@ func (s *DataSourceParameter) UnmarshalJSON(data []byte) error {
 }
 
 // EmailPreferences: Represents preferences for sending email
-// notifications for transfer run
-// events.
+// notifications for transfer run events.
 type EmailPreferences struct {
 	// EnableFailureEmail: If true, email notifications will be sent on
 	// transfer run failures.
@@ -609,17 +582,11 @@ func (s *EmailPreferences) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -634,10 +601,9 @@ type ListDataSourcesResponse struct {
 	DataSources []*DataSource `json:"dataSources,omitempty"`
 
 	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results,
-	// this token can be used as the
-	// `ListDataSourcesRequest.page_token`
-	// to request the next page of list results.
+	// multiple-page list results, this token can be used as the
+	// `ListDataSourcesRequest.page_token` to request the next page of list
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -708,11 +674,9 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 // project.
 type ListTransferConfigsResponse struct {
 	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results,
-	// this token can be used as
-	// the
-	// `ListTransferConfigsRequest.page_token`
-	// to request the next page of list results.
+	// multiple-page list results, this token can be used as the
+	// `ListTransferConfigsRequest.page_token` to request the next page of
+	// list results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TransferConfigs: Output only. The stored pipeline transfer
@@ -749,11 +713,9 @@ func (s *ListTransferConfigsResponse) MarshalJSON() ([]byte, error) {
 // ListTransferLogsResponse: The returned list transfer run messages.
 type ListTransferLogsResponse struct {
 	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results,
-	// this token can be used as
-	// the
-	// `GetTransferRunLogRequest.page_token`
-	// to request the next page of list results.
+	// multiple-page list results, this token can be used as the
+	// `GetTransferRunLogRequest.page_token` to request the next page of
+	// list results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TransferMessages: Output only. The stored pipeline transfer messages.
@@ -790,10 +752,9 @@ func (s *ListTransferLogsResponse) MarshalJSON() ([]byte, error) {
 // project.
 type ListTransferRunsResponse struct {
 	// NextPageToken: Output only. The next-pagination token. For
-	// multiple-page list results,
-	// this token can be used as the
-	// `ListTransferRunsRequest.page_token`
-	// to request the next page of list results.
+	// multiple-page list results, this token can be used as the
+	// `ListTransferRunsRequest.page_token` to request the next page of list
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TransferRuns: Output only. The stored pipeline transfer runs.
@@ -829,13 +790,11 @@ func (s *ListTransferRunsResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -843,13 +802,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -882,32 +840,23 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // ScheduleOptions: Options customizing the data transfer schedule.
 type ScheduleOptions struct {
 	// DisableAutoScheduling: If true, automatic scheduling of data transfer
-	// runs for this configuration
-	// will be disabled. The runs can be started on ad-hoc basis
-	// using
-	// StartManualTransferRuns API. When automatic scheduling is disabled,
-	// the
-	// TransferConfig.schedule field will be ignored.
+	// runs for this configuration will be disabled. The runs can be started
+	// on ad-hoc basis using StartManualTransferRuns API. When automatic
+	// scheduling is disabled, the TransferConfig.schedule field will be
+	// ignored.
 	DisableAutoScheduling bool `json:"disableAutoScheduling,omitempty"`
 
 	// EndTime: Defines time to stop scheduling transfer runs. A transfer
-	// run cannot be
-	// scheduled at or after the end time. The end time can be changed at
-	// any
-	// moment. The time when a data transfer can be trigerred manually is
-	// not
-	// limited by this option.
+	// run cannot be scheduled at or after the end time. The end time can be
+	// changed at any moment. The time when a data transfer can be trigerred
+	// manually is not limited by this option.
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: Specifies time to start scheduling transfer runs. The
-	// first run will be
-	// scheduled at or after the start time according to a recurrence
-	// pattern
-	// defined in the schedule string. The start time can be changed at
-	// any
-	// moment. The time when a data transfer can be trigerred manually is
-	// not
-	// limited by this option.
+	// first run will be scheduled at or after the start time according to a
+	// recurrence pattern defined in the schedule string. The start time can
+	// be changed at any moment. The time when a data transfer can be
+	// trigerred manually is not limited by this option.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -939,13 +888,11 @@ func (s *ScheduleOptions) MarshalJSON() ([]byte, error) {
 // a time range.
 type ScheduleTransferRunsRequest struct {
 	// EndTime: Required. End time of the range of transfer runs. For
-	// example,
-	// "2017-05-30T00:00:00+00:00".
+	// example, "2017-05-30T00:00:00+00:00".
 	EndTime string `json:"endTime,omitempty"`
 
 	// StartTime: Required. Start time of the range of transfer runs. For
-	// example,
-	// "2017-05-25T00:00:00+00:00".
+	// example, "2017-05-25T00:00:00+00:00".
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1008,8 +955,7 @@ func (s *ScheduleTransferRunsResponse) MarshalJSON() ([]byte, error) {
 // runs.
 type StartManualTransferRunsRequest struct {
 	// RequestedRunTime: Specific run_time for a transfer run to be started.
-	// The
-	// requested_run_time must not be in the future.
+	// The requested_run_time must not be in the future.
 	RequestedRunTime string `json:"requestedRunTime,omitempty"`
 
 	// RequestedTimeRange: Time range for the transfer runs that should be
@@ -1074,32 +1020,24 @@ func (s *StartManualTransferRunsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1126,25 +1064,19 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // TimeRange: A specification for a time range, this will request
-// transfer runs with
-// run_time between start_time (inclusive) and end_time (exclusive).
+// transfer runs with run_time between start_time (inclusive) and
+// end_time (exclusive).
 type TimeRange struct {
-	// EndTime: End time of the range of transfer runs. For
-	// example,
+	// EndTime: End time of the range of transfer runs. For example,
 	// "2017-05-30T00:00:00+00:00". The end_time must not be in the
-	// future.
-	// Creates transfer runs where run_time is in the range between
-	// start_time
-	// (inclusive) and end_time (exclusive).
+	// future. Creates transfer runs where run_time is in the range between
+	// start_time (inclusive) and end_time (exclusive).
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Start time of the range of transfer runs. For
-	// example,
+	// StartTime: Start time of the range of transfer runs. For example,
 	// "2017-05-25T00:00:00+00:00". The start_time must be strictly less
-	// than
-	// the end_time. Creates transfer runs where run_time is in the
-	// range
-	// between start_time (inclusive) and end_time (exclusive).
+	// than the end_time. Creates transfer runs where run_time is in the
+	// range between start_time (inclusive) and end_time (exclusive).
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1171,26 +1103,18 @@ func (s *TimeRange) MarshalJSON() ([]byte, error) {
 }
 
 // TransferConfig: Represents a data transfer configuration. A transfer
-// configuration
-// contains all metadata needed to perform a data transfer. For
-// example,
-// `destination_dataset_id` specifies where data should be stored.
-// When a new transfer configuration is created, the
-// specified
-// `destination_dataset_id` is created when needed and shared with
-// the
-// appropriate data source service account.
+// configuration contains all metadata needed to perform a data
+// transfer. For example, `destination_dataset_id` specifies where data
+// should be stored. When a new transfer configuration is created, the
+// specified `destination_dataset_id` is created when needed and shared
+// with the appropriate data source service account.
 type TransferConfig struct {
 	// DataRefreshWindowDays: The number of days to look back to
-	// automatically refresh the data.
-	// For example, if `data_refresh_window_days = 10`, then every
-	// day
-	// BigQuery reingests data for [today-10, today-1], rather than
-	// ingesting data
-	// for just [today-1].
-	// Only valid if the data source supports the feature. Set the value to
-	// 0
-	// to use the default value.
+	// automatically refresh the data. For example, if
+	// `data_refresh_window_days = 10`, then every day BigQuery reingests
+	// data for [today-10, today-1], rather than ingesting data for just
+	// [today-1]. Only valid if the data source supports the feature. Set
+	// the value to 0 to use the default value.
 	DataRefreshWindowDays int64 `json:"dataRefreshWindowDays,omitempty"`
 
 	// DataSourceId: Data source id. Cannot be changed once data transfer is
@@ -1205,59 +1129,44 @@ type TransferConfig struct {
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
 
 	// Disabled: Is this config disabled. When set to true, no runs are
-	// scheduled
-	// for a given transfer.
+	// scheduled for a given transfer.
 	Disabled bool `json:"disabled,omitempty"`
 
 	// DisplayName: User specified display name for the data transfer.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EmailPreferences: Email notifications will be sent according to these
-	// preferences
-	// to the email address of the user who owns this transfer config.
+	// preferences to the email address of the user who owns this transfer
+	// config.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
 
-	// Name: The resource name of the transfer config.
-	// Transfer config names have the form
-	// of
-	// `projects/{project_id}/locations/{region}/transferConfigs/{config_i
-	// d}`.
-	// The name is automatically generated based on the config_id specified
-	// in
-	// CreateTransferConfigRequest along with project_id and region. If
-	// config_id
-	// is not provided, usually a uuid, even though it is not guaranteed
-	// or
-	// required, will be generated for config_id.
+	// Name: The resource name of the transfer config. Transfer config names
+	// have the form of
+	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
+	// . The name is automatically generated based on the config_id
+	// specified in CreateTransferConfigRequest along with project_id and
+	// region. If config_id is not provided, usually a uuid, even though it
+	// is not guaranteed or required, will be generated for config_id.
 	Name string `json:"name,omitempty"`
 
 	// NextRunTime: Output only. Next time when data transfer will run.
 	NextRunTime string `json:"nextRunTime,omitempty"`
 
 	// NotificationPubsubTopic: Pub/Sub topic where notifications will be
-	// sent after transfer runs
-	// associated with this transfer config finish.
+	// sent after transfer runs associated with this transfer config finish.
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// Params: Data transfer specific parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
-	// Schedule: Data transfer schedule.
-	// If the data source does not support a custom schedule, this should
-	// be
-	// empty. If it is empty, the default value for the data source will
-	// be
-	// used.
-	// The specified times are in UTC.
-	// Examples of valid format:
-	// `1st,3rd monday of month 15:30`,
-	// `every wed,fri of jan,jun 13:15`, and
-	// `first sunday of quarter 00:00`.
-	// See more explanation about the format
-	// here:
-	// https://cloud.google.com/appengine/docs/flexible/python/scheduli
-	// ng-jobs-with-cron-yaml#the_schedule_format
-	// NOTE: the granularity should be at least 8 hours, or less frequent.
+	// Schedule: Data transfer schedule. If the data source does not support
+	// a custom schedule, this should be empty. If it is empty, the default
+	// value for the data source will be used. The specified times are in
+	// UTC. Examples of valid format: `1st,3rd monday of month 15:30`,
+	// `every wed,fri of jan,jun 13:15`, and `first sunday of quarter
+	// 00:00`. See more explanation about the format here:
+	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: the granularity should be at least 8 hours, or less
+	// frequent.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleOptions: Options customizing the data transfer schedule.
@@ -1268,8 +1177,7 @@ type TransferConfig struct {
 	// Possible values:
 	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by
-	// data transfer backend.
+	// up by data transfer backend.
 	//   "RUNNING" - Data transfer is in progress.
 	//   "SUCCEEDED" - Data transfer completed successfully.
 	//   "FAILED" - Data transfer failed.
@@ -1363,55 +1271,46 @@ type TransferRun struct {
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
 
 	// EmailPreferences: Output only. Email notifications will be sent
-	// according to these
-	// preferences to the email address of the user who owns the transfer
-	// config
-	// this run was derived from.
+	// according to these preferences to the email address of the user who
+	// owns the transfer config this run was derived from.
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
 
-	// EndTime: Output only. Time when transfer run ended.
-	// Parameter ignored by server for input requests.
+	// EndTime: Output only. Time when transfer run ended. Parameter ignored
+	// by server for input requests.
 	EndTime string `json:"endTime,omitempty"`
 
 	// ErrorStatus: Status of the transfer run.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
 
-	// Name: The resource name of the transfer run.
-	// Transfer run names have the
-	// form
-	// `projects/{project_id}/locations/{location}/transferConfigs/{conf
-	// ig_id}/runs/{run_id}`.
-	// The name is ignored when creating a transfer run.
+	// Name: The resource name of the transfer run. Transfer run names have
+	// the form
+	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id
+	// }/runs/{run_id}`. The name is ignored when creating a transfer run.
 	Name string `json:"name,omitempty"`
 
 	// NotificationPubsubTopic: Output only. Pub/Sub topic where a
-	// notification will be sent after this
-	// transfer run finishes
+	// notification will be sent after this transfer run finishes
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
 
 	// Params: Output only. Data transfer specific parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// RunTime: For batch transfer runs, specifies the date and time of the
-	// data should be
-	// ingested.
+	// data should be ingested.
 	RunTime string `json:"runTime,omitempty"`
 
 	// Schedule: Output only. Describes the schedule of this transfer run if
-	// it was
-	// created as part of a regular schedule. For batch transfer runs that
-	// are
-	// scheduled manually, this is empty.
-	// NOTE: the system might choose to delay the schedule depending on
-	// the
-	// current load, so `schedule_time` doesn't always match this.
+	// it was created as part of a regular schedule. For batch transfer runs
+	// that are scheduled manually, this is empty. NOTE: the system might
+	// choose to delay the schedule depending on the current load, so
+	// `schedule_time` doesn't always match this.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleTime: Minimum time after which a transfer run can be started.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
-	// StartTime: Output only. Time when transfer run was started.
-	// Parameter ignored by server for input requests.
+	// StartTime: Output only. Time when transfer run was started. Parameter
+	// ignored by server for input requests.
 	StartTime string `json:"startTime,omitempty"`
 
 	// State: Data transfer run state. Ignored for input requests.
@@ -1419,8 +1318,7 @@ type TransferRun struct {
 	// Possible values:
 	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by
-	// data transfer backend.
+	// up by data transfer backend.
 	//   "RUNNING" - Data transfer is in progress.
 	//   "SUCCEEDED" - Data transfer completed successfully.
 	//   "FAILED" - Data transfer failed.
@@ -1474,15 +1372,11 @@ type ProjectsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and
-// requesting user.
-// Some data sources doesn't support service account, so we need to talk
-// to
-// them on behalf of the end user. This API just checks whether we have
-// OAuth
-// token for the particular user, which is a pre-requisite before user
-// can
-// create a transfer config.
+// given data source and requesting user. Some data sources doesn't
+// support service account, so we need to talk to them on behalf of the
+// end user. This API just checks whether we have OAuth token for the
+// particular user, which is a pre-requisite before user can create a
+// transfer config.
 func (r *ProjectsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsDataSourcesCheckValidCredsCall {
 	c := &ProjectsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1517,7 +1411,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1581,7 +1475,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and\nrequesting user.\nSome data sources doesn't support service account, so we need to talk to\nthem on behalf of the end user. This API just checks whether we have OAuth\ntoken for the particular user, which is a pre-requisite before user can\ncreate a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.dataSources.checkValidCreds",
@@ -1590,7 +1484,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}` or\n`projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
+	//       "description": "Required. The data source in the form: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -1625,8 +1519,7 @@ type ProjectsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its
-// settings,
+// Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
 func (r *ProjectsDataSourcesService) Get(name string) *ProjectsDataSourcesGetCall {
 	c := &ProjectsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1671,7 +1564,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1733,7 +1626,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings,\nwhich can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.get",
@@ -1742,7 +1635,7 @@ func (c *ProjectsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}` or\n`projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -1774,8 +1667,8 @@ type ProjectsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings,
-// which can be used for UI rendering.
+// List: Lists supported data sources and returns their settings, which
+// can be used for UI rendering.
 func (r *ProjectsDataSourcesService) List(parent string) *ProjectsDataSourcesListCall {
 	c := &ProjectsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1790,11 +1683,11 @@ func (c *ProjectsDataSourcesListCall) PageSize(pageSize int64) *ProjectsDataSour
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListDataSourcesRequest` list results. For multiple-page
-// results, `ListDataSourcesResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListDataSourcesRequest` list results. For multiple-page results,
+// `ListDataSourcesResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsDataSourcesListCall) PageToken(pageToken string) *ProjectsDataSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1837,7 +1730,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1899,7 +1792,7 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings,\nwhich can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
 	//   "flatPath": "v1/projects/{projectsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.dataSources.list",
@@ -1914,12 +1807,12 @@ func (c *ProjectsDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListDataSourcesRequest` list results. For multiple-page\nresults, `ListDataSourcesResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListDataSourcesRequest` list results. For multiple-page results, `ListDataSourcesResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}` or\n`projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2016,7 +1909,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2185,7 +2078,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2326,15 +2219,11 @@ type ProjectsLocationsDataSourcesCheckValidCredsCall struct {
 }
 
 // CheckValidCreds: Returns true if valid credentials exist for the
-// given data source and
-// requesting user.
-// Some data sources doesn't support service account, so we need to talk
-// to
-// them on behalf of the end user. This API just checks whether we have
-// OAuth
-// token for the particular user, which is a pre-requisite before user
-// can
-// create a transfer config.
+// given data source and requesting user. Some data sources doesn't
+// support service account, so we need to talk to them on behalf of the
+// end user. This API just checks whether we have OAuth token for the
+// particular user, which is a pre-requisite before user can create a
+// transfer config.
 func (r *ProjectsLocationsDataSourcesService) CheckValidCreds(name string, checkvalidcredsrequest *CheckValidCredsRequest) *ProjectsLocationsDataSourcesCheckValidCredsCall {
 	c := &ProjectsLocationsDataSourcesCheckValidCredsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2369,7 +2258,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2433,7 +2322,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns true if valid credentials exist for the given data source and\nrequesting user.\nSome data sources doesn't support service account, so we need to talk to\nthem on behalf of the end user. This API just checks whether we have OAuth\ntoken for the particular user, which is a pre-requisite before user can\ncreate a transfer config.",
+	//   "description": "Returns true if valid credentials exist for the given data source and requesting user. Some data sources doesn't support service account, so we need to talk to them on behalf of the end user. This API just checks whether we have OAuth token for the particular user, which is a pre-requisite before user can create a transfer config.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}:checkValidCreds",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.checkValidCreds",
@@ -2442,7 +2331,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The data source in the form:\n`projects/{project_id}/dataSources/{data_source_id}` or\n`projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
+	//       "description": "Required. The data source in the form: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -2477,8 +2366,7 @@ type ProjectsLocationsDataSourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a supported data source and returns its
-// settings,
+// Get: Retrieves a supported data source and returns its settings,
 // which can be used for UI rendering.
 func (r *ProjectsLocationsDataSourcesService) Get(name string) *ProjectsLocationsDataSourcesGetCall {
 	c := &ProjectsLocationsDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2523,7 +2411,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2585,7 +2473,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a supported data source and returns its settings,\nwhich can be used for UI rendering.",
+	//   "description": "Retrieves a supported data source and returns its settings, which can be used for UI rendering.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources/{dataSourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.get",
@@ -2594,7 +2482,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/dataSources/{data_source_id}` or\n`projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/dataSources/{data_source_id}` or `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataSources/[^/]+$",
 	//       "required": true,
@@ -2626,8 +2514,8 @@ type ProjectsLocationsDataSourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists supported data sources and returns their settings,
-// which can be used for UI rendering.
+// List: Lists supported data sources and returns their settings, which
+// can be used for UI rendering.
 func (r *ProjectsLocationsDataSourcesService) List(parent string) *ProjectsLocationsDataSourcesListCall {
 	c := &ProjectsLocationsDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2642,11 +2530,11 @@ func (c *ProjectsLocationsDataSourcesListCall) PageSize(pageSize int64) *Project
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListDataSourcesRequest` list results. For multiple-page
-// results, `ListDataSourcesResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListDataSourcesRequest` list results. For multiple-page results,
+// `ListDataSourcesResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsLocationsDataSourcesListCall) PageToken(pageToken string) *ProjectsLocationsDataSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2689,7 +2577,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2751,7 +2639,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists supported data sources and returns their settings,\nwhich can be used for UI rendering.",
+	//   "description": "Lists supported data sources and returns their settings, which can be used for UI rendering.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataSources",
 	//   "httpMethod": "GET",
 	//   "id": "bigquerydatatransfer.projects.locations.dataSources.list",
@@ -2766,12 +2654,12 @@ func (c *ProjectsLocationsDataSourcesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListDataSourcesRequest` list results. For multiple-page\nresults, `ListDataSourcesResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListDataSourcesRequest` list results. For multiple-page results, `ListDataSourcesResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources should be returned.\nMust be in the form: `projects/{project_id}` or\n`projects/{project_id}/locations/{location_id}",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned. Must be in the form: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2834,30 +2722,11 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration.
-// This is required if new credentials are needed, as indicated
-// by
-// `CheckValidCreds`.
-// In order to obtain authorization_code, please make a
-// request
-// to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=
-// <datatransferapiclientid>&scope=<data_source_scopes>&redirect_uri=<red
-// irect_uri>
-//
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given
-//   data source returned by ListDataSources method.
-// * data_source_scopes are the scopes returned by ListDataSources
-// method.
-// * redirect_uri is an optional parameter. If not specified, then
-//   authorization code is posted to the opener of authorization flow
-// window.
-//   Otherwise it will be sent to the redirect uri. A special value of
-//   urn:ietf:wg:oauth:2.0:oob means that authorization code should be
-//   returned in the title bar of the browser, with the page text
-// prompting
-//   the user to copy the code and paste it in the application.
+// configuration. This is required if new credentials are needed, as
+// indicated by `CheckValidCreds`. In order to obtain
+// authorization_code, please make a request to
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// application.
 func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
@@ -2865,28 +2734,21 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authoriza
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
 // Optional service account name. If this field is set, transfer config
-// will
-// be created with this service account credentials. It requires
-// that
-// requesting user calling this API has permissions to act as this
-// service
-// account.
+// will be created with this service account credentials. It requires
+// that requesting user calling this API has permissions to act as this
+// service account.
 func (c *ProjectsLocationsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token,
-// that is, immediately after approving access, users have to set
-// the
+// version info. If users want to find a very recent access token, that
+// is, immediately after approving access, users have to set the
 // version_info claim in the token request. To obtain the version_info,
-// users
-// must use the "none+gsession" response type. which be return
-// a
+// users must use the "none+gsession" response type. which be return a
 // version_info back in the authorization response which be be put in a
-// JWT
-// claim in the token request.
+// JWT claim in the token request.
 func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -2919,7 +2781,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2992,24 +2854,24 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration.\nThis is required if new credentials are needed, as indicated by\n`CheckValidCreds`.\nIn order to obtain authorization_code, please make a\nrequest to\nhttps://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u003cdatatransferapiclientid\u003e\u0026scope=\u003cdata_source_scopes\u003e\u0026redirect_uri=\u003credirect_uri\u003e\n\n* client_id should be OAuth client_id of BigQuery DTS API for the given\n  data source returned by ListDataSources method.\n* data_source_scopes are the scopes returned by ListDataSources method.\n* redirect_uri is an optional parameter. If not specified, then\n  authorization code is posted to the opener of authorization flow window.\n  Otherwise it will be sent to the redirect uri. A special value of\n  urn:ietf:wg:oauth:2.0:oob means that authorization code should be\n  returned in the title bar of the browser, with the page text prompting\n  the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id} or\nprojects/{project_id}. If specified location and location of the\ndestination bigquery dataset do not match - the request will fail.",
+	//       "description": "Required. The BigQuery project id where the transfer configuration should be created. Must be in the format projects/{project_id}/locations/{location_id} or projects/{project_id}. If specified location and location of the destination bigquery dataset do not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, transfer config will\nbe created with this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+	//       "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3038,8 +2900,8 @@ type ProjectsLocationsTransferConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a data transfer configuration,
-// including any associated transfer runs and logs.
+// Delete: Deletes a data transfer configuration, including any
+// associated transfer runs and logs.
 func (r *ProjectsLocationsTransferConfigsService) Delete(name string) *ProjectsLocationsTransferConfigsDeleteCall {
 	c := &ProjectsLocationsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3073,7 +2935,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3132,7 +2994,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a data transfer configuration,\nincluding any associated transfer runs and logs.",
+	//   "description": "Deletes a data transfer configuration, including any associated transfer runs and logs.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.delete",
@@ -3141,7 +3003,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3215,7 +3077,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3286,7 +3148,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3341,11 +3203,11 @@ func (c *ProjectsLocationsTransferConfigsListCall) PageSize(pageSize int64) *Pro
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransfersRequest` list results. For multiple-page
-// results, `ListTransfersResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransfersRequest` list results. For multiple-page results,
+// `ListTransfersResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsLocationsTransferConfigsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3388,7 +3250,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3471,12 +3333,12 @@ func (c *ProjectsLocationsTransferConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransfersRequest` list results. For multiple-page\nresults, `ListTransfersResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransfersRequest` list results. For multiple-page results, `ListTransfersResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}` or\n`projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3529,8 +3391,8 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a data transfer configuration.
-// All fields must be set, even if they are not updated.
+// Patch: Updates a data transfer configuration. All fields must be set,
+// even if they are not updated.
 func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsLocationsTransferConfigsPatchCall {
 	c := &ProjectsLocationsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3540,45 +3402,22 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration.
-// If it is provided, the transfer configuration will be associated with
-// the
-// authorizing user.
-// In order to obtain authorization_code, please make a
-// request
-// to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=
-// <datatransferapiclientid>&scope=<data_source_scopes>&redirect_uri=<red
-// irect_uri>
-//
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given
-//   data source returned by ListDataSources method.
-// * data_source_scopes are the scopes returned by ListDataSources
-// method.
-// * redirect_uri is an optional parameter. If not specified, then
-//   authorization code is posted to the opener of authorization flow
-// window.
-//   Otherwise it will be sent to the redirect uri. A special value of
-//   urn:ietf:wg:oauth:2.0:oob means that authorization code should be
-//   returned in the title bar of the browser, with the page text
-// prompting
-//   the user to copy the code and paste it in the application.
+// configuration. If it is provided, the transfer configuration will be
+// associated with the authorizing user. In order to obtain
+// authorization_code, please make a request to
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// application.
 func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set
-// and
-// "service_account_name" is set in update_mask, transfer config will
-// be
-// updated to use this service account credentials. It requires
-// that
+// Optional service account name. If this field is set and
+// "service_account_name" is set in update_mask, transfer config will be
+// updated to use this service account credentials. It requires that
 // requesting user calling this API has permissions to act as this
-// service
-// account.
+// service account.
 func (c *ProjectsLocationsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
@@ -3592,16 +3431,12 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token,
-// that is, immediately after approving access, users have to set
-// the
+// version info. If users want to find a very recent access token, that
+// is, immediately after approving access, users have to set the
 // version_info claim in the token request. To obtain the version_info,
-// users
-// must use the "none+gsession" response type. which be return
-// a
+// users must use the "none+gsession" response type. which be return a
 // version_info back in the authorization response which be be put in a
-// JWT
-// claim in the token request.
+// JWT claim in the token request.
 func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3634,7 +3469,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3698,7 +3533,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a data transfer configuration.\nAll fields must be set, even if they are not updated.",
+	//   "description": "Updates a data transfer configuration. All fields must be set, even if they are not updated.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.patch",
@@ -3707,19 +3542,19 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration.\nIf it is provided, the transfer configuration will be associated with the\nauthorizing user.\nIn order to obtain authorization_code, please make a\nrequest to\nhttps://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u003cdatatransferapiclientid\u003e\u0026scope=\u003cdata_source_scopes\u003e\u0026redirect_uri=\u003credirect_uri\u003e\n\n* client_id should be OAuth client_id of BigQuery DTS API for the given\n  data source returned by ListDataSources method.\n* data_source_scopes are the scopes returned by ListDataSources method.\n* redirect_uri is an optional parameter. If not specified, then\n  authorization code is posted to the opener of authorization flow window.\n  Otherwise it will be sent to the redirect uri. A special value of\n  urn:ietf:wg:oauth:2.0:oob means that authorization code should be\n  returned in the title bar of the browser, with the page text prompting\n  the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set and\n\"service_account_name\" is set in update_mask, transfer config will be\nupdated to use this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+	//       "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3730,7 +3565,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3761,13 +3596,10 @@ type ProjectsLocationsTransferConfigsScheduleRunsCall struct {
 }
 
 // ScheduleRuns: Creates transfer runs for a time range [start_time,
-// end_time].
-// For each date - or whatever granularity the data source supports - in
-// the
-// range, one transfer run is created.
-// Note that runs are created per UTC time in the time
-// range.
-// DEPRECATED: use StartManualTransferRuns instead.
+// end_time]. For each date - or whatever granularity the data source
+// supports - in the range, one transfer run is created. Note that runs
+// are created per UTC time in the time range. DEPRECATED: use
+// StartManualTransferRuns instead.
 func (r *ProjectsLocationsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsLocationsTransferConfigsScheduleRunsCall {
 	c := &ProjectsLocationsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3802,7 +3634,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3866,7 +3698,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates transfer runs for a time range [start_time, end_time].\nFor each date - or whatever granularity the data source supports - in the\nrange, one transfer run is created.\nNote that runs are created per UTC time in the time range.\nDEPRECATED: use StartManualTransferRuns instead.",
+	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.scheduleRuns",
@@ -3875,7 +3707,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3909,12 +3741,9 @@ type ProjectsLocationsTransferConfigsStartManualRunsCall struct {
 }
 
 // StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to
-// current time. The transfer runs can be created for a time range where
-// the
-// run_time is between start_time (inclusive) and end_time (exclusive),
-// or for
-// a specific run_time.
+// schedule_time equal to current time. The transfer runs can be created
+// for a time range where the run_time is between start_time (inclusive)
+// and end_time (exclusive), or for a specific run_time.
 func (r *ProjectsLocationsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsLocationsTransferConfigsStartManualRunsCall {
 	c := &ProjectsLocationsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3949,7 +3778,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4013,7 +3842,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to\ncurrent time. The transfer runs can be created for a time range where the\nrun_time is between start_time (inclusive) and end_time (exclusive), or for\na specific run_time.",
+	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to current time. The transfer runs can be created for a time range where the run_time is between start_time (inclusive) and end_time (exclusive), or for a specific run_time.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:startManualRuns",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.locations.transferConfigs.startManualRuns",
@@ -4022,7 +3851,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -4088,7 +3917,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4156,7 +3985,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4230,7 +4059,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4301,7 +4130,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4348,11 +4177,11 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) PageSize(pageSize int64) 
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransferRunsRequest` list results. For multiple-page
-// results, `ListTransferRunsResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransferRunsRequest` list results. For multiple-page results,
+// `ListTransferRunsResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4362,8 +4191,8 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) PageToken(pageToken strin
 // run attempts are to be pulled.
 //
 // Possible values:
-//   "RUN_ATTEMPT_UNSPECIFIED"
-//   "LATEST"
+//   "RUN_ATTEMPT_UNSPECIFIED" - All runs should be returned.
+//   "LATEST" - Only latest run per day should be returned.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.Set("runAttempt", runAttempt)
 	return c
@@ -4373,12 +4202,13 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) RunAttempt(runAttempt str
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED"
-//   "PENDING"
-//   "RUNNING"
-//   "SUCCEEDED"
-//   "FAILED"
-//   "CANCELLED"
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "PENDING" - Data transfer is scheduled and is waiting to be picked
+// up by data transfer backend.
+//   "RUNNING" - Data transfer is in progress.
+//   "SUCCEEDED" - Data transfer completed successfully.
+//   "FAILED" - Data transfer failed.
+//   "CANCELLED" - Data transfer is cancelled.
 func (c *ProjectsLocationsTransferConfigsRunsListCall) States(states ...string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -4421,7 +4251,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4498,12 +4328,12 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransferRunsRequest` list results. For multiple-page\nresults, `ListTransferRunsResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferRunsRequest` list results. For multiple-page results, `ListTransferRunsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved. Format of transfer configuration resource name is: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -4514,6 +4344,10 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//       "enum": [
 	//         "RUN_ATTEMPT_UNSPECIFIED",
 	//         "LATEST"
+	//       ],
+	//       "enumDescriptions": [
+	//         "All runs should be returned.",
+	//         "Only latest run per day should be returned."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -4527,6 +4361,14 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//         "SUCCEEDED",
 	//         "FAILED",
 	//         "CANCELLED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "State placeholder.",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
+	//         "Data transfer is in progress.",
+	//         "Data transfer completed successfully.",
+	//         "Data transfer failed.",
+	//         "Data transfer is cancelled."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4587,14 +4429,14 @@ func (r *ProjectsLocationsTransferConfigsRunsTransferLogsService) List(parent st
 }
 
 // MessageTypes sets the optional parameter "messageTypes": Message
-// types to return. If not populated - INFO, WARNING and ERROR
-// messages are returned.
+// types to return. If not populated - INFO, WARNING and ERROR messages
+// are returned.
 //
 // Possible values:
-//   "MESSAGE_SEVERITY_UNSPECIFIED"
-//   "INFO"
-//   "WARNING"
-//   "ERROR"
+//   "MESSAGE_SEVERITY_UNSPECIFIED" - No severity specified.
+//   "INFO" - Informational message.
+//   "WARNING" - Warning message.
+//   "ERROR" - Error message.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) MessageTypes(messageTypes ...string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.SetMulti("messageTypes", append([]string{}, messageTypes...))
 	return c
@@ -4608,11 +4450,11 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) PageSize(page
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransferLogsRequest` list results. For multiple-page
-// results, `ListTransferLogsResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransferLogsRequest` list results. For multiple-page results,
+// `ListTransferLogsResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) PageToken(pageToken string) *ProjectsLocationsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4655,7 +4497,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4726,12 +4568,18 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "messageTypes": {
-	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR\nmessages are returned.",
+	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR messages are returned.",
 	//       "enum": [
 	//         "MESSAGE_SEVERITY_UNSPECIFIED",
 	//         "INFO",
 	//         "WARNING",
 	//         "ERROR"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No severity specified.",
+	//         "Informational message.",
+	//         "Warning message.",
+	//         "Error message."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4744,12 +4592,12 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Do(opts ...go
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransferLogsRequest` list results. For multiple-page\nresults, `ListTransferLogsResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferLogsRequest` list results. For multiple-page results, `ListTransferLogsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. Transfer run name in the form: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -4812,30 +4660,11 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration.
-// This is required if new credentials are needed, as indicated
-// by
-// `CheckValidCreds`.
-// In order to obtain authorization_code, please make a
-// request
-// to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=
-// <datatransferapiclientid>&scope=<data_source_scopes>&redirect_uri=<red
-// irect_uri>
-//
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given
-//   data source returned by ListDataSources method.
-// * data_source_scopes are the scopes returned by ListDataSources
-// method.
-// * redirect_uri is an optional parameter. If not specified, then
-//   authorization code is posted to the opener of authorization flow
-// window.
-//   Otherwise it will be sent to the redirect uri. A special value of
-//   urn:ietf:wg:oauth:2.0:oob means that authorization code should be
-//   returned in the title bar of the browser, with the page text
-// prompting
-//   the user to copy the code and paste it in the application.
+// configuration. This is required if new credentials are needed, as
+// indicated by `CheckValidCreds`. In order to obtain
+// authorization_code, please make a request to
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// application.
 func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
@@ -4843,28 +4672,21 @@ func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode 
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
 // Optional service account name. If this field is set, transfer config
-// will
-// be created with this service account credentials. It requires
-// that
-// requesting user calling this API has permissions to act as this
-// service
-// account.
+// will be created with this service account credentials. It requires
+// that requesting user calling this API has permissions to act as this
+// service account.
 func (c *ProjectsTransferConfigsCreateCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token,
-// that is, immediately after approving access, users have to set
-// the
+// version info. If users want to find a very recent access token, that
+// is, immediately after approving access, users have to set the
 // version_info claim in the token request. To obtain the version_info,
-// users
-// must use the "none+gsession" response type. which be return
-// a
+// users must use the "none+gsession" response type. which be return a
 // version_info back in the authorization response which be be put in a
-// JWT
-// claim in the token request.
+// JWT claim in the token request.
 func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -4897,7 +4719,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4970,24 +4792,24 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration.\nThis is required if new credentials are needed, as indicated by\n`CheckValidCreds`.\nIn order to obtain authorization_code, please make a\nrequest to\nhttps://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u003cdatatransferapiclientid\u003e\u0026scope=\u003cdata_source_scopes\u003e\u0026redirect_uri=\u003credirect_uri\u003e\n\n* client_id should be OAuth client_id of BigQuery DTS API for the given\n  data source returned by ListDataSources method.\n* data_source_scopes are the scopes returned by ListDataSources method.\n* redirect_uri is an optional parameter. If not specified, then\n  authorization code is posted to the opener of authorization flow window.\n  Otherwise it will be sent to the redirect uri. A special value of\n  urn:ietf:wg:oauth:2.0:oob means that authorization code should be\n  returned in the title bar of the browser, with the page text prompting\n  the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required if new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id where the transfer configuration should be created.\nMust be in the format projects/{project_id}/locations/{location_id} or\nprojects/{project_id}. If specified location and location of the\ndestination bigquery dataset do not match - the request will fail.",
+	//       "description": "Required. The BigQuery project id where the transfer configuration should be created. Must be in the format projects/{project_id}/locations/{location_id} or projects/{project_id}. If specified location and location of the destination bigquery dataset do not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set, transfer config will\nbe created with this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+	//       "description": "Optional service account name. If this field is set, transfer config will be created with this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5016,8 +4838,8 @@ type ProjectsTransferConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a data transfer configuration,
-// including any associated transfer runs and logs.
+// Delete: Deletes a data transfer configuration, including any
+// associated transfer runs and logs.
 func (r *ProjectsTransferConfigsService) Delete(name string) *ProjectsTransferConfigsDeleteCall {
 	c := &ProjectsTransferConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5051,7 +4873,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5110,7 +4932,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a data transfer configuration,\nincluding any associated transfer runs and logs.",
+	//   "description": "Deletes a data transfer configuration, including any associated transfer runs and logs.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.delete",
@@ -5119,7 +4941,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5193,7 +5015,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5264,7 +5086,7 @@ func (c *ProjectsTransferConfigsGetCall) Do(opts ...googleapi.CallOption) (*Tran
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5319,11 +5141,11 @@ func (c *ProjectsTransferConfigsListCall) PageSize(pageSize int64) *ProjectsTran
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransfersRequest` list results. For multiple-page
-// results, `ListTransfersResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransfersRequest` list results. For multiple-page results,
+// `ListTransfersResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsTransferConfigsListCall) PageToken(pageToken string) *ProjectsTransferConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5366,7 +5188,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5449,12 +5271,12 @@ func (c *ProjectsTransferConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransfersRequest` list results. For multiple-page\nresults, `ListTransfersResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransfersRequest` list results. For multiple-page results, `ListTransfersResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The BigQuery project id for which data sources\nshould be returned: `projects/{project_id}` or\n`projects/{project_id}/locations/{location_id}`",
+	//       "description": "Required. The BigQuery project id for which data sources should be returned: `projects/{project_id}` or `projects/{project_id}/locations/{location_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5507,8 +5329,8 @@ type ProjectsTransferConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a data transfer configuration.
-// All fields must be set, even if they are not updated.
+// Patch: Updates a data transfer configuration. All fields must be set,
+// even if they are not updated.
 func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *TransferConfig) *ProjectsTransferConfigsPatchCall {
 	c := &ProjectsTransferConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5518,45 +5340,22 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 
 // AuthorizationCode sets the optional parameter "authorizationCode":
 // Optional OAuth2 authorization code to use with this transfer
-// configuration.
-// If it is provided, the transfer configuration will be associated with
-// the
-// authorizing user.
-// In order to obtain authorization_code, please make a
-// request
-// to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=
-// <datatransferapiclientid>&scope=<data_source_scopes>&redirect_uri=<red
-// irect_uri>
-//
-// * client_id should be OAuth client_id of BigQuery DTS API for the
-// given
-//   data source returned by ListDataSources method.
-// * data_source_scopes are the scopes returned by ListDataSources
-// method.
-// * redirect_uri is an optional parameter. If not specified, then
-//   authorization code is posted to the opener of authorization flow
-// window.
-//   Otherwise it will be sent to the redirect uri. A special value of
-//   urn:ietf:wg:oauth:2.0:oob means that authorization code should be
-//   returned in the title bar of the browser, with the page text
-// prompting
-//   the user to copy the code and paste it in the application.
+// configuration. If it is provided, the transfer configuration will be
+// associated with the authorizing user. In order to obtain
+// authorization_code, please make a request to
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// application.
 func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
 	return c
 }
 
 // ServiceAccountName sets the optional parameter "serviceAccountName":
-// Optional service account name. If this field is set
-// and
-// "service_account_name" is set in update_mask, transfer config will
-// be
-// updated to use this service account credentials. It requires
-// that
+// Optional service account name. If this field is set and
+// "service_account_name" is set in update_mask, transfer config will be
+// updated to use this service account credentials. It requires that
 // requesting user calling this API has permissions to act as this
-// service
-// account.
+// service account.
 func (c *ProjectsTransferConfigsPatchCall) ServiceAccountName(serviceAccountName string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("serviceAccountName", serviceAccountName)
 	return c
@@ -5570,16 +5369,12 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 }
 
 // VersionInfo sets the optional parameter "versionInfo": Optional
-// version info. If users want to find a very recent access token,
-// that is, immediately after approving access, users have to set
-// the
+// version info. If users want to find a very recent access token, that
+// is, immediately after approving access, users have to set the
 // version_info claim in the token request. To obtain the version_info,
-// users
-// must use the "none+gsession" response type. which be return
-// a
+// users must use the "none+gsession" response type. which be return a
 // version_info back in the authorization response which be be put in a
-// JWT
-// claim in the token request.
+// JWT claim in the token request.
 func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5612,7 +5407,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5676,7 +5471,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a data transfer configuration.\nAll fields must be set, even if they are not updated.",
+	//   "description": "Updates a data transfer configuration. All fields must be set, even if they are not updated.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.patch",
@@ -5685,19 +5480,19 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration.\nIf it is provided, the transfer configuration will be associated with the\nauthorizing user.\nIn order to obtain authorization_code, please make a\nrequest to\nhttps://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u003cdatatransferapiclientid\u003e\u0026scope=\u003cdata_source_scopes\u003e\u0026redirect_uri=\u003credirect_uri\u003e\n\n* client_id should be OAuth client_id of BigQuery DTS API for the given\n  data source returned by ListDataSources method.\n* data_source_scopes are the scopes returned by ListDataSources method.\n* redirect_uri is an optional parameter. If not specified, then\n  authorization code is posted to the opener of authorization flow window.\n  Otherwise it will be sent to the redirect uri. A special value of\n  urn:ietf:wg:oauth:2.0:oob means that authorization code should be\n  returned in the title bar of the browser, with the page text prompting\n  the user to copy the code and paste it in the application.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. If it is provided, the transfer configuration will be associated with the authorizing user. In order to obtain authorization_code, please make a request to https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=\u0026scope=\u0026redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceAccountName": {
-	//       "description": "Optional service account name. If this field is set and\n\"service_account_name\" is set in update_mask, transfer config will be\nupdated to use this service account credentials. It requires that\nrequesting user calling this API has permissions to act as this service\naccount.",
+	//       "description": "Optional service account name. If this field is set and \"service_account_name\" is set in update_mask, transfer config will be updated to use this service account credentials. It requires that requesting user calling this API has permissions to act as this service account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5708,7 +5503,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the \"none+gsession\" response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "description": "Optional version info. If users want to find a very recent access token, that is, immediately after approving access, users have to set the version_info claim in the token request. To obtain the version_info, users must use the \"none+gsession\" response type. which be return a version_info back in the authorization response which be be put in a JWT claim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5739,13 +5534,10 @@ type ProjectsTransferConfigsScheduleRunsCall struct {
 }
 
 // ScheduleRuns: Creates transfer runs for a time range [start_time,
-// end_time].
-// For each date - or whatever granularity the data source supports - in
-// the
-// range, one transfer run is created.
-// Note that runs are created per UTC time in the time
-// range.
-// DEPRECATED: use StartManualTransferRuns instead.
+// end_time]. For each date - or whatever granularity the data source
+// supports - in the range, one transfer run is created. Note that runs
+// are created per UTC time in the time range. DEPRECATED: use
+// StartManualTransferRuns instead.
 func (r *ProjectsTransferConfigsService) ScheduleRuns(parent string, scheduletransferrunsrequest *ScheduleTransferRunsRequest) *ProjectsTransferConfigsScheduleRunsCall {
 	c := &ProjectsTransferConfigsScheduleRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5780,7 +5572,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5844,7 +5636,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates transfer runs for a time range [start_time, end_time].\nFor each date - or whatever granularity the data source supports - in the\nrange, one transfer run is created.\nNote that runs are created per UTC time in the time range.\nDEPRECATED: use StartManualTransferRuns instead.",
+	//   "description": "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.scheduleRuns",
@@ -5853,7 +5645,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5887,12 +5679,9 @@ type ProjectsTransferConfigsStartManualRunsCall struct {
 }
 
 // StartManualRuns: Start manual transfer runs to be executed now with
-// schedule_time equal to
-// current time. The transfer runs can be created for a time range where
-// the
-// run_time is between start_time (inclusive) and end_time (exclusive),
-// or for
-// a specific run_time.
+// schedule_time equal to current time. The transfer runs can be created
+// for a time range where the run_time is between start_time (inclusive)
+// and end_time (exclusive), or for a specific run_time.
 func (r *ProjectsTransferConfigsService) StartManualRuns(parent string, startmanualtransferrunsrequest *StartManualTransferRunsRequest) *ProjectsTransferConfigsStartManualRunsCall {
 	c := &ProjectsTransferConfigsStartManualRunsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5927,7 +5716,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5991,7 +5780,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to\ncurrent time. The transfer runs can be created for a time range where the\nrun_time is between start_time (inclusive) and end_time (exclusive), or for\na specific run_time.",
+	//   "description": "Start manual transfer runs to be executed now with schedule_time equal to current time. The transfer runs can be created for a time range where the run_time is between start_time (inclusive) and end_time (exclusive), or for a specific run_time.",
 	//   "flatPath": "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:startManualRuns",
 	//   "httpMethod": "POST",
 	//   "id": "bigquerydatatransfer.projects.transferConfigs.startManualRuns",
@@ -6000,7 +5789,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -6066,7 +5855,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6134,7 +5923,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -6208,7 +5997,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6279,7 +6068,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The field will contain name of the resource requested, for example:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. The field will contain name of the resource requested, for example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,
@@ -6326,11 +6115,11 @@ func (c *ProjectsTransferConfigsRunsListCall) PageSize(pageSize int64) *Projects
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransferRunsRequest` list results. For multiple-page
-// results, `ListTransferRunsResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransferRunsRequest` list results. For multiple-page results,
+// `ListTransferRunsResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsTransferConfigsRunsListCall) PageToken(pageToken string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6340,8 +6129,8 @@ func (c *ProjectsTransferConfigsRunsListCall) PageToken(pageToken string) *Proje
 // run attempts are to be pulled.
 //
 // Possible values:
-//   "RUN_ATTEMPT_UNSPECIFIED"
-//   "LATEST"
+//   "RUN_ATTEMPT_UNSPECIFIED" - All runs should be returned.
+//   "LATEST" - Only latest run per day should be returned.
 func (c *ProjectsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.Set("runAttempt", runAttempt)
 	return c
@@ -6351,12 +6140,13 @@ func (c *ProjectsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *Pro
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED"
-//   "PENDING"
-//   "RUNNING"
-//   "SUCCEEDED"
-//   "FAILED"
-//   "CANCELLED"
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "PENDING" - Data transfer is scheduled and is waiting to be picked
+// up by data transfer backend.
+//   "RUNNING" - Data transfer is in progress.
+//   "SUCCEEDED" - Data transfer completed successfully.
+//   "FAILED" - Data transfer failed.
+//   "CANCELLED" - Data transfer is cancelled.
 func (c *ProjectsTransferConfigsRunsListCall) States(states ...string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -6399,7 +6189,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6476,12 +6266,12 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransferRunsRequest` list results. For multiple-page\nresults, `ListTransferRunsResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferRunsRequest` list results. For multiple-page results, `ListTransferRunsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved.\nFormat of transfer configuration resource name is:\n`projects/{project_id}/transferConfigs/{config_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Name of transfer configuration for which transfer runs should be retrieved. Format of transfer configuration resource name is: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -6492,6 +6282,10 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//       "enum": [
 	//         "RUN_ATTEMPT_UNSPECIFIED",
 	//         "LATEST"
+	//       ],
+	//       "enumDescriptions": [
+	//         "All runs should be returned.",
+	//         "Only latest run per day should be returned."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6505,6 +6299,14 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//         "SUCCEEDED",
 	//         "FAILED",
 	//         "CANCELLED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "State placeholder.",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
+	//         "Data transfer is in progress.",
+	//         "Data transfer completed successfully.",
+	//         "Data transfer failed.",
+	//         "Data transfer is cancelled."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6565,14 +6367,14 @@ func (r *ProjectsTransferConfigsRunsTransferLogsService) List(parent string) *Pr
 }
 
 // MessageTypes sets the optional parameter "messageTypes": Message
-// types to return. If not populated - INFO, WARNING and ERROR
-// messages are returned.
+// types to return. If not populated - INFO, WARNING and ERROR messages
+// are returned.
 //
 // Possible values:
-//   "MESSAGE_SEVERITY_UNSPECIFIED"
-//   "INFO"
-//   "WARNING"
-//   "ERROR"
+//   "MESSAGE_SEVERITY_UNSPECIFIED" - No severity specified.
+//   "INFO" - Informational message.
+//   "WARNING" - Warning message.
+//   "ERROR" - Error message.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) MessageTypes(messageTypes ...string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.SetMulti("messageTypes", append([]string{}, messageTypes...))
 	return c
@@ -6586,11 +6388,11 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) PageSize(pageSize int6
 }
 
 // PageToken sets the optional parameter "pageToken": Pagination token,
-// which can be used to request a specific page
-// of `ListTransferLogsRequest` list results. For multiple-page
-// results, `ListTransferLogsResponse` outputs
-// a `next_page` token, which can be used as the
-// `page_token` value to request the next page of list results.
+// which can be used to request a specific page of
+// `ListTransferLogsRequest` list results. For multiple-page results,
+// `ListTransferLogsResponse` outputs a `next_page` token, which can be
+// used as the `page_token` value to request the next page of list
+// results.
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) PageToken(pageToken string) *ProjectsTransferConfigsRunsTransferLogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6633,7 +6435,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6704,12 +6506,18 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "messageTypes": {
-	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR\nmessages are returned.",
+	//       "description": "Message types to return. If not populated - INFO, WARNING and ERROR messages are returned.",
 	//       "enum": [
 	//         "MESSAGE_SEVERITY_UNSPECIFIED",
 	//         "INFO",
 	//         "WARNING",
 	//         "ERROR"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No severity specified.",
+	//         "Informational message.",
+	//         "Warning message.",
+	//         "Error message."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6722,12 +6530,12 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Do(opts ...googleapi.C
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Pagination token, which can be used to request a specific page\nof `ListTransferLogsRequest` list results. For multiple-page\nresults, `ListTransferLogsResponse` outputs\na `next_page` token, which can be used as the\n`page_token` value to request the next page of list results.",
+	//       "description": "Pagination token, which can be used to request a specific page of `ListTransferLogsRequest` list results. For multiple-page results, `ListTransferLogsResponse` outputs a `next_page` token, which can be used as the `page_token` value to request the next page of list results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Transfer run name in the form:\n`projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or\n`projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
+	//       "description": "Required. Transfer run name in the form: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+/runs/[^/]+$",
 	//       "required": true,

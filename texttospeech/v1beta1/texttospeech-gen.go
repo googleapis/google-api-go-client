@@ -176,6 +176,9 @@ type AudioConfig struct {
 	// Chrome and Firefox). The quality of the encoding is considerably
 	// higher
 	// than MP3 while using approximately the same bitrate.
+	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
+	// G.711 PCMU/mu-law.
+	// Audio content returned as MULAW also contains a WAV header.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
 	// EffectsProfileId: Optional. Input only. An identifier which selects
@@ -361,6 +364,16 @@ type SynthesizeSpeechRequest struct {
 	// AudioConfig: Required. The configuration of the synthesized audio.
 	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
 
+	// EnableTimePointing: Whether and what timepoints are returned in the
+	// response.
+	//
+	// Possible values:
+	//   "TIMEPOINT_TYPE_UNSPECIFIED" - Not specified. No timepoint
+	// information will be returned.
+	//   "SSML_MARK" - Timepoint information of <mark> tags in SSML input
+	// will be returned.
+	EnableTimePointing []string `json:"enableTimePointing,omitempty"`
+
 	// Input: Required. The Synthesizer requires either plain text or SSML
 	// as input.
 	Input *SynthesisInput `json:"input,omitempty"`
@@ -394,6 +407,9 @@ func (s *SynthesizeSpeechRequest) MarshalJSON() ([]byte, error) {
 // SynthesizeSpeechResponse: The message returned to the client by the
 // `SynthesizeSpeech` method.
 type SynthesizeSpeechResponse struct {
+	// AudioConfig: The audio metadata of `audio_content`.
+	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
+
 	// AudioContent: The audio data bytes encoded as specified in the
 	// request, including the
 	// header for encodings that are wrapped in containers (e.g. MP3,
@@ -404,11 +420,17 @@ type SynthesizeSpeechResponse struct {
 	// whereas JSON representations use base64.
 	AudioContent string `json:"audioContent,omitempty"`
 
+	// Timepoints: A link between a position in the original request input
+	// and a corresponding
+	// time in the output audio. It's only supported via <mark> of SSML
+	// input.
+	Timepoints []*Timepoint `json:"timepoints,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AudioContent") to
+	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -416,7 +438,7 @@ type SynthesizeSpeechResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AudioContent") to include
+	// NullFields is a list of field names (e.g. "AudioConfig") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -429,6 +451,55 @@ func (s *SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesizeSpeechResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Timepoint: This contains a mapping between a certain point in the
+// input text and a
+// corresponding time in the output audio.
+type Timepoint struct {
+	// MarkName: Timepoint name as received from the client within <mark>
+	// tag.
+	MarkName string `json:"markName,omitempty"`
+
+	// TimeSeconds: Time offset in seconds from the start of the synthesized
+	// audio.
+	TimeSeconds float64 `json:"timeSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MarkName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MarkName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Timepoint) MarshalJSON() ([]byte, error) {
+	type NoMethod Timepoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Timepoint) UnmarshalJSON(data []byte) error {
+	type NoMethod Timepoint
+	var s1 struct {
+		TimeSeconds gensupport.JSONFloat64 `json:"timeSeconds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TimeSeconds = float64(s1.TimeSeconds)
+	return nil
 }
 
 // Voice: Description of a voice supported by the TTS service.
@@ -613,7 +684,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -767,7 +838,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

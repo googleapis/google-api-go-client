@@ -169,17 +169,11 @@ type ProjectsTraceSinksService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -189,10 +183,9 @@ type Empty struct {
 // ListTraceSinksResponse: Result returned from `ListTraceSinks`.
 type ListTraceSinksResponse struct {
 	// NextPageToken: If there might be more results than appear in this
-	// response, then
-	// `nextPageToken` is included.  To get the next set of results, call
-	// the same
-	// method again using the value of `nextPageToken` as `pageToken`.
+	// response, then `nextPageToken` is included. To get the next set of
+	// results, call the same method again using the value of
+	// `nextPageToken` as `pageToken`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Sinks: A list of sinks.
@@ -229,10 +222,7 @@ func (s *ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 // data.
 type OutputConfig struct {
 	// Destination: The destination for writing trace data. Currently only
-	// BigQuery is
-	// supported. E.g.:
-	//
-	//
+	// BigQuery is supported. E.g.:
 	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	Destination string `json:"destination,omitempty"`
 
@@ -260,23 +250,14 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 }
 
 // TraceSink: Describes a sink used to export traces to a BigQuery
-// dataset. The sink must
-// be created within a project.
+// dataset. The sink must be created within a project.
 type TraceSink struct {
 	// Name: Required. The canonical sink resource name, unique within the
-	// project. Must be of the
-	// form:
-	//
-	//   project/[PROJECT_NUMBER]/traceSinks/[SINK_ID].
-	//
-	// E.g.:
-	//
-	//   "projects/12345/traceSinks/my-project-trace-sink".
-	//
-	// Sink identifiers are limited to 256 characters and can include only
-	// the
-	// following characters: upper and lower-case alphanumeric
-	// characters,
+	// project. Must be of the form:
+	// project/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
+	// "projects/12345/traceSinks/my-project-trace-sink". Sink identifiers
+	// are limited to 256 characters and can include only the following
+	// characters: upper and lower-case alphanumeric characters,
 	// underscores, hyphens, and periods.
 	Name string `json:"name,omitempty"`
 
@@ -284,24 +265,15 @@ type TraceSink struct {
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
 
 	// WriterIdentity: Output only. A service account name for exporting the
-	// data. This field is
-	// set by sinks.create and sinks.update. The service account will need
-	// to be
-	// granted write access to the destination specified in the
-	// output
-	// configuration, see [Granting access for
-	// a
-	// resource](/iam/docs/granting-roles-to-service-accounts#granting_acce
-	// ss_to_a_service_account_for_a_resource).
-	// To create tables and write data this account will need the dataEditor
-	// role.
-	// Read more about roles in the
-	// [BigQuery
-	// documentation](https://cloud.google.com/bigquery/docs/access
-	// -control).
-	// E.g.:
-	//
-	//    "service-00000001@00000002.iam.gserviceaccount.com"
+	// data. This field is set by sinks.create and sinks.update. The service
+	// account will need to be granted write access to the destination
+	// specified in the output configuration, see [Granting access for a
+	// resource](/iam/docs/granting-roles-to-service-accounts#granting_access
+	// _to_a_service_account_for_a_resource). To create tables and write
+	// data this account will need the dataEditor role. Read more about
+	// roles in the [BigQuery
+	// documentation](https://cloud.google.com/bigquery/docs/access-control).
+	//  E.g.: "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -342,13 +314,11 @@ type ProjectsTraceSinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a sink that exports trace spans to a destination.
-// The
-// export of newly-ingested traces begins immediately, unless the
-// sink's
-// `writer_identity` is not permitted to write to the destination.  A
-// sink can
-// export traces only from the resource owning the sink (the 'parent').
+// Create: Creates a sink that exports trace spans to a destination. The
+// export of newly-ingested traces begins immediately, unless the sink's
+// `writer_identity` is not permitted to write to the destination. A
+// sink can export traces only from the resource owning the sink (the
+// 'parent').
 func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) *ProjectsTraceSinksCreateCall {
 	c := &ProjectsTraceSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -383,7 +353,7 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -447,7 +417,7 @@ func (c *ProjectsTraceSinksCreateCall) Do(opts ...googleapi.CallOption) (*TraceS
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a sink that exports trace spans to a destination.  The\nexport of newly-ingested traces begins immediately, unless the sink's\n`writer_identity` is not permitted to write to the destination.  A sink can\nexport traces only from the resource owning the sink (the 'parent').",
+	//   "description": "Creates a sink that exports trace spans to a destination. The export of newly-ingested traces begins immediately, unless the sink's `writer_identity` is not permitted to write to the destination. A sink can export traces only from the resource owning the sink (the 'parent').",
 	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traceSinks.create",
@@ -456,7 +426,7 @@ func (c *ProjectsTraceSinksCreateCall) Do(opts ...googleapi.CallOption) (*TraceS
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource in which to create the sink (currently only project\nsinks are supported):\n\n    \"projects/[PROJECT_ID]\"\n\nExamples: `\"projects/my-trace-project\"`, `\"projects/123456789\"`.",
+	//       "description": "Required. The resource in which to create the sink (currently only project sinks are supported): \"projects/[PROJECT_ID]\" Examples: `\"projects/my-trace-project\"`, `\"projects/123456789\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -522,7 +492,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -590,7 +560,7 @@ func (c *ProjectsTraceSinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the sink to delete, including the\nparent resource and the sink identifier:\n\n    \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\"\n\nExample: `\"projects/12345/traceSinks/my-sink-id\"`.",
+	//       "description": "Required. The full resource name of the sink to delete, including the parent resource and the sink identifier: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
 	//       "required": true,
@@ -665,7 +635,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -736,7 +706,7 @@ func (c *ProjectsTraceSinksGetCall) Do(opts ...googleapi.CallOption) (*TraceSink
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the sink:\n\n    \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\"\n\nExample: `\"projects/12345/traceSinks/my-sink-id\"`.",
+	//       "description": "Required. The resource name of the sink: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
 	//       "required": true,
@@ -774,22 +744,19 @@ func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListC
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return from this request.
-// Non-positive values are ignored.  The presence of `nextPageToken` in
-// the
-// response indicates that more results might be available.
+// of results to return from this request. Non-positive values are
+// ignored. The presence of `nextPageToken` in the response indicates
+// that more results might be available.
 func (c *ProjectsTraceSinksListCall) PageSize(pageSize int64) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If present, then
-// retrieve the next batch of results from the
-// preceding call to this method.  `pageToken` must be the value
-// of
-// `nextPageToken` from the previous response.  The values of other
-// method
-// parameters should be identical to those in the previous call.
+// retrieve the next batch of results from the preceding call to this
+// method. `pageToken` must be the value of `nextPageToken` from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
 func (c *ProjectsTraceSinksListCall) PageToken(pageToken string) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -832,7 +799,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -903,18 +870,18 @@ func (c *ProjectsTraceSinksListCall) Do(opts ...googleapi.CallOption) (*ListTrac
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request.\nNon-positive values are ignored.  The presence of `nextPageToken` in the\nresponse indicates that more results might be available.",
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of `nextPageToken` in the response indicates that more results might be available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. If present, then retrieve the next batch of results from the\npreceding call to this method.  `pageToken` must be the value of\n`nextPageToken` from the previous response.  The values of other method\nparameters should be identical to those in the previous call.",
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. `pageToken` must be the value of `nextPageToken` from the previous response. The values of other method parameters should be identical to those in the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource whose sinks are to be listed (currently only\nproject parent resources are supported):\n\n    \"projects/[PROJECT_ID]\"",
+	//       "description": "Required. The parent resource whose sinks are to be listed (currently only project parent resources are supported): \"projects/[PROJECT_ID]\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -965,11 +932,9 @@ type ProjectsTraceSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink.  This method updates fields in the existing
-// sink according
-// to the provided update mask. The sink's name cannot be changed nor
-// any
-// output-only fields (e.g. the writer_identity).
+// Patch: Updates a sink. This method updates fields in the existing
+// sink according to the provided update mask. The sink's name cannot be
+// changed nor any output-only fields (e.g. the writer_identity).
 func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *ProjectsTraceSinksPatchCall {
 	c := &ProjectsTraceSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -978,19 +943,13 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field
-// mask that specifies the fields in `trace_sink` that are to
-// be updated. A sink field is overwritten if, and only if, it is
-// in the update mask.  `name` and `writer_identity` fields cannot be
-// updated.
-//
-// An empty updateMask is considered an error.
-//
-// For a detailed `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
-//
-// Example: `updateMask=output_config`.
+// mask that specifies the fields in `trace_sink` that are to be
+// updated. A sink field is overwritten if, and only if, it is in the
+// update mask. `name` and `writer_identity` fields cannot be updated.
+// An empty updateMask is considered an error. For a detailed
+// `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example:
+// `updateMask=output_config`.
 func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTraceSinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1023,7 +982,7 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1087,7 +1046,7 @@ func (c *ProjectsTraceSinksPatchCall) Do(opts ...googleapi.CallOption) (*TraceSi
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink.  This method updates fields in the existing sink according\nto the provided update mask. The sink's name cannot be changed nor any\noutput-only fields (e.g. the writer_identity).",
+	//   "description": "Updates a sink. This method updates fields in the existing sink according to the provided update mask. The sink's name cannot be changed nor any output-only fields (e.g. the writer_identity).",
 	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks/{traceSinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtrace.projects.traceSinks.patch",
@@ -1096,14 +1055,14 @@ func (c *ProjectsTraceSinksPatchCall) Do(opts ...googleapi.CallOption) (*TraceSi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full resource name of the sink to update, including the\nparent resource and the sink identifier:\n\n    \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\"\n\nExample: `\"projects/12345/traceSinks/my-sink-id\"`.",
+	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask that specifies the fields in `trace_sink` that are to\nbe updated. A sink field is overwritten if, and only if, it is\nin the update mask.  `name` and `writer_identity` fields cannot be updated.\n\nAn empty updateMask is considered an error.\n\nFor a detailed `FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\n\nExample: `updateMask=output_config`.",
+	//       "description": "Required. Field mask that specifies the fields in `trace_sink` that are to be updated. A sink field is overwritten if, and only if, it is in the update mask. `name` and `writer_identity` fields cannot be updated. An empty updateMask is considered an error. For a detailed `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example: `updateMask=output_config`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

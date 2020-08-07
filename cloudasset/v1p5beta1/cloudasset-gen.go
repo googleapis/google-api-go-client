@@ -1632,7 +1632,12 @@ func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON
 type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	// AllowedServices: The list of APIs usable within the Service
 	// Perimeter. Must be empty
-	// unless 'enable_restriction' is True.
+	// unless 'enable_restriction' is True. You can specify a list of
+	// individual
+	// services, as well as include the 'RESTRICTED-SERVICES' value,
+	// which
+	// automatically includes all of the services protected by the
+	// perimeter.
 	AllowedServices []string `json:"allowedServices,omitempty"`
 
 	// EnableRestriction: Whether to restrict API calls within the Service
@@ -2103,7 +2108,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

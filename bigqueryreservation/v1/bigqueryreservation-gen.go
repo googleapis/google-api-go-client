@@ -212,11 +212,10 @@ type ProjectsLocationsReservationsAssignmentsService struct {
 	s *Service
 }
 
-// Assignment: A Assignment allows a project to submit jobs
-// of a certain type using slots from the specified reservation.
+// Assignment: A Assignment allows a project to submit jobs of a certain
+// type using slots from the specified reservation.
 type Assignment struct {
-	// Assignee: The resource which will use the reservation.
-	// E.g.
+	// Assignee: The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
 	Assignee string `json:"assignee,omitempty"`
 
@@ -224,21 +223,18 @@ type Assignment struct {
 	//
 	// Possible values:
 	//   "JOB_TYPE_UNSPECIFIED" - Invalid type. Requests with this value
-	// will be rejected with
-	// error code `google.rpc.Code.INVALID_ARGUMENT`.
+	// will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.
 	//   "PIPELINE" - Pipeline (load/export) jobs from the project will use
 	// the reservation.
 	//   "QUERY" - Query jobs from the project will use the reservation.
 	//   "ML_EXTERNAL" - BigQuery ML jobs that use services external to
-	// BigQuery for model
-	// training. These jobs will not utilize idle slots from other
-	// reservations.
+	// BigQuery for model training. These jobs will not utilize idle slots
+	// from other reservations.
 	JobType string `json:"jobType,omitempty"`
 
-	// Name: Output only. Name of the resource.
-	// E.g.:
-	// `projects/myproject/locations/US/reservations/team1-prod/assignm
-	// ents/123`.
+	// Name: Output only. Name of the resource. E.g.:
+	// `projects/myproject/locations/US/reservations/team1-prod/assignments/1
+	// 23`.
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. State of the assignment.
@@ -246,8 +242,7 @@ type Assignment struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Invalid state value.
 	//   "PENDING" - Queries from assignee will be executed as on-demand, if
-	// related
-	// assignment is pending.
+	// related assignment is pending.
 	//   "ACTIVE" - Assignment is ready.
 	State string `json:"state,omitempty"`
 
@@ -280,9 +275,8 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 
 // BiReservation: Represents a BI Reservation.
 type BiReservation struct {
-	// Name: The resource name of the singleton BI reservation.
-	// Reservation names have the
-	// form
+	// Name: The resource name of the singleton BI reservation. Reservation
+	// names have the form
 	// `projects/{project_id}/locations/{location_id}/bireservation`.
 	Name string `json:"name,omitempty"`
 
@@ -320,28 +314,19 @@ func (s *BiReservation) MarshalJSON() ([]byte, error) {
 }
 
 // CapacityCommitment: Capacity commitment is a way to purchase compute
-// capacity for BigQuery jobs
-// (in the form of slots) with some committed period of usage.
-// Annual
-// commitments renew by default. Commitments can be removed after
-// their
-// commitment end time passes.
-//
-// In order to remove annual commitment, its plan needs to be changed
-// to monthly or flex first.
-//
-// A capacity commitment resource exists as a child resource of the
-// admin
-// project.
+// capacity for BigQuery jobs (in the form of slots) with some committed
+// period of usage. Annual commitments renew by default. Commitments can
+// be removed after their commitment end time passes. In order to remove
+// annual commitment, its plan needs to be changed to monthly or flex
+// first. A capacity commitment resource exists as a child resource of
+// the admin project.
 type CapacityCommitment struct {
 	// CommitmentEndTime: Output only. The end of the current commitment
-	// period. It is applicable only for ACTIVE
-	// capacity commitments.
+	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentEndTime string `json:"commitmentEndTime,omitempty"`
 
 	// CommitmentStartTime: Output only. The start of the current commitment
-	// period. It is applicable only for
-	// ACTIVE capacity commitments.
+	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 
 	// FailureStatus: Output only. For FAILED commitment plan, provides the
@@ -349,72 +334,54 @@ type CapacityCommitment struct {
 	FailureStatus *Status `json:"failureStatus,omitempty"`
 
 	// Name: Output only. The resource name of the capacity commitment,
-	// e.g.,
-	// `projects/myproject/locations/US/capacityCommitments/123`
+	// e.g., `projects/myproject/locations/US/capacityCommitments/123`
 	Name string `json:"name,omitempty"`
 
 	// Plan: Capacity commitment commitment plan.
 	//
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Invalid plan value. Requests with
-	// this value will be rejected with
-	// error code `google.rpc.Code.INVALID_ARGUMENT`.
+	// this value will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`.
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
-	// becoming ACTIVE.
-	// After that, they are not in a committed period anymore and can be
-	// removed
-	// any time.
+	// becoming ACTIVE. After that, they are not in a committed period
+	// anymore and can be removed any time.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
-	// after becoming
-	// ACTIVE. After that, they are converted to a new commitment based on
-	// the
-	// `renewal_plan`. Default `renewal_plan` for Trial commitment is Flex
-	// so
-	// that it can be deleted right after committed period ends.
+	// after becoming ACTIVE. After that, they are converted to a new
+	// commitment based on the `renewal_plan`. Default `renewal_plan` for
+	// Trial commitment is Flex so that it can be deleted right after
+	// committed period ends.
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
-	// after becoming
-	// ACTIVE. After that, they are not in a committed period anymore and
-	// can be
-	// removed any time.
+	// after becoming ACTIVE. After that, they are not in a committed period
+	// anymore and can be removed any time.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
-	// after becoming
-	// ACTIVE. After that they are converted to a new commitment based on
-	// the
-	// renewal_plan.
+	// after becoming ACTIVE. After that they are converted to a new
+	// commitment based on the renewal_plan.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
-	// commitment_end_time
-	// passes. Once the plan is changed, committed period is extended
-	// according to
-	// commitment plan. Only applicable for ANNUAL and TRIAL commitments.
+	// commitment_end_time passes. Once the plan is changed, committed
+	// period is extended according to commitment plan. Only applicable for
+	// ANNUAL and TRIAL commitments.
 	//
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Invalid plan value. Requests with
-	// this value will be rejected with
-	// error code `google.rpc.Code.INVALID_ARGUMENT`.
+	// this value will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`.
 	//   "FLEX" - Flex commitments have committed period of 1 minute after
-	// becoming ACTIVE.
-	// After that, they are not in a committed period anymore and can be
-	// removed
-	// any time.
+	// becoming ACTIVE. After that, they are not in a committed period
+	// anymore and can be removed any time.
 	//   "TRIAL" - Trial commitments have a committed period of 182 days
-	// after becoming
-	// ACTIVE. After that, they are converted to a new commitment based on
-	// the
-	// `renewal_plan`. Default `renewal_plan` for Trial commitment is Flex
-	// so
-	// that it can be deleted right after committed period ends.
+	// after becoming ACTIVE. After that, they are converted to a new
+	// commitment based on the `renewal_plan`. Default `renewal_plan` for
+	// Trial commitment is Flex so that it can be deleted right after
+	// committed period ends.
 	//   "MONTHLY" - Monthly commitments have a committed period of 30 days
-	// after becoming
-	// ACTIVE. After that, they are not in a committed period anymore and
-	// can be
-	// removed any time.
+	// after becoming ACTIVE. After that, they are not in a committed period
+	// anymore and can be removed any time.
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
-	// after becoming
-	// ACTIVE. After that they are converted to a new commitment based on
-	// the
-	// renewal_plan.
+	// after becoming ACTIVE. After that they are converted to a new
+	// commitment based on the renewal_plan.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -425,11 +392,10 @@ type CapacityCommitment struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Invalid state value.
 	//   "PENDING" - Capacity commitment is pending provisioning. Pending
-	// capacity commitment
-	// does not contribute to the parent's slot_capacity.
+	// capacity commitment does not contribute to the parent's
+	// slot_capacity.
 	//   "ACTIVE" - Once slots are provisioned, capacity commitment becomes
-	// active.
-	// slot_count is added to the parent's slot_capacity.
+	// active. slot_count is added to the parent's slot_capacity.
 	//   "FAILED" - Capacity commitment is failed to be activated by the
 	// backend.
 	State string `json:"state,omitempty"`
@@ -462,14 +428,12 @@ func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateSlotPoolMetadata: The metadata for operation returned
-// from
+// CreateSlotPoolMetadata: The metadata for operation returned from
 // ReservationService.CreateSlotPool.
 type CreateSlotPoolMetadata struct {
-	// SlotPool: Resource name of the slot pool that is being created.
-	// E.g.,
-	// projects/myproject/locations/us-central1/reservations/foo/slotPo
-	// ols/123
+	// SlotPool: Resource name of the slot pool that is being created. E.g.,
+	// projects/myproject/locations/us-central1/reservations/foo/slotPools/12
+	// 3
 	SlotPool string `json:"slotPool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SlotPool") to
@@ -496,17 +460,11 @@ func (s *CreateSlotPoolMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -520,8 +478,7 @@ type ListAssignmentsResponse struct {
 	Assignments []*Assignment `json:"assignments,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -559,8 +516,7 @@ type ListCapacityCommitmentsResponse struct {
 	CapacityCommitments []*CapacityCommitment `json:"capacityCommitments,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -632,8 +588,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // ReservationService.ListReservations.
 type ListReservationsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Reservations: List of reservations visible to the user.
@@ -669,12 +624,10 @@ func (s *ListReservationsResponse) MarshalJSON() ([]byte, error) {
 // MergeCapacityCommitmentsRequest: The request for
 // ReservationService.MergeCapacityCommitments.
 type MergeCapacityCommitmentsRequest struct {
-	// CapacityCommitmentIds: Ids of capacity commitments to merge.
-	// These capacity commitments must exist under admin project and
-	// location
-	// specified in the parent.
-	// ID is the last portion of capacity commitment name e.g., 'abc'
-	// for
+	// CapacityCommitmentIds: Ids of capacity commitments to merge. These
+	// capacity commitments must exist under admin project and location
+	// specified in the parent. ID is the last portion of capacity
+	// commitment name e.g., 'abc' for
 	// projects/myproject/locations/US/capacityCommitments/abc
 	CapacityCommitmentIds []string `json:"capacityCommitmentIds,omitempty"`
 
@@ -703,22 +656,16 @@ func (s *MergeCapacityCommitmentsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MoveAssignmentRequest: The request
-// for
-// ReservationService.MoveAssignment.
-//
-// **Note**: "bigquery.reservationAssignments.create" permission is
-// required on
-// the destination_id.
-//
-// **Note**: "bigquery.reservationAssignments.create"
-// and
+// MoveAssignmentRequest: The request for
+// ReservationService.MoveAssignment. **Note**:
+// "bigquery.reservationAssignments.create" permission is required on
+// the destination_id. **Note**:
+// "bigquery.reservationAssignments.create" and
 // "bigquery.reservationAssignments.delete" permission are required on
-// the
-// related assignee.
+// the related assignee.
 type MoveAssignmentRequest struct {
 	// DestinationId: The new reservation ID, e.g.:
-	//   `projects/myotherproject/locations/US/reservations/team2-prod`
+	// `projects/myotherproject/locations/US/reservations/team2-prod`
 	DestinationId string `json:"destinationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationId") to
@@ -745,52 +692,38 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
@@ -820,33 +753,22 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // users.
 type Reservation struct {
 	// IgnoreIdleSlots: If false, any query using this reservation will use
-	// idle slots from other
-	// reservations within the same admin project. If true, a query using
-	// this
-	// reservation will execute with the slot capacity specified above at
-	// most.
+	// idle slots from other reservations within the same admin project. If
+	// true, a query using this reservation will execute with the slot
+	// capacity specified above at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 
-	// Name: The resource name of the reservation,
-	// e.g.,
+	// Name: The resource name of the reservation, e.g.,
 	// `projects/*/locations/*/reservations/team1-prod`.
 	Name string `json:"name,omitempty"`
 
 	// SlotCapacity: Minimum slots available to this reservation. A slot is
-	// a unit of
-	// computational power in BigQuery, and serves as the unit of
-	// parallelism.
-	//
-	// Queries using this reservation might use more slots during runtime
-	// if
-	// ignore_idle_slots is set to false.
-	//
-	// If the new reservation's slot capacity exceed the parent's slot
-	// capacity or
-	// if total slot capacity of the new reservation and its siblings
-	// exceeds the
-	// parent's slot capacity, the request will fail
-	// with
+	// a unit of computational power in BigQuery, and serves as the unit of
+	// parallelism. Queries using this reservation might use more slots
+	// during runtime if ignore_idle_slots is set to false. If the new
+	// reservation's slot capacity exceed the parent's slot capacity or if
+	// total slot capacity of the new reservation and its siblings exceeds
+	// the parent's slot capacity, the request will fail with
 	// `google.rpc.Code.RESOURCE_EXHAUSTED`.
 	SlotCapacity int64 `json:"slotCapacity,omitempty,string"`
 
@@ -885,8 +807,7 @@ type SearchAllAssignmentsResponse struct {
 	Assignments []*Assignment `json:"assignments,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -923,8 +844,7 @@ type SearchAssignmentsResponse struct {
 	Assignments []*Assignment `json:"assignments,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results in the list.
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1021,32 +941,24 @@ func (s *SplitCapacityCommitmentResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1083,12 +995,9 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1122,7 +1031,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1181,7 +1090,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigqueryreservation.operations.delete",
@@ -1221,22 +1130,15 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1301,7 +1203,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1363,7 +1265,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "bigqueryreservation.operations.list",
@@ -1483,7 +1385,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1554,7 +1456,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the requested reservation, for example:\n`projects/{project_id}/locations/{location_id}/bireservation`",
+	//       "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/bireservation`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -1585,31 +1487,18 @@ type ProjectsLocationsSearchAllAssignmentsCall struct {
 }
 
 // SearchAllAssignments: Looks up assignments for a specified resource
-// for a particular region.
-// If the request is about a project:
-//
-// 1. Assignments created on the project will be returned if they
-// exist.
-// 2. Otherwise assignments created on the closest ancestor will be
-//    returned.
-// 3. Assignments for different JobTypes will all be returned.
-//
-// The same logic applies if the request is about a folder.
-//
-// If the request is about an organization, then assignments created on
-// the
-// organization will be returned (organization doesn't have
-// ancestors).
-//
-// Comparing to ListAssignments, there are some
-// behavior
-// differences:
-//
-// 1. permission on the assignee will be verified in this API.
-// 2. Hierarchy lookup (project->folder->organization) happens in this
-// API.
-// 3. Parent here is `projects/*/locations/*`, instead of
-//    `projects/*/locations/*reservations/*`.
+// for a particular region. If the request is about a project: 1.
+// Assignments created on the project will be returned if they exist. 2.
+// Otherwise assignments created on the closest ancestor will be
+// returned. 3. Assignments for different JobTypes will all be returned.
+// The same logic applies if the request is about a folder. If the
+// request is about an organization, then assignments created on the
+// organization will be returned (organization doesn't have ancestors).
+// Comparing to ListAssignments, there are some behavior differences: 1.
+// permission on the assignee will be verified in this API. 2. Hierarchy
+// lookup (project->folder->organization) happens in this API. 3. Parent
+// here is `projects/*/locations/*`, instead of
+// `projects/*/locations/*reservations/*`.
 func (r *ProjectsLocationsService) SearchAllAssignments(parent string) *ProjectsLocationsSearchAllAssignmentsCall {
 	c := &ProjectsLocationsSearchAllAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1631,13 +1520,9 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) PageToken(pageToken string) 
 }
 
 // Query sets the optional parameter "query": Please specify resource
-// name as assignee in the query.
-//
-// Examples:
-//
-// * `assignee=projects/myproject`
-// * `assignee=folders/123`
-// * `assignee=organizations/456`
+// name as assignee in the query. Examples: *
+// `assignee=projects/myproject` * `assignee=folders/123` *
+// `assignee=organizations/456`
 func (c *ProjectsLocationsSearchAllAssignmentsCall) Query(query string) *ProjectsLocationsSearchAllAssignmentsCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -1680,7 +1565,7 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAllAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1742,7 +1627,7 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up assignments for a specified resource for a particular region.\nIf the request is about a project:\n\n1. Assignments created on the project will be returned if they exist.\n2. Otherwise assignments created on the closest ancestor will be\n   returned.\n3. Assignments for different JobTypes will all be returned.\n\nThe same logic applies if the request is about a folder.\n\nIf the request is about an organization, then assignments created on the\norganization will be returned (organization doesn't have ancestors).\n\nComparing to ListAssignments, there are some behavior\ndifferences:\n\n1. permission on the assignee will be verified in this API.\n2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API.\n3. Parent here is `projects/*/locations/*`, instead of\n   `projects/*/locations/*reservations/*`.",
+	//   "description": "Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchAllAssignments",
 	//   "httpMethod": "GET",
 	//   "id": "bigqueryreservation.projects.locations.searchAllAssignments",
@@ -1762,14 +1647,14 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name with location (project name could be the wildcard '-'),\ne.g.:\n  `projects/-/locations/US`.",
+	//       "description": "Required. The resource name with location (project name could be the wildcard '-'), e.g.: `projects/-/locations/US`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Please specify resource name as assignee in the query.\n\nExamples:\n\n* `assignee=projects/myproject`\n* `assignee=folders/123`\n* `assignee=organizations/456`",
+	//       "description": "Please specify resource name as assignee in the query. Examples: * `assignee=projects/myproject` * `assignee=folders/123` * `assignee=organizations/456`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1819,34 +1704,19 @@ type ProjectsLocationsSearchAssignmentsCall struct {
 }
 
 // SearchAssignments: Looks up assignments for a specified resource for
-// a particular region.
-// If the request is about a project:
-//
-// 1. Assignments created on the project will be returned if they
-// exist.
-// 2. Otherwise assignments created on the closest ancestor will be
-//    returned.
-// 3. Assignments for different JobTypes will all be returned.
-//
-// The same logic applies if the request is about a folder.
-//
-// If the request is about an organization, then assignments created on
-// the
-// organization will be returned (organization doesn't have
-// ancestors).
-//
-// Comparing to ListAssignments, there are some
-// behavior
-// differences:
-//
-// 1. permission on the assignee will be verified in this API.
-// 2. Hierarchy lookup (project->folder->organization) happens in this
-// API.
-// 3. Parent here is `projects/*/locations/*`, instead of
-//    `projects/*/locations/*reservations/*`.
-//
-// **Note** "-" cannot be used for projects
-// nor locations.
+// a particular region. If the request is about a project: 1.
+// Assignments created on the project will be returned if they exist. 2.
+// Otherwise assignments created on the closest ancestor will be
+// returned. 3. Assignments for different JobTypes will all be returned.
+// The same logic applies if the request is about a folder. If the
+// request is about an organization, then assignments created on the
+// organization will be returned (organization doesn't have ancestors).
+// Comparing to ListAssignments, there are some behavior differences: 1.
+// permission on the assignee will be verified in this API. 2. Hierarchy
+// lookup (project->folder->organization) happens in this API. 3. Parent
+// here is `projects/*/locations/*`, instead of
+// `projects/*/locations/*reservations/*`. **Note** "-" cannot be used
+// for projects nor locations.
 func (r *ProjectsLocationsService) SearchAssignments(parent string) *ProjectsLocationsSearchAssignmentsCall {
 	c := &ProjectsLocationsSearchAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1868,13 +1738,9 @@ func (c *ProjectsLocationsSearchAssignmentsCall) PageToken(pageToken string) *Pr
 }
 
 // Query sets the optional parameter "query": Please specify resource
-// name as assignee in the query.
-//
-// Examples:
-//
-// * `assignee=projects/myproject`
-// * `assignee=folders/123`
-// * `assignee=organizations/456`
+// name as assignee in the query. Examples: *
+// `assignee=projects/myproject` * `assignee=folders/123` *
+// `assignee=organizations/456`
 func (c *ProjectsLocationsSearchAssignmentsCall) Query(query string) *ProjectsLocationsSearchAssignmentsCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -1917,7 +1783,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1979,7 +1845,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up assignments for a specified resource for a particular region.\nIf the request is about a project:\n\n1. Assignments created on the project will be returned if they exist.\n2. Otherwise assignments created on the closest ancestor will be\n   returned.\n3. Assignments for different JobTypes will all be returned.\n\nThe same logic applies if the request is about a folder.\n\nIf the request is about an organization, then assignments created on the\norganization will be returned (organization doesn't have ancestors).\n\nComparing to ListAssignments, there are some behavior\ndifferences:\n\n1. permission on the assignee will be verified in this API.\n2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API.\n3. Parent here is `projects/*/locations/*`, instead of\n   `projects/*/locations/*reservations/*`.\n\n**Note** \"-\" cannot be used for projects\nnor locations.",
+	//   "description": "Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** \"-\" cannot be used for projects nor locations.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchAssignments",
 	//   "httpMethod": "GET",
 	//   "id": "bigqueryreservation.projects.locations.searchAssignments",
@@ -1999,14 +1865,14 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the admin project(containing project and location),\ne.g.:\n  `projects/myproject/locations/US`.",
+	//       "description": "Required. The resource name of the admin project(containing project and location), e.g.: `projects/myproject/locations/US`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Please specify resource name as assignee in the query.\n\nExamples:\n\n* `assignee=projects/myproject`\n* `assignee=folders/123`\n* `assignee=organizations/456`",
+	//       "description": "Please specify resource name as assignee in the query. Examples: * `assignee=projects/myproject` * `assignee=folders/123` * `assignee=organizations/456`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2055,15 +1921,11 @@ type ProjectsLocationsUpdateBiReservationCall struct {
 	header_       http.Header
 }
 
-// UpdateBiReservation: Updates a BI reservation.
-//
-// Only fields specified in the `field_mask` are updated.
-//
-// A singleton BI reservation always exists with default size 0.
-// In order to reserve BI capacity it needs to be updated to an
-// amount
-// greater than 0. In order to release BI capacity reservation size
-// must be set to 0.
+// UpdateBiReservation: Updates a BI reservation. Only fields specified
+// in the `field_mask` are updated. A singleton BI reservation always
+// exists with default size 0. In order to reserve BI capacity it needs
+// to be updated to an amount greater than 0. In order to release BI
+// capacity reservation size must be set to 0.
 func (r *ProjectsLocationsService) UpdateBiReservation(name string, bireservation *BiReservation) *ProjectsLocationsUpdateBiReservationCall {
 	c := &ProjectsLocationsUpdateBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2105,7 +1967,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2169,7 +2031,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a BI reservation.\n\nOnly fields specified in the `field_mask` are updated.\n\nA singleton BI reservation always exists with default size 0.\nIn order to reserve BI capacity it needs to be updated to an amount\ngreater than 0. In order to release BI capacity reservation size\nmust be set to 0.",
+	//   "description": "Updates a BI reservation. Only fields specified in the `field_mask` are updated. A singleton BI reservation always exists with default size 0. In order to reserve BI capacity it needs to be updated to an amount greater than 0. In order to release BI capacity reservation size must be set to 0.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/biReservation",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigqueryreservation.projects.locations.updateBiReservation",
@@ -2178,7 +2040,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the singleton BI reservation.\nReservation names have the form\n`projects/{project_id}/locations/{location_id}/bireservation`.",
+	//       "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/bireservation`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -2227,8 +2089,7 @@ func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capa
 
 // EnforceSingleAdminProjectPerOrg sets the optional parameter
 // "enforceSingleAdminProjectPerOrg": If true, fail the request if
-// another project in the organization has a
-// capacity commitment.
+// another project in the organization has a capacity commitment.
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) EnforceSingleAdminProjectPerOrg(enforceSingleAdminProjectPerOrg bool) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c.urlParams_.Set("enforceSingleAdminProjectPerOrg", fmt.Sprint(enforceSingleAdminProjectPerOrg))
 	return c
@@ -2261,7 +2122,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2334,12 +2195,12 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "enforceSingleAdminProjectPerOrg": {
-	//       "description": "If true, fail the request if another project in the organization has a\ncapacity commitment.",
+	//       "description": "If true, fail the request if another project in the organization has a capacity commitment.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent reservation. E.g.,\n   `projects/myproject/locations/US`",
+	//       "description": "Required. Resource name of the parent reservation. E.g., `projects/myproject/locations/US`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2372,10 +2233,8 @@ type ProjectsLocationsCapacityCommitmentsDeleteCall struct {
 }
 
 // Delete: Deletes a capacity commitment. Attempting to delete capacity
-// commitment
-// before its commitment_end_time will fail with the error
-// code
-// `google.rpc.Code.FAILED_PRECONDITION`.
+// commitment before its commitment_end_time will fail with the error
+// code `google.rpc.Code.FAILED_PRECONDITION`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Delete(name string) *ProjectsLocationsCapacityCommitmentsDeleteCall {
 	c := &ProjectsLocationsCapacityCommitmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2409,7 +2268,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2468,7 +2327,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a capacity commitment. Attempting to delete capacity commitment\nbefore its commitment_end_time will fail with the error code\n`google.rpc.Code.FAILED_PRECONDITION`.",
+	//   "description": "Deletes a capacity commitment. Attempting to delete capacity commitment before its commitment_end_time will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.delete",
@@ -2477,7 +2336,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the capacity commitment to delete. E.g.,\n   `projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Required. Resource name of the capacity commitment to delete. E.g., `projects/myproject/locations/US/capacityCommitments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -2551,7 +2410,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2622,7 +2481,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the capacity commitment to retrieve. E.g.,\n   `projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Required. Resource name of the capacity commitment to retrieve. E.g., `projects/myproject/locations/US/capacityCommitments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -2710,7 +2569,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2792,7 +2651,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent reservation. E.g.,\n   `projects/myproject/locations/US`",
+	//       "description": "Required. Resource name of the parent reservation. E.g., `projects/myproject/locations/US`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2844,14 +2703,9 @@ type ProjectsLocationsCapacityCommitmentsMergeCall struct {
 }
 
 // Merge: Merges capacity commitments of the same plan into a single
-// commitment.
-//
-// The resulting capacity commitment has the greater
-// commitment_end_time
-// out of the to-be-merged capacity commitments.
-//
-// Attempting to merge capacity commitments of different plan will
-// fail
+// commitment. The resulting capacity commitment has the greater
+// commitment_end_time out of the to-be-merged capacity commitments.
+// Attempting to merge capacity commitments of different plan will fail
 // with the error code `google.rpc.Code.FAILED_PRECONDITION`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Merge(parent string, mergecapacitycommitmentsrequest *MergeCapacityCommitmentsRequest) *ProjectsLocationsCapacityCommitmentsMergeCall {
 	c := &ProjectsLocationsCapacityCommitmentsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2887,7 +2741,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2951,7 +2805,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Merges capacity commitments of the same plan into a single commitment.\n\nThe resulting capacity commitment has the greater commitment_end_time\nout of the to-be-merged capacity commitments.\n\nAttempting to merge capacity commitments of different plan will fail\nwith the error code `google.rpc.Code.FAILED_PRECONDITION`.",
+	//   "description": "Merges capacity commitments of the same plan into a single commitment. The resulting capacity commitment has the greater commitment_end_time out of the to-be-merged capacity commitments. Attempting to merge capacity commitments of different plan will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments:merge",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.merge",
@@ -2960,7 +2814,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent resource that identifies admin project and location e.g.,\n `projects/myproject/locations/us`",
+	//       "description": "Parent resource that identifies admin project and location e.g., `projects/myproject/locations/us`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2993,15 +2847,11 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing capacity commitment.
-//
-// Only `plan` and `renewal_plan` fields can be updated.
-//
-// Plan can only be changed to a plan of a longer commitment
-// period.
-// Attempting to change to a plan with shorter commitment period will
-// fail
-// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
+// Patch: Updates an existing capacity commitment. Only `plan` and
+// `renewal_plan` fields can be updated. Plan can only be changed to a
+// plan of a longer commitment period. Attempting to change to a plan
+// with shorter commitment period will fail with the error code
+// `google.rpc.Code.FAILED_PRECONDITION`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3043,7 +2893,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3107,7 +2957,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing capacity commitment.\n\nOnly `plan` and `renewal_plan` fields can be updated.\n\nPlan can only be changed to a plan of a longer commitment period.\nAttempting to change to a plan with shorter commitment period will fail\nwith the error code `google.rpc.Code.FAILED_PRECONDITION`.",
+	//   "description": "Updates an existing capacity commitment. Only `plan` and `renewal_plan` fields can be updated. Plan can only be changed to a plan of a longer commitment period. Attempting to change to a plan with shorter commitment period will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.patch",
@@ -3116,7 +2966,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the capacity commitment, e.g.,\n`projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Output only. The resource name of the capacity commitment, e.g., `projects/myproject/locations/US/capacityCommitments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -3156,17 +3006,11 @@ type ProjectsLocationsCapacityCommitmentsSplitCall struct {
 }
 
 // Split: Splits capacity commitment to two commitments of the same plan
-// and
-// `commitment_end_time`.
-//
-// A common use case is to enable downgrading commitments.
-//
-// For example, in order to downgrade from 10000 slots to 8000, you
-// might
-// split a 10000 capacity commitment into commitments of 2000 and 8000.
-// Then,
-// you would change the plan of the first one to `FLEX` and then delete
-// it.
+// and `commitment_end_time`. A common use case is to enable downgrading
+// commitments. For example, in order to downgrade from 10000 slots to
+// 8000, you might split a 10000 capacity commitment into commitments of
+// 2000 and 8000. Then, you would change the plan of the first one to
+// `FLEX` and then delete it.
 func (r *ProjectsLocationsCapacityCommitmentsService) Split(name string, splitcapacitycommitmentrequest *SplitCapacityCommitmentRequest) *ProjectsLocationsCapacityCommitmentsSplitCall {
 	c := &ProjectsLocationsCapacityCommitmentsSplitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3201,7 +3045,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3265,7 +3109,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Splits capacity commitment to two commitments of the same plan and\n`commitment_end_time`.\n\nA common use case is to enable downgrading commitments.\n\nFor example, in order to downgrade from 10000 slots to 8000, you might\nsplit a 10000 capacity commitment into commitments of 2000 and 8000. Then,\nyou would change the plan of the first one to `FLEX` and then delete it.",
+	//   "description": "Splits capacity commitment to two commitments of the same plan and `commitment_end_time`. A common use case is to enable downgrading commitments. For example, in order to downgrade from 10000 slots to 8000, you might split a 10000 capacity commitment into commitments of 2000 and 8000. Then, you would change the plan of the first one to `FLEX` and then delete it.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/capacityCommitments/{capacityCommitmentsId}:split",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.capacityCommitments.split",
@@ -3274,7 +3118,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name e.g.,:\n `projects/myproject/locations/US/capacityCommitments/123`",
+	//       "description": "Required. The resource name e.g.,: `projects/myproject/locations/US/capacityCommitments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/capacityCommitments/[^/]+$",
 	//       "required": true,
@@ -3316,8 +3160,7 @@ func (r *ProjectsLocationsReservationsService) Create(parent string, reservation
 }
 
 // ReservationId sets the optional parameter "reservationId": The
-// reservation ID. This field must only contain lower case
-// alphanumeric
+// reservation ID. This field must only contain lower case alphanumeric
 // characters or dash. Max length is 64 characters.
 func (c *ProjectsLocationsReservationsCreateCall) ReservationId(reservationId string) *ProjectsLocationsReservationsCreateCall {
 	c.urlParams_.Set("reservationId", reservationId)
@@ -3351,7 +3194,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3424,14 +3267,14 @@ func (c *ProjectsLocationsReservationsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Project, location. E.g.,\n`projects/myproject/locations/US`",
+	//       "description": "Required. Project, location. E.g., `projects/myproject/locations/US`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "reservationId": {
-	//       "description": "The reservation ID. This field must only contain lower case alphanumeric\ncharacters or dash. Max length is 64 characters.",
+	//       "description": "The reservation ID. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3461,9 +3304,8 @@ type ProjectsLocationsReservationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a reservation.
-// Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation
-// has
+// Delete: Deletes a reservation. Returns
+// `google.rpc.Code.FAILED_PRECONDITION` when reservation has
 // assignments.
 func (r *ProjectsLocationsReservationsService) Delete(name string) *ProjectsLocationsReservationsDeleteCall {
 	c := &ProjectsLocationsReservationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3498,7 +3340,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3557,7 +3399,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a reservation.\nReturns `google.rpc.Code.FAILED_PRECONDITION` when reservation has\nassignments.",
+	//   "description": "Deletes a reservation. Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has assignments.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigqueryreservation.projects.locations.reservations.delete",
@@ -3566,7 +3408,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the reservation to retrieve. E.g.,\n   `projects/myproject/locations/US/reservations/team1-prod`",
+	//       "description": "Required. Resource name of the reservation to retrieve. E.g., `projects/myproject/locations/US/reservations/team1-prod`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -3640,7 +3482,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3711,7 +3553,7 @@ func (c *ProjectsLocationsReservationsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the reservation to retrieve. E.g.,\n   `projects/myproject/locations/US/reservations/team1-prod`",
+	//       "description": "Required. Resource name of the reservation to retrieve. E.g., `projects/myproject/locations/US/reservations/team1-prod`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -3800,7 +3642,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3882,7 +3724,7 @@ func (c *ProjectsLocationsReservationsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name containing project and location, e.g.:\n  `projects/myproject/locations/US`",
+	//       "description": "Required. The parent resource name containing project and location, e.g.: `projects/myproject/locations/US`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3975,7 +3817,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4048,7 +3890,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the reservation, e.g.,\n`projects/*/locations/*/reservations/team1-prod`.",
+	//       "description": "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -4088,47 +3930,23 @@ type ProjectsLocationsReservationsAssignmentsCreateCall struct {
 }
 
 // Create: Creates an assignment object which allows the given project
-// to submit jobs
-// of a certain type using slots from the specified
-// reservation.
-//
-// Currently a
-// resource (project, folder, organization) can only have one assignment
-// per
-// each (job_type, location) combination, and that reservation will be
-// used
-// for all jobs of the matching type.
-//
-// Different assignments can be created on different levels of
-// the
-// projects, folders or organization hierarchy.  During query
-// execution,
+// to submit jobs of a certain type using slots from the specified
+// reservation. Currently a resource (project, folder, organization) can
+// only have one assignment per each (job_type, location) combination,
+// and that reservation will be used for all jobs of the matching type.
+// Different assignments can be created on different levels of the
+// projects, folders or organization hierarchy. During query execution,
 // the assignment is looked up at the project, folder and organization
-// levels
-// in that order. The first assignment found is applied to the
-// query.
-//
-// When creating assignments, it does not matter if other assignments
-// exist at
-// higher levels.
-//
-// Example:
-//
-// * The organization `organizationA` contains two projects, `project1`
-//   and `project2`.
-// * Assignments for all three entities (`organizationA`, `project1`,
-// and
-//   `project2`) could all be created and mapped to the same or
-// different
-//   reservations.
-//
-// Returns `google.rpc.Code.PERMISSION_DENIED` if user does not
-// have
-// 'bigquery.admin' permissions on the project using the reservation
-// and the project that owns this reservation.
-//
-// Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the
-// assignment
+// levels in that order. The first assignment found is applied to the
+// query. When creating assignments, it does not matter if other
+// assignments exist at higher levels. Example: * The organization
+// `organizationA` contains two projects, `project1` and `project2`. *
+// Assignments for all three entities (`organizationA`, `project1`, and
+// `project2`) could all be created and mapped to the same or different
+// reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user
+// does not have 'bigquery.admin' permissions on the project using the
+// reservation and the project that owns this reservation. Returns
+// `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment
 // does not match location of the reservation.
 func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c := &ProjectsLocationsReservationsAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4164,7 +3982,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4228,7 +4046,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an assignment object which allows the given project to submit jobs\nof a certain type using slots from the specified reservation.\n\nCurrently a\nresource (project, folder, organization) can only have one assignment per\neach (job_type, location) combination, and that reservation will be used\nfor all jobs of the matching type.\n\nDifferent assignments can be created on different levels of the\nprojects, folders or organization hierarchy.  During query execution,\nthe assignment is looked up at the project, folder and organization levels\nin that order. The first assignment found is applied to the query.\n\nWhen creating assignments, it does not matter if other assignments exist at\nhigher levels.\n\nExample:\n\n* The organization `organizationA` contains two projects, `project1`\n  and `project2`.\n* Assignments for all three entities (`organizationA`, `project1`, and\n  `project2`) could all be created and mapped to the same or different\n  reservations.\n\nReturns `google.rpc.Code.PERMISSION_DENIED` if user does not have\n'bigquery.admin' permissions on the project using the reservation\nand the project that owns this reservation.\n\nReturns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment\ndoes not match location of the reservation.",
+	//   "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.create",
@@ -4237,7 +4055,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name of the assignment\nE.g. `projects/myproject/locations/US/reservations/team1-prod`",
+	//       "description": "Required. The parent resource name of the assignment E.g. `projects/myproject/locations/US/reservations/team1-prod`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -4269,25 +4087,15 @@ type ProjectsLocationsReservationsAssignmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a assignment. No expansion will happen.
-//
-// Example:
-//
-// * Organization `organizationA` contains two projects, `project1` and
-//   `project2`.
-// * Reservation `res1` exists and was created previously.
-// * CreateAssignment was used previously to define the following
-//   associations between entities and reservations: `<organizationA,
-// res1>`
-//   and `<project1, res1>`
-//
-// In this example, deletion of the `<organizationA, res1>` assignment
-// won't
-// affect the other assignment `<project1, res1>`. After said
-// deletion,
-// queries from `project1` will still use `res1` while queries
-// from
-// `project2` will switch to use on-demand mode.
+// Delete: Deletes a assignment. No expansion will happen. Example: *
+// Organization `organizationA` contains two projects, `project1` and
+// `project2`. * Reservation `res1` exists and was created previously. *
+// CreateAssignment was used previously to define the following
+// associations between entities and reservations: `` and `` In this
+// example, deletion of the `` assignment won't affect the other
+// assignment ``. After said deletion, queries from `project1` will
+// still use `res1` while queries from `project2` will switch to use
+// on-demand mode.
 func (r *ProjectsLocationsReservationsAssignmentsService) Delete(name string) *ProjectsLocationsReservationsAssignmentsDeleteCall {
 	c := &ProjectsLocationsReservationsAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4321,7 +4129,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4380,7 +4188,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a assignment. No expansion will happen.\n\nExample:\n\n* Organization `organizationA` contains two projects, `project1` and\n  `project2`.\n* Reservation `res1` exists and was created previously.\n* CreateAssignment was used previously to define the following\n  associations between entities and reservations: `\u003corganizationA, res1\u003e`\n  and `\u003cproject1, res1\u003e`\n\nIn this example, deletion of the `\u003corganizationA, res1\u003e` assignment won't\naffect the other assignment `\u003cproject1, res1\u003e`. After said deletion,\nqueries from `project1` will still use `res1` while queries from\n`project2` will switch to use on-demand mode.",
+	//   "description": "Deletes a assignment. No expansion will happen. Example: * Organization `organizationA` contains two projects, `project1` and `project2`. * Reservation `res1` exists and was created previously. * CreateAssignment was used previously to define the following associations between entities and reservations: `` and `` In this example, deletion of the `` assignment won't affect the other assignment ``. After said deletion, queries from `project1` will still use `res1` while queries from `project2` will switch to use on-demand mode.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments/{assignmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.delete",
@@ -4389,7 +4197,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the resource, e.g.\n  `projects/myproject/locations/US/reservations/team1-prod/assignments/123`",
+	//       "description": "Required. Name of the resource, e.g. `projects/myproject/locations/US/reservations/team1-prod/assignments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/assignments/[^/]+$",
 	//       "required": true,
@@ -4419,30 +4227,17 @@ type ProjectsLocationsReservationsAssignmentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists assignments.
-//
-// Only explicitly created assignments will be returned.
-//
-// Example:
-//
-// * Organization `organizationA` contains two projects, `project1` and
-//   `project2`.
-// * Reservation `res1` exists and was created previously.
-// * CreateAssignment was used previously to define the following
-//   associations between entities and reservations: `<organizationA,
-// res1>`
-//   and `<project1, res1>`
-//
-// In this example, ListAssignments will just return the above two
-// assignments
-// for reservation `res1`, and no expansion/merge will happen.
-//
-// The wildcard "-" can be used for
-// reservations in the request. In that case all assignments belongs to
-// the
-// specified project and location will be listed.
-//
-// **Note** "-" cannot be used for projects nor locations.
+// List: Lists assignments. Only explicitly created assignments will be
+// returned. Example: * Organization `organizationA` contains two
+// projects, `project1` and `project2`. * Reservation `res1` exists and
+// was created previously. * CreateAssignment was used previously to
+// define the following associations between entities and reservations:
+// `` and `` In this example, ListAssignments will just return the above
+// two assignments for reservation `res1`, and no expansion/merge will
+// happen. The wildcard "-" can be used for reservations in the request.
+// In that case all assignments belongs to the specified project and
+// location will be listed. **Note** "-" cannot be used for projects nor
+// locations.
 func (r *ProjectsLocationsReservationsAssignmentsService) List(parent string) *ProjectsLocationsReservationsAssignmentsListCall {
 	c := &ProjectsLocationsReservationsAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4500,7 +4295,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4562,7 +4357,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists assignments.\n\nOnly explicitly created assignments will be returned.\n\nExample:\n\n* Organization `organizationA` contains two projects, `project1` and\n  `project2`.\n* Reservation `res1` exists and was created previously.\n* CreateAssignment was used previously to define the following\n  associations between entities and reservations: `\u003corganizationA, res1\u003e`\n  and `\u003cproject1, res1\u003e`\n\nIn this example, ListAssignments will just return the above two assignments\nfor reservation `res1`, and no expansion/merge will happen.\n\nThe wildcard \"-\" can be used for\nreservations in the request. In that case all assignments belongs to the\nspecified project and location will be listed.\n\n**Note** \"-\" cannot be used for projects nor locations.",
+	//   "description": "Lists assignments. Only explicitly created assignments will be returned. Example: * Organization `organizationA` contains two projects, `project1` and `project2`. * Reservation `res1` exists and was created previously. * CreateAssignment was used previously to define the following associations between entities and reservations: `` and `` In this example, ListAssignments will just return the above two assignments for reservation `res1`, and no expansion/merge will happen. The wildcard \"-\" can be used for reservations in the request. In that case all assignments belongs to the specified project and location will be listed. **Note** \"-\" cannot be used for projects nor locations.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments",
 	//   "httpMethod": "GET",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.list",
@@ -4582,7 +4377,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name e.g.:\n\n`projects/myproject/locations/US/reservations/team1-prod`\n\nOr:\n\n`projects/myproject/locations/US/reservations/-`",
+	//       "description": "Required. The parent resource name e.g.: `projects/myproject/locations/US/reservations/team1-prod` Or: `projects/myproject/locations/US/reservations/-`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
 	//       "required": true,
@@ -4633,12 +4428,9 @@ type ProjectsLocationsReservationsAssignmentsMoveCall struct {
 	header_               http.Header
 }
 
-// Move: Moves an assignment under a new reservation.
-//
-// This differs from removing an existing assignment and recreating a
-// new one
-// by providing a transactional change that ensures an assignee always
-// has an
+// Move: Moves an assignment under a new reservation. This differs from
+// removing an existing assignment and recreating a new one by providing
+// a transactional change that ensures an assignee always has an
 // associated reservation.
 func (r *ProjectsLocationsReservationsAssignmentsService) Move(name string, moveassignmentrequest *MoveAssignmentRequest) *ProjectsLocationsReservationsAssignmentsMoveCall {
 	c := &ProjectsLocationsReservationsAssignmentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4674,7 +4466,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4738,7 +4530,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves an assignment under a new reservation.\n\nThis differs from removing an existing assignment and recreating a new one\nby providing a transactional change that ensures an assignee always has an\nassociated reservation.",
+	//   "description": "Moves an assignment under a new reservation. This differs from removing an existing assignment and recreating a new one by providing a transactional change that ensures an assignee always has an associated reservation.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments/{assignmentsId}:move",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.move",
@@ -4747,7 +4539,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the assignment,\ne.g.\n`projects/myproject/locations/US/reservations/team1-prod/assignments/123`",
+	//       "description": "Required. The resource name of the assignment, e.g. `projects/myproject/locations/US/reservations/team1-prod/assignments/123`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/assignments/[^/]+$",
 	//       "required": true,

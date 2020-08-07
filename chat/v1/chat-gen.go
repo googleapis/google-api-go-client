@@ -182,12 +182,10 @@ type SpacesMessagesAttachmentsService struct {
 }
 
 // ActionParameter: List of string parameters to supply when the action
-// method is invoked.
-// For example, consider three snooze buttons: snooze now, snooze 1
-// day,
-// snooze next week. You might use action method = snooze(), passing
-// the
-// snooze type and snooze time in the list of string parameters.
+// method is invoked. For example, consider three snooze buttons: snooze
+// now, snooze 1 day, snooze next week. You might use action method =
+// snooze(), passing the snooze type and snooze time in the list of
+// string parameters.
 type ActionParameter struct {
 	// Key: The name of the parameter for the action script.
 	Key string `json:"key,omitempty"`
@@ -260,39 +258,19 @@ func (s *ActionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Annotation: Annotations associated with the plain-text body of the
-// message.
-//
-// Example plain-text message body:
-// ```
-// Hello @FooBot how are you!"
-// ```
-//
-// The corresponding annotations metadata:
-// ```
-// "annotations":[{
-//   "type":"USER_MENTION",
-//   "startIndex":6,
-//   "length":7,
-//   "userMention": {
-//     "user": {
-//       "name":"users/107946847022116401880",
-//       "displayName":"FooBot",
-//       "avatarUrl":"https://goo.gl/aeDtrS",
-//       "type":"BOT"
-//     },
-//     "type":"MENTION"
-//    }
-// }]
-// ```
+// message. Example plain-text message body: ``` Hello @FooBot how are
+// you!" ``` The corresponding annotations metadata: ```
+// "annotations":[{ "type":"USER_MENTION", "startIndex":6, "length":7,
+// "userMention": { "user": { "name":"users/107946847022116401880",
+// "displayName":"FooBot", "avatarUrl":"https://goo.gl/aeDtrS",
+// "type":"BOT" }, "type":"MENTION" } }] ```
 type Annotation struct {
 	// Length: Length of the substring in the plain-text message body this
-	// annotation
-	// corresponds to.
+	// annotation corresponds to.
 	Length int64 `json:"length,omitempty"`
 
 	// StartIndex: Start index (0-based, inclusive) in the plain-text
-	// message body this
-	// annotation corresponds to.
+	// message body this annotation corresponds to.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// Type: The type of this annotation.
@@ -332,8 +310,7 @@ func (s *Annotation) MarshalJSON() ([]byte, error) {
 // Attachment: An attachment in Hangouts Chat.
 type Attachment struct {
 	// AttachmentDataRef: A reference to the attachment data. This is used
-	// with the media API to
-	// download the attachment data.
+	// with the media API to download the attachment data.
 	AttachmentDataRef *AttachmentDataRef `json:"attachmentDataRef,omitempty"`
 
 	// ContentName: The original file name for the content, not the full
@@ -344,18 +321,15 @@ type Attachment struct {
 	ContentType string `json:"contentType,omitempty"`
 
 	// DownloadUri: Output only. The download URL which should be used to
-	// allow a human user to
-	// download the attachment. Bots should not use this URL to
-	// download
-	// attachment content.
+	// allow a human user to download the attachment. Bots should not use
+	// this URL to download attachment content.
 	DownloadUri string `json:"downloadUri,omitempty"`
 
 	// DriveDataRef: A reference to the drive attachment. This is used with
 	// the Drive API.
 	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
 
-	// Name: Resource name of the attachment, in the
-	// form
+	// Name: Resource name of the attachment, in the form
 	// "spaces/*/messages/*/attachments/*".
 	Name string `json:"name,omitempty"`
 
@@ -368,10 +342,8 @@ type Attachment struct {
 	Source string `json:"source,omitempty"`
 
 	// ThumbnailUri: Output only. The thumbnail URL which should be used to
-	// preview the
-	// attachment to a human user. Bots should not use this URL to
-	// download
-	// attachment content.
+	// preview the attachment to a human user. Bots should not use this URL
+	// to download attachment content.
 	ThumbnailUri string `json:"thumbnailUri,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -405,8 +377,7 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 // AttachmentDataRef: A reference to the data of an attachment.
 type AttachmentDataRef struct {
 	// ResourceName: The resource name of the attachment data. This is used
-	// with the media API
-	// to download the attachment data.
+	// with the media API to download the attachment data.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
@@ -502,11 +473,9 @@ func (s *Card) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CardAction: A card action is
-// the action associated with the card. For an invoice card, a
-// typical action would be: delete invoice, email invoice or open
-// the
-// invoice in browser.
+// CardAction: A card action is the action associated with the card. For
+// an invoice card, a typical action would be: delete invoice, email
+// invoice or open the invoice in browser.
 type CardAction struct {
 	// ActionLabel: The label used to be displayed in the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -553,10 +522,8 @@ type CardHeader struct {
 	Subtitle string `json:"subtitle,omitempty"`
 
 	// Title: The title must be specified. The header has a fixed height: if
-	// both a
-	// title and subtitle is specified, each will take up 1 line. If only
-	// the
-	// title is specified, it will take up both lines.
+	// both a title and subtitle is specified, each will take up 1 line. If
+	// only the title is specified, it will take up both lines.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageStyle") to
@@ -585,21 +552,15 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 // DeprecatedEvent: Hangouts Chat events.
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
-	// was clicked.
-	// Only populated for
-	// CARD_CLICKED events.
-	// See the [Interactive Cards
-	// guide](/hangouts/chat/how-tos/cards-onclick) for
+	// was clicked. Only populated for CARD_CLICKED events. See the
+	// [Interactive Cards guide](/hangouts/chat/how-tos/cards-onclick) for
 	// more information.
 	Action *FormAction `json:"action,omitempty"`
 
 	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
-	// to after they have completed an
-	// authorization or configuration flow outside of Hangouts Chat. See
-	// the
-	// [Authorizing access to 3p services
-	// guide](/hangouts/chat/how-tos/auth-3p)
-	// for more information.
+	// to after they have completed an authorization or configuration flow
+	// outside of Hangouts Chat. See the [Authorizing access to 3p services
+	// guide](/hangouts/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
 	// EventTime: The timestamp indicating when the event was dispatched.
@@ -612,18 +573,15 @@ type DeprecatedEvent struct {
 	Space *Space `json:"space,omitempty"`
 
 	// ThreadKey: The bot-defined key for the thread related to the event.
-	// See the
-	// thread_key field of the
-	// `spaces.message.create` request for more information.
+	// See the thread_key field of the `spaces.message.create` request for
+	// more information.
 	ThreadKey string `json:"threadKey,omitempty"`
 
 	// Token: A secret value that bots can use to verify if a request is
-	// from Google. The
-	// token is randomly generated by Google, remains static, and can be
-	// obtained
-	// from the Hangouts Chat API configuration page in the Cloud
-	// Console.
-	// Developers can revoke/regenerate it if needed from the same page.
+	// from Google. The token is randomly generated by Google, remains
+	// static, and can be obtained from the Hangouts Chat API configuration
+	// page in the Cloud Console. Developers can revoke/regenerate it if
+	// needed from the same page.
 	Token string `json:"token,omitempty"`
 
 	// Type: The type of the event.
@@ -691,17 +649,11 @@ func (s *DriveDataRef) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -709,16 +661,14 @@ type Empty struct {
 }
 
 // FormAction: A form action describes the behavior when the form is
-// submitted.
-// For example, an Apps Script can be invoked to handle the form.
+// submitted. For example, an Apps Script can be invoked to handle the
+// form.
 type FormAction struct {
 	// ActionMethodName: The method name is used to identify which part of
-	// the form triggered the
-	// form submission. This information is echoed back to the bot as part
-	// of
-	// the card click event. The same method name can be used for
-	// several
-	// elements that trigger a common behavior if desired.
+	// the form triggered the form submission. This information is echoed
+	// back to the bot as part of the card click event. The same method name
+	// can be used for several elements that trigger a common behavior if
+	// desired.
 	ActionMethodName string `json:"actionMethodName,omitempty"`
 
 	// Parameters: List of action parameters.
@@ -752,11 +702,10 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 // action.
 type Image struct {
 	// AspectRatio: The aspect ratio of this image (width/height). This
-	// field allows clients
-	// to reserve the right height for the image while waiting for it to
-	// load.
-	// It's not meant to override the native aspect ratio of the image.
-	// If unset, the server fills it by prefetching the image.
+	// field allows clients to reserve the right height for the image while
+	// waiting for it to load. It's not meant to override the native aspect
+	// ratio of the image. If unset, the server fills it by prefetching the
+	// image.
 	AspectRatio float64 `json:"aspectRatio,omitempty"`
 
 	// ImageUrl: The URL of the image.
@@ -805,8 +754,7 @@ func (s *Image) UnmarshalJSON(data []byte) error {
 // ImageButton: An image button with an onclick action.
 type ImageButton struct {
 	// Icon: The icon specified by an enum that indices to an icon provided
-	// by Chat
-	// API.
+	// by Chat API.
 	//
 	// Possible values:
 	//   "ICON_UNSPECIFIED"
@@ -846,8 +794,8 @@ type ImageButton struct {
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// Name: The name of this image_button which will be used for
-	// accessibility.
-	// Default value will be provided if developers don't specify.
+	// accessibility. Default value will be provided if developers don't
+	// specify.
 	Name string `json:"name,omitempty"`
 
 	// OnClick: The onclick action.
@@ -877,8 +825,8 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 }
 
 // KeyValue: A UI element contains a key (label) and a value (content).
-// And this
-// element may also contain some actions such as onclick button.
+// And this element may also contain some actions such as onclick
+// button.
 type KeyValue struct {
 	// BottomLabel: The text of the bottom label. Formatted text supported.
 	BottomLabel string `json:"bottomLabel,omitempty"`
@@ -893,8 +841,7 @@ type KeyValue struct {
 	// ContentMultiline: If the content should be multiline.
 	ContentMultiline bool `json:"contentMultiline,omitempty"`
 
-	// Icon: An enum value that will be replaced by the Chat API with
-	// the
+	// Icon: An enum value that will be replaced by the Chat API with the
 	// corresponding icon image.
 	//
 	// Possible values:
@@ -935,8 +882,7 @@ type KeyValue struct {
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// OnClick: The onclick action. Only the top label, bottom label and
-	// content region
-	// are clickable.
+	// content region are clickable.
 	OnClick *OnClick `json:"onClick,omitempty"`
 
 	// TopLabel: The text of the top label. Formatted text supported.
@@ -970,8 +916,7 @@ type ListMembershipsResponse struct {
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// NextPageToken: Continuation token to retrieve the next page of
-	// results. It will be empty
-	// for the last page of results.
+	// results. It will be empty for the last page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1003,10 +948,8 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 
 type ListSpacesResponse struct {
 	// NextPageToken: Continuation token to retrieve the next page of
-	// results. It will be empty
-	// for the last page of results. Tokens expire in an hour. An error is
-	// thrown
-	// if an expired token is passed.
+	// results. It will be empty for the last page of results. Tokens expire
+	// in an hour. An error is thrown if an expired token is passed.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Spaces: List of spaces in the requested (or first) page.
@@ -1074,17 +1017,15 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 // Membership: Represents a membership relation in Hangouts Chat.
 type Membership struct {
 	// CreateTime: The creation time of the membership a.k.a the time at
-	// which the member
-	// joined the space, if applicable.
+	// which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Member: Member details.
 	Member *User `json:"member,omitempty"`
 
 	// Name: Resource name of the membership, in the form
-	// "spaces/*/members/*".
-	//
-	// Example: spaces/AAAAMpdlehY/members/105115627578887013105
+	// "spaces/*/members/*". Example:
+	// spaces/AAAAMpdlehY/members/105115627578887013105
 	Name string `json:"name,omitempty"`
 
 	// State: State of the membership.
@@ -1093,11 +1034,9 @@ type Membership struct {
 	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default, do not use.
 	//   "JOINED" - The user has joined the space.
 	//   "INVITED" - The user has been invited, is able to join the space,
-	// but currently has
-	// not joined.
+	// but currently has not joined.
 	//   "NOT_A_MEMBER" - The user is not a member of the space, has not
-	// been invited and is not
-	// able to join the space.
+	// been invited and is not able to join the space.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1130,8 +1069,7 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // Message: A message in Hangouts Chat.
 type Message struct {
 	// ActionResponse: Input only. Parameters that a bot can use to
-	// configure how its response is
-	// posted.
+	// configure how its response is posted.
 	ActionResponse *ActionResponse `json:"actionResponse,omitempty"`
 
 	// Annotations: Output only. Annotations associated with the text in
@@ -1146,32 +1084,27 @@ type Message struct {
 	Attachment []*Attachment `json:"attachment,omitempty"`
 
 	// Cards: Rich, formatted and interactive cards that can be used to
-	// display UI
-	// elements such as: formatted texts, buttons, clickable images. Cards
-	// are
-	// normally displayed below the plain-text body of the message.
+	// display UI elements such as: formatted texts, buttons, clickable
+	// images. Cards are normally displayed below the plain-text body of the
+	// message.
 	Cards []*Card `json:"cards,omitempty"`
 
 	// CreateTime: Output only. The time at which the message was created in
-	// Hangouts Chat
-	// server.
+	// Hangouts Chat server.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// FallbackText: A plain-text description of the message's cards, used
-	// when the actual cards
-	// cannot be displayed (e.g. mobile notifications).
+	// when the actual cards cannot be displayed (e.g. mobile
+	// notifications).
 	FallbackText string `json:"fallbackText,omitempty"`
 
-	// Name: Resource name, in the form "spaces/*/messages/*".
-	//
-	// Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4
+	// Name: Resource name, in the form "spaces/*/messages/*". Example:
+	// spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4
 	Name string `json:"name,omitempty"`
 
 	// PreviewText: Text for generating preview chips. This text will not be
-	// displayed to the
-	// user, but any links to images, web pages, videos, etc. included here
-	// will
-	// generate preview chips.
+	// displayed to the user, but any links to images, web pages, videos,
+	// etc. included here will generate preview chips.
 	PreviewText string `json:"previewText,omitempty"`
 
 	// Sender: The user who created the message.
@@ -1273,12 +1206,10 @@ func (s *OpenLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Section: A section contains a collection of widgets that are
-// rendered
+// Section: A section contains a collection of widgets that are rendered
 // (vertically) in the order that they are specified. Across all
-// platforms,
-// cards have a narrow fixed width, so
-// there is currently no need for layout properties (e.g. float).
+// platforms, cards have a narrow fixed width, so there is currently no
+// need for layout properties (e.g. float).
 type Section struct {
 	// Header: The header of the section, text formatted supported.
 	Header string `json:"header,omitempty"`
@@ -1312,15 +1243,12 @@ func (s *Section) MarshalJSON() ([]byte, error) {
 // Space: A room or DM in Hangouts Chat.
 type Space struct {
 	// DisplayName: Output only. The display name (only if the space is a
-	// room).
-	// Please note that this field might not be populated in direct
-	// messages
-	// between humans.
+	// room). Please note that this field might not be populated in direct
+	// messages between humans.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Resource name of the space, in the form "spaces/*".
-	//
-	// Example: spaces/AAAAMpdlehYs
+	// Name: Resource name of the space, in the form "spaces/*". Example:
+	// spaces/AAAAMpdlehYs
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Whether the space is a DM between a bot and a single
@@ -1330,15 +1258,14 @@ type Space struct {
 	// Threaded: Whether the messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. The type of a space.
-	// This is deprecated. Use `single_user_bot_dm` instead.
+	// Type: Output only. The type of a space. This is deprecated. Use
+	// `single_user_bot_dm` instead.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
 	//   "ROOM" - Multi-user spaces such as rooms and DMs between humans.
 	//   "DM" - 1:1 Direct Message between a human and a bot, where all
-	// messages are
-	// flat.
+	// messages are flat.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1428,9 +1355,8 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 
 // Thread: A thread in Hangouts Chat.
 type Thread struct {
-	// Name: Resource name, in the form "spaces/*/threads/*".
-	//
-	// Example: spaces/AAAAMpdlehY/threads/UMxbHmzDlr4
+	// Name: Resource name, in the form "spaces/*/threads/*". Example:
+	// spaces/AAAAMpdlehY/threads/UMxbHmzDlr4
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1538,8 +1464,7 @@ func (s *UserMentionMetadata) MarshalJSON() ([]byte, error) {
 // etc.
 type WidgetMarkup struct {
 	// Buttons: A list of buttons. Buttons is also oneof data and only one
-	// of these
-	// fields should be set.
+	// of these fields should be set.
 	Buttons []*Button `json:"buttons,omitempty"`
 
 	// Image: Display an image in this widget.
@@ -1585,8 +1510,8 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Downloads media. Download is supported
-// on the URI `/v1/media/{+name}?alt=media`.
+// Download: Downloads media. Download is supported on the URI
+// `/v1/media/{+name}?alt=media`.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -1630,7 +1555,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1708,7 +1633,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Downloads media. Download is supported\non the URI `/v1/media/{+name}?alt=media`.",
+	//   "description": "Downloads media. Download is supported on the URI `/v1/media/{+name}?alt=media`.",
 	//   "flatPath": "v1/media/{mediaId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.media.download",
@@ -1717,7 +1642,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
+	//       "description": "Name of the media that is being downloaded. See ReadRequest.resource_name.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -1788,7 +1713,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1859,7 +1784,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\".\n\nExample: spaces/AAAAMpdlehY",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -1891,9 +1816,8 @@ func (r *SpacesService) List() *SpacesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The value is capped at 1000.
-// Server may return fewer results than requested.
-// If unspecified, server will default to 100.
+// The value is capped at 1000. Server may return fewer results than
+// requested. If unspecified, server will default to 100.
 func (c *SpacesListCall) PageSize(pageSize int64) *SpacesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1943,7 +1867,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2009,7 +1933,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. The value is capped at 1000.\nServer may return fewer results than requested.\nIf unspecified, server will default to 100.",
+	//       "description": "Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2104,7 +2028,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2175,7 +2099,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form\n\"spaces/*/members/*\".\n\nExample: spaces/AAAAMpdlehY/members/105115627578887013105",
+	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAMpdlehY/members/105115627578887013105",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -2209,9 +2133,8 @@ func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The value is capped at 1000.
-// Server may return fewer results than requested.
-// If unspecified, server will default to 100.
+// The value is capped at 1000. Server may return fewer results than
+// requested. If unspecified, server will default to 100.
 func (c *SpacesMembersListCall) PageSize(pageSize int64) *SpacesMembersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2261,7 +2184,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2332,7 +2255,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. The value is capped at 1000.\nServer may return fewer results than requested.\nIf unspecified, server will default to 100.",
+	//       "description": "Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2343,7 +2266,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be\nfetched, in the form \"spaces/*\".\n\nExample: spaces/AAAAMpdlehY",
+	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -2399,19 +2322,14 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 }
 
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier string that can be specified to group messages
-// into a single thread. If this is the first message with a given
-// thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
 // identifier, a new thread is created. Subsequent messages with the
-// same
-// thread identifier will be posted into the same thread. This relieves
-// bots
-// and webhooks from having to store the Hangouts Chat thread ID of a
-// thread (created earlier by them) to post
-// further updates to it.
-//
-// Has no effect if thread field,
-// corresponding to an existing thread, is set in message.
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -2444,7 +2362,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2517,14 +2435,14 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\".\nExample: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Opaque thread identifier string that can be specified to group messages\ninto a single thread. If this is the first message with a given thread\nidentifier, a new thread is created. Subsequent messages with the same\nthread identifier will be posted into the same thread. This relieves bots\nand webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post\nfurther updates to it.\n\nHas no effect if thread field,\ncorresponding to an existing thread, is set in message.",
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2584,7 +2502,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2652,7 +2570,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be deleted, in the form\n\"spaces/*/messages/*\"\n\nExample: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -2722,7 +2640,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2793,7 +2711,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be retrieved, in the form\n\"spaces/*/messages/*\".\n\nExample: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -2828,13 +2746,8 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// field paths to be updated, comma separated if there
-// are
-// multiple.
-//
-// Currently supported field paths:
-// * text
-// * cards
+// field paths to be updated, comma separated if there are multiple.
+// Currently supported field paths: * text * cards
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2867,7 +2780,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2940,14 +2853,14 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name, in the form \"spaces/*/messages/*\".\n\nExample: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Resource name, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to be updated, comma separated if there are\nmultiple.\n\nCurrently supported field paths:\n* text\n* cards",
+	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2976,8 +2889,7 @@ type SpacesMessagesAttachmentsGetCall struct {
 }
 
 // Get: Gets the metadata of a message attachment. The attachment data
-// is fetched
-// using the media API.
+// is fetched using the media API.
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3021,7 +2933,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3083,7 +2995,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched\nusing the media API.",
+	//   "description": "Gets the metadata of a message attachment. The attachment data is fetched using the media API.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/attachments/{attachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.attachments.get",
@@ -3092,7 +3004,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*At
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attachment, in the form\n\"spaces/*/messages/*/attachments/*\".",
+	//       "description": "Resource name of the attachment, in the form \"spaces/*/messages/*/attachments/*\".",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+/attachments/[^/]+$",
 	//       "required": true,

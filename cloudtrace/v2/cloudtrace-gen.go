@@ -179,13 +179,11 @@ type ProjectsTracesSpansService struct {
 // Annotation: Text annotation with a set of attributes.
 type Annotation struct {
 	// Attributes: A set of attributes on the annotation. You can have up to
-	// 4 attributes
-	// per Annotation.
+	// 4 attributes per Annotation.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// Description: A user-supplied message describing the event. The
-	// maximum length for
-	// the description is 256 bytes.
+	// maximum length for the description is 256 bytes.
 	Description *TruncatableString `json:"description,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -249,21 +247,17 @@ func (s *AttributeValue) MarshalJSON() ([]byte, error) {
 // Attributes: A set of attributes, each in the format `[KEY]:[VALUE]`.
 type Attributes struct {
 	// AttributeMap: The set of attributes. Each attribute's key can be up
-	// to 128 bytes
-	// long. The value can be a string up to 256 bytes, a signed 64-bit
-	// integer,
-	// or the Boolean values `true` and `false`. For example:
-	//
-	//     "/instance_id": { "string_value": { "value": "my-instance" } }
-	//     "/http/request_bytes": { "int_value": 300 }
-	//     "abc.com/myattribute": { "bool_value": false }
+	// to 128 bytes long. The value can be a string up to 256 bytes, a
+	// signed 64-bit integer, or the Boolean values `true` and `false`. For
+	// example: "/instance_id": { "string_value": { "value": "my-instance" }
+	// } "/http/request_bytes": { "int_value": 300 } "abc.com/myattribute":
+	// { "bool_value": false }
 	AttributeMap map[string]AttributeValue `json:"attributeMap,omitempty"`
 
 	// DroppedAttributesCount: The number of attributes that were discarded.
-	// Attributes can be discarded
-	// because their keys are too long or because there are too many
-	// attributes.
-	// If this value is 0 then all attributes are valid.
+	// Attributes can be discarded because their keys are too long or
+	// because there are too many attributes. If this value is 0 then all
+	// attributes are valid.
 	DroppedAttributesCount int64 `json:"droppedAttributesCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AttributeMap") to
@@ -293,8 +287,7 @@ func (s *Attributes) MarshalJSON() ([]byte, error) {
 // method.
 type BatchWriteSpansRequest struct {
 	// Spans: Required. A list of new spans. The span names must not match
-	// existing
-	// spans, or the results are undefined.
+	// existing spans, or the results are undefined.
 	Spans []*Span `json:"spans,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Spans") to
@@ -321,17 +314,11 @@ func (s *BatchWriteSpansRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -339,17 +326,13 @@ type Empty struct {
 }
 
 // Link: A pointer from the current span to another span in the same
-// trace or in a
-// different trace. For example, this can be used in batching
-// operations,
-// where a single batch handler processes multiple requests from
-// different
-// traces or when the handler receives a request from a different
-// project.
+// trace or in a different trace. For example, this can be used in
+// batching operations, where a single batch handler processes multiple
+// requests from different traces or when the handler receives a request
+// from a different project.
 type Link struct {
-	// Attributes: A set of attributes on the link. You have have up to  32
-	// attributes per
-	// link.
+	// Attributes: A set of attributes on the link. You have have up to 32
+	// attributes per link.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// SpanId: The [SPAN_ID] for a span within a trace.
@@ -393,12 +376,10 @@ func (s *Link) MarshalJSON() ([]byte, error) {
 }
 
 // Links: A collection of links, which are references from this span to
-// a span
-// in the same or different trace.
+// a span in the same or different trace.
 type Links struct {
 	// DroppedLinksCount: The number of dropped links after the maximum size
-	// was enforced. If
-	// this value is 0, then no links were dropped.
+	// was enforced. If this value is 0, then no links were dropped.
 	DroppedLinksCount int64 `json:"droppedLinksCount,omitempty"`
 
 	// Link: A collection of links.
@@ -432,19 +413,15 @@ func (s *Links) MarshalJSON() ([]byte, error) {
 // Spans.
 type MessageEvent struct {
 	// CompressedSizeBytes: The number of compressed bytes sent or received.
-	// If missing assumed to
-	// be the same size as uncompressed.
+	// If missing assumed to be the same size as uncompressed.
 	CompressedSizeBytes int64 `json:"compressedSizeBytes,omitempty,string"`
 
 	// Id: An identifier for the MessageEvent's message that can be used to
-	// match
-	// SENT and RECEIVED MessageEvents. It is recommended to be unique
-	// within
-	// a Span.
+	// match SENT and RECEIVED MessageEvents. It is recommended to be unique
+	// within a Span.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Type: Type of MessageEvent. Indicates whether the message was sent
-	// or
+	// Type: Type of MessageEvent. Indicates whether the message was sent or
 	// received.
 	//
 	// Possible values:
@@ -483,14 +460,12 @@ func (s *MessageEvent) MarshalJSON() ([]byte, error) {
 
 // Module: Binary module.
 type Module struct {
-	// BuildId: A unique identifier for the module, usually a hash of
-	// its
+	// BuildId: A unique identifier for the module, usually a hash of its
 	// contents (up to 128 bytes).
 	BuildId *TruncatableString `json:"buildId,omitempty"`
 
 	// Module: For example: main binary, kernel modules, and dynamic
-	// libraries
-	// such as libc.so, sharedlib.so (up to 256 bytes).
+	// libraries such as libc.so, sharedlib.so (up to 256 bytes).
 	Module *TruncatableString `json:"module,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuildId") to
@@ -517,44 +492,34 @@ func (s *Module) MarshalJSON() ([]byte, error) {
 }
 
 // Span: A span represents a single operation within a trace. Spans can
-// be
-// nested to form a trace tree. Often, a trace contains a root span
-// that describes the end-to-end latency, and one or more subspans
-// for
-// its sub-operations. A trace can also contain multiple root spans,
-// or none at all. Spans do not need to be contiguous&mdash;there may
-// be
-// gaps or overlaps between spans in a trace.
+// be nested to form a trace tree. Often, a trace contains a root span
+// that describes the end-to-end latency, and one or more subspans for
+// its sub-operations. A trace can also contain multiple root spans, or
+// none at all. Spans do not need to be contiguous—there may be gaps
+// or overlaps between spans in a trace.
 type Span struct {
 	// Attributes: A set of attributes on the span. You can have up to 32
-	// attributes per
-	// span.
+	// attributes per span.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// ChildSpanCount: Optional. The number of child spans that were
-	// generated while this span
-	// was active. If set, allows implementation to detect missing child
-	// spans.
+	// generated while this span was active. If set, allows implementation
+	// to detect missing child spans.
 	ChildSpanCount int64 `json:"childSpanCount,omitempty"`
 
 	// DisplayName: Required. A description of the span's operation (up to
-	// 128 bytes).
-	// Trace displays the description in the
-	// Google Cloud Platform Console.
-	// For example, the display name can be a qualified method name or a
-	// file name
-	// and a line number where the operation is called. A best practice is
-	// to use
-	// the same display name within an application and at the same call
-	// point.
-	// This makes it easier to correlate spans in different traces.
+	// 128 bytes). Trace displays the description in the Google Cloud
+	// Platform Console. For example, the display name can be a qualified
+	// method name or a file name and a line number where the operation is
+	// called. A best practice is to use the same display name within an
+	// application and at the same call point. This makes it easier to
+	// correlate spans in different traces.
 	DisplayName *TruncatableString `json:"displayName,omitempty"`
 
 	// EndTime: Required. The end time of the span. On the client side, this
-	// is the time kept by
-	// the local machine where the span execution ends. On the server side,
-	// this
-	// is the time when the server application handler stops running.
+	// is the time kept by the local machine where the span execution ends.
+	// On the server side, this is the time when the server application
+	// handler stops running.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Links: Links associated with the span. You can have up to 128 links
@@ -562,84 +527,64 @@ type Span struct {
 	Links *Links `json:"links,omitempty"`
 
 	// Name: Required. The resource name of the span in the following
-	// format:
-	//
-	//     projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique
-	// identifier for a trace within a project;
-	// it is a 32-character hexadecimal encoding of a 16-byte
-	// array.
-	//
-	// [SPAN_ID] is a unique identifier for a span within a trace; it
-	// is a 16-character hexadecimal encoding of an 8-byte array. It should
-	// not
-	// be zero.
+	// format: projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a
+	// unique identifier for a trace within a project; it is a 32-character
+	// hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique
+	// identifier for a span within a trace; it is a 16-character
+	// hexadecimal encoding of an 8-byte array. It should not be zero.
 	Name string `json:"name,omitempty"`
 
 	// ParentSpanId: The [SPAN_ID] of this span's parent span. If this is a
-	// root span,
-	// then this field must be empty.
+	// root span, then this field must be empty.
 	ParentSpanId string `json:"parentSpanId,omitempty"`
 
 	// SameProcessAsParentSpan: Optional. Set this parameter to indicate
-	// whether this span is in
-	// the same process as its parent. If you do not set this
-	// parameter,
-	// Trace is unable to take advantage of this helpful information.
+	// whether this span is in the same process as its parent. If you do not
+	// set this parameter, Trace is unable to take advantage of this helpful
+	// information.
 	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
 
 	// SpanId: Required. The [SPAN_ID] portion of the span's resource name.
 	SpanId string `json:"spanId,omitempty"`
 
 	// SpanKind: Optional. Distinguishes between spans generated in a
-	// particular context. For example,
-	// two spans with the same name may be distinguished using `CLIENT`
-	// (caller)
-	// and `SERVER` (callee) to identify an RPC call.
+	// particular context. For example, two spans with the same name may be
+	// distinguished using `CLIENT` (caller) and `SERVER` (callee) to
+	// identify an RPC call.
 	//
 	// Possible values:
-	//   "SPAN_KIND_UNSPECIFIED" - Unspecified. Do NOT use as
-	// default.
+	//   "SPAN_KIND_UNSPECIFIED" - Unspecified. Do NOT use as default.
 	// Implementations MAY assume SpanKind.INTERNAL to be default.
 	//   "INTERNAL" - Indicates that the span is used internally. Default
 	// value.
 	//   "SERVER" - Indicates that the span covers server-side handling of
-	// an RPC or other
-	// remote network request.
+	// an RPC or other remote network request.
 	//   "CLIENT" - Indicates that the span covers the client-side wrapper
-	// around an RPC or
-	// other remote request.
+	// around an RPC or other remote request.
 	//   "PRODUCER" - Indicates that the span describes producer sending a
-	// message to a broker.
-	// Unlike client and  server, there is no direct critical path
-	// latency
-	// relationship between producer and consumer spans (e.g. publishing
-	// a
-	// message to a pubsub service).
+	// message to a broker. Unlike client and server, there is no direct
+	// critical path latency relationship between producer and consumer
+	// spans (e.g. publishing a message to a pubsub service).
 	//   "CONSUMER" - Indicates that the span describes consumer receiving a
-	// message from a
-	// broker. Unlike client and  server, there is no direct critical
-	// path
-	// latency relationship between producer and consumer spans (e.g.
-	// receiving
-	// a message from a pubsub service subscription).
+	// message from a broker. Unlike client and server, there is no direct
+	// critical path latency relationship between producer and consumer
+	// spans (e.g. receiving a message from a pubsub service subscription).
 	SpanKind string `json:"spanKind,omitempty"`
 
 	// StackTrace: Stack trace captured at the start of the span.
 	StackTrace *StackTrace `json:"stackTrace,omitempty"`
 
 	// StartTime: Required. The start time of the span. On the client side,
-	// this is the time kept by
-	// the local machine where the span execution starts. On the server
-	// side, this
-	// is the time when the server's application handler starts running.
+	// this is the time kept by the local machine where the span execution
+	// starts. On the server side, this is the time when the server's
+	// application handler starts running.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Status: Optional. The final status for this span.
 	Status *Status `json:"status,omitempty"`
 
 	// TimeEvents: A set of time events. You can have up to 32 annotations
-	// and 128 message
-	// events per span.
+	// and 128 message events per span.
 	TimeEvents *TimeEvents `json:"timeEvents,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -672,18 +617,16 @@ func (s *Span) MarshalJSON() ([]byte, error) {
 // StackFrame: Represents a single stack frame in a stack trace.
 type StackFrame struct {
 	// ColumnNumber: The column number where the function call appears, if
-	// available.
-	// This is important in JavaScript because of its anonymous functions.
+	// available. This is important in JavaScript because of its anonymous
+	// functions.
 	ColumnNumber int64 `json:"columnNumber,omitempty,string"`
 
 	// FileName: The name of the source file where the function call appears
-	// (up to 256
-	// bytes).
+	// (up to 256 bytes).
 	FileName *TruncatableString `json:"fileName,omitempty"`
 
 	// FunctionName: The fully-qualified name that uniquely identifies the
-	// function or
-	// method that is active in this frame (up to 1024 bytes).
+	// function or method that is active in this frame (up to 1024 bytes).
 	FunctionName *TruncatableString `json:"functionName,omitempty"`
 
 	// LineNumber: The line number in `file_name` where the function call
@@ -694,10 +637,8 @@ type StackFrame struct {
 	LoadModule *Module `json:"loadModule,omitempty"`
 
 	// OriginalFunctionName: An un-mangled function name, if `function_name`
-	// is
-	// [mangled](http://www.avabodh.com/cxxin/namemangling.html). The name
-	// can
-	// be fully-qualified (up to 1024 bytes).
+	// is [mangled](http://www.avabodh.com/cxxin/namemangling.html). The
+	// name can be fully-qualified (up to 1024 bytes).
 	OriginalFunctionName *TruncatableString `json:"originalFunctionName,omitempty"`
 
 	// SourceVersion: The version of the deployed source code (up to 128
@@ -730,9 +671,8 @@ func (s *StackFrame) MarshalJSON() ([]byte, error) {
 // StackFrames: A collection of stack frames, which can be truncated.
 type StackFrames struct {
 	// DroppedFramesCount: The number of stack frames that were dropped
-	// because there
-	// were too many stack frames.
-	// If this value is 0, then no stack frames were dropped.
+	// because there were too many stack frames. If this value is 0, then no
+	// stack frames were dropped.
 	DroppedFramesCount int64 `json:"droppedFramesCount,omitempty"`
 
 	// Frame: Stack frames in this call stack.
@@ -769,16 +709,11 @@ type StackTrace struct {
 	StackFrames *StackFrames `json:"stackFrames,omitempty"`
 
 	// StackTraceHashId: The hash ID is used to conserve network bandwidth
-	// for duplicate
-	// stack traces within a single trace.
-	//
-	// Often multiple spans will have identical stack traces.
-	// The first occurrence of a stack trace should contain both
-	// the
-	// `stackFrame` content and a value in `stackTraceHashId`.
-	//
-	// Subsequent spans within the same request can refer
-	// to that stack trace by only setting `stackTraceHashId`.
+	// for duplicate stack traces within a single trace. Often multiple
+	// spans will have identical stack traces. The first occurrence of a
+	// stack trace should contain both the `stackFrame` content and a value
+	// in `stackTraceHashId`. Subsequent spans within the same request can
+	// refer to that stack trace by only setting `stackTraceHashId`.
 	StackTraceHashId int64 `json:"stackTraceHashId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "StackFrames") to
@@ -805,32 +740,24 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -892,19 +819,18 @@ func (s *TimeEvent) MarshalJSON() ([]byte, error) {
 }
 
 // TimeEvents: A collection of `TimeEvent`s. A `TimeEvent` is a
-// time-stamped annotation
-// on the span, consisting of either user-supplied key:value pairs,
-// or
-// details of a message sent/received between Spans.
+// time-stamped annotation on the span, consisting of either
+// user-supplied key:value pairs, or details of a message sent/received
+// between Spans.
 type TimeEvents struct {
 	// DroppedAnnotationsCount: The number of dropped annotations in all the
-	// included time events.
-	// If the value is 0, then no annotations were dropped.
+	// included time events. If the value is 0, then no annotations were
+	// dropped.
 	DroppedAnnotationsCount int64 `json:"droppedAnnotationsCount,omitempty"`
 
 	// DroppedMessageEventsCount: The number of dropped message events in
-	// all the included time events.
-	// If the value is 0, then no message events were dropped.
+	// all the included time events. If the value is 0, then no message
+	// events were dropped.
 	DroppedMessageEventsCount int64 `json:"droppedMessageEventsCount,omitempty"`
 
 	// TimeEvent: A collection of `TimeEvent`s.
@@ -939,20 +865,15 @@ func (s *TimeEvents) MarshalJSON() ([]byte, error) {
 // specified length.
 type TruncatableString struct {
 	// TruncatedByteCount: The number of bytes removed from the original
-	// string. If this
-	// value is 0, then the string was not shortened.
+	// string. If this value is 0, then the string was not shortened.
 	TruncatedByteCount int64 `json:"truncatedByteCount,omitempty"`
 
 	// Value: The shortened string. For example, if the original string is
-	// 500
-	// bytes long and the limit of the string is 128 bytes, then
-	// `value` contains the first 128 bytes of the 500-byte
-	// string.
-	//
-	// Truncation always happens on a UTF8 character boundary. If there
-	// are multi-byte characters in the string, then the length of
-	// the
-	// shortened string might be less than the size limit.
+	// 500 bytes long and the limit of the string is 128 bytes, then `value`
+	// contains the first 128 bytes of the 500-byte string. Truncation
+	// always happens on a UTF8 character boundary. If there are multi-byte
+	// characters in the string, then the length of the shortened string
+	// might be less than the size limit.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TruncatedByteCount")
@@ -991,8 +912,7 @@ type ProjectsTracesBatchWriteCall struct {
 }
 
 // BatchWrite: Sends new spans to new or existing traces. You cannot
-// update
-// existing spans.
+// update existing spans.
 func (r *ProjectsTracesService) BatchWrite(name string, batchwritespansrequest *BatchWriteSpansRequest) *ProjectsTracesBatchWriteCall {
 	c := &ProjectsTracesBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1027,7 +947,7 @@ func (c *ProjectsTracesBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsTracesBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1091,7 +1011,7 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.",
+	//   "description": "Sends new spans to new or existing traces. You cannot update existing spans.",
 	//   "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtrace.projects.traces.batchWrite",
@@ -1100,7 +1020,7 @@ func (c *ProjectsTracesBatchWriteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the project where the spans belong. The format is\n`projects/[PROJECT_ID]`.",
+	//       "description": "Required. The name of the project where the spans belong. The format is `projects/[PROJECT_ID]`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1168,7 +1088,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Header() http.Header {
 
 func (c *ProjectsTracesSpansCreateSpanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1241,7 +1161,7 @@ func (c *ProjectsTracesSpansCreateSpanCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array. It should not\nbe zero.",
+	//       "description": "Required. The resource name of the span in the following format: projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array. [SPAN_ID] is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array. It should not be zero.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$",
 	//       "required": true,

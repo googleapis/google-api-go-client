@@ -181,10 +181,8 @@ type OperationsService struct {
 }
 
 // AccessLevel: An `AccessLevel` is a label that can be applied to
-// requests to Google Cloud
-// services, along with a list of requirements necessary for the label
-// to be
-// applied.
+// requests to Google Cloud services, along with a list of requirements
+// necessary for the label to be applied.
 type AccessLevel struct {
 	// Basic: A `BasicLevel` composed of `Conditions`.
 	Basic *BasicLevel `json:"basic,omitempty"`
@@ -197,12 +195,9 @@ type AccessLevel struct {
 	Description string `json:"description,omitempty"`
 
 	// Name: Required. Resource name for the Access Level. The `short_name`
-	// component
-	// must begin with a letter and only include alphanumeric and '_'.
-	// Format:
-	// `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum
-	// length
-	// of the `short_name` component is 50 characters.
+	// component must begin with a letter and only include alphanumeric and
+	// '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`.
+	// The maximum length of the `short_name` component is 50 characters.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -236,35 +231,25 @@ func (s *AccessLevel) MarshalJSON() ([]byte, error) {
 }
 
 // AccessPolicy: `AccessPolicy` is a container for `AccessLevels` (which
-// define the necessary
-// attributes to use Google Cloud services) and `ServicePerimeters`
-// (which
-// define regions of services able to freely pass data within a
-// perimeter). An
-// access policy is globally visible within an organization, and
-// the
-// restrictions it specifies apply to all projects within an
-// organization.
+// define the necessary attributes to use Google Cloud services) and
+// `ServicePerimeters` (which define regions of services able to freely
+// pass data within a perimeter). An access policy is globally visible
+// within an organization, and the restrictions it specifies apply to
+// all projects within an organization.
 type AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of
-	// the
-	// `AccessPolicy`. This will always be a strongly validated etag,
-	// meaning that
-	// two Access Polices will be identical if and only if their etags
-	// are
-	// identical. Clients should not expect this to be in any specific
-	// format.
+	// the `AccessPolicy`. This will always be a strongly validated etag,
+	// meaning that two Access Polices will be identical if and only if
+	// their etags are identical. Clients should not expect this to be in
+	// any specific format.
 	Etag string `json:"etag,omitempty"`
 
-	// Name: Output only. Resource name of the `AccessPolicy`.
-	// Format:
+	// Name: Output only. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{policy_id}`
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud
-	// Resource
-	// Hierarchy. Currently immutable once created.
-	// Format:
+	// Resource Hierarchy. Currently immutable once created. Format:
 	// `organizations/{organization_id}`
 	Parent string `json:"parent,omitempty"`
 
@@ -302,14 +287,11 @@ func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
 // recommended features.
 type BasicLevel struct {
 	// CombiningFunction: How the `conditions` list should be combined to
-	// determine if a request is
-	// granted this `AccessLevel`. If AND is used, each `Condition`
-	// in
-	// `conditions` must be satisfied for the `AccessLevel` to be applied.
-	// If OR
-	// is used, at least one `Condition` in `conditions` must be satisfied
-	// for the
-	// `AccessLevel` to be applied. Default behavior is AND.
+	// determine if a request is granted this `AccessLevel`. If AND is used,
+	// each `Condition` in `conditions` must be satisfied for the
+	// `AccessLevel` to be applied. If OR is used, at least one `Condition`
+	// in `conditions` must be satisfied for the `AccessLevel` to be
+	// applied. Default behavior is AND.
 	//
 	// Possible values:
 	//   "AND" - All `Conditions` must be true for the `BasicLevel` to be
@@ -352,21 +334,15 @@ type CancelOperationRequest struct {
 }
 
 // CommitServicePerimetersRequest: A request to commit dry-run specs in
-// all Service Perimeters belonging to
-// an Access Policy.
+// all Service Perimeters belonging to an Access Policy.
 type CommitServicePerimetersRequest struct {
 	// Etag: Optional. The etag for the version of the Access Policy that
-	// this
-	// commit operation is to be performed on. If, at the time of commit,
-	// the
-	// etag for the Access Policy stored in Access Context Manager is
-	// different
-	// from the specified etag, then the commit operation will not be
-	// performed
-	// and the call will fail. This field is not required. If etag is
-	// not
-	// provided, the operation will be performed as if a valid etag is
-	// provided.
+	// this commit operation is to be performed on. If, at the time of
+	// commit, the etag for the Access Policy stored in Access Context
+	// Manager is different from the specified etag, then the commit
+	// operation will not be performed and the call will fail. This field is
+	// not required. If etag is not provided, the operation will be
+	// performed as if a valid etag is provided.
 	Etag string `json:"etag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -393,12 +369,11 @@ func (s *CommitServicePerimetersRequest) MarshalJSON() ([]byte, error) {
 }
 
 // CommitServicePerimetersResponse: A response to
-// CommitServicePerimetersRequest. This will be put inside
-// of
+// CommitServicePerimetersRequest. This will be put inside of
 // Operation.response field.
 type CommitServicePerimetersResponse struct {
-	// ServicePerimeters: List of all the Service Perimeter instances in
-	// the Access Policy.
+	// ServicePerimeters: List of all the Service Perimeter instances in the
+	// Access Policy.
 	ServicePerimeters []*ServicePerimeter `json:"servicePerimeters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServicePerimeters")
@@ -426,66 +401,47 @@ func (s *CommitServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Condition: A condition necessary for an `AccessLevel` to be granted.
-// The Condition is an
-// AND over its fields. So a Condition is true if: 1) the request IP is
-// from one
-// of the listed subnetworks AND 2) the originating device complies with
-// the
-// listed device policy AND 3) all listed access levels are granted AND
-// 4) the
-// request was sent at a time allowed by the DateTimeRestriction.
+// The Condition is an AND over its fields. So a Condition is true if:
+// 1) the request IP is from one of the listed subnetworks AND 2) the
+// originating device complies with the listed device policy AND 3) all
+// listed access levels are granted AND 4) the request was sent at a
+// time allowed by the DateTimeRestriction.
 type Condition struct {
 	// DevicePolicy: Device specific restrictions, all restrictions must
-	// hold for the
-	// Condition to be true. If not specified, all devices are allowed.
+	// hold for the Condition to be true. If not specified, all devices are
+	// allowed.
 	DevicePolicy *DevicePolicy `json:"devicePolicy,omitempty"`
 
 	// IpSubnetworks: CIDR block IP subnetwork specification. May be IPv4 or
-	// IPv6. Note that for
-	// a CIDR IP address block, the specified IP address portion must be
-	// properly
-	// truncated (i.e. all the host bits must be zero) or the input is
-	// considered
-	// malformed. For example, "192.0.2.0/24" is accepted but "192.0.2.1/24"
-	// is
-	// not. Similarly, for IPv6, "2001:db8::/32" is accepted
-	// whereas
-	// "2001:db8::1/32" is not. The originating IP of a request must be in
-	// one of
-	// the listed subnets in order for this Condition to be true. If empty,
-	// all IP
-	// addresses are allowed.
+	// IPv6. Note that for a CIDR IP address block, the specified IP address
+	// portion must be properly truncated (i.e. all the host bits must be
+	// zero) or the input is considered malformed. For example,
+	// "192.0.2.0/24" is accepted but "192.0.2.1/24" is not. Similarly, for
+	// IPv6, "2001:db8::/32" is accepted whereas "2001:db8::1/32" is not.
+	// The originating IP of a request must be in one of the listed subnets
+	// in order for this Condition to be true. If empty, all IP addresses
+	// are allowed.
 	IpSubnetworks []string `json:"ipSubnetworks,omitempty"`
 
 	// Members: The request must be made by one of the provided user or
-	// service
-	// accounts. Groups are not
-	// supported.
-	// Syntax:
-	// `user:{emailid}`
-	// `serviceAccount:{emailid}`
-	// If not specified, a request may come from any user.
+	// service accounts. Groups are not supported. Syntax: `user:{emailid}`
+	// `serviceAccount:{emailid}` If not specified, a request may come from
+	// any user.
 	Members []string `json:"members,omitempty"`
 
 	// Negate: Whether to negate the Condition. If true, the Condition
-	// becomes a NAND over
-	// its non-empty fields, each field must be false for the Condition
-	// overall to
-	// be satisfied. Defaults to false.
+	// becomes a NAND over its non-empty fields, each field must be false
+	// for the Condition overall to be satisfied. Defaults to false.
 	Negate bool `json:"negate,omitempty"`
 
 	// Regions: The request must originate from one of the provided
-	// countries/regions.
-	// Must be valid ISO 3166-1 alpha-2 codes.
+	// countries/regions. Must be valid ISO 3166-1 alpha-2 codes.
 	Regions []string `json:"regions,omitempty"`
 
 	// RequiredAccessLevels: A list of other access levels defined in the
-	// same `Policy`, referenced by
-	// resource name. Referencing an `AccessLevel` which does not exist is
-	// an
-	// error. All access levels listed must be granted for the Condition
-	// to be true.
-	// Example:
+	// same `Policy`, referenced by resource name. Referencing an
+	// `AccessLevel` which does not exist is an error. All access levels
+	// listed must be granted for the Condition to be true. Example:
 	// "accessPolicies/MY_POLICY/accessLevels/LEVEL_NAME"
 	RequiredAccessLevels []string `json:"requiredAccessLevels,omitempty"`
 
@@ -513,10 +469,9 @@ func (s *Condition) MarshalJSON() ([]byte, error) {
 }
 
 // CustomLevel: `CustomLevel` is an `AccessLevel` using the Cloud Common
-// Expression Language
-// to represent the necessary conditions for the level to apply to a
-// request.
-// See CEL spec at: https://github.com/google/cel-spec
+// Expression Language to represent the necessary conditions for the
+// level to apply to a request. See CEL spec at:
+// https://github.com/google/cel-spec
 type CustomLevel struct {
 	// Expr: Required. A Cloud CEL expression evaluating to a boolean.
 	Expr *Expr `json:"expr,omitempty"`
@@ -545,39 +500,29 @@ func (s *CustomLevel) MarshalJSON() ([]byte, error) {
 }
 
 // DevicePolicy: `DevicePolicy` specifies device specific restrictions
-// necessary to acquire a
-// given access level. A `DevicePolicy` specifies requirements for
-// requests from
-// devices to be granted access levels, it does not do any enforcement
-// on the
-// device. `DevicePolicy` acts as an AND over all specified fields, and
-// each
-// repeated field is an OR over its elements. Any unset fields are
-// ignored. For
-// example, if the proto is { os_type : DESKTOP_WINDOWS, os_type
-// :
-// DESKTOP_LINUX, encryption_status: ENCRYPTED}, then the DevicePolicy
-// will be
-// true for requests originating from encrypted Linux desktops and
-// encrypted
+// necessary to acquire a given access level. A `DevicePolicy` specifies
+// requirements for requests from devices to be granted access levels,
+// it does not do any enforcement on the device. `DevicePolicy` acts as
+// an AND over all specified fields, and each repeated field is an OR
+// over its elements. Any unset fields are ignored. For example, if the
+// proto is { os_type : DESKTOP_WINDOWS, os_type : DESKTOP_LINUX,
+// encryption_status: ENCRYPTED}, then the DevicePolicy will be true for
+// requests originating from encrypted Linux desktops and encrypted
 // Windows desktops.
 type DevicePolicy struct {
 	// AllowedDeviceManagementLevels: Allowed device management levels, an
-	// empty list allows all management
-	// levels.
+	// empty list allows all management levels.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - The device's management level is not
 	// specified or not known.
 	//   "NONE" - The device is not managed.
 	//   "BASIC" - Basic management is enabled, which is generally limited
-	// to monitoring and
-	// wiping the corporate account.
+	// to monitoring and wiping the corporate account.
 	//   "COMPLETE" - Complete device management. This includes more
-	// thorough monitoring and the
-	// ability to directly manage the device (such as remote wiping). This
-	// can be
-	// enabled through the Android Enterprise Platform.
+	// thorough monitoring and the ability to directly manage the device
+	// (such as remote wiping). This can be enabled through the Android
+	// Enterprise Platform.
 	AllowedDeviceManagementLevels []string `json:"allowedDeviceManagementLevels,omitempty"`
 
 	// AllowedEncryptionStatuses: Allowed encryptions statuses, an empty
@@ -604,8 +549,7 @@ type DevicePolicy struct {
 	RequireCorpOwned bool `json:"requireCorpOwned,omitempty"`
 
 	// RequireScreenlock: Whether or not screenlock is required for the
-	// DevicePolicy to be true.
-	// Defaults to `false`.
+	// DevicePolicy to be true. Defaults to `false`.
 	RequireScreenlock bool `json:"requireScreenlock,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -634,17 +578,11 @@ func (s *DevicePolicy) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -652,65 +590,40 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -742,8 +655,7 @@ type ListAccessLevelsResponse struct {
 	AccessLevels []*AccessLevel `json:"accessLevels,omitempty"`
 
 	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is
-	// empty, no further results remain.
+	// results. If the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -780,8 +692,7 @@ type ListAccessPoliciesResponse struct {
 	AccessPolicies []*AccessPolicy `json:"accessPolicies,omitempty"`
 
 	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is
-	// empty, no further results remain.
+	// results. If the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -853,8 +764,7 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // `ListServicePerimetersRequest`.
 type ListServicePerimetersResponse struct {
 	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is
-	// empty, no further results remain.
+	// results. If the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServicePerimeters: List of the Service Perimeter instances.
@@ -888,52 +798,38 @@ func (s *ListServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -967,9 +863,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // making requests.
 type OsConstraint struct {
 	// MinimumVersion: The minimum allowed OS version. If not set, any
-	// version of this OS
-	// satisfies the constraint. Format: "major.minor.patch".
-	// Examples: "10.5.301", "9.2.1".
+	// version of this OS satisfies the constraint. Format:
+	// "major.minor.patch". Examples: "10.5.301", "9.2.1".
 	MinimumVersion string `json:"minimumVersion,omitempty"`
 
 	// OsType: Required. The allowed OS type.
@@ -986,12 +881,9 @@ type OsConstraint struct {
 	OsType string `json:"osType,omitempty"`
 
 	// RequireVerifiedChromeOs: Only allows requests from devices with a
-	// verified Chrome OS.
-	// Verifications includes requirements that the device is
-	// enterprise-managed,
-	// conformant to domain policies, and the caller has permission to
-	// call
-	// the API targeted by the request.
+	// verified Chrome OS. Verifications includes requirements that the
+	// device is enterprise-managed, conformant to domain policies, and the
+	// caller has permission to call the API targeted by the request.
 	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinimumVersion") to
@@ -1019,26 +911,20 @@ func (s *OsConstraint) MarshalJSON() ([]byte, error) {
 }
 
 // ReplaceAccessLevelsRequest: A request to replace all existing Access
-// Levels in an Access Policy with
-// the Access Levels provided. This is done atomically.
+// Levels in an Access Policy with the Access Levels provided. This is
+// done atomically.
 type ReplaceAccessLevelsRequest struct {
-	// AccessLevels: Required. The desired Access Levels that should
-	// replace all existing Access Levels in the
-	// Access Policy.
+	// AccessLevels: Required. The desired Access Levels that should replace
+	// all existing Access Levels in the Access Policy.
 	AccessLevels []*AccessLevel `json:"accessLevels,omitempty"`
 
 	// Etag: Optional. The etag for the version of the Access Policy that
-	// this
-	// replace operation is to be performed on. If, at the time of replace,
-	// the
-	// etag for the Access Policy stored in Access Context Manager is
-	// different
-	// from the specified etag, then the replace operation will not be
-	// performed
-	// and the call will fail. This field is not required. If etag is
-	// not
-	// provided, the operation will be performed as if a valid etag is
-	// provided.
+	// this replace operation is to be performed on. If, at the time of
+	// replace, the etag for the Access Policy stored in Access Context
+	// Manager is different from the specified etag, then the replace
+	// operation will not be performed and the call will fail. This field is
+	// not required. If etag is not provided, the operation will be
+	// performed as if a valid etag is provided.
 	Etag string `json:"etag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
@@ -1065,8 +951,7 @@ func (s *ReplaceAccessLevelsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ReplaceAccessLevelsResponse: A response to
-// ReplaceAccessLevelsRequest. This will be put inside
-// of
+// ReplaceAccessLevelsRequest. This will be put inside of
 // Operation.response field.
 type ReplaceAccessLevelsResponse struct {
 	// AccessLevels: List of the Access Level instances.
@@ -1096,27 +981,20 @@ func (s *ReplaceAccessLevelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ReplaceServicePerimetersRequest: A request to replace all existing
-// Service Perimeters in an Access Policy
-// with the Service Perimeters provided. This is done atomically.
+// Service Perimeters in an Access Policy with the Service Perimeters
+// provided. This is done atomically.
 type ReplaceServicePerimetersRequest struct {
 	// Etag: Optional. The etag for the version of the Access Policy that
-	// this
-	// replace operation is to be performed on. If, at the time of replace,
-	// the
-	// etag for the Access Policy stored in Access Context Manager is
-	// different
-	// from the specified etag, then the replace operation will not be
-	// performed
-	// and the call will fail. This field is not required. If etag is
-	// not
-	// provided, the operation will be performed as if a valid etag is
-	// provided.
+	// this replace operation is to be performed on. If, at the time of
+	// replace, the etag for the Access Policy stored in Access Context
+	// Manager is different from the specified etag, then the replace
+	// operation will not be performed and the call will fail. This field is
+	// not required. If etag is not provided, the operation will be
+	// performed as if a valid etag is provided.
 	Etag string `json:"etag,omitempty"`
 
 	// ServicePerimeters: Required. The desired Service Perimeters that
-	// should
-	// replace all existing Service Perimeters in the
-	// Access Policy.
+	// should replace all existing Service Perimeters in the Access Policy.
 	ServicePerimeters []*ServicePerimeter `json:"servicePerimeters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1143,8 +1021,7 @@ func (s *ReplaceServicePerimetersRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ReplaceServicePerimetersResponse: A response to
-// ReplaceServicePerimetersRequest. This will be put inside
-// of
+// ReplaceServicePerimetersRequest. This will be put inside of
 // Operation.response field.
 type ReplaceServicePerimetersResponse struct {
 	// ServicePerimeters: List of the Service Perimeter instances.
@@ -1175,47 +1052,33 @@ func (s *ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ServicePerimeter: `ServicePerimeter` describes a set of Google Cloud
-// resources which can freely
-// import and export data amongst themselves, but not export outside of
-// the
-// `ServicePerimeter`. If a request with a source within this
-// `ServicePerimeter`
-// has a target outside of the `ServicePerimeter`, the request will be
-// blocked.
-// Otherwise the request is allowed. There are two types of Service
-// Perimeter -
+// resources which can freely import and export data amongst themselves,
+// but not export outside of the `ServicePerimeter`. If a request with a
+// source within this `ServicePerimeter` has a target outside of the
+// `ServicePerimeter`, the request will be blocked. Otherwise the
+// request is allowed. There are two types of Service Perimeter -
 // Regular and Bridge. Regular Service Perimeters cannot overlap, a
-// single
-// Google Cloud project can only belong to a single regular Service
-// Perimeter.
-// Service Perimeter Bridges can contain only Google Cloud projects as
-// members,
-// a single Google Cloud project may belong to multiple Service
-// Perimeter
-// Bridges.
+// single Google Cloud project can only belong to a single regular
+// Service Perimeter. Service Perimeter Bridges can contain only Google
+// Cloud projects as members, a single Google Cloud project may belong
+// to multiple Service Perimeter Bridges.
 type ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does
-	// not affect
-	// behavior.
+	// not affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the ServicePerimeter.  The
-	// `short_name`
-	// component must begin with a letter and only include alphanumeric and
-	// '_'.
-	// Format: `accessPolicies/{policy_id}/servicePerimeters/{short_name}`
+	// Name: Required. Resource name for the ServicePerimeter. The
+	// `short_name` component must begin with a letter and only include
+	// alphanumeric and '_'. Format:
+	// `accessPolicies/{policy_id}/servicePerimeters/{short_name}`
 	Name string `json:"name,omitempty"`
 
-	// PerimeterType: Perimeter type indicator. A single project is
-	// allowed to be a member of single regular perimeter, but multiple
-	// service
+	// PerimeterType: Perimeter type indicator. A single project is allowed
+	// to be a member of single regular perimeter, but multiple service
 	// perimeter bridges. A project cannot be a included in a perimeter
-	// bridge
-	// without being included in regular perimeter. For perimeter
-	// bridges,
-	// the restricted service list as well as access level lists must
-	// be
-	// empty.
+	// bridge without being included in regular perimeter. For perimeter
+	// bridges, the restricted service list as well as access level lists
+	// must be empty.
 	//
 	// Possible values:
 	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
@@ -1223,43 +1086,30 @@ type ServicePerimeter struct {
 	PerimeterType string `json:"perimeterType,omitempty"`
 
 	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
-	// configuration
-	// allows to specify and test ServicePerimeter configuration without
-	// enforcing
-	// actual access restrictions. Only allowed to be set when
-	// the
-	// "use_explicit_dry_run_spec" flag is set.
+	// configuration allows to specify and test ServicePerimeter
+	// configuration without enforcing actual access restrictions. Only
+	// allowed to be set when the "use_explicit_dry_run_spec" flag is set.
 	Spec *ServicePerimeterConfig `json:"spec,omitempty"`
 
 	// Status: Current ServicePerimeter configuration. Specifies sets of
-	// resources,
-	// restricted services and access levels that determine
-	// perimeter
-	// content and boundaries.
+	// resources, restricted services and access levels that determine
+	// perimeter content and boundaries.
 	Status *ServicePerimeterConfig `json:"status,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
 	Title string `json:"title,omitempty"`
 
 	// UseExplicitDryRunSpec: Use explicit dry run spec flag. Ordinarily, a
-	// dry-run spec implicitly
-	// exists  for all Service Perimeters, and that spec is identical to
-	// the
-	// status for those Service Perimeters. When this flag is set, it
-	// inhibits the
-	// generation of the implicit spec, thereby allowing the user to
-	// explicitly
-	// provide a configuration ("spec") to use in a dry-run version of the
-	// Service
-	// Perimeter. This allows the user to test changes to the enforced
-	// config
-	// ("status") without actually enforcing them. This testing is done
-	// through
-	// analyzing the differences between currently enforced and
-	// suggested
+	// dry-run spec implicitly exists for all Service Perimeters, and that
+	// spec is identical to the status for those Service Perimeters. When
+	// this flag is set, it inhibits the generation of the implicit spec,
+	// thereby allowing the user to explicitly provide a configuration
+	// ("spec") to use in a dry-run version of the Service Perimeter. This
+	// allows the user to test changes to the enforced config ("status")
+	// without actually enforcing them. This testing is done through
+	// analyzing the differences between currently enforced and suggested
 	// restrictions. use_explicit_dry_run_spec must bet set to True if any
-	// of the
-	// fields in the spec are set to non-default values.
+	// of the fields in the spec are set to non-default values.
 	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1290,38 +1140,29 @@ func (s *ServicePerimeter) MarshalJSON() ([]byte, error) {
 }
 
 // ServicePerimeterConfig: `ServicePerimeterConfig` specifies a set of
-// Google Cloud resources that
-// describe specific Service Perimeter configuration.
+// Google Cloud resources that describe specific Service Perimeter
+// configuration.
 type ServicePerimeterConfig struct {
 	// AccessLevels: A list of `AccessLevel` resource names that allow
-	// resources within the
-	// `ServicePerimeter` to be accessed from the internet. `AccessLevels`
-	// listed
-	// must be in the same policy as this `ServicePerimeter`. Referencing
-	// a
-	// nonexistent `AccessLevel` is a syntax error. If no `AccessLevel`
-	// names are
-	// listed, resources within the perimeter can only be accessed via
-	// Google
-	// Cloud calls with request origins within the perimeter.
-	// Example:
-	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL".
-	// For Service Perimeter Bridge, must be empty.
+	// resources within the `ServicePerimeter` to be accessed from the
+	// internet. `AccessLevels` listed must be in the same policy as this
+	// `ServicePerimeter`. Referencing a nonexistent `AccessLevel` is a
+	// syntax error. If no `AccessLevel` names are listed, resources within
+	// the perimeter can only be accessed via Google Cloud calls with
+	// request origins within the perimeter. Example:
+	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL". For Service
+	// Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
-	// service perimeter.
-	// Currently only projects are allowed. Format:
+	// service perimeter. Currently only projects are allowed. Format:
 	// `projects/{project_number}`
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: Google Cloud services that are subject to the
-	// Service Perimeter
-	// restrictions. For example, if `storage.googleapis.com` is specified,
-	// access
-	// to the storage buckets inside the perimeter must meet the
-	// perimeter's
-	// access restrictions.
+	// Service Perimeter restrictions. For example, if
+	// `storage.googleapis.com` is specified, access to the storage buckets
+	// inside the perimeter must meet the perimeter's access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
 
 	// VpcAccessibleServices: Configuration for APIs allowed within
@@ -1352,32 +1193,24 @@ func (s *ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1404,17 +1237,17 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // VpcAccessibleServices: Specifies how APIs are allowed to communicate
-// within the Service
-// Perimeter.
+// within the Service Perimeter.
 type VpcAccessibleServices struct {
 	// AllowedServices: The list of APIs usable within the Service
-	// Perimeter. Must be empty
-	// unless 'enable_restriction' is True.
+	// Perimeter. Must be empty unless 'enable_restriction' is True. You can
+	// specify a list of individual services, as well as include the
+	// 'RESTRICTED-SERVICES' value, which automatically includes all of the
+	// services protected by the perimeter.
 	AllowedServices []string `json:"allowedServices,omitempty"`
 
 	// EnableRestriction: Whether to restrict API calls within the Service
-	// Perimeter to the list of
-	// APIs specified in 'allowed_services'.
+	// Perimeter to the list of APIs specified in 'allowed_services'.
 	EnableRestriction bool `json:"enableRestriction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedServices") to
@@ -1452,14 +1285,10 @@ type AccessPoliciesCreateCall struct {
 }
 
 // Create: Create an `AccessPolicy`. Fails if this organization already
-// has a
-// `AccessPolicy`. The longrunning Operation will have a successful
-// status
-// once the `AccessPolicy` has propagated to long-lasting
-// storage.
-// Syntactic and basic semantic errors will be returned in `metadata` as
-// a
-// BadRequest proto.
+// has a `AccessPolicy`. The longrunning Operation will have a
+// successful status once the `AccessPolicy` has propagated to
+// long-lasting storage. Syntactic and basic semantic errors will be
+// returned in `metadata` as a BadRequest proto.
 func (r *AccessPoliciesService) Create(accesspolicy *AccessPolicy) *AccessPoliciesCreateCall {
 	c := &AccessPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accesspolicy = accesspolicy
@@ -1493,7 +1322,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1554,7 +1383,7 @@ func (c *AccessPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Create an `AccessPolicy`. Fails if this organization already has a\n`AccessPolicy`. The longrunning Operation will have a successful status\nonce the `AccessPolicy` has propagated to long-lasting storage.\nSyntactic and basic semantic errors will be returned in `metadata` as a\nBadRequest proto.",
+	//   "description": "Create an `AccessPolicy`. Fails if this organization already has a `AccessPolicy`. The longrunning Operation will have a successful status once the `AccessPolicy` has propagated to long-lasting storage. Syntactic and basic semantic errors will be returned in `metadata` as a BadRequest proto.",
 	//   "flatPath": "v1/accessPolicies",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.create",
@@ -1584,11 +1413,9 @@ type AccessPoliciesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an AccessPolicy by resource
-// name. The longrunning Operation will have a successful status once
-// the
-// AccessPolicy
-// has been removed from long-lasting storage.
+// Delete: Delete an AccessPolicy by resource name. The longrunning
+// Operation will have a successful status once the AccessPolicy has
+// been removed from long-lasting storage.
 func (r *AccessPoliciesService) Delete(name string) *AccessPoliciesDeleteCall {
 	c := &AccessPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1622,7 +1449,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1681,7 +1508,7 @@ func (c *AccessPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an AccessPolicy by resource\nname. The longrunning Operation will have a successful status once the\nAccessPolicy\nhas been removed from long-lasting storage.",
+	//   "description": "Delete an AccessPolicy by resource name. The longrunning Operation will have a successful status once the AccessPolicy has been removed from long-lasting storage.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "accesscontextmanager.accessPolicies.delete",
@@ -1690,7 +1517,7 @@ func (c *AccessPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the access policy to delete.\n\nFormat `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy to delete. Format `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -1763,7 +1590,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1834,7 +1661,7 @@ func (c *AccessPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AccessPolicy,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the access policy to get.\n\nFormat `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy to get. Format `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -1862,8 +1689,7 @@ type AccessPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: List all AccessPolicies under a
-// container.
+// List: List all AccessPolicies under a container.
 func (r *AccessPoliciesService) List() *AccessPoliciesListCall {
 	c := &AccessPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1877,19 +1703,15 @@ func (c *AccessPoliciesListCall) PageSize(pageSize int64) *AccessPoliciesListCal
 }
 
 // PageToken sets the optional parameter "pageToken": Next page token
-// for the next batch of AccessPolicy instances. Defaults to
-// the first page of results.
+// for the next batch of AccessPolicy instances. Defaults to the first
+// page of results.
 func (c *AccessPoliciesListCall) PageToken(pageToken string) *AccessPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Parent sets the optional parameter "parent": Required. Resource name
-// for the container to list AccessPolicy
-// instances
-// from.
-//
-// Format:
+// for the container to list AccessPolicy instances from. Format:
 // `organizations/{org_id}`
 func (c *AccessPoliciesListCall) Parent(parent string) *AccessPoliciesListCall {
 	c.urlParams_.Set("parent", parent)
@@ -1933,7 +1755,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1992,7 +1814,7 @@ func (c *AccessPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAccessPo
 	}
 	return ret, nil
 	// {
-	//   "description": "List all AccessPolicies under a\ncontainer.",
+	//   "description": "List all AccessPolicies under a container.",
 	//   "flatPath": "v1/accessPolicies",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.accessPolicies.list",
@@ -2005,12 +1827,12 @@ func (c *AccessPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAccessPo
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Next page token for the next batch of AccessPolicy instances. Defaults to\nthe first page of results.",
+	//       "description": "Next page token for the next batch of AccessPolicy instances. Defaults to the first page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name for the container to list AccessPolicy instances\nfrom.\n\nFormat:\n`organizations/{org_id}`",
+	//       "description": "Required. Resource name for the container to list AccessPolicy instances from. Format: `organizations/{org_id}`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2058,13 +1880,11 @@ type AccessPoliciesPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Update an AccessPolicy. The
-// longrunning Operation from this RPC will have a successful status
-// once the
-// changes to the AccessPolicy have propagated
-// to long-lasting storage. Syntactic and basic semantic errors will
-// be
-// returned in `metadata` as a BadRequest proto.
+// Patch: Update an AccessPolicy. The longrunning Operation from this
+// RPC will have a successful status once the changes to the
+// AccessPolicy have propagated to long-lasting storage. Syntactic and
+// basic semantic errors will be returned in `metadata` as a BadRequest
+// proto.
 func (r *AccessPoliciesService) Patch(name string, accesspolicy *AccessPolicy) *AccessPoliciesPatchCall {
 	c := &AccessPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2106,7 +1926,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2170,7 +1990,7 @@ func (c *AccessPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Update an AccessPolicy. The\nlongrunning Operation from this RPC will have a successful status once the\nchanges to the AccessPolicy have propagated\nto long-lasting storage. Syntactic and basic semantic errors will be\nreturned in `metadata` as a BadRequest proto.",
+	//   "description": "Update an AccessPolicy. The longrunning Operation from this RPC will have a successful status once the changes to the AccessPolicy have propagated to long-lasting storage. Syntactic and basic semantic errors will be returned in `metadata` as a BadRequest proto.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "accesscontextmanager.accessPolicies.patch",
@@ -2179,7 +1999,7 @@ func (c *AccessPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of the `AccessPolicy`. Format:\n`accessPolicies/{policy_id}`",
+	//       "description": "Output only. Resource name of the `AccessPolicy`. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -2217,13 +2037,10 @@ type AccessPoliciesAccessLevelsCreateCall struct {
 	header_     http.Header
 }
 
-// Create: Create an Access Level. The longrunning
-// operation from this RPC will have a successful status once the
-// Access
-// Level has
-// propagated to long-lasting storage. Access Levels containing
-// errors will result in an error response for the first error
-// encountered.
+// Create: Create an Access Level. The longrunning operation from this
+// RPC will have a successful status once the Access Level has
+// propagated to long-lasting storage. Access Levels containing errors
+// will result in an error response for the first error encountered.
 func (r *AccessPoliciesAccessLevelsService) Create(parent string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsCreateCall {
 	c := &AccessPoliciesAccessLevelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2258,7 +2075,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2322,7 +2139,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Create an Access Level. The longrunning\noperation from this RPC will have a successful status once the Access\nLevel has\npropagated to long-lasting storage. Access Levels containing\nerrors will result in an error response for the first error encountered.",
+	//   "description": "Create an Access Level. The longrunning operation from this RPC will have a successful status once the Access Level has propagated to long-lasting storage. Access Levels containing errors will result in an error response for the first error encountered.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.create",
@@ -2331,7 +2148,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy which owns this Access\nLevel.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy which owns this Access Level. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -2362,11 +2179,9 @@ type AccessPoliciesAccessLevelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Access Level by resource
-// name. The longrunning operation from this RPC will have a successful
-// status
-// once the Access Level has been removed
-// from long-lasting storage.
+// Delete: Delete an Access Level by resource name. The longrunning
+// operation from this RPC will have a successful status once the Access
+// Level has been removed from long-lasting storage.
 func (r *AccessPoliciesAccessLevelsService) Delete(name string) *AccessPoliciesAccessLevelsDeleteCall {
 	c := &AccessPoliciesAccessLevelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2400,7 +2215,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2459,7 +2274,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Access Level by resource\nname. The longrunning operation from this RPC will have a successful status\nonce the Access Level has been removed\nfrom long-lasting storage.",
+	//   "description": "Delete an Access Level by resource name. The longrunning operation from this RPC will have a successful status once the Access Level has been removed from long-lasting storage.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels/{accessLevelsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.delete",
@@ -2468,7 +2283,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the Access Level.\n\nFormat:\n`accessPolicies/{policy_id}/accessLevels/{access_level_id}`",
+	//       "description": "Required. Resource name for the Access Level. Format: `accessPolicies/{policy_id}/accessLevels/{access_level_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
 	//       "required": true,
@@ -2497,8 +2312,7 @@ type AccessPoliciesAccessLevelsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get an Access Level by resource
-// name.
+// Get: Get an Access Level by resource name.
 func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAccessLevelsGetCall {
 	c := &AccessPoliciesAccessLevelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2506,23 +2320,21 @@ func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAcce
 }
 
 // AccessLevelFormat sets the optional parameter "accessLevelFormat":
-// Whether to return `BasicLevels` in the Cloud Common
-// Expression
-// Language rather than as `BasicLevels`. Defaults to AS_DEFINED,
-// where
-// Access Levels
-// are returned as `BasicLevels` or `CustomLevels` based on how they
-// were
-// created. If set to CEL, all Access Levels are returned
-// as
-// `CustomLevels`. In the CEL case, `BasicLevels` are translated to
-// equivalent
-// `CustomLevels`.
+// Whether to return `BasicLevels` in the Cloud Common Expression
+// Language rather than as `BasicLevels`. Defaults to AS_DEFINED, where
+// Access Levels are returned as `BasicLevels` or `CustomLevels` based
+// on how they were created. If set to CEL, all Access Levels are
+// returned as `CustomLevels`. In the CEL case, `BasicLevels` are
+// translated to equivalent `CustomLevels`.
 //
 // Possible values:
-//   "LEVEL_FORMAT_UNSPECIFIED"
-//   "AS_DEFINED"
-//   "CEL"
+//   "LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
+//   "AS_DEFINED" - Uses the format the resource was defined in.
+// BasicLevels are returned as BasicLevels, CustomLevels are returned as
+// CustomLevels.
+//   "CEL" - Use Cloud Common Expression Language when returning the
+// resource. Both BasicLevels and CustomLevels are returned as
+// CustomLevels.
 func (c *AccessPoliciesAccessLevelsGetCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsGetCall {
 	c.urlParams_.Set("accessLevelFormat", accessLevelFormat)
 	return c
@@ -2565,7 +2377,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2627,7 +2439,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Do(opts ...googleapi.CallOption) (*A
 	}
 	return ret, nil
 	// {
-	//   "description": "Get an Access Level by resource\nname.",
+	//   "description": "Get an Access Level by resource name.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels/{accessLevelsId}",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.get",
@@ -2636,17 +2448,22 @@ func (c *AccessPoliciesAccessLevelsGetCall) Do(opts ...googleapi.CallOption) (*A
 	//   ],
 	//   "parameters": {
 	//     "accessLevelFormat": {
-	//       "description": "Whether to return `BasicLevels` in the Cloud Common Expression\nLanguage rather than as `BasicLevels`. Defaults to AS_DEFINED, where\nAccess Levels\nare returned as `BasicLevels` or `CustomLevels` based on how they were\ncreated. If set to CEL, all Access Levels are returned as\n`CustomLevels`. In the CEL case, `BasicLevels` are translated to equivalent\n`CustomLevels`.",
+	//       "description": "Whether to return `BasicLevels` in the Cloud Common Expression Language rather than as `BasicLevels`. Defaults to AS_DEFINED, where Access Levels are returned as `BasicLevels` or `CustomLevels` based on how they were created. If set to CEL, all Access Levels are returned as `CustomLevels`. In the CEL case, `BasicLevels` are translated to equivalent `CustomLevels`.",
 	//       "enum": [
 	//         "LEVEL_FORMAT_UNSPECIFIED",
 	//         "AS_DEFINED",
 	//         "CEL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The format was not specified.",
+	//         "Uses the format the resource was defined in. BasicLevels are returned as BasicLevels, CustomLevels are returned as CustomLevels.",
+	//         "Use Cloud Common Expression Language when returning the resource. Both BasicLevels and CustomLevels are returned as CustomLevels."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Resource name for the Access Level.\n\nFormat:\n`accessPolicies/{policy_id}/accessLevels/{access_level_id}`",
+	//       "description": "Required. Resource name for the Access Level. Format: `accessPolicies/{policy_id}/accessLevels/{access_level_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
 	//       "required": true,
@@ -2675,8 +2492,7 @@ type AccessPoliciesAccessLevelsListCall struct {
 	header_      http.Header
 }
 
-// List: List all Access Levels for an access
-// policy.
+// List: List all Access Levels for an access policy.
 func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesAccessLevelsListCall {
 	c := &AccessPoliciesAccessLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2685,31 +2501,32 @@ func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesA
 
 // AccessLevelFormat sets the optional parameter "accessLevelFormat":
 // Whether to return `BasicLevels` in the Cloud Common Expression
-// language, as
-// `CustomLevels`, rather than as `BasicLevels`. Defaults to
-// returning
-// `AccessLevels` in the format they were defined.
+// language, as `CustomLevels`, rather than as `BasicLevels`. Defaults
+// to returning `AccessLevels` in the format they were defined.
 //
 // Possible values:
-//   "LEVEL_FORMAT_UNSPECIFIED"
-//   "AS_DEFINED"
-//   "CEL"
+//   "LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
+//   "AS_DEFINED" - Uses the format the resource was defined in.
+// BasicLevels are returned as BasicLevels, CustomLevels are returned as
+// CustomLevels.
+//   "CEL" - Use Cloud Common Expression Language when returning the
+// resource. Both BasicLevels and CustomLevels are returned as
+// CustomLevels.
 func (c *AccessPoliciesAccessLevelsListCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsListCall {
 	c.urlParams_.Set("accessLevelFormat", accessLevelFormat)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of Access
-// Levels to include in
-// the list. Default 100.
+// Levels to include in the list. Default 100.
 func (c *AccessPoliciesAccessLevelsListCall) PageSize(pageSize int64) *AccessPoliciesAccessLevelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Next page token
-// for the next batch of Access Level instances.
-// Defaults to the first page of results.
+// for the next batch of Access Level instances. Defaults to the first
+// page of results.
 func (c *AccessPoliciesAccessLevelsListCall) PageToken(pageToken string) *AccessPoliciesAccessLevelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2752,7 +2569,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2631,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "List all Access Levels for an access\npolicy.",
+	//   "description": "List all Access Levels for an access policy.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.list",
@@ -2823,28 +2640,33 @@ func (c *AccessPoliciesAccessLevelsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "accessLevelFormat": {
-	//       "description": "Whether to return `BasicLevels` in the Cloud Common Expression language, as\n`CustomLevels`, rather than as `BasicLevels`. Defaults to returning\n`AccessLevels` in the format they were defined.",
+	//       "description": "Whether to return `BasicLevels` in the Cloud Common Expression language, as `CustomLevels`, rather than as `BasicLevels`. Defaults to returning `AccessLevels` in the format they were defined.",
 	//       "enum": [
 	//         "LEVEL_FORMAT_UNSPECIFIED",
 	//         "AS_DEFINED",
 	//         "CEL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The format was not specified.",
+	//         "Uses the format the resource was defined in. BasicLevels are returned as BasicLevels, CustomLevels are returned as CustomLevels.",
+	//         "Use Cloud Common Expression Language when returning the resource. Both BasicLevels and CustomLevels are returned as CustomLevels."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of Access Levels to include in\nthe list. Default 100.",
+	//       "description": "Number of Access Levels to include in the list. Default 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Next page token for the next batch of Access Level instances.\nDefaults to the first page of results.",
+	//       "description": "Next page token for the next batch of Access Level instances. Defaults to the first page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy to list Access Levels from.\n\nFormat:\n`accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy to list Access Levels from. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -2894,13 +2716,11 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Update an Access Level. The longrunning
-// operation from this RPC will have a successful status once the
-// changes to
-// the Access Level have propagated
-// to long-lasting storage. Access Levels containing
-// errors will result in an error response for the first error
-// encountered.
+// Patch: Update an Access Level. The longrunning operation from this
+// RPC will have a successful status once the changes to the Access
+// Level have propagated to long-lasting storage. Access Levels
+// containing errors will result in an error response for the first
+// error encountered.
 func (r *AccessPoliciesAccessLevelsService) Patch(name string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsPatchCall {
 	c := &AccessPoliciesAccessLevelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2942,7 +2762,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3006,7 +2826,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Update an Access Level. The longrunning\noperation from this RPC will have a successful status once the changes to\nthe Access Level have propagated\nto long-lasting storage. Access Levels containing\nerrors will result in an error response for the first error encountered.",
+	//   "description": "Update an Access Level. The longrunning operation from this RPC will have a successful status once the changes to the Access Level have propagated to long-lasting storage. Access Levels containing errors will result in an error response for the first error encountered.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels/{accessLevelsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.patch",
@@ -3015,7 +2835,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the Access Level. The `short_name` component\nmust begin with a letter and only include alphanumeric and '_'. Format:\n`accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length\nof the `short_name` component is 50 characters.",
+	//       "description": "Required. Resource name for the Access Level. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length of the `short_name` component is 50 characters.",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/accessLevels/[^/]+$",
 	//       "required": true,
@@ -3053,24 +2873,15 @@ type AccessPoliciesAccessLevelsReplaceAllCall struct {
 	header_                    http.Header
 }
 
-// ReplaceAll: Replace all existing Access Levels in an Access
-// Policy with
-// the Access Levels provided. This
-// is done atomically. The longrunning operation from this RPC will have
-// a
-// successful status once all replacements have propagated to
-// long-lasting
-// storage. Replacements containing errors will result in an error
-// response
-// for the first error encountered.  Replacement will be cancelled on
-// error,
-// existing Access Levels will not be
-// affected. Operation.response field will
-// contain
-// ReplaceAccessLevelsResponse. Removing Access Levels contained in
-// existing
-// Service Perimeters will result in
-// error.
+// ReplaceAll: Replace all existing Access Levels in an Access Policy
+// with the Access Levels provided. This is done atomically. The
+// longrunning operation from this RPC will have a successful status
+// once all replacements have propagated to long-lasting storage.
+// Replacements containing errors will result in an error response for
+// the first error encountered. Replacement will be cancelled on error,
+// existing Access Levels will not be affected. Operation.response field
+// will contain ReplaceAccessLevelsResponse. Removing Access Levels
+// contained in existing Service Perimeters will result in error.
 func (r *AccessPoliciesAccessLevelsService) ReplaceAll(parent string, replaceaccesslevelsrequest *ReplaceAccessLevelsRequest) *AccessPoliciesAccessLevelsReplaceAllCall {
 	c := &AccessPoliciesAccessLevelsReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3105,7 +2916,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3169,7 +2980,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Replace all existing Access Levels in an Access\nPolicy with\nthe Access Levels provided. This\nis done atomically. The longrunning operation from this RPC will have a\nsuccessful status once all replacements have propagated to long-lasting\nstorage. Replacements containing errors will result in an error response\nfor the first error encountered.  Replacement will be cancelled on error,\nexisting Access Levels will not be\naffected. Operation.response field will contain\nReplaceAccessLevelsResponse. Removing Access Levels contained in existing\nService Perimeters will result in\nerror.",
+	//   "description": "Replace all existing Access Levels in an Access Policy with the Access Levels provided. This is done atomically. The longrunning operation from this RPC will have a successful status once all replacements have propagated to long-lasting storage. Replacements containing errors will result in an error response for the first error encountered. Replacement will be cancelled on error, existing Access Levels will not be affected. Operation.response field will contain ReplaceAccessLevelsResponse. Removing Access Levels contained in existing Service Perimeters will result in error.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/accessLevels:replaceAll",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.accessLevels.replaceAll",
@@ -3178,7 +2989,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy which owns these\nAccess Levels.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy which owns these Access Levels. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3210,28 +3021,18 @@ type AccessPoliciesServicePerimetersCommitCall struct {
 	header_                        http.Header
 }
 
-// Commit: Commit the dry-run spec for all the Service Perimeters in
-// an
-// Access Policy.
-// A commit operation on a Service Perimeter involves copying its `spec`
-// field
-// to that Service Perimeter's `status` field. Only Service Perimeters
-// with
-// `use_explicit_dry_run_spec` field set to true are affected by a
-// commit
-// operation. The longrunning operation from this RPC will have a
-// successful
-// status once the dry-run specs for all the Service Perimeters have
-// been
-// committed. If a commit fails, it will cause the longrunning operation
-// to
-// return an error response and the entire commit operation will be
-// cancelled.
-// When successful, Operation.response field will
-// contain
+// Commit: Commit the dry-run spec for all the Service Perimeters in an
+// Access Policy. A commit operation on a Service Perimeter involves
+// copying its `spec` field to that Service Perimeter's `status` field.
+// Only Service Perimeters with `use_explicit_dry_run_spec` field set to
+// true are affected by a commit operation. The longrunning operation
+// from this RPC will have a successful status once the dry-run specs
+// for all the Service Perimeters have been committed. If a commit
+// fails, it will cause the longrunning operation to return an error
+// response and the entire commit operation will be cancelled. When
+// successful, Operation.response field will contain
 // CommitServicePerimetersResponse. The `dry_run` and the `spec` fields
-// will
-// be cleared after a successful commit operation.
+// will be cleared after a successful commit operation.
 func (r *AccessPoliciesServicePerimetersService) Commit(parent string, commitserviceperimetersrequest *CommitServicePerimetersRequest) *AccessPoliciesServicePerimetersCommitCall {
 	c := &AccessPoliciesServicePerimetersCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3266,7 +3067,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3330,7 +3131,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Commit the dry-run spec for all the Service Perimeters in an\nAccess Policy.\nA commit operation on a Service Perimeter involves copying its `spec` field\nto that Service Perimeter's `status` field. Only Service Perimeters with\n`use_explicit_dry_run_spec` field set to true are affected by a commit\noperation. The longrunning operation from this RPC will have a successful\nstatus once the dry-run specs for all the Service Perimeters have been\ncommitted. If a commit fails, it will cause the longrunning operation to\nreturn an error response and the entire commit operation will be cancelled.\nWhen successful, Operation.response field will contain\nCommitServicePerimetersResponse. The `dry_run` and the `spec` fields will\nbe cleared after a successful commit operation.",
+	//   "description": "Commit the dry-run spec for all the Service Perimeters in an Access Policy. A commit operation on a Service Perimeter involves copying its `spec` field to that Service Perimeter's `status` field. Only Service Perimeters with `use_explicit_dry_run_spec` field set to true are affected by a commit operation. The longrunning operation from this RPC will have a successful status once the dry-run specs for all the Service Perimeters have been committed. If a commit fails, it will cause the longrunning operation to return an error response and the entire commit operation will be cancelled. When successful, Operation.response field will contain CommitServicePerimetersResponse. The `dry_run` and the `spec` fields will be cleared after a successful commit operation.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:commit",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.commit",
@@ -3339,7 +3140,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name for the parent Access Policy which owns all\nService Perimeters in scope for\nthe commit operation.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the parent Access Policy which owns all Service Perimeters in scope for the commit operation. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3371,12 +3172,9 @@ type AccessPoliciesServicePerimetersCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Create a Service Perimeter. The
-// longrunning operation from this RPC will have a successful status
-// once the
-// Service Perimeter has
-// propagated to long-lasting storage. Service Perimeters
-// containing
+// Create: Create a Service Perimeter. The longrunning operation from
+// this RPC will have a successful status once the Service Perimeter has
+// propagated to long-lasting storage. Service Perimeters containing
 // errors will result in an error response for the first error
 // encountered.
 func (r *AccessPoliciesServicePerimetersService) Create(parent string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersCreateCall {
@@ -3413,7 +3211,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3477,7 +3275,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nService Perimeter has\npropagated to long-lasting storage. Service Perimeters containing\nerrors will result in an error response for the first error encountered.",
+	//   "description": "Create a Service Perimeter. The longrunning operation from this RPC will have a successful status once the Service Perimeter has propagated to long-lasting storage. Service Perimeters containing errors will result in an error response for the first error encountered.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.create",
@@ -3486,7 +3284,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy which owns this Service\nPerimeter.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy which owns this Service Perimeter. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3517,11 +3315,9 @@ type AccessPoliciesServicePerimetersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a Service Perimeter by resource
-// name. The longrunning operation from this RPC will have a successful
-// status
-// once the Service Perimeter has been
-// removed from long-lasting storage.
+// Delete: Delete a Service Perimeter by resource name. The longrunning
+// operation from this RPC will have a successful status once the
+// Service Perimeter has been removed from long-lasting storage.
 func (r *AccessPoliciesServicePerimetersService) Delete(name string) *AccessPoliciesServicePerimetersDeleteCall {
 	c := &AccessPoliciesServicePerimetersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3555,7 +3351,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3614,7 +3410,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a Service Perimeter by resource\nname. The longrunning operation from this RPC will have a successful status\nonce the Service Perimeter has been\nremoved from long-lasting storage.",
+	//   "description": "Delete a Service Perimeter by resource name. The longrunning operation from this RPC will have a successful status once the Service Perimeter has been removed from long-lasting storage.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.delete",
@@ -3623,7 +3419,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the Service Perimeter.\n\nFormat:\n`accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`",
+	//       "description": "Required. Resource name for the Service Perimeter. Format: `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/servicePerimeters/[^/]+$",
 	//       "required": true,
@@ -3652,8 +3448,7 @@ type AccessPoliciesServicePerimetersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a Service Perimeter by resource
-// name.
+// Get: Get a Service Perimeter by resource name.
 func (r *AccessPoliciesServicePerimetersService) Get(name string) *AccessPoliciesServicePerimetersGetCall {
 	c := &AccessPoliciesServicePerimetersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3697,7 +3492,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3759,7 +3554,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a Service Perimeter by resource\nname.",
+	//   "description": "Get a Service Perimeter by resource name.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.get",
@@ -3768,7 +3563,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the Service Perimeter.\n\nFormat:\n`accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`",
+	//       "description": "Required. Resource name for the Service Perimeter. Format: `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/servicePerimeters/[^/]+$",
 	//       "required": true,
@@ -3797,8 +3592,7 @@ type AccessPoliciesServicePerimetersListCall struct {
 	header_      http.Header
 }
 
-// List: List all Service Perimeters for an
-// access policy.
+// List: List all Service Perimeters for an access policy.
 func (r *AccessPoliciesServicePerimetersService) List(parent string) *AccessPoliciesServicePerimetersListCall {
 	c := &AccessPoliciesServicePerimetersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3806,16 +3600,15 @@ func (r *AccessPoliciesServicePerimetersService) List(parent string) *AccessPoli
 }
 
 // PageSize sets the optional parameter "pageSize": Number of Service
-// Perimeters to include
-// in the list. Default 100.
+// Perimeters to include in the list. Default 100.
 func (c *AccessPoliciesServicePerimetersListCall) PageSize(pageSize int64) *AccessPoliciesServicePerimetersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Next page token
-// for the next batch of Service Perimeter instances.
-// Defaults to the first page of results.
+// for the next batch of Service Perimeter instances. Defaults to the
+// first page of results.
 func (c *AccessPoliciesServicePerimetersListCall) PageToken(pageToken string) *AccessPoliciesServicePerimetersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3858,7 +3651,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3920,7 +3713,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "List all Service Perimeters for an\naccess policy.",
+	//   "description": "List all Service Perimeters for an access policy.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.list",
@@ -3929,18 +3722,18 @@ func (c *AccessPoliciesServicePerimetersListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Number of Service Perimeters to include\nin the list. Default 100.",
+	//       "description": "Number of Service Perimeters to include in the list. Default 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Next page token for the next batch of Service Perimeter instances.\nDefaults to the first page of results.",
+	//       "description": "Next page token for the next batch of Service Perimeter instances. Defaults to the first page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy to list Service Perimeters from.\n\nFormat:\n`accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy to list Service Perimeters from. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -3990,14 +3783,11 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Update a Service Perimeter. The
-// longrunning operation from this RPC will have a successful status
-// once the
-// changes to the Service Perimeter have
-// propagated to long-lasting storage. Service Perimeter
-// containing
-// errors will result in an error response for the first error
-// encountered.
+// Patch: Update a Service Perimeter. The longrunning operation from
+// this RPC will have a successful status once the changes to the
+// Service Perimeter have propagated to long-lasting storage. Service
+// Perimeter containing errors will result in an error response for the
+// first error encountered.
 func (r *AccessPoliciesServicePerimetersService) Patch(name string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersPatchCall {
 	c := &AccessPoliciesServicePerimetersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4039,7 +3829,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4103,7 +3893,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a Service Perimeter. The\nlongrunning operation from this RPC will have a successful status once the\nchanges to the Service Perimeter have\npropagated to long-lasting storage. Service Perimeter containing\nerrors will result in an error response for the first error encountered.",
+	//   "description": "Update a Service Perimeter. The longrunning operation from this RPC will have a successful status once the changes to the Service Perimeter have propagated to long-lasting storage. Service Perimeter containing errors will result in an error response for the first error encountered.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters/{servicePerimetersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.patch",
@@ -4112,7 +3902,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name for the ServicePerimeter.  The `short_name`\ncomponent must begin with a letter and only include alphanumeric and '_'.\nFormat: `accessPolicies/{policy_id}/servicePerimeters/{short_name}`",
+	//       "description": "Required. Resource name for the ServicePerimeter. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/servicePerimeters/{short_name}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+/servicePerimeters/[^/]+$",
 	//       "required": true,
@@ -4150,20 +3940,14 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 	header_                         http.Header
 }
 
-// ReplaceAll: Replace all existing Service Perimeters in an
-// Access Policy
-// with the Service Perimeters provided.
-// This is done atomically. The longrunning operation from this
-// RPC will have a successful status once all replacements have
-// propagated to
-// long-lasting storage. Replacements containing errors will result in
-// an
-// error response for the first error encountered. Replacement will
-// be
-// cancelled on error, existing Service Perimeters will not be
-// affected. Operation.response field will
-// contain
-// ReplaceServicePerimetersResponse.
+// ReplaceAll: Replace all existing Service Perimeters in an Access
+// Policy with the Service Perimeters provided. This is done atomically.
+// The longrunning operation from this RPC will have a successful status
+// once all replacements have propagated to long-lasting storage.
+// Replacements containing errors will result in an error response for
+// the first error encountered. Replacement will be cancelled on error,
+// existing Service Perimeters will not be affected. Operation.response
+// field will contain ReplaceServicePerimetersResponse.
 func (r *AccessPoliciesServicePerimetersService) ReplaceAll(parent string, replaceserviceperimetersrequest *ReplaceServicePerimetersRequest) *AccessPoliciesServicePerimetersReplaceAllCall {
 	c := &AccessPoliciesServicePerimetersReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4198,7 +3982,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4262,7 +4046,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Replace all existing Service Perimeters in an\nAccess Policy\nwith the Service Perimeters provided.\nThis is done atomically. The longrunning operation from this\nRPC will have a successful status once all replacements have propagated to\nlong-lasting storage. Replacements containing errors will result in an\nerror response for the first error encountered. Replacement will be\ncancelled on error, existing Service Perimeters will not be\naffected. Operation.response field will contain\nReplaceServicePerimetersResponse.",
+	//   "description": "Replace all existing Service Perimeters in an Access Policy with the Service Perimeters provided. This is done atomically. The longrunning operation from this RPC will have a successful status once all replacements have propagated to long-lasting storage. Replacements containing errors will result in an error response for the first error encountered. Replacement will be cancelled on error, existing Service Perimeters will not be affected. Operation.response field will contain ReplaceServicePerimetersResponse.",
 	//   "flatPath": "v1/accessPolicies/{accessPoliciesId}/servicePerimeters:replaceAll",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.accessPolicies.servicePerimeters.replaceAll",
@@ -4271,7 +4055,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name for the access policy which owns these\nService Perimeters.\n\nFormat: `accessPolicies/{policy_id}`",
+	//       "description": "Required. Resource name for the access policy which owns these Service Perimeters. Format: `accessPolicies/{policy_id}`",
 	//       "location": "path",
 	//       "pattern": "^accessPolicies/[^/]+$",
 	//       "required": true,
@@ -4304,23 +4088,15 @@ type OperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4355,7 +4131,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4419,7 +4195,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "accesscontextmanager.operations.cancel",
@@ -4460,12 +4236,9 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4499,7 +4272,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4558,7 +4331,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "accesscontextmanager.operations.delete",
@@ -4596,11 +4369,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4644,7 +4415,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4706,7 +4477,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.operations.get",
@@ -4745,22 +4516,15 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4825,7 +4589,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200806")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4887,7 +4651,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "accesscontextmanager.operations.list",

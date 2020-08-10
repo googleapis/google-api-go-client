@@ -179,17 +179,11 @@ type UsersSshPublicKeysService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -230,8 +224,7 @@ func (s *ImportSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LoginProfile: The user profile information used for logging in to a
-// virtual machine on
-// Google Compute Engine.
+// virtual machine on Google Compute Engine.
 type LoginProfile struct {
 	// Name: Required. A unique user ID.
 	Name string `json:"name,omitempty"`
@@ -293,8 +286,7 @@ type PosixAccount struct {
 	//
 	// Possible values:
 	//   "OPERATING_SYSTEM_TYPE_UNSPECIFIED" - The operating system type
-	// associated with the user account information is
-	// unspecified.
+	// associated with the user account information is unspecified.
 	//   "LINUX" - Linux user account information.
 	//   "WINDOWS" - Windows user account information.
 	OperatingSystemType string `json:"operatingSystemType,omitempty"`
@@ -306,8 +298,7 @@ type PosixAccount struct {
 	Shell string `json:"shell,omitempty"`
 
 	// SystemId: System identifier for which account the username or uid
-	// applies to.
-	// By default, the empty value is used.
+	// applies to. By default, the empty value is used.
 	SystemId string `json:"systemId,omitempty"`
 
 	// Uid: The user ID.
@@ -349,10 +340,7 @@ type SshPublicKey struct {
 	// key.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Key: Public key text in SSH format, defined by
-	// <a href="https://www.ietf.org/rfc/rfc4253.txt"
-	// target="_blank">RFC4253</a>
-	// section 6.6.
+	// Key: Public key text in SSH format, defined by RFC4253 section 6.6.
 	Key string `json:"key,omitempty"`
 
 	// Name: Output only. The canonical resource name.
@@ -398,8 +386,7 @@ type UsersGetLoginProfileCall struct {
 }
 
 // GetLoginProfile: Retrieves the profile information used for logging
-// in to a virtual machine
-// on Google Compute Engine.
+// in to a virtual machine on Google Compute Engine.
 func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	c := &UsersGetLoginProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -457,7 +444,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -519,7 +506,7 @@ func (c *UsersGetLoginProfileCall) Do(opts ...googleapi.CallOption) (*LoginProfi
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the profile information used for logging in to a virtual machine\non Google Compute Engine.",
+	//   "description": "Retrieves the profile information used for logging in to a virtual machine on Google Compute Engine.",
 	//   "flatPath": "v1/users/{usersId}/loginProfile",
 	//   "httpMethod": "GET",
 	//   "id": "oslogin.users.getLoginProfile",
@@ -569,10 +556,8 @@ type UsersImportSshPublicKeyCall struct {
 }
 
 // ImportSshPublicKey: Adds an SSH public key and returns the profile
-// information. Default POSIX
-// account information is set when no username and UID exist as part of
-// the
-// login profile.
+// information. Default POSIX account information is set when no
+// username and UID exist as part of the login profile.
 func (r *UsersService) ImportSshPublicKey(parent string, sshpublickey *SshPublicKey) *UsersImportSshPublicKeyCall {
 	c := &UsersImportSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -614,7 +599,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -678,7 +663,7 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds an SSH public key and returns the profile information. Default POSIX\naccount information is set when no username and UID exist as part of the\nlogin profile.",
+	//   "description": "Adds an SSH public key and returns the profile information. Default POSIX account information is set when no username and UID exist as part of the login profile.",
 	//   "flatPath": "v1/users/{usersId}:importSshPublicKey",
 	//   "httpMethod": "POST",
 	//   "id": "oslogin.users.importSshPublicKey",
@@ -758,7 +743,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -826,7 +811,7 @@ func (c *UsersProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A reference to the POSIX account to update. POSIX accounts are identified\nby the project ID they are associated with. A reference to the POSIX\naccount is in format `users/{user}/projects/{project}`.",
+	//       "description": "Required. A reference to the POSIX account to update. POSIX accounts are identified by the project ID they are associated with. A reference to the POSIX account is in format `users/{user}/projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/projects/[^/]+$",
 	//       "required": true,
@@ -889,7 +874,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -957,7 +942,7 @@ func (c *UsersSshPublicKeysDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fingerprint of the public key to update. Public keys are identified by\ntheir SHA-256 fingerprint. The fingerprint of the public key is in format\n`users/{user}/sshPublicKeys/{fingerprint}`.",
+	//       "description": "Required. The fingerprint of the public key to update. Public keys are identified by their SHA-256 fingerprint. The fingerprint of the public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$",
 	//       "required": true,
@@ -1031,7 +1016,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1102,7 +1087,7 @@ func (c *UsersSshPublicKeysGetCall) Do(opts ...googleapi.CallOption) (*SshPublic
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fingerprint of the public key to retrieve. Public keys are identified\nby their SHA-256 fingerprint. The fingerprint of the public key is in\nformat `users/{user}/sshPublicKeys/{fingerprint}`.",
+	//       "description": "Required. The fingerprint of the public key to retrieve. Public keys are identified by their SHA-256 fingerprint. The fingerprint of the public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$",
 	//       "required": true,
@@ -1133,8 +1118,7 @@ type UsersSshPublicKeysPatchCall struct {
 }
 
 // Patch: Updates an SSH public key and returns the profile information.
-// This method
-// supports patch semantics.
+// This method supports patch semantics.
 func (r *UsersSshPublicKeysService) Patch(name string, sshpublickey *SshPublicKey) *UsersSshPublicKeysPatchCall {
 	c := &UsersSshPublicKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1176,7 +1160,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1240,7 +1224,7 @@ func (c *UsersSshPublicKeysPatchCall) Do(opts ...googleapi.CallOption) (*SshPubl
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an SSH public key and returns the profile information. This method\nsupports patch semantics.",
+	//   "description": "Updates an SSH public key and returns the profile information. This method supports patch semantics.",
 	//   "flatPath": "v1/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "oslogin.users.sshPublicKeys.patch",
@@ -1249,7 +1233,7 @@ func (c *UsersSshPublicKeysPatchCall) Do(opts ...googleapi.CallOption) (*SshPubl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fingerprint of the public key to update. Public keys are identified by\ntheir SHA-256 fingerprint. The fingerprint of the public key is in format\n`users/{user}/sshPublicKeys/{fingerprint}`.",
+	//       "description": "Required. The fingerprint of the public key to update. Public keys are identified by their SHA-256 fingerprint. The fingerprint of the public key is in format `users/{user}/sshPublicKeys/{fingerprint}`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$",
 	//       "required": true,

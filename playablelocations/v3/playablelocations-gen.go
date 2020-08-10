@@ -137,19 +137,12 @@ type V3Service struct {
 // event details.
 type GoogleMapsPlayablelocationsV3Impression struct {
 	// GameObjectType: An arbitrary, developer-defined type identifier for
-	// each type of game
-	// object used in your game.
-	//
-	// Since players interact with differ types of game objects in different
-	// ways,
-	// this field allows you to segregate impression data by type for
-	// analysis.
-	//
-	// You should assign a unique `game_object_type` ID to represent a
-	// distinct
-	// type of game object in your game.
-	//
-	// For example, 1=monster location, 2=powerup location.
+	// each type of game object used in your game. Since players interact
+	// with differ types of game objects in different ways, this field
+	// allows you to segregate impression data by type for analysis. You
+	// should assign a unique `game_object_type` ID to represent a distinct
+	// type of game object in your game. For example, 1=monster location,
+	// 2=powerup location.
 	GameObjectType int64 `json:"gameObjectType,omitempty"`
 
 	// ImpressionType: Required. The type of impression event.
@@ -191,26 +184,19 @@ func (s *GoogleMapsPlayablelocationsV3Impression) MarshalJSON() ([]byte, error) 
 // logging impressions.
 type GoogleMapsPlayablelocationsV3LogImpressionsRequest struct {
 	// ClientInfo: Required. Information about the client device. For
-	// example, device model and
-	// operating system.
+	// example, device model and operating system.
 	ClientInfo *GoogleMapsUnityClientInfo `json:"clientInfo,omitempty"`
 
 	// Impressions: Required. Impression event details. The maximum number
-	// of impression reports that you
-	// can log at once is 50.
+	// of impression reports that you can log at once is 50.
 	Impressions []*GoogleMapsPlayablelocationsV3Impression `json:"impressions,omitempty"`
 
 	// RequestId: Required. A string that uniquely identifies the log
-	// impressions request. This allows
-	// you to detect duplicate requests. We recommend that you use UUIDs for
-	// this
-	// value. The value must not exceed 50 characters.
-	//
-	// You should reuse the `request_id` only when retrying a request in
-	// case of
-	// failure. In this case, the request must be identical to the one
-	// that
-	// failed.
+	// impressions request. This allows you to detect duplicate requests. We
+	// recommend that you use UUIDs for this value. The value must not
+	// exceed 50 characters. You should reuse the `request_id` only when
+	// retrying a request in case of failure. In this case, the request must
+	// be identical to the one that failed.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
@@ -237,8 +223,7 @@ func (s *GoogleMapsPlayablelocationsV3LogImpressionsRequest) MarshalJSON() ([]by
 }
 
 // GoogleMapsPlayablelocationsV3LogImpressionsResponse: A response for
-// the LogImpressions method.
-// This method returns no data upon success.
+// the LogImpressions method. This method returns no data upon success.
 type GoogleMapsPlayablelocationsV3LogImpressionsResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -249,26 +234,19 @@ type GoogleMapsPlayablelocationsV3LogImpressionsResponse struct {
 // logging your player's bad location reports.
 type GoogleMapsPlayablelocationsV3LogPlayerReportsRequest struct {
 	// ClientInfo: Required. Information about the client device (for
-	// example, device model and
-	// operating system).
+	// example, device model and operating system).
 	ClientInfo *GoogleMapsUnityClientInfo `json:"clientInfo,omitempty"`
 
 	// PlayerReports: Required. Player reports. The maximum number of player
-	// reports that you can log at
-	// once is 50.
+	// reports that you can log at once is 50.
 	PlayerReports []*GoogleMapsPlayablelocationsV3PlayerReport `json:"playerReports,omitempty"`
 
 	// RequestId: Required. A string that uniquely identifies the log player
-	// reports request. This
-	// allows you to detect duplicate requests. We recommend that you use
-	// UUIDs
-	// for this value. The value must not exceed 50 characters.
-	//
-	// You should reuse the `request_id` only when retrying a request in the
-	// case
-	// of a failure. In that case, the request must be identical to the one
-	// that
-	// failed.
+	// reports request. This allows you to detect duplicate requests. We
+	// recommend that you use UUIDs for this value. The value must not
+	// exceed 50 characters. You should reuse the `request_id` only when
+	// retrying a request in the case of a failure. In that case, the
+	// request must be identical to the one that failed.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
@@ -295,10 +273,8 @@ func (s *GoogleMapsPlayablelocationsV3LogPlayerReportsRequest) MarshalJSON() ([]
 }
 
 // GoogleMapsPlayablelocationsV3LogPlayerReportsResponse: A response for
-// the LogPlayerReports
-// method.
-//
-// This method returns no data upon success.
+// the LogPlayerReports method. This method returns no data upon
+// success.
 type GoogleMapsPlayablelocationsV3LogPlayerReportsResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -306,15 +282,12 @@ type GoogleMapsPlayablelocationsV3LogPlayerReportsResponse struct {
 }
 
 // GoogleMapsPlayablelocationsV3PlayerReport: A report submitted by a
-// player about a playable location that is considered
-// inappropriate for use in the game.
+// player about a playable location that is considered inappropriate for
+// use in the game.
 type GoogleMapsPlayablelocationsV3PlayerReport struct {
 	// LanguageCode: Language code (in BCP-47 format) indicating the
-	// language of the freeform
-	// description provided in `reason_details`. Examples are "en", "en-US"
-	// or
-	// "ja-Latn". For more information,
-	// see
+	// language of the freeform description provided in `reason_details`.
+	// Examples are "en", "en-US" or "ja-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -322,8 +295,7 @@ type GoogleMapsPlayablelocationsV3PlayerReport struct {
 	LocationName string `json:"locationName,omitempty"`
 
 	// ReasonDetails: Required. A free-form description detailing why the
-	// playable location is
-	// considered bad.
+	// playable location is considered bad.
 	ReasonDetails string `json:"reasonDetails,omitempty"`
 
 	// Reasons: Required. One or more reasons why this playable location is
@@ -333,17 +305,15 @@ type GoogleMapsPlayablelocationsV3PlayerReport struct {
 	//   "BAD_LOCATION_REASON_UNSPECIFIED" - Unspecified reason. Do not use.
 	//   "OTHER" - The reason isn't one of the reasons in this enumeration.
 	//   "NOT_PEDESTRIAN_ACCESSIBLE" - The playable location isn't
-	// accessible to pedestrians. For example, if
-	// it's in the middle of a highway.
+	// accessible to pedestrians. For example, if it's in the middle of a
+	// highway.
 	//   "NOT_OPEN_TO_PUBLIC" - The playable location isn't open to the
-	// public. For example, a private
-	// office building.
+	// public. For example, a private office building.
 	//   "PERMANENTLY_CLOSED" - The playable location is permanently closed.
-	// For example, when a business
-	// has been shut down.
+	// For example, when a business has been shut down.
 	//   "TEMPORARILY_INACCESSIBLE" - The playable location is temporarily
-	// inaccessible. For example, when a
-	// business has closed for renovations.
+	// inaccessible. For example, when a business has closed for
+	// renovations.
 	Reasons []string `json:"reasons,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -373,19 +343,13 @@ func (s *GoogleMapsPlayablelocationsV3PlayerReport) MarshalJSON() ([]byte, error
 // search for playable locations.
 type GoogleMapsPlayablelocationsV3SampleAreaFilter struct {
 	// S2CellId: Required. The S2 cell ID of the area you want. This must be
-	// between cell level 11 and
-	// 14 (inclusive).
-	//
-	// S2 cells are 64-bit integers that identify areas on the Earth. They
-	// are
-	// hierarchical, and can therefore be used for spatial indexing.
-	//
-	// The S2 geometry library is available in a number of languages:
-	//
-	//   * [C++](https://github.com/google/s2geometry)
-	//   * [Java](https://github.com/google/s2-geometry-library-java)
-	//   * [Go](https://github.com/golang/geo)
-	//   *
+	// between cell level 11 and 14 (inclusive). S2 cells are 64-bit
+	// integers that identify areas on the Earth. They are hierarchical, and
+	// can therefore be used for spatial indexing. The S2 geometry library
+	// is available in a number of languages: *
+	// [C++](https://github.com/google/s2geometry) *
+	// [Java](https://github.com/google/s2-geometry-library-java) *
+	// [Go](https://github.com/golang/geo) *
 	// [Python](https://github.com/google/s2geometry/tree/master/src/python)
 	S2CellId uint64 `json:"s2CellId,omitempty,string"`
 
@@ -413,45 +377,27 @@ func (s *GoogleMapsPlayablelocationsV3SampleAreaFilter) MarshalJSON() ([]byte, e
 }
 
 // GoogleMapsPlayablelocationsV3SampleCriterion: Encapsulates a filter
-// criterion for searching for a set of playable
-// locations.
+// criterion for searching for a set of playable locations.
 type GoogleMapsPlayablelocationsV3SampleCriterion struct {
 	// FieldsToReturn: Specifies which `PlayableLocation` fields are
-	// returned.
-	//
-	// `name` (which is used for logging impressions), `center_point`
-	// and
-	// `place_id` (or `plus_code`) are always returned.
-	//
-	// The following fields are omitted unless you specify them here:
-	//
-	//   * snapped_point
-	//   * types
-	//
-	// Note: The more fields you include, the more expensive in terms of
-	// data and
-	// associated latency your query will be.
+	// returned. `name` (which is used for logging impressions),
+	// `center_point` and `place_id` (or `plus_code`) are always returned.
+	// The following fields are omitted unless you specify them here: *
+	// snapped_point * types Note: The more fields you include, the more
+	// expensive in terms of data and associated latency your query will be.
 	FieldsToReturn string `json:"fieldsToReturn,omitempty"`
 
 	// Filter: Specifies filtering options, and specifies what will be
-	// included in the
-	// result set.
+	// included in the result set.
 	Filter *GoogleMapsPlayablelocationsV3SampleFilter `json:"filter,omitempty"`
 
 	// GameObjectType: Required. An arbitrary, developer-defined identifier
-	// of the type of game object that
-	// the playable location is used for. This field allows you to
-	// specify
-	// criteria per game object type when searching for playable
-	// locations.
-	//
-	// You should assign a unique `game_object_type` ID across
-	// all
-	// `request_criteria` to represent a distinct type of game object.
-	// For
-	// example, 1=monster location, 2=powerup location.
-	//
-	// The response contains a map<game_object_type, Response>.
+	// of the type of game object that the playable location is used for.
+	// This field allows you to specify criteria per game object type when
+	// searching for playable locations. You should assign a unique
+	// `game_object_type` ID across all `request_criteria` to represent a
+	// distinct type of game object. For example, 1=monster location,
+	// 2=powerup location. The response contains a map.
 	GameObjectType int64 `json:"gameObjectType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldsToReturn") to
@@ -481,21 +427,17 @@ func (s *GoogleMapsPlayablelocationsV3SampleCriterion) MarshalJSON() ([]byte, er
 // GoogleMapsPlayablelocationsV3SampleFilter: Specifies the filters to
 // use when searching for playable locations.
 type GoogleMapsPlayablelocationsV3SampleFilter struct {
-	// IncludedTypes: Restricts the set of playable locations to just
-	// the
+	// IncludedTypes: Restricts the set of playable locations to just the
 	// [types](/maps/documentation/gaming/tt/types) that you want.
 	IncludedTypes []string `json:"includedTypes,omitempty"`
 
 	// MaxLocationCount: Specifies the maximum number of playable locations
-	// to return. This value
-	// must not be greater than 1000. The default value is 100.
-	//
-	// Only the top-ranking playable locations are returned.
+	// to return. This value must not be greater than 1000. The default
+	// value is 100. Only the top-ranking playable locations are returned.
 	MaxLocationCount int64 `json:"maxLocationCount,omitempty"`
 
 	// Spacing: A set of options that control the spacing between playable
-	// locations. By
-	// default the minimum distance between locations is 200m.
+	// locations. By default the minimum distance between locations is 200m.
 	Spacing *GoogleMapsPlayablelocationsV3SampleSpacingOptions `json:"spacing,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludedTypes") to
@@ -522,17 +464,12 @@ func (s *GoogleMapsPlayablelocationsV3SampleFilter) MarshalJSON() ([]byte, error
 }
 
 // GoogleMapsPlayablelocationsV3SamplePlayableLocation: A geographical
-// point suitable for placing game objects in location-based
-// games.
+// point suitable for placing game objects in location-based games.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocation struct {
 	// CenterPoint: Required. The latitude and longitude associated with the
-	// center of the playable
-	// location.
-	//
-	// By default, the set of playable locations returned
-	// from
-	// SamplePlayableLocations use
-	// center-point coordinates.
+	// center of the playable location. By default, the set of playable
+	// locations returned from SamplePlayableLocations use center-point
+	// coordinates.
 	CenterPoint *GoogleTypeLatLng `json:"centerPoint,omitempty"`
 
 	// Name: Required. The name of this playable location.
@@ -545,17 +482,13 @@ type GoogleMapsPlayablelocationsV3SamplePlayableLocation struct {
 	PlusCode string `json:"plusCode,omitempty"`
 
 	// SnappedPoint: The playable location's coordinates, snapped to the
-	// sidewalk of the
-	// nearest road, if a nearby road exists.
+	// sidewalk of the nearest road, if a nearby road exists.
 	SnappedPoint *GoogleTypeLatLng `json:"snappedPoint,omitempty"`
 
-	// Types: A collection of [Playable
-	// Location
+	// Types: A collection of [Playable Location
 	// Types](/maps/documentation/gaming/tt/types) for this playable
-	// location. The
-	// first type in the collection is the primary type.
-	//
-	// Type information might not be available for all playable locations.
+	// location. The first type in the collection is the primary type. Type
+	// information might not be available for all playable locations.
 	Types []string `json:"types,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CenterPoint") to
@@ -610,47 +543,29 @@ func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationList) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest:
-// Life of a query:
-//
-// - When a game starts in a new location, your game server issues
-// a
-// SamplePlayableLocations
-// request. The request specifies the S2 cell, and contains one or
-// more
-// "criteria" for filtering:
-//
-// - Criterion 0: i locations for long-lived bases, or level 0 monsters,
-// or...
-// - Criterion 1: j locations for short-lived bases, or level 1
-// monsters, ...
-// - Criterion 2: k locations for random objects.
-// - etc (up to 5 criterion may be specified).
-//
-// `PlayableLocationList` will then contain mutually
-// exclusive lists of `PlayableLocation` objects that satisfy each
-// of
-// the criteria. Think of it as a collection of real-world locations
-// that you
-// can then associate with your game state.
-//
-// Note: These points are impermanent in nature. E.g, parks can close,
-// and
-// places can be removed.
-//
-// The response specifies how long you can expect the playable locations
-// to
-// last. Once they expire, you should query the
-// `samplePlayableLocations` API
-// again to get a fresh view of the real world.
+// GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest:  Life of
+// a query: - When a game starts in a new location, your game server
+// issues a SamplePlayableLocations request. The request specifies the
+// S2 cell, and contains one or more "criteria" for filtering: -
+// Criterion 0: i locations for long-lived bases, or level 0 monsters,
+// or... - Criterion 1: j locations for short-lived bases, or level 1
+// monsters, ... - Criterion 2: k locations for random objects. - etc
+// (up to 5 criterion may be specified). `PlayableLocationList` will
+// then contain mutually exclusive lists of `PlayableLocation` objects
+// that satisfy each of the criteria. Think of it as a collection of
+// real-world locations that you can then associate with your game
+// state. Note: These points are impermanent in nature. E.g, parks can
+// close, and places can be removed. The response specifies how long you
+// can expect the playable locations to last. Once they expire, you
+// should query the `samplePlayableLocations` API again to get a fresh
+// view of the real world.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest struct {
 	// AreaFilter: Required. Specifies the area to search within for
 	// playable locations.
 	AreaFilter *GoogleMapsPlayablelocationsV3SampleAreaFilter `json:"areaFilter,omitempty"`
 
 	// Criteria: Required. Specifies one or more (up to 5) criteria for
-	// filtering the
-	// returned playable locations.
+	// filtering the returned playable locations.
 	Criteria []*GoogleMapsPlayablelocationsV3SampleCriterion `json:"criteria,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AreaFilter") to
@@ -677,28 +592,19 @@ func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest) MarshalJSO
 }
 
 // GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse:
-//
-// Response for the
-// SamplePlayableLocations
-// method.
+// Response for the SamplePlayableLocations method.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse struct {
 	// LocationsPerGameObjectType: Each PlayableLocation object corresponds
-	// to a game_object_type specified
-	// in the request.
+	// to a game_object_type specified in the request.
 	LocationsPerGameObjectType map[string]GoogleMapsPlayablelocationsV3SamplePlayableLocationList `json:"locationsPerGameObjectType,omitempty"`
 
 	// Ttl: Required. Specifies the "time-to-live" for the set of playable
-	// locations. You can use
-	// this value to determine how long to cache the set of playable
-	// locations.
-	// After this length of time, your back-end game server should issue a
-	// new
-	// SamplePlayableLocations
-	// request to get a fresh set of playable locations (because for
-	// example, they
-	// might have been removed, a park might have closed for the day,
-	// a
-	// business might have closed permanently).
+	// locations. You can use this value to determine how long to cache the
+	// set of playable locations. After this length of time, your back-end
+	// game server should issue a new SamplePlayableLocations request to get
+	// a fresh set of playable locations (because for example, they might
+	// have been removed, a park might have closed for the day, a business
+	// might have closed permanently).
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -734,64 +640,28 @@ func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse) MarshalJS
 // that specifies the separation between playable locations.
 type GoogleMapsPlayablelocationsV3SampleSpacingOptions struct {
 	// MinSpacingMeters: Required. The minimum spacing between any two
-	// playable locations, measured in meters.
-	// The minimum value is 30.
-	// The maximum value is 1000.
-	//
-	// Inputs will be rounded up to the next 10 meter interval.
-	//
-	// The default value is 200m.
-	//
-	// Set this field to remove tight clusters of playable
-	// locations.
-	//
-	// Note:
-	//
-	// The spacing is a greedy algorithm. It optimizes for selecting the
-	// highest
-	// ranking locations first, not to maximize the number of locations
-	// selected.
-	// Consider the following scenario:
-	//
-	//   * Rank: A: 2, B: 1, C: 3.
-	//   * Distance: A--200m--B--200m--C
-	//
-	// If spacing=250, it will pick the highest ranked location [B], not [A,
-	// C].
-	//
-	//
-	// Note:
-	//
-	// Spacing works within the game object type itself, as well as the
-	// previous
-	// ones.
-	// Suppose three game object types, each with the following spacing:
-	//
-	//   * X: 400m, Y: undefined, Z: 200m.
-	//
-	// 1. Add locations for X, within 400m of each other.
-	// 2. Add locations for Y, without any spacing.
-	// 3. Finally, add locations for Z within 200m of each other as well X
-	// and Y.
-	//
-	// The distance diagram between those locations end up as:
-	//
-	//   * From->To.
-	//   * X->X: 400m
-	//   * Y->X, Y->Y: unspecified.
-	//   * Z->X, Z->Y, Z->Z: 200m.
+	// playable locations, measured in meters. The minimum value is 30. The
+	// maximum value is 1000. Inputs will be rounded up to the next 10 meter
+	// interval. The default value is 200m. Set this field to remove tight
+	// clusters of playable locations. Note: The spacing is a greedy
+	// algorithm. It optimizes for selecting the highest ranking locations
+	// first, not to maximize the number of locations selected. Consider the
+	// following scenario: * Rank: A: 2, B: 1, C: 3. * Distance:
+	// A--200m--B--200m--C If spacing=250, it will pick the highest ranked
+	// location [B], not [A, C]. Note: Spacing works within the game object
+	// type itself, as well as the previous ones. Suppose three game object
+	// types, each with the following spacing: * X: 400m, Y: undefined, Z:
+	// 200m. 1. Add locations for X, within 400m of each other. 2. Add
+	// locations for Y, without any spacing. 3. Finally, add locations for Z
+	// within 200m of each other as well X and Y. The distance diagram
+	// between those locations end up as: * From->To. * X->X: 400m * Y->X,
+	// Y->Y: unspecified. * Z->X, Z->Y, Z->Z: 200m.
 	MinSpacingMeters float64 `json:"minSpacingMeters,omitempty"`
 
 	// PointType: Specifies whether the minimum spacing constraint applies
-	// to the
-	// center-point or to the snapped point of playable locations. The
-	// default
-	// value is `CENTER_POINT`.
-	//
-	// If a snapped point is not available for a playable location,
-	// its
-	// center-point is used instead.
-	//
+	// to the center-point or to the snapped point of playable locations.
+	// The default value is `CENTER_POINT`. If a snapped point is not
+	// available for a playable location, its center-point is used instead.
 	// Set this to the point type used in your game.
 	//
 	// Possible values:
@@ -800,8 +670,8 @@ type GoogleMapsPlayablelocationsV3SampleSpacingOptions struct {
 	//   "CENTER_POINT" - The geographic coordinates correspond to the
 	// center of the location.
 	//   "SNAPPED_POINT" - The geographic coordinates correspond to the
-	// location snapped to the
-	// sidewalk of the nearest road (when a nearby road exists).
+	// location snapped to the sidewalk of the nearest road (when a nearby
+	// road exists).
 	PointType string `json:"pointType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinSpacingMeters") to
@@ -845,42 +715,35 @@ func (s *GoogleMapsPlayablelocationsV3SampleSpacingOptions) UnmarshalJSON(data [
 // GoogleMapsUnityClientInfo: Client information.
 type GoogleMapsUnityClientInfo struct {
 	// ApiClient: API client name and version. For example, the SDK calling
-	// the API. The
-	// exact format is up to the client.
+	// the API. The exact format is up to the client.
 	ApiClient string `json:"apiClient,omitempty"`
 
 	// ApplicationId: Application ID, such as the package name on Android
-	// and the bundle
-	// identifier on iOS platforms.
+	// and the bundle identifier on iOS platforms.
 	ApplicationId string `json:"applicationId,omitempty"`
 
 	// ApplicationVersion: Application version number, such as "1.2.3". The
-	// exact format is
-	// application-dependent.
+	// exact format is application-dependent.
 	ApplicationVersion string `json:"applicationVersion,omitempty"`
 
 	// DeviceModel: Device model as reported by the device. The exact format
-	// is
-	// platform-dependent.
+	// is platform-dependent.
 	DeviceModel string `json:"deviceModel,omitempty"`
 
 	// LanguageCode: Language code (in BCP-47 format) indicating the UI
-	// language of the client.
-	// Examples are "en", "en-US" or "ja-Latn". For more information,
-	// see
+	// language of the client. Examples are "en", "en-US" or "ja-Latn". For
+	// more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// OperatingSystem: Operating system name and version as reported by the
-	// OS. For example,
-	// "Mac OS X 10.10.4". The exact format is platform-dependent.
+	// OS. For example, "Mac OS X 10.10.4". The exact format is
+	// platform-dependent.
 	OperatingSystem string `json:"operatingSystem,omitempty"`
 
 	// OperatingSystemBuild: Build number/version of the operating system.
-	// e.g., the contents of
-	// android.os.Build.ID in Android, or the contents of sysctl
-	// "kern.osversion"
-	// in iOS.
+	// e.g., the contents of android.os.Build.ID in Android, or the contents
+	// of sysctl "kern.osversion" in iOS.
 	OperatingSystemBuild string `json:"operatingSystemBuild,omitempty"`
 
 	// Platform: Platform where the application is running.
@@ -920,14 +783,9 @@ func (s *GoogleMapsUnityClientInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleTypeLatLng: An object representing a latitude/longitude pair.
-// This is expressed as a pair
-// of doubles representing degrees latitude and degrees longitude.
-// Unless
-// specified otherwise, this must conform to the
-// <a
-// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-// st
-// andard</a>. Values must be within normalized ranges.
+// This is expressed as a pair of doubles representing degrees latitude
+// and degrees longitude. Unless specified otherwise, this must conform
+// to the WGS84 standard. Values must be within normalized ranges.
 type GoogleTypeLatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -987,13 +845,9 @@ type V3LogImpressionsCall struct {
 }
 
 // LogImpressions: Logs new events when playable locations are
-// displayed, and when they are
-// interacted with.
-//
-// Impressions are not partially saved; either all impressions are saved
-// and
-// this request succeeds, or no impressions are saved, and this request
-// fails.
+// displayed, and when they are interacted with. Impressions are not
+// partially saved; either all impressions are saved and this request
+// succeeds, or no impressions are saved, and this request fails.
 func (r *V3Service) LogImpressions(googlemapsplayablelocationsv3logimpressionsrequest *GoogleMapsPlayablelocationsV3LogImpressionsRequest) *V3LogImpressionsCall {
 	c := &V3LogImpressionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlemapsplayablelocationsv3logimpressionsrequest = googlemapsplayablelocationsv3logimpressionsrequest
@@ -1027,7 +881,7 @@ func (c *V3LogImpressionsCall) Header() http.Header {
 
 func (c *V3LogImpressionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1090,7 +944,7 @@ func (c *V3LogImpressionsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlay
 	}
 	return ret, nil
 	// {
-	//   "description": "Logs new events when playable locations are displayed, and when they are\ninteracted with.\n\nImpressions are not partially saved; either all impressions are saved and\nthis request succeeds, or no impressions are saved, and this request fails.",
+	//   "description": "Logs new events when playable locations are displayed, and when they are interacted with. Impressions are not partially saved; either all impressions are saved and this request succeeds, or no impressions are saved, and this request fails.",
 	//   "flatPath": "v3:logImpressions",
 	//   "httpMethod": "POST",
 	//   "id": "playablelocations.logImpressions",
@@ -1118,11 +972,9 @@ type V3LogPlayerReportsCall struct {
 }
 
 // LogPlayerReports: Logs bad playable location reports submitted by
-// players.
-//
-// Reports are not partially saved; either all reports are saved and
-// this
-// request succeeds, or no reports are saved, and this request fails.
+// players. Reports are not partially saved; either all reports are
+// saved and this request succeeds, or no reports are saved, and this
+// request fails.
 func (r *V3Service) LogPlayerReports(googlemapsplayablelocationsv3logplayerreportsrequest *GoogleMapsPlayablelocationsV3LogPlayerReportsRequest) *V3LogPlayerReportsCall {
 	c := &V3LogPlayerReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlemapsplayablelocationsv3logplayerreportsrequest = googlemapsplayablelocationsv3logplayerreportsrequest
@@ -1156,7 +1008,7 @@ func (c *V3LogPlayerReportsCall) Header() http.Header {
 
 func (c *V3LogPlayerReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1219,7 +1071,7 @@ func (c *V3LogPlayerReportsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPl
 	}
 	return ret, nil
 	// {
-	//   "description": "Logs bad playable location reports submitted by players.\n\nReports are not partially saved; either all reports are saved and this\nrequest succeeds, or no reports are saved, and this request fails.",
+	//   "description": "Logs bad playable location reports submitted by players. Reports are not partially saved; either all reports are saved and this request succeeds, or no reports are saved, and this request fails.",
 	//   "flatPath": "v3:logPlayerReports",
 	//   "httpMethod": "POST",
 	//   "id": "playablelocations.logPlayerReports",
@@ -1247,11 +1099,8 @@ type V3SamplePlayableLocationsCall struct {
 }
 
 // SamplePlayableLocations: Returns a set of playable locations that lie
-// within a specified area,
-// that satisfy optional filter criteria.
-//
-// Note: Identical `SamplePlayableLocations` requests can return
-// different
+// within a specified area, that satisfy optional filter criteria. Note:
+// Identical `SamplePlayableLocations` requests can return different
 // results as the state of the world changes over time.
 func (r *V3Service) SamplePlayableLocations(googlemapsplayablelocationsv3sampleplayablelocationsrequest *GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest) *V3SamplePlayableLocationsCall {
 	c := &V3SamplePlayableLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1286,7 +1135,7 @@ func (c *V3SamplePlayableLocationsCall) Header() http.Header {
 
 func (c *V3SamplePlayableLocationsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1350,7 +1199,7 @@ func (c *V3SamplePlayableLocationsCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a set of playable locations that lie within a specified area,\nthat satisfy optional filter criteria.\n\nNote: Identical `SamplePlayableLocations` requests can return different\nresults as the state of the world changes over time.",
+	//   "description": "Returns a set of playable locations that lie within a specified area, that satisfy optional filter criteria. Note: Identical `SamplePlayableLocations` requests can return different results as the state of the world changes over time.",
 	//   "flatPath": "v3:samplePlayableLocations",
 	//   "httpMethod": "POST",
 	//   "id": "playablelocations.samplePlayableLocations",

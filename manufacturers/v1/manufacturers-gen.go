@@ -156,86 +156,70 @@ type AccountsProductsService struct {
 	s *Service
 }
 
-// Attributes: Attributes of the product. For more information,
-// see
+// Attributes: Attributes of the product. For more information, see
 // https://support.google.com/manufacturers/answer/6124116.
 type Attributes struct {
 	// AdditionalImageLink: The additional images of the product. For more
-	// information,
-	// see
+	// information, see
 	// https://support.google.com/manufacturers/answer/6124116#addlimage.
 	AdditionalImageLink []*Image `json:"additionalImageLink,omitempty"`
 
 	// AgeGroup: The target age group of the product. For more information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#agegroup.
+	// see https://support.google.com/manufacturers/answer/6124116#agegroup.
 	AgeGroup string `json:"ageGroup,omitempty"`
 
-	// Brand: The brand name of the product. For more information,
-	// see
+	// Brand: The brand name of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#brand.
 	Brand string `json:"brand,omitempty"`
 
-	// Capacity: The capacity of the product. For more information,
-	// see
+	// Capacity: The capacity of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#capacity.
 	Capacity *Capacity `json:"capacity,omitempty"`
 
-	// Color: The color of the product. For more information,
-	// see
+	// Color: The color of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#color.
 	Color string `json:"color,omitempty"`
 
-	// Count: The count of the product. For more information,
-	// see
+	// Count: The count of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#count.
 	Count *Count `json:"count,omitempty"`
 
 	// Description: The description of the product. For more information,
 	// see
-	// https://support.google.com/manufacturers/answer/6124116#descriptio
-	// n.
+	// https://support.google.com/manufacturers/answer/6124116#description.
 	Description string `json:"description,omitempty"`
 
 	// DisclosureDate: The disclosure date of the product. For more
-	// information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#disclosure
-	// .
+	// information, see
+	// https://support.google.com/manufacturers/answer/6124116#disclosure.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
 
 	// ExcludedDestination: A list of excluded destinations.
 	ExcludedDestination []string `json:"excludedDestination,omitempty"`
 
 	// FeatureDescription: The rich format description of the product. For
-	// more information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#featuredes
-	// c.
+	// more information, see
+	// https://support.google.com/manufacturers/answer/6124116#featuredesc.
 	FeatureDescription []*FeatureDescription `json:"featureDescription,omitempty"`
 
-	// Flavor: The flavor of the product. For more information,
-	// see
+	// Flavor: The flavor of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#flavor.
 	Flavor string `json:"flavor,omitempty"`
 
-	// Format: The format of the product. For more information,
-	// see
+	// Format: The format of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#format.
 	Format string `json:"format,omitempty"`
 
-	// Gender: The target gender of the product. For more information,
-	// see
+	// Gender: The target gender of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#gender.
 	Gender string `json:"gender,omitempty"`
 
 	// Gtin: The Global Trade Item Number (GTIN) of the product. For more
-	// information,
-	// see https://support.google.com/manufacturers/answer/6124116#gtin.
+	// information, see
+	// https://support.google.com/manufacturers/answer/6124116#gtin.
 	Gtin []string `json:"gtin,omitempty"`
 
-	// ImageLink: The image of the product. For more information,
-	// see
+	// ImageLink: The image of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#image.
 	ImageLink *Image `json:"imageLink,omitempty"`
 
@@ -244,111 +228,88 @@ type Attributes struct {
 
 	// ItemGroupId: The item group id of the product. For more information,
 	// see
-	// https://support.google.com/manufacturers/answer/6124116#itemgroupi
-	// d.
+	// https://support.google.com/manufacturers/answer/6124116#itemgroupid.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
 
-	// Material: The material of the product. For more information,
-	// see
+	// Material: The material of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#material.
 	Material string `json:"material,omitempty"`
 
 	// Mpn: The Manufacturer Part Number (MPN) of the product. For more
-	// information,
-	// see https://support.google.com/manufacturers/answer/6124116#mpn.
+	// information, see
+	// https://support.google.com/manufacturers/answer/6124116#mpn.
 	Mpn string `json:"mpn,omitempty"`
 
-	// Pattern: The pattern of the product. For more information,
-	// see
+	// Pattern: The pattern of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#pattern.
 	Pattern string `json:"pattern,omitempty"`
 
-	// ProductDetail: The details of the product. For more information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#productdet
-	// ail.
+	// ProductDetail: The details of the product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#productdetail.
 	ProductDetail []*ProductDetail `json:"productDetail,omitempty"`
 
 	// ProductLine: The name of the group of products related to the
-	// product. For more
-	// information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#productlin
-	// e.
+	// product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#productline.
 	ProductLine string `json:"productLine,omitempty"`
 
 	// ProductName: The canonical name of the product. For more information,
 	// see
-	// https://support.google.com/manufacturers/answer/6124116#productnam
-	// e.
+	// https://support.google.com/manufacturers/answer/6124116#productname.
 	ProductName string `json:"productName,omitempty"`
 
 	// ProductPageUrl: The URL of the detail page of the product. For more
-	// information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#productpag
-	// e.
+	// information, see
+	// https://support.google.com/manufacturers/answer/6124116#productpage.
 	ProductPageUrl string `json:"productPageUrl,omitempty"`
 
 	// ProductType: The type or category of the product. For more
-	// information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#producttyp
-	// e.
+	// information, see
+	// https://support.google.com/manufacturers/answer/6124116#producttype.
 	ProductType []string `json:"productType,omitempty"`
 
 	// ReleaseDate: The release date of the product. For more information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#release.
+	// see https://support.google.com/manufacturers/answer/6124116#release.
 	ReleaseDate string `json:"releaseDate,omitempty"`
 
-	// RichProductContent: Rich product content. For more information,
-	// see
+	// RichProductContent: Rich product content. For more information, see
 	// https://support.google.com/manufacturers/answer/9389865
 	RichProductContent []string `json:"richProductContent,omitempty"`
 
 	// Scent: The scent of the product. For more information, see
-	//  https://support.google.com/manufacturers/answer/6124116#scent.
+	// https://support.google.com/manufacturers/answer/6124116#scent.
 	Scent string `json:"scent,omitempty"`
 
-	// Size: The size of the product. For more information,
-	// see
+	// Size: The size of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#size.
 	Size string `json:"size,omitempty"`
 
-	// SizeSystem: The size system of the product. For more information,
-	// see
-	// https://support.google.com/manufacturers/answer/6124116#sizesystem
-	// .
+	// SizeSystem: The size system of the product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#sizesystem.
 	SizeSystem string `json:"sizeSystem,omitempty"`
 
-	// SizeType: The size type of the product. For more information,
-	// see
+	// SizeType: The size type of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#sizetype.
 	SizeType string `json:"sizeType,omitempty"`
 
 	// SuggestedRetailPrice: The suggested retail price (MSRP) of the
-	// product. For more information,
-	// see https://support.google.com/manufacturers/answer/6124116#price.
+	// product. For more information, see
+	// https://support.google.com/manufacturers/answer/6124116#price.
 	SuggestedRetailPrice *Price `json:"suggestedRetailPrice,omitempty"`
 
 	// TargetClientId: The target client id. Should only be used in the
-	// accounts of the data
-	// partners.
+	// accounts of the data partners.
 	TargetClientId string `json:"targetClientId,omitempty"`
 
-	// Theme: The theme of the product. For more information,
-	// see
+	// Theme: The theme of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#theme.
 	Theme string `json:"theme,omitempty"`
 
-	// Title: The title of the product. For more information,
-	// see
+	// Title: The title of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#title.
 	Title string `json:"title,omitempty"`
 
-	// VideoLink: The videos of the product. For more information,
-	// see
+	// VideoLink: The videos of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#video.
 	VideoLink []string `json:"videoLink,omitempty"`
 
@@ -376,8 +337,7 @@ func (s *Attributes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Capacity: The capacity of a product. For more information,
-// see
+// Capacity: The capacity of a product. For more information, see
 // https://support.google.com/manufacturers/answer/6124116#capacity.
 type Capacity struct {
 	// Unit: The unit of the capacity, i.e., MB, GB, or TB.
@@ -410,8 +370,7 @@ func (s *Capacity) MarshalJSON() ([]byte, error) {
 }
 
 // Count: The number of products in a single package. For more
-// information,
-// see
+// information, see
 // https://support.google.com/manufacturers/answer/6124116#count.
 type Count struct {
 	// Unit: The unit in which these products are counted.
@@ -482,17 +441,11 @@ func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -500,10 +453,8 @@ type Empty struct {
 }
 
 // FeatureDescription: A feature description of the product. For more
-// information,
-// see
-// https://support.google.com/manufacturers/answer/6124116#featuredes
-// c.
+// information, see
+// https://support.google.com/manufacturers/answer/6124116#featuredesc.
 type FeatureDescription struct {
 	// Headline: A short description of the feature.
 	Headline string `json:"headline,omitempty"`
@@ -540,14 +491,11 @@ func (s *FeatureDescription) MarshalJSON() ([]byte, error) {
 // Image: An image.
 type Image struct {
 	// ImageUrl: The URL of the image. For crawled images, this is the
-	// provided URL. For
-	// uploaded images, this is a serving URL from Google if the image has
-	// been
-	// processed successfully.
+	// provided URL. For uploaded images, this is a serving URL from Google
+	// if the image has been processed successfully.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// Status: The status of the image.
-	// @OutputOnly
+	// Status: The status of the image. @OutputOnly
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The image status is unspecified. Should not
@@ -571,8 +519,7 @@ type Image struct {
 	//   "HTTP_404" - The image URL returned a "404 Not Found" error.
 	Status string `json:"status,omitempty"`
 
-	// Type: The type of the image, i.e., crawled or uploaded.
-	// @OutputOnly
+	// Type: The type of the image, i.e., crawled or uploaded. @OutputOnly
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Type is unspecified. Should not be used.
@@ -606,9 +553,7 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 // Issue: Product issue.
 type Issue struct {
 	// Attribute: If present, the attribute that triggered the issue. For
-	// more information
-	// about attributes,
-	// see
+	// more information about attributes, see
 	// https://support.google.com/manufacturers/answer/6124116.
 	Attribute string `json:"attribute,omitempty"`
 
@@ -624,13 +569,11 @@ type Issue struct {
 	// Possible values:
 	//   "RESOLUTION_UNSPECIFIED" - Unspecified resolution, never used.
 	//   "USER_ACTION" - The user who provided the data must act in order to
-	// resolve the issue
-	// (for example by correcting some data).
+	// resolve the issue (for example by correcting some data).
 	//   "PENDING_PROCESSING" - The issue will be resolved automatically
-	// (for example image crawl or
-	// Google review). No action is required now. Resolution might lead
-	// to
-	// another issue (for example if crawl fails).
+	// (for example image crawl or Google review). No action is required
+	// now. Resolution might lead to another issue (for example if crawl
+	// fails).
 	Resolution string `json:"resolution,omitempty"`
 
 	// Severity: The severity of the issue.
@@ -640,15 +583,11 @@ type Issue struct {
 	//   "ERROR" - Error severity. The issue prevents the usage of the whole
 	// item.
 	//   "WARNING" - Warning severity. The issue is either one that prevents
-	// the usage of the
-	// attribute that triggered it or one that will soon prevent the usage
-	// of
-	// the whole item.
+	// the usage of the attribute that triggered it or one that will soon
+	// prevent the usage of the whole item.
 	//   "INFO" - Info severity. The issue is one that doesn't require
-	// immediate attention.
-	// It is, for example, used to communicate which attributes are
-	// still
-	// pending review.
+	// immediate attention. It is, for example, used to communicate which
+	// attributes are still pending review.
 	Severity string `json:"severity,omitempty"`
 
 	// Timestamp: The timestamp when this issue appeared.
@@ -657,8 +596,7 @@ type Issue struct {
 	// Title: Short title describing the nature of the issue.
 	Title string `json:"title,omitempty"`
 
-	// Type: The server-generated type of the issue, for
-	// example,
+	// Type: The server-generated type of the issue, for example,
 	// “INCORRECT_TEXT_FORMATTING”, “IMAGE_NOT_SERVEABLE”, etc.
 	Type string `json:"type,omitempty"`
 
@@ -754,13 +692,11 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 // Product: Product data.
 type Product struct {
 	// Attributes: Attributes of the product uploaded to the Manufacturer
-	// Center. Manually
-	// edited attributes are taken into account.
+	// Center. Manually edited attributes are taken into account.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// ContentLanguage: The content language of the product as a two-letter
-	// ISO 639-1 language code
-	// (for example, en).
+	// ISO 639-1 language code (for example, en).
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// DestinationStatuses: The status of the destinations.
@@ -771,37 +707,24 @@ type Product struct {
 	Issues []*Issue `json:"issues,omitempty"`
 
 	// Name: Name in the format
-	// `{target_country}:{content_language}:{product_id}`.
-	//
-	// `target_country`   - The target country of the product as a CLDR
-	// territory
-	//                      code (for example, US).
-	//
-	// `content_language` - The content language of the product as a
-	// two-letter
-	//                      ISO 639-1 language code (for example,
-	// en).
-	//
-	// `product_id`     -   The ID of the product. For more information,
-	// see
-	//
+	// `{target_country}:{content_language}:{product_id}`. `target_country`
+	// - The target country of the product as a CLDR territory code (for
+	// example, US). `content_language` - The content language of the
+	// product as a two-letter ISO 639-1 language code (for example, en).
+	// `product_id` - The ID of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#id.
 	Name string `json:"name,omitempty"`
 
-	// Parent: Parent ID in the format
-	// `accounts/{account_id}`.
-	//
-	// `account_id` - The ID of the Manufacturer Center account.
+	// Parent: Parent ID in the format `accounts/{account_id}`. `account_id`
+	// - The ID of the Manufacturer Center account.
 	Parent string `json:"parent,omitempty"`
 
-	// ProductId: The ID of the product. For more information,
-	// see
+	// ProductId: The ID of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#id.
 	ProductId string `json:"productId,omitempty"`
 
 	// TargetCountry: The target country of the product as a CLDR territory
-	// code (for example,
-	// US).
+	// code (for example, US).
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -833,8 +756,7 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 
 // ProductDetail: A product detail of the product. For more information,
 // see
-// https://support.google.com/manufacturers/answer/6124116#productdet
-// ail.
+// https://support.google.com/manufacturers/answer/6124116#productdetail.
 type ProductDetail struct {
 	// AttributeName: The name of the attribute.
 	AttributeName string `json:"attributeName,omitempty"`
@@ -915,7 +837,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -985,14 +907,14 @@ func (c *AccountsProductsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`.\n\n`target_country`   - The target country of the product as a CLDR territory\n                     code (for example, US).\n\n`content_language` - The content language of the product as a two-letter\n                     ISO 639-1 language code (for example, en).\n\n`product_id`     -   The ID of the product. For more information, see\n                     https://support.google.com/manufacturers/answer/6124116#id.",
+	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`.\n\n`account_id` - The ID of the Manufacturer Center account.",
+	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -1023,16 +945,10 @@ type AccountsProductsGetCall struct {
 }
 
 // Get: Gets the product from a Manufacturer Center account, including
-// product
-// issues.
-//
-// A recently updated product takes around 15 minutes to process.
-// Changes are
-// only visible after it has been processed. While some issues may
-// be
-// available once the product has been processed, other issues may take
-// days
-// to appear.
+// product issues. A recently updated product takes around 15 minutes to
+// process. Changes are only visible after it has been processed. While
+// some issues may be available once the product has been processed,
+// other issues may take days to appear.
 func (r *AccountsProductsService) Get(parent string, name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1041,14 +957,14 @@ func (r *AccountsProductsService) Get(parent string, name string) *AccountsProdu
 }
 
 // Include sets the optional parameter "include": The information to be
-// included in the response. Only sections listed here
-// will be returned.
+// included in the response. Only sections listed here will be returned.
 //
 // Possible values:
-//   "UNKNOWN"
-//   "ATTRIBUTES"
-//   "ISSUES"
-//   "DESTINATION_STATUSES"
+//   "UNKNOWN" - Unknown, never used.
+//   "ATTRIBUTES" - Include the attributes of the product.
+//   "ISSUES" - Include the issues of the product.
+//   "DESTINATION_STATUSES" - Include the destination statuses of the
+// product.
 func (c *AccountsProductsGetCall) Include(include ...string) *AccountsProductsGetCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
 	return c
@@ -1091,7 +1007,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1154,7 +1070,7 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the product from a Manufacturer Center account, including product\nissues.\n\nA recently updated product takes around 15 minutes to process. Changes are\nonly visible after it has been processed. While some issues may be\navailable once the product has been processed, other issues may take days\nto appear.",
+	//   "description": "Gets the product from a Manufacturer Center account, including product issues. A recently updated product takes around 15 minutes to process. Changes are only visible after it has been processed. While some issues may be available once the product has been processed, other issues may take days to appear.",
 	//   "flatPath": "v1/accounts/{accountsId}/products/{productsId}",
 	//   "httpMethod": "GET",
 	//   "id": "manufacturers.accounts.products.get",
@@ -1164,26 +1080,32 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 	//   ],
 	//   "parameters": {
 	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.",
+	//       "description": "The information to be included in the response. Only sections listed here will be returned.",
 	//       "enum": [
 	//         "UNKNOWN",
 	//         "ATTRIBUTES",
 	//         "ISSUES",
 	//         "DESTINATION_STATUSES"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown, never used.",
+	//         "Include the attributes of the product.",
+	//         "Include the issues of the product.",
+	//         "Include the destination statuses of the product."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`.\n\n`target_country`   - The target country of the product as a CLDR territory\n                     code (for example, US).\n\n`content_language` - The content language of the product as a two-letter\n                     ISO 639-1 language code (for example, en).\n\n`product_id`     -   The ID of the product. For more information, see\n                     https://support.google.com/manufacturers/answer/6124116#id.",
+	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`.\n\n`account_id` - The ID of the Manufacturer Center account.",
+	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -1220,22 +1142,21 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 }
 
 // Include sets the optional parameter "include": The information to be
-// included in the response. Only sections listed here
-// will be returned.
+// included in the response. Only sections listed here will be returned.
 //
 // Possible values:
-//   "UNKNOWN"
-//   "ATTRIBUTES"
-//   "ISSUES"
-//   "DESTINATION_STATUSES"
+//   "UNKNOWN" - Unknown, never used.
+//   "ATTRIBUTES" - Include the attributes of the product.
+//   "ISSUES" - Include the issues of the product.
+//   "DESTINATION_STATUSES" - Include the destination statuses of the
+// product.
 func (c *AccountsProductsListCall) Include(include ...string) *AccountsProductsListCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// product statuses to return in the response, used for
-// paging.
+// product statuses to return in the response, used for paging.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1285,7 +1206,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1356,19 +1277,25 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	//   ],
 	//   "parameters": {
 	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.",
+	//       "description": "The information to be included in the response. Only sections listed here will be returned.",
 	//       "enum": [
 	//         "UNKNOWN",
 	//         "ATTRIBUTES",
 	//         "ISSUES",
 	//         "DESTINATION_STATUSES"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown, never used.",
+	//         "Include the attributes of the product.",
+	//         "Include the issues of the product.",
+	//         "Include the destination statuses of the product."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of product statuses to return in the response, used for\npaging.",
+	//       "description": "Maximum number of product statuses to return in the response, used for paging.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1379,7 +1306,7 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`.\n\n`account_id` - The ID of the Manufacturer Center account.",
+	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -1431,31 +1358,18 @@ type AccountsProductsUpdateCall struct {
 }
 
 // Update: Inserts or updates the attributes of the product in a
-// Manufacturer Center
-// account.
-//
-// Creates a product with the provided attributes. If the product
-// already
-// exists, then all attributes are replaced with the new ones. The
-// checks at
-// upload time are minimal. All required attributes need to be present
-// for a
-// product to be valid. Issues may show up later after the API has
-// accepted a
-// new upload for a product and it is possible to overwrite an existing
-// valid
-// product with an invalid product. To detect this, you should retrieve
-// the
-// product and check it for issues once the new version is
-// available.
-//
-// Uploaded attributes first need to be processed before they can
-// be
+// Manufacturer Center account. Creates a product with the provided
+// attributes. If the product already exists, then all attributes are
+// replaced with the new ones. The checks at upload time are minimal.
+// All required attributes need to be present for a product to be valid.
+// Issues may show up later after the API has accepted a new upload for
+// a product and it is possible to overwrite an existing valid product
+// with an invalid product. To detect this, you should retrieve the
+// product and check it for issues once the new version is available.
+// Uploaded attributes first need to be processed before they can be
 // retrieved. Until then, new products will be unavailable, and
-// retrieval
-// of previously uploaded products will return the original state of
-// the
-// product.
+// retrieval of previously uploaded products will return the original
+// state of the product.
 func (r *AccountsProductsService) Update(parent string, name string, attributes *Attributes) *AccountsProductsUpdateCall {
 	c := &AccountsProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1491,7 +1405,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1470,7 @@ func (c *AccountsProductsUpdateCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Inserts or updates the attributes of the product in a Manufacturer Center\naccount.\n\nCreates a product with the provided attributes. If the product already\nexists, then all attributes are replaced with the new ones. The checks at\nupload time are minimal. All required attributes need to be present for a\nproduct to be valid. Issues may show up later after the API has accepted a\nnew upload for a product and it is possible to overwrite an existing valid\nproduct with an invalid product. To detect this, you should retrieve the\nproduct and check it for issues once the new version is available.\n\nUploaded attributes first need to be processed before they can be\nretrieved. Until then, new products will be unavailable, and retrieval\nof previously uploaded products will return the original state of the\nproduct.",
+	//   "description": "Inserts or updates the attributes of the product in a Manufacturer Center account. Creates a product with the provided attributes. If the product already exists, then all attributes are replaced with the new ones. The checks at upload time are minimal. All required attributes need to be present for a product to be valid. Issues may show up later after the API has accepted a new upload for a product and it is possible to overwrite an existing valid product with an invalid product. To detect this, you should retrieve the product and check it for issues once the new version is available. Uploaded attributes first need to be processed before they can be retrieved. Until then, new products will be unavailable, and retrieval of previously uploaded products will return the original state of the product.",
 	//   "flatPath": "v1/accounts/{accountsId}/products/{productsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "manufacturers.accounts.products.update",
@@ -1566,14 +1480,14 @@ func (c *AccountsProductsUpdateCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`.\n\n`target_country`   - The target country of the product as a CLDR territory\n                     code (for example, US).\n\n`content_language` - The content language of the product as a two-letter\n                     ISO 639-1 language code (for example, en).\n\n`product_id`     -   The ID of the product. For more information, see\n                     https://support.google.com/manufacturers/answer/6124116#id.",
+	//       "description": "Name in the format `{target_country}:{content_language}:{product_id}`. `target_country` - The target country of the product as a CLDR territory code (for example, US). `content_language` - The content language of the product as a two-letter ISO 639-1 language code (for example, en). `product_id` - The ID of the product. For more information, see https://support.google.com/manufacturers/answer/6124116#id.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Parent ID in the format `accounts/{account_id}`.\n\n`account_id` - The ID of the Manufacturer Center account.",
+	//       "description": "Parent ID in the format `accounts/{account_id}`. `account_id` - The ID of the Manufacturer Center account.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,

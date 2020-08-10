@@ -149,145 +149,76 @@ type TerraintilesService struct {
 // parks, etc.
 type Area struct {
 	// HasExternalEdges: True if the polygon is not entirely internal to the
-	// feature that it belongs
-	// to: that is, some of the edges are bordering another feature.
+	// feature that it belongs to: that is, some of the edges are bordering
+	// another feature.
 	HasExternalEdges bool `json:"hasExternalEdges,omitempty"`
 
 	// InternalEdges: When has_external_edges is true, the polygon has some
-	// edges that border
-	// another feature. This field indicates the internal edges that do not
-	// border
-	// another feature. Each value is an index into the vertices array,
-	// and
-	// denotes the start vertex of the internal edge (the next vertex in
-	// the
-	// boundary loop is the end of the edge). If the selected vertex is the
-	// last
-	// vertex in the boundary loop, then the edge between that vertex and
-	// the
-	// starting vertex of the loop is internal.
-	//
-	// This field may be used for styling. For example, building parapets
-	// could be
-	// placed only on the external edges of a building polygon, or water
-	// could be
-	// lighter colored near the external edges of a body of water.
-	//
-	// If has_external_edges is false, all edges are internal and this field
-	// will
-	// be empty.
+	// edges that border another feature. This field indicates the internal
+	// edges that do not border another feature. Each value is an index into
+	// the vertices array, and denotes the start vertex of the internal edge
+	// (the next vertex in the boundary loop is the end of the edge). If the
+	// selected vertex is the last vertex in the boundary loop, then the
+	// edge between that vertex and the starting vertex of the loop is
+	// internal. This field may be used for styling. For example, building
+	// parapets could be placed only on the external edges of a building
+	// polygon, or water could be lighter colored near the external edges of
+	// a body of water. If has_external_edges is false, all edges are
+	// internal and this field will be empty.
 	InternalEdges []int64 `json:"internalEdges,omitempty"`
 
 	// LoopBreaks: Identifies the boundary loops of the polygon. Only set
-	// for INDEXED_TRIANGLE
-	// polygons. Each value is an index into the vertices array indicating
-	// the
-	// beginning of a loop. For instance, values of [2, 5] would
-	// indicate
-	// loop_data contained 3 loops with indices 0-1, 2-4, and 5-end.
-	//
-	// This may be used in conjunction with the internal_edges field for
-	// styling
-	// polygon boundaries. Note that an edge may be on a polygon boundary
-	// but
-	// still internal to the feature. For example, a feature split across
-	// multiple
-	// tiles will have an internal polygon boundary edge along the edge of
-	// the
-	// tile.
+	// for INDEXED_TRIANGLE polygons. Each value is an index into the
+	// vertices array indicating the beginning of a loop. For instance,
+	// values of [2, 5] would indicate loop_data contained 3 loops with
+	// indices 0-1, 2-4, and 5-end. This may be used in conjunction with the
+	// internal_edges field for styling polygon boundaries. Note that an
+	// edge may be on a polygon boundary but still internal to the feature.
+	// For example, a feature split across multiple tiles will have an
+	// internal polygon boundary edge along the edge of the tile.
 	LoopBreaks []int64 `json:"loopBreaks,omitempty"`
 
 	// TriangleIndices: When the polygon encoding is of type
-	// INDEXED_TRIANGLES, this contains the
-	// indices of the triangle vertices in the vertex_offsets field. There
-	// are 3
-	// vertex indices per triangle.
+	// INDEXED_TRIANGLES, this contains the indices of the triangle vertices
+	// in the vertex_offsets field. There are 3 vertex indices per triangle.
 	TriangleIndices []int64 `json:"triangleIndices,omitempty"`
 
 	// Type: The polygon encoding type used for this area.
 	//
 	// Possible values:
 	//   "TRIANGLE_FAN" - The first vertex in vertex_offset is the center of
-	// a triangle fan. The
-	// other vertices are arranged around this vertex in a fan shape.
-	// The
-	// following diagram showes a triangle fan polygon with the
-	// vertices
-	// labelled with their indices in the vertex_offset list.
-	//
-	// Triangle fan polygons always have a single boundary loop.
-	//
-	// Vertices may be in either a clockwise or counterclockwise order.
-	//
-	//                      (1)
-	//                      / \
-	//                     /   \
-	//                    /     \
-	//                  (0)-----(2)
-	//                  / \     /
-	//                 /   \   /
-	//                /     \ /
-	//              (4)-----(3)
+	// a triangle fan. The other vertices are arranged around this vertex in
+	// a fan shape. The following diagram showes a triangle fan polygon with
+	// the vertices labelled with their indices in the vertex_offset list.
+	// Triangle fan polygons always have a single boundary loop. Vertices
+	// may be in either a clockwise or counterclockwise order. (1) / \ / \ /
+	// \ (0)-----(2) / \ / / \ / / \ / (4)-----(3)
 	//   "INDEXED_TRIANGLES" - The polygon is a set of triangles with three
-	// vertex indices per triangle.
-	// The vertex indices can be found in the triangle_indices
-	// field.
-	//
-	// Indexed triangle polygons also contain information about boundary
-	// loops.
-	// These identify the loops at the boundary of the polygon and may be
-	// used
-	// in conjunction with the internal_edges field for styling. Boundary
-	// loops
-	// may represent either a hole or a disconnected component of the
-	// polygon.
-	//
-	// The following diagram shows an indexed triangle polygon with two
-	// boundary
-	// loops.
-	//
-	//     (0)          (4)
-	//     / \          / \
-	//    /   \        /   \
-	//  (1)----(2)   (3)----(5)
+	// vertex indices per triangle. The vertex indices can be found in the
+	// triangle_indices field. Indexed triangle polygons also contain
+	// information about boundary loops. These identify the loops at the
+	// boundary of the polygon and may be used in conjunction with the
+	// internal_edges field for styling. Boundary loops may represent either
+	// a hole or a disconnected component of the polygon. The following
+	// diagram shows an indexed triangle polygon with two boundary loops.
+	// (0) (4) / \ / \ / \ / \ (1)----(2) (3)----(5)
 	//   "TRIANGLE_STRIP" - A strip of triangles, where each triangle uses
-	// the last edge of the
-	// previous triangle.
-	//
-	// Vertices may be in either a clockwise or counterclockwise
-	// order.
-	//
-	// Only polygons without the has_external_edges flag set will use
-	// triangle
-	// strips.
-	//
-	//                      (0)
-	//                      / \
-	//                     /   \
-	//                    /     \
-	//                  (2)-----(1)
-	//                  / \     /
-	//                 /   \   /
-	//                /     \ /
-	//              (4)-----(3)
+	// the last edge of the previous triangle. Vertices may be in either a
+	// clockwise or counterclockwise order. Only polygons without the
+	// has_external_edges flag set will use triangle strips. (0) / \ / \ / \
+	// (2)-----(1) / \ / / \ / / \ / (4)-----(3)
 	Type string `json:"type,omitempty"`
 
 	// VertexOffsets: The vertices present in the polygon defining the area.
 	VertexOffsets *Vertex2DList `json:"vertexOffsets,omitempty"`
 
 	// ZOrder: The z-ordering of this area. Areas with a lower z-order
-	// should be rendered
-	// beneath areas with a higher z-order. This z-ordering does not
-	// imply
-	// anything about the altitude of the line relative to the ground, but
-	// it
-	// can be used to prevent z-fighting during rendering on the client.
-	// This
-	// z-ordering can only be used to compare areas, and cannot be compared
-	// with
-	// the z_order field in the Line message.
-	//
-	// The z-order may be negative or zero.
+	// should be rendered beneath areas with a higher z-order. This
+	// z-ordering does not imply anything about the altitude of the line
+	// relative to the ground, but it can be used to prevent z-fighting
+	// during rendering on the client. This z-ordering can only be used to
+	// compare areas, and cannot be compared with the z_order field in the
+	// Line message. The z-order may be negative or zero.
 	ZOrder int64 `json:"zOrder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HasExternalEdges") to
@@ -315,16 +246,11 @@ func (s *Area) MarshalJSON() ([]byte, error) {
 }
 
 // ExtrudedArea: Represents a height-extruded area: a 3D prism with a
-// constant X-Y plane cross
-// section. Used to represent extruded buildings. A single building may
-// consist
-// of several extruded areas.
-//
+// constant X-Y plane cross section. Used to represent extruded
+// buildings. A single building may consist of several extruded areas.
 // The min_z and max_z fields are scaled to the size of the tile. An
-// extruded
-// area with a max_z value of 4096 has the same height as the width of
-// the tile
-// that it is on.
+// extruded area with a max_z value of 4096 has the same height as the
+// width of the tile that it is on.
 type ExtrudedArea struct {
 	// Area: The area representing the footprint of the extruded area.
 	Area *Area `json:"area,omitempty"`
@@ -334,12 +260,9 @@ type ExtrudedArea struct {
 	MaxZ int64 `json:"maxZ,omitempty"`
 
 	// MinZ: The z-value in local tile coordinates where the extruded area
-	// begins. This
-	// is non-zero for extruded areas that begin off the ground. For
-	// example, a
-	// building with a skybridge may have an extruded area component with
-	// a
-	// non-zero min_z.
+	// begins. This is non-zero for extruded areas that begin off the
+	// ground. For example, a building with a skybridge may have an extruded
+	// area component with a non-zero min_z.
 	MinZ int64 `json:"minZ,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Area") to
@@ -372,13 +295,11 @@ type Feature struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Geometry: The geometry of this feature, representing the space that
-	// it occupies in
-	// the world.
+	// it occupies in the world.
 	Geometry *Geometry `json:"geometry,omitempty"`
 
 	// PlaceId: Place ID of this feature, suitable for use in Places API
-	// details
-	// requests.
+	// details requests.
 	PlaceId string `json:"placeId,omitempty"`
 
 	// Relations: Relations to other features.
@@ -407,8 +328,7 @@ type Feature struct {
 	//   "SHOPPING" - A structure containing a business or businesses that
 	// sell goods.
 	//   "SCHOOL" - Institution where young people receive general (not
-	// vocation or
-	// professional) education.
+	// vocation or professional) education.
 	//   "SEGMENT" - Segments such as roads and train lines.
 	//   "ROAD" - A way leading from one place to another intended for use
 	// by vehicles.
@@ -418,12 +338,9 @@ type Feature struct {
 	// volumes of traffic.
 	//   "HIGHWAY" - A major road including freeways and state highways.
 	//   "CONTROLLED_ACCESS_HIGHWAY" - A highway with grade-separated
-	// crossings that is accessed exclusively by
-	// ramps. These are usually called "freeways" or "motorways".
-	//
-	// The enable_detailed_highway_types request flag must be set in order
-	// for
-	// this type to be returned.
+	// crossings that is accessed exclusively by ramps. These are usually
+	// called "freeways" or "motorways". The enable_detailed_highway_types
+	// request flag must be set in order for this type to be returned.
 	//   "FOOTPATH" - A path that's primarily intended for use by
 	// pedestrians and/or cyclists.
 	//   "RAIL" - Tracks intended for use by trains.
@@ -465,8 +382,7 @@ func (s *Feature) MarshalJSON() ([]byte, error) {
 }
 
 // FeatureTile: A tile containing information about the map features
-// located in the region it
-// covers.
+// located in the region it covers.
 type FeatureTile struct {
 	// Coordinates: The global tile coordinates that uniquely identify this
 	// tile.
@@ -476,12 +392,9 @@ type FeatureTile struct {
 	Features []*Feature `json:"features,omitempty"`
 
 	// Name: Resource name of the tile. The tile resource name is prefixed
-	// by its
-	// collection ID `tiles/` followed by the resource ID, which encodes
-	// the
-	// tile's global x and y coordinates and zoom level as
-	// `@<x>,<y>,<zoom>z`. For
-	// example, `tiles/@1,2,3z`.
+	// by its collection ID `tiles/` followed by the resource ID, which
+	// encodes the tile's global x and y coordinates and zoom level as
+	// `@,,z`. For example, `tiles/@1,2,3z`.
 	Name string `json:"name,omitempty"`
 
 	// Providers: Data providers for the data contained in this tile.
@@ -491,41 +404,26 @@ type FeatureTile struct {
 	//
 	// Possible values:
 	//   "STATUS_OK" - Everything worked out OK. The cache-control header
-	// determines how long
-	// this Tile response may be cached by the client. See also version_id
-	// and
-	// STATUS_OK_DATA_UNCHANGED.
+	// determines how long this Tile response may be cached by the client.
+	// See also version_id and STATUS_OK_DATA_UNCHANGED.
 	//   "STATUS_OK_DATA_UNCHANGED" - Indicates that the request was
-	// processed successfully and that the tile
-	// data that would have been returned are identical to the data already
-	// in
-	// the client's cache, as specified by the value of
-	// client_tile_version_id
-	// contained in GetFeatureTileRequest.
-	//
-	// In particular, the tile's features and providers will not be
-	// populated
-	// when the tile data is identical. However, the cache-control header
-	// and
-	// version_id can still change even when the tile contents itself does
-	// not,
-	// so clients should always use the most recent values returned by the
-	// API.
+	// processed successfully and that the tile data that would have been
+	// returned are identical to the data already in the client's cache, as
+	// specified by the value of client_tile_version_id contained in
+	// GetFeatureTileRequest. In particular, the tile's features and
+	// providers will not be populated when the tile data is identical.
+	// However, the cache-control header and version_id can still change
+	// even when the tile contents itself does not, so clients should always
+	// use the most recent values returned by the API.
 	Status string `json:"status,omitempty"`
 
 	// VersionId: An opaque value, usually less than 30 characters, that
-	// contains version
-	// info about this tile and the data that was used to generate it.
-	//
-	// The client should store this value in its tile cache and pass it back
-	// to
-	// the API in the client_tile_version_id field of subsequent tile
-	// requests in
-	// order to enable the API to detect when the new tile would be the same
-	// as
-	// the one the client already has in its cache.
-	//
-	// Also see STATUS_OK_DATA_UNCHANGED.
+	// contains version info about this tile and the data that was used to
+	// generate it. The client should store this value in its tile cache and
+	// pass it back to the API in the client_tile_version_id field of
+	// subsequent tile requests in order to enable the API to detect when
+	// the new tile would be the same as the one the client already has in
+	// its cache. Also see STATUS_OK_DATA_UNCHANGED.
 	VersionId string `json:"versionId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -556,52 +454,28 @@ func (s *FeatureTile) MarshalJSON() ([]byte, error) {
 }
 
 // FirstDerivativeElevationGrid: A packed representation of a 2D grid of
-// uniformly spaced points containing
-// elevation data. Each point within the grid represents the altitude
-// in
-// meters above average sea level at that location within the
-// tile.
-//
-// Elevations provided are (generally) relative to the EGM96 geoid,
-// however
-// some areas will be relative to NAVD88. EGM96 and NAVD88 are off by no
-// more
-// than 2 meters.
-//
-// The grid is oriented north-west to south-east, as illustrated:
-//
-//     rows[0].a[0]      rows[0].a[m]
-//         +-----------------+
-//         |                 |
-//         |        N        |
-//         |        ^        |
-//         |        |        |
-//         |   W <-----> E   |
-//         |        |        |
-//         |        v        |
-//         |        S        |
-//         |                 |
-//         +-----------------+
-//     rows[n].a[0]      rows[n].a[m]
-//
+// uniformly spaced points containing elevation data. Each point within
+// the grid represents the altitude in meters above average sea level at
+// that location within the tile. Elevations provided are (generally)
+// relative to the EGM96 geoid, however some areas will be relative to
+// NAVD88. EGM96 and NAVD88 are off by no more than 2 meters. The grid
+// is oriented north-west to south-east, as illustrated: rows[0].a[0]
+// rows[0].a[m] +-----------------+ | | | N | | ^ | | | | | W <-----> E
+// | | | | | v | | S | | | +-----------------+ rows[n].a[0] rows[n].a[m]
 // Rather than storing the altitudes directly, we store the diffs
-// between them
-// as integers at some requested level of precision to take advantage
-// of
-// integer packing. The actual altitude values a[] can be reconstructed
-// using
-// the scale and each row's first_altitude and altitude_diff fields.
+// between them as integers at some requested level of precision to take
+// advantage of integer packing. The actual altitude values a[] can be
+// reconstructed using the scale and each row's first_altitude and
+// altitude_diff fields.
 type FirstDerivativeElevationGrid struct {
 	// AltitudeMultiplier: A multiplier applied to the altitude fields below
-	// to extract the actual
-	// altitudes in meters from the elevation grid.
+	// to extract the actual altitudes in meters from the elevation grid.
 	AltitudeMultiplier float64 `json:"altitudeMultiplier,omitempty"`
 
 	// Rows: Rows of points containing altitude data making up the elevation
-	// grid.
-	// Each row is the same length. Rows are ordered from north to south.
-	// E.g:
-	// rows[0] is the north-most row, and rows[n] is the south-most row.
+	// grid. Each row is the same length. Rows are ordered from north to
+	// south. E.g: rows[0] is the north-most row, and rows[n] is the
+	// south-most row.
 	Rows []*Row `json:"rows,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeMultiplier")
@@ -643,20 +517,13 @@ func (s *FirstDerivativeElevationGrid) UnmarshalJSON(data []byte) error {
 }
 
 // Geometry: Represents the geometry of a feature, that is, the shape
-// that it has on the
-// map. The local tile coordinate system has the origin at the
-// north-west
-// (upper-left) corner of the tile, and is scaled to 4096 units across
-// each
-// edge. The height (Z) axis has the same scale factor: an extruded area
-// with a
-// max_z value of 4096 has the same height as the width of the tile that
-// it is
-// on.
-//
-// There is no clipping boundary, so it is possible that some
-// coordinates will
-// lie outside the tile boundaries.
+// that it has on the map. The local tile coordinate system has the
+// origin at the north-west (upper-left) corner of the tile, and is
+// scaled to 4096 units across each edge. The height (Z) axis has the
+// same scale factor: an extruded area with a max_z value of 4096 has
+// the same height as the width of the tile that it is on. There is no
+// clipping boundary, so it is possible that some coordinates will lie
+// outside the tile boundaries.
 type Geometry struct {
 	// Areas: The areas present in this geometry.
 	Areas []*Area `json:"areas,omitempty"`
@@ -694,28 +561,20 @@ func (s *Geometry) MarshalJSON() ([]byte, error) {
 }
 
 // Line: Represents a 2D polyline. Used to represent segments such as
-// roads, train
-// tracks, etc.
+// roads, train tracks, etc.
 type Line struct {
 	// VertexOffsets: The vertices present in the polyline.
 	VertexOffsets *Vertex2DList `json:"vertexOffsets,omitempty"`
 
 	// ZOrder: The z-order of the line. Lines with a lower z-order should be
-	// rendered
-	// beneath lines with a higher z-order. This z-ordering does not
-	// imply
-	// anything about the altitude of the area relative to the ground, but
-	// it
-	// can be used to prevent z-fighting during rendering on the client.
-	// In
-	// general, larger and more important road features will have a higher
-	// z-order
-	// line associated with them. This z-ordering can only be used to
-	// compare
-	// lines, and cannot be compared with the z_order field in the Area
-	// message.
-	//
-	// The z-order may be negative or zero.
+	// rendered beneath lines with a higher z-order. This z-ordering does
+	// not imply anything about the altitude of the area relative to the
+	// ground, but it can be used to prevent z-fighting during rendering on
+	// the client. In general, larger and more important road features will
+	// have a higher z-order line associated with them. This z-ordering can
+	// only be used to compare lines, and cannot be compared with the
+	// z_order field in the Area message. The z-order may be negative or
+	// zero.
 	ZOrder int64 `json:"zOrder,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "VertexOffsets") to
@@ -775,8 +634,7 @@ func (s *ModeledVolume) MarshalJSON() ([]byte, error) {
 }
 
 // ProviderInfo: Information about the data providers that should be
-// included in the
-// attribution string shown by the client.
+// included in the attribution string shown by the client.
 type ProviderInfo struct {
 	// Description: Attribution string for this provider. This string is not
 	// localized.
@@ -806,14 +664,11 @@ func (s *ProviderInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Relation: Represents a relation to another feature in the tile. For
-// example, a building
-// might be occupied by a given POI. The related feature can be
-// retrieved using
-// the related feature index.
+// example, a building might be occupied by a given POI. The related
+// feature can be retrieved using the related feature index.
 type Relation struct {
 	// RelatedFeatureIndex: Zero-based index to look up the related feature
-	// from the list of features
-	// in the tile.
+	// from the list of features in the tile.
 	RelatedFeatureIndex int64 `json:"relatedFeatureIndex,omitempty"`
 
 	// RelationType: Relation type between the origin feature to the related
@@ -854,8 +709,8 @@ func (s *Relation) MarshalJSON() ([]byte, error) {
 // RoadInfo: Extra metadata relating to roads.
 type RoadInfo struct {
 	// IsPrivate: Road has signage discouraging or prohibiting use by the
-	// general public.
-	// E.g., roads with signs that say "Private", or "No trespassing."
+	// general public. E.g., roads with signs that say "Private", or "No
+	// trespassing."
 	IsPrivate bool `json:"isPrivate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsPrivate") to
@@ -882,22 +737,16 @@ func (s *RoadInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Row: A row of altitude points in the elevation grid, ordered from
-// west to
-// east.
+// west to east.
 type Row struct {
 	// AltitudeDiffs: The difference between each successive pair of
-	// altitudes, from west to
-	// east. The first, westmost point, is just the altitude rather than
-	// a
-	// diff. The units are specified by the altitude_multiplier
-	// parameter
-	// above; the value in meters is given by altitude_multiplier
-	// *
-	// altitude_diffs[n]. The altitude row (in metres above sea level) can
-	// be
-	// reconstructed with: a[0] = altitude_diffs[0] * altitude_multiplier
-	// when
-	// n > 0, a[n] = a[n-1] + altitude_diffs[n-1] * altitude_multiplier.
+	// altitudes, from west to east. The first, westmost point, is just the
+	// altitude rather than a diff. The units are specified by the
+	// altitude_multiplier parameter above; the value in meters is given by
+	// altitude_multiplier * altitude_diffs[n]. The altitude row (in metres
+	// above sea level) can be reconstructed with: a[0] = altitude_diffs[0]
+	// * altitude_multiplier when n > 0, a[n] = a[n-1] + altitude_diffs[n-1]
+	// * altitude_multiplier.
 	AltitudeDiffs []int64 `json:"altitudeDiffs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeDiffs") to
@@ -924,112 +773,55 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 }
 
 // SecondDerivativeElevationGrid: A packed representation of a 2D grid
-// of uniformly spaced points containing
-// elevation data. Each point within the grid represents the altitude
-// in
-// meters above average sea level at that location within the
-// tile.
-//
-// Elevations provided are (generally) relative to the EGM96 geoid,
-// however
-// some areas will be relative to NAVD88. EGM96 and NAVD88 are off by no
-// more
-// than 2 meters.
-//
-// The grid is oriented north-west to south-east, as illustrated:
-//
-//     rows[0].a[0]      rows[0].a[m]
-//         +-----------------+
-//         |                 |
-//         |        N        |
-//         |        ^        |
-//         |        |        |
-//         |   W <-----> E   |
-//         |        |        |
-//         |        v        |
-//         |        S        |
-//         |                 |
-//         +-----------------+
-//     rows[n].a[0]      rows[n].a[m]
-//
-// Rather than storing the altitudes directly, we store the diffs of the
-// diffs
-// between them as integers at some requested level of precision to
-// take
-// advantage of integer packing.
-//
-// Note that the data is packed in such a way that is fast to decode
-// in
+// of uniformly spaced points containing elevation data. Each point
+// within the grid represents the altitude in meters above average sea
+// level at that location within the tile. Elevations provided are
+// (generally) relative to the EGM96 geoid, however some areas will be
+// relative to NAVD88. EGM96 and NAVD88 are off by no more than 2
+// meters. The grid is oriented north-west to south-east, as
+// illustrated: rows[0].a[0] rows[0].a[m] +-----------------+ | | | N |
+// | ^ | | | | | W <-----> E | | | | | v | | S | | | +-----------------+
+// rows[n].a[0] rows[n].a[m] Rather than storing the altitudes directly,
+// we store the diffs of the diffs between them as integers at some
+// requested level of precision to take advantage of integer packing.
+// Note that the data is packed in such a way that is fast to decode in
 // Unity and that further optimizes wire size.
 type SecondDerivativeElevationGrid struct {
 	// AltitudeMultiplier: A multiplier applied to the elements in the
-	// encoded data to extract the
-	// actual altitudes in meters.
+	// encoded data to extract the actual altitudes in meters.
 	AltitudeMultiplier float64 `json:"altitudeMultiplier,omitempty"`
 
 	// ColumnCount: The number of columns included in the encoded elevation
-	// data (i.e. the
-	// horizontal resolution of the grid).
+	// data (i.e. the horizontal resolution of the grid).
 	ColumnCount int64 `json:"columnCount,omitempty"`
 
 	// EncodedData: A stream of elements each representing a point on the
-	// tile running across
-	// each row from left to right, top to bottom.
-	//
-	// There will be precisely horizontal_resolution *
-	// vertical_resolution
-	// elements in the stream.
-	//
-	// The elements are not the heights, rather the second order derivative
-	// of
-	// the values one would expect in a stream of height data.
-	//
-	// Each element is a varint with the following
-	// encoding:
-	// ------------------------------------------------------------
-	// ------------|
-	// | Head Nibble
-	//
-	// |
-	// --------------------------------------------------------------------
-	// ----|
-	// | Bit 0     | Bit 1        | Bits 2-3
-	//   |
-	// | Terminator| Sign (1=neg) | Least significant 2 bits of absolute
-	// error
-	// |
-	// --------------------------------------------------------------------
-	// ----|
-	// | Tail Nibble #1
-	//
-	// |
-	// --------------------------------------------------------------------
-	// ----|
-	// | Bit 0     | Bit 1-3
-	//   |
-	// | Terminator| Least significant 3 bits of absolute error
-	//
-	// |
-	// --------------------------------------------------------------------
-	// ----|
-	// | ...
-	// | Tail Nibble #n
-	//
-	// |
-	// --------------------------------------------------------------------
-	// ----|
-	// | Bit 0     | Bit 1-3
-	//   |
-	// | Terminator| Least significant 3 bits of absolute error
-	//
-	// |
-	// --------------------------------------------------------------------
-	// ----|
+	// tile running across each row from left to right, top to bottom. There
+	// will be precisely horizontal_resolution * vertical_resolution
+	// elements in the stream. The elements are not the heights, rather the
+	// second order derivative of the values one would expect in a stream of
+	// height data. Each element is a varint with the following encoding:
+	// ----------------------------------------------------------------------
+	// --| | Head Nibble |
+	// ----------------------------------------------------------------------
+	// --| | Bit 0 | Bit 1 | Bits 2-3 | | Terminator| Sign (1=neg) | Least
+	// significant 2 bits of absolute error |
+	// ----------------------------------------------------------------------
+	// --| | Tail Nibble #1 |
+	// ----------------------------------------------------------------------
+	// --| | Bit 0 | Bit 1-3 | | Terminator| Least significant 3 bits of
+	// absolute error |
+	// ----------------------------------------------------------------------
+	// --| | ... | Tail Nibble #n |
+	// ----------------------------------------------------------------------
+	// --| | Bit 0 | Bit 1-3 | | Terminator| Least significant 3 bits of
+	// absolute error |
+	// ----------------------------------------------------------------------
+	// --|
 	EncodedData string `json:"encodedData,omitempty"`
 
 	// RowCount: The number of rows included in the encoded elevation data
-	// (i.e. the
-	// vertical resolution of the grid).
+	// (i.e. the vertical resolution of the grid).
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeMultiplier")
@@ -1099,8 +891,7 @@ func (s *SegmentInfo) MarshalJSON() ([]byte, error) {
 }
 
 // TerrainTile: A tile containing information about the terrain located
-// in the region it
-// covers.
+// in the region it covers.
 type TerrainTile struct {
 	// Coordinates: The global tile coordinates that uniquely identify this
 	// tile.
@@ -1111,17 +902,13 @@ type TerrainTile struct {
 	FirstDerivative *FirstDerivativeElevationGrid `json:"firstDerivative,omitempty"`
 
 	// Name: Resource name of the tile. The tile resource name is prefixed
-	// by its
-	// collection ID `terrain/` followed by the resource ID, which encodes
-	// the
-	// tile's global x and y coordinates and zoom level as
-	// `@<x>,<y>,<zoom>z`.
-	// For example, `terrain/@1,2,3z`.
+	// by its collection ID `terrain/` followed by the resource ID, which
+	// encodes the tile's global x and y coordinates and zoom level as
+	// `@,,z`. For example, `terrain/@1,2,3z`.
 	Name string `json:"name,omitempty"`
 
 	// SecondDerivative: Terrain elevation data encoded as a
-	// SecondDerivativeElevationGrid.
-	// .
+	// SecondDerivativeElevationGrid. .
 	SecondDerivative *SecondDerivativeElevationGrid `json:"secondDerivative,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1152,34 +939,21 @@ func (s *TerrainTile) MarshalJSON() ([]byte, error) {
 }
 
 // TileCoordinates: Global tile coordinates. Global tile coordinates
-// reference a specific tile on
-// the map at a specific zoom level.
-//
-// The origin of this coordinate system is always at the northwest
-// corner of the
-// map, with x values increasing from west to east and y values
-// increasing from
-// north to south. Tiles are indexed using x, y coordinates from that
-// origin.
-// The zoom level containing the entire world in a tile is 0, and it
-// increases
-// as you zoom in. Zoom level n + 1 will contain 4 times as many tiles
-// as zoom
-// level n.
-//
-// The zoom level controls the level of detail of the data that is
-// returned. In
+// reference a specific tile on the map at a specific zoom level. The
+// origin of this coordinate system is always at the northwest corner of
+// the map, with x values increasing from west to east and y values
+// increasing from north to south. Tiles are indexed using x, y
+// coordinates from that origin. The zoom level containing the entire
+// world in a tile is 0, and it increases as you zoom in. Zoom level n +
+// 1 will contain 4 times as many tiles as zoom level n. The zoom level
+// controls the level of detail of the data that is returned. In
 // particular, this affects the set of feature types returned, their
-// density,
-// and geometry simplification. The exact tile contents may change over
-// time,
-// but care will be taken to keep supporting the most important use
-// cases. For
-// example, zoom level 15 shows roads for orientation and planning in
-// the local
-// neighborhood and zoom level 17 shows buildings to give users on foot
-// a sense
-// of situational awareness.
+// density, and geometry simplification. The exact tile contents may
+// change over time, but care will be taken to keep supporting the most
+// important use cases. For example, zoom level 15 shows roads for
+// orientation and planning in the local neighborhood and zoom level 17
+// shows buildings to give users on foot a sense of situational
+// awareness.
 type TileCoordinates struct {
 	// X: Required. The x coordinate.
 	X int64 `json:"x,omitempty"`
@@ -1214,22 +988,14 @@ func (s *TileCoordinates) MarshalJSON() ([]byte, error) {
 }
 
 // TriangleStrip: Represents a strip of triangles. Each triangle uses
-// the last edge of the
-// previous one. The following diagram shows an example of a triangle
-// strip,
-// with each vertex labeled with its index in the vertex_index array.
-//
-//              (1)-----(3)
-//              / \     / \
-//             /   \   /   \
-//            /     \ /     \
-//          (0)-----(2)-----(4)
-//
-// Vertices may be in either clockwise or counter-clockwise order.
+// the last edge of the previous one. The following diagram shows an
+// example of a triangle strip, with each vertex labeled with its index
+// in the vertex_index array. (1)-----(3) / \ / \ / \ / \ / \ / \
+// (0)-----(2)-----(4) Vertices may be in either clockwise or
+// counter-clockwise order.
 type TriangleStrip struct {
 	// VertexIndices: Index into the vertex_offset array representing the
-	// next vertex in the
-	// triangle strip.
+	// next vertex in the triangle strip.
 	VertexIndices []int64 `json:"vertexIndices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "VertexIndices") to
@@ -1256,14 +1022,10 @@ func (s *TriangleStrip) MarshalJSON() ([]byte, error) {
 }
 
 // Vertex2DList: 2D vertex list used for lines and areas. Each entry
-// represents an offset from
-// the previous one in local tile coordinates. The first entry is offset
-// from
-// (0, 0).
-//
-// For example, the list of vertices [(1,1), (2, 2), (1, 2)] would be
-// encoded
-// in vertex offsets as [(1, 1), (1, 1), (-1, 0)].
+// represents an offset from the previous one in local tile coordinates.
+// The first entry is offset from (0, 0). For example, the list of
+// vertices [(1,1), (2, 2), (1, 2)] would be encoded in vertex offsets
+// as [(1, 1), (1, 1), (-1, 0)].
 type Vertex2DList struct {
 	// XOffsets: List of x-offsets in local tile coordinates.
 	XOffsets []int64 `json:"xOffsets,omitempty"`
@@ -1295,10 +1057,8 @@ func (s *Vertex2DList) MarshalJSON() ([]byte, error) {
 }
 
 // Vertex3DList: 3D vertex list used for modeled volumes. Each entry
-// represents an offset from
-// the previous one in local tile coordinates. The first coordinate is
-// offset
-// from (0, 0, 0).
+// represents an offset from the previous one in local tile coordinates.
+// The first coordinate is offset from (0, 0, 0).
 type Vertex3DList struct {
 	// XOffsets: List of x-offsets in local tile coordinates.
 	XOffsets []int64 `json:"xOffsets,omitempty"`
@@ -1352,8 +1112,7 @@ func (r *FeaturetilesService) Get(name string) *FeaturetilesGetCall {
 
 // ClientInfoApiClient sets the optional parameter
 // "clientInfo.apiClient": API client name and version. For example, the
-// SDK calling the API. The
-// exact format is up to the client.
+// SDK calling the API. The exact format is up to the client.
 func (c *FeaturetilesGetCall) ClientInfoApiClient(clientInfoApiClient string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.apiClient", clientInfoApiClient)
 	return c
@@ -1361,8 +1120,7 @@ func (c *FeaturetilesGetCall) ClientInfoApiClient(clientInfoApiClient string) *F
 
 // ClientInfoApplicationId sets the optional parameter
 // "clientInfo.applicationId": Application ID, such as the package name
-// on Android and the bundle
-// identifier on iOS platforms.
+// on Android and the bundle identifier on iOS platforms.
 func (c *FeaturetilesGetCall) ClientInfoApplicationId(clientInfoApplicationId string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.applicationId", clientInfoApplicationId)
 	return c
@@ -1370,8 +1128,7 @@ func (c *FeaturetilesGetCall) ClientInfoApplicationId(clientInfoApplicationId st
 
 // ClientInfoApplicationVersion sets the optional parameter
 // "clientInfo.applicationVersion": Application version number, such as
-// "1.2.3". The exact format is
-// application-dependent.
+// "1.2.3". The exact format is application-dependent.
 func (c *FeaturetilesGetCall) ClientInfoApplicationVersion(clientInfoApplicationVersion string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.applicationVersion", clientInfoApplicationVersion)
 	return c
@@ -1379,8 +1136,7 @@ func (c *FeaturetilesGetCall) ClientInfoApplicationVersion(clientInfoApplication
 
 // ClientInfoDeviceModel sets the optional parameter
 // "clientInfo.deviceModel": Device model as reported by the device. The
-// exact format is
-// platform-dependent.
+// exact format is platform-dependent.
 func (c *FeaturetilesGetCall) ClientInfoDeviceModel(clientInfoDeviceModel string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.deviceModel", clientInfoDeviceModel)
 	return c
@@ -1388,8 +1144,8 @@ func (c *FeaturetilesGetCall) ClientInfoDeviceModel(clientInfoDeviceModel string
 
 // ClientInfoOperatingSystem sets the optional parameter
 // "clientInfo.operatingSystem": Operating system name and version as
-// reported by the OS. For example,
-// "Mac OS X 10.10.4". The exact format is platform-dependent.
+// reported by the OS. For example, "Mac OS X 10.10.4". The exact format
+// is platform-dependent.
 func (c *FeaturetilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSystem string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.operatingSystem", clientInfoOperatingSystem)
 	return c
@@ -1399,28 +1155,24 @@ func (c *FeaturetilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSyste
 // Platform where the application is running.
 //
 // Possible values:
-//   "PLATFORM_UNSPECIFIED"
-//   "EDITOR"
-//   "MAC_OS"
-//   "WINDOWS"
-//   "LINUX"
-//   "ANDROID"
-//   "IOS"
-//   "WEB_GL"
+//   "PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
+//   "EDITOR" - Development environment.
+//   "MAC_OS" - macOS.
+//   "WINDOWS" - Windows.
+//   "LINUX" - Linux
+//   "ANDROID" - Android
+//   "IOS" - iOS
+//   "WEB_GL" - WebGL.
 func (c *FeaturetilesGetCall) ClientInfoPlatform(clientInfoPlatform string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.platform", clientInfoPlatform)
 	return c
 }
 
-// ClientInfoUserId sets the optional parameter "clientInfo.userId": A
-// client-generated user ID. The ID should be generated and persisted
-// during
-// the first user session or whenever a pre-existing ID is not found.
-// The
-// exact format is up to the client. This must be non-empty in
-// a
-// GetFeatureTileRequest (whether via the header
-// or
+// ClientInfoUserId sets the optional parameter "clientInfo.userId":
+// Required. A client-generated user ID. The ID should be generated and
+// persisted during the first user session or whenever a pre-existing ID
+// is not found. The exact format is up to the client. This must be
+// non-empty in a GetFeatureTileRequest (whether via the header or
 // GetFeatureTileRequest.client_info).
 func (c *FeaturetilesGetCall) ClientInfoUserId(clientInfoUserId string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.userId", clientInfoUserId)
@@ -1429,18 +1181,13 @@ func (c *FeaturetilesGetCall) ClientInfoUserId(clientInfoUserId string) *Feature
 
 // ClientTileVersionId sets the optional parameter
 // "clientTileVersionId": Optional version id identifying the tile that
-// is already in the client's
-// cache. This field should be populated with the most recent version_id
-// value
-// returned by the API for the requested tile.
-//
-// If the version id is empty the server always returns a newly rendered
-// tile.
-// If it is provided the server checks if the tile contents would be
-// identical
-// to one that's already on the client, and if so, returns a
-// stripped-down
-// response tile with STATUS_OK_DATA_UNCHANGED instead.
+// is already in the client's cache. This field should be populated with
+// the most recent version_id value returned by the API for the
+// requested tile. If the version id is empty the server always returns
+// a newly rendered tile. If it is provided the server checks if the
+// tile contents would be identical to one that's already on the client,
+// and if so, returns a stripped-down response tile with
+// STATUS_OK_DATA_UNCHANGED instead.
 func (c *FeaturetilesGetCall) ClientTileVersionId(clientTileVersionId string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientTileVersionId", clientTileVersionId)
 	return c
@@ -1448,23 +1195,19 @@ func (c *FeaturetilesGetCall) ClientTileVersionId(clientTileVersionId string) *F
 
 // EnableDetailedHighwayTypes sets the optional parameter
 // "enableDetailedHighwayTypes": Flag indicating whether detailed
-// highway types should be returned. If this
-// is set, the CONTROLLED_ACCESS_HIGHWAY type may be returned. If not,
-// then
-// these highways will have the generic HIGHWAY type.
-//
-// This exists for backwards compatibility reasons.
+// highway types should be returned. If this is set, the
+// CONTROLLED_ACCESS_HIGHWAY type may be returned. If not, then these
+// highways will have the generic HIGHWAY type. This exists for
+// backwards compatibility reasons.
 func (c *FeaturetilesGetCall) EnableDetailedHighwayTypes(enableDetailedHighwayTypes bool) *FeaturetilesGetCall {
 	c.urlParams_.Set("enableDetailedHighwayTypes", fmt.Sprint(enableDetailedHighwayTypes))
 	return c
 }
 
 // EnableFeatureNames sets the optional parameter "enableFeatureNames":
-// Flag indicating whether human-readable names should be returned
-// for
+// Flag indicating whether human-readable names should be returned for
 // features. If this is set, the display_name field on the feature will
-// be
-// filled out.
+// be filled out.
 func (c *FeaturetilesGetCall) EnableFeatureNames(enableFeatureNames bool) *FeaturetilesGetCall {
 	c.urlParams_.Set("enableFeatureNames", fmt.Sprint(enableFeatureNames))
 	return c
@@ -1472,10 +1215,8 @@ func (c *FeaturetilesGetCall) EnableFeatureNames(enableFeatureNames bool) *Featu
 
 // EnableModeledVolumes sets the optional parameter
 // "enableModeledVolumes": Flag indicating whether 3D building models
-// should be enabled. If this is
-// set structures will be returned as 3D modeled volumes rather than
-// 2.5D
-// extruded areas where possible.
+// should be enabled. If this is set structures will be returned as 3D
+// modeled volumes rather than 2.5D extruded areas where possible.
 func (c *FeaturetilesGetCall) EnableModeledVolumes(enableModeledVolumes bool) *FeaturetilesGetCall {
 	c.urlParams_.Set("enableModeledVolumes", fmt.Sprint(enableModeledVolumes))
 	return c
@@ -1491,9 +1232,7 @@ func (c *FeaturetilesGetCall) EnablePoliticalFeatures(enablePoliticalFeatures bo
 
 // EnablePrivateRoads sets the optional parameter "enablePrivateRoads":
 // Flag indicating whether the returned tile will contain road features
-// that
-// are marked private. Private roads are indicated by
-// the
+// that are marked private. Private roads are indicated by the
 // Feature.segment_info.road_info.is_private field.
 func (c *FeaturetilesGetCall) EnablePrivateRoads(enablePrivateRoads bool) *FeaturetilesGetCall {
 	c.urlParams_.Set("enablePrivateRoads", fmt.Sprint(enablePrivateRoads))
@@ -1502,21 +1241,18 @@ func (c *FeaturetilesGetCall) EnablePrivateRoads(enablePrivateRoads bool) *Featu
 
 // EnableUnclippedBuildings sets the optional parameter
 // "enableUnclippedBuildings": Flag indicating whether unclipped
-// buildings should be returned. If this is
-// set, building render ops will extend beyond the tile boundary.
-// Buildings
-// will only be returned on the tile that contains their centroid.
+// buildings should be returned. If this is set, building render ops
+// will extend beyond the tile boundary. Buildings will only be returned
+// on the tile that contains their centroid.
 func (c *FeaturetilesGetCall) EnableUnclippedBuildings(enableUnclippedBuildings bool) *FeaturetilesGetCall {
 	c.urlParams_.Set("enableUnclippedBuildings", fmt.Sprint(enableUnclippedBuildings))
 	return c
 }
 
 // LanguageCode sets the optional parameter "languageCode": Required.
-// The BCP-47 language code corresponding to the language in which
-// the name was requested, such as "en-US" or "sr-Latn".
-//
-// For more information,
-// see
+// The BCP-47 language code corresponding to the language in which the
+// name was requested, such as "en-US" or "sr-Latn". For more
+// information, see
 // http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 func (c *FeaturetilesGetCall) LanguageCode(languageCode string) *FeaturetilesGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
@@ -1524,12 +1260,9 @@ func (c *FeaturetilesGetCall) LanguageCode(languageCode string) *FeaturetilesGet
 }
 
 // RegionCode sets the optional parameter "regionCode": Required. The
-// Unicode country/region code (CLDR) of the location from which
-// the request is coming from, such as "US" and "419".
-//
-// For more information,
-// see
-// http://www.unicode.org/reports/tr35/#unicode_region_subtag.
+// Unicode country/region code (CLDR) of the location from which the
+// request is coming from, such as "US" and "419". For more information,
+// see http://www.unicode.org/reports/tr35/#unicode_region_subtag.
 func (c *FeaturetilesGetCall) RegionCode(regionCode string) *FeaturetilesGetCall {
 	c.urlParams_.Set("regionCode", regionCode)
 	return c
@@ -1572,7 +1305,7 @@ func (c *FeaturetilesGetCall) Header() http.Header {
 
 func (c *FeaturetilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1643,27 +1376,27 @@ func (c *FeaturetilesGetCall) Do(opts ...googleapi.CallOption) (*FeatureTile, er
 	//   ],
 	//   "parameters": {
 	//     "clientInfo.apiClient": {
-	//       "description": "API client name and version. For example, the SDK calling the API. The\nexact format is up to the client.",
+	//       "description": "API client name and version. For example, the SDK calling the API. The exact format is up to the client.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.applicationId": {
-	//       "description": "Application ID, such as the package name on Android and the bundle\nidentifier on iOS platforms.",
+	//       "description": "Application ID, such as the package name on Android and the bundle identifier on iOS platforms.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.applicationVersion": {
-	//       "description": "Application version number, such as \"1.2.3\". The exact format is\napplication-dependent.",
+	//       "description": "Application version number, such as \"1.2.3\". The exact format is application-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.deviceModel": {
-	//       "description": "Device model as reported by the device. The exact format is\nplatform-dependent.",
+	//       "description": "Device model as reported by the device. The exact format is platform-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.operatingSystem": {
-	//       "description": "Operating system name and version as reported by the OS. For example,\n\"Mac OS X 10.10.4\". The exact format is platform-dependent.",
+	//       "description": "Operating system name and version as reported by the OS. For example, \"Mac OS X 10.10.4\". The exact format is platform-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1679,31 +1412,41 @@ func (c *FeaturetilesGetCall) Do(opts ...googleapi.CallOption) (*FeatureTile, er
 	//         "IOS",
 	//         "WEB_GL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified or unknown OS.",
+	//         "Development environment.",
+	//         "macOS.",
+	//         "Windows.",
+	//         "Linux",
+	//         "Android",
+	//         "iOS",
+	//         "WebGL."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.userId": {
-	//       "description": "A client-generated user ID. The ID should be generated and persisted during\nthe first user session or whenever a pre-existing ID is not found. The\nexact format is up to the client. This must be non-empty in a\nGetFeatureTileRequest (whether via the header or\nGetFeatureTileRequest.client_info).",
+	//       "description": "Required. A client-generated user ID. The ID should be generated and persisted during the first user session or whenever a pre-existing ID is not found. The exact format is up to the client. This must be non-empty in a GetFeatureTileRequest (whether via the header or GetFeatureTileRequest.client_info).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientTileVersionId": {
-	//       "description": "Optional version id identifying the tile that is already in the client's\ncache. This field should be populated with the most recent version_id value\nreturned by the API for the requested tile.\n\nIf the version id is empty the server always returns a newly rendered tile.\nIf it is provided the server checks if the tile contents would be identical\nto one that's already on the client, and if so, returns a stripped-down\nresponse tile with STATUS_OK_DATA_UNCHANGED instead.",
+	//       "description": "Optional version id identifying the tile that is already in the client's cache. This field should be populated with the most recent version_id value returned by the API for the requested tile. If the version id is empty the server always returns a newly rendered tile. If it is provided the server checks if the tile contents would be identical to one that's already on the client, and if so, returns a stripped-down response tile with STATUS_OK_DATA_UNCHANGED instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "enableDetailedHighwayTypes": {
-	//       "description": "Flag indicating whether detailed highway types should be returned. If this\nis set, the CONTROLLED_ACCESS_HIGHWAY type may be returned. If not, then\nthese highways will have the generic HIGHWAY type.\n\nThis exists for backwards compatibility reasons.",
+	//       "description": "Flag indicating whether detailed highway types should be returned. If this is set, the CONTROLLED_ACCESS_HIGHWAY type may be returned. If not, then these highways will have the generic HIGHWAY type. This exists for backwards compatibility reasons.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enableFeatureNames": {
-	//       "description": "Flag indicating whether human-readable names should be returned for\nfeatures. If this is set, the display_name field on the feature will be\nfilled out.",
+	//       "description": "Flag indicating whether human-readable names should be returned for features. If this is set, the display_name field on the feature will be filled out.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enableModeledVolumes": {
-	//       "description": "Flag indicating whether 3D building models should be enabled. If this is\nset structures will be returned as 3D modeled volumes rather than 2.5D\nextruded areas where possible.",
+	//       "description": "Flag indicating whether 3D building models should be enabled. If this is set structures will be returned as 3D modeled volumes rather than 2.5D extruded areas where possible.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -1713,29 +1456,29 @@ func (c *FeaturetilesGetCall) Do(opts ...googleapi.CallOption) (*FeatureTile, er
 	//       "type": "boolean"
 	//     },
 	//     "enablePrivateRoads": {
-	//       "description": "Flag indicating whether the returned tile will contain road features that\nare marked private. Private roads are indicated by the\nFeature.segment_info.road_info.is_private field.",
+	//       "description": "Flag indicating whether the returned tile will contain road features that are marked private. Private roads are indicated by the Feature.segment_info.road_info.is_private field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "enableUnclippedBuildings": {
-	//       "description": "Flag indicating whether unclipped buildings should be returned. If this is\nset, building render ops will extend beyond the tile boundary. Buildings\nwill only be returned on the tile that contains their centroid.",
+	//       "description": "Flag indicating whether unclipped buildings should be returned. If this is set, building render ops will extend beyond the tile boundary. Buildings will only be returned on the tile that contains their centroid.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "languageCode": {
-	//       "description": "Required. The BCP-47 language code corresponding to the language in which\nthe name was requested, such as \"en-US\" or \"sr-Latn\".\n\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+	//       "description": "Required. The BCP-47 language code corresponding to the language in which the name was requested, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Resource name of the tile. The tile resource name is prefixed by\nits collection ID `tiles/` followed by the resource ID, which encodes the\ntile's global x and y coordinates and zoom level as `@\u003cx\u003e,\u003cy\u003e,\u003czoom\u003ez`.\nFor example, `tiles/@1,2,3z`.",
+	//       "description": "Required. Resource name of the tile. The tile resource name is prefixed by its collection ID `tiles/` followed by the resource ID, which encodes the tile's global x and y coordinates and zoom level as `@,,z`. For example, `tiles/@1,2,3z`.",
 	//       "location": "path",
 	//       "pattern": "^featuretiles/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "regionCode": {
-	//       "description": "Required. The Unicode country/region code (CLDR) of the location from which\nthe request is coming from, such as \"US\" and \"419\".\n\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#unicode_region_subtag.",
+	//       "description": "Required. The Unicode country/region code (CLDR) of the location from which the request is coming from, such as \"US\" and \"419\". For more information, see http://www.unicode.org/reports/tr35/#unicode_region_subtag.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1768,10 +1511,8 @@ func (r *TerraintilesService) Get(name string) *TerraintilesGetCall {
 
 // AltitudePrecisionCentimeters sets the optional parameter
 // "altitudePrecisionCentimeters": The precision of terrain altitudes in
-// centimeters.
-// Possible values: between 1 (cm level precision) and 1,000,000
-// (10-kilometer
-// level precision).
+// centimeters. Possible values: between 1 (cm level precision) and
+// 1,000,000 (10-kilometer level precision).
 func (c *TerraintilesGetCall) AltitudePrecisionCentimeters(altitudePrecisionCentimeters int64) *TerraintilesGetCall {
 	c.urlParams_.Set("altitudePrecisionCentimeters", fmt.Sprint(altitudePrecisionCentimeters))
 	return c
@@ -1779,8 +1520,7 @@ func (c *TerraintilesGetCall) AltitudePrecisionCentimeters(altitudePrecisionCent
 
 // ClientInfoApiClient sets the optional parameter
 // "clientInfo.apiClient": API client name and version. For example, the
-// SDK calling the API. The
-// exact format is up to the client.
+// SDK calling the API. The exact format is up to the client.
 func (c *TerraintilesGetCall) ClientInfoApiClient(clientInfoApiClient string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.apiClient", clientInfoApiClient)
 	return c
@@ -1788,8 +1528,7 @@ func (c *TerraintilesGetCall) ClientInfoApiClient(clientInfoApiClient string) *T
 
 // ClientInfoApplicationId sets the optional parameter
 // "clientInfo.applicationId": Application ID, such as the package name
-// on Android and the bundle
-// identifier on iOS platforms.
+// on Android and the bundle identifier on iOS platforms.
 func (c *TerraintilesGetCall) ClientInfoApplicationId(clientInfoApplicationId string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.applicationId", clientInfoApplicationId)
 	return c
@@ -1797,8 +1536,7 @@ func (c *TerraintilesGetCall) ClientInfoApplicationId(clientInfoApplicationId st
 
 // ClientInfoApplicationVersion sets the optional parameter
 // "clientInfo.applicationVersion": Application version number, such as
-// "1.2.3". The exact format is
-// application-dependent.
+// "1.2.3". The exact format is application-dependent.
 func (c *TerraintilesGetCall) ClientInfoApplicationVersion(clientInfoApplicationVersion string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.applicationVersion", clientInfoApplicationVersion)
 	return c
@@ -1806,8 +1544,7 @@ func (c *TerraintilesGetCall) ClientInfoApplicationVersion(clientInfoApplication
 
 // ClientInfoDeviceModel sets the optional parameter
 // "clientInfo.deviceModel": Device model as reported by the device. The
-// exact format is
-// platform-dependent.
+// exact format is platform-dependent.
 func (c *TerraintilesGetCall) ClientInfoDeviceModel(clientInfoDeviceModel string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.deviceModel", clientInfoDeviceModel)
 	return c
@@ -1815,8 +1552,8 @@ func (c *TerraintilesGetCall) ClientInfoDeviceModel(clientInfoDeviceModel string
 
 // ClientInfoOperatingSystem sets the optional parameter
 // "clientInfo.operatingSystem": Operating system name and version as
-// reported by the OS. For example,
-// "Mac OS X 10.10.4". The exact format is platform-dependent.
+// reported by the OS. For example, "Mac OS X 10.10.4". The exact format
+// is platform-dependent.
 func (c *TerraintilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSystem string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.operatingSystem", clientInfoOperatingSystem)
 	return c
@@ -1826,28 +1563,24 @@ func (c *TerraintilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSyste
 // Platform where the application is running.
 //
 // Possible values:
-//   "PLATFORM_UNSPECIFIED"
-//   "EDITOR"
-//   "MAC_OS"
-//   "WINDOWS"
-//   "LINUX"
-//   "ANDROID"
-//   "IOS"
-//   "WEB_GL"
+//   "PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
+//   "EDITOR" - Development environment.
+//   "MAC_OS" - macOS.
+//   "WINDOWS" - Windows.
+//   "LINUX" - Linux
+//   "ANDROID" - Android
+//   "IOS" - iOS
+//   "WEB_GL" - WebGL.
 func (c *TerraintilesGetCall) ClientInfoPlatform(clientInfoPlatform string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.platform", clientInfoPlatform)
 	return c
 }
 
-// ClientInfoUserId sets the optional parameter "clientInfo.userId": A
-// client-generated user ID. The ID should be generated and persisted
-// during
-// the first user session or whenever a pre-existing ID is not found.
-// The
-// exact format is up to the client. This must be non-empty in
-// a
-// GetFeatureTileRequest (whether via the header
-// or
+// ClientInfoUserId sets the optional parameter "clientInfo.userId":
+// Required. A client-generated user ID. The ID should be generated and
+// persisted during the first user session or whenever a pre-existing ID
+// is not found. The exact format is up to the client. This must be
+// non-empty in a GetFeatureTileRequest (whether via the header or
 // GetFeatureTileRequest.client_info).
 func (c *TerraintilesGetCall) ClientInfoUserId(clientInfoUserId string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.userId", clientInfoUserId)
@@ -1856,21 +1589,13 @@ func (c *TerraintilesGetCall) ClientInfoUserId(clientInfoUserId string) *Terrain
 
 // MaxElevationResolutionCells sets the optional parameter
 // "maxElevationResolutionCells": The maximum allowed resolution for the
-// returned elevation heightmap.
-// Possible values: between 1 and 1024 (and not less
-// than
-// min_elevation_resolution_cells).
-// Over-sized heightmaps will be non-uniformly down-sampled such that
-// each
-// edge is no longer than this value. Non-uniformity is chosen to
-// maximise the
-// amount of preserved data.
-//
-// For example:
-// Original resolution: 100px (width) * 30px
-// (height)
-// max_elevation_resolution: 30
-// New resolution: 30px (width) * 30px (height)
+// returned elevation heightmap. Possible values: between 1 and 1024
+// (and not less than min_elevation_resolution_cells). Over-sized
+// heightmaps will be non-uniformly down-sampled such that each edge is
+// no longer than this value. Non-uniformity is chosen to maximise the
+// amount of preserved data. For example: Original resolution: 100px
+// (width) * 30px (height) max_elevation_resolution: 30 New resolution:
+// 30px (width) * 30px (height)
 func (c *TerraintilesGetCall) MaxElevationResolutionCells(maxElevationResolutionCells int64) *TerraintilesGetCall {
 	c.urlParams_.Set("maxElevationResolutionCells", fmt.Sprint(maxElevationResolutionCells))
 	return c
@@ -1878,22 +1603,14 @@ func (c *TerraintilesGetCall) MaxElevationResolutionCells(maxElevationResolution
 
 // MinElevationResolutionCells sets the optional parameter
 // "minElevationResolutionCells": The minimum allowed resolution for the
-// returned elevation heightmap.
-// Possible values: between 0 and 1024 (and not more
-// than
-// max_elevation_resolution_cells). Zero is supported for
-// backward
-// compatibility.
-// Under-sized heightmaps will be non-uniformly up-sampled
-// such that each edge is no shorter than this value. Non-uniformity is
-// chosen
-// to maximise the amount of preserved data.
-//
-// For example:
-// Original resolution: 30px (width) * 10px
+// returned elevation heightmap. Possible values: between 0 and 1024
+// (and not more than max_elevation_resolution_cells). Zero is supported
+// for backward compatibility. Under-sized heightmaps will be
+// non-uniformly up-sampled such that each edge is no shorter than this
+// value. Non-uniformity is chosen to maximise the amount of preserved
+// data. For example: Original resolution: 30px (width) * 10px (height)
+// min_elevation_resolution: 30 New resolution: 30px (width) * 30px
 // (height)
-// min_elevation_resolution: 30
-// New resolution: 30px (width) * 30px (height)
 func (c *TerraintilesGetCall) MinElevationResolutionCells(minElevationResolutionCells int64) *TerraintilesGetCall {
 	c.urlParams_.Set("minElevationResolutionCells", fmt.Sprint(minElevationResolutionCells))
 	return c
@@ -1903,9 +1620,12 @@ func (c *TerraintilesGetCall) MinElevationResolutionCells(minElevationResolution
 // formats that the client understands.
 //
 // Possible values:
-//   "TERRAIN_FORMAT_UNKNOWN"
-//   "FIRST_DERIVATIVE"
-//   "SECOND_DERIVATIVE"
+//   "TERRAIN_FORMAT_UNKNOWN" - An unknown or unspecified terrain
+// format.
+//   "FIRST_DERIVATIVE" - Terrain elevation data encoded as a
+// FirstDerivativeElevationGrid. .
+//   "SECOND_DERIVATIVE" - Terrain elevation data encoded as a
+// SecondDerivativeElevationGrid.
 func (c *TerraintilesGetCall) TerrainFormats(terrainFormats ...string) *TerraintilesGetCall {
 	c.urlParams_.SetMulti("terrainFormats", append([]string{}, terrainFormats...))
 	return c
@@ -1948,7 +1668,7 @@ func (c *TerraintilesGetCall) Header() http.Header {
 
 func (c *TerraintilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200807")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2019,33 +1739,33 @@ func (c *TerraintilesGetCall) Do(opts ...googleapi.CallOption) (*TerrainTile, er
 	//   ],
 	//   "parameters": {
 	//     "altitudePrecisionCentimeters": {
-	//       "description": "The precision of terrain altitudes in centimeters.\nPossible values: between 1 (cm level precision) and 1,000,000 (10-kilometer\nlevel precision).",
+	//       "description": "The precision of terrain altitudes in centimeters. Possible values: between 1 (cm level precision) and 1,000,000 (10-kilometer level precision).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "clientInfo.apiClient": {
-	//       "description": "API client name and version. For example, the SDK calling the API. The\nexact format is up to the client.",
+	//       "description": "API client name and version. For example, the SDK calling the API. The exact format is up to the client.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.applicationId": {
-	//       "description": "Application ID, such as the package name on Android and the bundle\nidentifier on iOS platforms.",
+	//       "description": "Application ID, such as the package name on Android and the bundle identifier on iOS platforms.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.applicationVersion": {
-	//       "description": "Application version number, such as \"1.2.3\". The exact format is\napplication-dependent.",
+	//       "description": "Application version number, such as \"1.2.3\". The exact format is application-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.deviceModel": {
-	//       "description": "Device model as reported by the device. The exact format is\nplatform-dependent.",
+	//       "description": "Device model as reported by the device. The exact format is platform-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.operatingSystem": {
-	//       "description": "Operating system name and version as reported by the OS. For example,\n\"Mac OS X 10.10.4\". The exact format is platform-dependent.",
+	//       "description": "Operating system name and version as reported by the OS. For example, \"Mac OS X 10.10.4\". The exact format is platform-dependent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2061,28 +1781,38 @@ func (c *TerraintilesGetCall) Do(opts ...googleapi.CallOption) (*TerrainTile, er
 	//         "IOS",
 	//         "WEB_GL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified or unknown OS.",
+	//         "Development environment.",
+	//         "macOS.",
+	//         "Windows.",
+	//         "Linux",
+	//         "Android",
+	//         "iOS",
+	//         "WebGL."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "clientInfo.userId": {
-	//       "description": "A client-generated user ID. The ID should be generated and persisted during\nthe first user session or whenever a pre-existing ID is not found. The\nexact format is up to the client. This must be non-empty in a\nGetFeatureTileRequest (whether via the header or\nGetFeatureTileRequest.client_info).",
+	//       "description": "Required. A client-generated user ID. The ID should be generated and persisted during the first user session or whenever a pre-existing ID is not found. The exact format is up to the client. This must be non-empty in a GetFeatureTileRequest (whether via the header or GetFeatureTileRequest.client_info).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxElevationResolutionCells": {
-	//       "description": "The maximum allowed resolution for the returned elevation heightmap.\nPossible values: between 1 and 1024 (and not less than\nmin_elevation_resolution_cells).\nOver-sized heightmaps will be non-uniformly down-sampled such that each\nedge is no longer than this value. Non-uniformity is chosen to maximise the\namount of preserved data.\n\nFor example:\nOriginal resolution: 100px (width) * 30px (height)\nmax_elevation_resolution: 30\nNew resolution: 30px (width) * 30px (height)",
+	//       "description": "The maximum allowed resolution for the returned elevation heightmap. Possible values: between 1 and 1024 (and not less than min_elevation_resolution_cells). Over-sized heightmaps will be non-uniformly down-sampled such that each edge is no longer than this value. Non-uniformity is chosen to maximise the amount of preserved data. For example: Original resolution: 100px (width) * 30px (height) max_elevation_resolution: 30 New resolution: 30px (width) * 30px (height)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "minElevationResolutionCells": {
-	//       "description": "The minimum allowed resolution for the returned elevation heightmap.\nPossible values: between 0 and 1024 (and not more than\nmax_elevation_resolution_cells). Zero is supported for backward\ncompatibility.\nUnder-sized heightmaps will be non-uniformly up-sampled\nsuch that each edge is no shorter than this value. Non-uniformity is chosen\nto maximise the amount of preserved data.\n\nFor example:\nOriginal resolution: 30px (width) * 10px (height)\nmin_elevation_resolution: 30\nNew resolution: 30px (width) * 30px (height)",
+	//       "description": "The minimum allowed resolution for the returned elevation heightmap. Possible values: between 0 and 1024 (and not more than max_elevation_resolution_cells). Zero is supported for backward compatibility. Under-sized heightmaps will be non-uniformly up-sampled such that each edge is no shorter than this value. Non-uniformity is chosen to maximise the amount of preserved data. For example: Original resolution: 30px (width) * 10px (height) min_elevation_resolution: 30 New resolution: 30px (width) * 30px (height)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "name": {
-	//       "description": "Required. Resource name of the tile. The tile resource name is prefixed by\nits collection ID `terraintiles/` followed by the resource ID, which\nencodes the tile's global x and y coordinates and zoom level as\n`@\u003cx\u003e,\u003cy\u003e,\u003czoom\u003ez`. For example, `terraintiles/@1,2,3z`.",
+	//       "description": "Required. Resource name of the tile. The tile resource name is prefixed by its collection ID `terraintiles/` followed by the resource ID, which encodes the tile's global x and y coordinates and zoom level as `@,,z`. For example, `terraintiles/@1,2,3z`.",
 	//       "location": "path",
 	//       "pattern": "^terraintiles/[^/]+$",
 	//       "required": true,
@@ -2094,6 +1824,11 @@ func (c *TerraintilesGetCall) Do(opts ...googleapi.CallOption) (*TerrainTile, er
 	//         "TERRAIN_FORMAT_UNKNOWN",
 	//         "FIRST_DERIVATIVE",
 	//         "SECOND_DERIVATIVE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "An unknown or unspecified terrain format.",
+	//         "Terrain elevation data encoded as a FirstDerivativeElevationGrid. .",
+	//         "Terrain elevation data encoded as a SecondDerivativeElevationGrid."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

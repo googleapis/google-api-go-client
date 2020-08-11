@@ -377,7 +377,7 @@
       "name": "apigee",
       "version": "v1",
       "title": "Apigee API",
-      "description": "The Apigee API lets you programmatically manage Apigee hybrid with a set of RESTful operations, including: - Create, edit, and delete API proxies - Manage users - Deploy and undeploy proxy revisions - Configure environments For information on using the APIs described in this section, see Get started using the APIs \u003cdocs.apigee.com/hybrid/latest/api-get-started\u003e. *Note:* This product is available as a free trial for a time period of 60 days.",
+      "description": "Use the Apigee API to programmatically develop and manage APIs with a set of RESTful operations. Develop and secure API proxies, deploy and undeploy API proxy revisions, monitor APIs, configure environments, manage users, and more. Get started using the APIs \u003chttps://cloud.google.com/apigee/docs/api-platform/get-started/api-get-started\u003e. *Note:* This product is available as a free trial for a time period of 60 days.",
       "discoveryRestUrl": "https://apigee.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2319,6 +2319,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/gmail/postmaster",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "groupsmigration:v1",
+      "name": "groupsmigration",
+      "version": "v1",
+      "title": "Groups Migration API",
+      "description": "The Groups Migration API allows domain administrators to archive emails into Google groups.",
+      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/google-apps/groups-migration/",
       "preferred": true
     },
     {

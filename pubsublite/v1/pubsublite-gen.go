@@ -266,14 +266,12 @@ type CursorProjectsLocationsSubscriptionsCursorsService struct {
 
 // Capacity: The throughput capacity configuration for each partition.
 type Capacity struct {
-	// PublishMibPerSec: Publish throughput capacity per partition in
-	// MiB/s.
+	// PublishMibPerSec: Publish throughput capacity per partition in MiB/s.
 	// Must be >= 4 and <= 16.
 	PublishMibPerSec int64 `json:"publishMibPerSec,omitempty"`
 
 	// SubscribeMibPerSec: Subscribe throughput capacity per partition in
-	// MiB/s.
-	// Must be >= 4 and <= 32.
+	// MiB/s. Must be >= 4 and <= 32.
 	SubscribeMibPerSec int64 `json:"subscribeMibPerSec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PublishMibPerSec") to
@@ -304,8 +302,7 @@ func (s *Capacity) MarshalJSON() ([]byte, error) {
 // topic partition.
 type Cursor struct {
 	// Offset: The offset of a message within a topic partition. Must be
-	// greater than or
-	// equal 0.
+	// greater than or equal 0.
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Offset") to
@@ -339,13 +336,12 @@ type DeliveryConfig struct {
 	//   "DELIVERY_REQUIREMENT_UNSPECIFIED" - Default value. This value is
 	// unused.
 	//   "DELIVER_IMMEDIATELY" - The server does not wait for a published
-	// message to be successfully
-	// written to storage before delivering it to subscribers.
+	// message to be successfully written to storage before delivering it to
+	// subscribers.
 	//   "DELIVER_AFTER_STORED" - The server will not deliver a published
-	// message to subscribers until
-	// the message has been successfully written to storage. This will
-	// result
-	// in higher end-to-end latency, but consistent delivery.
+	// message to subscribers until the message has been successfully
+	// written to storage. This will result in higher end-to-end latency,
+	// but consistent delivery.
 	DeliveryRequirement string `json:"deliveryRequirement,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliveryRequirement")
@@ -373,17 +369,11 @@ func (s *DeliveryConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -393,8 +383,8 @@ type Empty struct {
 // ListPartitionCursorsResponse: Response for ListPartitionCursors
 type ListPartitionCursorsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page.
-	// If this field is omitted, there are no subsequent pages.
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// PartitionCursors: The partition cursors from this request.
@@ -430,13 +420,12 @@ func (s *ListPartitionCursorsResponse) MarshalJSON() ([]byte, error) {
 // ListSubscriptionsResponse: Response for ListSubscriptions.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page of
-	// results. If this field is omitted, there are no more results.
+	// the next page of results. If this field is omitted, there are no more
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The list of subscriptions in the requested parent. The
-	// order of the
-	// subscriptions is unspecified.
+	// order of the subscriptions is unspecified.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -469,13 +458,12 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicSubscriptionsResponse: Response for ListTopicSubscriptions.
 type ListTopicSubscriptionsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page of
-	// results. If this field is omitted, there are no more results.
+	// the next page of results. If this field is omitted, there are no more
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The names of subscriptions attached to the topic. The
-	// order of the
-	// subscriptions is unspecified.
+	// order of the subscriptions is unspecified.
 	Subscriptions []string `json:"subscriptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -508,13 +496,12 @@ func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicsResponse: Response for ListTopics.
 type ListTopicsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page of
-	// results. If this field is omitted, there are no more results.
+	// the next page of results. If this field is omitted, there are no more
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Topics: The list of topic in the requested parent. The order of the
-	// topics is
-	// unspecified.
+	// topics is unspecified.
 	Topics []*Topic `json:"topics,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -553,14 +540,10 @@ type PartitionConfig struct {
 	Count int64 `json:"count,omitempty,string"`
 
 	// Scale: Every partition in the topic is allocated throughput
-	// equivalent to
-	// `scale` times the standard partition throughput (4 MiB/s). This is
-	// also
-	// reflected in the cost of this topic; a topic with `scale` of 2
-	// and
-	// count of 10 is charged for 20 partitions. This value must be in
-	// the
-	// range [1,4].
+	// equivalent to `scale` times the standard partition throughput (4
+	// MiB/s). This is also reflected in the cost of this topic; a topic
+	// with `scale` of 2 and count of 10 is charged for 20 partitions. This
+	// value must be in the range [1,4].
 	Scale int64 `json:"scale,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Capacity") to
@@ -620,19 +603,14 @@ func (s *PartitionCursor) MarshalJSON() ([]byte, error) {
 // RetentionConfig: The settings for a topic's message retention.
 type RetentionConfig struct {
 	// PerPartitionBytes: The provisioned storage, in bytes, per partition.
-	// If the number of bytes
-	// stored in any of the topic's partitions grows beyond this value,
-	// older
-	// messages will be dropped to make room for newer ones, regardless of
-	// the
-	// value of `period`.
+	// If the number of bytes stored in any of the topic's partitions grows
+	// beyond this value, older messages will be dropped to make room for
+	// newer ones, regardless of the value of `period`.
 	PerPartitionBytes int64 `json:"perPartitionBytes,omitempty,string"`
 
 	// Period: How long a published message is retained. If unset, messages
-	// will be
-	// retained as long as the bytes retained for each partition is
-	// below
-	// `per_partition_bytes`.
+	// will be retained as long as the bytes retained for each partition is
+	// below `per_partition_bytes`.
 	Period string `json:"period,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PerPartitionBytes")
@@ -665,17 +643,13 @@ type Subscription struct {
 	// delivery.
 	DeliveryConfig *DeliveryConfig `json:"deliveryConfig,omitempty"`
 
-	// Name: The name of the subscription.
-	// Structured
-	// like:
-	// projects/{project_number}/locations/{location}/subscriptions/{su
-	// bscription_id}
+	// Name: The name of the subscription. Structured like:
+	// projects/{project_number}/locations/{location}/subscriptions/{subscrip
+	// tion_id}
 	Name string `json:"name,omitempty"`
 
-	// Topic: The name of the topic this subscription is attached
-	// to.
-	// Structured
-	// like:
+	// Topic: The name of the topic this subscription is attached to.
+	// Structured like:
 	// projects/{project_number}/locations/{location}/topics/{topic_id}
 	Topic string `json:"topic,omitempty"`
 
@@ -709,9 +683,7 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 
 // Topic: Metadata about a topic resource.
 type Topic struct {
-	// Name: The name of the topic.
-	// Structured
-	// like:
+	// Name: The name of the topic. Structured like:
 	// projects/{project_number}/locations/{location}/topics/{topic_id}
 	Name string `json:"name,omitempty"`
 
@@ -802,10 +774,8 @@ func (r *AdminProjectsLocationsSubscriptionsService) Create(parent string, subsc
 
 // SubscriptionId sets the optional parameter "subscriptionId":
 // Required. The ID to use for the subscription, which will become the
-// final component
-// of the subscription's name.
-//
-// This value is structured like: `my-sub-name`.
+// final component of the subscription's name. This value is structured
+// like: `my-sub-name`.
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) SubscriptionId(subscriptionId string) *AdminProjectsLocationsSubscriptionsCreateCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
@@ -838,7 +808,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -911,14 +881,14 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent location in which to create the subscription.\nStructured like `projects/{project_number}/locations/{location}`.",
+	//       "description": "Required. The parent location in which to create the subscription. Structured like `projects/{project_number}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "Required. The ID to use for the subscription, which will become the final component\nof the subscription's name.\n\nThis value is structured like: `my-sub-name`.",
+	//       "description": "Required. The ID to use for the subscription, which will become the final component of the subscription's name. This value is structured like: `my-sub-name`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -981,7 +951,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1122,7 +1092,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1230,21 +1200,19 @@ func (r *AdminProjectsLocationsSubscriptionsService) List(parent string) *AdminP
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of subscriptions to return. The service may return fewer
-// than this value.
-// If unset or zero, all subscriptions for the parent will be returned.
+// of subscriptions to return. The service may return fewer than this
+// value. If unset or zero, all subscriptions for the parent will be
+// returned.
 func (c *AdminProjectsLocationsSubscriptionsListCall) PageSize(pageSize int64) *AdminProjectsLocationsSubscriptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListSubscriptions` call.
-// Provide this to retrieve the subsequent page.
-//
-// When paginating, all other parameters provided to `ListSubscriptions`
-// must
-// match the call that provided the page token.
+// received from a previous `ListSubscriptions` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListSubscriptions` must match the call that provided the
+// page token.
 func (c *AdminProjectsLocationsSubscriptionsListCall) PageToken(pageToken string) *AdminProjectsLocationsSubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1287,7 +1255,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1358,18 +1326,18 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of subscriptions to return. The service may return fewer\nthan this value.\nIf unset or zero, all subscriptions for the parent will be returned.",
+	//       "description": "The maximum number of subscriptions to return. The service may return fewer than this value. If unset or zero, all subscriptions for the parent will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListSubscriptions` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListSubscriptions` must\nmatch the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListSubscriptions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSubscriptions` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent whose subscriptions are to be listed.\nStructured like `projects/{project_number}/locations/{location}`.",
+	//       "description": "Required. The parent whose subscriptions are to be listed. Structured like `projects/{project_number}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1461,7 +1429,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1534,7 +1502,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the subscription.\nStructured like:\nprojects/{project_number}/locations/{location}/subscriptions/{subscription_id}",
+	//       "description": "The name of the subscription. Structured like: projects/{project_number}/locations/{location}/subscriptions/{subscription_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -1581,10 +1549,8 @@ func (r *AdminProjectsLocationsTopicsService) Create(parent string, topic *Topic
 }
 
 // TopicId sets the optional parameter "topicId": Required. The ID to
-// use for the topic, which will become the final component of
-// the topic's name.
-//
-// This value is structured like: `my-topic-name`.
+// use for the topic, which will become the final component of the
+// topic's name. This value is structured like: `my-topic-name`.
 func (c *AdminProjectsLocationsTopicsCreateCall) TopicId(topicId string) *AdminProjectsLocationsTopicsCreateCall {
 	c.urlParams_.Set("topicId", topicId)
 	return c
@@ -1617,7 +1583,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1690,14 +1656,14 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent location in which to create the topic.\nStructured like `projects/{project_number}/locations/{location}`.",
+	//       "description": "Required. The parent location in which to create the topic. Structured like `projects/{project_number}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "topicId": {
-	//       "description": "Required. The ID to use for the topic, which will become the final component of\nthe topic's name.\n\nThis value is structured like: `my-topic-name`.",
+	//       "description": "Required. The ID to use for the topic, which will become the final component of the topic's name. This value is structured like: `my-topic-name`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1760,7 +1726,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1901,7 +1867,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2046,7 +2012,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2154,21 +2120,17 @@ func (r *AdminProjectsLocationsTopicsService) List(parent string) *AdminProjects
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of topics to return. The service may return fewer than
-// this value.
-// If unset or zero, all topics for the parent will be returned.
+// of topics to return. The service may return fewer than this value. If
+// unset or zero, all topics for the parent will be returned.
 func (c *AdminProjectsLocationsTopicsListCall) PageSize(pageSize int64) *AdminProjectsLocationsTopicsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListTopics` call.
-// Provide this to retrieve the subsequent page.
-//
-// When paginating, all other parameters provided to `ListTopics` must
-// match
-// the call that provided the page token.
+// received from a previous `ListTopics` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListTopics` must match the call that provided the page token.
 func (c *AdminProjectsLocationsTopicsListCall) PageToken(pageToken string) *AdminProjectsLocationsTopicsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2211,7 +2173,7 @@ func (c *AdminProjectsLocationsTopicsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2282,18 +2244,18 @@ func (c *AdminProjectsLocationsTopicsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of topics to return. The service may return fewer than\nthis value.\nIf unset or zero, all topics for the parent will be returned.",
+	//       "description": "The maximum number of topics to return. The service may return fewer than this value. If unset or zero, all topics for the parent will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListTopics` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListTopics` must match\nthe call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListTopics` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTopics` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent whose topics are to be listed.\nStructured like `projects/{project_number}/locations/{location}`.",
+	//       "description": "Required. The parent whose topics are to be listed. Structured like `projects/{project_number}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2385,7 +2347,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2458,7 +2420,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the topic.\nStructured like:\nprojects/{project_number}/locations/{location}/topics/{topic_id}",
+	//       "description": "The name of the topic. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -2504,22 +2466,19 @@ func (r *AdminProjectsLocationsTopicsSubscriptionsService) List(name string) *Ad
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of subscriptions to return. The service may return fewer
-// than this value.
-// If unset or zero, all subscriptions for the given topic will be
-// returned.
+// of subscriptions to return. The service may return fewer than this
+// value. If unset or zero, all subscriptions for the given topic will
+// be returned.
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) PageSize(pageSize int64) *AdminProjectsLocationsTopicsSubscriptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListTopicSubscriptions` call.
-// Provide this to retrieve the subsequent page.
-//
-// When paginating, all other parameters provided to
-// `ListTopicSubscriptions`
-// must match the call that provided the page token.
+// received from a previous `ListTopicSubscriptions` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListTopicSubscriptions` must match the call
+// that provided the page token.
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) PageToken(pageToken string) *AdminProjectsLocationsTopicsSubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2562,7 +2521,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Header() http.Header
 
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2640,13 +2599,13 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of subscriptions to return. The service may return fewer\nthan this value.\nIf unset or zero, all subscriptions for the given topic will be returned.",
+	//       "description": "The maximum number of subscriptions to return. The service may return fewer than this value. If unset or zero, all subscriptions for the given topic will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListTopicSubscriptions` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListTopicSubscriptions`\nmust match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListTopicSubscriptions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTopicSubscriptions` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2702,8 +2661,7 @@ func (r *CursorProjectsLocationsSubscriptionsCursorsService) List(parent string)
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of cursors to return. The service may return fewer than
-// this value.
+// of cursors to return. The service may return fewer than this value.
 // If unset or zero, all cursors for the parent will be returned.
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) PageSize(pageSize int64) *CursorProjectsLocationsSubscriptionsCursorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -2711,12 +2669,10 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) PageSize(pageSize 
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPartitionCursors` call.
-// Provide this to retrieve the subsequent page.
-//
-// When paginating, all other parameters provided to
-// `ListPartitionCursors`
-// must match the call that provided the page token.
+// received from a previous `ListPartitionCursors` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListPartitionCursors` must match the call that provided
+// the page token.
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) PageToken(pageToken string) *CursorProjectsLocationsSubscriptionsCursorsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2759,7 +2715,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Header() http.Head
 
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2830,18 +2786,18 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of cursors to return. The service may return fewer than\nthis value.\nIf unset or zero, all cursors for the parent will be returned.",
+	//       "description": "The maximum number of cursors to return. The service may return fewer than this value. If unset or zero, all cursors for the parent will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListPartitionCursors` call.\nProvide this to retrieve the subsequent page.\n\nWhen paginating, all other parameters provided to `ListPartitionCursors`\nmust match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListPartitionCursors` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPartitionCursors` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The subscription for which to retrieve cursors.\nStructured like\n`projects/{project_number}/locations/{location}/subscriptions/{subscription_id}`.",
+	//       "description": "Required. The subscription for which to retrieve cursors. Structured like `projects/{project_number}/locations/{location}/subscriptions/{subscription_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,

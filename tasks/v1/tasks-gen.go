@@ -164,8 +164,7 @@ type TasksService struct {
 
 type Task struct {
 	// Completed: Completion date of the task (as a RFC 3339 timestamp).
-	// This field is
-	// omitted if the task has not been completed.
+	// This field is omitted if the task has not been completed.
 	Completed *string `json:"completed,omitempty"`
 
 	// Deleted: Flag indicating whether the task has been deleted. The
@@ -173,22 +172,17 @@ type Task struct {
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Due: Due date of the task (as a RFC 3339 timestamp). Optional. The
-	// due date only
-	// records date information; the time portion of the timestamp is
-	// discarded
-	// when setting the due date. It isn't possible to read or write the
-	// time that
-	// a task is due via the API.
+	// due date only records date information; the time portion of the
+	// timestamp is discarded when setting the due date. It isn't possible
+	// to read or write the time that a task is due via the API.
 	Due string `json:"due,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
 	// Hidden: Flag indicating whether the task is hidden. This is the case
-	// if the task
-	// had been marked completed when the task list was last cleared. The
-	// default
-	// is False. This field is read-only.
+	// if the task had been marked completed when the task list was last
+	// cleared. The default is False. This field is read-only.
 	Hidden bool `json:"hidden,omitempty"`
 
 	// Id: Task identifier.
@@ -204,23 +198,17 @@ type Task struct {
 	Notes string `json:"notes,omitempty"`
 
 	// Parent: Parent task identifier. This field is omitted if it is a
-	// top-level task.
-	// This field is read-only. Use the "move" method to move the task under
-	// a
-	// different parent or to the top level.
+	// top-level task. This field is read-only. Use the "move" method to
+	// move the task under a different parent or to the top level.
 	Parent string `json:"parent,omitempty"`
 
 	// Position: String indicating the position of the task among its
-	// sibling tasks under
-	// the same parent task or at the top level. If this string is greater
-	// than
-	// another task's corresponding position string according to
-	// lexicographical
-	// ordering, the task is positioned after the other task under the same
-	// parent
-	// task (or at the top level). This field is read-only. Use the "move"
-	// method
-	// to move the task to another position.
+	// sibling tasks under the same parent task or at the top level. If this
+	// string is greater than another task's corresponding position string
+	// according to lexicographical ordering, the task is positioned after
+	// the other task under the same parent task (or at the top level). This
+	// field is read-only. Use the "move" method to move the task to another
+	// position.
 	Position string `json:"position,omitempty"`
 
 	// SelfLink: URL pointing to this task. Used to retrieve, update, or
@@ -266,9 +254,8 @@ func (s *Task) MarshalJSON() ([]byte, error) {
 }
 
 type TaskLinks struct {
-	// Description: The description. In HTML speak: Everything between
-	// &lt;a&gt; and
-	// &lt;/a&gt;.
+	// Description: The description. In HTML speak: Everything between <a>
+	// and </a>.
 	Description string `json:"description,omitempty"`
 
 	// Link: The URL.
@@ -311,8 +298,7 @@ type TaskList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// SelfLink: URL pointing to this task list. Used to retrieve, update,
-	// or delete this
-	// task list.
+	// or delete this task list.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: Title of the task list.
@@ -474,7 +460,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -586,7 +572,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -720,7 +706,7 @@ func (c *TasklistsInsertCall) Header() http.Header {
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -818,8 +804,8 @@ func (r *TasklistsService) List() *TasklistsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is
-// 20 (max allowed: 100).
+// of task lists returned on one page.  The default is 20 (max allowed:
+// 100).
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -869,7 +855,7 @@ func (c *TasklistsListCall) Header() http.Header {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -935,7 +921,7 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is\n20 (max allowed: 100).",
+	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -991,8 +977,7 @@ type TasklistsPatchCall struct {
 }
 
 // Patch: Updates the authenticated user's specified task list. This
-// method supports
-// patch semantics.
+// method supports patch semantics.
 func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
 	c := &TasklistsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1027,7 +1012,7 @@ func (c *TasklistsPatchCall) Header() http.Header {
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1091,7 +1076,7 @@ func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the authenticated user's specified task list. This method supports\npatch semantics.",
+	//   "description": "Updates the authenticated user's specified task list. This method supports patch semantics.",
 	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
 	//   "httpMethod": "PATCH",
 	//   "id": "tasks.tasklists.patch",
@@ -1166,7 +1151,7 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1270,10 +1255,8 @@ type TasksClearCall struct {
 }
 
 // Clear: Clears all completed tasks from the specified task list. The
-// affected tasks
-// will be marked as 'hidden' and no longer be returned by default
-// when
-// retrieving all tasks for a task list.
+// affected tasks will be marked as 'hidden' and no longer be returned
+// by default when retrieving all tasks for a task list.
 func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 	c := &TasksClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -1307,7 +1290,7 @@ func (c *TasksClearCall) Header() http.Header {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1341,7 +1324,7 @@ func (c *TasksClearCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Clears all completed tasks from the specified task list. The affected tasks\nwill be marked as 'hidden' and no longer be returned by default when\nretrieving all tasks for a task list.",
+	//   "description": "Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.",
 	//   "flatPath": "tasks/v1/lists/{tasklist}/clear",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.clear",
@@ -1410,7 +1393,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1532,7 +1515,7 @@ func (c *TasksGetCall) Header() http.Header {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1649,16 +1632,15 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 }
 
 // Parent sets the optional parameter "parent": Parent task identifier.
-// If the task is created at the top level, this
-// parameter is omitted.
+// If the task is created at the top level, this parameter is omitted.
 func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
 // Previous sets the optional parameter "previous": Previous sibling
-// task identifier. If the task is created at the first
-// position among its siblings, this parameter is omitted.
+// task identifier. If the task is created at the first position among
+// its siblings, this parameter is omitted.
 func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
 	c.urlParams_.Set("previous", previous)
 	return c
@@ -1691,7 +1673,7 @@ func (c *TasksInsertCall) Header() http.Header {
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1764,12 +1746,12 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent task identifier. If the task is created at the top level, this\nparameter is omitted. Optional.",
+	//       "description": "Parent task identifier. If the task is created at the top level, this parameter is omitted. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "previous": {
-	//       "description": "Previous sibling task identifier. If the task is created at the first\nposition among its siblings, this parameter is omitted. Optional.",
+	//       "description": "Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1813,40 +1795,40 @@ func (r *TasksService) List(tasklistid string) *TasksListCall {
 }
 
 // CompletedMax sets the optional parameter "completedMax": Upper bound
-// for a task's completion date (as a RFC 3339 timestamp) to
-// filter by.  The default is not to filter by completion date.
+// for a task's completion date (as a RFC 3339 timestamp) to filter by.
+// The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 	c.urlParams_.Set("completedMax", completedMax)
 	return c
 }
 
 // CompletedMin sets the optional parameter "completedMin": Lower bound
-// for a task's completion date (as a RFC 3339 timestamp) to
-// filter by.  The default is not to filter by completion date.
+// for a task's completion date (as a RFC 3339 timestamp) to filter by.
+// The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 	c.urlParams_.Set("completedMin", completedMin)
 	return c
 }
 
 // DueMax sets the optional parameter "dueMax": Upper bound for a task's
-// due date (as a RFC 3339 timestamp) to filter by.
-//  The default is not to filter by due date.
+// due date (as a RFC 3339 timestamp) to filter by.  The default is not
+// to filter by due date.
 func (c *TasksListCall) DueMax(dueMax string) *TasksListCall {
 	c.urlParams_.Set("dueMax", dueMax)
 	return c
 }
 
 // DueMin sets the optional parameter "dueMin": Lower bound for a task's
-// due date (as a RFC 3339 timestamp) to filter by.
-//  The default is not to filter by due date.
+// due date (as a RFC 3339 timestamp) to filter by.  The default is not
+// to filter by due date.
 func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 	c.urlParams_.Set("dueMin", dueMin)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is
-// 20 (max allowed: 100).
+// of task lists returned on one page.  The default is 20 (max allowed:
+// 100).
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1860,34 +1842,32 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 }
 
 // ShowCompleted sets the optional parameter "showCompleted": Flag
-// indicating whether completed tasks are returned in the result.
-//  The default is True.
+// indicating whether completed tasks are returned in the result.  The
+// default is True.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Flag
-// indicating whether deleted tasks are returned in the result.
-// The default is False.
+// indicating whether deleted tasks are returned in the result.  The
+// default is False.
 func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // ShowHidden sets the optional parameter "showHidden": Flag indicating
-// whether hidden tasks are returned in the result.
-// The default is False.
+// whether hidden tasks are returned in the result.  The default is
+// False.
 func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
 	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for
-// a task's last modification time (as a RFC 3339 timestamp)
-// to filter by.  The default is not to filter by last
-// modification
-// time.
+// a task's last modification time (as a RFC 3339 timestamp) to filter
+// by.  The default is not to filter by last modification time.
 func (c *TasksListCall) UpdatedMin(updatedMin string) *TasksListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
 	return c
@@ -1930,7 +1910,7 @@ func (c *TasksListCall) Header() http.Header {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2001,27 +1981,27 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//   ],
 	//   "parameters": {
 	//     "completedMax": {
-	//       "description": "Upper bound for a task's completion date (as a RFC 3339 timestamp) to\nfilter by. Optional. The default is not to filter by completion date.",
+	//       "description": "Upper bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "completedMin": {
-	//       "description": "Lower bound for a task's completion date (as a RFC 3339 timestamp) to\nfilter by. Optional. The default is not to filter by completion date.",
+	//       "description": "Lower bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "dueMax": {
-	//       "description": "Upper bound for a task's due date (as a RFC 3339 timestamp) to filter by.\nOptional. The default is not to filter by due date.",
+	//       "description": "Upper bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "dueMin": {
-	//       "description": "Lower bound for a task's due date (as a RFC 3339 timestamp) to filter by.\nOptional. The default is not to filter by due date.",
+	//       "description": "Lower bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is\n20 (max allowed: 100).",
+	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2032,17 +2012,17 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "showCompleted": {
-	//       "description": "Flag indicating whether completed tasks are returned in the result.\nOptional. The default is True.",
+	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Flag indicating whether deleted tasks are returned in the result. Optional.\nThe default is False.",
+	//       "description": "Flag indicating whether deleted tasks are returned in the result. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "showHidden": {
-	//       "description": "Flag indicating whether hidden tasks are returned in the result. Optional.\nThe default is False.",
+	//       "description": "Flag indicating whether hidden tasks are returned in the result. Optional. The default is False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2053,7 +2033,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "updatedMin": {
-	//       "description": "Lower bound for a task's last modification time (as a RFC 3339 timestamp)\nto filter by. Optional. The default is not to filter by last modification\ntime.",
+	//       "description": "Lower bound for a task's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2103,10 +2083,8 @@ type TasksMoveCall struct {
 }
 
 // Move: Moves the specified task to another position in the task list.
-// This can
-// include putting it as a child task under a new parent and/or move it
-// to a
-// different position among its sibling tasks.
+// This can include putting it as a child task under a new parent and/or
+// move it to a different position among its sibling tasks.
 func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 	c := &TasksMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -2115,16 +2093,16 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 }
 
 // Parent sets the optional parameter "parent": New parent task
-// identifier. If the task is moved to the top level, this
-// parameter is omitted.
+// identifier. If the task is moved to the top level, this parameter is
+// omitted.
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
 // Previous sets the optional parameter "previous": New previous sibling
-// task identifier. If the task is moved to the first
-// position among its siblings, this parameter is omitted.
+// task identifier. If the task is moved to the first position among its
+// siblings, this parameter is omitted.
 func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	c.urlParams_.Set("previous", previous)
 	return c
@@ -2157,7 +2135,7 @@ func (c *TasksMoveCall) Header() http.Header {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2217,7 +2195,7 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves the specified task to another position in the task list. This can\ninclude putting it as a child task under a new parent and/or move it to a\ndifferent position among its sibling tasks.",
+	//   "description": "Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.",
 	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.move",
@@ -2227,12 +2205,12 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "New parent task identifier. If the task is moved to the top level, this\nparameter is omitted. Optional.",
+	//       "description": "New parent task identifier. If the task is moved to the top level, this parameter is omitted. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "previous": {
-	//       "description": "New previous sibling task identifier. If the task is moved to the first\nposition among its siblings, this parameter is omitted. Optional.",
+	//       "description": "New previous sibling task identifier. If the task is moved to the first position among its siblings, this parameter is omitted. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2309,7 +2287,7 @@ func (c *TasksPatchCall) Header() http.Header {
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2458,7 +2436,7 @@ func (c *TasksUpdateCall) Header() http.Header {
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -180,12 +180,11 @@ func (s *PublishUrlNotificationResponse) MarshalJSON() ([]byte, error) {
 }
 
 // UrlNotification: `UrlNotification` is the resource used in all
-// Indexing API calls.
-// It describes one event in the life cycle of a Web Document.
+// Indexing API calls. It describes one event in the life cycle of a Web
+// Document.
 type UrlNotification struct {
-	// NotifyTime: Creation timestamp for this notification.
-	// Users should _not_ specify it, the field is ignored at the request
-	// time.
+	// NotifyTime: Creation timestamp for this notification. Users should
+	// _not_ specify it, the field is ignored at the request time.
 	NotifyTime string `json:"notifyTime,omitempty"`
 
 	// Type: The URL life cycle event that Google is being notified about.
@@ -197,10 +196,8 @@ type UrlNotification struct {
 	Type string `json:"type,omitempty"`
 
 	// Url: The object of this notification. The URL must be owned by the
-	// publisher
-	// of this notification and, in case of `URL_UPDATED` notifications, it
-	// _must_
-	// be crawlable by Google.
+	// publisher of this notification and, in case of `URL_UPDATED`
+	// notifications, it _must_ be crawlable by Google.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NotifyTime") to
@@ -227,8 +224,7 @@ func (s *UrlNotification) MarshalJSON() ([]byte, error) {
 }
 
 // UrlNotificationMetadata: Summary of the most recent Indexing API
-// notifications successfully received,
-// for a given URL.
+// notifications successfully received, for a given URL.
 type UrlNotificationMetadata struct {
 	// LatestRemove: Latest notification received with type `URL_REMOVED`.
 	LatestRemove *UrlNotification `json:"latestRemove,omitempty"`
@@ -277,10 +273,9 @@ type UrlNotificationsGetMetadataCall struct {
 }
 
 // GetMetadata: Gets metadata about a Web Document. This method can
-// _only_ be used to query
-// URLs that were previously seen in successful Indexing API
-// notifications.
-// Includes the latest `UrlNotification` received via this API.
+// _only_ be used to query URLs that were previously seen in successful
+// Indexing API notifications. Includes the latest `UrlNotification`
+// received via this API.
 func (r *UrlNotificationsService) GetMetadata() *UrlNotificationsGetMetadataCall {
 	c := &UrlNotificationsGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -329,7 +324,7 @@ func (c *UrlNotificationsGetMetadataCall) Header() http.Header {
 
 func (c *UrlNotificationsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -388,7 +383,7 @@ func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*Url
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets metadata about a Web Document. This method can _only_ be used to query\nURLs that were previously seen in successful Indexing API notifications.\nIncludes the latest `UrlNotification` received via this API.",
+	//   "description": "Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.",
 	//   "flatPath": "v3/urlNotifications/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "indexing.urlNotifications.getMetadata",
@@ -455,7 +450,7 @@ func (c *UrlNotificationsPublishCall) Header() http.Header {
 
 func (c *UrlNotificationsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

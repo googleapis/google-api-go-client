@@ -519,6 +519,19 @@ type ApplicationPolicy struct {
 	// available in AppTrackInfo.
 	AccessibleTrackIds []string `json:"accessibleTrackIds,omitempty"`
 
+	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate
+	// with itself across a device’s work and personal profiles, subject
+	// to user consent.
+	//
+	// Possible values:
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_UNSPECIFIED" - Unspecified.
+	// Defaults to CONNECTED_WORK_AND_PERSONAL_APPS_DISALLOWED.
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_DISALLOWED" - Default. Prevents
+	// the app from communicating cross-profile.
+	//   "CONNECTED_WORK_AND_PERSONAL_APP_ALLOWED" - Allows the app to
+	// communicate across profiles after receiving user consent.
+	ConnectedWorkAndPersonalApp string `json:"connectedWorkAndPersonalApp,omitempty"`
+
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not
@@ -585,14 +598,9 @@ type ApplicationPolicy struct {
 	// values supported by the app. Each field name in the managed
 	// configuration must match the key field of the ManagedProperty. The
 	// field value must be compatible with the type of the ManagedProperty:
-	// <table> <tr><td><i>type</i></td><td><i>JSON value</i></td></tr>
-	// <tr><td>BOOL</td><td>true or false</td></tr>
-	// <tr><td>STRING</td><td>string</td></tr>
-	// <tr><td>INTEGER</td><td>number</td></tr>
-	// <tr><td>CHOICE</td><td>string</td></tr>
-	// <tr><td>MULTISELECT</td><td>array of strings</td></tr>
-	// <tr><td>HIDDEN</td><td>string</td></tr>
-	// <tr><td>BUNDLE_ARRAY</td><td>array of objects</td></tr> </table>
+	// *type* *JSON value* BOOL true or false STRING string INTEGER number
+	// CHOICE string MULTISELECT array of strings HIDDEN string BUNDLE_ARRAY
+	// array of objects
 	ManagedConfiguration googleapi.RawMessage `json:"managedConfiguration,omitempty"`
 
 	// ManagedConfigurationTemplate: The managed configurations template for
@@ -979,12 +987,11 @@ func (s *ComplianceRule) MarshalJSON() ([]byte, error) {
 // Date: Represents a whole or partial calendar date, e.g. a birthday.
 // The time of day and time zone are either specified elsewhere or are
 // not significant. The date is relative to the Proleptic Gregorian
-// Calendar. This can represent:
-// A full date, with non-zero year, month and day values
-// A month and day value, with a zero year, e.g. an anniversary
-// A year on its own, with zero month and day values
-// A year and month value, with a zero day, e.g. a credit card
-// expiration dateRelated types are google.type.TimeOfDay and
+// Calendar. This can represent: A full date, with non-zero year, month
+// and day values A month and day value, with a zero year, e.g. an
+// anniversary A year on its own, with zero month and day values A year
+// and month value, with a zero day, e.g. a credit card expiration
+// dateRelated types are google.type.TimeOfDay and
 // google.protobuf.Timestamp.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
@@ -1351,12 +1358,9 @@ func (s *Display) MarshalJSON() ([]byte, error) {
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-// }
-// The JSON representation for Empty is empty JSON object {}.
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for Empty is empty
+// JSON object {}.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2088,8 +2092,8 @@ func (s *ListWebAppsResponse) MarshalJSON() ([]byte, error) {
 // ManagedConfigurationTemplate: The managed configurations template for
 // the app, saved from the managed configurations iframe.
 type ManagedConfigurationTemplate struct {
-	// ConfigurationVariables: Optional, a map containing <key, value>
-	// configuration variables defined for the configuration.
+	// ConfigurationVariables: Optional, a map containing configuration
+	// variables defined for the configuration.
 	ConfigurationVariables map[string]string `json:"configurationVariables,omitempty"`
 
 	// TemplateId: The ID of the managed configurations template.
@@ -2351,7 +2355,7 @@ type NonComplianceDetail struct {
 	// JSON field would be referenced in JavaScript, that is: 1) For
 	// object-typed fields, the field name is followed by a dot then by a
 	// subfield name. 2) For array-typed fields, the field name is followed
-	// by the array index  enclosed in brackets. For example, to indicate a
+	// by the array index enclosed in brackets. For example, to indicate a
 	// problem with the url field in the externalData field in the 3rd
 	// application, the path would be applications[2].externalData.url
 	FieldPath string `json:"fieldPath,omitempty"`
@@ -2417,7 +2421,7 @@ type NonComplianceDetail struct {
 	PackageName string `json:"packageName,omitempty"`
 
 	// SettingName: The name of the policy setting. This is the JSON field
-	// name of a top-level Policy  field.
+	// name of a top-level Policy field.
 	SettingName string `json:"settingName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -3628,15 +3632,13 @@ func (s *SetupAction) MarshalJSON() ([]byte, error) {
 type SigninDetail struct {
 	// AllowPersonalUsage: Controls whether personal usage is allowed on a
 	// device provisioned with this enrollment token.For company-owned
-	// devices:
-	// Enabling personal usage allows the user to set up a work profile on
-	// the device.
-	// Disabling personal usage requires the user provision the device as a
-	// fully managed device.For personally-owned devices:
-	// Enabling personal usage allows the user to set up a work profile on
-	// the device.
-	// Disabling personal usage will prevent the device from provisioning.
-	// Personal usage cannot be disabled on personally-owned device.
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage requires the user
+	// provision the device as a fully managed device.For personally-owned
+	// devices: Enabling personal usage allows the user to set up a work
+	// profile on the device. Disabling personal usage will prevent the
+	// device from provisioning. Personal usage cannot be disabled on
+	// personally-owned device.
 	//
 	// Possible values:
 	//   "ALLOW_PERSONAL_USAGE_UNSPECIFIED" - Personal usage restriction is
@@ -3660,10 +3662,9 @@ type SigninDetail struct {
 	// SigninUrl: Sign-in URL for authentication when device is provisioned
 	// with a sign-in enrollment token. The sign-in endpoint should finish
 	// authentication flow with a URL in the form of
-	// https://enterprise.google.com/android/enroll?et=<token> for a
-	// successful login, or
-	// https://enterprise.google.com/android/enroll/invalid for a failed
-	// login.
+	// https://enterprise.google.com/android/enroll?et= for a successful
+	// login, or https://enterprise.google.com/android/enroll/invalid for a
+	// failed login.
 	SigninUrl string `json:"signinUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowPersonalUsage")
@@ -4040,8 +4041,8 @@ type UserFacingMessage struct {
 	// localized messages are provided.
 	DefaultMessage string `json:"defaultMessage,omitempty"`
 
-	// LocalizedMessages: A map containing <locale, message> pairs, where
-	// locale is a well-formed BCP 47 language
+	// LocalizedMessages: A map containing pairs, where locale is a
+	// well-formed BCP 47 language
 	// (https://www.w3.org/International/articles/language-tags/) code, such
 	// as en-US, es-ES, or fr.
 	LocalizedMessages map[string]string `json:"localizedMessages,omitempty"`
@@ -4141,9 +4142,9 @@ func (s *WebApp) MarshalJSON() ([]byte, error) {
 type WebAppIcon struct {
 	// ImageData: The actual bytes of the image in a base64url encoded
 	// string (c.f. RFC4648, section 5 "Base 64 Encoding with URL and
-	// Filename Safe Alphabet"). <ul> <li>The image type can be png or jpg.
-	// <li>The image should ideally be square. <li>The image should ideally
-	// have a size of 512x512. </ul>
+	// Filename Safe Alphabet"). - The image type can be png or jpg. - The
+	// image should ideally be square. - The image should ideally have a
+	// size of 512x512.
 	ImageData string `json:"imageData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ImageData") to
@@ -4173,11 +4174,11 @@ func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
 type WebToken struct {
 	// EnabledFeatures: The features to enable. Use this if you want to
 	// control exactly which feature(s) will be activated; leave empty to
-	// allow all features.Restrictions / things to note: <ul> <li> If no
-	// features are listed here, all features are enabled — this is the
-	// default behavior where you give access to all features to your
-	// admins. <li> This must not contain any FEATURE_UNSPECIFIED values.
-	// <li> Repeated values are ignored </ul>
+	// allow all features.Restrictions / things to note: - If no features
+	// are listed here, all features are enabled — this is the default
+	// behavior where you give access to all features to your admins. - This
+	// must not contain any FEATURE_UNSPECIFIED values. - Repeated values
+	// are ignored
 	//
 	// Possible values:
 	//   "FEATURE_UNSPECIFIED" - Unspecified feature.
@@ -4347,7 +4348,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4499,7 +4500,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4642,7 +4643,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4806,7 +4807,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4921,9 +4922,11 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 // flags that control the device wiping behavior.
 //
 // Possible values:
-//   "WIPE_DATA_FLAG_UNSPECIFIED"
-//   "PRESERVE_RESET_PROTECTION_DATA"
-//   "WIPE_EXTERNAL_STORAGE"
+//   "WIPE_DATA_FLAG_UNSPECIFIED" - This value is ignored.
+//   "PRESERVE_RESET_PROTECTION_DATA" - Preserve the factory reset
+// protection data on the device.
+//   "WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external
+// storage (such as SD cards).
 func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
 	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
 	return c
@@ -4965,7 +4968,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5046,6 +5049,11 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//         "PRESERVE_RESET_PROTECTION_DATA",
 	//         "WIPE_EXTERNAL_STORAGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "This value is ignored.",
+	//         "Preserve the factory reset protection data on the device.",
+	//         "Additionally wipe the device's external storage (such as SD cards)."
+	//       ],
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -5122,7 +5130,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5259,7 +5267,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5422,7 +5430,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5597,7 +5605,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5750,7 +5758,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5883,7 +5891,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6026,7 +6034,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6200,7 +6208,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6372,7 +6380,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6511,7 +6519,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6642,7 +6650,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6783,7 +6791,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6941,7 +6949,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7116,7 +7124,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7262,7 +7270,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7400,7 +7408,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7541,7 +7549,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7699,7 +7707,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7874,7 +7882,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,7 +8029,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8176,7 +8184,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

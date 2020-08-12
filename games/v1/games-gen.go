@@ -306,18 +306,15 @@ type AchievementDefinition struct {
 	InitialState string `json:"initialState,omitempty"`
 
 	// IsRevealedIconUrlDefault: Indicates whether the revealed icon image
-	// being returned is a default
-	// image, or is provided by the game.
+	// being returned is a default image, or is provided by the game.
 	IsRevealedIconUrlDefault bool `json:"isRevealedIconUrlDefault,omitempty"`
 
 	// IsUnlockedIconUrlDefault: Indicates whether the unlocked icon image
-	// being returned is a default
-	// image, or is game-provided.
+	// being returned is a default image, or is game-provided.
 	IsUnlockedIconUrlDefault bool `json:"isUnlockedIconUrlDefault,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementDefinition`.
+	// the fixed string `games#achievementDefinition`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the achievement.
@@ -363,8 +360,7 @@ type AchievementDefinitionsListResponse struct {
 	Items []*AchievementDefinition `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementDefinitionsListResponse`.
+	// the fixed string `games#achievementDefinitionsListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results.
@@ -404,13 +400,11 @@ type AchievementIncrementResponse struct {
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementIncrementResponse`.
+	// the fixed string `games#achievementIncrementResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NewlyUnlocked: Whether the current steps for the achievement has
-	// reached the number of
-	// steps required to unlock.
+	// reached the number of steps required to unlock.
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -443,8 +437,8 @@ func (s *AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
 // AchievementRevealResponse: An achievement reveal response
 type AchievementRevealResponse struct {
 	// CurrentState: The current state of the achievement for which a reveal
-	// was attempted. This
-	// might be `UNLOCKED` if the achievement was already unlocked.
+	// was attempted. This might be `UNLOCKED` if the achievement was
+	// already unlocked.
 	//
 	// Possible values:
 	//   "REVEAL_ACHIEVEMENT_STATE_UNSPECIFIED" - Safe default, don't use.
@@ -453,8 +447,7 @@ type AchievementRevealResponse struct {
 	CurrentState string `json:"currentState,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementRevealResponse`.
+	// the fixed string `games#achievementRevealResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -492,13 +485,11 @@ type AchievementSetStepsAtLeastResponse struct {
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementSetStepsAtLeastResponse`.
+	// the fixed string `games#achievementSetStepsAtLeastResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NewlyUnlocked: Whether the current steps for the achievement has
-	// reached the number of
-	// steps required to unlock.
+	// reached the number of steps required to unlock.
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -531,13 +522,12 @@ func (s *AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
 // AchievementUnlockResponse: An achievement unlock response
 type AchievementUnlockResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementUnlockResponse`.
+	// the fixed string `games#achievementUnlockResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NewlyUnlocked: Whether this achievement was newly unlocked (that is,
-	// whether the unlock
-	// request for the achievement was the first for the player).
+	// whether the unlock request for the achievement was the first for the
+	// player).
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -571,8 +561,7 @@ func (s *AchievementUnlockResponse) MarshalJSON() ([]byte, error) {
 // requests.
 type AchievementUpdateMultipleRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementUpdateMultipleRequest`.
+	// the fixed string `games#achievementUpdateMultipleRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// Updates: The individual achievement update requests.
@@ -605,8 +594,7 @@ func (s *AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
 // UpdateMultipleAchievements rpc.
 type AchievementUpdateMultipleResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementUpdateMultipleResponse`.
+	// the fixed string `games#achievementUpdateMultipleResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// UpdatedAchievements: The updated state of the achievements.
@@ -645,18 +633,15 @@ type AchievementUpdateRequest struct {
 	AchievementId string `json:"achievementId,omitempty"`
 
 	// IncrementPayload: The payload if an update of type `INCREMENT` was
-	// requested for
-	// the achievement.
+	// requested for the achievement.
 	IncrementPayload *GamesAchievementIncrement `json:"incrementPayload,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementUpdateRequest`.
+	// the fixed string `games#achievementUpdateRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// SetStepsAtLeastPayload: The payload if an update of type
-	// `SET_STEPS_AT_LEAST` was
-	// requested for the achievement.
+	// `SET_STEPS_AT_LEAST` was requested for the achievement.
 	SetStepsAtLeastPayload *GamesAchievementSetStepsAtLeast `json:"setStepsAtLeastPayload,omitempty"`
 
 	// UpdateType: The type of update being applied.
@@ -712,13 +697,12 @@ type AchievementUpdateResponse struct {
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#achievementUpdateResponse`.
+	// the fixed string `games#achievementUpdateResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NewlyUnlocked: Whether this achievement was newly unlocked (that is,
-	// whether the unlock
-	// request for the achievement was the first for the player).
+	// whether the unlock request for the achievement was the first for the
+	// player).
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
 
 	// UpdateOccurred: Whether the requested updates actually affected the
@@ -781,8 +765,7 @@ type Application struct {
 	Instances []*Instance `json:"instances,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#application`.
+	// the fixed string `games#application`.
 	Kind string `json:"kind,omitempty"`
 
 	// LastUpdatedTimestamp: The last updated timestamp of the application.
@@ -796,8 +779,8 @@ type Application struct {
 	Name string `json:"name,omitempty"`
 
 	// ThemeColor: A hint to the client UI for what color to use as an
-	// app-themed color. The
-	// color is given as an RGB triplet (e.g. "E0E0E0").
+	// app-themed color. The color is given as an RGB triplet (e.g.
+	// "E0E0E0").
 	ThemeColor string `json:"themeColor,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -831,8 +814,7 @@ func (s *Application) MarshalJSON() ([]byte, error) {
 // ApplicationCategory: An application category object.
 type ApplicationCategory struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#applicationCategory`.
+	// the fixed string `games#applicationCategory`.
 	Kind string `json:"kind,omitempty"`
 
 	// Primary: The primary category.
@@ -868,13 +850,12 @@ func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
 // response resource.
 type ApplicationVerifyResponse struct {
 	// AlternatePlayerId: An alternate ID that was once used for the player
-	// that was issued the auth
-	// token used in this request. (This field is not normally populated.)
+	// that was issued the auth token used in this request. (This field is
+	// not normally populated.)
 	AlternatePlayerId string `json:"alternate_player_id,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#applicationVerifyResponse`.
+	// the fixed string `games#applicationVerifyResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// PlayerId: The ID of the player that was issued the auth token used in
@@ -918,8 +899,7 @@ type Category struct {
 	ExperiencePoints int64 `json:"experiencePoints,omitempty,string"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#category`.
+	// the fixed string `games#category`.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
@@ -952,8 +932,7 @@ type CategoryListResponse struct {
 	Items []*Category `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#categoryListResponse`.
+	// the fixed string `games#categoryListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results.
@@ -994,8 +973,7 @@ type EventBatchRecordFailure struct {
 	//   "EVENT_FAILURE_CAUSE_UNSPECIFIED" - Default value. Should not be
 	// used.
 	//   "TOO_LARGE" - A batch request was issued with more events than are
-	// allowed in
-	// a single batch.
+	// allowed in a single batch.
 	//   "TIME_PERIOD_EXPIRED" - A batch was sent with data too far in the
 	// past to record.
 	//   "TIME_PERIOD_SHORT" - A batch was sent with a time range that was
@@ -1005,13 +983,11 @@ type EventBatchRecordFailure struct {
 	//   "ALREADY_UPDATED" - An attempt was made to record a batch of data
 	// which was already seen.
 	//   "RECORD_RATE_HIGH" - An attempt was made to record data faster than
-	// the server
-	// will apply updates.
+	// the server will apply updates.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventBatchRecordFailure`.
+	// the fixed string `games#eventBatchRecordFailure`.
 	Kind string `json:"kind,omitempty"`
 
 	// Range: The time range which was rejected; empty for a request-wide
@@ -1047,8 +1023,7 @@ type EventChild struct {
 	ChildId string `json:"childId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventChild`.
+	// the fixed string `games#eventChild`.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChildId") to
@@ -1092,13 +1067,11 @@ type EventDefinition struct {
 	ImageUrl string `json:"imageUrl,omitempty"`
 
 	// IsDefaultImageUrl: Indicates whether the icon image being returned is
-	// a default image, or is
-	// game-provided.
+	// a default image, or is game-provided.
 	IsDefaultImageUrl bool `json:"isDefaultImageUrl,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventDefinition`.
+	// the fixed string `games#eventDefinition`.
 	Kind string `json:"kind,omitempty"`
 
 	// Visibility: The visibility of event being tracked in this definition.
@@ -1107,8 +1080,7 @@ type EventDefinition struct {
 	//   "EVENT_VISIBILITY_UNSPECIFIED" - Default value. Should not be used.
 	//   "REVEALED" - This event should be visible to all users.
 	//   "HIDDEN" - This event should only be shown to users that have
-	// recorded this event
-	// at least once.
+	// recorded this event at least once.
 	Visibility string `json:"visibility,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChildEvents") to
@@ -1140,8 +1112,7 @@ type EventDefinitionListResponse struct {
 	Items []*EventDefinition `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventDefinitionListResponse`.
+	// the fixed string `games#eventDefinitionListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -1177,18 +1148,15 @@ func (s *EventDefinitionListResponse) MarshalJSON() ([]byte, error) {
 // EventPeriodRange: An event period time range.
 type EventPeriodRange struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventPeriodRange`.
+	// the fixed string `games#eventPeriodRange`.
 	Kind string `json:"kind,omitempty"`
 
 	// PeriodEndMillis: The time when this update period ends, in millis,
-	// since 1970 UTC (Unix
-	// Epoch).
+	// since 1970 UTC (Unix Epoch).
 	PeriodEndMillis int64 `json:"periodEndMillis,omitempty,string"`
 
 	// PeriodStartMillis: The time when this update period begins, in
-	// millis, since 1970 UTC (Unix
-	// Epoch).
+	// millis, since 1970 UTC (Unix Epoch).
 	PeriodStartMillis int64 `json:"periodStartMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -1217,8 +1185,7 @@ func (s *EventPeriodRange) MarshalJSON() ([]byte, error) {
 // EventPeriodUpdate: An event period update resource.
 type EventPeriodUpdate struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventPeriodUpdate`.
+	// the fixed string `games#eventPeriodUpdate`.
 	Kind string `json:"kind,omitempty"`
 
 	// TimePeriod: The time period being covered by this update.
@@ -1267,8 +1234,7 @@ type EventRecordFailure struct {
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventRecordFailure`.
+	// the fixed string `games#eventRecordFailure`.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventId") to
@@ -1297,13 +1263,11 @@ func (s *EventRecordFailure) MarshalJSON() ([]byte, error) {
 // EventRecordRequest: An event period update resource.
 type EventRecordRequest struct {
 	// CurrentTimeMillis: The current time when this update was sent, in
-	// milliseconds, since 1970 UTC
-	// (Unix Epoch).
+	// milliseconds, since 1970 UTC (Unix Epoch).
 	CurrentTimeMillis int64 `json:"currentTimeMillis,omitempty,string"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventRecordRequest`.
+	// the fixed string `games#eventRecordRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// RequestId: The request ID used to identify this attempt to record
@@ -1344,8 +1308,7 @@ type EventUpdateRequest struct {
 	DefinitionId string `json:"definitionId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventUpdateRequest`.
+	// the fixed string `games#eventUpdateRequest`.
 	Kind string `json:"kind,omitempty"`
 
 	// UpdateCount: The number of times this event occurred in this time
@@ -1385,8 +1348,7 @@ type EventUpdateResponse struct {
 	EventFailures []*EventRecordFailure `json:"eventFailures,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#eventUpdateResponse`.
+	// the fixed string `games#eventUpdateResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// PlayerEvents: The current status of any updated events
@@ -1419,13 +1381,11 @@ func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GamesAchievementIncrement: The payload to request to increment
-// an
+// GamesAchievementIncrement: The payload to request to increment an
 // achievement.
 type GamesAchievementIncrement struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#GamesAchievementIncrement`.
+	// the fixed string `games#GamesAchievementIncrement`.
 	Kind string `json:"kind,omitempty"`
 
 	// RequestId: The requestId associated with an increment to an
@@ -1459,12 +1419,10 @@ func (s *GamesAchievementIncrement) MarshalJSON() ([]byte, error) {
 }
 
 // GamesAchievementSetStepsAtLeast: The payload to request to increment
-// an
-// achievement.
+// an achievement.
 type GamesAchievementSetStepsAtLeast struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#GamesAchievementSetStepsAtLeast`.
+	// the fixed string `games#GamesAchievementSetStepsAtLeast`.
 	Kind string `json:"kind,omitempty"`
 
 	// Steps: The minimum number of steps for the achievement to be set to.
@@ -1499,8 +1457,7 @@ type ImageAsset struct {
 	Height int64 `json:"height,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#imageAsset`.
+	// the fixed string `games#imageAsset`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the asset.
@@ -1548,8 +1505,7 @@ type Instance struct {
 	IosInstance *InstanceIosDetails `json:"iosInstance,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#instance`.
+	// the fixed string `games#instance`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Localized display name.
@@ -1606,8 +1562,7 @@ type InstanceAndroidDetails struct {
 	EnablePiracyCheck bool `json:"enablePiracyCheck,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#instanceAndroidDetails`.
+	// the fixed string `games#instanceAndroidDetails`.
 	Kind string `json:"kind,omitempty"`
 
 	// PackageName: Android package name which maps to Google Play URL.
@@ -1650,18 +1605,15 @@ type InstanceIosDetails struct {
 	ItunesAppId string `json:"itunesAppId,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#instanceIosDetails`.
+	// the fixed string `games#instanceIosDetails`.
 	Kind string `json:"kind,omitempty"`
 
 	// PreferredForIpad: Indicates that this instance is the default for new
-	// installations on iPad
-	// devices.
+	// installations on iPad devices.
 	PreferredForIpad bool `json:"preferredForIpad,omitempty"`
 
 	// PreferredForIphone: Indicates that this instance is the default for
-	// new installations on iPhone
-	// devices.
+	// new installations on iPhone devices.
 	PreferredForIphone bool `json:"preferredForIphone,omitempty"`
 
 	// SupportIpad: Flag to indicate if this instance supports iPad.
@@ -1697,8 +1649,7 @@ func (s *InstanceIosDetails) MarshalJSON() ([]byte, error) {
 // InstanceWebDetails: The Web details resource.
 type InstanceWebDetails struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#instanceWebDetails`.
+	// the fixed string `games#instanceWebDetails`.
 	Kind string `json:"kind,omitempty"`
 
 	// LaunchUrl: Launch URL for the game.
@@ -1740,13 +1691,11 @@ type Leaderboard struct {
 	Id string `json:"id,omitempty"`
 
 	// IsIconUrlDefault: Indicates whether the icon image being returned is
-	// a default image, or is
-	// game-provided.
+	// a default image, or is game-provided.
 	IsIconUrlDefault bool `json:"isIconUrlDefault,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#leaderboard`.
+	// the fixed string `games#leaderboard`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The name of the leaderboard.
@@ -1800,8 +1749,7 @@ type LeaderboardEntry struct {
 	FormattedScoreRank string `json:"formattedScoreRank,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#leaderboardEntry`.
+	// the fixed string `games#leaderboardEntry`.
 	Kind string `json:"kind,omitempty"`
 
 	// Player: The player who holds this score.
@@ -1810,9 +1758,9 @@ type LeaderboardEntry struct {
 	// ScoreRank: The rank of this score for this leaderboard.
 	ScoreRank int64 `json:"scoreRank,omitempty,string"`
 
-	// ScoreTag: Additional information about the score.  Values must
-	// contain no more than
-	// 64 URI-safe characters as defined by section 2.3 of RFC 3986.
+	// ScoreTag: Additional information about the score. Values must contain
+	// no more than 64 URI-safe characters as defined by section 2.3 of RFC
+	// 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// ScoreValue: The numerical value of this score.
@@ -1829,8 +1777,7 @@ type LeaderboardEntry struct {
 	TimeSpan string `json:"timeSpan,omitempty"`
 
 	// WriteTimestampMillis: The timestamp at which this score was recorded,
-	// in milliseconds since the
-	// epoch in UTC.
+	// in milliseconds since the epoch in UTC.
 	WriteTimestampMillis int64 `json:"writeTimestampMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "FormattedScore") to
@@ -1863,8 +1810,7 @@ type LeaderboardListResponse struct {
 	Items []*Leaderboard `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#leaderboardListResponse`.
+	// the fixed string `games#leaderboardListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results.
@@ -1907,8 +1853,7 @@ type LeaderboardScoreRank struct {
 	FormattedRank string `json:"formattedRank,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#leaderboardScoreRank`.
+	// the fixed string `games#leaderboardScoreRank`.
 	Kind string `json:"kind,omitempty"`
 
 	// NumScores: The number of scores in the leaderboard.
@@ -1947,8 +1892,7 @@ type LeaderboardScores struct {
 	Items []*LeaderboardEntry `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#leaderboardScores`.
+	// the fixed string `games#leaderboardScores`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -1958,13 +1902,10 @@ type LeaderboardScores struct {
 	NumScores int64 `json:"numScores,omitempty,string"`
 
 	// PlayerScore: The score of the requesting player on the leaderboard.
-	// The player's score
-	// may appear both here and in the list of scores above. If you are
-	// viewing a
-	// public leaderboard and the player is not sharing their gameplay
-	// information
-	// publicly, the `scoreRank`and `formattedScoreRank`
-	// values will not be present.
+	// The player's score may appear both here and in the list of scores
+	// above. If you are viewing a public leaderboard and the player is not
+	// sharing their gameplay information publicly, the `scoreRank`and
+	// `formattedScoreRank` values will not be present.
 	PlayerScore *LeaderboardEntry `json:"playerScore,omitempty"`
 
 	// PrevPageToken: The pagination token for the previous page of results.
@@ -2000,13 +1941,12 @@ func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
 // MetagameConfig: The metagame config resource
 type MetagameConfig struct {
 	// CurrentVersion: Current version of the metagame configuration data.
-	// When this data is
-	// updated, the version number will be increased by one.
+	// When this data is updated, the version number will be increased by
+	// one.
 	CurrentVersion int64 `json:"currentVersion,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#metagameConfig`.
+	// the fixed string `games#metagameConfig`.
 	Kind string `json:"kind,omitempty"`
 
 	// PlayerLevels: The list of player levels.
@@ -2061,8 +2001,8 @@ type Player struct {
 	ExperienceInfo *PlayerExperienceInfo `json:"experienceInfo,omitempty"`
 
 	// FriendStatus: The friend status of the given player, relative to the
-	// requester. This is
-	// unset if the player is not sharing their friends list with the game.
+	// requester. This is unset if the player is not sharing their friends
+	// list with the game.
 	//
 	// Possible values:
 	//   "FRIEND_STATUS_UNSPECIFIED" - Default value. This value is unused.
@@ -2071,28 +2011,24 @@ type Player struct {
 	FriendStatus string `json:"friendStatus,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#player`
+	// the fixed string `games#player`
 	Kind string `json:"kind,omitempty"`
 
 	// Name: A representation of the individual components of the name.
 	Name *PlayerName `json:"name,omitempty"`
 
 	// OriginalPlayerId: The player ID that was used for this player the
-	// first time they signed into
-	// the game in question. This is only populated for calls to player.get
-	// for
-	// the requesting player, only if the player ID has subsequently
-	// changed, and
-	// only to clients that support remapping player IDs.
+	// first time they signed into the game in question. This is only
+	// populated for calls to player.get for the requesting player, only if
+	// the player ID has subsequently changed, and only to clients that
+	// support remapping player IDs.
 	OriginalPlayerId string `json:"originalPlayerId,omitempty"`
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
 
 	// ProfileSettings: The player's profile settings. Controls whether or
-	// not the player's profile
-	// is visible to other players.
+	// not the player's profile is visible to other players.
 	ProfileSettings *ProfileSettings `json:"profileSettings,omitempty"`
 
 	// Title: The player's title rewarded for their game activities.
@@ -2130,13 +2066,11 @@ func (s *Player) MarshalJSON() ([]byte, error) {
 // name.
 type PlayerName struct {
 	// FamilyName: The family name of this player. In some places, this is
-	// known as the last
-	// name.
+	// known as the last name.
 	FamilyName string `json:"familyName,omitempty"`
 
 	// GivenName: The given name of this player. In some places, this is
-	// known as the first
-	// name.
+	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FamilyName") to
@@ -2177,10 +2111,9 @@ type PlayerAchievement struct {
 	CurrentSteps int64 `json:"currentSteps,omitempty"`
 
 	// ExperiencePoints: Experience points earned for the achievement. This
-	// field is absent for
-	// achievements that have not yet been unlocked and 0 for achievements
-	// that
-	// have been unlocked by testers but that are unpublished.
+	// field is absent for achievements that have not yet been unlocked and
+	// 0 for achievements that have been unlocked by testers but that are
+	// unpublished.
 	ExperiencePoints int64 `json:"experiencePoints,omitempty,string"`
 
 	// FormattedCurrentStepsString: The current steps for an incremental
@@ -2191,8 +2124,7 @@ type PlayerAchievement struct {
 	Id string `json:"id,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerAchievement`.
+	// the fixed string `games#playerAchievement`.
 	Kind string `json:"kind,omitempty"`
 
 	// LastUpdatedTimestamp: The timestamp of the last modification to this
@@ -2229,8 +2161,7 @@ type PlayerAchievementListResponse struct {
 	Items []*PlayerAchievement `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerAchievementListResponse`.
+	// the fixed string `games#playerAchievementListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results.
@@ -2269,15 +2200,12 @@ type PlayerEvent struct {
 	DefinitionId string `json:"definitionId,omitempty"`
 
 	// FormattedNumEvents: The current number of times this event has
-	// occurred, as a string. The
-	// formatting of this string depends on the configuration of your event
-	// in the
-	// Play Games Developer Console.
+	// occurred, as a string. The formatting of this string depends on the
+	// configuration of your event in the Play Games Developer Console.
 	FormattedNumEvents string `json:"formattedNumEvents,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerEvent`.
+	// the fixed string `games#playerEvent`.
 	Kind string `json:"kind,omitempty"`
 
 	// NumEvents: The current number of times this event has occurred.
@@ -2315,8 +2243,7 @@ type PlayerEventListResponse struct {
 	Items []*PlayerEvent `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerEventListResponse`.
+	// the fixed string `games#playerEventListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -2359,18 +2286,15 @@ type PlayerExperienceInfo struct {
 	CurrentLevel *PlayerLevel `json:"currentLevel,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerExperienceInfo`.
+	// the fixed string `games#playerExperienceInfo`.
 	Kind string `json:"kind,omitempty"`
 
 	// LastLevelUpTimestampMillis: The timestamp when the player was leveled
-	// up, in millis since Unix epoch
-	// UTC.
+	// up, in millis since Unix epoch UTC.
 	LastLevelUpTimestampMillis int64 `json:"lastLevelUpTimestampMillis,omitempty,string"`
 
 	// NextLevel: The next level of the player. If the current level is the
-	// maximum level,
-	// this should be same as the current level.
+	// maximum level, this should be same as the current level.
 	NextLevel *PlayerLevel `json:"nextLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2400,25 +2324,28 @@ func (s *PlayerExperienceInfo) MarshalJSON() ([]byte, error) {
 
 // PlayerLeaderboardScore: A player leaderboard score object.
 type PlayerLeaderboardScore struct {
+	// FriendsRank: The rank of the score in the friends collection for this
+	// leaderboard.
+	FriendsRank *LeaderboardScoreRank `json:"friendsRank,omitempty"`
+
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerLeaderboardScore`.
+	// the fixed string `games#playerLeaderboardScore`.
 	Kind string `json:"kind,omitempty"`
 
 	// LeaderboardId: The ID of the leaderboard this score is in.
 	LeaderboardId string `json:"leaderboard_id,omitempty"`
 
 	// PublicRank: The public rank of the score in this leaderboard. This
-	// object will not be
-	// present if the user is not sharing their scores publicly.
+	// object will not be present if the user is not sharing their scores
+	// publicly.
 	PublicRank *LeaderboardScoreRank `json:"publicRank,omitempty"`
 
 	// ScoreString: The formatted value of this score.
 	ScoreString string `json:"scoreString,omitempty"`
 
-	// ScoreTag: Additional information about the score.  Values must
-	// contain no more than
-	// 64 URI-safe characters as defined by section 2.3 of RFC 3986.
+	// ScoreTag: Additional information about the score. Values must contain
+	// no more than 64 URI-safe characters as defined by section 2.3 of RFC
+	// 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// ScoreValue: The numerical value of this score.
@@ -2438,11 +2365,10 @@ type PlayerLeaderboardScore struct {
 	TimeSpan string `json:"timeSpan,omitempty"`
 
 	// WriteTimestamp: The timestamp at which this score was recorded, in
-	// milliseconds since the
-	// epoch in UTC.
+	// milliseconds since the epoch in UTC.
 	WriteTimestamp int64 `json:"writeTimestamp,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "FriendsRank") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2450,10 +2376,10 @@ type PlayerLeaderboardScore struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FriendsRank") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2472,8 +2398,7 @@ type PlayerLeaderboardScoreListResponse struct {
 	Items []*PlayerLeaderboardScore `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerLeaderboardScoreListResponse`.
+	// the fixed string `games#playerLeaderboardScoreListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -2512,8 +2437,7 @@ func (s *PlayerLeaderboardScoreListResponse) MarshalJSON() ([]byte, error) {
 // PlayerLevel: 1P/3P metadata about a user's level.
 type PlayerLevel struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerLevel`.
+	// the fixed string `games#playerLevel`.
 	Kind string `json:"kind,omitempty"`
 
 	// Level: The level for the user.
@@ -2554,8 +2478,7 @@ type PlayerListResponse struct {
 	Items []*Player `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerListResponse`.
+	// the fixed string `games#playerListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results.
@@ -2594,16 +2517,15 @@ type PlayerScore struct {
 	FormattedScore string `json:"formattedScore,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerScore`.
+	// the fixed string `games#playerScore`.
 	Kind string `json:"kind,omitempty"`
 
 	// Score: The numerical value for this player score.
 	Score int64 `json:"score,omitempty,string"`
 
-	// ScoreTag: Additional information about this score.  Values will
-	// contain no more than
-	// 64 URI-safe characters as defined by section 2.3 of RFC 3986.
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// TimeSpan: The time span for this player score.
@@ -2643,8 +2565,7 @@ func (s *PlayerScore) MarshalJSON() ([]byte, error) {
 // PlayerScoreListResponse: A list of score submission statuses.
 type PlayerScoreListResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerScoreListResponse`.
+	// the fixed string `games#playerScoreListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// SubmittedScores: The score submissions statuses.
@@ -2680,8 +2601,7 @@ func (s *PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
 // PlayerScoreResponse: A list of leaderboard entry resources.
 type PlayerScoreResponse struct {
 	// BeatenScoreTimeSpans: The time spans where the submitted score is
-	// better than the existing score
-	// for that time span.
+	// better than the existing score for that time span.
 	//
 	// Possible values:
 	//   "SCORE_TIME_SPAN_UNSPECIFIED" - Default value. This value is
@@ -2695,23 +2615,21 @@ type PlayerScoreResponse struct {
 	FormattedScore string `json:"formattedScore,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerScoreResponse`.
+	// the fixed string `games#playerScoreResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// LeaderboardId: The leaderboard ID that this score was submitted to.
 	LeaderboardId string `json:"leaderboardId,omitempty"`
 
-	// ScoreTag: Additional information about this score.  Values will
-	// contain no more than
-	// 64 URI-safe characters as defined by section 2.3 of RFC 3986.
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// UnbeatenScores: The scores in time spans that have not been beaten.
-	// As an example, the
-	// submitted score may be better than the
-	// player's `DAILY` score, but not better than the player's scores
-	// for the `WEEKLY` or `ALL_TIME` time spans.
+	// As an example, the submitted score may be better than the player's
+	// `DAILY` score, but not better than the player's scores for the
+	// `WEEKLY` or `ALL_TIME` time spans.
 	UnbeatenScores []*PlayerScore `json:"unbeatenScores,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2746,8 +2664,7 @@ func (s *PlayerScoreResponse) MarshalJSON() ([]byte, error) {
 // PlayerScoreSubmissionList: A list of score submission requests.
 type PlayerScoreSubmissionList struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#playerScoreSubmissionList`.
+	// the fixed string `games#playerScoreSubmissionList`.
 	Kind string `json:"kind,omitempty"`
 
 	// Scores: The score submissions.
@@ -2782,22 +2699,16 @@ type ProfileSettings struct {
 	//   "FRIENDS_LIST_VISIBILITY_UNSPECIFIED" - Unused.
 	//   "VISIBLE" - The friends list is currently visible to the game.
 	//   "REQUEST_REQUIRED" - The developer does not have access to the
-	// friends list, but can call the
-	// Android API to show a consent dialog.
+	// friends list, but can call the Android API to show a consent dialog.
 	//   "UNAVAILABLE" - The friends list is currently unavailable for this
-	// user, and it is not
-	// possible to request access at this time, either because the user
-	// has
-	// permanently declined or the friends feature is not available to them.
-	// In
-	// this state, any attempts to request access to the friends list will
-	// be
-	// unsuccessful.
+	// user, and it is not possible to request access at this time, either
+	// because the user has permanently declined or the friends feature is
+	// not available to them. In this state, any attempts to request access
+	// to the friends list will be unsuccessful.
 	FriendsListVisibility string `json:"friendsListVisibility,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#profileSettings`.
+	// the fixed string `games#profileSettings`.
 	Kind string `json:"kind,omitempty"`
 
 	// ProfileVisible: Whether the player's profile is visible to the
@@ -2832,13 +2743,11 @@ func (s *ProfileSettings) MarshalJSON() ([]byte, error) {
 // RevisionCheckResponse: A third party checking a revision response.
 type RevisionCheckResponse struct {
 	// ApiVersion: The version of the API this client revision should use
-	// when calling API
-	// methods.
+	// when calling API methods.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#revisionCheckResponse`.
+	// the fixed string `games#revisionCheckResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// RevisionStatus: The result of the revision check.
@@ -2848,8 +2757,7 @@ type RevisionCheckResponse struct {
 	// unused.
 	//   "OK" - The revision being used is current.
 	//   "DEPRECATED" - There is currently a newer version available, but
-	// the revision being used
-	// still works.
+	// the revision being used still works.
 	//   "INVALID" - The revision being used is not supported in any
 	// released version.
 	RevisionStatus string `json:"revisionStatus,omitempty"`
@@ -2884,8 +2792,7 @@ func (s *RevisionCheckResponse) MarshalJSON() ([]byte, error) {
 // ScoreSubmission: A request to submit a score to leaderboards.
 type ScoreSubmission struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#scoreSubmission`.
+	// the fixed string `games#scoreSubmission`.
 	Kind string `json:"kind,omitempty"`
 
 	// LeaderboardId: The leaderboard this score is being submitted to.
@@ -2894,14 +2801,13 @@ type ScoreSubmission struct {
 	// Score: The new score being submitted.
 	Score int64 `json:"score,omitempty,string"`
 
-	// ScoreTag: Additional information about this score.  Values will
-	// contain no more than
-	// 64 URI-safe characters as defined by section 2.3 of RFC 3986.
+	// ScoreTag: Additional information about this score. Values will
+	// contain no more than 64 URI-safe characters as defined by section 2.3
+	// of RFC 3986.
 	ScoreTag string `json:"scoreTag,omitempty"`
 
 	// Signature: Signature Values will contain URI-safe characters as
-	// defined by section 2.3
-	// of RFC 3986.
+	// defined by section 2.3 of RFC 3986.
 	Signature string `json:"signature,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -2937,10 +2843,8 @@ type Snapshot struct {
 	Description string `json:"description,omitempty"`
 
 	// DriveId: The ID of the file underlying this snapshot in the Drive
-	// API.  Only present
-	// if the snapshot is a view on a Drive file and the file is owned by
-	// the
-	// caller.
+	// API. Only present if the snapshot is a view on a Drive file and the
+	// file is owned by the caller.
 	DriveId string `json:"driveId,omitempty"`
 
 	// DurationMillis: The duration associated with this snapshot, in
@@ -2951,18 +2855,15 @@ type Snapshot struct {
 	Id string `json:"id,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#snapshot`.
+	// the fixed string `games#snapshot`.
 	Kind string `json:"kind,omitempty"`
 
 	// LastModifiedMillis: The timestamp (in millis since Unix epoch) of the
-	// last modification to this
-	// snapshot.
+	// last modification to this snapshot.
 	LastModifiedMillis int64 `json:"lastModifiedMillis,omitempty,string"`
 
 	// ProgressValue: The progress value (64-bit integer set by developer)
-	// associated with this
-	// snapshot.
+	// associated with this snapshot.
 	ProgressValue int64 `json:"progressValue,omitempty,string"`
 
 	// Title: The title of this snapshot.
@@ -3011,16 +2912,14 @@ type SnapshotImage struct {
 	Height int64 `json:"height,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#snapshotImage`.
+	// the fixed string `games#snapshotImage`.
 	Kind string `json:"kind,omitempty"`
 
 	// MimeType: The MIME type of the image.
 	MimeType string `json:"mime_type,omitempty"`
 
 	// Url: The URL of the image. This URL may be invalidated at any time
-	// and should
-	// not be cached.
+	// and should not be cached.
 	Url string `json:"url,omitempty"`
 
 	// Width: The width of the image.
@@ -3055,13 +2954,11 @@ type SnapshotListResponse struct {
 	Items []*Snapshot `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#snapshotListResponse`.
+	// the fixed string `games#snapshotListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: Token corresponding to the next page of results. If
-	// there are no more
-	// results, the token is omitted.
+	// there are no more results, the token is omitted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3094,74 +2991,60 @@ func (s *SnapshotListResponse) MarshalJSON() ([]byte, error) {
 // StatsResponse: A third party stats resource.
 type StatsResponse struct {
 	// AvgSessionLengthMinutes: Average session length in minutes of the
-	// player. E.g., 1, 30, 60, ... . Not
-	// populated if there is not enough information.
+	// player. E.g., 1, 30, 60, ... . Not populated if there is not enough
+	// information.
 	AvgSessionLengthMinutes float64 `json:"avg_session_length_minutes,omitempty"`
 
 	// ChurnProbability: The probability of the player not returning to play
-	// the game in the next
-	// day. E.g., 0, 0.1, 0.5, ..., 1.0. Not populated if there is not
-	// enough
-	// information.
+	// the game in the next day. E.g., 0, 0.1, 0.5, ..., 1.0. Not populated
+	// if there is not enough information.
 	ChurnProbability float64 `json:"churn_probability,omitempty"`
 
 	// DaysSinceLastPlayed: Number of days since the player last played this
-	// game. E.g., 0, 1, 5, 10,
-	// ... . Not populated if there is not enough information.
+	// game. E.g., 0, 1, 5, 10, ... . Not populated if there is not enough
+	// information.
 	DaysSinceLastPlayed int64 `json:"days_since_last_played,omitempty"`
 
 	// HighSpenderProbability: The probability of the player going to spend
-	// beyond a threshold amount of
-	// money. E.g., 0, 0.25, 0.50, 0.75. Not populated if there is not
-	// enough
-	// information.
+	// beyond a threshold amount of money. E.g., 0, 0.25, 0.50, 0.75. Not
+	// populated if there is not enough information.
 	HighSpenderProbability float64 `json:"high_spender_probability,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `games#statsResponse`.
+	// the fixed string `games#statsResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NumPurchases: Number of in-app purchases made by the player in this
-	// game. E.g., 0, 1, 5,
-	// 10, ... . Not populated if there is not enough information.
+	// game. E.g., 0, 1, 5, 10, ... . Not populated if there is not enough
+	// information.
 	NumPurchases int64 `json:"num_purchases,omitempty"`
 
 	// NumSessions: The approximate number of sessions of the player within
-	// the last 28 days,
-	// where a session begins when the player is connected to Play Games
-	// Services
-	// and ends when they are disconnected. E.g., 0, 1, 5, 10, ... . Not
-	// populated
-	// if there is not enough information.
+	// the last 28 days, where a session begins when the player is connected
+	// to Play Games Services and ends when they are disconnected. E.g., 0,
+	// 1, 5, 10, ... . Not populated if there is not enough information.
 	NumSessions int64 `json:"num_sessions,omitempty"`
 
 	// NumSessionsPercentile: The approximation of the sessions percentile
-	// of the player within the last
-	// 30 days, where a session begins when the player is connected to Play
-	// Games
-	// Services and ends when they are disconnected. E.g., 0, 0.25, 0.5,
-	// 0.75. Not
-	// populated if there is not enough information.
+	// of the player within the last 30 days, where a session begins when
+	// the player is connected to Play Games Services and ends when they are
+	// disconnected. E.g., 0, 0.25, 0.5, 0.75. Not populated if there is not
+	// enough information.
 	NumSessionsPercentile float64 `json:"num_sessions_percentile,omitempty"`
 
 	// SpendPercentile: The approximate spend percentile of the player in
-	// this game. E.g., 0, 0.25,
-	// 0.5, 0.75. Not populated if there is not enough information.
+	// this game. E.g., 0, 0.25, 0.5, 0.75. Not populated if there is not
+	// enough information.
 	SpendPercentile float64 `json:"spend_percentile,omitempty"`
 
 	// SpendProbability: The probability of the player going to spend the
-	// game in the next seven
-	// days. E.g., 0, 0.25, 0.50, 0.75. Not populated if there is not
-	// enough
-	// information.
+	// game in the next seven days. E.g., 0, 0.25, 0.50, 0.75. Not populated
+	// if there is not enough information.
 	SpendProbability float64 `json:"spend_probability,omitempty"`
 
 	// TotalSpendNext28Days: The predicted amount of money that the player
-	// going to spend in the next 28
-	// days. E.g., 1, 30, 60, ... . Not populated if there is not
-	// enough
-	// information.
+	// going to spend in the next 28 days. E.g., 1, 30, 60, ... . Not
+	// populated if there is not enough information.
 	TotalSpendNext28Days float64 `json:"total_spend_next_28_days,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3243,9 +3126,8 @@ func (c *AchievementDefinitionsListCall) Language(language string) *AchievementD
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of achievement resources to return in the response, used
-// for paging. For any response, the actual number of achievement
-// resources
+// number of achievement resources to return in the response, used for
+// paging. For any response, the actual number of achievement resources
 // returned may be less than the specified `maxResults`.
 func (c *AchievementDefinitionsListCall) MaxResults(maxResults int64) *AchievementDefinitionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
@@ -3296,7 +3178,7 @@ func (c *AchievementDefinitionsListCall) Header() http.Header {
 
 func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3368,7 +3250,7 @@ func (c *AchievementDefinitionsListCall) Do(opts ...googleapi.CallOption) (*Achi
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of achievement resources to return in the response, used\nfor paging. For any response, the actual number of achievement resources\nreturned may be less than the specified `maxResults`.",
+	//       "description": "The maximum number of achievement resources to return in the response, used for paging. For any response, the actual number of achievement resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3422,8 +3304,7 @@ type AchievementsIncrementCall struct {
 }
 
 // Increment: Increments the steps of the achievement with the given ID
-// for the currently
-// authenticated player.
+// for the currently authenticated player.
 func (r *AchievementsService) Increment(achievementId string, stepsToIncrement int64) *AchievementsIncrementCall {
 	c := &AchievementsIncrementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -3432,9 +3313,8 @@ func (r *AchievementsService) Increment(achievementId string, stepsToIncrement i
 }
 
 // RequestId sets the optional parameter "requestId": A randomly
-// generated numeric ID for each request specified by the caller.
-// This number is used at the server to ensure that the request is
-// handled
+// generated numeric ID for each request specified by the caller. This
+// number is used at the server to ensure that the request is handled
 // correctly across retries.
 func (c *AchievementsIncrementCall) RequestId(requestId int64) *AchievementsIncrementCall {
 	c.urlParams_.Set("requestId", fmt.Sprint(requestId))
@@ -3468,7 +3348,7 @@ func (c *AchievementsIncrementCall) Header() http.Header {
 
 func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3527,7 +3407,7 @@ func (c *AchievementsIncrementCall) Do(opts ...googleapi.CallOption) (*Achieveme
 	}
 	return ret, nil
 	// {
-	//   "description": "Increments the steps of the achievement with the given ID for the currently\nauthenticated player.",
+	//   "description": "Increments the steps of the achievement with the given ID for the currently authenticated player.",
 	//   "flatPath": "games/v1/achievements/{achievementId}/increment",
 	//   "httpMethod": "POST",
 	//   "id": "games.achievements.increment",
@@ -3543,7 +3423,7 @@ func (c *AchievementsIncrementCall) Do(opts ...googleapi.CallOption) (*Achieveme
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "A randomly generated numeric ID for each request specified by the caller.\nThis number is used at the server to ensure that the request is handled\ncorrectly across retries.",
+	//       "description": "A randomly generated numeric ID for each request specified by the caller. This number is used at the server to ensure that the request is handled correctly across retries.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -3579,8 +3459,7 @@ type AchievementsListCall struct {
 }
 
 // List: Lists the progress for all your application's achievements for
-// the
-// currently authenticated player.
+// the currently authenticated player.
 func (r *AchievementsService) List(playerId string) *AchievementsListCall {
 	c := &AchievementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -3595,9 +3474,8 @@ func (c *AchievementsListCall) Language(language string) *AchievementsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of achievement resources to return in the response, used
-// for paging. For any response, the actual number of achievement
-// resources
+// number of achievement resources to return in the response, used for
+// paging. For any response, the actual number of achievement resources
 // returned may be less than the specified `maxResults`.
 func (c *AchievementsListCall) MaxResults(maxResults int64) *AchievementsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
@@ -3612,14 +3490,14 @@ func (c *AchievementsListCall) PageToken(pageToken string) *AchievementsListCall
 }
 
 // State sets the optional parameter "state": Tells the server to return
-// only achievements with the specified state.  If
-// this parameter isn't specified, all achievements are returned.
+// only achievements with the specified state. If this parameter isn't
+// specified, all achievements are returned.
 //
 // Possible values:
-//   "ALL"
-//   "HIDDEN"
-//   "REVEALED"
-//   "UNLOCKED"
+//   "ALL" - List all achievements. This is the default.
+//   "HIDDEN" - List only hidden achievements.
+//   "REVEALED" - List only revealed achievements.
+//   "UNLOCKED" - List only unlocked achievements.
 func (c *AchievementsListCall) State(state string) *AchievementsListCall {
 	c.urlParams_.Set("state", state)
 	return c
@@ -3662,7 +3540,7 @@ func (c *AchievementsListCall) Header() http.Header {
 
 func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3724,7 +3602,7 @@ func (c *AchievementsListCall) Do(opts ...googleapi.CallOption) (*PlayerAchievem
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the progress for all your application's achievements for the\ncurrently authenticated player.",
+	//   "description": "Lists the progress for all your application's achievements for the currently authenticated player.",
 	//   "flatPath": "games/v1/players/{playerId}/achievements",
 	//   "httpMethod": "GET",
 	//   "id": "games.achievements.list",
@@ -3738,7 +3616,7 @@ func (c *AchievementsListCall) Do(opts ...googleapi.CallOption) (*PlayerAchievem
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of achievement resources to return in the response, used\nfor paging. For any response, the actual number of achievement resources\nreturned may be less than the specified `maxResults`.",
+	//       "description": "The maximum number of achievement resources to return in the response, used for paging. For any response, the actual number of achievement resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3749,18 +3627,24 @@ func (c *AchievementsListCall) Do(opts ...googleapi.CallOption) (*PlayerAchievem
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "state": {
-	//       "description": "Tells the server to return only achievements with the specified state.  If\nthis parameter isn't specified, all achievements are returned.",
+	//       "description": "Tells the server to return only achievements with the specified state. If this parameter isn't specified, all achievements are returned.",
 	//       "enum": [
 	//         "ALL",
 	//         "HIDDEN",
 	//         "REVEALED",
 	//         "UNLOCKED"
+	//       ],
+	//       "enumDescriptions": [
+	//         "List all achievements. This is the default.",
+	//         "List only hidden achievements.",
+	//         "List only revealed achievements.",
+	//         "List only unlocked achievements."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3808,8 +3692,7 @@ type AchievementsRevealCall struct {
 	header_       http.Header
 }
 
-// Reveal: Sets the state of the achievement with the given ID
-// to
+// Reveal: Sets the state of the achievement with the given ID to
 // `REVEALED` for the currently authenticated player.
 func (r *AchievementsService) Reveal(achievementId string) *AchievementsRevealCall {
 	c := &AchievementsRevealCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3844,7 +3727,7 @@ func (c *AchievementsRevealCall) Header() http.Header {
 
 func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3903,7 +3786,7 @@ func (c *AchievementsRevealCall) Do(opts ...googleapi.CallOption) (*AchievementR
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the state of the achievement with the given ID to\n`REVEALED` for the currently authenticated player.",
+	//   "description": "Sets the state of the achievement with the given ID to `REVEALED` for the currently authenticated player.",
 	//   "flatPath": "games/v1/achievements/{achievementId}/reveal",
 	//   "httpMethod": "POST",
 	//   "id": "games.achievements.reveal",
@@ -3940,12 +3823,9 @@ type AchievementsSetStepsAtLeastCall struct {
 }
 
 // SetStepsAtLeast: Sets the steps for the currently authenticated
-// player towards unlocking an
-// achievement. If the steps parameter is less than the current number
-// of
-// steps that the player already gained for the achievement, the
-// achievement
-// is not modified.
+// player towards unlocking an achievement. If the steps parameter is
+// less than the current number of steps that the player already gained
+// for the achievement, the achievement is not modified.
 func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64) *AchievementsSetStepsAtLeastCall {
 	c := &AchievementsSetStepsAtLeastCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
@@ -3980,7 +3860,7 @@ func (c *AchievementsSetStepsAtLeastCall) Header() http.Header {
 
 func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4040,7 +3920,7 @@ func (c *AchievementsSetStepsAtLeastCall) Do(opts ...googleapi.CallOption) (*Ach
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the steps for the currently authenticated player towards unlocking an\nachievement. If the steps parameter is less than the current number of\nsteps that the player already gained for the achievement, the achievement\nis not modified.",
+	//   "description": "Sets the steps for the currently authenticated player towards unlocking an achievement. If the steps parameter is less than the current number of steps that the player already gained for the achievement, the achievement is not modified.",
 	//   "flatPath": "games/v1/achievements/{achievementId}/setStepsAtLeast",
 	//   "httpMethod": "POST",
 	//   "id": "games.achievements.setStepsAtLeast",
@@ -4119,7 +3999,7 @@ func (c *AchievementsUnlockCall) Header() http.Header {
 
 func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4249,7 +4129,7 @@ func (c *AchievementsUpdateMultipleCall) Header() http.Header {
 
 func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4343,11 +4223,9 @@ type ApplicationsGetCall struct {
 }
 
 // Get: Retrieves the metadata of the application with the given ID. If
-// the
-// requested application is not available for the
-// specified
-// `platformType`, the returned response will not include any
-// instance data.
+// the requested application is not available for the specified
+// `platformType`, the returned response will not include any instance
+// data.
 func (r *ApplicationsService) Get(applicationId string) *ApplicationsGetCall {
 	c := &ApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -4365,10 +4243,11 @@ func (c *ApplicationsGetCall) Language(language string) *ApplicationsGetCall {
 // application details returned to the specific platform.
 //
 // Possible values:
-//   "PLATFORM_TYPE_UNSPECIFIED"
-//   "ANDROID"
-//   "IOS"
-//   "WEB_APP"
+//   "PLATFORM_TYPE_UNSPECIFIED" - Default value, don't use.
+//   "ANDROID" - Retrieve applications that can be played on Android.
+//   "IOS" - Retrieve applications that can be played on iOS.
+//   "WEB_APP" - Retrieve applications that can be played on desktop
+// web.
 func (c *ApplicationsGetCall) PlatformType(platformType string) *ApplicationsGetCall {
 	c.urlParams_.Set("platformType", platformType)
 	return c
@@ -4411,7 +4290,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4473,7 +4352,7 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the metadata of the application with the given ID. If the\nrequested application is not available for the specified\n`platformType`, the returned response will not include any\ninstance data.",
+	//   "description": "Retrieves the metadata of the application with the given ID. If the requested application is not available for the specified `platformType`, the returned response will not include any instance data.",
 	//   "flatPath": "games/v1/applications/{applicationId}",
 	//   "httpMethod": "GET",
 	//   "id": "games.applications.get",
@@ -4500,6 +4379,12 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 	//         "IOS",
 	//         "WEB_APP"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value, don't use.",
+	//         "Retrieve applications that can be played on Android.",
+	//         "Retrieve applications that can be played on iOS.",
+	//         "Retrieve applications that can be played on desktop web."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4525,8 +4410,7 @@ type ApplicationsPlayedCall struct {
 }
 
 // Played: Indicate that the currently authenticated user is playing
-// your
-// application.
+// your application.
 func (r *ApplicationsService) Played() *ApplicationsPlayedCall {
 	c := &ApplicationsPlayedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4559,7 +4443,7 @@ func (c *ApplicationsPlayedCall) Header() http.Header {
 
 func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4590,7 +4474,7 @@ func (c *ApplicationsPlayedCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Indicate that the currently authenticated user is playing your\napplication.",
+	//   "description": "Indicate that the currently authenticated user is playing your application.",
 	//   "flatPath": "games/v1/applications/played",
 	//   "httpMethod": "POST",
 	//   "id": "games.applications.played",
@@ -4616,9 +4500,8 @@ type ApplicationsVerifyCall struct {
 }
 
 // Verify: Verifies the auth token provided with this request is for the
-// application
-// with the specified ID, and returns the ID of the player it was
-// granted for.
+// application with the specified ID, and returns the ID of the player
+// it was granted for.
 func (r *ApplicationsService) Verify(applicationId string) *ApplicationsVerifyCall {
 	c := &ApplicationsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -4662,7 +4545,7 @@ func (c *ApplicationsVerifyCall) Header() http.Header {
 
 func (c *ApplicationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4724,7 +4607,7 @@ func (c *ApplicationsVerifyCall) Do(opts ...googleapi.CallOption) (*ApplicationV
 	}
 	return ret, nil
 	// {
-	//   "description": "Verifies the auth token provided with this request is for the application\nwith the specified ID, and returns the ID of the player it was granted for.",
+	//   "description": "Verifies the auth token provided with this request is for the application with the specified ID, and returns the ID of the player it was granted for.",
 	//   "flatPath": "games/v1/applications/{applicationId}/verify",
 	//   "httpMethod": "GET",
 	//   "id": "games.applications.verify",
@@ -4761,8 +4644,7 @@ type EventsListByPlayerCall struct {
 }
 
 // ListByPlayer: Returns a list showing the current progress on events
-// in this application
-// for the currently authenticated user.
+// in this application for the currently authenticated user.
 func (r *EventsService) ListByPlayer() *EventsListByPlayerCall {
 	c := &EventsListByPlayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4776,10 +4658,9 @@ func (c *EventsListByPlayerCall) Language(language string) *EventsListByPlayerCa
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of events to return in the response, used for paging.
-// For any response, the actual number of events to return may be less
-// than
-// the specified maxResults.
+// number of events to return in the response, used for paging. For any
+// response, the actual number of events to return may be less than the
+// specified maxResults.
 func (c *EventsListByPlayerCall) MaxResults(maxResults int64) *EventsListByPlayerCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -4829,7 +4710,7 @@ func (c *EventsListByPlayerCall) Header() http.Header {
 
 func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4888,7 +4769,7 @@ func (c *EventsListByPlayerCall) Do(opts ...googleapi.CallOption) (*PlayerEventL
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list showing the current progress on events in this application\nfor the currently authenticated user.",
+	//   "description": "Returns a list showing the current progress on events in this application for the currently authenticated user.",
 	//   "flatPath": "games/v1/events",
 	//   "httpMethod": "GET",
 	//   "id": "games.events.listByPlayer",
@@ -4900,7 +4781,7 @@ func (c *EventsListByPlayerCall) Do(opts ...googleapi.CallOption) (*PlayerEventL
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of events to return in the response, used for paging.\nFor any response, the actual number of events to return may be less than\nthe specified maxResults.",
+	//       "description": "The maximum number of events to return in the response, used for paging. For any response, the actual number of events to return may be less than the specified maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4968,11 +4849,9 @@ func (c *EventsListDefinitionsCall) Language(language string) *EventsListDefinit
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of event definitions to return in the response, used
-// for
-// paging.  For any response, the actual number of event definitions to
-// return
-// may be less than the specified `maxResults`.
+// number of event definitions to return in the response, used for
+// paging. For any response, the actual number of event definitions to
+// return may be less than the specified `maxResults`.
 func (c *EventsListDefinitionsCall) MaxResults(maxResults int64) *EventsListDefinitionsCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -5022,7 +4901,7 @@ func (c *EventsListDefinitionsCall) Header() http.Header {
 
 func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5093,7 +4972,7 @@ func (c *EventsListDefinitionsCall) Do(opts ...googleapi.CallOption) (*EventDefi
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of event definitions to return in the response, used for\npaging.  For any response, the actual number of event definitions to return\nmay be less than the specified `maxResults`.",
+	//       "description": "The maximum number of event definitions to return in the response, used for paging. For any response, the actual number of event definitions to return may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5147,8 +5026,7 @@ type EventsRecordCall struct {
 }
 
 // Record: Records a batch of changes to the number of times events have
-// occurred for
-// the currently authenticated user of this application.
+// occurred for the currently authenticated user of this application.
 func (r *EventsService) Record(eventrecordrequest *EventRecordRequest) *EventsRecordCall {
 	c := &EventsRecordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.eventrecordrequest = eventrecordrequest
@@ -5189,7 +5067,7 @@ func (c *EventsRecordCall) Header() http.Header {
 
 func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5250,7 +5128,7 @@ func (c *EventsRecordCall) Do(opts ...googleapi.CallOption) (*EventUpdateRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Records a batch of changes to the number of times events have occurred for\nthe currently authenticated user of this application.",
+	//   "description": "Records a batch of changes to the number of times events have occurred for the currently authenticated user of this application.",
 	//   "flatPath": "games/v1/events",
 	//   "httpMethod": "POST",
 	//   "id": "games.events.record",
@@ -5338,7 +5216,7 @@ func (c *LeaderboardsGetCall) Header() http.Header {
 
 func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5455,9 +5333,8 @@ func (c *LeaderboardsListCall) Language(language string) *LeaderboardsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of leaderboards to return in the response.  For any
-// response, the actual number of leaderboards returned may be less than
-// the
+// number of leaderboards to return in the response. For any response,
+// the actual number of leaderboards returned may be less than the
 // specified `maxResults`.
 func (c *LeaderboardsListCall) MaxResults(maxResults int64) *LeaderboardsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
@@ -5508,7 +5385,7 @@ func (c *LeaderboardsListCall) Header() http.Header {
 
 func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5579,7 +5456,7 @@ func (c *LeaderboardsListCall) Do(opts ...googleapi.CallOption) (*LeaderboardLis
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of leaderboards to return in the response.  For any\nresponse, the actual number of leaderboards returned may be less than the\nspecified `maxResults`.",
+	//       "description": "The maximum number of leaderboards to return in the response. For any response, the actual number of leaderboards returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5676,7 +5553,7 @@ func (c *MetagameGetMetagameConfigCall) Header() http.Header {
 
 func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5765,8 +5642,7 @@ type MetagameListCategoriesByPlayerCall struct {
 }
 
 // ListCategoriesByPlayer: List play data aggregated per category for
-// the player corresponding to
-// `playerId`.
+// the player corresponding to `playerId`.
 func (r *MetagameService) ListCategoriesByPlayer(playerId string, collection string) *MetagameListCategoriesByPlayerCall {
 	c := &MetagameListCategoriesByPlayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -5782,9 +5658,8 @@ func (c *MetagameListCategoriesByPlayerCall) Language(language string) *Metagame
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of category resources to return in the response, used
-// for paging. For any response, the actual number of category
-// resources
+// number of category resources to return in the response, used for
+// paging. For any response, the actual number of category resources
 // returned may be less than the specified `maxResults`.
 func (c *MetagameListCategoriesByPlayerCall) MaxResults(maxResults int64) *MetagameListCategoriesByPlayerCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
@@ -5835,7 +5710,7 @@ func (c *MetagameListCategoriesByPlayerCall) Header() http.Header {
 
 func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5898,7 +5773,7 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "List play data aggregated per category for the player corresponding to\n`playerId`.",
+	//   "description": "List play data aggregated per category for the player corresponding to `playerId`.",
 	//   "flatPath": "games/v1/players/{playerId}/categories/{collection}",
 	//   "httpMethod": "GET",
 	//   "id": "games.metagame.listCategoriesByPlayer",
@@ -5913,6 +5788,10 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	//         "COLLECTION_UNSPECIFIED",
 	//         "ALL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "Retrieve data for all categories. This is the default."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5923,7 +5802,7 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of category resources to return in the response, used\nfor paging. For any response, the actual number of category resources\nreturned may be less than the specified `maxResults`.",
+	//       "description": "The maximum number of category resources to return in the response, used for paging. For any response, the actual number of category resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5934,7 +5813,7 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5983,9 +5862,8 @@ type PlayersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves the Player resource with the given ID.  To retrieve
-// the player
-// for the currently authenticated user, set `playerId` to `me`.
+// Get: Retrieves the Player resource with the given ID. To retrieve the
+// player for the currently authenticated user, set `playerId` to `me`.
 func (r *PlayersService) Get(playerId string) *PlayersGetCall {
 	c := &PlayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6036,7 +5914,7 @@ func (c *PlayersGetCall) Header() http.Header {
 
 func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6098,7 +5976,7 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the Player resource with the given ID.  To retrieve the player\nfor the currently authenticated user, set `playerId` to `me`.",
+	//   "description": "Retrieves the Player resource with the given ID. To retrieve the player for the currently authenticated user, set `playerId` to `me`.",
 	//   "flatPath": "games/v1/players/{playerId}",
 	//   "httpMethod": "GET",
 	//   "id": "games.players.get",
@@ -6112,7 +5990,7 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6156,11 +6034,9 @@ func (c *PlayersListCall) Language(language string) *PlayersListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of player resources to return in the response, used
-// for
+// number of player resources to return in the response, used for
 // paging. For any response, the actual number of player resources
-// returned
-// may be less than the specified `maxResults`.
+// returned may be less than the specified `maxResults`.
 func (c *PlayersListCall) MaxResults(maxResults int64) *PlayersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6210,7 +6086,7 @@ func (c *PlayersListCall) Header() http.Header {
 
 func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6287,6 +6163,11 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 	//         "VISIBLE",
 	//         "FRIENDS_ALL"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Retrieve a list of players that are also playing this game in reverse chronological order.",
+	//         "Retrieve a list of players in the user's social graph that are visible to this game.",
+	//         "Retrieve a list of players who are friends of the user in alphabetical order."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6297,7 +6178,7 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of player resources to return in the response, used for\npaging. For any response, the actual number of player resources returned\nmay be less than the specified `maxResults`.",
+	//       "description": "The maximum number of player resources to return in the response, used for paging. For any response, the actual number of player resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6394,7 +6275,7 @@ func (c *RevisionsCheckCall) Header() http.Header {
 
 func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6462,7 +6343,7 @@ func (c *RevisionsCheckCall) Do(opts ...googleapi.CallOption) (*RevisionCheckRes
 	//   ],
 	//   "parameters": {
 	//     "clientRevision": {
-	//       "description": "The revision of the client SDK used by your application. Format:\n`[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible values of `PLATFORM_TYPE` are:\n* `ANDROID` - Client is running the Android SDK.\n* `IOS` - Client is running the iOS SDK.\n* `WEB_APP` - Client is running as a Web App.",
+	//       "description": "The revision of the client SDK used by your application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` - Client is running as a Web App.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -6493,14 +6374,11 @@ type ScoresGetCall struct {
 }
 
 // Get: Get high scores, and optionally ranks, in leaderboards for the
-// currently
-// authenticated player.  For a specific time span, `leaderboardId`
-// can be set to `ALL` to retrieve data for all leaderboards in a
-// given time span.  `NOTE: You cannot ask for 'ALL' leaderboards
-// and
-// 'ALL' timeSpans in the same request; only one parameter may be set
-// to
-// 'ALL'.
+// currently authenticated player. For a specific time span,
+// `leaderboardId` can be set to `ALL` to retrieve data for all
+// leaderboards in a given time span. `NOTE: You cannot ask for 'ALL'
+// leaderboards and 'ALL' timeSpans in the same request; only one
+// parameter may be set to 'ALL'.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6511,14 +6389,16 @@ func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan stri
 
 // IncludeRankType sets the optional parameter "includeRankType": The
 // types of ranks to return. If the parameter is omitted, no ranks will
-// be
-// returned.
+// be returned.
 //
 // Possible values:
-//   "INCLUDE_RANK_TYPE_UNSPECIFIED"
-//   "ALL"
-//   "PUBLIC"
-//   "SOCIAL"
+//   "INCLUDE_RANK_TYPE_UNSPECIFIED" - Default value. Should be unused.
+//   "ALL" - Retrieve all supported ranks. In HTTP, this parameter value
+// can also be specified as `ALL`.
+//   "PUBLIC" - Retrieve public ranks, if the player is sharing their
+// gameplay activity publicly.
+//   "SOCIAL" - (Obsolete) Retrieve the social rank.
+//   "FRIENDS" - Retrieve the rank on the friends collection.
 func (c *ScoresGetCall) IncludeRankType(includeRankType string) *ScoresGetCall {
 	c.urlParams_.Set("includeRankType", includeRankType)
 	return c
@@ -6532,10 +6412,9 @@ func (c *ScoresGetCall) Language(language string) *ScoresGetCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of leaderboard scores to return in the response.  For
-// any response, the actual number of leaderboard scores returned may be
-// less
-// than the specified `maxResults`.
+// number of leaderboard scores to return in the response. For any
+// response, the actual number of leaderboard scores returned may be
+// less than the specified `maxResults`.
 func (c *ScoresGetCall) MaxResults(maxResults int64) *ScoresGetCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6585,7 +6464,7 @@ func (c *ScoresGetCall) Header() http.Header {
 
 func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6650,7 +6529,7 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	}
 	return ret, nil
 	// {
-	//   "description": "Get high scores, and optionally ranks, in leaderboards for the currently\nauthenticated player.  For a specific time span, `leaderboardId`\ncan be set to `ALL` to retrieve data for all leaderboards in a\ngiven time span.  `NOTE: You cannot ask for 'ALL' leaderboards and\n'ALL' timeSpans in the same request; only one parameter may be set to\n'ALL'.",
+	//   "description": "Get high scores, and optionally ranks, in leaderboards for the currently authenticated player. For a specific time span, `leaderboardId` can be set to `ALL` to retrieve data for all leaderboards in a given time span. `NOTE: You cannot ask for 'ALL' leaderboards and 'ALL' timeSpans in the same request; only one parameter may be set to 'ALL'.",
 	//   "flatPath": "games/v1/players/{playerId}/leaderboards/{leaderboardId}/scores/{timeSpan}",
 	//   "httpMethod": "GET",
 	//   "id": "games.scores.get",
@@ -6661,12 +6540,20 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//   ],
 	//   "parameters": {
 	//     "includeRankType": {
-	//       "description": "The types of ranks to return. If the parameter is omitted, no ranks will be\nreturned.",
+	//       "description": "The types of ranks to return. If the parameter is omitted, no ranks will be returned.",
 	//       "enum": [
 	//         "INCLUDE_RANK_TYPE_UNSPECIFIED",
 	//         "ALL",
 	//         "PUBLIC",
-	//         "SOCIAL"
+	//         "SOCIAL",
+	//         "FRIENDS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. Should be unused.",
+	//         "Retrieve all supported ranks. In HTTP, this parameter value can also be specified as `ALL`.",
+	//         "Retrieve public ranks, if the player is sharing their gameplay activity publicly.",
+	//         "(Obsolete) Retrieve the social rank.",
+	//         "Retrieve the rank on the friends collection."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6677,13 +6564,13 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//       "type": "string"
 	//     },
 	//     "leaderboardId": {
-	//       "description": "The ID of the leaderboard.  Can be set to 'ALL' to retrieve data for all\nleaderboards for this application.",
+	//       "description": "The ID of the leaderboard. Can be set to 'ALL' to retrieve data for all leaderboards for this application.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of leaderboard scores to return in the response.  For\nany response, the actual number of leaderboard scores returned may be less\nthan the specified `maxResults`.",
+	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6694,7 +6581,7 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the\nauthenticated player's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6707,6 +6594,13 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "Get the high scores for all time spans. If this is used, maxResults values will be ignored.",
+	//         "Get the all time high score.",
+	//         "List the top scores for the current day.",
+	//         "List the top scores for the current week."
 	//       ],
 	//       "location": "path",
 	//       "required": true,
@@ -6774,10 +6668,9 @@ func (c *ScoresListCall) Language(language string) *ScoresListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of leaderboard scores to return in the response.  For
-// any response, the actual number of leaderboard scores returned may be
-// less
-// than the specified `maxResults`.
+// number of leaderboard scores to return in the response. For any
+// response, the actual number of leaderboard scores returned may be
+// less than the specified `maxResults`.
 func (c *ScoresListCall) MaxResults(maxResults int64) *ScoresListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6827,7 +6720,7 @@ func (c *ScoresListCall) Header() http.Header {
 
 func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6908,6 +6801,12 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//         "SOCIAL",
 	//         "FRIENDS"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "List all scores in the public leaderboard.",
+	//         "(Obsolete) Legacy G+ social scores.",
+	//         "List only scores of friends."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6924,7 +6823,7 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of leaderboard scores to return in the response.  For\nany response, the actual number of leaderboard scores returned may be less\nthan the specified `maxResults`.",
+	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6941,6 +6840,12 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "The score is an all-time score.",
+	//         "The score is a weekly score.",
+	//         "The score is a daily score."
 	//       ],
 	//       "location": "query",
 	//       "required": true,
@@ -7009,10 +6914,9 @@ func (c *ScoresListWindowCall) Language(language string) *ScoresListWindowCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of leaderboard scores to return in the response.  For
-// any response, the actual number of leaderboard scores returned may be
-// less
-// than the specified `maxResults`.
+// number of leaderboard scores to return in the response. For any
+// response, the actual number of leaderboard scores returned may be
+// less than the specified `maxResults`.
 func (c *ScoresListWindowCall) MaxResults(maxResults int64) *ScoresListWindowCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -7026,13 +6930,10 @@ func (c *ScoresListWindowCall) PageToken(pageToken string) *ScoresListWindowCall
 }
 
 // ResultsAbove sets the optional parameter "resultsAbove": The
-// preferred number of scores to return above the player's score.
-// More
+// preferred number of scores to return above the player's score. More
 // scores may be returned if the player is at the bottom of the
-// leaderboard;
-// fewer may be returned if the player is at the top. Must be less than
-// or
-// equal to maxResults.
+// leaderboard; fewer may be returned if the player is at the top. Must
+// be less than or equal to maxResults.
 func (c *ScoresListWindowCall) ResultsAbove(resultsAbove int64) *ScoresListWindowCall {
 	c.urlParams_.Set("resultsAbove", fmt.Sprint(resultsAbove))
 	return c
@@ -7040,8 +6941,7 @@ func (c *ScoresListWindowCall) ResultsAbove(resultsAbove int64) *ScoresListWindo
 
 // ReturnTopIfAbsent sets the optional parameter "returnTopIfAbsent":
 // True if the top scores should be returned when the player is not in
-// the
-// leaderboard. Defaults to true.
+// the leaderboard. Defaults to true.
 func (c *ScoresListWindowCall) ReturnTopIfAbsent(returnTopIfAbsent bool) *ScoresListWindowCall {
 	c.urlParams_.Set("returnTopIfAbsent", fmt.Sprint(returnTopIfAbsent))
 	return c
@@ -7084,7 +6984,7 @@ func (c *ScoresListWindowCall) Header() http.Header {
 
 func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7165,6 +7065,12 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//         "SOCIAL",
 	//         "FRIENDS"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "List all scores in the public leaderboard.",
+	//         "(Obsolete) Legacy G+ social scores.",
+	//         "List only scores of friends."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7181,7 +7087,7 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of leaderboard scores to return in the response.  For\nany response, the actual number of leaderboard scores returned may be less\nthan the specified `maxResults`.",
+	//       "description": "The maximum number of leaderboard scores to return in the response. For any response, the actual number of leaderboard scores returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7192,13 +7098,13 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//       "type": "string"
 	//     },
 	//     "resultsAbove": {
-	//       "description": "The preferred number of scores to return above the player's score. More\nscores may be returned if the player is at the bottom of the leaderboard;\nfewer may be returned if the player is at the top. Must be less than or\nequal to maxResults.",
+	//       "description": "The preferred number of scores to return above the player's score. More scores may be returned if the player is at the bottom of the leaderboard; fewer may be returned if the player is at the top. Must be less than or equal to maxResults.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "returnTopIfAbsent": {
-	//       "description": "True if the top scores should be returned when the player is not in the\nleaderboard. Defaults to true.",
+	//       "description": "True if the top scores should be returned when the player is not in the leaderboard. Defaults to true.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7209,6 +7115,12 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//         "ALL_TIME",
 	//         "WEEKLY",
 	//         "DAILY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "The score is an all-time score.",
+	//         "The score is a weekly score.",
+	//         "The score is a daily score."
 	//       ],
 	//       "location": "query",
 	//       "required": true,
@@ -7273,10 +7185,9 @@ func (c *ScoresSubmitCall) Language(language string) *ScoresSubmitCall {
 }
 
 // ScoreTag sets the optional parameter "scoreTag": Additional
-// information about the score you're submitting.  Values must
-// contain no more than 64 URI-safe characters as defined by section 2.3
-// of
-// RFC 3986.
+// information about the score you're submitting. Values must contain no
+// more than 64 URI-safe characters as defined by section 2.3 of RFC
+// 3986.
 func (c *ScoresSubmitCall) ScoreTag(scoreTag string) *ScoresSubmitCall {
 	c.urlParams_.Set("scoreTag", scoreTag)
 	return c
@@ -7309,7 +7220,7 @@ func (c *ScoresSubmitCall) Header() http.Header {
 
 func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7389,14 +7300,14 @@ func (c *ScoresSubmitCall) Do(opts ...googleapi.CallOption) (*PlayerScoreRespons
 	//       "type": "string"
 	//     },
 	//     "score": {
-	//       "description": "The score you're submitting. The submitted score is ignored if it is worse\nthan a previously submitted score, where worse depends on the leaderboard\nsort order. The meaning of the score value depends on the leaderboard\nformat type. For fixed-point, the score represents the raw value.  For\ntime, the score represents elapsed time in milliseconds.  For currency, the\nscore represents a value in micro units.",
+	//       "description": "The score you're submitting. The submitted score is ignored if it is worse than a previously submitted score, where worse depends on the leaderboard sort order. The meaning of the score value depends on the leaderboard format type. For fixed-point, the score represents the raw value. For time, the score represents elapsed time in milliseconds. For currency, the score represents a value in micro units.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "scoreTag": {
-	//       "description": "Additional information about the score you're submitting.  Values must\ncontain no more than 64 URI-safe characters as defined by section 2.3 of\nRFC 3986.",
+	//       "description": "Additional information about the score you're submitting. Values must contain no more than 64 URI-safe characters as defined by section 2.3 of RFC 3986.",
 	//       "location": "query",
 	//       "pattern": "[a-zA-Z0-9-._~]{0,64}",
 	//       "type": "string"
@@ -7464,7 +7375,7 @@ func (c *ScoresSubmitMultipleCall) Header() http.Header {
 
 func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7613,7 +7524,7 @@ func (c *SnapshotsGetCall) Header() http.Header {
 
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7719,8 +7630,7 @@ type SnapshotsListCall struct {
 }
 
 // List: Retrieves a list of snapshots created by your application for
-// the player
-// corresponding to the player ID.
+// the player corresponding to the player ID.
 func (r *SnapshotsService) List(playerId string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -7735,9 +7645,8 @@ func (c *SnapshotsListCall) Language(language string) *SnapshotsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of snapshot resources to return in the response, used
-// for paging. For any response, the actual number of snapshot
-// resources
+// number of snapshot resources to return in the response, used for
+// paging. For any response, the actual number of snapshot resources
 // returned may be less than the specified `maxResults`.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
@@ -7788,7 +7697,7 @@ func (c *SnapshotsListCall) Header() http.Header {
 
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7850,7 +7759,7 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotListRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of snapshots created by your application for the player\ncorresponding to the player ID.",
+	//   "description": "Retrieves a list of snapshots created by your application for the player corresponding to the player ID.",
 	//   "flatPath": "games/v1/players/{playerId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "games.snapshots.list",
@@ -7864,7 +7773,7 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotListRespo
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of snapshot resources to return in the response, used\nfor paging. For any response, the actual number of snapshot resources\nreturned may be less than the specified `maxResults`.",
+	//       "description": "The maximum number of snapshot resources to return in the response, used for paging. For any response, the actual number of snapshot resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7875,7 +7784,7 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotListRespo
 	//       "type": "string"
 	//     },
 	//     "playerId": {
-	//       "description": "A player ID. A value of `me` may be used in place of the authenticated\nplayer's ID.",
+	//       "description": "A player ID. A value of `me` may be used in place of the authenticated player's ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7925,8 +7834,7 @@ type StatsGetCall struct {
 }
 
 // Get: Returns engagement and spend statistics in this application for
-// the
-// currently authenticated user.
+// the currently authenticated user.
 func (r *StatsService) Get() *StatsGetCall {
 	c := &StatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7969,7 +7877,7 @@ func (c *StatsGetCall) Header() http.Header {
 
 func (c *StatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8028,7 +7936,7 @@ func (c *StatsGetCall) Do(opts ...googleapi.CallOption) (*StatsResponse, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns engagement and spend statistics in this application for the\ncurrently authenticated user.",
+	//   "description": "Returns engagement and spend statistics in this application for the currently authenticated user.",
 	//   "flatPath": "games/v1/stats",
 	//   "httpMethod": "GET",
 	//   "id": "games.stats.get",

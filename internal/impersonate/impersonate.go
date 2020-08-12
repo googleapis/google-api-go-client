@@ -93,10 +93,11 @@ func (i impersonatedTokenSource) Token() (*oauth2.Token, error) {
 		return nil, fmt.Errorf("impersonate: unable to marshal request: %v", err)
 	}
 	url := fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", i.name)
-	req, err := http.NewRequestWithContext(i.ctx, "POST", url, bytes.NewReader(b))
+	req, err := http.NewRequest("POST", url, bytes.NewReader(b))
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to create request: %v", err)
 	}
+	req = req.WithContext(i.ctx)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := hc.Do(req)

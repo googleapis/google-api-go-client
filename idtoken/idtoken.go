@@ -78,6 +78,9 @@ func NewTokenSource(ctx context.Context, audience string, opts ...ClientOption) 
 	if ds.TokenSource != nil {
 		return nil, fmt.Errorf("idtoken: option.WithTokenSource not supported")
 	}
+	if ds.ImpersonationConfig != nil {
+		return nil, fmt.Errorf("idtoken: option.WithImpersonatedCredentials not supported")
+	}
 	return newTokenSource(ctx, audience, &ds)
 }
 

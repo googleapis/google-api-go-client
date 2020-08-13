@@ -19,7 +19,7 @@ import (
 // Creds returns credential information obtained from DialSettings, or if none, then
 // it returns default credential information.
 func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
-	creds, err := creds(ctx, ds)
+	creds, err := baseCreds(ctx, ds)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
 	return creds, nil
 }
 
-func creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
+func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
 	if ds.Credentials != nil {
 		return ds.Credentials, nil
 	}
@@ -124,6 +124,8 @@ func impersonateCredentials(ctx context.Context, creds *google.Credentials, ds *
 	if err != nil {
 		return nil, err
 	}
-	creds.TokenSource = ts
-	return creds, nil
+	return &google.Credentials{
+		TokenSource: ts,
+		ProjectID:   creds.ProjectID,
+	}, nil
 }

@@ -243,39 +243,28 @@ type ProvidersNotesOccurrencesService struct {
 // Artifact: Artifact describes a build product.
 type Artifact struct {
 	// Checksum: Hash or checksum value of a binary, or Docker Registry 2.0
-	// digest of a
-	// container.
+	// digest of a container.
 	Checksum string `json:"checksum,omitempty"`
 
 	// Id: Artifact ID, if any; for container images, this will be a URL by
-	// digest
-	// like gcr.io/projectID/imagename@sha256:123456
+	// digest like gcr.io/projectID/imagename@sha256:123456
 	Id string `json:"id,omitempty"`
 
 	// Name: Name of the artifact. This may be the path to a binary or jar
-	// file, or in
-	// the case of a container build, the name used to push the container
-	// image to
-	// Google Container Registry, as presented to `docker push`.
-	//
-	// This field is deprecated in favor of the plural `names` field; it
-	// continues
-	// to exist here to allow existing BuildProvenance serialized to json
-	// in
-	// google.devtools.containeranalysis.v1alpha1.BuildDetails.provenance_
-	// bytes to
-	// deserialize back into proto.
+	// file, or in the case of a container build, the name used to push the
+	// container image to Google Container Registry, as presented to `docker
+	// push`. This field is deprecated in favor of the plural `names` field;
+	// it continues to exist here to allow existing BuildProvenance
+	// serialized to json in
+	// google.devtools.containeranalysis.v1alpha1.BuildDetails.provenance_byt
+	// es to deserialize back into proto.
 	Name string `json:"name,omitempty"`
 
 	// Names: Related artifact names. This may be the path to a binary or
-	// jar file, or in
-	// the case of a container build, the name used to push the container
-	// image to
-	// Google Container Registry, as presented to `docker push`. Note that
-	// a
-	// single Artifact ID can have multiple names, for example if two tags
-	// are
-	// applied to one image.
+	// jar file, or in the case of a container build, the name used to push
+	// the container image to Google Container Registry, as presented to
+	// `docker push`. Note that a single Artifact ID can have multiple
+	// names, for example if two tags are applied to one image.
 	Names []string `json:"names,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Checksum") to
@@ -301,21 +290,15 @@ func (s *Artifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Attestation: Occurrence that represents a single "attestation".  The
-// authenticity of an
-// Attestation can be verified using the attached signature. If the
-// verifier
-// trusts the public key of the signer, then verifying the signature
-// is
-// sufficient to establish trust.  In this circumstance,
-// the
-// AttestationAuthority to which this Attestation is attached is
-// primarily
-// useful for look-up (how to find this Attestation if you already know
-// the
-// Authority and artifact to be verified) and intent (which authority
-// was this
-// attestation intended to sign for).
+// Attestation: Occurrence that represents a single "attestation". The
+// authenticity of an Attestation can be verified using the attached
+// signature. If the verifier trusts the public key of the signer, then
+// verifying the signature is sufficient to establish trust. In this
+// circumstance, the AttestationAuthority to which this Attestation is
+// attached is primarily useful for look-up (how to find this
+// Attestation if you already know the Authority and artifact to be
+// verified) and intent (which authority was this attestation intended
+// to sign for).
 type Attestation struct {
 	PgpSignedAttestation *PgpSignedAttestation `json:"pgpSignedAttestation,omitempty"`
 
@@ -345,20 +328,14 @@ func (s *Attestation) MarshalJSON() ([]byte, error) {
 }
 
 // AttestationAuthority: Note kind that represents a logical attestation
-// "role" or "authority".  For
-// example, an organization might have one `AttestationAuthority` for
-// "QA" and
-// one for "build".  This Note is intended to act strictly as a
-// grouping
-// mechanism for the attached Occurrences (Attestations).  This
-// grouping
-// mechanism also provides a security boundary, since IAM ACLs gate the
-// ability
-// for a principle to attach an Occurrence to a given Note.  It also
-// provides a
-// single point of lookup to find all attached Attestation Occurrences,
-// even if
-// they don't all live in the same project.
+// "role" or "authority". For example, an organization might have one
+// `AttestationAuthority` for "QA" and one for "build". This Note is
+// intended to act strictly as a grouping mechanism for the attached
+// Occurrences (Attestations). This grouping mechanism also provides a
+// security boundary, since IAM ACLs gate the ability for a principle to
+// attach an Occurrence to a given Note. It also provides a single point
+// of lookup to find all attached Attestation Occurrences, even if they
+// don't all live in the same project.
 type AttestationAuthority struct {
 	Hint *AttestationAuthorityHint `json:"hint,omitempty"`
 
@@ -386,17 +363,12 @@ func (s *AttestationAuthority) MarshalJSON() ([]byte, error) {
 }
 
 // AttestationAuthorityHint: This submessage provides human-readable
-// hints about the purpose of the
-// AttestationAuthority.  Because the name of a Note acts as its
-// resource
-// reference, it is important to disambiguate the canonical name of the
-// Note
-// (which might be a UUID for security purposes) from "readable" names
-// more
-// suitable for debug output.  Note that these hints should NOT be used
-// to
-// look up AttestationAuthorities in security sensitive contexts, such
-// as when
+// hints about the purpose of the AttestationAuthority. Because the name
+// of a Note acts as its resource reference, it is important to
+// disambiguate the canonical name of the Note (which might be a UUID
+// for security purposes) from "readable" names more suitable for debug
+// output. Note that these hints should NOT be used to look up
+// AttestationAuthorities in security sensitive contexts, such as when
 // looking up Attestations to verify.
 type AttestationAuthorityHint struct {
 	// HumanReadableName: The human readable name of this Attestation
@@ -428,19 +400,15 @@ func (s *AttestationAuthorityHint) MarshalJSON() ([]byte, error) {
 }
 
 // Basis: Basis describes the base image portion (Note) of the
-// DockerImage
-// relationship.  Linked occurrences are derived from this or
-// an
-// equivalent image via:
-//   FROM <Basis.resource_url>
-// Or an equivalent reference, e.g. a tag of the resource_url.
+// DockerImage relationship. Linked occurrences are derived from this or
+// an equivalent image via: FROM Or an equivalent reference, e.g. a tag
+// of the resource_url.
 type Basis struct {
 	// Fingerprint: The fingerprint of the base image.
 	Fingerprint *Fingerprint `json:"fingerprint,omitempty"`
 
 	// ResourceUrl: The resource_url for the resource representing the basis
-	// of
-	// associated occurrence images.
+	// of associated occurrence images.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
@@ -468,95 +436,53 @@ func (s *Basis) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -588,24 +514,14 @@ type BuildDetails struct {
 	Provenance *BuildProvenance `json:"provenance,omitempty"`
 
 	// ProvenanceBytes: Serialized JSON representation of the provenance,
-	// used in generating the
-	// `BuildSignature` in the corresponding Result. After verifying
-	// the
-	// signature, `provenance_bytes` can be unmarshalled and compared to
-	// the
-	// provenance to confirm that it is unchanged. A base64-encoded
-	// string
-	// representation of the provenance bytes is used for the signature in
-	// order
-	// to interoperate with openssl which expects this format for
-	// signature
-	// verification.
-	//
-	// The serialized form is captured both to avoid ambiguity in how
-	// the
-	// provenance is marshalled to json as well to prevent incompatibilities
-	// with
-	// future changes.
+	// used in generating the `BuildSignature` in the corresponding Result.
+	// After verifying the signature, `provenance_bytes` can be unmarshalled
+	// and compared to the provenance to confirm that it is unchanged. A
+	// base64-encoded string representation of the provenance bytes is used
+	// for the signature in order to interoperate with openssl which expects
+	// this format for signature verification. The serialized form is
+	// captured both to avoid ambiguity in how the provenance is marshalled
+	// to json as well to prevent incompatibilities with future changes.
 	ProvenanceBytes string `json:"provenanceBytes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Provenance") to
@@ -632,12 +548,12 @@ func (s *BuildDetails) MarshalJSON() ([]byte, error) {
 }
 
 // BuildProvenance: Provenance of a build. Contains all information
-// needed to verify the full
-// details about the build from source to completion.
+// needed to verify the full details about the build from source to
+// completion.
 type BuildProvenance struct {
 	// BuildOptions: Special options applied to this build. This is a
-	// catch-all field where
-	// build providers can enter any desired additional details.
+	// catch-all field where build providers can enter any desired
+	// additional details.
 	BuildOptions map[string]string `json:"buildOptions,omitempty"`
 
 	// BuilderVersion: Version string of the builder at the time this build
@@ -654,10 +570,9 @@ type BuildProvenance struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Creator: E-mail address of the user who initiated this build. Note
-	// that this was the
-	// user's e-mail address at the time the build was initiated; this
-	// address may
-	// not represent the same end-user for all time.
+	// that this was the user's e-mail address at the time the build was
+	// initiated; this address may not represent the same end-user for all
+	// time.
 	Creator string `json:"creator,omitempty"`
 
 	// FinishTime: Time at which execution of the build was finished.
@@ -709,17 +624,13 @@ func (s *BuildProvenance) MarshalJSON() ([]byte, error) {
 // build.
 type BuildSignature struct {
 	// KeyId: An Id for the key used to sign. This could be either an Id for
-	// the key
-	// stored in `public_key` (such as the Id or fingerprint for a PGP key,
-	// or the
-	// CN for a cert), or a reference to an external key (such as a
-	// reference to a
-	// key in Cloud Key Management Service).
+	// the key stored in `public_key` (such as the Id or fingerprint for a
+	// PGP key, or the CN for a cert), or a reference to an external key
+	// (such as a reference to a key in Cloud Key Management Service).
 	KeyId string `json:"keyId,omitempty"`
 
 	// KeyType: The type of the key, either stored in `public_key` or
-	// referenced in
-	// `key_id`
+	// referenced in `key_id`
 	//
 	// Possible values:
 	//   "KEY_TYPE_UNSPECIFIED" - `KeyType` is not set.
@@ -728,24 +639,16 @@ type BuildSignature struct {
 	KeyType string `json:"keyType,omitempty"`
 
 	// PublicKey: Public key of the builder which can be used to verify that
-	// the related
-	// findings are valid and unchanged. If `key_type` is empty, this
-	// defaults
-	// to PEM encoded public keys.
-	//
-	// This field may be empty if `key_id` references an external key.
-	//
-	// For Cloud Build based signatures, this is a PEM encoded public
-	// key. To verify the Cloud Build signature, place the contents of
-	// this field into a file (public.pem). The signature field is
-	// base64-decoded
-	// into its binary representation in signature.bin, and the provenance
-	// bytes
-	// from `BuildDetails` are base64-decoded into a binary representation
-	// in
-	// signed.bin. OpenSSL can then verify the signature:
-	// `openssl sha256 -verify public.pem -signature signature.bin
-	// signed.bin`
+	// the related findings are valid and unchanged. If `key_type` is empty,
+	// this defaults to PEM encoded public keys. This field may be empty if
+	// `key_id` references an external key. For Cloud Build based
+	// signatures, this is a PEM encoded public key. To verify the Cloud
+	// Build signature, place the contents of this field into a file
+	// (public.pem). The signature field is base64-decoded into its binary
+	// representation in signature.bin, and the provenance bytes from
+	// `BuildDetails` are base64-decoded into a binary representation in
+	// signed.bin. OpenSSL can then verify the signature: `openssl sha256
+	// -verify public.pem -signature signature.bin signed.bin`
 	PublicKey string `json:"publicKey,omitempty"`
 
 	// Signature: Signature of the related `BuildProvenance`, encoded in a
@@ -776,15 +679,13 @@ func (s *BuildSignature) MarshalJSON() ([]byte, error) {
 }
 
 // BuildType: Note holding the version of the provider's builder and the
-// signature of
-// the provenance message in linked BuildDetails.
+// signature of the provenance message in linked BuildDetails.
 type BuildType struct {
 	// BuilderVersion: Version of the builder which produced this Note.
 	BuilderVersion string `json:"builderVersion,omitempty"`
 
 	// Signature: Signature of the build in Occurrences pointing to the Note
-	// containing this
-	// `BuilderDetails`.
+	// containing this `BuilderDetails`.
 	Signature *BuildSignature `json:"signature,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BuilderVersion") to
@@ -818,21 +719,19 @@ type Command struct {
 	Args []string `json:"args,omitempty"`
 
 	// Dir: Working directory (relative to project source root) used when
-	// running
-	// this Command.
+	// running this Command.
 	Dir string `json:"dir,omitempty"`
 
 	// Env: Environment variables set before running this Command.
 	Env []string `json:"env,omitempty"`
 
 	// Id: Optional unique identifier for this Command, used in wait_for to
-	// reference
-	// this Command as a dependency.
+	// reference this Command as a dependency.
 	Id string `json:"id,omitempty"`
 
 	// Name: Name of the command, as presented on the command line, or if
-	// the command is
-	// packaged as a Docker container, as presented to `docker pull`.
+	// the command is packaged as a Docker container, as presented to
+	// `docker pull`.
 	Name string `json:"name,omitempty"`
 
 	// WaitFor: The ID(s) of the Command(s) that this Command depends on.
@@ -942,8 +841,7 @@ type Deployment struct {
 	Platform string `json:"platform,omitempty"`
 
 	// ResourceUri: Output only. Resource URI for the artifact being
-	// deployed taken from the
-	// deployable field with the same name.
+	// deployed taken from the deployable field with the same name.
 	ResourceUri []string `json:"resourceUri,omitempty"`
 
 	// UndeployTime: End of the lifetime of this deployment.
@@ -976,29 +874,23 @@ func (s *Deployment) MarshalJSON() ([]byte, error) {
 }
 
 // Derived: Derived describes the derived image portion (Occurrence) of
-// the
-// DockerImage relationship.  This image would be produced from a
-// Dockerfile
-// with FROM <DockerImage.Basis in attached Note>.
+// the DockerImage relationship. This image would be produced from a
+// Dockerfile with FROM .
 type Derived struct {
 	// BaseResourceUrl: Output only. This contains the base image URL for
-	// the derived image
-	// occurrence.
+	// the derived image occurrence.
 	BaseResourceUrl string `json:"baseResourceUrl,omitempty"`
 
 	// Distance: Output only. The number of layers by which this image
-	// differs from the
-	// associated image basis.
+	// differs from the associated image basis.
 	Distance int64 `json:"distance,omitempty"`
 
 	// Fingerprint: The fingerprint of the derived image.
 	Fingerprint *Fingerprint `json:"fingerprint,omitempty"`
 
 	// LayerInfo: This contains layer-specific metadata, if populated it has
-	// length
-	// "distance" and is ordered with [distance] being the layer
-	// immediately
-	// following the base image and [1] being the final layer.
+	// length "distance" and is ordered with [distance] being the layer
+	// immediately following the base image and [1] being the final layer.
 	LayerInfo []*Layer `json:"layerInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseResourceUrl") to
@@ -1026,17 +918,13 @@ func (s *Derived) MarshalJSON() ([]byte, error) {
 }
 
 // Detail: Identifies all occurrences of this vulnerability in the
-// package for a
-// specific distro/location
-// For example: glibc in cpe:/o:debian:debian_linux:8 for versions 2.1 -
-// 2.2
+// package for a specific distro/location For example: glibc in
+// cpe:/o:debian:debian_linux:8 for versions 2.1 - 2.2
 type Detail struct {
 	// CpeUri: The cpe_uri in [cpe format]
-	// (https://cpe.mitre.org/specification/) in
-	// which the vulnerability manifests.  Examples include distro or
-	// storage
-	// location for vulnerable jar.
-	// This field can be used as a filter in list requests.
+	// (https://cpe.mitre.org/specification/) in which the vulnerability
+	// manifests. Examples include distro or storage location for vulnerable
+	// jar. This field can be used as a filter in list requests.
 	CpeUri string `json:"cpeUri,omitempty"`
 
 	// Description: A vendor-specific description of this note.
@@ -1046,8 +934,7 @@ type Detail struct {
 	FixedLocation *VulnerabilityLocation `json:"fixedLocation,omitempty"`
 
 	// IsObsolete: Whether this Detail is obsolete. Occurrences are expected
-	// not to point to
-	// obsolete details.
+	// not to point to obsolete details.
 	IsObsolete bool `json:"isObsolete,omitempty"`
 
 	// MaxAffectedVersion: The max version of the package in which the
@@ -1058,14 +945,12 @@ type Detail struct {
 	// vulnerability exists.
 	MinAffectedVersion *Version `json:"minAffectedVersion,omitempty"`
 
-	// Package: The name of the package where the vulnerability was
-	// found.
+	// Package: The name of the package where the vulnerability was found.
 	// This field can be used as a filter in list requests.
 	Package string `json:"package,omitempty"`
 
 	// PackageType: The type of package; whether native or non native(ruby
-	// gems,
-	// node.js packages etc)
+	// gems, node.js packages etc)
 	PackageType string `json:"packageType,omitempty"`
 
 	// SeverityName: The severity (eg: distro assigned severity) for this
@@ -1106,16 +991,13 @@ type Discovered struct {
 	//   "SCANNING" - Resource is being analyzed.
 	//   "FINISHED_SUCCESS" - Analysis has finished successfully.
 	//   "FINISHED_FAILED" - Analysis has finished unsuccessfully, the
-	// analysis itself is in a bad
-	// state.
+	// analysis itself is in a bad state.
 	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported.
 	AnalysisStatus string `json:"analysisStatus,omitempty"`
 
 	// AnalysisStatusError: When an error is encountered this will contain a
-	// LocalizedMessage under
-	// details to show to the user. The LocalizedMessage output only
-	// and
-	// populated by the API.
+	// LocalizedMessage under details to show to the user. The
+	// LocalizedMessage output only and populated by the API.
 	AnalysisStatusError *Status `json:"analysisStatusError,omitempty"`
 
 	// ContinuousAnalysis: Whether the resource is continuously analyzed.
@@ -1130,8 +1012,7 @@ type Discovered struct {
 	Cpe string `json:"cpe,omitempty"`
 
 	// Operation: Output only. An operation that indicates the status of the
-	// current scan.
-	// This field is deprecated, do not use.
+	// current scan. This field is deprecated, do not use.
 	Operation *Operation `json:"operation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisStatus") to
@@ -1159,14 +1040,11 @@ func (s *Discovered) MarshalJSON() ([]byte, error) {
 }
 
 // Discovery: A note that indicates a type of analysis a provider would
-// perform. This note
-// exists in a provider's project. A `Discovery` occurrence is created
-// in a
-// consumer's project at the start of analysis. The occurrence's
-// operation will
-// indicate the status of the analysis. Absence of an occurrence linked
-// to this
-// note for a resource indicates that analysis hasn't started.
+// perform. This note exists in a provider's project. A `Discovery`
+// occurrence is created in a consumer's project at the start of
+// analysis. The occurrence's operation will indicate the status of the
+// analysis. Absence of an occurrence linked to this note for a resource
+// indicates that analysis hasn't started.
 type Discovery struct {
 	// AnalysisKind: The kind of analysis that is handled by this discovery.
 	//
@@ -1210,12 +1088,10 @@ func (s *Discovery) MarshalJSON() ([]byte, error) {
 }
 
 // Distribution: This represents a particular channel of distribution
-// for a given package.
-// e.g. Debian's jessie-backports dpkg mirror
+// for a given package. e.g. Debian's jessie-backports dpkg mirror
 type Distribution struct {
 	// Architecture: The CPU architecture for which packages in this
-	// distribution
-	// channel were built
+	// distribution channel were built
 	//
 	// Possible values:
 	//   "ARCHITECTURE_UNSPECIFIED" - Unknown architecture
@@ -1224,16 +1100,16 @@ type Distribution struct {
 	Architecture string `json:"architecture,omitempty"`
 
 	// CpeUri: The cpe_uri in [cpe
-	// format](https://cpe.mitre.org/specification/)
-	// denoting the package manager version distributing a package.
+	// format](https://cpe.mitre.org/specification/) denoting the package
+	// manager version distributing a package.
 	CpeUri string `json:"cpeUri,omitempty"`
 
 	// Description: The distribution channel-specific description of this
 	// package.
 	Description string `json:"description,omitempty"`
 
-	// LatestVersion: The latest available version of this package in
-	// this distribution channel.
+	// LatestVersion: The latest available version of this package in this
+	// distribution channel.
 	LatestVersion *Version `json:"latestVersion,omitempty"`
 
 	// Maintainer: A freeform string denoting the maintainer of this
@@ -1267,17 +1143,11 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1285,65 +1155,40 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1370,8 +1215,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 }
 
 // FileHashes: Container message for hashes of byte content of files,
-// used in Source
-// messages to verify integrity of source input to the build.
+// used in Source messages to verify integrity of source input to the
+// build.
 type FileHashes struct {
 	// FileHash: Collection of file hashes.
 	FileHash []*Hash `json:"fileHash,omitempty"`
@@ -1402,20 +1247,17 @@ func (s *FileHashes) MarshalJSON() ([]byte, error) {
 // Fingerprint: A set of properties that uniquely identify a given
 // Docker image.
 type Fingerprint struct {
-	// V1Name: The layer-id of the final layer in the Docker image's
-	// v1
-	// representation.
-	// This field can be used as a filter in list requests.
+	// V1Name: The layer-id of the final layer in the Docker image's v1
+	// representation. This field can be used as a filter in list requests.
 	V1Name string `json:"v1Name,omitempty"`
 
 	// V2Blob: The ordered list of v2 blobs that represent a given image.
 	V2Blob []string `json:"v2Blob,omitempty"`
 
 	// V2Name: Output only. The name of the image's v2 blobs computed via:
-	//   [bottom] := v2_blobbottom := sha256(v2_blob[N] + " " +
-	// v2_name[N+1])
-	// Only the name of the final blob is kept.
-	// This field can be used as a filter in list requests.
+	// [bottom] := v2_blobbottom := sha256(v2_blob[N] + " " + v2_name[N+1])
+	// Only the name of the final blob is kept. This field can be used as a
+	// filter in list requests.
 	V2Name string `json:"v2Name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "V1Name") to
@@ -1444,8 +1286,7 @@ func (s *Fingerprint) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -1474,24 +1315,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1520,10 +1351,8 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 }
 
 // GetVulnzOccurrencesSummaryResponse: A summary of how many vulnz
-// occurrences there are per severity type.
-// counts by groups, or if we should have different summary
-// messages
-// like this.
+// occurrences there are per severity type. counts by groups, or if we
+// should have different summary messages like this.
 type GetVulnzOccurrencesSummaryResponse struct {
 	// Counts: A map of how many occurrences were found for each severity.
 	Counts []*SeverityCount `json:"counts,omitempty"`
@@ -1565,8 +1394,7 @@ type GoogleDevtoolsContaineranalysisV1alpha1AliasContext struct {
 	//   "FIXED" - Git tag.
 	//   "MOVABLE" - Git branch.
 	//   "OTHER" - Used to specify non-standard aliases. For example, if a
-	// Git repo has a
-	// ref named "refs/foo/bar".
+	// Git repo has a ref named "refs/foo/bar".
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The alias name.
@@ -1597,8 +1425,7 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1AliasContext) MarshalJSON() ([]b
 
 // GoogleDevtoolsContaineranalysisV1alpha1CloudRepoSourceContext: A
 // CloudRepoSourceContext denotes a particular revision in a Google
-// Cloud
-// Source Repo.
+// Cloud Source Repo.
 type GoogleDevtoolsContaineranalysisV1alpha1CloudRepoSourceContext struct {
 	// AliasContext: An alias, which may be a branch or tag.
 	AliasContext *GoogleDevtoolsContaineranalysisV1alpha1AliasContext `json:"aliasContext,omitempty"`
@@ -1639,9 +1466,8 @@ type GoogleDevtoolsContaineranalysisV1alpha1GerritSourceContext struct {
 	AliasContext *GoogleDevtoolsContaineranalysisV1alpha1AliasContext `json:"aliasContext,omitempty"`
 
 	// GerritProject: The full project name within the host. Projects may be
-	// nested, so
-	// "project/subproject" is a valid project name. The "repo name" is
-	// the hostURI/project.
+	// nested, so "project/subproject" is a valid project name. The "repo
+	// name" is the hostURI/project.
 	GerritProject string `json:"gerritProject,omitempty"`
 
 	// HostUri: The URI of a running Gerrit instance.
@@ -1674,8 +1500,7 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1GerritSourceContext) MarshalJSON
 }
 
 // GoogleDevtoolsContaineranalysisV1alpha1GitSourceContext: A
-// GitSourceContext denotes a particular revision in a third party
-// Git
+// GitSourceContext denotes a particular revision in a third party Git
 // repository (e.g., GitHub).
 type GoogleDevtoolsContaineranalysisV1alpha1GitSourceContext struct {
 	// RevisionId: Required. Git commit hash.
@@ -1708,8 +1533,8 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1GitSourceContext) MarshalJSON() 
 }
 
 // GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata: Metadata
-// for all operations used and required for all operations
-// that created by Container Analysis Providers
+// for all operations used and required for all operations that created
+// by Container Analysis Providers
 type GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata struct {
 	// CreateTime: Output only. The time this operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1742,8 +1567,8 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1OperationMetadata) MarshalJSON()
 }
 
 // GoogleDevtoolsContaineranalysisV1alpha1ProjectRepoId: Selects a repo
-// using a Google Cloud Platform project ID (e.g.,
-// winged-cargo-31) and a repo name within that project.
+// using a Google Cloud Platform project ID (e.g., winged-cargo-31) and
+// a repo name within that project.
 type GoogleDevtoolsContaineranalysisV1alpha1ProjectRepoId struct {
 	// ProjectId: The ID of the project.
 	ProjectId string `json:"projectId,omitempty"`
@@ -1807,8 +1632,8 @@ func (s *GoogleDevtoolsContaineranalysisV1alpha1RepoId) MarshalJSON() ([]byte, e
 }
 
 // GoogleDevtoolsContaineranalysisV1alpha1SourceContext: A SourceContext
-// is a reference to a tree of files. A SourceContext together
-// with a path point to a unique revision of a single file or directory.
+// is a reference to a tree of files. A SourceContext together with a
+// path point to a unique revision of a single file or directory.
 type GoogleDevtoolsContaineranalysisV1alpha1SourceContext struct {
 	// CloudRepo: A SourceContext referring to a revision in a Google Cloud
 	// Source Repo.
@@ -1883,12 +1708,10 @@ func (s *Hash) MarshalJSON() ([]byte, error) {
 }
 
 // Installation: This represents how a particular software package may
-// be installed on
-// a system.
+// be installed on a system.
 type Installation struct {
 	// Location: All of the places within the filesystem versions of this
-	// package
-	// have been found.
+	// package have been found.
 	Location []*Location `json:"location,omitempty"`
 
 	// Name: Output only. The name of the installed package.
@@ -2009,9 +1832,8 @@ func (s *ListNoteOccurrencesResponse) MarshalJSON() ([]byte, error) {
 // ListNotesResponse: Response including listed notes.
 type ListNotesResponse struct {
 	// NextPageToken: The next pagination token in the list response. It
-	// should be used as
-	// page_token for the following request. An empty value means no more
-	// result.
+	// should be used as page_token for the following request. An empty
+	// value means no more result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Notes: The occurrences requested
@@ -2048,10 +1870,8 @@ func (s *ListNotesResponse) MarshalJSON() ([]byte, error) {
 // occurrences.
 type ListOccurrencesResponse struct {
 	// NextPageToken: The next pagination token in the list response. It
-	// should be used as
-	// `page_token` for the following request. An empty value means no
-	// more
-	// results.
+	// should be used as `page_token` for the following request. An empty
+	// value means no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Occurrences: The occurrences requested.
@@ -2121,13 +1941,12 @@ func (s *ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Location: An occurrence of a particular package installation found
-// within a
-// system's filesystem.
-// e.g. glibc was found in /var/lib/dpkg/status
+// within a system's filesystem. e.g. glibc was found in
+// /var/lib/dpkg/status
 type Location struct {
 	// CpeUri: The cpe_uri in [cpe
-	// format](https://cpe.mitre.org/specification/)
-	// denoting the package manager version distributing a package.
+	// format](https://cpe.mitre.org/specification/) denoting the package
+	// manager version distributing a package.
 	CpeUri string `json:"cpeUri,omitempty"`
 
 	// Path: The path from which we gathered that this package/version is
@@ -2172,8 +1991,7 @@ type Note struct {
 	BuildType *BuildType `json:"buildType,omitempty"`
 
 	// CreateTime: Output only. The time this note was created. This field
-	// can be used as a
-	// filter in list requests.
+	// can be used as a filter in list requests.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Deployable: A note describing something that can be deployed.
@@ -2187,8 +2005,7 @@ type Note struct {
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
 	// Kind: Output only. This explicitly denotes which kind of note is
-	// specified. This
-	// field can be used as a filter in list requests.
+	// specified. This field can be used as a filter in list requests.
 	//
 	// Possible values:
 	//   "KIND_UNSPECIFIED" - Unknown
@@ -2209,8 +2026,7 @@ type Note struct {
 	// LongDescription: A detailed description of this `Note`.
 	LongDescription string `json:"longDescription,omitempty"`
 
-	// Name: The name of the note in the
-	// form
+	// Name: The name of the note in the form
 	// "projects/{provider_project_id}/notes/{NOTE_ID}"
 	Name string `json:"name,omitempty"`
 
@@ -2225,8 +2041,7 @@ type Note struct {
 	ShortDescription string `json:"shortDescription,omitempty"`
 
 	// UpdateTime: Output only. The time this note was last updated. This
-	// field can be used as
-	// a filter in list requests.
+	// field can be used as a filter in list requests.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Upgrade: A note describing an upgrade.
@@ -2279,8 +2094,8 @@ type Occurrence struct {
 	// Deployment: Describes the deployment of an artifact on a runtime.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
-	// DerivedImage: Describes how this resource derives from the basis
-	// in the associated note.
+	// DerivedImage: Describes how this resource derives from the basis in
+	// the associated note.
 	DerivedImage *Derived `json:"derivedImage,omitempty"`
 
 	// Discovered: Describes the initial scan status for this resource.
@@ -2291,8 +2106,8 @@ type Occurrence struct {
 	Installation *Installation `json:"installation,omitempty"`
 
 	// Kind: Output only. This explicitly denotes which of the `Occurrence`
-	// details are
-	// specified. This field can be used as a filter in list requests.
+	// details are specified. This field can be used as a filter in list
+	// requests.
 	//
 	// Possible values:
 	//   "KIND_UNSPECIFIED" - Unknown
@@ -2310,30 +2125,26 @@ type Occurrence struct {
 	//   "UPGRADE" - This represents an available software upgrade.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Output only. The name of the `Occurrence` in the
-	// form
+	// Name: Output only. The name of the `Occurrence` in the form
 	// "projects/{project_id}/occurrences/{OCCURRENCE_ID}"
 	Name string `json:"name,omitempty"`
 
-	// NoteName: An analysis note associated with this image, in the
-	// form
-	// "providers/{provider_id}/notes/{NOTE_ID}"
-	// This field can be used as a filter in list requests.
+	// NoteName: An analysis note associated with this image, in the form
+	// "providers/{provider_id}/notes/{NOTE_ID}" This field can be used as a
+	// filter in list requests.
 	NoteName string `json:"noteName,omitempty"`
 
 	// Remediation: A description of actions that can be taken to remedy the
 	// `Note`
 	Remediation string `json:"remediation,omitempty"`
 
-	// Resource:
-	// The resource for which the `Occurrence` applies.
+	// Resource:  The resource for which the `Occurrence` applies.
 	Resource *Resource `json:"resource,omitempty"`
 
 	// ResourceUrl: The unique URL of the image or the container for which
-	// the `Occurrence`
-	// applies. For example, https://gcr.io/project/image@sha256:foo This
-	// field
-	// can be used as a filter in list requests.
+	// the `Occurrence` applies. For example,
+	// https://gcr.io/project/image@sha256:foo This field can be used as a
+	// filter in list requests.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
 	// UpdateTime: Output only. The time this `Occurrence` was last updated.
@@ -2373,52 +2184,38 @@ func (s *Occurrence) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2449,9 +2246,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Package: This represents a particular package that is distributed
-// over
-// various channels.
-// e.g. glibc (aka libc6) is distributed by many, at various versions.
+// over various channels. e.g. glibc (aka libc6) is distributed by many,
+// at various versions.
 type Package struct {
 	// Distribution: The various channels by which a package is distributed.
 	Distribution []*Distribution `json:"distribution,omitempty"`
@@ -2483,8 +2279,7 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 }
 
 // PackageIssue: This message wraps a location affected by a
-// vulnerability and its
-// associated fix (if one is available).
+// vulnerability and its associated fix (if one is available).
 type PackageIssue struct {
 	// AffectedLocation: The location of the vulnerability.
 	AffectedLocation *VulnerabilityLocation `json:"affectedLocation,omitempty"`
@@ -2519,75 +2314,47 @@ func (s *PackageIssue) MarshalJSON() ([]byte, error) {
 }
 
 // PgpSignedAttestation: An attestation wrapper with a PGP-compatible
-// signature.
-// This message only supports `ATTACHED` signatures, where the payload
-// that is
-// signed is included alongside the signature itself in the same file.
+// signature. This message only supports `ATTACHED` signatures, where
+// the payload that is signed is included alongside the signature itself
+// in the same file.
 type PgpSignedAttestation struct {
 	// ContentType: Type (for example schema) of the attestation payload
-	// that was signed.
-	// The verifier must ensure that the provided type is one that the
-	// verifier
-	// supports, and that the attestation payload is a valid instantiation
-	// of that
-	// type (for example by validating a JSON schema).
+	// that was signed. The verifier must ensure that the provided type is
+	// one that the verifier supports, and that the attestation payload is a
+	// valid instantiation of that type (for example by validating a JSON
+	// schema).
 	//
 	// Possible values:
 	//   "CONTENT_TYPE_UNSPECIFIED" - `ContentType` is not set.
-	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature.
-	// See
-	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276
-	// c3e0f64e77723e7/docs/atomic-signature.md
-	// The payload extracted from `signature` is a JSON blob conforming to
-	// the
-	// linked schema.
+	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature. See
+	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md The payload extracted from `signature` is a JSON blob conforming to the linked
+	// schema.
 	ContentType string `json:"contentType,omitempty"`
 
 	// PgpKeyId: The cryptographic fingerprint of the key used to generate
-	// the signature,
-	// as output by, e.g. `gpg --list-keys`. This should be the version 4,
-	// full
-	// 160-bit fingerprint, expressed as a 40 character hexadecimal string.
-	// See
-	// https://tools.ietf.org/html/rfc4880#section-12.2 for
-	// details.
-	// Implementations may choose to acknowledge "LONG", "SHORT", or
-	// other
+	// the signature, as output by, e.g. `gpg --list-keys`. This should be
+	// the version 4, full 160-bit fingerprint, expressed as a 40 character
+	// hexadecimal string. See
+	// https://tools.ietf.org/html/rfc4880#section-12.2 for details.
+	// Implementations may choose to acknowledge "LONG", "SHORT", or other
 	// abbreviated key IDs, but only the full fingerprint is guaranteed to
-	// work.
-	// In gpg, the full fingerprint can be retrieved from the `fpr`
-	// field
-	// returned when calling --list-keys with --with-colons.  For
-	// example:
-	// ```
-	// gpg --with-colons --with-fingerprint --force-v4-certs \
-	//     --list-keys
-	// attester@example.com
-	// tru::1:1513631572:0:3:1:5
-	// pub:...<SNIP>...
-	// fpr:::
-	// ::::::24FF6481B76AC91E66A00AC657A93A81EF3AE6FB:
-	// ```
-	// Above, the fingerprint is `24FF6481B76AC91E66A00AC657A93A81EF3AE6FB`.
+	// work. In gpg, the full fingerprint can be retrieved from the `fpr`
+	// field returned when calling --list-keys with --with-colons. For
+	// example: ``` gpg --with-colons --with-fingerprint --force-v4-certs \
+	// --list-keys attester@example.com tru::1:1513631572:0:3:1:5 pub:......
+	// fpr:::::::::24FF6481B76AC91E66A00AC657A93A81EF3AE6FB: ``` Above, the
+	// fingerprint is `24FF6481B76AC91E66A00AC657A93A81EF3AE6FB`.
 	PgpKeyId string `json:"pgpKeyId,omitempty"`
 
 	// Signature: The raw content of the signature, as output by GNU Privacy
-	// Guard (GPG) or
-	// equivalent.  Since this message only supports attached signatures,
-	// the
-	// payload that was signed must be attached. While the signature
-	// format
-	// supported is dependent on the verification implementation, currently
-	// only
-	// ASCII-armored (`--armor` to gpg), non-clearsigned (`--sign` rather
-	// than
-	// `--clearsign` to gpg) are supported. Concretely, `gpg --sign
-	// --armor
-	// --output=signature.gpg payload.json` will create the signature
-	// content
-	// expected in this field in `signature.gpg` for the
-	// `payload.json`
-	// attestation payload.
+	// Guard (GPG) or equivalent. Since this message only supports attached
+	// signatures, the payload that was signed must be attached. While the
+	// signature format supported is dependent on the verification
+	// implementation, currently only ASCII-armored (`--armor` to gpg),
+	// non-clearsigned (`--sign` rather than `--clearsign` to gpg) are
+	// supported. Concretely, `gpg --sign --armor --output=signature.gpg
+	// payload.json` will create the signature content expected in this
+	// field in `signature.gpg` for the `payload.json` attestation payload.
 	Signature string `json:"signature,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
@@ -2614,150 +2381,73 @@ func (s *PgpSignedAttestation) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -2821,8 +2511,7 @@ func (s *RelatedUrl) MarshalJSON() ([]byte, error) {
 }
 
 // RepoSource: RepoSource describes the location of the source in a
-// Google Cloud Source
-// Repository.
+// Google Cloud Source Repository.
 type RepoSource struct {
 	// BranchName: Name of the branch to build.
 	BranchName string `json:"branchName,omitempty"`
@@ -2862,8 +2551,8 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Resource:
-// Resource is an entity that can have metadata. E.g., a Docker image.
+// Resource:  Resource is an entity that can have metadata. E.g., a
+// Docker image.
 type Resource struct {
 	// ContentHash: The hash of the resource content. E.g., the Docker
 	// digest.
@@ -2873,8 +2562,7 @@ type Resource struct {
 	// "Debian".
 	Name string `json:"name,omitempty"`
 
-	// Uri: The unique URI of the resource.
-	// E.g.,
+	// Uri: The unique URI of the resource. E.g.,
 	// "https://gcr.io/project/image@sha256:foo" for a Docker image.
 	Uri string `json:"uri,omitempty"`
 
@@ -2914,8 +2602,7 @@ type ScanConfig struct {
 	// Enabled: Indicates whether the Scan is enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// Name: Output only. The name of the ScanConfig in the
-	// form
+	// Name: Output only. The name of the ScanConfig in the form
 	// “projects/{project_id}/scanConfigs/{scan_config_id}".
 	Name string `json:"name,omitempty"`
 
@@ -2952,11 +2639,9 @@ func (s *ScanConfig) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -3026,17 +2711,13 @@ func (s *SeverityCount) MarshalJSON() ([]byte, error) {
 // build.
 type Source struct {
 	// AdditionalContexts: If provided, some of the source code used for the
-	// build may be found in
-	// these locations, in the case where the source repository had
-	// multiple
-	// remotes or submodules. This list will not include the context
-	// specified in
-	// the context field.
+	// build may be found in these locations, in the case where the source
+	// repository had multiple remotes or submodules. This list will not
+	// include the context specified in the context field.
 	AdditionalContexts []*GoogleDevtoolsContaineranalysisV1alpha1SourceContext `json:"additionalContexts,omitempty"`
 
 	// ArtifactStorageSource: If provided, the input binary artifacts for
-	// the build came from this
-	// location.
+	// the build came from this location.
 	ArtifactStorageSource *StorageSource `json:"artifactStorageSource,omitempty"`
 
 	// Context: If provided, the source code used for the build came from
@@ -3044,16 +2725,11 @@ type Source struct {
 	Context *GoogleDevtoolsContaineranalysisV1alpha1SourceContext `json:"context,omitempty"`
 
 	// FileHashes: Hash(es) of the build source, which can be used to verify
-	// that the original
-	// source integrity was maintained in the build.
-	//
-	// The keys to this map are file paths used as build source and the
-	// values
-	// contain the hash values for those files.
-	//
-	// If the build source came in a single package such as a gzipped
-	// tarfile
-	// (.tar.gz), the FileHash will be for the single path to that file.
+	// that the original source integrity was maintained in the build. The
+	// keys to this map are file paths used as build source and the values
+	// contain the hash values for those files. If the build source came in
+	// a single package such as a gzipped tarfile (.tar.gz), the FileHash
+	// will be for the single path to that file.
 	FileHashes map[string]FileHashes `json:"fileHashes,omitempty"`
 
 	// RepoSource: If provided, get source from this location in a Cloud
@@ -3061,8 +2737,7 @@ type Source struct {
 	RepoSource *RepoSource `json:"repoSource,omitempty"`
 
 	// StorageSource: If provided, get the source from this location in in
-	// Google Cloud
-	// Storage.
+	// Google Cloud Storage.
 	StorageSource *StorageSource `json:"storageSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalContexts")
@@ -3090,32 +2765,24 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -3142,14 +2809,11 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // StorageSource: StorageSource describes the location of the source in
-// an archive file in
-// Google Cloud Storage.
+// an archive file in Google Cloud Storage.
 type StorageSource struct {
 	// Bucket: Google Cloud Storage bucket containing source (see [Bucket
-	// Name
-	// Requirements]
-	// (https://cloud.google.com/storage/docs/bucket-namin
-	// g#requirements)).
+	// Name Requirements]
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
 	// Generation: Google Cloud Storage generation for the object.
@@ -3185,11 +2849,8 @@ func (s *StorageSource) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -3220,8 +2881,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3283,19 +2943,16 @@ func (s *UpdateOperationRequest) MarshalJSON() ([]byte, error) {
 }
 
 // UpgradeDistribution: The Upgrade Distribution represents metadata
-// about the Upgrade for each
-// operating system (CPE). Some distributions have additional metadata
-// around
-// updates, classifying them into various categories and severities.
+// about the Upgrade for each operating system (CPE). Some distributions
+// have additional metadata around updates, classifying them into
+// various categories and severities.
 type UpgradeDistribution struct {
 	// Classification: The operating system classification of this Upgrade,
-	// as specified by the
-	// upstream operating system upgrade feed.
+	// as specified by the upstream operating system upgrade feed.
 	Classification string `json:"classification,omitempty"`
 
 	// CpeUri: Required - The specific operating system this metadata
-	// applies to. See
-	// https://cpe.mitre.org/specification/.
+	// applies to. See https://cpe.mitre.org/specification/.
 	CpeUri string `json:"cpeUri,omitempty"`
 
 	// Cve: The cve that would be resolved by this upgrade.
@@ -3329,10 +2986,8 @@ func (s *UpgradeDistribution) MarshalJSON() ([]byte, error) {
 }
 
 // UpgradeNote: An Upgrade Note represents a potential upgrade of a
-// package to a given
-// version. For each package version combination (i.e. bash 4.0, bash
-// 4.1,
-// bash 4.1.2), there will be a Upgrade Note.
+// package to a given version. For each package version combination
+// (i.e. bash 4.0, bash 4.1, bash 4.1.2), there will be a Upgrade Note.
 type UpgradeNote struct {
 	// Distributions: Metadata about the upgrade for each specific operating
 	// system.
@@ -3369,17 +3024,13 @@ func (s *UpgradeNote) MarshalJSON() ([]byte, error) {
 }
 
 // UpgradeOccurrence: An Upgrade Occurrence represents that a specific
-// resource_url could install a
-// specific upgrade. This presence is supplied via local sources (i.e.
-// it is
-// present in the mirror and the running system has noticed its
-// availability).
+// resource_url could install a specific upgrade. This presence is
+// supplied via local sources (i.e. it is present in the mirror and the
+// running system has noticed its availability).
 type UpgradeOccurrence struct {
 	// Distribution: Metadata about the upgrade for available for the
-	// specific operating system
-	// for the resource_url. This allows efficient filtering, as well
-	// as
-	// making it easier to use the occurrence.
+	// specific operating system for the resource_url. This allows efficient
+	// filtering, as well as making it easier to use the occurrence.
 	Distribution *UpgradeDistribution `json:"distribution,omitempty"`
 
 	// Package: Required - The package this Upgrade is for.
@@ -3413,29 +3064,22 @@ func (s *UpgradeOccurrence) MarshalJSON() ([]byte, error) {
 }
 
 // Version: Version contains structured information about the version of
-// the package.
-// For a discussion of this in
-// Debian/Ubuntu:
-// http://serverfault.com/questions/604541/debian-packages
-// -version-convention
-// For a discussion of this in
-// Redhat/Fedora/Centos:
-// http://blog.jasonantman.com/2014/07/how-yum-and-
-// rpm-compare-versions/
+// the package. For a discussion of this in Debian/Ubuntu:
+// http://serverfault.com/questions/604541/debian-packages-version-convention For a discussion of this in Redhat/Fedora/Centos:
+// http://blog.jasonantman.com/2014/07/how-yum-and-rpm-compare-versions/
 type Version struct {
 	// Epoch: Used to correct mistakes in the version numbering scheme.
 	Epoch int64 `json:"epoch,omitempty"`
 
 	// Kind: Distinguish between sentinel MIN/MAX versions and normal
-	// versions.
-	// If kind is not NORMAL, then the other fields are ignored.
+	// versions. If kind is not NORMAL, then the other fields are ignored.
 	//
 	// Possible values:
 	//   "NORMAL" - A standard package version, defined by the other fields.
-	//   "MINIMUM" - A special version representing negative infinity,
-	// other fields are ignored.
-	//   "MAXIMUM" - A special version representing positive infinity,
-	// other fields are ignored.
+	//   "MINIMUM" - A special version representing negative infinity, other
+	// fields are ignored.
+	//   "MAXIMUM" - A special version representing positive infinity, other
+	// fields are ignored.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: The main part of the version name.
@@ -3468,21 +3112,17 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 }
 
 // VulnerabilityDetails: Used by Occurrence to point to where the
-// vulnerability exists and how
-// to fix it.
+// vulnerability exists and how to fix it.
 type VulnerabilityDetails struct {
 	// CvssScore: Output only. The CVSS score of this vulnerability. CVSS
-	// score is on a
-	// scale of 0-10 where 0 indicates low severity and 10 indicates
-	// high
-	// severity.
+	// score is on a scale of 0-10 where 0 indicates low severity and 10
+	// indicates high severity.
 	CvssScore float64 `json:"cvssScore,omitempty"`
 
 	// EffectiveSeverity: The distro assigned severity for this
-	// vulnerability when that is
-	// available and note provider assigned severity when distro has not
-	// yet
-	// assigned a severity for this vulnerability.
+	// vulnerability when that is available and note provider assigned
+	// severity when distro has not yet assigned a severity for this
+	// vulnerability.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unknown Impact
@@ -3494,8 +3134,7 @@ type VulnerabilityDetails struct {
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
 
 	// PackageIssue: The set of affected locations and their fixes (if
-	// available) within
-	// the associated resource.
+	// available) within the associated resource.
 	PackageIssue []*PackageIssue `json:"packageIssue,omitempty"`
 
 	// Severity: Output only. The note provider assigned Severity of the
@@ -3510,8 +3149,7 @@ type VulnerabilityDetails struct {
 	//   "CRITICAL" - Critical Impact
 	Severity string `json:"severity,omitempty"`
 
-	// Type: The type of package; whether native or non native(ruby
-	// gems,
+	// Type: The type of package; whether native or non native(ruby gems,
 	// node.js packages etc)
 	Type string `json:"type,omitempty"`
 
@@ -3555,18 +3193,16 @@ func (s *VulnerabilityDetails) UnmarshalJSON(data []byte) error {
 // VulnerabilityLocation: The location of the vulnerability
 type VulnerabilityLocation struct {
 	// CpeUri: The cpe_uri in [cpe format]
-	// (https://cpe.mitre.org/specification/)
-	// format. Examples include distro or storage location for vulnerable
-	// jar.
-	// This field can be used as a filter in list requests.
+	// (https://cpe.mitre.org/specification/) format. Examples include
+	// distro or storage location for vulnerable jar. This field can be used
+	// as a filter in list requests.
 	CpeUri string `json:"cpeUri,omitempty"`
 
 	// Package: The package being described.
 	Package string `json:"package,omitempty"`
 
 	// Version: The version of the package being described. This field can
-	// be used as a
-	// filter in list requests.
+	// be used as a filter in list requests.
 	Version *Version `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to
@@ -3599,8 +3235,7 @@ type VulnerabilityType struct {
 	CvssScore float64 `json:"cvssScore,omitempty"`
 
 	// Details: All information about the package to specifically identify
-	// this
-	// vulnerability. One entry per (version range and cpe_uri) the
+	// this vulnerability. One entry per (version range and cpe_uri) the
 	// package vulnerability has manifested in.
 	Details []*Detail `json:"details,omitempty"`
 
@@ -3671,10 +3306,8 @@ func (r *ProjectsNotesService) Create(parent string, note *Note) *ProjectsNotesC
 	return c
 }
 
-// Name sets the optional parameter "name": The name of the
-// project.
-// Should be of the form "providers/{provider_id}".
-// @Deprecated
+// Name sets the optional parameter "name": The name of the project.
+// Should be of the form "providers/{provider_id}". @Deprecated
 func (c *ProjectsNotesCreateCall) Name(name string) *ProjectsNotesCreateCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -3714,7 +3347,7 @@ func (c *ProjectsNotesCreateCall) Header() http.Header {
 
 func (c *ProjectsNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3787,7 +3420,7 @@ func (c *ProjectsNotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, error
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project.\nShould be of the form \"providers/{provider_id}\".\n@Deprecated",
+	//       "description": "The name of the project. Should be of the form \"providers/{provider_id}\". @Deprecated",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3797,7 +3430,7 @@ func (c *ProjectsNotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, error
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "This field contains the project Id for example:\n\"projects/{project_id}",
+	//       "description": "This field contains the project Id for example: \"projects/{project_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3862,7 +3495,7 @@ func (c *ProjectsNotesDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3930,7 +3563,7 @@ func (c *ProjectsNotesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note in the form of\n\"providers/{provider_id}/notes/{NOTE_ID}\"",
+	//       "description": "The name of the note in the form of \"providers/{provider_id}/notes/{NOTE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4003,7 +3636,7 @@ func (c *ProjectsNotesGetCall) Header() http.Header {
 
 func (c *ProjectsNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4074,7 +3707,7 @@ func (c *ProjectsNotesGetCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note in the form of\n\"providers/{provider_id}/notes/{NOTE_ID}\"",
+	//       "description": "The name of the note in the form of \"providers/{provider_id}/notes/{NOTE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4104,25 +3737,17 @@ type ProjectsNotesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a note or an
-// `Occurrence` resource.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// `Occurrence` resource. Requires
+// `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a note or occurrence, respectively.
-// Attempting to call this method on a resource without the
-// required
-// permission will result in a `PERMISSION_DENIED` error. Attempting to
-// call
-// this method on a non-existent resource will result in a `NOT_FOUND`
-// error
-// if the user has list permission on the project, or a
-// `PERMISSION_DENIED`
-// error otherwise. The resource takes the following
-// formats:
+// resource is a note or occurrence, respectively. Attempting to call
+// this method on a resource without the required permission will result
+// in a `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has list permission on the project, or a `PERMISSION_DENIED` error
+// otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
-// and
-// projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+// and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 func (r *ProjectsNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsNotesGetIamPolicyCall {
 	c := &ProjectsNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4157,7 +3782,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4221,7 +3846,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a note or an `Occurrence` resource.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na note or occurrence, respectively.\nAttempting to call this method on a resource without the required\npermission will result in a `PERMISSION_DENIED` error. Attempting to call\nthis method on a non-existent resource will result in a `NOT_FOUND` error\nif the user has list permission on the project, or a `PERMISSION_DENIED`\nerror otherwise. The resource takes the following formats:\n`projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and\nprojects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
+	//   "description": "Gets the access control policy for a note or an `Occurrence` resource. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a note or occurrence, respectively. Attempting to call this method on a resource without the required permission will result in a `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/notes/{notesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.notes.getIamPolicy",
@@ -4230,7 +3855,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4276,9 +3901,7 @@ func (c *ProjectsNotesListCall) Filter(filter string) *ProjectsNotesListCall {
 }
 
 // Name sets the optional parameter "name": The name field will contain
-// the project Id for example:
-// "providers/{provider_id}
-// @Deprecated
+// the project Id for example: "providers/{provider_id} @Deprecated
 func (c *ProjectsNotesListCall) Name(name string) *ProjectsNotesListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -4335,7 +3958,7 @@ func (c *ProjectsNotesListCall) Header() http.Header {
 
 func (c *ProjectsNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4411,7 +4034,7 @@ func (c *ProjectsNotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResp
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name field will contain the project Id for example:\n\"providers/{provider_id}\n@Deprecated",
+	//       "description": "The name field will contain the project Id for example: \"providers/{provider_id} @Deprecated",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4519,7 +4142,7 @@ func (c *ProjectsNotesPatchCall) Header() http.Header {
 
 func (c *ProjectsNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4592,7 +4215,7 @@ func (c *ProjectsNotesPatchCall) Do(opts ...googleapi.CallOption) (*Note, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note.\nShould be of the form \"projects/{provider_id}/notes/{note_id}\".",
+	//       "description": "The name of the note. Should be of the form \"projects/{provider_id}/notes/{note_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4631,26 +4254,17 @@ type ProjectsNotesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified `Note`
-// or `Occurrence`.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a `Note` or an `Occurrence`, respectively.
-// Attempting to call this method without these permissions will result
-// in a `
-// `PERMISSION_DENIED` error.
-// Attempting to call this method on a non-existent resource will result
-// in a
-// `NOT_FOUND` error if the user has `containeranalysis.notes.list`
-// permission
-// on a `Note` or `containeranalysis.occurrences.list` on an
-// `Occurrence`, or
-// a `PERMISSION_DENIED` error otherwise. The resource takes the
-// following
+// resource is a `Note` or an `Occurrence`, respectively. Attempting to
+// call this method without these permissions will result in a `
+// `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has `containeranalysis.notes.list` permission on a `Note` or
+// `containeranalysis.occurrences.list` on an `Occurrence`, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
-// occurrences
-// and projects/{projectid}/notes/{noteid} for notes
+// occurrences and projects/{projectid}/notes/{noteid} for notes
 func (r *ProjectsNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsNotesSetIamPolicyCall {
 	c := &ProjectsNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4685,7 +4299,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4749,7 +4363,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na `Note` or an `Occurrence`, respectively.\nAttempting to call this method without these permissions will result in a `\n`PERMISSION_DENIED` error.\nAttempting to call this method on a non-existent resource will result in a\n`NOT_FOUND` error if the user has `containeranalysis.notes.list` permission\non a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or\na `PERMISSION_DENIED` error otherwise. The resource takes the following\nformats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences\nand projects/{projectid}/notes/{noteid} for notes",
+	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a `Note` or an `Occurrence`, respectively. Attempting to call this method without these permissions will result in a ` `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has `containeranalysis.notes.list` permission on a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences and projects/{projectid}/notes/{noteid} for notes",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/notes/{notesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.notes.setIamPolicy",
@@ -4758,7 +4372,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4791,19 +4405,13 @@ type ProjectsNotesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns the permissions that a caller has on the
-// specified note or
-// occurrence resource. Requires list permission on the project (for
-// example,
-// "storage.objects.list" on the containing bucket for testing
-// permission of
-// an object). Attempting to call this method on a non-existent resource
-// will
-// result in a `NOT_FOUND` error if the user has list permission on
-// the
-// project, or a `PERMISSION_DENIED` error otherwise. The resource takes
-// the
-// following formats:
-// `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
+// specified note or occurrence resource. Requires list permission on
+// the project (for example, "storage.objects.list" on the containing
+// bucket for testing permission of an object). Attempting to call this
+// method on a non-existent resource will result in a `NOT_FOUND` error
+// if the user has list permission on the project, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
+// formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 func (r *ProjectsNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsNotesTestIamPermissionsCall {
 	c := &ProjectsNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4839,7 +4447,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4903,7 +4511,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the permissions that a caller has on the specified note or\noccurrence resource. Requires list permission on the project (for example,\n\"storage.objects.list\" on the containing bucket for testing permission of\nan object). Attempting to call this method on a non-existent resource will\nresult in a `NOT_FOUND` error if the user has list permission on the\nproject, or a `PERMISSION_DENIED` error otherwise. The resource takes the\nfollowing formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for\n`Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
+	//   "description": "Returns the permissions that a caller has on the specified note or occurrence resource. Requires list permission on the project (for example, \"storage.objects.list\" on the containing bucket for testing permission of an object). Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/notes/{notesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.notes.testIamPermissions",
@@ -4912,7 +4520,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -4945,10 +4553,8 @@ type ProjectsNotesOccurrencesListCall struct {
 }
 
 // List: Lists `Occurrences` referencing the specified `Note`. Use this
-// method to
-// get all occurrences referencing your `Note` across all your
-// customer
-// projects.
+// method to get all occurrences referencing your `Note` across all your
+// customer projects.
 func (r *ProjectsNotesOccurrencesService) List(name string) *ProjectsNotesOccurrencesListCall {
 	c := &ProjectsNotesOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5012,7 +4618,7 @@ func (c *ProjectsNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5074,7 +4680,7 @@ func (c *ProjectsNotesOccurrencesListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists `Occurrences` referencing the specified `Note`. Use this method to\nget all occurrences referencing your `Note` across all your customer\nprojects.",
+	//   "description": "Lists `Occurrences` referencing the specified `Note`. Use this method to get all occurrences referencing your `Note` across all your customer projects.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/notes/{notesId}/occurrences",
 	//   "httpMethod": "GET",
 	//   "id": "containeranalysis.projects.notes.occurrences.list",
@@ -5088,7 +4694,7 @@ func (c *ProjectsNotesOccurrencesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name field will contain the note name for example:\n  \"provider/{provider_id}/notes/{note_id}\"",
+	//       "description": "The name field will contain the note name for example: \"provider/{provider_id}/notes/{note_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -5150,8 +4756,7 @@ type ProjectsOccurrencesCreateCall struct {
 }
 
 // Create: Creates a new `Occurrence`. Use this method to create
-// `Occurrences`
-// for a resource.
+// `Occurrences` for a resource.
 func (r *ProjectsOccurrencesService) Create(parent string, occurrence *Occurrence) *ProjectsOccurrencesCreateCall {
 	c := &ProjectsOccurrencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5160,8 +4765,7 @@ func (r *ProjectsOccurrencesService) Create(parent string, occurrence *Occurrenc
 }
 
 // Name sets the optional parameter "name": The name of the project.
-// Should be of the form "projects/{project_id}".
-// @Deprecated
+// Should be of the form "projects/{project_id}". @Deprecated
 func (c *ProjectsOccurrencesCreateCall) Name(name string) *ProjectsOccurrencesCreateCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -5194,7 +4798,7 @@ func (c *ProjectsOccurrencesCreateCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5258,7 +4862,7 @@ func (c *ProjectsOccurrencesCreateCall) Do(opts ...googleapi.CallOption) (*Occur
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new `Occurrence`. Use this method to create `Occurrences`\nfor a resource.",
+	//   "description": "Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/occurrences",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.occurrences.create",
@@ -5267,7 +4871,7 @@ func (c *ProjectsOccurrencesCreateCall) Do(opts ...googleapi.CallOption) (*Occur
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project.  Should be of the form \"projects/{project_id}\".\n@Deprecated",
+	//       "description": "The name of the project. Should be of the form \"projects/{project_id}\". @Deprecated",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5303,8 +4907,7 @@ type ProjectsOccurrencesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the given `Occurrence` from the system. Use this
-// when
+// Delete: Deletes the given `Occurrence` from the system. Use this when
 // an `Occurrence` is no longer applicable for the given resource.
 func (r *ProjectsOccurrencesService) Delete(name string) *ProjectsOccurrencesDeleteCall {
 	c := &ProjectsOccurrencesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5339,7 +4942,7 @@ func (c *ProjectsOccurrencesDeleteCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5398,7 +5001,7 @@ func (c *ProjectsOccurrencesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the given `Occurrence` from the system. Use this when\nan `Occurrence` is no longer applicable for the given resource.",
+	//   "description": "Deletes the given `Occurrence` from the system. Use this when an `Occurrence` is no longer applicable for the given resource.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/occurrences/{occurrencesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "containeranalysis.projects.occurrences.delete",
@@ -5407,7 +5010,7 @@ func (c *ProjectsOccurrencesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the occurrence in the form of\n\"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
+	//       "description": "The name of the occurrence in the form of \"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -5480,7 +5083,7 @@ func (c *ProjectsOccurrencesGetCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5551,7 +5154,7 @@ func (c *ProjectsOccurrencesGetCall) Do(opts ...googleapi.CallOption) (*Occurren
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the occurrence of the form\n\"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
+	//       "description": "The name of the occurrence of the form \"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -5581,25 +5184,17 @@ type ProjectsOccurrencesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a note or an
-// `Occurrence` resource.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// `Occurrence` resource. Requires
+// `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a note or occurrence, respectively.
-// Attempting to call this method on a resource without the
-// required
-// permission will result in a `PERMISSION_DENIED` error. Attempting to
-// call
-// this method on a non-existent resource will result in a `NOT_FOUND`
-// error
-// if the user has list permission on the project, or a
-// `PERMISSION_DENIED`
-// error otherwise. The resource takes the following
-// formats:
+// resource is a note or occurrence, respectively. Attempting to call
+// this method on a resource without the required permission will result
+// in a `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has list permission on the project, or a `PERMISSION_DENIED` error
+// otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
-// and
-// projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+// and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 func (r *ProjectsOccurrencesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsOccurrencesGetIamPolicyCall {
 	c := &ProjectsOccurrencesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5634,7 +5229,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5698,7 +5293,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a note or an `Occurrence` resource.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na note or occurrence, respectively.\nAttempting to call this method on a resource without the required\npermission will result in a `PERMISSION_DENIED` error. Attempting to call\nthis method on a non-existent resource will result in a `NOT_FOUND` error\nif the user has list permission on the project, or a `PERMISSION_DENIED`\nerror otherwise. The resource takes the following formats:\n`projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and\nprojects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
+	//   "description": "Gets the access control policy for a note or an `Occurrence` resource. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a note or occurrence, respectively. Attempting to call this method on a resource without the required permission will result in a `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/occurrences/{occurrencesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.occurrences.getIamPolicy",
@@ -5707,7 +5302,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -5783,7 +5378,7 @@ func (c *ProjectsOccurrencesGetNotesCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetNotesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5854,7 +5449,7 @@ func (c *ProjectsOccurrencesGetNotesCall) Do(opts ...googleapi.CallOption) (*Not
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the occurrence in the form\n\"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
+	//       "description": "The name of the occurrence in the form \"projects/{project_id}/occurrences/{OCCURRENCE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -5934,7 +5529,7 @@ func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6058,24 +5653,26 @@ func (c *ProjectsOccurrencesListCall) Filter(filter string) *ProjectsOccurrences
 // filter on.
 //
 // Possible values:
-//   "KIND_UNSPECIFIED"
-//   "PACKAGE_VULNERABILITY"
-//   "BUILD_DETAILS"
-//   "IMAGE_BASIS"
-//   "PACKAGE_MANAGER"
-//   "DEPLOYABLE"
-//   "DISCOVERY"
-//   "ATTESTATION_AUTHORITY"
-//   "UPGRADE"
+//   "KIND_UNSPECIFIED" - Unknown
+//   "PACKAGE_VULNERABILITY" - The note and occurrence represent a
+// package vulnerability.
+//   "BUILD_DETAILS" - The note and occurrence assert build provenance.
+//   "IMAGE_BASIS" - This represents an image basis relationship.
+//   "PACKAGE_MANAGER" - This represents a package installed via a
+// package manager.
+//   "DEPLOYABLE" - The note and occurrence track deployment events.
+//   "DISCOVERY" - The note and occurrence track the initial discovery
+// status of a resource.
+//   "ATTESTATION_AUTHORITY" - This represents a logical "role" that can
+// attest to artifacts.
+//   "UPGRADE" - This represents an available software upgrade.
 func (c *ProjectsOccurrencesListCall) Kind(kind string) *ProjectsOccurrencesListCall {
 	c.urlParams_.Set("kind", kind)
 	return c
 }
 
 // Name sets the optional parameter "name": The name field contains the
-// project Id. For example:
-// "projects/{project_id}
-// @Deprecated
+// project Id. For example: "projects/{project_id} @Deprecated
 func (c *ProjectsOccurrencesListCall) Name(name string) *ProjectsOccurrencesListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -6132,7 +5729,7 @@ func (c *ProjectsOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6220,11 +5817,22 @@ func (c *ProjectsOccurrencesListCall) Do(opts ...googleapi.CallOption) (*ListOcc
 	//         "ATTESTATION_AUTHORITY",
 	//         "UPGRADE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown",
+	//         "The note and occurrence represent a package vulnerability.",
+	//         "The note and occurrence assert build provenance.",
+	//         "This represents an image basis relationship.",
+	//         "This represents a package installed via a package manager.",
+	//         "The note and occurrence track deployment events.",
+	//         "The note and occurrence track the initial discovery status of a resource.",
+	//         "This represents a logical \"role\" that can attest to artifacts.",
+	//         "This represents an available software upgrade."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name field contains the project Id. For example:\n\"projects/{project_id}\n@Deprecated",
+	//       "description": "The name field contains the project Id. For example: \"projects/{project_id} @Deprecated",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6332,7 +5940,7 @@ func (c *ProjectsOccurrencesPatchCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6405,7 +6013,7 @@ func (c *ProjectsOccurrencesPatchCall) Do(opts ...googleapi.CallOption) (*Occurr
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the occurrence.\nShould be of the form \"projects/{project_id}/occurrences/{OCCURRENCE_ID}\".",
+	//       "description": "The name of the occurrence. Should be of the form \"projects/{project_id}/occurrences/{OCCURRENCE_ID}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -6444,26 +6052,17 @@ type ProjectsOccurrencesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified `Note`
-// or `Occurrence`.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a `Note` or an `Occurrence`, respectively.
-// Attempting to call this method without these permissions will result
-// in a `
-// `PERMISSION_DENIED` error.
-// Attempting to call this method on a non-existent resource will result
-// in a
-// `NOT_FOUND` error if the user has `containeranalysis.notes.list`
-// permission
-// on a `Note` or `containeranalysis.occurrences.list` on an
-// `Occurrence`, or
-// a `PERMISSION_DENIED` error otherwise. The resource takes the
-// following
+// resource is a `Note` or an `Occurrence`, respectively. Attempting to
+// call this method without these permissions will result in a `
+// `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has `containeranalysis.notes.list` permission on a `Note` or
+// `containeranalysis.occurrences.list` on an `Occurrence`, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
-// occurrences
-// and projects/{projectid}/notes/{noteid} for notes
+// occurrences and projects/{projectid}/notes/{noteid} for notes
 func (r *ProjectsOccurrencesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsOccurrencesSetIamPolicyCall {
 	c := &ProjectsOccurrencesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6498,7 +6097,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6562,7 +6161,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na `Note` or an `Occurrence`, respectively.\nAttempting to call this method without these permissions will result in a `\n`PERMISSION_DENIED` error.\nAttempting to call this method on a non-existent resource will result in a\n`NOT_FOUND` error if the user has `containeranalysis.notes.list` permission\non a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or\na `PERMISSION_DENIED` error otherwise. The resource takes the following\nformats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences\nand projects/{projectid}/notes/{noteid} for notes",
+	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a `Note` or an `Occurrence`, respectively. Attempting to call this method without these permissions will result in a ` `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has `containeranalysis.notes.list` permission on a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences and projects/{projectid}/notes/{noteid} for notes",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/occurrences/{occurrencesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.occurrences.setIamPolicy",
@@ -6571,7 +6170,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -6604,19 +6203,13 @@ type ProjectsOccurrencesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns the permissions that a caller has on the
-// specified note or
-// occurrence resource. Requires list permission on the project (for
-// example,
-// "storage.objects.list" on the containing bucket for testing
-// permission of
-// an object). Attempting to call this method on a non-existent resource
-// will
-// result in a `NOT_FOUND` error if the user has list permission on
-// the
-// project, or a `PERMISSION_DENIED` error otherwise. The resource takes
-// the
-// following formats:
-// `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
+// specified note or occurrence resource. Requires list permission on
+// the project (for example, "storage.objects.list" on the containing
+// bucket for testing permission of an object). Attempting to call this
+// method on a non-existent resource will result in a `NOT_FOUND` error
+// if the user has list permission on the project, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
+// formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 func (r *ProjectsOccurrencesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsOccurrencesTestIamPermissionsCall {
 	c := &ProjectsOccurrencesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6652,7 +6245,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6716,7 +6309,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the permissions that a caller has on the specified note or\noccurrence resource. Requires list permission on the project (for example,\n\"storage.objects.list\" on the containing bucket for testing permission of\nan object). Attempting to call this method on a non-existent resource will\nresult in a `NOT_FOUND` error if the user has list permission on the\nproject, or a `PERMISSION_DENIED` error otherwise. The resource takes the\nfollowing formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for\n`Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
+	//   "description": "Returns the permissions that a caller has on the specified note or occurrence resource. Requires list permission on the project (for example, \"storage.objects.list\" on the containing bucket for testing permission of an object). Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/occurrences/{occurrencesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.projects.occurrences.testIamPermissions",
@@ -6725,7 +6318,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/occurrences/[^/]+$",
 	//       "required": true,
@@ -6792,7 +6385,7 @@ func (c *ProjectsOperationsCreateCall) Header() http.Header {
 
 func (c *ProjectsOperationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6898,9 +6491,8 @@ type ProjectsOperationsPatchCall struct {
 }
 
 // Patch: Updates an existing operation returns an error if operation
-//  does not exist. The only valid operations are to update mark the
-// done bit
-// change the result.
+// does not exist. The only valid operations are to update mark the done
+// bit change the result.
 func (r *ProjectsOperationsService) Patch(name string, updateoperationrequest *UpdateOperationRequest) *ProjectsOperationsPatchCall {
 	c := &ProjectsOperationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6935,7 +6527,7 @@ func (c *ProjectsOperationsPatchCall) Header() http.Header {
 
 func (c *ProjectsOperationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6999,7 +6591,7 @@ func (c *ProjectsOperationsPatchCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing operation returns an error if operation\n does not exist. The only valid operations are to update mark the done bit\nchange the result.",
+	//   "description": "Updates an existing operation returns an error if operation does not exist. The only valid operations are to update mark the done bit change the result.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "containeranalysis.projects.operations.patch",
@@ -7008,7 +6600,7 @@ func (c *ProjectsOperationsPatchCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the Operation.\nShould be of the form \"projects/{provider_id}/operations/{operation_id}\".",
+	//       "description": "The name of the Operation. Should be of the form \"projects/{provider_id}/operations/{operation_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
@@ -7084,7 +6676,7 @@ func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7155,7 +6747,7 @@ func (c *ProjectsScanConfigsGetCall) Do(opts ...googleapi.CallOption) (*ScanConf
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the ScanConfig in the form\nprojects/{project_id}/scanConfigs/{scan_config_id}",
+	//       "description": "The name of the ScanConfig in the form projects/{project_id}/scanConfigs/{scan_config_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -7248,7 +6840,7 @@ func (c *ProjectsScanConfigsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7427,7 +7019,7 @@ func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7500,7 +7092,7 @@ func (c *ProjectsScanConfigsPatchCall) Do(opts ...googleapi.CallOption) (*ScanCo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The scan config to update of the form\nprojects/{project_id}/scanConfigs/{scan_config_id}.",
+	//       "description": "The scan config to update of the form projects/{project_id}/scanConfigs/{scan_config_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/scanConfigs/[^/]+$",
 	//       "required": true,
@@ -7554,8 +7146,7 @@ func (c *ProvidersNotesCreateCall) NoteId(noteId string) *ProvidersNotesCreateCa
 }
 
 // Parent sets the optional parameter "parent": This field contains the
-// project Id for example:
-// "projects/{project_id}
+// project Id for example: "projects/{project_id}
 func (c *ProvidersNotesCreateCall) Parent(parent string) *ProvidersNotesCreateCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -7588,7 +7179,7 @@ func (c *ProvidersNotesCreateCall) Header() http.Header {
 
 func (c *ProvidersNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7661,7 +7252,7 @@ func (c *ProvidersNotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project.\nShould be of the form \"providers/{provider_id}\".\n@Deprecated",
+	//       "description": "The name of the project. Should be of the form \"providers/{provider_id}\". @Deprecated",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+$",
 	//       "required": true,
@@ -7673,7 +7264,7 @@ func (c *ProvidersNotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, erro
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "This field contains the project Id for example:\n\"projects/{project_id}",
+	//       "description": "This field contains the project Id for example: \"projects/{project_id}",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7736,7 +7327,7 @@ func (c *ProvidersNotesDeleteCall) Header() http.Header {
 
 func (c *ProvidersNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7804,7 +7395,7 @@ func (c *ProvidersNotesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note in the form of\n\"providers/{provider_id}/notes/{NOTE_ID}\"",
+	//       "description": "The name of the note in the form of \"providers/{provider_id}/notes/{NOTE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -7877,7 +7468,7 @@ func (c *ProvidersNotesGetCall) Header() http.Header {
 
 func (c *ProvidersNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7948,7 +7539,7 @@ func (c *ProvidersNotesGetCall) Do(opts ...googleapi.CallOption) (*Note, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note in the form of\n\"providers/{provider_id}/notes/{NOTE_ID}\"",
+	//       "description": "The name of the note in the form of \"providers/{provider_id}/notes/{NOTE_ID}\"",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -7978,25 +7569,17 @@ type ProvidersNotesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a note or an
-// `Occurrence` resource.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// `Occurrence` resource. Requires
+// `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a note or occurrence, respectively.
-// Attempting to call this method on a resource without the
-// required
-// permission will result in a `PERMISSION_DENIED` error. Attempting to
-// call
-// this method on a non-existent resource will result in a `NOT_FOUND`
-// error
-// if the user has list permission on the project, or a
-// `PERMISSION_DENIED`
-// error otherwise. The resource takes the following
-// formats:
+// resource is a note or occurrence, respectively. Attempting to call
+// this method on a resource without the required permission will result
+// in a `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has list permission on the project, or a `PERMISSION_DENIED` error
+// otherwise. The resource takes the following formats:
 // `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences
-// and
-// projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
+// and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes
 func (r *ProvidersNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProvidersNotesGetIamPolicyCall {
 	c := &ProvidersNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8031,7 +7614,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8095,7 +7678,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a note or an `Occurrence` resource.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na note or occurrence, respectively.\nAttempting to call this method on a resource without the required\npermission will result in a `PERMISSION_DENIED` error. Attempting to call\nthis method on a non-existent resource will result in a `NOT_FOUND` error\nif the user has list permission on the project, or a `PERMISSION_DENIED`\nerror otherwise. The resource takes the following formats:\n`projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and\nprojects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
+	//   "description": "Gets the access control policy for a note or an `Occurrence` resource. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a note or occurrence, respectively. Attempting to call this method on a resource without the required permission will result in a `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for occurrences and projects/{PROJECT_ID}/notes/{NOTE_ID} for notes",
 	//   "flatPath": "v1alpha1/providers/{providersId}/notes/{notesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.providers.notes.getIamPolicy",
@@ -8104,7 +7687,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -8207,7 +7790,7 @@ func (c *ProvidersNotesListCall) Header() http.Header {
 
 func (c *ProvidersNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8283,7 +7866,7 @@ func (c *ProvidersNotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesRes
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name field will contain the project Id for example:\n\"providers/{provider_id}\n@Deprecated",
+	//       "description": "The name field will contain the project Id for example: \"providers/{provider_id} @Deprecated",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+$",
 	//       "required": true,
@@ -8391,7 +7974,7 @@ func (c *ProvidersNotesPatchCall) Header() http.Header {
 
 func (c *ProvidersNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8464,7 +8047,7 @@ func (c *ProvidersNotesPatchCall) Do(opts ...googleapi.CallOption) (*Note, error
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the note.\nShould be of the form \"projects/{provider_id}/notes/{note_id}\".",
+	//       "description": "The name of the note. Should be of the form \"projects/{provider_id}/notes/{note_id}\".",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -8503,26 +8086,17 @@ type ProvidersNotesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified `Note`
-// or `Occurrence`.
-// Requires `containeranalysis.notes.setIamPolicy`
-// or
+// or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or
 // `containeranalysis.occurrences.setIamPolicy` permission if the
-// resource is
-// a `Note` or an `Occurrence`, respectively.
-// Attempting to call this method without these permissions will result
-// in a `
-// `PERMISSION_DENIED` error.
-// Attempting to call this method on a non-existent resource will result
-// in a
-// `NOT_FOUND` error if the user has `containeranalysis.notes.list`
-// permission
-// on a `Note` or `containeranalysis.occurrences.list` on an
-// `Occurrence`, or
-// a `PERMISSION_DENIED` error otherwise. The resource takes the
-// following
+// resource is a `Note` or an `Occurrence`, respectively. Attempting to
+// call this method without these permissions will result in a `
+// `PERMISSION_DENIED` error. Attempting to call this method on a
+// non-existent resource will result in a `NOT_FOUND` error if the user
+// has `containeranalysis.notes.list` permission on a `Note` or
+// `containeranalysis.occurrences.list` on an `Occurrence`, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
 // formats: `projects/{projectid}/occurrences/{occurrenceid}` for
-// occurrences
-// and projects/{projectid}/notes/{noteid} for notes
+// occurrences and projects/{projectid}/notes/{noteid} for notes
 func (r *ProvidersNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProvidersNotesSetIamPolicyCall {
 	c := &ProvidersNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8557,7 +8131,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8621,7 +8195,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`.\nRequires `containeranalysis.notes.setIamPolicy` or\n`containeranalysis.occurrences.setIamPolicy` permission if the resource is\na `Note` or an `Occurrence`, respectively.\nAttempting to call this method without these permissions will result in a `\n`PERMISSION_DENIED` error.\nAttempting to call this method on a non-existent resource will result in a\n`NOT_FOUND` error if the user has `containeranalysis.notes.list` permission\non a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or\na `PERMISSION_DENIED` error otherwise. The resource takes the following\nformats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences\nand projects/{projectid}/notes/{noteid} for notes",
+	//   "description": "Sets the access control policy on the specified `Note` or `Occurrence`. Requires `containeranalysis.notes.setIamPolicy` or `containeranalysis.occurrences.setIamPolicy` permission if the resource is a `Note` or an `Occurrence`, respectively. Attempting to call this method without these permissions will result in a ` `PERMISSION_DENIED` error. Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has `containeranalysis.notes.list` permission on a `Note` or `containeranalysis.occurrences.list` on an `Occurrence`, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{projectid}/occurrences/{occurrenceid}` for occurrences and projects/{projectid}/notes/{noteid} for notes",
 	//   "flatPath": "v1alpha1/providers/{providersId}/notes/{notesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.providers.notes.setIamPolicy",
@@ -8630,7 +8204,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -8663,19 +8237,13 @@ type ProvidersNotesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns the permissions that a caller has on the
-// specified note or
-// occurrence resource. Requires list permission on the project (for
-// example,
-// "storage.objects.list" on the containing bucket for testing
-// permission of
-// an object). Attempting to call this method on a non-existent resource
-// will
-// result in a `NOT_FOUND` error if the user has list permission on
-// the
-// project, or a `PERMISSION_DENIED` error otherwise. The resource takes
-// the
-// following formats:
-// `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
+// specified note or occurrence resource. Requires list permission on
+// the project (for example, "storage.objects.list" on the containing
+// bucket for testing permission of an object). Attempting to call this
+// method on a non-existent resource will result in a `NOT_FOUND` error
+// if the user has list permission on the project, or a
+// `PERMISSION_DENIED` error otherwise. The resource takes the following
+// formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for
 // `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`
 func (r *ProvidersNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProvidersNotesTestIamPermissionsCall {
 	c := &ProvidersNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8711,7 +8279,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProvidersNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8775,7 +8343,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the permissions that a caller has on the specified note or\noccurrence resource. Requires list permission on the project (for example,\n\"storage.objects.list\" on the containing bucket for testing permission of\nan object). Attempting to call this method on a non-existent resource will\nresult in a `NOT_FOUND` error if the user has list permission on the\nproject, or a `PERMISSION_DENIED` error otherwise. The resource takes the\nfollowing formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for\n`Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
+	//   "description": "Returns the permissions that a caller has on the specified note or occurrence resource. Requires list permission on the project (for example, \"storage.objects.list\" on the containing bucket for testing permission of an object). Attempting to call this method on a non-existent resource will result in a `NOT_FOUND` error if the user has list permission on the project, or a `PERMISSION_DENIED` error otherwise. The resource takes the following formats: `projects/{PROJECT_ID}/occurrences/{OCCURRENCE_ID}` for `Occurrences` and `projects/{PROJECT_ID}/notes/{NOTE_ID}` for `Notes`",
 	//   "flatPath": "v1alpha1/providers/{providersId}/notes/{notesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "containeranalysis.providers.notes.testIamPermissions",
@@ -8784,7 +8352,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,
@@ -8817,10 +8385,8 @@ type ProvidersNotesOccurrencesListCall struct {
 }
 
 // List: Lists `Occurrences` referencing the specified `Note`. Use this
-// method to
-// get all occurrences referencing your `Note` across all your
-// customer
-// projects.
+// method to get all occurrences referencing your `Note` across all your
+// customer projects.
 func (r *ProvidersNotesOccurrencesService) List(name string) *ProvidersNotesOccurrencesListCall {
 	c := &ProvidersNotesOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8884,7 +8450,7 @@ func (c *ProvidersNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProvidersNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8946,7 +8512,7 @@ func (c *ProvidersNotesOccurrencesListCall) Do(opts ...googleapi.CallOption) (*L
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists `Occurrences` referencing the specified `Note`. Use this method to\nget all occurrences referencing your `Note` across all your customer\nprojects.",
+	//   "description": "Lists `Occurrences` referencing the specified `Note`. Use this method to get all occurrences referencing your `Note` across all your customer projects.",
 	//   "flatPath": "v1alpha1/providers/{providersId}/notes/{notesId}/occurrences",
 	//   "httpMethod": "GET",
 	//   "id": "containeranalysis.providers.notes.occurrences.list",
@@ -8960,7 +8526,7 @@ func (c *ProvidersNotesOccurrencesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name field will contain the note name for example:\n  \"provider/{provider_id}/notes/{note_id}\"",
+	//       "description": "The name field will contain the note name for example: \"provider/{provider_id}/notes/{note_id}\"",
 	//       "location": "path",
 	//       "pattern": "^providers/[^/]+/notes/[^/]+$",
 	//       "required": true,

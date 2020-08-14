@@ -194,14 +194,13 @@ type AchievementConfiguration struct {
 	InitialState string `json:"initialState,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#achievementConfiguration`.
+	// the fixed string `gamesConfiguration#achievementConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// Published: The read-only published data of the achievement.
 	Published *AchievementConfigurationDetail `json:"published,omitempty"`
 
-	// StepsToUnlock: Steps to unlock.  Only applicable to incremental
+	// StepsToUnlock: Steps to unlock. Only applicable to incremental
 	// achievements.
 	StepsToUnlock int64 `json:"stepsToUnlock,omitempty"`
 
@@ -246,8 +245,7 @@ type AchievementConfigurationDetail struct {
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#achievementConfigurationDetail`.
+	// the fixed string `gamesConfiguration#achievementConfigurationDetail`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Localized strings for the achievement name.
@@ -289,8 +287,8 @@ type AchievementConfigurationListResponse struct {
 	Items []*AchievementConfiguration `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#achievementConfigurationListResponse`.
+	// the fixed string
+	// `gamesConfiguration#achievementConfigurationListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -326,37 +324,30 @@ func (s *AchievementConfigurationListResponse) MarshalJSON() ([]byte, error) {
 // GamesNumberAffixConfiguration: A number affix resource.
 type GamesNumberAffixConfiguration struct {
 	// Few: When the language requires special treatment of "small" numbers
-	// (as with 2,
-	// 3, and 4 in Czech; or numbers ending 2, 3, or 4 but not 12, 13, or 14
-	// in
-	// Polish).
+	// (as with 2, 3, and 4 in Czech; or numbers ending 2, 3, or 4 but not
+	// 12, 13, or 14 in Polish).
 	Few *LocalizedStringBundle `json:"few,omitempty"`
 
 	// Many: When the language requires special treatment of "large" numbers
-	// (as with
-	// numbers ending 11-99 in Maltese).
+	// (as with numbers ending 11-99 in Maltese).
 	Many *LocalizedStringBundle `json:"many,omitempty"`
 
 	// One: When the language requires special treatment of numbers like one
-	// (as with
-	// the number 1 in English and most other languages; in Russian, any
-	// number
-	// ending in 1 but not ending in 11 is in this class).
+	// (as with the number 1 in English and most other languages; in
+	// Russian, any number ending in 1 but not ending in 11 is in this
+	// class).
 	One *LocalizedStringBundle `json:"one,omitempty"`
 
 	// Other: When the language does not require special treatment of the
-	// given quantity
-	// (as with all numbers in Chinese, or 42 in English).
+	// given quantity (as with all numbers in Chinese, or 42 in English).
 	Other *LocalizedStringBundle `json:"other,omitempty"`
 
 	// Two: When the language requires special treatment of numbers like two
-	// (as with 2
-	// in Welsh, or 102 in Slovenian).
+	// (as with 2 in Welsh, or 102 in Slovenian).
 	Two *LocalizedStringBundle `json:"two,omitempty"`
 
 	// Zero: When the language requires special treatment of the number 0
-	// (as in
-	// Arabic).
+	// (as in Arabic).
 	Zero *LocalizedStringBundle `json:"zero,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Few") to
@@ -398,22 +389,15 @@ type GamesNumberFormatConfiguration struct {
 	//   "NUMBER_FORMAT_TYPE_UNSPECIFIED" - Default value. This value is
 	// unused.
 	//   "NUMERIC" - Numbers are formatted to have no digits or fixed number
-	// of digits after
-	// the decimal point according to locale. An optional custom unit can
-	// be
-	// added.
+	// of digits after the decimal point according to locale. An optional
+	// custom unit can be added.
 	//   "TIME_DURATION" - Numbers are formatted to hours, minutes and
 	// seconds.
 	//   "CURRENCY" - Numbers are formatted to currency according to locale.
 	NumberFormatType string `json:"numberFormatType,omitempty"`
 
-	// Suffix: An optional suffix for the NUMERIC format type.  These
-	// strings follow the
-	// same
-	// <a
-	// href="http://developer.android.com/guide/topics/resources/string-re
-	// source.html#Plurals">
-	// plural rules</a> as all Android string resources.
+	// Suffix: An optional suffix for the NUMERIC format type. These strings
+	// follow the same plural rules as all Android string resources.
 	Suffix *GamesNumberAffixConfiguration `json:"suffix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
@@ -450,8 +434,7 @@ type ImageConfiguration struct {
 	ImageType string `json:"imageType,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#imageConfiguration`.
+	// the fixed string `gamesConfiguration#imageConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// ResourceId: The resource ID of resource which the image belongs to.
@@ -496,8 +479,7 @@ type LeaderboardConfiguration struct {
 	Id string `json:"id,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#leaderboardConfiguration`.
+	// the fixed string `gamesConfiguration#leaderboardConfiguration`.
 	Kind string `json:"kind,omitempty"`
 
 	// Published: The read-only published data of the leaderboard.
@@ -552,8 +534,7 @@ type LeaderboardConfigurationDetail struct {
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#leaderboardConfigurationDetail`.
+	// the fixed string `gamesConfiguration#leaderboardConfigurationDetail`.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Localized strings for the leaderboard name.
@@ -595,11 +576,8 @@ type LeaderboardConfigurationListResponse struct {
 	Items []*LeaderboardConfiguration `json:"items,omitempty"`
 
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the
-	// fixed
-	// string
-	// `gamesConfiguration#leaderboardConfigurationListResponse`
-	// .
+	// the fixed string
+	// `gamesConfiguration#leaderboardConfigurationListResponse`.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The pagination token for the next page of results.
@@ -635,8 +613,7 @@ func (s *LeaderboardConfigurationListResponse) MarshalJSON() ([]byte, error) {
 // LocalizedString: A localized string resource.
 type LocalizedString struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#localizedString`.
+	// the fixed string `gamesConfiguration#localizedString`.
 	Kind string `json:"kind,omitempty"`
 
 	// Locale: The locale string.
@@ -671,8 +648,7 @@ func (s *LocalizedString) MarshalJSON() ([]byte, error) {
 // LocalizedStringBundle: A localized string bundle resource.
 type LocalizedStringBundle struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
-	// the fixed
-	// string `gamesConfiguration#localizedStringBundle`.
+	// the fixed string `gamesConfiguration#localizedStringBundle`.
 	Kind string `json:"kind,omitempty"`
 
 	// Translations: The locale strings.
@@ -745,7 +721,7 @@ func (c *AchievementConfigurationsDeleteCall) Header() http.Header {
 
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -858,7 +834,7 @@ func (c *AchievementConfigurationsGetCall) Header() http.Header {
 
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -992,7 +968,7 @@ func (c *AchievementConfigurationsInsertCall) Header() http.Header {
 
 func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1105,10 +1081,9 @@ func (r *AchievementConfigurationsService) List(applicationId string) *Achieveme
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of resource configurations to return in the response,
-// used for paging. For any response, the actual number of resources
-// returned
-// may be less than the specified `maxResults`.
+// number of resource configurations to return in the response, used for
+// paging. For any response, the actual number of resources returned may
+// be less than the specified `maxResults`.
 func (c *AchievementConfigurationsListCall) MaxResults(maxResults int64) *AchievementConfigurationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1158,7 +1133,7 @@ func (c *AchievementConfigurationsListCall) Header() http.Header {
 
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1236,7 +1211,7 @@ func (c *AchievementConfigurationsListCall) Do(opts ...googleapi.CallOption) (*A
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
+	//       "description": "The maximum number of resource configurations to return in the response, used for paging. For any response, the actual number of resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1326,7 +1301,7 @@ func (c *AchievementConfigurationsUpdateCall) Header() http.Header {
 
 func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1506,7 +1481,7 @@ func (c *ImageConfigurationsUploadCall) Header() http.Header {
 
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1622,6 +1597,11 @@ func (c *ImageConfigurationsUploadCall) Do(opts ...googleapi.CallOption) (*Image
 	//         "ACHIEVEMENT_ICON",
 	//         "LEADERBOARD_ICON"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. This value is unused.",
+	//         "The icon image for an achievement resource.",
+	//         "The icon image for a leaderboard resource."
+	//       ],
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1689,7 +1669,7 @@ func (c *LeaderboardConfigurationsDeleteCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1802,7 +1782,7 @@ func (c *LeaderboardConfigurationsGetCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1936,7 +1916,7 @@ func (c *LeaderboardConfigurationsInsertCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2049,10 +2029,9 @@ func (r *LeaderboardConfigurationsService) List(applicationId string) *Leaderboa
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of resource configurations to return in the response,
-// used for paging. For any response, the actual number of resources
-// returned
-// may be less than the specified `maxResults`.
+// number of resource configurations to return in the response, used for
+// paging. For any response, the actual number of resources returned may
+// be less than the specified `maxResults`.
 func (c *LeaderboardConfigurationsListCall) MaxResults(maxResults int64) *LeaderboardConfigurationsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -2102,7 +2081,7 @@ func (c *LeaderboardConfigurationsListCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2180,7 +2159,7 @@ func (c *LeaderboardConfigurationsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of resource configurations to return in the response,\nused for paging. For any response, the actual number of resources returned\nmay be less than the specified `maxResults`.",
+	//       "description": "The maximum number of resource configurations to return in the response, used for paging. For any response, the actual number of resources returned may be less than the specified `maxResults`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2270,7 +2249,7 @@ func (c *LeaderboardConfigurationsUpdateCall) Header() http.Header {
 
 func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

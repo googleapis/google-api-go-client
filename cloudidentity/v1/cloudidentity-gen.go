@@ -170,26 +170,603 @@ type GroupsMembershipsService struct {
 	s *Service
 }
 
+// AndroidAttributes: Resource representing the Android specific
+// attributes of a Device.
+type AndroidAttributes struct {
+	// EnabledUnknownSources: Whether applications from unknown sources can
+	// be installed on device.
+	EnabledUnknownSources bool `json:"enabledUnknownSources,omitempty"`
+
+	// OwnerProfileAccount: Whether this account is on an owner/primary
+	// profile. For phones, only true for owner profiles. Android 4+ devices
+	// can have secondary or restricted user profiles.
+	OwnerProfileAccount bool `json:"ownerProfileAccount,omitempty"`
+
+	// OwnershipPrivilege: Ownership privileges on device.
+	//
+	// Possible values:
+	//   "OWNERSHIP_PRIVILEGE_UNSPECIFIED" - Ownership privilege is not set.
+	//   "DEVICE_ADMINISTRATOR" - Active device administrator privileges on
+	// the device.
+	//   "PROFILE_OWNER" - Profile Owner privileges. The account is in a
+	// managed corporate profile.
+	//   "DEVICE_OWNER" - Device Owner privileges on the device.
+	OwnershipPrivilege string `json:"ownershipPrivilege,omitempty"`
+
+	// SupportsWorkProfile: Whether device supports Android work profiles.
+	// If false, this service will not block access to corp data even if an
+	// administrator turns on the "Enforce Work Profile" policy.
+	SupportsWorkProfile bool `json:"supportsWorkProfile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnabledUnknownSources") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledUnknownSources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidAttributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApproveDeviceUserResponse: Response message for approving the device
+// to access user data.
+type ApproveDeviceUserResponse struct {
+	// DeviceUser: Resultant DeviceUser object for the action.
+	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ApproveDeviceUserResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BlockDeviceUserResponse: Response message for blocking the device
+// from accessing user data.
+type BlockDeviceUserResponse struct {
+	// DeviceUser: Resultant DeviceUser object for the action.
+	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BlockDeviceUserResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelWipeDeviceResponse: Response message for cancelling an
+// unfinished device wipe.
+type CancelWipeDeviceResponse struct {
+	// Device: Resultant Device object for the action. Note that asset tags
+	// will not be returned in the device object.
+	Device *Device `json:"device,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Device") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelWipeDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelWipeDeviceUserResponse: Response message for cancelling an
+// unfinished user account wipe.
+type CancelWipeDeviceUserResponse struct {
+	// DeviceUser: Resultant DeviceUser object for the action.
+	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelWipeDeviceUserResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClientState: Represents the state associated with an API client
+// calling the Devices API. Resource representing ClientState and
+// supports updates from API users
+type ClientState struct {
+	// AssetTags: The caller can specify asset tags for this resource
+	AssetTags []string `json:"assetTags,omitempty"`
+
+	// ComplianceState: The compliance state of the resource as specified by
+	// the API client.
+	//
+	// Possible values:
+	//   "COMPLIANCE_STATE_UNSPECIFIED" - The compliance state of the
+	// resource is unknown or unspecified.
+	//   "COMPLIANT" - Device is compliant with third party policies
+	//   "NON_COMPLIANT" - Device is not compliant with third party policies
+	ComplianceState string `json:"complianceState,omitempty"`
+
+	// CreateTime: Output only. The time the client state data was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomId: This field may be used to store a unique identifier for the
+	// API resource within which these CustomAttributes are a field.
+	CustomId string `json:"customId,omitempty"`
+
+	// Etag: The token that needs to be passed back for concurrency control
+	// in updates. Token needs to be passed back in UpdateRequest
+	Etag string `json:"etag,omitempty"`
+
+	// HealthScore: The Health score of the resource
+	//
+	// Possible values:
+	//   "HEALTH_SCORE_UNSPECIFIED" - Default value
+	//   "VERY_POOR" - The object is in very poor health as defined by the
+	// caller.
+	//   "POOR" - The object is in poor health as defined by the caller.
+	//   "NEUTRAL" - The object health is neither good nor poor, as defined
+	// by the caller.
+	//   "GOOD" - The object is in good health as defined by the caller.
+	//   "VERY_GOOD" - The object is in very good health as defined by the
+	// caller.
+	HealthScore string `json:"healthScore,omitempty"`
+
+	// KeyValuePairs: The map of key-value attributes stored by callers
+	// specific to a device. The total serialized length of this map may not
+	// exceed 10KB. No limit is placed on the number of attributes in a map.
+	KeyValuePairs map[string]CustomAttributeValue `json:"keyValuePairs,omitempty"`
+
+	// LastUpdateTime: Output only. The time the client state data was last
+	// updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// Managed: The management state of the resource as specified by the API
+	// client.
+	//
+	// Possible values:
+	//   "MANAGED_STATE_UNSPECIFIED" - The management state of the resource
+	// is unknown or unspecified.
+	//   "MANAGED" - The resource is managed.
+	//   "UNMANAGED" - The resource is not managed.
+	Managed string `json:"managed,omitempty"`
+
+	// Name: Output only. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// ClientState in format:
+	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner
+	// _id}`, where partner_id corresponds to the partner storing the data.
+	Name string `json:"name,omitempty"`
+
+	// OwnerType: Output only. The owner of the ClientState
+	//
+	// Possible values:
+	//   "OWNER_TYPE_UNSPECIFIED" - Unknown owner type
+	//   "OWNER_TYPE_CUSTOMER" - Customer is the owner
+	//   "OWNER_TYPE_PARTNER" - Partner is the owner
+	OwnerType string `json:"ownerType,omitempty"`
+
+	// ScoreReason: A descriptive cause of the health score.
+	ScoreReason string `json:"scoreReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssetTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssetTags") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClientState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomAttributeValue: Additional custom attribute values may be one
+// of these types
+type CustomAttributeValue struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// NumberValue: Represents a double value.
+	NumberValue float64 `json:"numberValue,omitempty"`
+
+	// StringValue: Represents a string value.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttributeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
+	type NoMethod CustomAttributeValue
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
+}
+
+// Device: A Device within the Cloud Identity Devices API. Represents a
+// Device known to Google Cloud, independent of the device ownership,
+// type, and whether it is assigned or in use by a user.
+type Device struct {
+	// AndroidSpecificAttributes: Output only. Attributes specific to
+	// Android devices.
+	AndroidSpecificAttributes *AndroidAttributes `json:"androidSpecificAttributes,omitempty"`
+
+	// AssetTag: Asset tag of the device.
+	AssetTag string `json:"assetTag,omitempty"`
+
+	// BasebandVersion: Output only. Baseband version of the device.
+	BasebandVersion string `json:"basebandVersion,omitempty"`
+
+	// BootloaderVersion: Output only. Device bootloader version. Example:
+	// 0.6.7.
+	BootloaderVersion string `json:"bootloaderVersion,omitempty"`
+
+	// Brand: Output only. Device brand. Example: Samsung.
+	Brand string `json:"brand,omitempty"`
+
+	// BuildNumber: Output only. Build number of the device.
+	BuildNumber string `json:"buildNumber,omitempty"`
+
+	// CompromisedState: Output only. Represents whether the Device is
+	// compromised.
+	//
+	// Possible values:
+	//   "COMPROMISED_STATE_UNSPECIFIED" - Default value.
+	//   "COMPROMISED" - The device is compromised (currently, this means
+	// Android device is rooted).
+	//   "UNCOMPROMISED" - The device is safe (currently, this means Android
+	// device is unrooted).
+	CompromisedState string `json:"compromisedState,omitempty"`
+
+	// CreateTime: Output only. When the Company-Owned device was imported.
+	// This field is empty for BYOD devices.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeviceType: Output only. Type of device.
+	//
+	// Possible values:
+	//   "DEVICE_TYPE_UNSPECIFIED" - Unknown device type
+	//   "ANDROID" - Device is an Android device
+	//   "IOS" - Device is an iOS device
+	//   "GOOGLE_SYNC" - Device is a Google Sync device.
+	//   "WINDOWS" - Device is a Windows device.
+	//   "MAC_OS" - Device is a MacOS device.
+	//   "LINUX" - Device is a Linux device.
+	//   "CHROME_OS" - Device is a ChromeOS device.
+	DeviceType string `json:"deviceType,omitempty"`
+
+	// EnabledDeveloperOptions: Output only. Whether developer options is
+	// enabled on device.
+	EnabledDeveloperOptions bool `json:"enabledDeveloperOptions,omitempty"`
+
+	// EnabledUsbDebugging: Output only. Whether USB debugging is enabled on
+	// device.
+	EnabledUsbDebugging bool `json:"enabledUsbDebugging,omitempty"`
+
+	// EncryptionState: Output only. Device encryption state.
+	//
+	// Possible values:
+	//   "ENCRYPTION_STATE_UNSPECIFIED" - Encryption Status is not set.
+	//   "UNSUPPORTED_BY_DEVICE" - Device doesn't support encryption.
+	//   "ENCRYPTED" - Device is encrypted.
+	//   "NOT_ENCRYPTED" - Device is not encrypted.
+	EncryptionState string `json:"encryptionState,omitempty"`
+
+	// Imei: Output only. IMEI number of device if GSM device; empty
+	// otherwise.
+	Imei string `json:"imei,omitempty"`
+
+	// KernelVersion: Output only. Kernel version of the device.
+	KernelVersion string `json:"kernelVersion,omitempty"`
+
+	// LastSyncTime: Most recent time when device synced with this service.
+	LastSyncTime string `json:"lastSyncTime,omitempty"`
+
+	// ManagementState: Output only. Management state of the device
+	//
+	// Possible values:
+	//   "MANAGEMENT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "APPROVED" - Device is approved.
+	//   "BLOCKED" - Device is blocked.
+	//   "PENDING" - Device is pending approval.
+	//   "UNPROVISIONED" - The device is not provisioned. Device will start
+	// from this state until some action is taken (i.e. a user starts using
+	// the device).
+	//   "WIPING" - Data and settings on the device are being removed.
+	//   "WIPED" - All data and settings on the device are removed.
+	ManagementState string `json:"managementState,omitempty"`
+
+	// Manufacturer: Output only. Device manufacturer. Example: Motorola.
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// Meid: Output only. MEID number of device if CDMA device; empty
+	// otherwise.
+	Meid string `json:"meid,omitempty"`
+
+	// Model: Output only. Model name of device. Example: Pixel 3.
+	Model string `json:"model,omitempty"`
+
+	// Name: Output only. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Device in format: `devices/{device_id}`, where device_id is the
+	// unique id assigned to the Device.
+	Name string `json:"name,omitempty"`
+
+	// NetworkOperator: Output only. Mobile or network operator of device,
+	// if available.
+	NetworkOperator string `json:"networkOperator,omitempty"`
+
+	// OsVersion: Output only. OS version of the device. Example: Android
+	// 8.1.0.
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// OtherAccounts: Output only. Domain name for Google accounts on
+	// device. Type for other accounts on device. On Android, will only be
+	// populated if |ownership_privilege| is |PROFILE_OWNER| or
+	// |DEVICE_OWNER|. Does not include the account signed in to the device
+	// policy app if that account's domain has only one account. Examples:
+	// "com.example", "xyz.com".
+	OtherAccounts []string `json:"otherAccounts,omitempty"`
+
+	// OwnerType: Output only. Whether the device is owned by the company or
+	// an individual
+	//
+	// Possible values:
+	//   "DEVICE_OWNERSHIP_UNSPECIFIED" - Default value. The value is
+	// unused.
+	//   "COMPANY" - Company owns the device.
+	//   "BYOD" - Bring Your Own Device (i.e. individual owns the device)
+	OwnerType string `json:"ownerType,omitempty"`
+
+	// ReleaseVersion: Output only. OS release version. Example: 6.0.
+	ReleaseVersion string `json:"releaseVersion,omitempty"`
+
+	// SecurityPatchTime: Output only. OS security patch update time on
+	// device.
+	SecurityPatchTime string `json:"securityPatchTime,omitempty"`
+
+	// SerialNumber: Serial Number of device. Example: HT82V1A01076.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// WifiMacAddresses: WiFi MAC addresses of device.
+	WifiMacAddresses []string `json:"wifiMacAddresses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidSpecificAttributes") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AndroidSpecificAttributes") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Device) MarshalJSON() ([]byte, error) {
+	type NoMethod Device
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceUser: Represents a user's use of a Device in the Cloud Identity
+// Devices API. A DeviceUser is a resource representing a user's use of
+// a Device
+type DeviceUser struct {
+	// CompromisedState: Compromised State of the DeviceUser object
+	//
+	// Possible values:
+	//   "COMPROMISED_STATE_UNSPECIFIED" - Compromised state of Device User
+	// account is unknown or unspecified.
+	//   "COMPROMISED" - Device User Account is compromised.
+	//   "NOT_COMPROMISED" - Device User Account is not compromised.
+	CompromisedState string `json:"compromisedState,omitempty"`
+
+	// CreateTime: When the user first signed in to the device
+	CreateTime string `json:"createTime,omitempty"`
+
+	// FirstSyncTime: Output only. Most recent time when user registered
+	// with this service.
+	FirstSyncTime string `json:"firstSyncTime,omitempty"`
+
+	// LanguageCode: Output only. Default locale used on device, in IETF
+	// BCP-47 format.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// LastSyncTime: Output only. Last time when user synced with policies.
+	LastSyncTime string `json:"lastSyncTime,omitempty"`
+
+	// ManagementState: Output only. Management state of the user on the
+	// device.
+	//
+	// Possible values:
+	//   "MANAGEMENT_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "WIPING" - This user's data and profile is being removed from the
+	// device.
+	//   "WIPED" - This user's data and profile is removed from the device.
+	//   "APPROVED" - User is approved to access data on the device.
+	//   "BLOCKED" - User is blocked from accessing data on the device.
+	//   "PENDING_APPROVAL" - User is awaiting approval.
+	//   "UNENROLLED" - User is unenrolled from Advanced Windows Management,
+	// but the Windows account is still intact.
+	ManagementState string `json:"managementState,omitempty"`
+
+	// Name: Output only. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// DeviceUser in format: `devices/{device_id}/deviceUsers/{user_id}`,
+	// where user_id is the ID of the user associated with the user session.
+	Name string `json:"name,omitempty"`
+
+	// PasswordState: Password state of the DeviceUser object
+	//
+	// Possible values:
+	//   "PASSWORD_STATE_UNSPECIFIED" - Password state not set.
+	//   "PASSWORD_SET" - Password set in object.
+	//   "PASSWORD_NOT_SET" - Password not set in object.
+	PasswordState string `json:"passwordState,omitempty"`
+
+	// UserAgent: Output only. User agent on the device for this specific
+	// user
+	UserAgent string `json:"userAgent,omitempty"`
+
+	// UserEmail: Email address of the user registered on the device.
+	UserEmail string `json:"userEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompromisedState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompromisedState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceUser) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceUser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EntityKey: An EntityKey uniquely identifies an Entity. Namespaces are
-// used to provide
-// isolation for IDs. A single ID can be reused across namespaces but
-// the
-// combination of a namespace and an ID must be unique.
+// used to provide isolation for IDs. A single ID can be reused across
+// namespaces but the combination of a namespace and an ID must be
+// unique.
 type EntityKey struct {
 	// Id: The ID of the entity within the given namespace. The ID must be
-	// unique
-	// within its namespace.
+	// unique within its namespace.
 	Id string `json:"id,omitempty"`
 
 	// Namespace: Namespaces provide isolation for IDs, so an ID only needs
-	// to be unique
-	// within its namespace.
-	//
-	// Namespaces are currently only created as part of IdentitySource
-	// creation
-	// from Admin Console. A namespace
-	// "identitysources/{identity_source_id}" is
-	// created corresponding to every Identity Source `identity_source_id`.
+	// to be unique within its namespace. Namespaces are currently only
+	// created as part of IdentitySource creation from Admin Console. A
+	// namespace "identitysources/{identity_source_id}" is created
+	// corresponding to every Identity Source `identity_source_id`.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -217,53 +794,43 @@ func (s *EntityKey) MarshalJSON() ([]byte, error) {
 
 // Group: Resource representing a Group.
 type Group struct {
-	// CreateTime: Output only. The time when the Group was created.
-	// Output only.
+	// CreateTime: Output only. The time when the Group was created. Output
+	// only.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: An extended description to help users determine the
-	// purpose of a Group. For
-	// example, you can include information about who should join the Group,
-	// the
-	// types of messages to send to the Group, links to FAQs about the
-	// Group, or
-	// related Groups. Maximum length is 4,096 characters.
+	// purpose of a Group. For example, you can include information about
+	// who should join the Group, the types of messages to send to the
+	// Group, links to FAQs about the Group, or related Groups. Maximum
+	// length is 4,096 characters.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The Group's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GroupKey: Required. Immutable. EntityKey of the Group.
-	//
-	// Must be set when creating a Group, read-only afterwards.
+	// GroupKey: Required. Immutable. EntityKey of the Group. Must be set
+	// when creating a Group, read-only afterwards.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
 
-	// Labels: Required. `Required`. Labels for Group resource.
-	// For creating Groups under a namespace, set label key
-	// to
+	// Labels: Required. `Required`. Labels for Group resource. For creating
+	// Groups under a namespace, set label key to
 	// 'labels/system/groups/external' and label value as empty.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of
-	// the
+	// name](https://cloud.google.com/apis/design/resource_names) of the
 	// Group in the format: `groups/{group_id}`, where group_id is the
-	// unique ID
-	// assigned to the Group.
-	//
-	// Must be left blank while creating a Group.
+	// unique ID assigned to the Group. Must be left blank while creating a
+	// Group.
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. Immutable. The entity under which this Group
-	// resides in Cloud Identity resource
-	// hierarchy. Must be set when creating a Group, read-only
-	// afterwards.
-	//
-	// Currently allowed types: `identitysources`.
+	// resides in Cloud Identity resource hierarchy. Must be set when
+	// creating a Group, read-only afterwards. Currently allowed types:
+	// `identitysources`.
 	Parent string `json:"parent,omitempty"`
 
-	// UpdateTime: Output only. The time when the Group was last
-	// updated.
+	// UpdateTime: Output only. The time when the Group was last updated.
 	// Output only.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -296,13 +863,12 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 
 // ListGroupsResponse: Response message for ListGroups operation.
 type ListGroupsResponse struct {
-	// Groups: Groups returned in response to list request.
-	// The results are not sorted.
+	// Groups: Groups returned in response to list request. The results are
+	// not sorted.
 	Groups []*Group `json:"groups,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results available for listing.
+	// if there are no more results available for listing.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -337,8 +903,7 @@ type ListMembershipsResponse struct {
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results available for listing.
+	// if there are no more results available for listing.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -370,11 +935,9 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 
 type LookupGroupNameResponse struct {
 	// Name: [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of
-	// the
+	// name](https://cloud.google.com/apis/design/resource_names) of the
 	// Group in the format: `groups/{group_id}`, where `group_id` is the
-	// unique ID
-	// assigned to the Group.
+	// unique ID assigned to the Group.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -406,14 +969,10 @@ func (s *LookupGroupNameResponse) MarshalJSON() ([]byte, error) {
 
 type LookupMembershipNameResponse struct {
 	// Name: [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of
-	// the
-	// Membership being looked up.
-	//
-	// Format: `groups/{group_id}/memberships/{member_id}`, where `group_id`
-	// is
-	// the unique ID assigned to the Group to which Membership belongs to,
-	// and
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Membership being looked up. Format:
+	// `groups/{group_id}/memberships/{member_id}`, where `group_id` is the
+	// unique ID assigned to the Group to which Membership belongs to, and
 	// `member_id` is the unique ID assigned to the member.
 	Name string `json:"name,omitempty"`
 
@@ -451,28 +1010,22 @@ type Membership struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of
-	// the
+	// name](https://cloud.google.com/apis/design/resource_names) of the
 	// Membership in the format:
-	// `groups/{group_id}/memberships/{member_id}`,
-	// where group_id is the unique ID assigned to the Group to which
-	// Membership
-	// belongs to, and member_id is the unique ID assigned to the
-	// member
-	//
-	// Must be left blank while creating a Membership.
+	// `groups/{group_id}/memberships/{member_id}`, where group_id is the
+	// unique ID assigned to the Group to which Membership belongs to, and
+	// member_id is the unique ID assigned to the member Must be left blank
+	// while creating a Membership.
 	Name string `json:"name,omitempty"`
 
 	// PreferredMemberKey: Required. Immutable. EntityKey of the entity to
-	// be added as the member. Must be set while
-	// creating a Membership, read-only afterwards.
-	//
-	// Currently allowed entity types: `Users`, `Groups`.
+	// be added as the member. Must be set while creating a Membership,
+	// read-only afterwards. Currently allowed entity types: `Users`,
+	// `Groups`.
 	PreferredMemberKey *EntityKey `json:"preferredMemberKey,omitempty"`
 
-	// Roles: Roles for a member within the Group.
-	//
-	// Currently supported MembershipRoles: "MEMBER".
+	// Roles: Roles for a member within the Group. Currently supported
+	// MembershipRoles: "MEMBER".
 	Roles []*MembershipRole `json:"roles,omitempty"`
 
 	// UpdateTime: Output only. Last updated timestamp of the Membership.
@@ -508,9 +1061,8 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 
 // MembershipRole: Resource representing a role within a Membership.
 type MembershipRole struct {
-	// Name: MembershipRole in string format.
-	//
-	// Currently supported MembershipRoles: "MEMBER".
+	// Name: MembershipRole in string format. Currently supported
+	// MembershipRoles: "MEMBER".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -537,52 +1089,38 @@ func (s *MembershipRole) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -617,8 +1155,7 @@ type SearchGroupsResponse struct {
 	Groups []*Group `json:"groups,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no
-	// more results available for specified query.
+	// if there are no more results available for specified query.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -649,32 +1186,24 @@ func (s *SearchGroupsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -696,6 +1225,65 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WipeDeviceResponse: Response message for wiping all data on the
+// device.
+type WipeDeviceResponse struct {
+	// Device: Resultant Device object for the action. Note that asset tags
+	// will not be returned in the device object.
+	Device *Device `json:"device,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Device") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Device") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WipeDeviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod WipeDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WipeDeviceUserResponse: Response message for wiping the user's
+// account from the device.
+type WipeDeviceUserResponse struct {
+	// DeviceUser: Resultant DeviceUser object for the action.
+	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod WipeDeviceUserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -744,7 +1332,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -870,7 +1458,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -938,7 +1526,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where `group_id` is the unique ID\nassigned to the Group.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -1012,7 +1600,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1083,7 +1671,7 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where `group_id` is the unique ID\nassigned to the Group.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -1120,8 +1708,8 @@ func (r *GroupsService) List() *GroupsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50
-// (max 500) for the FULL view.
+// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
+// FULL view.
 func (c *GroupsListCall) PageSize(pageSize int64) *GroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1145,9 +1733,9 @@ func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 // returned. Defaults to [View.BASIC]().
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED"
-//   "BASIC"
-//   "FULL"
+//   "VIEW_UNSPECIFIED" - Default. Should not be used.
+//   "BASIC" - Server responses only include basic information.
+//   "FULL" - Full representation of the resource.
 func (c *GroupsListCall) View(view string) *GroupsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -1190,7 +1778,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1256,7 +1844,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1277,6 +1865,11 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Should not be used.",
+	//         "Server responses only include basic information.",
+	//         "Full representation of the resource."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1326,19 +1919,17 @@ type GroupsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up
-// [resource
+// Lookup: Looks up [resource
 // name](https://cloud.google.com/apis/design/resource_names) of a Group
-// by
-// its EntityKey.
+// by its EntityKey.
 func (r *GroupsService) Lookup() *GroupsLookupCall {
 	c := &GroupsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // GroupKeyId sets the optional parameter "groupKey.id": The ID of the
-// entity within the given namespace. The ID must be unique
-// within its namespace.
+// entity within the given namespace. The ID must be unique within its
+// namespace.
 func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.id", groupKeyId)
 	return c
@@ -1346,14 +1937,10 @@ func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 
 // GroupKeyNamespace sets the optional parameter "groupKey.namespace":
 // Namespaces provide isolation for IDs, so an ID only needs to be
-// unique
-// within its namespace.
-//
-// Namespaces are currently only created as part of IdentitySource
-// creation
-// from Admin Console. A namespace
-// "identitysources/{identity_source_id}" is
-// created corresponding to every Identity Source `identity_source_id`.
+// unique within its namespace. Namespaces are currently only created as
+// part of IdentitySource creation from Admin Console. A namespace
+// "identitysources/{identity_source_id}" is created corresponding to
+// every Identity Source `identity_source_id`.
 func (c *GroupsLookupCall) GroupKeyNamespace(groupKeyNamespace string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.namespace", groupKeyNamespace)
 	return c
@@ -1396,7 +1983,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1455,19 +2042,19 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up [resource\nname](https://cloud.google.com/apis/design/resource_names) of a Group by\nits EntityKey.",
+	//   "description": "Looks up [resource name](https://cloud.google.com/apis/design/resource_names) of a Group by its EntityKey.",
 	//   "flatPath": "v1/groups:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.lookup",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "groupKey.id": {
-	//       "description": "The ID of the entity within the given namespace. The ID must be unique\nwithin its namespace.",
+	//       "description": "The ID of the entity within the given namespace. The ID must be unique within its namespace.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "groupKey.namespace": {
-	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique\nwithin its namespace.\n\nNamespaces are currently only created as part of IdentitySource creation\nfrom Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is\ncreated corresponding to every Identity Source `identity_source_id`.",
+	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique within its namespace. Namespaces are currently only created as part of IdentitySource creation from Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is created corresponding to every Identity Source `identity_source_id`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1538,7 +2125,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +2198,7 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup in the format: `groups/{group_id}`, where group_id is the unique ID\nassigned to the Group.\n\nMust be left blank while creating a Group.",
+	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where group_id is the unique ID assigned to the Group. Must be left blank while creating a Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -1656,8 +2243,8 @@ func (r *GroupsService) Search() *GroupsSearchCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50
-// (max 500) for the FULL view.
+// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
+// FULL view.
 func (c *GroupsSearchCall) PageSize(pageSize int64) *GroupsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1672,11 +2259,10 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 }
 
 // Query sets the optional parameter "query": Required. `Required`.
-// Query string for performing search on groups. Users can search
-// on parent and label attributes of groups.
-// EXACT match ('==') is supported on parent, and CONTAINS match ('in')
-// is
-// supported on labels.
+// Query string for performing search on groups. Users can search on
+// parent and label attributes of groups. EXACT match ('==') is
+// supported on parent, and CONTAINS match ('in') is supported on
+// labels.
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -1686,9 +2272,9 @@ func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 // returned. Defaults to [View.BASIC]().
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED"
-//   "BASIC"
-//   "FULL"
+//   "VIEW_UNSPECIFIED" - Default. Should not be used.
+//   "BASIC" - Server responses only include basic information.
+//   "FULL" - Full representation of the resource.
 func (c *GroupsSearchCall) View(view string) *GroupsSearchCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -1731,7 +2317,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,7 +2383,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1808,7 +2394,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. `Required`. Query string for performing search on groups. Users can search\non parent and label attributes of groups.\nEXACT match ('==') is supported on parent, and CONTAINS match ('in') is\nsupported on labels.",
+	//       "description": "Required. `Required`. Query string for performing search on groups. Users can search on parent and label attributes of groups. EXACT match ('==') is supported on parent, and CONTAINS match ('in') is supported on labels.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1818,6 +2404,11 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Should not be used.",
+	//         "Server responses only include basic information.",
+	//         "Full representation of the resource."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1903,7 +2494,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1976,7 +2567,7 @@ func (c *GroupsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup to create Membership within. Format: `groups/{group_id}`, where\n`group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to create Membership within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -2042,7 +2633,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2110,7 +2701,7 @@ func (c *GroupsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nMembership to be deleted.\n\nFormat: `groups/{group_id}/memberships/{member_id}`, where `group_id` is\nthe unique ID assigned to the Group to which Membership belongs to, and\nmember_id is the unique ID assigned to the member.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Membership to be deleted. Format: `groups/{group_id}/memberships/{member_id}`, where `group_id` is the unique ID assigned to the Group to which Membership belongs to, and member_id is the unique ID assigned to the member.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -2184,7 +2775,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2846,7 @@ func (c *GroupsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nMembership to be retrieved.\n\nFormat: `groups/{group_id}/memberships/{member_id}`, where `group_id` is\nthe unique id assigned to the Group to which Membership belongs to, and\n`member_id` is the unique ID assigned to the member.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Membership to be retrieved. Format: `groups/{group_id}/memberships/{member_id}`, where `group_id` is the unique id assigned to the Group to which Membership belongs to, and `member_id` is the unique ID assigned to the member.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -2294,8 +2885,8 @@ func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCal
 }
 
 // PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50
-// (max 500) for the FULL view.
+// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
+// FULL view.
 func (c *GroupsMembershipsListCall) PageSize(pageSize int64) *GroupsMembershipsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2312,9 +2903,9 @@ func (c *GroupsMembershipsListCall) PageToken(pageToken string) *GroupsMembershi
 // be returned. Defaults to View.BASIC.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED"
-//   "BASIC"
-//   "FULL"
+//   "VIEW_UNSPECIFIED" - Default. Should not be used.
+//   "BASIC" - Server responses only include basic information.
+//   "FULL" - Full representation of the resource.
 func (c *GroupsMembershipsListCall) View(view string) *GroupsMembershipsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2357,7 +2948,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2428,7 +3019,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2439,7 +3030,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup to list Memberships within.\n\nFormat: `groups/{group_id}`, where `group_id` is the unique ID assigned to\nthe Group.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to list Memberships within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -2451,6 +3042,11 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
 	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Should not be used.",
+	//         "Server responses only include basic information.",
+	//         "Full representation of the resource."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2501,11 +3097,9 @@ type GroupsMembershipsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up
-// [resource
+// Lookup: Looks up [resource
 // name](https://cloud.google.com/apis/design/resource_names) of a
-// Membership
-// within a Group by member's EntityKey.
+// Membership within a Group by member's EntityKey.
 func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLookupCall {
 	c := &GroupsMembershipsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2513,8 +3107,8 @@ func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLooku
 }
 
 // MemberKeyId sets the optional parameter "memberKey.id": The ID of the
-// entity within the given namespace. The ID must be unique
-// within its namespace.
+// entity within the given namespace. The ID must be unique within its
+// namespace.
 func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.id", memberKeyId)
 	return c
@@ -2522,14 +3116,10 @@ func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMem
 
 // MemberKeyNamespace sets the optional parameter "memberKey.namespace":
 // Namespaces provide isolation for IDs, so an ID only needs to be
-// unique
-// within its namespace.
-//
-// Namespaces are currently only created as part of IdentitySource
-// creation
-// from Admin Console. A namespace
-// "identitysources/{identity_source_id}" is
-// created corresponding to every Identity Source `identity_source_id`.
+// unique within its namespace. Namespaces are currently only created as
+// part of IdentitySource creation from Admin Console. A namespace
+// "identitysources/{identity_source_id}" is created corresponding to
+// every Identity Source `identity_source_id`.
 func (c *GroupsMembershipsLookupCall) MemberKeyNamespace(memberKeyNamespace string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.namespace", memberKeyNamespace)
 	return c
@@ -2572,7 +3162,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2634,7 +3224,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up [resource\nname](https://cloud.google.com/apis/design/resource_names) of a Membership\nwithin a Group by member's EntityKey.",
+	//   "description": "Looks up [resource name](https://cloud.google.com/apis/design/resource_names) of a Membership within a Group by member's EntityKey.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.lookup",
@@ -2643,17 +3233,17 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//   ],
 	//   "parameters": {
 	//     "memberKey.id": {
-	//       "description": "The ID of the entity within the given namespace. The ID must be unique\nwithin its namespace.",
+	//       "description": "The ID of the entity within the given namespace. The ID must be unique within its namespace.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "memberKey.namespace": {
-	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique\nwithin its namespace.\n\nNamespaces are currently only created as part of IdentitySource creation\nfrom Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is\ncreated corresponding to every Identity Source `identity_source_id`.",
+	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique within its namespace. Namespaces are currently only created as part of IdentitySource creation from Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is created corresponding to every Identity Source `identity_source_id`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the\nGroup to lookup Membership within.\n\nFormat: `groups/{group_id}`, where `group_id` is the unique ID assigned to\nthe Group.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to lookup Membership within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,

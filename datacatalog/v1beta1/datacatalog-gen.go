@@ -290,95 +290,53 @@ type ProjectsLocationsTaxonomiesPolicyTagsService struct {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -405,17 +363,11 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -423,65 +375,40 @@ type Empty struct {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -510,8 +437,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -540,24 +466,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -586,28 +502,22 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec: Spec for a
-// group of BigQuery tables with name pattern
-// `[prefix]YYYYMMDD`.
+// group of BigQuery tables with name pattern `[prefix]YYYYMMDD`.
 // Context:
-// https://cloud.google.com/bigquery/docs/pa
-// rtitioned-tables#partitioning_versus_sharding
+// https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding
 type GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec struct {
 	// Dataset: Output only. The Data Catalog resource name of the dataset
-	// entry the current table
-	// belongs to, for
-	// example,
-	// `projects/{project_id}/locations/{location}/entrygroups/{entr
-	// y_group_id}/entries/{entry_id}`.
+	// entry the current table belongs to, for example,
+	// `projects/{project_id}/locations/{location}/entrygroups/{entry_group_i
+	// d}/entries/{entry_id}`.
 	Dataset string `json:"dataset,omitempty"`
 
 	// ShardCount: Output only. Total number of shards.
 	ShardCount int64 `json:"shardCount,omitempty,string"`
 
 	// TablePrefix: Output only. The table name prefix of the shards. The
-	// name of any given shard is
-	// `[table_prefix]YYYYMMDD`, for example, for shard `MyTable20180101`,
-	// the
-	// `table_prefix` is `MyTable`.
+	// name of any given shard is `[table_prefix]YYYYMMDD`, for example, for
+	// shard `MyTable20180101`, the `table_prefix` is `MyTable`.
 	TablePrefix string `json:"tablePrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
@@ -646,13 +556,11 @@ type GoogleCloudDatacatalogV1beta1BigQueryTableSpec struct {
 	TableSourceType string `json:"tableSourceType,omitempty"`
 
 	// TableSpec: Spec of a BigQuery table. This field should only be
-	// populated if
-	// `table_source_type` is `BIGQUERY_TABLE`.
+	// populated if `table_source_type` is `BIGQUERY_TABLE`.
 	TableSpec *GoogleCloudDatacatalogV1beta1TableSpec `json:"tableSpec,omitempty"`
 
 	// ViewSpec: Table view specification. This field should only be
-	// populated if
-	// `table_source_type` is `BIGQUERY_VIEW`.
+	// populated if `table_source_type` is `BIGQUERY_VIEW`.
 	ViewSpec *GoogleCloudDatacatalogV1beta1ViewSpec `json:"viewSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TableSourceType") to
@@ -680,8 +588,7 @@ func (s *GoogleCloudDatacatalogV1beta1BigQueryTableSpec) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDatacatalogV1beta1ColumnSchema: Representation of a column
-// within a schema. Columns could be nested inside
-// other columns.
+// within a schema. Columns could be nested inside other columns.
 type GoogleCloudDatacatalogV1beta1ColumnSchema struct {
 	// Column: Required. Name of the column.
 	Column string `json:"column,omitempty"`
@@ -691,10 +598,8 @@ type GoogleCloudDatacatalogV1beta1ColumnSchema struct {
 	Description string `json:"description,omitempty"`
 
 	// Mode: Optional. A column's mode indicates whether the values in this
-	// column are required,
-	// nullable, etc. Only `NULLABLE`, `REQUIRED` and `REPEATED` are
-	// supported.
-	// Default mode is `NULLABLE`.
+	// column are required, nullable, etc. Only `NULLABLE`, `REQUIRED` and
+	// `REPEATED` are supported. Default mode is `NULLABLE`.
 	Mode string `json:"mode,omitempty"`
 
 	// Subcolumns: Optional. Schema of sub-columns. A column can have zero
@@ -727,55 +632,41 @@ func (s *GoogleCloudDatacatalogV1beta1ColumnSchema) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1beta1Entry: Entry Metadata.
-// A Data Catalog Entry resource represents another resource in
-// Google
-// Cloud Platform (such as a BigQuery dataset or a Pub/Sub topic),
-// or
-// outside of Google Cloud Platform. Clients can use the
-// `linked_resource` field
-// in the Entry resource to refer to the original resource ID of the
-// source
-// system.
-//
-// An Entry resource contains resource details, such as its schema. An
-// Entry can
-// also be used to attach flexible metadata, such as a
-// Tag.
+// GoogleCloudDatacatalogV1beta1Entry: Entry Metadata. A Data Catalog
+// Entry resource represents another resource in Google Cloud Platform
+// (such as a BigQuery dataset or a Pub/Sub topic), or outside of Google
+// Cloud Platform. Clients can use the `linked_resource` field in the
+// Entry resource to refer to the original resource ID of the source
+// system. An Entry resource contains resource details, such as its
+// schema. An Entry can also be used to attach flexible metadata, such
+// as a Tag.
 type GoogleCloudDatacatalogV1beta1Entry struct {
 	// BigqueryDateShardedSpec: Specification for a group of BigQuery tables
-	// with name pattern
-	// `[prefix]YYYYMMDD`.
-	// Context:
-	// https://cloud.google.com/bigquery/docs/partitioned-tables#par
-	// titioning_versus_sharding.
+	// with name pattern `[prefix]YYYYMMDD`. Context:
+	// https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding.
 	BigqueryDateShardedSpec *GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec `json:"bigqueryDateShardedSpec,omitempty"`
 
 	// BigqueryTableSpec: Specification that applies to a BigQuery table.
-	// This is only valid on
-	// entries of type `TABLE`.
+	// This is only valid on entries of type `TABLE`.
 	BigqueryTableSpec *GoogleCloudDatacatalogV1beta1BigQueryTableSpec `json:"bigqueryTableSpec,omitempty"`
 
 	// Description: Entry description, which can consist of several
-	// sentences or paragraphs
-	// that describe entry contents. Default value is an empty string.
+	// sentences or paragraphs that describe entry contents. Default value
+	// is an empty string.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Display information such as title and description. A
-	// short name to identify
-	// the entry, for example, "Analytics Data - Jan 2011". Default value is
-	// an
-	// empty string.
+	// short name to identify the entry, for example, "Analytics Data - Jan
+	// 2011". Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GcsFilesetSpec: Specification that applies to a Cloud Storage
-	// fileset. This is only valid
-	// on entries of type FILESET.
+	// fileset. This is only valid on entries of type FILESET.
 	GcsFilesetSpec *GoogleCloudDatacatalogV1beta1GcsFilesetSpec `json:"gcsFilesetSpec,omitempty"`
 
 	// IntegratedSystem: Output only. This field indicates the entry's
-	// source system that Data Catalog
-	// integrates with, such as BigQuery or Pub/Sub.
+	// source system that Data Catalog integrates with, such as BigQuery or
+	// Pub/Sub.
 	//
 	// Possible values:
 	//   "INTEGRATED_SYSTEM_UNSPECIFIED" - Default unknown system.
@@ -783,38 +674,23 @@ type GoogleCloudDatacatalogV1beta1Entry struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
-	// LinkedResource: The resource this metadata entry refers to.
-	//
-	// For Google Cloud Platform resources, `linked_resource` is the [full
-	// name
-	// of
-	// the
-	// resource](https://cloud.google.com/apis/design/resource_names#f
-	// ull_resource_name).
-	// For example, the `linked_resource` for a table resource from BigQuery
-	// is:
-	//
-	// *
+	// LinkedResource: The resource this metadata entry refers to. For
+	// Google Cloud Platform resources, `linked_resource` is the [full name
+	// of the
+	// resource](https://cloud.google.com/apis/design/resource_names#full_res
+	// ource_name). For example, the `linked_resource` for a table resource
+	// from BigQuery is: *
 	// //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables
-	// /tableId
-	//
-	// Output only when Entry is of type in the EntryType enum. For entries
-	// with
-	// user_specified_type, this field is optional and defaults to an
-	// empty
-	// string.
+	// /tableId Output only when Entry is of type in the EntryType enum. For
+	// entries with user_specified_type, this field is optional and defaults
+	// to an empty string.
 	LinkedResource string `json:"linkedResource,omitempty"`
 
 	// Name: The Data Catalog resource name of the entry in URL format.
-	// Example:
-	//
-	// *
+	// Example: *
 	// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-	// }/entries/{entry_id}
-	//
-	// Note that this Entry and its child resources may not actually be
-	// stored in
-	// the location in this name.
+	// }/entries/{entry_id} Note that this Entry and its child resources may
+	// not actually be stored in the location in this name.
 	Name string `json:"name,omitempty"`
 
 	// Schema: Schema of the entry. An entry might not have any schema
@@ -822,62 +698,44 @@ type GoogleCloudDatacatalogV1beta1Entry struct {
 	Schema *GoogleCloudDatacatalogV1beta1Schema `json:"schema,omitempty"`
 
 	// SourceSystemTimestamps: Output only. Timestamps about the underlying
-	// resource, not about this Data Catalog
-	// entry. Output only when Entry is of type in the EntryType enum. For
-	// entries
-	// with user_specified_type, this field is optional and defaults to an
-	// empty
+	// resource, not about this Data Catalog entry. Output only when Entry
+	// is of type in the EntryType enum. For entries with
+	// user_specified_type, this field is optional and defaults to an empty
 	// timestamp.
 	SourceSystemTimestamps *GoogleCloudDatacatalogV1beta1SystemTimestamps `json:"sourceSystemTimestamps,omitempty"`
 
-	// Type: The type of the entry.
-	// Only used for Entries with types in the EntryType enum.
+	// Type: The type of the entry. Only used for Entries with types in the
+	// EntryType enum.
 	//
 	// Possible values:
 	//   "ENTRY_TYPE_UNSPECIFIED" - Default unknown type.
 	//   "TABLE" - Output only. The type of entry that has a GoogleSQL
-	// schema, including
-	// logical views.
-	//   "MODEL" - Output only. The type of
-	// models.
+	// schema, including logical views.
+	//   "MODEL" - Output only. The type of models.
 	// https://cloud.google.com/bigquery-ml/docs/bigqueryml-intro
 	//   "DATA_STREAM" - Output only. An entry type which is used for
-	// streaming entries. Example:
-	// Pub/Sub topic.
+	// streaming entries. Example: Pub/Sub topic.
 	//   "FILESET" - An entry type which is a set of files or objects.
-	// Example:
-	// Cloud Storage fileset.
+	// Example: Cloud Storage fileset.
 	Type string `json:"type,omitempty"`
 
 	// UserSpecifiedSystem: This field indicates the entry's source system
-	// that Data Catalog does not
-	// integrate with. `user_specified_system` strings must begin with a
-	// letter
-	// or underscore and can only contain letters, numbers, and underscores;
-	// are
-	// case insensitive; must be at least 1 character and at most 64
-	// characters
-	// long.
+	// that Data Catalog does not integrate with. `user_specified_system`
+	// strings must begin with a letter or underscore and can only contain
+	// letters, numbers, and underscores; are case insensitive; must be at
+	// least 1 character and at most 64 characters long.
 	UserSpecifiedSystem string `json:"userSpecifiedSystem,omitempty"`
 
 	// UserSpecifiedType: Entry type if it does not fit any of the
-	// input-allowed values listed in
-	// `EntryType` enum above. When creating an entry, users should check
-	// the
-	// enum values first, if nothing matches the entry to be created,
-	// then
-	// provide a custom value, for example
-	// "my_special_type".
-	// `user_specified_type` strings must begin with a letter or underscore
-	// and
-	// can only contain letters, numbers, and underscores; are case
-	// insensitive;
-	// must be at least 1 character and at most 64 characters
-	// long.
-	//
-	// Currently, only FILESET enum value is allowed. All other entries
-	// created
-	// through Data Catalog must use `user_specified_type`.
+	// input-allowed values listed in `EntryType` enum above. When creating
+	// an entry, users should check the enum values first, if nothing
+	// matches the entry to be created, then provide a custom value, for
+	// example "my_special_type". `user_specified_type` strings must begin
+	// with a letter or underscore and can only contain letters, numbers,
+	// and underscores; are case insensitive; must be at least 1 character
+	// and at most 64 characters long. Currently, only FILESET enum value is
+	// allowed. All other entries created through Data Catalog must use
+	// `user_specified_type`.
 	UserSpecifiedType string `json:"userSpecifiedType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -909,9 +767,8 @@ func (s *GoogleCloudDatacatalogV1beta1Entry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1beta1EntryGroup: EntryGroup Metadata.
-// An EntryGroup resource represents a logical grouping of zero or
-// more
+// GoogleCloudDatacatalogV1beta1EntryGroup: EntryGroup Metadata. An
+// EntryGroup resource represents a logical grouping of zero or more
 // Data Catalog Entry resources.
 type GoogleCloudDatacatalogV1beta1EntryGroup struct {
 	// DataCatalogTimestamps: Output only. Timestamps about this EntryGroup.
@@ -919,26 +776,18 @@ type GoogleCloudDatacatalogV1beta1EntryGroup struct {
 	DataCatalogTimestamps *GoogleCloudDatacatalogV1beta1SystemTimestamps `json:"dataCatalogTimestamps,omitempty"`
 
 	// Description: Entry group description, which can consist of several
-	// sentences or
-	// paragraphs that describe entry group contents. Default value is an
-	// empty
-	// string.
+	// sentences or paragraphs that describe entry group contents. Default
+	// value is an empty string.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: A short name to identify the entry group, for
-	// example,
+	// DisplayName: A short name to identify the entry group, for example,
 	// "analytics data - jan 2011". Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the entry group in URL format. Example:
-	//
-	// *
+	// Name: The resource name of the entry group in URL format. Example: *
 	// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
-	// }
-	//
-	// Note that this EntryGroup and its child resources may not actually
-	// be
-	// stored in the location in this name.
+	// } Note that this EntryGroup and its child resources may not actually
+	// be stored in the location in this name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -971,8 +820,7 @@ func (s *GoogleCloudDatacatalogV1beta1EntryGroup) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse: Response
-// message for
-// ExportTaxonomies.
+// message for ExportTaxonomies.
 type GoogleCloudDatacatalogV1beta1ExportTaxonomiesResponse struct {
 	// Taxonomies: List of taxonomies and policy tags in a tree structure.
 	Taxonomies []*GoogleCloudDatacatalogV1beta1SerializedTaxonomy `json:"taxonomies,omitempty"`
@@ -1044,24 +892,16 @@ func (s *GoogleCloudDatacatalogV1beta1FieldType) MarshalJSON() ([]byte, error) {
 
 type GoogleCloudDatacatalogV1beta1FieldTypeEnumType struct {
 	// AllowedValues: The set of allowed values for this enum. This set must
-	// not be empty, the
+	// not be empty, the display names of the values in this set must not be
+	// empty and the display names of the values must be case-insensitively
+	// unique within this set. The order of items in this list is preserved.
+	// This field can be used to Required on create; optional on update. The
+	// set of allowed values for this enum. This set must not be empty, the
 	// display names of the values in this set must not be empty and the
-	// display
-	// names of the values must be case-insensitively unique within this
-	// set.
-	// The order of items in this list is preserved. This field can be used
-	// to
-	// Required on create; optional on update. The set of allowed values
-	// for
-	// this enum. This set must not be empty, the display names of the
-	// values in
-	// this set must not be empty and the display names of the values must
-	// be
-	// case-insensitively unique within this set. Currently, enum values
-	// can
-	// only be added to the list of allowed values. Deletion and renaming
-	// of
-	// enum values are not supported. Can have up to 500 allowed values.
+	// display names of the values must be case-insensitively unique within
+	// this set. Currently, enum values can only be added to the list of
+	// allowed values. Deletion and renaming of enum values are not
+	// supported. Can have up to 500 allowed values.
 	AllowedValues []*GoogleCloudDatacatalogV1beta1FieldTypeEnumTypeEnumValue `json:"allowedValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
@@ -1155,52 +995,30 @@ func (s *GoogleCloudDatacatalogV1beta1GcsFileSpec) MarshalJSON() ([]byte, error)
 // Storage fileset entry.
 type GoogleCloudDatacatalogV1beta1GcsFilesetSpec struct {
 	// FilePatterns: Required. Patterns to identify a set of files in Google
-	// Cloud Storage.
-	// See [Cloud
-	// Storage
-	// documentation](https://cloud.google.com/storage/docs/gsutil/ad
-	// dlhelp/WildcardNames)
-	// for more information. Note that bucket wildcards are currently
-	// not
-	// supported.
-	//
-	// Examples of valid file_patterns:
-	//
-	//  * `gs://bucket_name/dir/*`: matches all files within
-	// `bucket_name/dir`
-	//                              directory.
-	//  * `gs://bucket_name/dir/**`: matches all files in `bucket_name/dir`
-	//                               spanning all subdirectories.
-	//  * `gs://bucket_name/file*`: matches files prefixed by `file` in
-	//                              `bucket_name`
-	//  * `gs://bucket_name/??.txt`: matches files with two characters
-	// followed by
-	//                               `.txt` in `bucket_name`
-	//  * `gs://bucket_name/[aeiou].txt`: matches files that contain a
-	// single
-	//                                    vowel character followed by `.txt`
-	// in
-	//                                    `bucket_name`
-	//  * `gs://bucket_name/[a-m].txt`: matches files that contain `a`, `b`,
-	// ...
-	//                                  or `m` followed by `.txt` in
-	// `bucket_name`
-	//  * `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that
-	// match
-	//                              `a/*/b` pattern, such as `a/c/b`,
-	// `a/d/b`
-	//  * `gs://another_bucket/a.txt`: matches
-	// `gs://another_bucket/a.txt`
-	//
-	// You can combine wildcards to provide more powerful matches, for
-	// example:
-	//
-	//  * `gs://bucket_name/[a-m]??.j*g`
+	// Cloud Storage. See [Cloud Storage
+	// documentation](https://cloud.google.com/storage/docs/gsutil/addlhelp/W
+	// ildcardNames) for more information. Note that bucket wildcards are
+	// currently not supported. Examples of valid file_patterns: *
+	// `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`
+	// directory. * `gs://bucket_name/dir/**`: matches all files in
+	// `bucket_name/dir` spanning all subdirectories. *
+	// `gs://bucket_name/file*`: matches files prefixed by `file` in
+	// `bucket_name` * `gs://bucket_name/??.txt`: matches files with two
+	// characters followed by `.txt` in `bucket_name` *
+	// `gs://bucket_name/[aeiou].txt`: matches files that contain a single
+	// vowel character followed by `.txt` in `bucket_name` *
+	// `gs://bucket_name/[a-m].txt`: matches files that contain `a`, `b`,
+	// ... or `m` followed by `.txt` in `bucket_name` *
+	// `gs://bucket_name/a/*/b`: matches all files in `bucket_name` that
+	// match `a/*/b` pattern, such as `a/c/b`, `a/d/b` *
+	// `gs://another_bucket/a.txt`: matches `gs://another_bucket/a.txt` You
+	// can combine wildcards to provide more powerful matches, for example:
+	// * `gs://bucket_name/[a-m]??.j*g`
 	FilePatterns []string `json:"filePatterns,omitempty"`
 
 	// SampleGcsFileSpecs: Output only. Sample files contained in this
-	// fileset, not all files contained in this
-	// fileset are represented here.
+	// fileset, not all files contained in this fileset are represented
+	// here.
 	SampleGcsFileSpecs []*GoogleCloudDatacatalogV1beta1GcsFileSpec `json:"sampleGcsFileSpecs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FilePatterns") to
@@ -1227,8 +1045,7 @@ func (s *GoogleCloudDatacatalogV1beta1GcsFilesetSpec) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest: Request message
-// for
-// ImportTaxonomies.
+// for ImportTaxonomies.
 type GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest struct {
 	// InlineSource: Inline source used for taxonomies to be imported.
 	InlineSource *GoogleCloudDatacatalogV1beta1InlineSource `json:"inlineSource,omitempty"`
@@ -1257,8 +1074,7 @@ func (s *GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest) MarshalJSON() ([]
 }
 
 // GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse: Response
-// message for
-// ImportTaxonomies.
+// message for ImportTaxonomies.
 type GoogleCloudDatacatalogV1beta1ImportTaxonomiesResponse struct {
 	// Taxonomies: Taxonomies that were imported.
 	Taxonomies []*GoogleCloudDatacatalogV1beta1Taxonomy `json:"taxonomies,omitempty"`
@@ -1320,15 +1136,13 @@ func (s *GoogleCloudDatacatalogV1beta1InlineSource) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudDatacatalogV1beta1ListEntriesResponse: Response message
-// for
-// ListEntries.
+// for ListEntries.
 type GoogleCloudDatacatalogV1beta1ListEntriesResponse struct {
 	// Entries: Entry details.
 	Entries []*GoogleCloudDatacatalogV1beta1Entry `json:"entries,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results. It is set
-	// to empty if no items
-	// remain in results.
+	// to empty if no items remain in results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1359,15 +1173,13 @@ func (s *GoogleCloudDatacatalogV1beta1ListEntriesResponse) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse: Response
-// message for
-// ListEntryGroups.
+// message for ListEntryGroups.
 type GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse struct {
 	// EntryGroups: EntryGroup details.
 	EntryGroups []*GoogleCloudDatacatalogV1beta1EntryGroup `json:"entryGroups,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results. It is set
-	// to empty if no items
-	// remain in results.
+	// to empty if no items remain in results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1398,12 +1210,10 @@ func (s *GoogleCloudDatacatalogV1beta1ListEntryGroupsResponse) MarshalJSON() ([]
 }
 
 // GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse: Response message
-// for
-// ListPolicyTags.
+// for ListPolicyTags.
 type GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse struct {
 	// NextPageToken: Token used to retrieve the next page of results, or
-	// empty if there are no
-	// more results in the list.
+	// empty if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// PolicyTags: The policy tags that are in the requested taxonomy.
@@ -1436,13 +1246,11 @@ func (s *GoogleCloudDatacatalogV1beta1ListPolicyTagsResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogV1beta1ListTagsResponse: Response message
-// for
+// GoogleCloudDatacatalogV1beta1ListTagsResponse: Response message for
 // ListTags.
 type GoogleCloudDatacatalogV1beta1ListTagsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results. It is set
-	// to empty if no items
-	// remain in results.
+	// to empty if no items remain in results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Tags: Tag details.
@@ -1476,12 +1284,10 @@ func (s *GoogleCloudDatacatalogV1beta1ListTagsResponse) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse: Response message
-// for
-// ListTaxonomies.
+// for ListTaxonomies.
 type GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse struct {
 	// NextPageToken: Token used to retrieve the next page of results, or
-	// empty if there are no
-	// more results in the list.
+	// empty if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Taxonomies: Taxonomies that the project contains.
@@ -1515,52 +1321,39 @@ func (s *GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse) MarshalJSON() ([]b
 }
 
 // GoogleCloudDatacatalogV1beta1PolicyTag: Denotes one policy tag in a
-// taxonomy (e.g. ssn). Policy Tags can be defined
-// in a hierarchy. For example, consider the following
-// hierarchy:
-// Geolocation -&gt; (LatLong, City, ZipCode). PolicyTag
-// "Geolocation"
-// contains three child policy tags: "LatLong", "City", and "ZipCode".
+// taxonomy (e.g. ssn). Policy Tags can be defined in a hierarchy. For
+// example, consider the following hierarchy: Geolocation -> (LatLong,
+// City, ZipCode). PolicyTag "Geolocation" contains three child policy
+// tags: "LatLong", "City", and "ZipCode".
 type GoogleCloudDatacatalogV1beta1PolicyTag struct {
 	// ChildPolicyTags: Output only. Resource names of child policy tags of
 	// this policy tag.
 	ChildPolicyTags []string `json:"childPolicyTags,omitempty"`
 
 	// Description: Description of this policy tag. It must: contain only
-	// unicode characters,
-	// tabs, newlines, carriage returns and page breaks; and be at most 2000
-	// bytes
-	// long when encoded in UTF-8. If not set, defaults to an empty
+	// unicode characters, tabs, newlines, carriage returns and page breaks;
+	// and be at most 2000 bytes long when encoded in UTF-8. If not set,
+	// defaults to an empty description. If not set, defaults to an empty
 	// description.
-	// If not set, defaults to an empty description.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Required. User defined name of this policy tag. It must:
-	// be unique within the parent
-	// taxonomy; contain only unicode letters, numbers, underscores, dashes
-	// and
-	// spaces; not start or end with spaces; and be at most 200 bytes long
-	// when
-	// encoded in UTF-8.
+	// be unique within the parent taxonomy; contain only unicode letters,
+	// numbers, underscores, dashes and spaces; not start or end with
+	// spaces; and be at most 200 bytes long when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this policy tag, whose format
-	// is:
-	// "projects/{project_number}/locations/{location_id}/taxonomies/{tax
-	// onomy_id}/policyTags/{id}".
+	// Name: Output only. Resource name of this policy tag, whose format is:
+	// "projects/{project_number}/locations/{location_id}/taxonomies/{taxonom
+	// y_id}/policyTags/{id}".
 	Name string `json:"name,omitempty"`
 
 	// ParentPolicyTag: Resource name of this policy tag's parent policy tag
-	// (e.g. for the
-	// "LatLong" policy tag in the example above, this field contains
-	// the
-	// resource name of the "Geolocation" policy tag). If empty, it means
-	// this
-	// policy tag is a top level policy tag (e.g. this field is empty for
-	// the
-	// "Geolocation" policy tag in the example above). If not set, defaults
-	// to an
-	// empty string.
+	// (e.g. for the "LatLong" policy tag in the example above, this field
+	// contains the resource name of the "Geolocation" policy tag). If
+	// empty, it means this policy tag is a top level policy tag (e.g. this
+	// field is empty for the "Geolocation" policy tag in the example
+	// above). If not set, defaults to an empty string.
 	ParentPolicyTag string `json:"parentPolicyTag,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1592,8 +1385,7 @@ func (s *GoogleCloudDatacatalogV1beta1PolicyTag) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest:
-// Request message for
-// RenameTagTemplateFieldEnumValue.
+// Request message for RenameTagTemplateFieldEnumValue.
 type GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest struct {
 	// NewEnumValueDisplayName: Required. The new display name of the enum
 	// value. For example, `my_new_enum_value`.
@@ -1625,8 +1417,7 @@ func (s *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest) Ma
 }
 
 // GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest: Request
-// message for
-// RenameTagTemplateField.
+// message for RenameTagTemplateField.
 type GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest struct {
 	// NewTagTemplateFieldId: Required. The new ID of this tag template
 	// field. For example, `my_new_field`.
@@ -1661,8 +1452,7 @@ func (s *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) MarshalJSON
 // BigQuery, GoogleSQL, Avro schema).
 type GoogleCloudDatacatalogV1beta1Schema struct {
 	// Columns: Required. Schema of columns. A maximum of 10,000 columns and
-	// sub-columns can be
-	// specified.
+	// sub-columns can be specified.
 	Columns []*GoogleCloudDatacatalogV1beta1ColumnSchema `json:"columns,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -1689,63 +1479,40 @@ func (s *GoogleCloudDatacatalogV1beta1Schema) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogRequest: Request message
-// for
-// SearchCatalog.
+// for SearchCatalog.
 type GoogleCloudDatacatalogV1beta1SearchCatalogRequest struct {
 	// OrderBy: Specifies the ordering of results, currently supported
-	// case-sensitive
-	// choices are:
-	//
-	//   * `relevance`, only supports descending
-	//   * `last_modified_timestamp [asc|desc]`, defaults to descending if
-	// not
-	//     specified
-	//
-	// If not specified, defaults to `relevance` descending.
+	// case-sensitive choices are: * `relevance`, only supports descending *
+	// `last_modified_timestamp [asc|desc]`, defaults to descending if not
+	// specified If not specified, defaults to `relevance` descending.
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// PageSize: Number of results in the search page. If <=0 then defaults
-	// to 10. Max limit
-	// for page_size is 1000. Throws an invalid argument for page_size >
-	// 1000.
+	// to 10. Max limit for page_size is 1000. Throws an invalid argument
+	// for page_size > 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: Optional. Pagination token returned in an
-	// earlier
-	// SearchCatalogResponse.next_page_token, which
-	// indicates that this is a continuation of a
-	// prior
-	// SearchCatalogRequest
-	// call, and that the system should return the next page of data. If
-	// empty,
-	// the first page is returned.
+	// PageToken: Optional. Pagination token returned in an earlier
+	// SearchCatalogResponse.next_page_token, which indicates that this is a
+	// continuation of a prior SearchCatalogRequest call, and that the
+	// system should return the next page of data. If empty, the first page
+	// is returned.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Query: Required. The query string in search query syntax. The query
-	// must be non-empty.
-	//
-	// Query strings can be simple as "x" or more qualified as:
-	//
-	// * name:x
-	// * column:x
-	// * description:y
-	//
-	// Note: Query tokens need to have a minimum of 3 characters for
-	// substring
-	// matching to work correctly. See [Data Catalog
-	// Search
-	// Syntax](https://cloud.google.com/data-catalog/docs/how-to/searc
-	// h-reference)
-	// for more information.
+	// Query: Optional. The query string in search query syntax. An empty
+	// query string will result in all data assets (in the specified scope)
+	// that the user has access to. Query strings can be simple as "x" or
+	// more qualified as: * name:x * column:x * description:y Note: Query
+	// tokens need to have a minimum of 3 characters for substring matching
+	// to work correctly. See [Data Catalog Search
+	// Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-refer
+	// ence) for more information.
 	Query string `json:"query,omitempty"`
 
 	// Scope: Required. The scope of this search request. A `scope` that has
-	// empty
-	// `include_org_ids`, `include_project_ids` AND
-	// false
+	// empty `include_org_ids`, `include_project_ids` AND false
 	// `include_gcp_public_datasets` is considered invalid. Data Catalog
-	// will
-	// return an error in such a case.
+	// will return an error in such a case.
 	Scope *GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope `json:"scope,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OrderBy") to
@@ -1775,70 +1542,35 @@ func (s *GoogleCloudDatacatalogV1beta1SearchCatalogRequest) MarshalJSON() ([]byt
 // that select the subspace used for query matching.
 type GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope struct {
 	// IncludeGcpPublicDatasets: If `true`, include Google Cloud Platform
-	// (GCP) public datasets in the
-	// search results. Info on GCP public datasets is available
-	// at
-	// https://cloud.google.com/public-datasets/. By default, GCP
-	// public
-	// datasets are excluded.
+	// (GCP) public datasets in the search results. Info on GCP public
+	// datasets is available at https://cloud.google.com/public-datasets/.
+	// By default, GCP public datasets are excluded.
 	IncludeGcpPublicDatasets bool `json:"includeGcpPublicDatasets,omitempty"`
 
 	// IncludeOrgIds: The list of organization IDs to search within. To find
-	// your organization
-	// ID, follow instructions
-	// in
-	// https://cloud.google.com/resource-manager/docs/creating-managing-or
-	// ganization.
+	// your organization ID, follow instructions in
+	// https://cloud.google.com/resource-manager/docs/creating-managing-organization.
 	IncludeOrgIds []string `json:"includeOrgIds,omitempty"`
 
 	// IncludeProjectIds: The list of project IDs to search within. To learn
-	// more about the
-	// distinction between project names/IDs/numbers, go
-	// to
+	// more about the distinction between project names/IDs/numbers, go to
 	// https://cloud.google.com/docs/overview/#projects.
 	IncludeProjectIds []string `json:"includeProjectIds,omitempty"`
 
 	// RestrictedLocations: Optional. The list of locations to search
-	// within.
-	// 1. If empty, search will be performed in all locations;
-	// 2. If any of the locations are NOT in the valid locations list,
-	// error
-	// will be returned;
-	// 3. Otherwise, search only the given locations for matching
-	// results.
-	// Typical usage is to leave this field empty. When a location
-	// is
-	// unreachable as returned in the `SearchCatalogResponse.unreachable`
-	// field,
-	// users can repeat the search request with this parameter set to
-	// get
-	// additional information on the error.
-	//
-	// Valid locations:
-	//  * asia-east1
-	//  * asia-east2
-	//  * asia-northeast1
-	//  * asia-northeast2
-	//  * asia-northeast3
-	//  * asia-south1
-	//  * asia-southeast1
-	//  * australia-southeast1
-	//  * eu
-	//  * europe-north1
-	//  * europe-west1
-	//  * europe-west2
-	//  * europe-west3
-	//  * europe-west4
-	//  * europe-west6
-	//  * global
-	//  * northamerica-northeast1
-	//  * southamerica-east1
-	//  * us
-	//  * us-central1
-	//  * us-east1
-	//  * us-east4
-	//  * us-west1
-	//  * us-west2
+	// within. 1. If empty, search will be performed in all locations; 2. If
+	// any of the locations are NOT in the valid locations list, error will
+	// be returned; 3. Otherwise, search only the given locations for
+	// matching results. Typical usage is to leave this field empty. When a
+	// location is unreachable as returned in the
+	// `SearchCatalogResponse.unreachable` field, users can repeat the
+	// search request with this parameter set to get additional information
+	// on the error. Valid locations: * asia-east1 * asia-east2 *
+	// asia-northeast1 * asia-northeast2 * asia-northeast3 * asia-south1 *
+	// asia-southeast1 * australia-southeast1 * eu * europe-north1 *
+	// europe-west1 * europe-west2 * europe-west3 * europe-west4 *
+	// europe-west6 * global * northamerica-northeast1 * southamerica-east1
+	// * us * us-central1 * us-east1 * us-east4 * us-west1 * us-west2
 	RestrictedLocations []string `json:"restrictedLocations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1867,8 +1599,7 @@ func (s *GoogleCloudDatacatalogV1beta1SearchCatalogRequestScope) MarshalJSON() (
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogResponse: Response message
-// for
-// SearchCatalog.
+// for SearchCatalog.
 type GoogleCloudDatacatalogV1beta1SearchCatalogResponse struct {
 	// NextPageToken: The token that can be used to retrieve the next page
 	// of results.
@@ -1878,12 +1609,10 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogResponse struct {
 	Results []*GoogleCloudDatacatalogV1beta1SearchCatalogResult `json:"results,omitempty"`
 
 	// Unreachable: Unreachable locations. Search result does not include
-	// data from those
-	// locations. Users can get additional information on the error by
-	// repeating
-	// the search request with a more restrictive parameter -- setting the
-	// value
-	// for `SearchDataCatalogRequest.scope.include_locations`.
+	// data from those locations. Users can get additional information on
+	// the error by repeating the search request with a more restrictive
+	// parameter -- setting the value for
+	// `SearchDataCatalogRequest.scope.include_locations`.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1914,43 +1643,31 @@ func (s *GoogleCloudDatacatalogV1beta1SearchCatalogResponse) MarshalJSON() ([]by
 }
 
 // GoogleCloudDatacatalogV1beta1SearchCatalogResult: A result that
-// appears in the response of a search request. Each result
-// captures details of one entry that matches the search.
+// appears in the response of a search request. Each result captures
+// details of one entry that matches the search.
 type GoogleCloudDatacatalogV1beta1SearchCatalogResult struct {
 	// LinkedResource: The full name of the cloud resource the entry belongs
-	// to.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource
-	// _name.
-	// Example:
-	//
-	//  *
+	// to. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name. Example: *
 	// `//bigquery.googleapis.com/projects/projectId/datasets/datasetId/table
 	// s/tableId`
 	LinkedResource string `json:"linkedResource,omitempty"`
 
 	// RelativeResourceName: The relative resource name of the resource in
-	// URL format.
-	// Examples:
-	//
-	//  *
+	// URL format. Examples: *
 	// `projects/{project_id}/locations/{location_id}/entryGroups/{entry_grou
-	// p_id}/entries/{entry_id}`
-	//  * `projects/{project_id}/tagTemplates/{tag_template_id}`
+	// p_id}/entries/{entry_id}` *
+	// `projects/{project_id}/tagTemplates/{tag_template_id}`
 	RelativeResourceName string `json:"relativeResourceName,omitempty"`
 
 	// SearchResultSubtype: Sub-type of the search result. This is a
-	// dot-delimited description of the
-	// resource's full type, and is the same as the value callers would
-	// provide in
-	// the "type" search facet.  Examples: `entry.table`,
-	// `entry.dataStream`,
-	// `tagTemplate`.
+	// dot-delimited description of the resource's full type, and is the
+	// same as the value callers would provide in the "type" search facet.
+	// Examples: `entry.table`, `entry.dataStream`, `tagTemplate`.
 	SearchResultSubtype string `json:"searchResultSubtype,omitempty"`
 
 	// SearchResultType: Type of the search result. This field can be used
-	// to determine which Get
-	// method to call to fetch the full resource.
+	// to determine which Get method to call to fetch the full resource.
 	//
 	// Possible values:
 	//   "SEARCH_RESULT_TYPE_UNSPECIFIED" - Default unknown type.
@@ -1990,19 +1707,16 @@ type GoogleCloudDatacatalogV1beta1SerializedPolicyTag struct {
 	ChildPolicyTags []*GoogleCloudDatacatalogV1beta1SerializedPolicyTag `json:"childPolicyTags,omitempty"`
 
 	// Description: Description of the serialized policy tag. The length of
-	// the
-	// description is limited to 2000 bytes when encoded in UTF-8. If not
-	// set,
-	// defaults to an empty description.
+	// the description is limited to 2000 bytes when encoded in UTF-8. If
+	// not set, defaults to an empty description.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Required. Display name of the policy tag. Max 200 bytes
 	// when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// PolicyTag: Resource name of the policy tag.
-	//
-	// This field will be ignored when calling ImportTaxonomies.
+	// PolicyTag: Resource name of the policy tag. This field will be
+	// ignored when calling ImportTaxonomies.
 	PolicyTag string `json:"policyTag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChildPolicyTags") to
@@ -2030,14 +1744,12 @@ func (s *GoogleCloudDatacatalogV1beta1SerializedPolicyTag) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDatacatalogV1beta1SerializedTaxonomy: Message capturing a
-// taxonomy and its policy tag hierarchy as a nested proto.
-// Used for taxonomy import/export and mutation.
+// taxonomy and its policy tag hierarchy as a nested proto. Used for
+// taxonomy import/export and mutation.
 type GoogleCloudDatacatalogV1beta1SerializedTaxonomy struct {
 	// Description: Description of the serialized taxonomy. The length of
-	// the
-	// description is limited to 2000 bytes when encoded in UTF-8. If not
-	// set,
-	// defaults to an empty description.
+	// the description is limited to 2000 bytes when encoded in UTF-8. If
+	// not set, defaults to an empty description.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Required. Display name of the taxonomy. Max 200 bytes
@@ -2079,8 +1791,7 @@ type GoogleCloudDatacatalogV1beta1SystemTimestamps struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// ExpireTime: Output only. The expiration time of the resource within
-	// the given system.
-	// Currently only apllicable to BigQuery resources.
+	// the given system. Currently only apllicable to BigQuery resources.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// UpdateTime: The last-modified time of the resource within the given
@@ -2113,14 +1824,10 @@ func (s *GoogleCloudDatacatalogV1beta1SystemTimestamps) MarshalJSON() ([]byte, e
 // GoogleCloudDatacatalogV1beta1TableSpec: Normal BigQuery table spec.
 type GoogleCloudDatacatalogV1beta1TableSpec struct {
 	// GroupedEntry: Output only. If the table is a dated shard, i.e., with
-	// name pattern `[prefix]YYYYMMDD`,
-	// `grouped_entry` is the Data Catalog resource name of the date
-	// sharded
-	// grouped entry, for
-	// example,
-	// `projects/{project_id}/locations/{location}/entrygroups/{entr
-	// y_group_id}/entries/{entry_id}`.
-	// Otherwise, `grouped_entry` is empty.
+	// name pattern `[prefix]YYYYMMDD`, `grouped_entry` is the Data Catalog
+	// resource name of the date sharded grouped entry, for example,
+	// `projects/{project_id}/locations/{location}/entrygroups/{entry_group_i
+	// d}/entries/{entry_id}`. Otherwise, `grouped_entry` is empty.
 	GroupedEntry string `json:"groupedEntry,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GroupedEntry") to
@@ -2147,53 +1854,34 @@ func (s *GoogleCloudDatacatalogV1beta1TableSpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1beta1Tag: Tags are used to attach custom
-// metadata to Data Catalog resources. Tags
-// conform to the specifications within their tag template.
-//
-// See [Data
-// Catalog
+// metadata to Data Catalog resources. Tags conform to the
+// specifications within their tag template. See [Data Catalog
 // IAM](https://cloud.google.com/data-catalog/docs/concepts/iam) for
-// information
-// on the permissions needed to create or view tags.
+// information on the permissions needed to create or view tags.
 type GoogleCloudDatacatalogV1beta1Tag struct {
 	// Column: Resources like Entry can have schemas associated with them.
-	// This scope
-	// allows users to attach tags to an individual column based on that
-	// schema.
-	//
-	// For attaching a tag to a nested column, use `.` to separate the
-	// column
-	// names. Example:
-	//
-	// * `outer_column.inner_column`
+	// This scope allows users to attach tags to an individual column based
+	// on that schema. For attaching a tag to a nested column, use `.` to
+	// separate the column names. Example: * `outer_column.inner_column`
 	Column string `json:"column,omitempty"`
 
 	// Fields: Required. This maps the ID of a tag field to the value of and
-	// additional information
-	// about that field. Valid field IDs are defined by the tag's template.
-	// A tag
-	// must have at least 1 field and at most 500 fields.
+	// additional information about that field. Valid field IDs are defined
+	// by the tag's template. A tag must have at least 1 field and at most
+	// 500 fields.
 	Fields map[string]GoogleCloudDatacatalogV1beta1TagField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag in URL format. Example:
-	//
-	// *
+	// Name: The resource name of the tag in URL format. Example: *
 	// projects/{project_id}/locations/{location}/entrygroups/{entry_group_id
-	// }/entries/{entry_id}/tags/{tag_id}
-	//
-	// where `tag_id` is a system-generated identifier.
-	// Note that this Tag may not actually be stored in the location in this
-	// name.
+	// }/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
+	// system-generated identifier. Note that this Tag may not actually be
+	// stored in the location in this name.
 	Name string `json:"name,omitempty"`
 
 	// Template: Required. The resource name of the tag template that this
-	// tag uses. Example:
-	//
-	// *
+	// tag uses. Example: *
 	// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-	// id}
-	//
-	// This field cannot be modified after creation.
+	// id} This field cannot be modified after creation.
 	Template string `json:"template,omitempty"`
 
 	// TemplateDisplayName: Output only. The display name of the tag
@@ -2228,8 +1916,7 @@ func (s *GoogleCloudDatacatalogV1beta1Tag) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDatacatalogV1beta1TagField: Contains the value and
-// supporting information for a field within
-// a Tag.
+// supporting information for a field within a Tag.
 type GoogleCloudDatacatalogV1beta1TagField struct {
 	// BoolValue: Holds the value for a tag field with boolean type.
 	BoolValue bool `json:"boolValue,omitempty"`
@@ -2241,18 +1928,14 @@ type GoogleCloudDatacatalogV1beta1TagField struct {
 	DoubleValue float64 `json:"doubleValue,omitempty"`
 
 	// EnumValue: Holds the value for a tag field with enum type. This value
-	// must be
-	// one of the allowed values in the definition of this enum.
+	// must be one of the allowed values in the definition of this enum.
 	EnumValue *GoogleCloudDatacatalogV1beta1TagFieldEnumValue `json:"enumValue,omitempty"`
 
 	// Order: Output only. The order of this field with respect to other
-	// fields in this tag. It can be
-	// set in Tag. For
-	// example, a higher value can indicate a more important field. The
-	// value can
-	// be negative. Multiple fields can have the same order, and field
-	// orders
-	// within a tag do not have to be sequential.
+	// fields in this tag. It can be set in Tag. For example, a higher value
+	// can indicate a more important field. The value can be negative.
+	// Multiple fields can have the same order, and field orders within a
+	// tag do not have to be sequential.
 	Order int64 `json:"order,omitempty"`
 
 	// StringValue: Holds the value for a tag field with string type.
@@ -2327,49 +2010,32 @@ func (s *GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDatacatalogV1beta1TagTemplate: A tag template defines a
-// tag, which can have one or more typed fields.
-// The template is used to create and attach the tag to GCP
+// tag, which can have one or more typed fields. The template is used to
+// create and attach the tag to GCP resources. [Tag template
+// roles](https://cloud.google.com/iam/docs/understanding-roles#data-cata
+// log-roles) provide permissions to create, edit, and use the template.
+// See, for example, the [TagTemplate
+// User](https://cloud.google.com/data-catalog/docs/how-to/template-user)
+//  role, which includes permission to use the tag template to tag
 // resources.
-// [Tag
-// template
-// roles](https://cloud.google.com/iam/docs/understanding-roles#
-// data-catalog-roles)
-// provide permissions to create, edit, and use the template. See, for
-// example,
-// the
-// [TagTemplate
-// User](https://cloud.google.com/data-catalog/docs/how-to/t
-// emplate-user) role,
-// which includes permission to use the tag template to tag resources.
 type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// DisplayName: The display name for this template. Defaults to an empty
 	// string.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Fields: Required. Map of tag template field IDs to the settings for
-	// the field.
-	// This map is an exhaustive list of the allowed fields. This map must
-	// contain
-	// at least one field and at most 500 fields.
-	//
-	// The keys to this map are tag template field IDs. Field IDs can
-	// contain
-	// letters (both uppercase and lowercase), numbers (0-9) and underscores
-	// (_).
-	// Field IDs must be at least 1 character long and at most
-	// 64 characters long. Field IDs must start with a letter or underscore.
+	// the field. This map is an exhaustive list of the allowed fields. This
+	// map must contain at least one field and at most 500 fields. The keys
+	// to this map are tag template field IDs. Field IDs can contain letters
+	// (both uppercase and lowercase), numbers (0-9) and underscores (_).
+	// Field IDs must be at least 1 character long and at most 64 characters
+	// long. Field IDs must start with a letter or underscore.
 	Fields map[string]GoogleCloudDatacatalogV1beta1TagTemplateField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag template in URL format.
-	// Example:
-	//
-	// *
+	// Name: The resource name of the tag template in URL format. Example: *
 	// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
-	// id}
-	//
-	// Note that this TagTemplate and its child resources may not actually
-	// be
-	// stored in the location in this name.
+	// id} Note that this TagTemplate and its child resources may not
+	// actually be stored in the location in this name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2410,24 +2076,16 @@ type GoogleCloudDatacatalogV1beta1TagTemplateField struct {
 	IsRequired bool `json:"isRequired,omitempty"`
 
 	// Name: Output only. The resource name of the tag template field in URL
-	// format. Example:
-	//
-	// *
+	// format. Example: *
 	// projects/{project_id}/locations/{location}/tagTemplates/{tag_template}
-	// /fields/{field}
-	//
-	// Note that this TagTemplateField may not actually be stored in the
-	// location
-	// in this name.
+	// /fields/{field} Note that this TagTemplateField may not actually be
+	// stored in the location in this name.
 	Name string `json:"name,omitempty"`
 
 	// Order: The order of this field with respect to other fields in this
-	// tag
-	// template.  A higher value indicates a more important field. The value
-	// can
-	// be negative. Multiple fields can have the same order, and field
-	// orders
-	// within a tag do not have to be sequential.
+	// tag template. A higher value indicates a more important field. The
+	// value can be negative. Multiple fields can have the same order, and
+	// field orders within a tag do not have to be sequential.
 	Order int64 `json:"order,omitempty"`
 
 	// Type: Required. The type of value this tag field can contain.
@@ -2461,45 +2119,35 @@ func (s *GoogleCloudDatacatalogV1beta1TagTemplateField) MarshalJSON() ([]byte, e
 }
 
 // GoogleCloudDatacatalogV1beta1Taxonomy: A taxonomy is a collection of
-// policy tags that classify data along a common
-// axis. For instance a data *sensitivity* taxonomy could contain policy
-// tags
-// denoting PII such as age, zipcode, and SSN. A data *origin* taxonomy
-// could
-// contain policy tags to distinguish user data, employee data, partner
-// data,
+// policy tags that classify data along a common axis. For instance a
+// data *sensitivity* taxonomy could contain policy tags denoting PII
+// such as age, zipcode, and SSN. A data *origin* taxonomy could contain
+// policy tags to distinguish user data, employee data, partner data,
 // public data.
 type GoogleCloudDatacatalogV1beta1Taxonomy struct {
 	// ActivatedPolicyTypes: Optional. A list of policy types that are
-	// activated for this taxonomy. If not set,
-	// defaults to an empty list.
+	// activated for this taxonomy. If not set, defaults to an empty list.
 	//
 	// Possible values:
 	//   "POLICY_TYPE_UNSPECIFIED" - Unspecified policy type.
 	//   "FINE_GRAINED_ACCESS_CONTROL" - Fine grained access control policy,
-	// which enables access control on
-	// tagged resources.
+	// which enables access control on tagged resources.
 	ActivatedPolicyTypes []string `json:"activatedPolicyTypes,omitempty"`
 
 	// Description: Optional. Description of this taxonomy. It must: contain
-	// only unicode characters,
-	// tabs, newlines, carriage returns and page breaks; and be at most 2000
-	// bytes
-	// long when encoded in UTF-8. If not set, defaults to an empty
-	// description.
+	// only unicode characters, tabs, newlines, carriage returns and page
+	// breaks; and be at most 2000 bytes long when encoded in UTF-8. If not
+	// set, defaults to an empty description.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Required. User defined name of this taxonomy. It must:
-	// contain only unicode letters,
-	// numbers, underscores, dashes and spaces; not start or end with
-	// spaces; and
-	// be at most 200 bytes long when encoded in UTF-8.
+	// contain only unicode letters, numbers, underscores, dashes and
+	// spaces; not start or end with spaces; and be at most 200 bytes long
+	// when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this taxonomy, whose format
-	// is:
-	// "projects/{project_number}/locations/{location_id}/taxonomies/{id}
-	// ".
+	// Name: Output only. Resource name of this taxonomy, whose format is:
+	// "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2560,150 +2208,73 @@ func (s *GoogleCloudDatacatalogV1beta1ViewSpec) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -2738,11 +2309,9 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -2772,11 +2341,8 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -2807,8 +2373,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2849,30 +2414,16 @@ type CatalogSearchCall struct {
 }
 
 // Search: Searches Data Catalog for multiple resources like entries,
-// tags that
-// match a query.
-//
-// This is a custom
-// method
+// tags that match a query. This is a custom method
 // (https://cloud.google.com/apis/design/custom_methods) and does not
-// return
-// the complete resource, only the resource identifier and high
-// level
-// fields. Clients can subsequentally call `Get` methods.
-//
-// Note that Data Catalog search queries do not guarantee full recall.
-// Query
-// results that match your query may not be returned, even in
-// subsequent
+// return the complete resource, only the resource identifier and high
+// level fields. Clients can subsequentally call `Get` methods. Note
+// that Data Catalog search queries do not guarantee full recall. Query
+// results that match your query may not be returned, even in subsequent
 // result pages. Also note that results returned (and not returned) can
-// vary
-// across repeated search queries.
-//
-// See [Data Catalog
-// Search
-// Syntax](https://cloud.google.com/data-catalog/docs/how-to/searc
-// h-reference)
-// for more information.
+// vary across repeated search queries. See [Data Catalog Search
+// Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-refer
+// ence) for more information.
 func (r *CatalogService) Search(googleclouddatacatalogv1beta1searchcatalogrequest *GoogleCloudDatacatalogV1beta1SearchCatalogRequest) *CatalogSearchCall {
 	c := &CatalogSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleclouddatacatalogv1beta1searchcatalogrequest = googleclouddatacatalogv1beta1searchcatalogrequest
@@ -2906,7 +2457,7 @@ func (c *CatalogSearchCall) Header() http.Header {
 
 func (c *CatalogSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2969,7 +2520,7 @@ func (c *CatalogSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataca
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches Data Catalog for multiple resources like entries, tags that\nmatch a query.\n\nThis is a custom method\n(https://cloud.google.com/apis/design/custom_methods) and does not return\nthe complete resource, only the resource identifier and high level\nfields. Clients can subsequentally call `Get` methods.\n\nNote that Data Catalog search queries do not guarantee full recall. Query\nresults that match your query may not be returned, even in subsequent\nresult pages. Also note that results returned (and not returned) can vary\nacross repeated search queries.\n\nSee [Data Catalog Search\nSyntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference)\nfor more information.",
+	//   "description": "Searches Data Catalog for multiple resources like entries, tags that match a query. This is a custom method (https://cloud.google.com/apis/design/custom_methods) and does not return the complete resource, only the resource identifier and high level fields. Clients can subsequentally call `Get` methods. Note that Data Catalog search queries do not guarantee full recall. Query results that match your query may not be returned, even in subsequent result pages. Also note that results returned (and not returned) can vary across repeated search queries. See [Data Catalog Search Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference) for more information.",
 	//   "flatPath": "v1beta1/catalog:search",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.catalog.search",
@@ -3021,51 +2572,32 @@ type EntriesLookupCall struct {
 }
 
 // Lookup: Get an entry by target resource name. This method allows
-// clients to use
-// the resource name from the source Google Cloud Platform service to
-// get the
-// Data Catalog Entry.
+// clients to use the resource name from the source Google Cloud
+// Platform service to get the Data Catalog Entry.
 func (r *EntriesService) Lookup() *EntriesLookupCall {
 	c := &EntriesLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // LinkedResource sets the optional parameter "linkedResource": The full
-// name of the Google Cloud Platform resource the Data Catalog
-// entry represents.
-// See:
-// https://cloud.google.com/apis/design/resource_names#full_resource
-// _name.
-// Full names are case-sensitive.
-//
-// Examples:
-//
-//  *
-// //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables
-// /tableId
-//  * //pubsub.googleapis.com/projects/projectId/topics/topicId
+// name of the Google Cloud Platform resource the Data Catalog entry
+// represents. See:
+// https://cloud.google.com/apis/design/resource_names#full_resource_name. Full names are case-sensitive. Examples: * //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId *
+// //pubsub.googleapis.com/projects/projectId/topics/topicId
 func (c *EntriesLookupCall) LinkedResource(linkedResource string) *EntriesLookupCall {
 	c.urlParams_.Set("linkedResource", linkedResource)
 	return c
 }
 
 // SqlResource sets the optional parameter "sqlResource": The SQL name
-// of the entry. SQL names are case-sensitive.
-//
-// Examples:
-//
-//   * `pubsub.project_id.topic_id`
-//   * ``pubsub.project_id.`topic.id.with.dots` ``
-//   * `bigquery.table.project_id.dataset_id.table_id`
-//   * `bigquery.dataset.project_id.dataset_id`
-//   *
+// of the entry. SQL names are case-sensitive. Examples: *
+// `pubsub.project_id.topic_id` *
+// ``pubsub.project_id.`topic.id.with.dots` `` *
+// `bigquery.table.project_id.dataset_id.table_id` *
+// `bigquery.dataset.project_id.dataset_id` *
 // `datacatalog.entry.project_id.location_id.entry_group_id.entry_id`
-//
-// `*
-// _id`s shoud satisfy the standard SQL rules for
-// identifiers.
-// https://cloud.google.com/bigquery/docs/reference/standard
-// -sql/lexical.
+// `*_id`s shoud satisfy the standard SQL rules for identifiers.
+// https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
 func (c *EntriesLookupCall) SqlResource(sqlResource string) *EntriesLookupCall {
 	c.urlParams_.Set("sqlResource", sqlResource)
 	return c
@@ -3108,7 +2640,7 @@ func (c *EntriesLookupCall) Header() http.Header {
 
 func (c *EntriesLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3168,19 +2700,19 @@ func (c *EntriesLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataca
 	}
 	return ret, nil
 	// {
-	//   "description": "Get an entry by target resource name. This method allows clients to use\nthe resource name from the source Google Cloud Platform service to get the\nData Catalog Entry.",
+	//   "description": "Get an entry by target resource name. This method allows clients to use the resource name from the source Google Cloud Platform service to get the Data Catalog Entry.",
 	//   "flatPath": "v1beta1/entries:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "datacatalog.entries.lookup",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "linkedResource": {
-	//       "description": "The full name of the Google Cloud Platform resource the Data Catalog\nentry represents. See:\nhttps://cloud.google.com/apis/design/resource_names#full_resource_name.\nFull names are case-sensitive.\n\nExamples:\n\n * //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId\n * //pubsub.googleapis.com/projects/projectId/topics/topicId",
+	//       "description": "The full name of the Google Cloud Platform resource the Data Catalog entry represents. See: https://cloud.google.com/apis/design/resource_names#full_resource_name. Full names are case-sensitive. Examples: * //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId * //pubsub.googleapis.com/projects/projectId/topics/topicId",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "sqlResource": {
-	//       "description": "The SQL name of the entry. SQL names are case-sensitive.\n\nExamples:\n\n  * `pubsub.project_id.topic_id`\n  * ``pubsub.project_id.`topic.id.with.dots` ``\n  * `bigquery.table.project_id.dataset_id.table_id`\n  * `bigquery.dataset.project_id.dataset_id`\n  * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id`\n\n`*_id`s shoud satisfy the standard SQL rules for identifiers.\nhttps://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
+	//       "description": "The SQL name of the entry. SQL names are case-sensitive. Examples: * `pubsub.project_id.topic_id` * ``pubsub.project_id.`topic.id.with.dots` `` * `bigquery.table.project_id.dataset_id.table_id` * `bigquery.dataset.project_id.dataset_id` * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id` `*_id`s shoud satisfy the standard SQL rules for identifiers. https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3208,16 +2740,11 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 }
 
 // Create: A maximum of 10,000 entry groups may be created per
-// organization across all
-// locations.
-//
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `parent` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// organization across all locations. Users should enable the Data
+// Catalog API in the project identified by the `parent` parameter (see
+// [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3226,10 +2753,9 @@ func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googlecloudd
 }
 
 // EntryGroupId sets the optional parameter "entryGroupId": Required.
-// The id of the entry group to create.
-// The id must begin with a letter or underscore, contain only
-// English
-// letters, numbers and underscores, and be at most 64 characters.
+// The id of the entry group to create. The id must begin with a letter
+// or underscore, contain only English letters, numbers and underscores,
+// and be at most 64 characters.
 func (c *ProjectsLocationsEntryGroupsCreateCall) EntryGroupId(entryGroupId string) *ProjectsLocationsEntryGroupsCreateCall {
 	c.urlParams_.Set("entryGroupId", entryGroupId)
 	return c
@@ -3262,7 +2788,7 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3327,7 +2853,7 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "A maximum of 10,000 entry groups may be created per organization across all\nlocations.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "A maximum of 10,000 entry groups may be created per organization across all locations. Users should enable the Data Catalog API in the project identified by the `parent` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.create",
@@ -3336,12 +2862,12 @@ func (c *ProjectsLocationsEntryGroupsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "entryGroupId": {
-	//       "description": "Required. The id of the entry group to create.\nThe id must begin with a letter or underscore, contain only English\nletters, numbers and underscores, and be at most 64 characters.",
+	//       "description": "Required. The id of the entry group to create. The id must begin with a letter or underscore, contain only English letters, numbers and underscores, and be at most 64 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project this entry group is in. Example:\n\n* projects/{project_id}/locations/{location}\n\nNote that this EntryGroup and its child resources may not actually be\nstored in the location in this name.",
+	//       "description": "Required. The name of the project this entry group is in. Example: * projects/{project_id}/locations/{location} Note that this EntryGroup and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3373,14 +2899,11 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an EntryGroup. Only entry groups that do not contain
-// entries can be
-// deleted. Users should enable the Data Catalog API in the
-// project
-// identified by the `name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// entries can be deleted. Users should enable the Data Catalog API in
+// the project identified by the `name` parameter (see [Data Catalog
+// Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsEntryGroupsService) Delete(name string) *ProjectsLocationsEntryGroupsDeleteCall {
 	c := &ProjectsLocationsEntryGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3421,7 +2944,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3480,7 +3003,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be\ndeleted. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Deletes an EntryGroup. Only entry groups that do not contain entries can be deleted. Users should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.entryGroups.delete",
@@ -3494,7 +3017,7 @@ func (c *ProjectsLocationsEntryGroupsDeleteCall) Do(opts ...googleapi.CallOption
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the entry group. For example,\n`projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}`.",
+	//       "description": "Required. The name of the entry group. For example, `projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -3574,7 +3097,7 @@ func (c *ProjectsLocationsEntryGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3646,7 +3169,7 @@ func (c *ProjectsLocationsEntryGroupsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entry group. For example,\n`projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}`.",
+	//       "description": "Required. The name of the entry group. For example, `projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -3682,27 +3205,16 @@ type ProjectsLocationsEntryGroupsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a resource. A
-// `NOT_FOUND` error
-// is returned if the resource does not exist. An empty policy is
-// returned
-// if the resource exists but does not have a policy set on
-// it.
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// Callers must have following Google IAM permission
-//   - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag
-//     templates.
-//   - `datacatalog.entries.getIamPolicy` to get policies on entries.
-//   - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
-// groups.
+// `NOT_FOUND` error is returned if the resource does not exist. An
+// empty policy is returned if the resource exists but does not have a
+// policy set on it. Supported resources are: - Tag templates. -
+// Entries. - Entry groups. Note, this method cannot be used to manage
+// policies for BigQuery, Pub/Sub and any external Google Cloud Platform
+// resources synced to Data Catalog. Callers must have following Google
+// IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get
+// policies on tag templates. - `datacatalog.entries.getIamPolicy` to
+// get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to
+// get policies on entry groups.
 func (r *ProjectsLocationsEntryGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3737,7 +3249,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3801,7 +3313,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error\nis returned if the resource does not exist. An empty policy is returned\nif the resource exists but does not have a policy set on it.\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag\n    templates.\n  - `datacatalog.entries.getIamPolicy` to get policies on entries.\n  - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
+	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it. Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. Callers must have following Google IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.getIamPolicy",
@@ -3810,7 +3322,7 @@ func (c *ProjectsLocationsEntryGroupsGetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -3850,16 +3362,15 @@ func (r *ProjectsLocationsEntryGroupsService) List(parent string) *ProjectsLocat
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Default is 10. Max limit is 1000.
-// Throws an invalid argument for `page_size > 1000`.
+// of items to return. Default is 10. Max limit is 1000. Throws an
+// invalid argument for `page_size > 1000`.
 func (c *ProjectsLocationsEntryGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token that
-// specifies which page is requested. If empty, the first page
-// is
+// specifies which page is requested. If empty, the first page is
 // returned.
 func (c *ProjectsLocationsEntryGroupsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -3903,7 +3414,7 @@ func (c *ProjectsLocationsEntryGroupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3976,18 +3487,18 @@ func (c *ProjectsLocationsEntryGroupsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. Default is 10. Max limit is 1000.\nThrows an invalid argument for `page_size \u003e 1000`.",
+	//       "description": "Optional. The maximum number of items to return. Default is 10. Max limit is 1000. Throws an invalid argument for `page_size \u003e 1000`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. Token that specifies which page is requested. If empty, the first page is\nreturned.",
+	//       "description": "Optional. Token that specifies which page is requested. If empty, the first page is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the location that contains the entry groups, which can be\nprovided in URL format. Example:\n\n* projects/{project_id}/locations/{location}",
+	//       "description": "Required. The name of the location that contains the entry groups, which can be provided in URL format. Example: * projects/{project_id}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4038,14 +3549,10 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 }
 
 // Patch: Updates an EntryGroup. The user should enable the Data Catalog
-// API in the
-// project identified by the `entry_group.name` parameter (see [Data
-// Catalog
-// Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// API in the project identified by the `entry_group.name` parameter
+// (see [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsPatchCall {
 	c := &ProjectsLocationsEntryGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4054,8 +3561,8 @@ func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddata
 }
 
 // UpdateMask sets the optional parameter "updateMask": The fields to
-// update on the entry group. If absent or empty, all modifiable
-// fields are updated.
+// update on the entry group. If absent or empty, all modifiable fields
+// are updated.
 func (c *ProjectsLocationsEntryGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4088,7 +3595,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4153,7 +3660,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the\nproject identified by the `entry_group.name` parameter (see [Data Catalog\nResource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Updates an EntryGroup. The user should enable the Data Catalog API in the project identified by the `entry_group.name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.entryGroups.patch",
@@ -4162,14 +3669,14 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the entry group in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n\nNote that this EntryGroup and its child resources may not actually be\nstored in the location in this name.",
+	//       "description": "The resource name of the entry group in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} Note that this EntryGroup and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to update on the entry group. If absent or empty, all modifiable\nfields are updated.",
+	//       "description": "The fields to update on the entry group. If absent or empty, all modifiable fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4201,23 +3708,14 @@ type ProjectsLocationsEntryGroupsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy for a resource. Replaces
-// any existing
-// policy.
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// Callers must have following Google IAM permission
-//   - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag
-//     templates.
-//   - `datacatalog.entries.setIamPolicy` to set policies on entries.
-//   - `datacatalog.entryGroups.setIamPolicy` to set policies on entry
-// groups.
+// any existing policy. Supported resources are: - Tag templates. -
+// Entries. - Entry groups. Note, this method cannot be used to manage
+// policies for BigQuery, Pub/Sub and any external Google Cloud Platform
+// resources synced to Data Catalog. Callers must have following Google
+// IAM permission - `datacatalog.tagTemplates.setIamPolicy` to set
+// policies on tag templates. - `datacatalog.entries.setIamPolicy` to
+// set policies on entries. - `datacatalog.entryGroups.setIamPolicy` to
+// set policies on entry groups.
 func (r *ProjectsLocationsEntryGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEntryGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4252,7 +3750,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4316,7 +3814,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a resource. Replaces any existing\npolicy.\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag\n    templates.\n  - `datacatalog.entries.setIamPolicy` to set policies on entries.\n  - `datacatalog.entryGroups.setIamPolicy` to set policies on entry groups.",
+	//   "description": "Sets the access control policy for a resource. Replaces any existing policy. Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. Callers must have following Google IAM permission - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag templates. - `datacatalog.entries.setIamPolicy` to set policies on entries. - `datacatalog.entryGroups.setIamPolicy` to set policies on entry groups.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.setIamPolicy",
@@ -4325,7 +3823,7 @@ func (c *ProjectsLocationsEntryGroupsSetIamPolicyCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -4357,23 +3855,13 @@ type ProjectsLocationsEntryGroupsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns the caller's permissions on a
-// resource.
+// TestIamPermissions: Returns the caller's permissions on a resource.
 // If the resource does not exist, an empty set of permissions is
-// returned
-// (We don't return a `NOT_FOUND` error).
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// A caller is not required to have Google IAM permission to make
-// this
+// returned (We don't return a `NOT_FOUND` error). Supported resources
+// are: - Tag templates. - Entries. - Entry groups. Note, this method
+// cannot be used to manage policies for BigQuery, Pub/Sub and any
+// external Google Cloud Platform resources synced to Data Catalog. A
+// caller is not required to have Google IAM permission to make this
 // request.
 func (r *ProjectsLocationsEntryGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4409,7 +3897,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4473,7 +3961,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the caller's permissions on a resource.\nIf the resource does not exist, an empty set of permissions is returned\n(We don't return a `NOT_FOUND` error).\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nA caller is not required to have Google IAM permission to make this\nrequest.",
+	//   "description": "Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (We don't return a `NOT_FOUND` error). Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. A caller is not required to have Google IAM permission to make this request.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.testIamPermissions",
@@ -4482,7 +3970,7 @@ func (c *ProjectsLocationsEntryGroupsTestIamPermissionsCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -4515,18 +4003,12 @@ type ProjectsLocationsEntryGroupsEntriesCreateCall struct {
 }
 
 // Create: Creates an entry. Only entries of 'FILESET' type or
-// user-specified type can
-// be created.
-//
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `parent` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
-//
-// A maximum of 100,000 entries may be created per entry group.
+// user-specified type can be created. Users should enable the Data
+// Catalog API in the project identified by the `parent` parameter (see
+// [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information). A maximum of 100,000 entries may be created
+// per entry group.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4568,7 +4050,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4633,7 +4115,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can\nbe created.\n\nUsers should enable the Data Catalog API in the project identified by\nthe `parent` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).\n\nA maximum of 100,000 entries may be created per entry group.",
+	//   "description": "Creates an entry. Only entries of 'FILESET' type or user-specified type can be created. Users should enable the Data Catalog API in the project identified by the `parent` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information). A maximum of 100,000 entries may be created per entry group.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.create",
@@ -4647,7 +4129,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesCreateCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the entry group this entry is in. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n\nNote that this Entry and its child resources may not actually be stored in\nthe location in this name.",
+	//       "description": "Required. The name of the entry group this entry is in. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -4678,17 +4160,12 @@ type ProjectsLocationsEntryGroupsEntriesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing entry. Only entries created
-// through
-// CreateEntry
-// method can be deleted.
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// Delete: Deletes an existing entry. Only entries created through
+// CreateEntry method can be deleted. Users should enable the Data
+// Catalog API in the project identified by the `name` parameter (see
+// [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsEntryGroupsEntriesService) Delete(name string) *ProjectsLocationsEntryGroupsEntriesDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4722,7 +4199,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,7 +4258,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing entry. Only entries created through\nCreateEntry\nmethod can be deleted.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Deletes an existing entry. Only entries created through CreateEntry method can be deleted. Users should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.delete",
@@ -4790,7 +4267,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+	//       "description": "Required. The name of the entry. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -4863,7 +4340,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4935,7 +4412,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entry. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+	//       "description": "Required. The name of the entry. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -4965,27 +4442,16 @@ type ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a resource. A
-// `NOT_FOUND` error
-// is returned if the resource does not exist. An empty policy is
-// returned
-// if the resource exists but does not have a policy set on
-// it.
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// Callers must have following Google IAM permission
-//   - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag
-//     templates.
-//   - `datacatalog.entries.getIamPolicy` to get policies on entries.
-//   - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
-// groups.
+// `NOT_FOUND` error is returned if the resource does not exist. An
+// empty policy is returned if the resource exists but does not have a
+// policy set on it. Supported resources are: - Tag templates. -
+// Entries. - Entry groups. Note, this method cannot be used to manage
+// policies for BigQuery, Pub/Sub and any external Google Cloud Platform
+// resources synced to Data Catalog. Callers must have following Google
+// IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get
+// policies on tag templates. - `datacatalog.entries.getIamPolicy` to
+// get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to
+// get policies on entry groups.
 func (r *ProjectsLocationsEntryGroupsEntriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5020,7 +4486,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5084,7 +4550,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error\nis returned if the resource does not exist. An empty policy is returned\nif the resource exists but does not have a policy set on it.\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag\n    templates.\n  - `datacatalog.entries.getIamPolicy` to get policies on entries.\n  - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
+	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it. Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. Callers must have following Google IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.getIamPolicy",
@@ -5093,7 +4559,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -5133,16 +4599,15 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *Projec
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Default is 10. Max limit is 1000.
-// Throws an invalid argument for `page_size > 1000`.
+// of items to return. Default is 10. Max limit is 1000. Throws an
+// invalid argument for `page_size > 1000`.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token that
-// specifies which page is requested. If empty, the first page
-// is
+// specifies which page is requested. If empty, the first page is
 // returned.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -5150,10 +4615,8 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) PageToken(pageToken string
 }
 
 // ReadMask sets the optional parameter "readMask": The fields to return
-// for each Entry. If not set or empty, all
-// fields are returned.
-// For example, setting read_mask to contain only one path "name" will
-// cause
+// for each Entry. If not set or empty, all fields are returned. For
+// example, setting read_mask to contain only one path "name" will cause
 // ListEntries to return a list of Entries with only "name" field.
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) ReadMask(readMask string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("readMask", readMask)
@@ -5197,7 +4660,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5270,25 +4733,25 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. Default is 10. Max limit is 1000.\nThrows an invalid argument for `page_size \u003e 1000`.",
+	//       "description": "The maximum number of items to return. Default is 10. Max limit is 1000. Throws an invalid argument for `page_size \u003e 1000`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+	//       "description": "Token that specifies which page is requested. If empty, the first page is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the entry group that contains the entries, which can\nbe provided in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}",
+	//       "description": "Required. The name of the entry group that contains the entries, which can be provided in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "The fields to return for each Entry. If not set or empty, all\nfields are returned.\nFor example, setting read_mask to contain only one path \"name\" will cause\nListEntries to return a list of Entries with only \"name\" field.",
+	//       "description": "The fields to return for each Entry. If not set or empty, all fields are returned. For example, setting read_mask to contain only one path \"name\" will cause ListEntries to return a list of Entries with only \"name\" field.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5337,14 +4800,11 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 	header_                            http.Header
 }
 
-// Patch: Updates an existing entry.
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `entry.name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// Patch: Updates an existing entry. Users should enable the Data
+// Catalog API in the project identified by the `entry.name` parameter
+// (see [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5353,26 +4813,14 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googlecl
 }
 
 // UpdateMask sets the optional parameter "updateMask": The fields to
-// update on the entry. If absent or empty, all modifiable
-// fields are updated.
-//
-// The following fields are modifiable:
-// * For entries with type `DATA_STREAM`:
-//    * `schema`
-// * For entries with type `FILESET`
-//    * `schema`
-//    * `display_name`
-//    * `description`
-//    * `gcs_fileset_spec`
-//    * `gcs_fileset_spec.file_patterns`
-// * For entries with `user_specified_type`
-//    * `schema`
-//    * `display_name`
-//    * `description`
-//    * user_specified_type
-//    * user_specified_system
-//    * linked_resource
-//    * source_system_timestamps
+// update on the entry. If absent or empty, all modifiable fields are
+// updated. The following fields are modifiable: * For entries with type
+// `DATA_STREAM`: * `schema` * For entries with type `FILESET` *
+// `schema` * `display_name` * `description` * `gcs_fileset_spec` *
+// `gcs_fileset_spec.file_patterns` * For entries with
+// `user_specified_type` * `schema` * `display_name` * `description` *
+// user_specified_type * user_specified_system * linked_resource *
+// source_system_timestamps
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5405,7 +4853,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5470,7 +4918,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing entry.\nUsers should enable the Data Catalog API in the project identified by\nthe `entry.name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Updates an existing entry. Users should enable the Data Catalog API in the project identified by the `entry.name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.patch",
@@ -5479,14 +4927,14 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The Data Catalog resource name of the entry in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nNote that this Entry and its child resources may not actually be stored in\nthe location in this name.",
+	//       "description": "The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to update on the entry. If absent or empty, all modifiable\nfields are updated.\n\nThe following fields are modifiable:\n* For entries with type `DATA_STREAM`:\n   * `schema`\n* For entries with type `FILESET`\n   * `schema`\n   * `display_name`\n   * `description`\n   * `gcs_fileset_spec`\n   * `gcs_fileset_spec.file_patterns`\n* For entries with `user_specified_type`\n   * `schema`\n   * `display_name`\n   * `description`\n   * user_specified_type\n   * user_specified_system\n   * linked_resource\n   * source_system_timestamps",
+	//       "description": "The fields to update on the entry. If absent or empty, all modifiable fields are updated. The following fields are modifiable: * For entries with type `DATA_STREAM`: * `schema` * For entries with type `FILESET` * `schema` * `display_name` * `description` * `gcs_fileset_spec` * `gcs_fileset_spec.file_patterns` * For entries with `user_specified_type` * `schema` * `display_name` * `description` * user_specified_type * user_specified_system * linked_resource * source_system_timestamps",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5517,23 +4965,13 @@ type ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns the caller's permissions on a
-// resource.
+// TestIamPermissions: Returns the caller's permissions on a resource.
 // If the resource does not exist, an empty set of permissions is
-// returned
-// (We don't return a `NOT_FOUND` error).
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// A caller is not required to have Google IAM permission to make
-// this
+// returned (We don't return a `NOT_FOUND` error). Supported resources
+// are: - Tag templates. - Entries. - Entry groups. Note, this method
+// cannot be used to manage policies for BigQuery, Pub/Sub and any
+// external Google Cloud Platform resources synced to Data Catalog. A
+// caller is not required to have Google IAM permission to make this
 // request.
 func (r *ProjectsLocationsEntryGroupsEntriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5569,7 +5007,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5633,7 +5071,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the caller's permissions on a resource.\nIf the resource does not exist, an empty set of permissions is returned\n(We don't return a `NOT_FOUND` error).\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nA caller is not required to have Google IAM permission to make this\nrequest.",
+	//   "description": "Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (We don't return a `NOT_FOUND` error). Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. A caller is not required to have Google IAM permission to make this request.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.testIamPermissions",
@@ -5642,7 +5080,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -5674,19 +5112,14 @@ type ProjectsLocationsEntryGroupsEntriesTagsCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates a tag on an Entry.
-// Note: The project identified by the `parent` parameter for
-// the
-// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1
-// beta1/projects.locations.entryGroups.entries.tags/create#path-paramete
-// rs)
-// and
-// the
-// [tag
-// template](https://cloud.google.com/data-catalog/docs/referenc
-// e/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)
-//
-// used to create the tag must be from the same organization.
+// Create: Creates a tag on an Entry. Note: The project identified by
+// the `parent` parameter for the
+// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta
+// 1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+// and the [tag
+// template](https://cloud.google.com/data-catalog/docs/reference/rest/v1
+// beta1/projects.locations.tagTemplates/create#path-parameters) used to
+// create the tag must be from the same organization.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsEntriesTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5721,7 +5154,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5785,7 +5218,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+	//   "description": "Creates a tag on an Entry. Note: The project identified by the `parent` parameter for the [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be from the same organization.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.entries.tags.create",
@@ -5794,7 +5227,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsCreateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the resource to attach this tag to. Tags can be attached to\nEntries. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nNote that this Tag and its child resources may not actually be stored in\nthe location in this name.",
+	//       "description": "Required. The name of the resource to attach this tag to. Tags can be attached to Entries. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Tag and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -5859,7 +5292,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5927,7 +5360,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsDeleteCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the tag to delete. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
+	//       "description": "Required. The name of the tag to delete. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -5971,8 +5404,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) PageSize(pageSize int6
 }
 
 // PageToken sets the optional parameter "pageToken": Token that
-// specifies which page is requested. If empty, the first page
-// is
+// specifies which page is requested. If empty, the first page is
 // returned.
 func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsEntriesTagsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6016,7 +5448,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6095,12 +5527,12 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsListCall) Do(opts ...googleapi.C
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+	//       "description": "Token that specifies which page is requested. If empty, the first page is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource could be an Entry or an EntryGroup. Examples: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -6159,9 +5591,8 @@ func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Patch(nameid string, go
 }
 
 // UpdateMask sets the optional parameter "updateMask": The fields to
-// update on the Tag. If absent or empty, all modifiable fields
-// are updated. Currently the only modifiable field is the field
-// `fields`.
+// update on the Tag. If absent or empty, all modifiable fields are
+// updated. Currently the only modifiable field is the field `fields`.
 func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsEntriesTagsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6194,7 +5625,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6267,14 +5698,14 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}\n\nwhere `tag_id` is a system-generated identifier.\nNote that this Tag may not actually be stored in the location in this name.",
+	//       "description": "The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to update on the Tag. If absent or empty, all modifiable fields\nare updated. Currently the only modifiable field is the field `fields`.",
+	//       "description": "The fields to update on the Tag. If absent or empty, all modifiable fields are updated. Currently the only modifiable field is the field `fields`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6305,19 +5736,14 @@ type ProjectsLocationsEntryGroupsTagsCreateCall struct {
 	header_                          http.Header
 }
 
-// Create: Creates a tag on an Entry.
-// Note: The project identified by the `parent` parameter for
-// the
-// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1
-// beta1/projects.locations.entryGroups.entries.tags/create#path-paramete
-// rs)
-// and
-// the
-// [tag
-// template](https://cloud.google.com/data-catalog/docs/referenc
-// e/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)
-//
-// used to create the tag must be from the same organization.
+// Create: Creates a tag on an Entry. Note: The project identified by
+// the `parent` parameter for the
+// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta
+// 1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+// and the [tag
+// template](https://cloud.google.com/data-catalog/docs/reference/rest/v1
+// beta1/projects.locations.tagTemplates/create#path-parameters) used to
+// create the tag must be from the same organization.
 func (r *ProjectsLocationsEntryGroupsTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6352,7 +5778,7 @@ func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6416,7 +5842,7 @@ func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a tag on an Entry.\nNote: The project identified by the `parent` parameter for the\n[tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)\nand the\n[tag\ntemplate](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)\nused to create the tag must be from the same organization.",
+	//   "description": "Creates a tag on an Entry. Note: The project identified by the `parent` parameter for the [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be from the same organization.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.entryGroups.tags.create",
@@ -6425,7 +5851,7 @@ func (c *ProjectsLocationsEntryGroupsTagsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the resource to attach this tag to. Tags can be attached to\nEntries. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}\n\nNote that this Tag and its child resources may not actually be stored in\nthe location in this name.",
+	//       "description": "Required. The name of the resource to attach this tag to. Tags can be attached to Entries. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Tag and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -6490,7 +5916,7 @@ func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6558,7 +5984,7 @@ func (c *ProjectsLocationsEntryGroupsTagsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the tag to delete. Example:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
+	//       "description": "Required. The name of the tag to delete. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -6602,8 +6028,7 @@ func (c *ProjectsLocationsEntryGroupsTagsListCall) PageSize(pageSize int64) *Pro
 }
 
 // PageToken sets the optional parameter "pageToken": Token that
-// specifies which page is requested. If empty, the first page
-// is
+// specifies which page is requested. If empty, the first page is
 // returned.
 func (c *ProjectsLocationsEntryGroupsTagsListCall) PageToken(pageToken string) *ProjectsLocationsEntryGroupsTagsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6647,7 +6072,7 @@ func (c *ProjectsLocationsEntryGroupsTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6726,12 +6151,12 @@ func (c *ProjectsLocationsEntryGroupsTagsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token that specifies which page is requested. If empty, the first page is\nreturned.",
+	//       "description": "Token that specifies which page is requested. If empty, the first page is returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource\ncould be an Entry or an\nEntryGroup.\n\nExamples:\n\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}\n* projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
+	//       "description": "Required. The name of the Data Catalog resource to list the tags of. The resource could be an Entry or an EntryGroup. Examples: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -6790,9 +6215,8 @@ func (r *ProjectsLocationsEntryGroupsTagsService) Patch(nameid string, googleclo
 }
 
 // UpdateMask sets the optional parameter "updateMask": The fields to
-// update on the Tag. If absent or empty, all modifiable fields
-// are updated. Currently the only modifiable field is the field
-// `fields`.
+// update on the Tag. If absent or empty, all modifiable fields are
+// updated. Currently the only modifiable field is the field `fields`.
 func (c *ProjectsLocationsEntryGroupsTagsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEntryGroupsTagsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6825,7 +6249,7 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEntryGroupsTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6898,14 +6322,14 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format. Example:\n\n* projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}\n\nwhere `tag_id` is a system-generated identifier.\nNote that this Tag may not actually be stored in the location in this name.",
+	//       "description": "The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The fields to update on the Tag. If absent or empty, all modifiable fields\nare updated. Currently the only modifiable field is the field `fields`.",
+	//       "description": "The fields to update on the Tag. If absent or empty, all modifiable fields are updated. Currently the only modifiable field is the field `fields`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6937,13 +6361,10 @@ type ProjectsLocationsTagTemplatesCreateCall struct {
 }
 
 // Create: Creates a tag template. The user should enable the Data
-// Catalog API in
-// the project identified by the `parent` parameter (see [Data
-// Catalog
-// Resource
-// Project](https://cloud.google.com/data-catalog/docs/c
-// oncepts/resource-project)
-// for more information).
+// Catalog API in the project identified by the `parent` parameter (see
+// [Data Catalog Resource
+// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
+// project) for more information).
 func (r *ProjectsLocationsTagTemplatesService) Create(parent string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesCreateCall {
 	c := &ProjectsLocationsTagTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6985,7 +6406,7 @@ func (c *ProjectsLocationsTagTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7051,7 +6472,7 @@ func (c *ProjectsLocationsTagTemplatesCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a tag template. The user should enable the Data Catalog API in\nthe project identified by the `parent` parameter (see [Data Catalog\nResource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
+	//   "description": "Creates a tag template. The user should enable the Data Catalog API in the project identified by the `parent` parameter (see [Data Catalog Resource Project](https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.create",
@@ -7060,7 +6481,7 @@ func (c *ProjectsLocationsTagTemplatesCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project and the template location\n[region](https://cloud.google.com/data-catalog/docs/concepts/regions.\n\nExample:\n\n* projects/{project_id}/locations/us-central1",
+	//       "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions. Example: * projects/{project_id}/locations/us-central1",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7096,14 +6517,11 @@ type ProjectsLocationsTagTemplatesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a tag template and all tags using the template.
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// Delete: Deletes a tag template and all tags using the template. Users
+// should enable the Data Catalog API in the project identified by the
+// `name` parameter (see [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsTagTemplatesService) Delete(name string) *ProjectsLocationsTagTemplatesDeleteCall {
 	c := &ProjectsLocationsTagTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7111,10 +6529,9 @@ func (r *ProjectsLocationsTagTemplatesService) Delete(name string) *ProjectsLoca
 }
 
 // Force sets the optional parameter "force": Required. Currently, this
-// field must always be set to `true`.
-// This confirms the deletion of any possible tags using this
-// template.
-// `force = false` will be supported in the future.
+// field must always be set to `true`. This confirms the deletion of any
+// possible tags using this template. `force = false` will be supported
+// in the future.
 func (c *ProjectsLocationsTagTemplatesDeleteCall) Force(force bool) *ProjectsLocationsTagTemplatesDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -7147,7 +6564,7 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7206,7 +6623,7 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a tag template and all tags using the template.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Deletes a tag template and all tags using the template. Users should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.tagTemplates.delete",
@@ -7215,12 +6632,12 @@ func (c *ProjectsLocationsTagTemplatesDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Required. Currently, this field must always be set to `true`.\nThis confirms the deletion of any possible tags using this template.\n`force = false` will be supported in the future.",
+	//       "description": "Required. Currently, this field must always be set to `true`. This confirms the deletion of any possible tags using this template. `force = false` will be supported in the future.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the tag template to delete. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}",
+	//       "description": "Required. The name of the tag template to delete. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7293,7 +6710,7 @@ func (c *ProjectsLocationsTagTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7366,7 +6783,7 @@ func (c *ProjectsLocationsTagTemplatesGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the tag template. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}",
+	//       "description": "Required. The name of the tag template. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7396,27 +6813,16 @@ type ProjectsLocationsTagTemplatesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a resource. A
-// `NOT_FOUND` error
-// is returned if the resource does not exist. An empty policy is
-// returned
-// if the resource exists but does not have a policy set on
-// it.
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// Callers must have following Google IAM permission
-//   - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag
-//     templates.
-//   - `datacatalog.entries.getIamPolicy` to get policies on entries.
-//   - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
-// groups.
+// `NOT_FOUND` error is returned if the resource does not exist. An
+// empty policy is returned if the resource exists but does not have a
+// policy set on it. Supported resources are: - Tag templates. -
+// Entries. - Entry groups. Note, this method cannot be used to manage
+// policies for BigQuery, Pub/Sub and any external Google Cloud Platform
+// resources synced to Data Catalog. Callers must have following Google
+// IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get
+// policies on tag templates. - `datacatalog.entries.getIamPolicy` to
+// get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to
+// get policies on entry groups.
 func (r *ProjectsLocationsTagTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTagTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7451,7 +6857,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7515,7 +6921,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error\nis returned if the resource does not exist. An empty policy is returned\nif the resource exists but does not have a policy set on it.\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag\n    templates.\n  - `datacatalog.entries.getIamPolicy` to get policies on entries.\n  - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
+	//   "description": "Gets the access control policy for a resource. A `NOT_FOUND` error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it. Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. Callers must have following Google IAM permission - `datacatalog.tagTemplates.getIamPolicy` to get policies on tag templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.getIamPolicy",
@@ -7524,7 +6930,7 @@ func (c *ProjectsLocationsTagTemplatesGetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7557,18 +6963,13 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 }
 
 // Patch: Updates a tag template. This method cannot be used to update
-// the fields of
-// a template. The tag template fields are represented as separate
-// resources
-// and should be updated using their own create/update/delete
-// methods.
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `tag_template.name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// the fields of a template. The tag template fields are represented as
+// separate resources and should be updated using their own
+// create/update/delete methods. Users should enable the Data Catalog
+// API in the project identified by the `tag_template.name` parameter
+// (see [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesPatchCall {
 	c := &ProjectsLocationsTagTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7577,13 +6978,9 @@ func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddat
 }
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
-// specifies the parts of the template to overwrite.
-//
-// Allowed fields:
-//
-//   * `display_name`
-//
-// If absent or empty, all of the allowed fields above will be updated.
+// specifies the parts of the template to overwrite. Allowed fields: *
+// `display_name` If absent or empty, all of the allowed fields above
+// will be updated.
 func (c *ProjectsLocationsTagTemplatesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTagTemplatesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7616,7 +7013,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7682,7 +7079,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a tag template. This method cannot be used to update the fields of\na template. The tag template fields are represented as separate resources\nand should be updated using their own create/update/delete methods.\nUsers should enable the Data Catalog API in the project identified by\nthe `tag_template.name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Updates a tag template. This method cannot be used to update the fields of a template. The tag template fields are represented as separate resources and should be updated using their own create/update/delete methods. Users should enable the Data Catalog API in the project identified by the `tag_template.name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.tagTemplates.patch",
@@ -7691,14 +7088,14 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag template in URL format. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}\n\nNote that this TagTemplate and its child resources may not actually be\nstored in the location in this name.",
+	//       "description": "The resource name of the tag template in URL format. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id} Note that this TagTemplate and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask specifies the parts of the template to overwrite.\n\nAllowed fields:\n\n  * `display_name`\n\nIf absent or empty, all of the allowed fields above will be updated.",
+	//       "description": "The field mask specifies the parts of the template to overwrite. Allowed fields: * `display_name` If absent or empty, all of the allowed fields above will be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7730,23 +7127,14 @@ type ProjectsLocationsTagTemplatesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy for a resource. Replaces
-// any existing
-// policy.
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// Callers must have following Google IAM permission
-//   - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag
-//     templates.
-//   - `datacatalog.entries.setIamPolicy` to set policies on entries.
-//   - `datacatalog.entryGroups.setIamPolicy` to set policies on entry
-// groups.
+// any existing policy. Supported resources are: - Tag templates. -
+// Entries. - Entry groups. Note, this method cannot be used to manage
+// policies for BigQuery, Pub/Sub and any external Google Cloud Platform
+// resources synced to Data Catalog. Callers must have following Google
+// IAM permission - `datacatalog.tagTemplates.setIamPolicy` to set
+// policies on tag templates. - `datacatalog.entries.setIamPolicy` to
+// set policies on entries. - `datacatalog.entryGroups.setIamPolicy` to
+// set policies on entry groups.
 func (r *ProjectsLocationsTagTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTagTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7781,7 +7169,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7845,7 +7233,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a resource. Replaces any existing\npolicy.\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nCallers must have following Google IAM permission\n  - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag\n    templates.\n  - `datacatalog.entries.setIamPolicy` to set policies on entries.\n  - `datacatalog.entryGroups.setIamPolicy` to set policies on entry groups.",
+	//   "description": "Sets the access control policy for a resource. Replaces any existing policy. Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. Callers must have following Google IAM permission - `datacatalog.tagTemplates.setIamPolicy` to set policies on tag templates. - `datacatalog.entries.setIamPolicy` to set policies on entries. - `datacatalog.entryGroups.setIamPolicy` to set policies on entry groups.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.setIamPolicy",
@@ -7854,7 +7242,7 @@ func (c *ProjectsLocationsTagTemplatesSetIamPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -7886,23 +7274,13 @@ type ProjectsLocationsTagTemplatesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns the caller's permissions on a
-// resource.
+// TestIamPermissions: Returns the caller's permissions on a resource.
 // If the resource does not exist, an empty set of permissions is
-// returned
-// (We don't return a `NOT_FOUND` error).
-//
-// Supported resources are:
-//   - Tag templates.
-//   - Entries.
-//   - Entry groups.
-// Note, this method cannot be used to manage policies for BigQuery,
-// Pub/Sub
-// and any external Google Cloud Platform resources synced to Data
-// Catalog.
-//
-// A caller is not required to have Google IAM permission to make
-// this
+// returned (We don't return a `NOT_FOUND` error). Supported resources
+// are: - Tag templates. - Entries. - Entry groups. Note, this method
+// cannot be used to manage policies for BigQuery, Pub/Sub and any
+// external Google Cloud Platform resources synced to Data Catalog. A
+// caller is not required to have Google IAM permission to make this
 // request.
 func (r *ProjectsLocationsTagTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTagTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsTagTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7938,7 +7316,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8002,7 +7380,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the caller's permissions on a resource.\nIf the resource does not exist, an empty set of permissions is returned\n(We don't return a `NOT_FOUND` error).\n\nSupported resources are:\n  - Tag templates.\n  - Entries.\n  - Entry groups.\nNote, this method cannot be used to manage policies for BigQuery, Pub/Sub\nand any external Google Cloud Platform resources synced to Data Catalog.\n\nA caller is not required to have Google IAM permission to make this\nrequest.",
+	//   "description": "Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (We don't return a `NOT_FOUND` error). Supported resources are: - Tag templates. - Entries. - Entry groups. Note, this method cannot be used to manage policies for BigQuery, Pub/Sub and any external Google Cloud Platform resources synced to Data Catalog. A caller is not required to have Google IAM permission to make this request.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.testIamPermissions",
@@ -8011,7 +7389,7 @@ func (c *ProjectsLocationsTagTemplatesTestIamPermissionsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
@@ -8044,13 +7422,10 @@ type ProjectsLocationsTagTemplatesFieldsCreateCall struct {
 }
 
 // Create: Creates a field in a tag template. The user should enable the
-// Data Catalog
-// API in the project identified by the `parent` parameter (see
-// [Data Catalog
-// Resource
-// Project](https://cloud.google.com/data-catalog/docs/concepts/
-// resource-project)
-// for more information).
+// Data Catalog API in the project identified by the `parent` parameter
+// (see [Data Catalog Resource
+// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
+// project) for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Create(parent string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsCreateCall {
 	c := &ProjectsLocationsTagTemplatesFieldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8059,14 +7434,11 @@ func (r *ProjectsLocationsTagTemplatesFieldsService) Create(parent string, googl
 }
 
 // TagTemplateFieldId sets the optional parameter "tagTemplateFieldId":
-// Required. The ID of the tag template field to create.
-// Field ids can contain letters (both uppercase and lowercase),
-// numbers
-// (0-9), underscores (_) and dashes (-). Field IDs must be at least
-// 1
+// Required. The ID of the tag template field to create. Field ids can
+// contain letters (both uppercase and lowercase), numbers (0-9),
+// underscores (_) and dashes (-). Field IDs must be at least 1
 // character long and at most 128 characters long. Field IDs must also
-// be
-// unique within their template.
+// be unique within their template.
 func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) TagTemplateFieldId(tagTemplateFieldId string) *ProjectsLocationsTagTemplatesFieldsCreateCall {
 	c.urlParams_.Set("tagTemplateFieldId", tagTemplateFieldId)
 	return c
@@ -8099,7 +7471,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8165,7 +7537,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `parent` parameter (see\n[Data Catalog Resource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
+	//   "description": "Creates a field in a tag template. The user should enable the Data Catalog API in the project identified by the `parent` parameter (see [Data Catalog Resource Project](https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.create",
@@ -8174,14 +7546,14 @@ func (c *ProjectsLocationsTagTemplatesFieldsCreateCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project and the template location\n[region](https://cloud.google.com/data-catalog/docs/concepts/regions).\n\nExample:\n\n* projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}",
+	//       "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions). Example: * projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tagTemplateFieldId": {
-	//       "description": "Required. The ID of the tag template field to create.\nField ids can contain letters (both uppercase and lowercase), numbers\n(0-9), underscores (_) and dashes (-). Field IDs must be at least 1\ncharacter long and at most 128 characters long. Field IDs must also be\nunique within their template.",
+	//       "description": "Required. The ID of the tag template field to create. Field ids can contain letters (both uppercase and lowercase), numbers (0-9), underscores (_) and dashes (-). Field IDs must be at least 1 character long and at most 128 characters long. Field IDs must also be unique within their template.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8210,15 +7582,11 @@ type ProjectsLocationsTagTemplatesFieldsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a field in a tag template and all uses of that
-// field.
-// Users should enable the Data Catalog API in the project identified
-// by
-// the `name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// Delete: Deletes a field in a tag template and all uses of that field.
+// Users should enable the Data Catalog API in the project identified by
+// the `name` parameter (see [Data Catalog Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Delete(name string) *ProjectsLocationsTagTemplatesFieldsDeleteCall {
 	c := &ProjectsLocationsTagTemplatesFieldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8226,10 +7594,9 @@ func (r *ProjectsLocationsTagTemplatesFieldsService) Delete(name string) *Projec
 }
 
 // Force sets the optional parameter "force": Required. Currently, this
-// field must always be set to `true`.
-// This confirms the deletion of this field from any tags using this
-// field.
-// `force = false` will be supported in the future.
+// field must always be set to `true`. This confirms the deletion of
+// this field from any tags using this field. `force = false` will be
+// supported in the future.
 func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Force(force bool) *ProjectsLocationsTagTemplatesFieldsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -8262,7 +7629,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8321,7 +7688,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a field in a tag template and all uses of that field.\nUsers should enable the Data Catalog API in the project identified by\nthe `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Deletes a field in a tag template and all uses of that field. Users should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.delete",
@@ -8330,12 +7697,12 @@ func (c *ProjectsLocationsTagTemplatesFieldsDeleteCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Required. Currently, this field must always be set to `true`.\nThis confirms the deletion of this field from any tags using this field.\n`force = false` will be supported in the future.",
+	//       "description": "Required. Currently, this field must always be set to `true`. This confirms the deletion of this field from any tags using this field. `force = false` will be supported in the future.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the tag template field to delete. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
+	//       "description": "Required. The name of the tag template field to delete. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
 	//       "required": true,
@@ -8365,14 +7732,11 @@ type ProjectsLocationsTagTemplatesFieldsPatchCall struct {
 }
 
 // Patch: Updates a field in a tag template. This method cannot be used
-// to update the
-// field type. Users should enable the Data Catalog API in the
-// project
-// identified by the `name` parameter (see [Data Catalog Resource
-// Project]
-// (https://cloud.google.com/data-catalog/docs/concepts/resource
-// -project) for
-// more information).
+// to update the field type. Users should enable the Data Catalog API in
+// the project identified by the `name` parameter (see [Data Catalog
+// Resource Project]
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+//  for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Patch(name string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsPatchCall {
 	c := &ProjectsLocationsTagTemplatesFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8381,24 +7745,13 @@ func (r *ProjectsLocationsTagTemplatesFieldsService) Patch(name string, googlecl
 }
 
 // UpdateMask sets the optional parameter "updateMask": The field mask
-// specifies the parts of the template to be updated.
-// Allowed fields:
-//
-//   * `display_name`
-//   * `type.enum_type`
-//   * `is_required`
-//
-// If `update_mask` is not set or empty, all of the allowed fields above
-// will
-// be updated.
-//
+// specifies the parts of the template to be updated. Allowed fields: *
+// `display_name` * `type.enum_type` * `is_required` If `update_mask` is
+// not set or empty, all of the allowed fields above will be updated.
 // When updating an enum type, the provided values will be merged with
-// the
-// existing values. Therefore, enum values can only be added, existing
-// enum
-// values cannot be deleted nor renamed. Updating a template field
-// from
-// optional to required is NOT allowed.
+// the existing values. Therefore, enum values can only be added,
+// existing enum values cannot be deleted nor renamed. Updating a
+// template field from optional to required is NOT allowed.
 func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTagTemplatesFieldsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8431,7 +7784,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8497,7 +7850,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a field in a tag template. This method cannot be used to update the\nfield type. Users should enable the Data Catalog API in the project\nidentified by the `name` parameter (see [Data Catalog Resource Project]\n(https://cloud.google.com/data-catalog/docs/concepts/resource-project) for\nmore information).",
+	//   "description": "Updates a field in a tag template. This method cannot be used to update the field type. Users should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project] (https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.patch",
@@ -8506,14 +7859,14 @@ func (c *ProjectsLocationsTagTemplatesFieldsPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the tag template field. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
+	//       "description": "Required. The name of the tag template field. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. The field mask specifies the parts of the template to be updated.\nAllowed fields:\n\n  * `display_name`\n  * `type.enum_type`\n  * `is_required`\n\nIf `update_mask` is not set or empty, all of the allowed fields above will\nbe updated.\n\nWhen updating an enum type, the provided values will be merged with the\nexisting values. Therefore, enum values can only be added, existing enum\nvalues cannot be deleted nor renamed. Updating a template field from\noptional to required is NOT allowed.",
+	//       "description": "Optional. The field mask specifies the parts of the template to be updated. Allowed fields: * `display_name` * `type.enum_type` * `is_required` If `update_mask` is not set or empty, all of the allowed fields above will be updated. When updating an enum type, the provided values will be merged with the existing values. Therefore, enum values can only be added, existing enum values cannot be deleted nor renamed. Updating a template field from optional to required is NOT allowed.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8545,13 +7898,10 @@ type ProjectsLocationsTagTemplatesFieldsRenameCall struct {
 }
 
 // Rename: Renames a field in a tag template. The user should enable the
-// Data Catalog
-// API in the project identified by the `name` parameter (see [Data
-// Catalog
-// Resource
-// Project](https://cloud.google.com/data-catalog/docs/c
-// oncepts/resource-project)
-// for more information).
+// Data Catalog API in the project identified by the `name` parameter
+// (see [Data Catalog Resource
+// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
+// project) for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Rename(name string, googleclouddatacatalogv1beta1renametagtemplatefieldrequest *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) *ProjectsLocationsTagTemplatesFieldsRenameCall {
 	c := &ProjectsLocationsTagTemplatesFieldsRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8586,7 +7936,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) Header() http.Header {
 
 func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8652,7 +8002,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Renames a field in a tag template. The user should enable the Data Catalog\nAPI in the project identified by the `name` parameter (see [Data Catalog\nResource\nProject](https://cloud.google.com/data-catalog/docs/concepts/resource-project)\nfor more information).",
+	//   "description": "Renames a field in a tag template. The user should enable the Data Catalog API in the project identified by the `name` parameter (see [Data Catalog Resource Project](https://cloud.google.com/data-catalog/docs/concepts/resource-project) for more information).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}:rename",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.rename",
@@ -8661,7 +8011,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsRenameCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the tag template. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
+	//       "description": "Required. The name of the tag template. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
 	//       "required": true,
@@ -8694,10 +8044,9 @@ type ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall struct {
 }
 
 // Rename: Renames an enum value in a tag template. The enum values have
-// to be unique
-// within one enum field. Thus, an enum value cannot be renamed with a
-// name
-// used in any other enum value within the same enum field.
+// to be unique within one enum field. Thus, an enum value cannot be
+// renamed with a name used in any other enum value within the same enum
+// field.
 func (r *ProjectsLocationsTagTemplatesFieldsEnumValuesService) Rename(name string, googleclouddatacatalogv1beta1renametagtemplatefieldenumvaluerequest *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldEnumValueRequest) *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall {
 	c := &ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8732,7 +8081,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) Header() http.
 
 func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8798,7 +8147,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Renames an enum value in a tag template. The enum values have to be unique\nwithin one enum field. Thus, an enum value cannot be renamed with a name\nused in any other enum value within the same enum field.",
+	//   "description": "Renames an enum value in a tag template. The enum values have to be unique within one enum field. Thus, an enum value cannot be renamed with a name used in any other enum value within the same enum field.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tagTemplates/{tagTemplatesId}/fields/{fieldsId}/enumValues/{enumValuesId}:rename",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.tagTemplates.fields.enumValues.rename",
@@ -8807,7 +8156,7 @@ func (c *ProjectsLocationsTagTemplatesFieldsEnumValuesRenameCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the enum field value. Example:\n\n* projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name}",
+	//       "description": "Required. The name of the enum field value. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+/enumValues/[^/]+$",
 	//       "required": true,
@@ -8874,7 +8223,7 @@ func (c *ProjectsLocationsTaxonomiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8979,8 +8328,7 @@ type ProjectsLocationsTaxonomiesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a taxonomy. This operation will also delete
-// all
+// Delete: Deletes a taxonomy. This operation will also delete all
 // policy tags in this taxonomy along with their associated policies.
 func (r *ProjectsLocationsTaxonomiesService) Delete(name string) *ProjectsLocationsTaxonomiesDeleteCall {
 	c := &ProjectsLocationsTaxonomiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9015,7 +8363,7 @@ func (c *ProjectsLocationsTaxonomiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9074,7 +8422,7 @@ func (c *ProjectsLocationsTaxonomiesDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a taxonomy. This operation will also delete all\npolicy tags in this taxonomy along with their associated policies.",
+	//   "description": "Deletes a taxonomy. This operation will also delete all policy tags in this taxonomy along with their associated policies.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datacatalog.projects.locations.taxonomies.delete",
@@ -9083,7 +8431,7 @@ func (c *ProjectsLocationsTaxonomiesDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the taxonomy to be deleted. All policy tags in\nthis taxonomy will also be deleted.",
+	//       "description": "Required. Resource name of the taxonomy to be deleted. All policy tags in this taxonomy will also be deleted.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -9112,12 +8460,9 @@ type ProjectsLocationsTaxonomiesExportCall struct {
 	header_      http.Header
 }
 
-// Export: Exports all taxonomies and their policy tags in a
-// project.
-//
+// Export: Exports all taxonomies and their policy tags in a project.
 // This method generates SerializedTaxonomy protos with nested policy
-// tags
-// that can be used as an input for future ImportTaxonomies calls.
+// tags that can be used as an input for future ImportTaxonomies calls.
 func (r *ProjectsLocationsTaxonomiesService) Export(parent string) *ProjectsLocationsTaxonomiesExportCall {
 	c := &ProjectsLocationsTaxonomiesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9175,7 +8520,7 @@ func (c *ProjectsLocationsTaxonomiesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9239,7 +8584,7 @@ func (c *ProjectsLocationsTaxonomiesExportCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports all taxonomies and their policy tags in a project.\n\nThis method generates SerializedTaxonomy protos with nested policy tags\nthat can be used as an input for future ImportTaxonomies calls.",
+	//   "description": "Exports all taxonomies and their policy tags in a project. This method generates SerializedTaxonomy protos with nested policy tags that can be used as an input for future ImportTaxonomies calls.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies:export",
 	//   "httpMethod": "GET",
 	//   "id": "datacatalog.projects.locations.taxonomies.export",
@@ -9248,7 +8593,7 @@ func (c *ProjectsLocationsTaxonomiesExportCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the project that taxonomies to be exported\nwill share.",
+	//       "description": "Required. Resource name of the project that taxonomies to be exported will share.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -9332,7 +8677,7 @@ func (c *ProjectsLocationsTaxonomiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9468,7 +8813,7 @@ func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9541,7 +8886,7 @@ func (c *ProjectsLocationsTaxonomiesGetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -9574,12 +8919,8 @@ type ProjectsLocationsTaxonomiesImportCall struct {
 }
 
 // Import: Imports all taxonomies and their policy tags to a project as
-// new
-// taxonomies.
-//
-// This method provides a bulk taxonomy / policy tag creation using
-// nested
-// proto structure.
+// new taxonomies. This method provides a bulk taxonomy / policy tag
+// creation using nested proto structure.
 func (r *ProjectsLocationsTaxonomiesService) Import(parent string, googleclouddatacatalogv1beta1importtaxonomiesrequest *GoogleCloudDatacatalogV1beta1ImportTaxonomiesRequest) *ProjectsLocationsTaxonomiesImportCall {
 	c := &ProjectsLocationsTaxonomiesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9614,7 +8955,7 @@ func (c *ProjectsLocationsTaxonomiesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9680,7 +9021,7 @@ func (c *ProjectsLocationsTaxonomiesImportCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports all taxonomies and their policy tags to a project as new\ntaxonomies.\n\nThis method provides a bulk taxonomy / policy tag creation using nested\nproto structure.",
+	//   "description": "Imports all taxonomies and their policy tags to a project as new taxonomies. This method provides a bulk taxonomy / policy tag creation using nested proto structure.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies:import",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.taxonomies.import",
@@ -9722,8 +9063,7 @@ type ProjectsLocationsTaxonomiesListCall struct {
 }
 
 // List: Lists all taxonomies in a project in a particular location that
-// the caller
-// has permission to view.
+// the caller has permission to view.
 func (r *ProjectsLocationsTaxonomiesService) List(parent string) *ProjectsLocationsTaxonomiesListCall {
 	c := &ProjectsLocationsTaxonomiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9731,8 +9071,8 @@ func (r *ProjectsLocationsTaxonomiesService) List(parent string) *ProjectsLocati
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Must be a value between 1 and 1000.
-// If not set, defaults to 50.
+// of items to return. Must be a value between 1 and 1000. If not set,
+// defaults to 50.
 func (c *ProjectsLocationsTaxonomiesListCall) PageSize(pageSize int64) *ProjectsLocationsTaxonomiesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9740,8 +9080,7 @@ func (c *ProjectsLocationsTaxonomiesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": The
 // next_page_token value returned from a previous list request, if any.
-// If
-// not set, defaults to an empty string.
+// If not set, defaults to an empty string.
 func (c *ProjectsLocationsTaxonomiesListCall) PageToken(pageToken string) *ProjectsLocationsTaxonomiesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9784,7 +9123,7 @@ func (c *ProjectsLocationsTaxonomiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9848,7 +9187,7 @@ func (c *ProjectsLocationsTaxonomiesListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all taxonomies in a project in a particular location that the caller\nhas permission to view.",
+	//   "description": "Lists all taxonomies in a project in a particular location that the caller has permission to view.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies",
 	//   "httpMethod": "GET",
 	//   "id": "datacatalog.projects.locations.taxonomies.list",
@@ -9857,13 +9196,13 @@ func (c *ProjectsLocationsTaxonomiesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. Must be a value between 1 and 1000.\nIf not set, defaults to 50.",
+	//       "description": "The maximum number of items to return. Must be a value between 1 and 1000. If not set, defaults to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous list request, if any. If\nnot set, defaults to an empty string.",
+	//       "description": "The next_page_token value returned from a previous list request, if any. If not set, defaults to an empty string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9927,12 +9266,9 @@ func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatac
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. For the `FieldMask`
-// definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/re
-// ference/google.protobuf#fieldmask
-// If not set, defaults to all of the fields that are allowed to update.
+// applies to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to
+// update.
 func (c *ProjectsLocationsTaxonomiesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTaxonomiesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9965,7 +9301,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10039,14 +9375,14 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this taxonomy, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
+	//       "description": "Output only. Resource name of this taxonomy, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf not set, defaults to all of the fields that are allowed to update.",
+	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10112,7 +9448,7 @@ func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10185,7 +9521,7 @@ func (c *ProjectsLocationsTaxonomiesSetIamPolicyCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -10218,8 +9554,7 @@ type ProjectsLocationsTaxonomiesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns the permissions that a caller has on the
-// specified taxonomy or
-// policy tag.
+// specified taxonomy or policy tag.
 func (r *ProjectsLocationsTaxonomiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10254,7 +9589,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10318,7 +9653,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the permissions that a caller has on the specified taxonomy or\npolicy tag.",
+	//   "description": "Returns the permissions that a caller has on the specified taxonomy or policy tag.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.taxonomies.testIamPermissions",
@@ -10327,7 +9662,7 @@ func (c *ProjectsLocationsTaxonomiesTestIamPermissionsCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -10394,7 +9729,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10534,7 +9869,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10602,7 +9937,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the policy tag to be deleted. All of its descendant\npolicy tags will also be deleted.",
+	//       "description": "Required. Resource name of the policy tag to be deleted. All of its descendant policy tags will also be deleted.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
@@ -10675,7 +10010,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10811,7 +10146,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10884,7 +10219,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
@@ -10924,8 +10259,8 @@ func (r *ProjectsLocationsTaxonomiesPolicyTagsService) List(parent string) *Proj
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Must be a value between 1 and 1000.
-// If not set, defaults to 50.
+// of items to return. Must be a value between 1 and 1000. If not set,
+// defaults to 50.
 func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) PageSize(pageSize int64) *ProjectsLocationsTaxonomiesPolicyTagsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10933,8 +10268,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) PageSize(pageSize int64)
 
 // PageToken sets the optional parameter "pageToken": The
 // next_page_token value returned from a previous List request, if any.
-// If
-// not set, defaults to an empty string.
+// If not set, defaults to an empty string.
 func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) PageToken(pageToken string) *ProjectsLocationsTaxonomiesPolicyTagsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10977,7 +10311,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11050,13 +10384,13 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. Must be a value between 1 and 1000.\nIf not set, defaults to 50.",
+	//       "description": "The maximum number of items to return. Must be a value between 1 and 1000. If not set, defaults to 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any. If\nnot set, defaults to an empty string.",
+	//       "description": "The next_page_token value returned from a previous List request, if any. If not set, defaults to an empty string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11120,19 +10454,13 @@ func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, google
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
-// applies to the resource. Only display_name, description
-// and
+// applies to the resource. Only display_name, description and
 // parent_policy_tag can be updated and thus can be listed in the mask.
-// If
-// update_mask is not provided, all allowed fields (i.e.
-// display_name,
-// description and parent) will be updated. For more information
-// including the
-// `FieldMask` definition,
-// see
-// https://developers.google.com/protocol-buffers/docs/reference/goog
-// le.protobuf#fieldmask
-// If not set, defaults to all of the fields that are allowed to update.
+// If update_mask is not provided, all allowed fields (i.e.
+// display_name, description and parent) will be updated. For more
+// information including the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to
+// update.
 func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -11165,7 +10493,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11239,14 +10567,14 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this policy tag, whose format is:\n\"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
+	//       "description": "Output only. Resource name of this policy tag, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask applies to the resource. Only display_name, description and\nparent_policy_tag can be updated and thus can be listed in the mask. If\nupdate_mask is not provided, all allowed fields (i.e. display_name,\ndescription and parent) will be updated. For more information including the\n`FieldMask` definition, see\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf not set, defaults to all of the fields that are allowed to update.",
+	//       "description": "The update mask applies to the resource. Only display_name, description and parent_policy_tag can be updated and thus can be listed in the mask. If update_mask is not provided, all allowed fields (i.e. display_name, description and parent) will be updated. For more information including the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -11312,7 +10640,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) Header() http.He
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11385,7 +10713,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,
@@ -11418,8 +10746,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns the permissions that a caller has on the
-// specified taxonomy or
-// policy tag.
+// specified taxonomy or policy tag.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11454,7 +10781,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Header() h
 
 func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11518,7 +10845,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the permissions that a caller has on the specified taxonomy or\npolicy tag.",
+	//   "description": "Returns the permissions that a caller has on the specified taxonomy or policy tag.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/taxonomies/{taxonomiesId}/policyTags/{policyTagsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "datacatalog.projects.locations.taxonomies.policyTags.testIamPermissions",
@@ -11527,7 +10854,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,

@@ -169,8 +169,7 @@ type TopicsService struct {
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckId: The acknowledgment ID for the message being acknowledged. This
-	// was
-	// returned by the Pub/Sub system in the Pull response.
+	// was returned by the Pub/Sub system in the Pull response.
 	AckId []string `json:"ackId,omitempty"`
 
 	// Subscription: The subscription whose message is being acknowledged.
@@ -200,22 +199,13 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: An empty message that you can re-use to avoid defining
-// duplicated empty
-// messages in your project. A typical example is to use it as argument
-// or the
-// return value of a service API. For instance:
-//
-//   service Foo {
-//     rpc Bar (proto2.Empty) returns (proto2.Empty) { };
-//   };
-//
-// BEGIN GOOGLE-INTERNAL
-// The difference between this one and net/rpc/empty-message.proto is
-// that
-// 1) The generated message here is in proto2 C++ API.
-// 2) The proto2.Empty has minimum dependencies
-//    (no message_set or net/rpc dependencies)
-// END GOOGLE-INTERNAL
+// duplicated empty messages in your project. A typical example is to
+// use it as argument or the return value of a service API. For
+// instance: service Foo { rpc Bar (proto2.Empty) returns (proto2.Empty)
+// { }; }; BEGIN GOOGLE-INTERNAL The difference between this one and
+// net/rpc/empty-message.proto is that 1) The generated message here is
+// in proto2 C++ API. 2) The proto2.Empty has minimum dependencies (no
+// message_set or net/rpc dependencies) END GOOGLE-INTERNAL
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -225,31 +215,16 @@ type Empty struct {
 // Label: A key-value pair applied to a given object.
 type Label struct {
 	// Key: The key of a label is a syntactically valid URL (as per RFC
-	// 1738) with
-	// the "scheme" and initial slashes omitted and with the
-	// additional
-	// restrictions noted below.  Each key should be globally unique.
-	// The
-	// "host" portion is called the "namespace" and is not
-	// necessarily
-	// resolvable to a network endpoint.  Instead, the namespace indicates
-	// what
-	// system or entity defines the semantics of the label.  Namespaces do
-	// not
-	// restrict the set of objects to which a label may be associated.
-	//
-	// Keys are defined by the following grammar:
-	//
-	//   key          = hostname "/" kpath
-	//   kpath        = ksegment *[ "/" ksegment ]
-	//   ksegment     = alphadigit | *[ alphadigit | "-" | "_" | "."
-	// ]
-	//
-	// where "hostname" and "alphadigit" are defined as in RFC
-	// 1738.
-	//
-	// Example key:
-	//   spanner.google.com/universe
+	// 1738) with the "scheme" and initial slashes omitted and with the
+	// additional restrictions noted below. Each key should be globally
+	// unique. The "host" portion is called the "namespace" and is not
+	// necessarily resolvable to a network endpoint. Instead, the namespace
+	// indicates what system or entity defines the semantics of the label.
+	// Namespaces do not restrict the set of objects to which a label may be
+	// associated. Keys are defined by the following grammar: key = hostname
+	// "/" kpath kpath = ksegment *[ "/" ksegment ] ksegment = alphadigit |
+	// *[ alphadigit | "-" | "_" | "." ] where "hostname" and "alphadigit"
+	// are defined as in RFC 1738. Example key: spanner.google.com/universe
 	Key string `json:"key,omitempty"`
 
 	// NumValue: An integer value.
@@ -284,10 +259,8 @@ func (s *Label) MarshalJSON() ([]byte, error) {
 // ListSubscriptionsResponse: Response for the ListSubscriptions method.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there are more
-	// subscriptions that match the
-	// request and this value should be passed to the
-	// next
-	// <code>ListSubscriptionsRequest</code> to continue.
+	// subscriptions that match the request and this value should be passed
+	// to the next ListSubscriptionsRequest to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscription: The subscriptions that match the request.
@@ -323,10 +296,8 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicsResponse: Response for the ListTopics method.
 type ListTopicsResponse struct {
 	// NextPageToken: If not empty, indicates that there are more topics
-	// that match the request,
-	// and this value should be passed to the next
-	// <code>ListTopicsRequest</code>
-	// to continue.
+	// that match the request, and this value should be passed to the next
+	// ListTopicsRequest to continue.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Topic: The resulting topics.
@@ -362,28 +333,22 @@ func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: The new ack deadline with respect to the time
-	// this request was sent to the
-	// Pub/Sub system. Must be >= 0. For example, if the value is 10, the
-	// new ack
-	// deadline will expire 10 seconds after the ModifyAckDeadline call was
-	// made.
-	// Specifying zero may immediately make the message available for
-	// another pull
-	// request.
+	// this request was sent to the Pub/Sub system. Must be >= 0. For
+	// example, if the value is 10, the new ack deadline will expire 10
+	// seconds after the ModifyAckDeadline call was made. Specifying zero
+	// may immediately make the message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// AckId: The acknowledgment ID. Either this or ack_ids must be
-	// populated,
-	// not both.
+	// populated, not both.
 	AckId string `json:"ackId,omitempty"`
 
-	// AckIds: List of acknowledgment IDs. Either this field or
-	// ack_id
+	// AckIds: List of acknowledgment IDs. Either this field or ack_id
 	// should be populated, not both.
 	AckIds []string `json:"ackIds,omitempty"`
 
-	// Subscription: Next Index: 5
-	// The name of the subscription from which messages are being pulled.
+	// Subscription: Next Index: 5 The name of the subscription from which
+	// messages are being pulled.
 	Subscription string `json:"subscription,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds")
@@ -412,9 +377,8 @@ func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
-	// PushConfig: An empty <code>push_config</code> indicates that the
-	// Pub/Sub system should
-	// pause pushing messages from the given subscription.
+	// PushConfig: An empty push_config indicates that the Pub/Sub system
+	// should pause pushing messages from the given subscription.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// Subscription: The name of the subscription.
@@ -477,10 +441,8 @@ func (s *PublishBatchRequest) MarshalJSON() ([]byte, error) {
 // PublishBatchResponse: Response for the PublishBatch method.
 type PublishBatchResponse struct {
 	// MessageIds: The server-assigned ID of each published message, in the
-	// same order as
-	// the messages in the request. IDs are guaranteed to be unique
-	// within
-	// the topic.
+	// same order as the messages in the request. IDs are guaranteed to be
+	// unique within the topic.
 	MessageIds []string `json:"messageIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -545,10 +507,9 @@ func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 // event.
 type PubsubEvent struct {
 	// Deleted: Indicates that this subscription has been deleted. (Note
-	// that pull
-	// subscribers will always receive NOT_FOUND in response in their
-	// pull
-	// request on the subscription, rather than seeing this boolean.)
+	// that pull subscribers will always receive NOT_FOUND in response in
+	// their pull request on the subscription, rather than seeing this
+	// boolean.)
 	Deleted bool `json:"deleted,omitempty"`
 
 	// Message: A received message.
@@ -589,21 +550,18 @@ type PubsubMessage struct {
 	Data string `json:"data,omitempty"`
 
 	// Label: Optional list of labels for this message. Keys in this
-	// collection must
-	// be unique.
+	// collection must be unique.
 	Label []*Label `json:"label,omitempty"`
 
 	// MessageId: ID of this message assigned by the server at publication
-	// time. Guaranteed
-	// to be unique within the topic. This value may be read by a
-	// subscriber
-	// that receives a PubsubMessage via a Pull call or a push delivery. It
-	// must
-	// not be populated by a publisher in a Publish call.
+	// time. Guaranteed to be unique within the topic. This value may be
+	// read by a subscriber that receives a PubsubMessage via a Pull call or
+	// a push delivery. It must not be populated by a publisher in a Publish
+	// call.
 	MessageId string `json:"messageId,omitempty"`
 
-	// PublishTime: The time at which the message was published.
-	// The time is milliseconds since the UNIX epoch.
+	// PublishTime: The time at which the message was published. The time is
+	// milliseconds since the UNIX epoch.
 	PublishTime int64 `json:"publishTime,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -632,19 +590,16 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 // PullBatchRequest: Request for the PullBatch method.
 type PullBatchRequest struct {
 	// MaxEvents: The maximum number of PubsubEvents returned for this
-	// request. The Pub/Sub
-	// system may return fewer than the number of events specified.
+	// request. The Pub/Sub system may return fewer than the number of
+	// events specified.
 	MaxEvents int64 `json:"maxEvents,omitempty"`
 
 	// ReturnImmediately: If this is specified as true the system will
-	// respond immediately even if
-	// it is not able to return a message in the Pull response. Otherwise
-	// the
-	// system is allowed to wait until at least one message is available
-	// rather
-	// than returning no messages. The client may cancel the request if it
-	// does
-	// not wish to wait any longer for the response.
+	// respond immediately even if it is not able to return a message in the
+	// Pull response. Otherwise the system is allowed to wait until at least
+	// one message is available rather than returning no messages. The
+	// client may cancel the request if it does not wish to wait any longer
+	// for the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
 
 	// Subscription: The subscription from which messages should be pulled.
@@ -676,12 +631,10 @@ func (s *PullBatchRequest) MarshalJSON() ([]byte, error) {
 // PullBatchResponse: Response for the PullBatch method.
 type PullBatchResponse struct {
 	// PullResponses: Received Pub/Sub messages or status events. The
-	// Pub/Sub system will return
-	// zero messages if there are no more messages available in the backlog.
-	// The
-	// Pub/Sub system may return fewer than the max_events requested even
-	// if
-	// there are more messages available in the backlog.
+	// Pub/Sub system will return zero messages if there are no more
+	// messages available in the backlog. The Pub/Sub system may return
+	// fewer than the max_events requested even if there are more messages
+	// available in the backlog.
 	PullResponses []*PullResponse `json:"pullResponses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -714,14 +667,11 @@ func (s *PullBatchResponse) MarshalJSON() ([]byte, error) {
 // PullRequest: Request for the Pull method.
 type PullRequest struct {
 	// ReturnImmediately: If this is specified as true the system will
-	// respond immediately even if
-	// it is not able to return a message in the Pull response. Otherwise
-	// the
-	// system is allowed to wait until at least one message is available
-	// rather
-	// than returning FAILED_PRECONDITION. The client may cancel the request
-	// if
-	// it does not wish to wait any longer for the response.
+	// respond immediately even if it is not able to return a message in the
+	// Pull response. Otherwise the system is allowed to wait until at least
+	// one message is available rather than returning FAILED_PRECONDITION.
+	// The client may cancel the request if it does not wish to wait any
+	// longer for the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
 
 	// Subscription: The subscription from which a message should be pulled.
@@ -751,9 +701,8 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PullResponse: Either a <code>PubsubMessage</code> or a truncation
-// event. One of these two
-// must be populated.
+// PullResponse: Either a PubsubMessage or a truncation event. One of
+// these two must be populated.
 type PullResponse struct {
 	// AckId: This ID must be used to acknowledge the received event or
 	// message.
@@ -792,8 +741,8 @@ func (s *PullResponse) MarshalJSON() ([]byte, error) {
 // PushConfig: Configuration for a push delivery endpoint.
 type PushConfig struct {
 	// PushEndpoint: A URL locating the endpoint to which messages should be
-	// pushed.
-	// For example, a Webhook endpoint might use "https://example.com/push".
+	// pushed. For example, a Webhook endpoint might use
+	// "https://example.com/push".
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PushEndpoint") to
@@ -822,44 +771,28 @@ func (s *PushConfig) MarshalJSON() ([]byte, error) {
 // Subscription: A subscription resource.
 type Subscription struct {
 	// AckDeadlineSeconds: For either push or pull delivery, the value is
-	// the maximum time after a
-	// subscriber receives a message before the subscriber should
-	// acknowledge or
-	// Nack the message. If the Ack deadline for a message passes without
-	// an
-	// Ack or a Nack, the Pub/Sub system will eventually redeliver the
-	// message.
-	// If a subscriber acknowledges after the deadline, the Pub/Sub system
-	// may
-	// accept the Ack, but it is possible that the message has been
-	// already
-	// delivered again. Multiple Acks to the message are allowed and
-	// will
-	// succeed.
-	//
-	// For push delivery, this value is used to set the request timeout
-	// for
-	// the call to the push endpoint.
-	//
-	// For pull delivery, this value is used as the initial value for the
-	// Ack
-	// deadline. It may be overridden for each message using its
-	// corresponding
-	// ack_id with <code>ModifyAckDeadline</code>.
-	// While a message is outstanding (i.e. it has been delivered to a
-	// pull
+	// the maximum time after a subscriber receives a message before the
+	// subscriber should acknowledge or Nack the message. If the Ack
+	// deadline for a message passes without an Ack or a Nack, the Pub/Sub
+	// system will eventually redeliver the message. If a subscriber
+	// acknowledges after the deadline, the Pub/Sub system may accept the
+	// Ack, but it is possible that the message has been already delivered
+	// again. Multiple Acks to the message are allowed and will succeed. For
+	// push delivery, this value is used to set the request timeout for the
+	// call to the push endpoint. For pull delivery, this value is used as
+	// the initial value for the Ack deadline. It may be overridden for each
+	// message using its corresponding ack_id with ModifyAckDeadline. While
+	// a message is outstanding (i.e. it has been delivered to a pull
 	// subscriber and the subscriber has not yet Acked or Nacked), the
-	// Pub/Sub
-	// system will not deliver that message to another pull subscriber
-	// (on a best-effort basis).
+	// Pub/Sub system will not deliver that message to another pull
+	// subscriber (on a best-effort basis).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// Name: Name of the subscription.
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is
-	// used to configure it.
+	// field is used to configure it.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// Topic: The name of the topic from which this subscription is
@@ -937,14 +870,11 @@ type SubscriptionsAcknowledgeCall struct {
 }
 
 // Acknowledge: Acknowledges a particular received message: the Pub/Sub
-// system can remove
-// the given message from the subscription. Acknowledging a message
-// whose
-// Ack deadline has expired may succeed, but the message could have
-// been
-// already redelivered. Acknowledging a message more than once will
-// not
-// result in an error. This is only used for messages received via pull.
+// system can remove the given message from the subscription.
+// Acknowledging a message whose Ack deadline has expired may succeed,
+// but the message could have been already redelivered. Acknowledging a
+// message more than once will not result in an error. This is only used
+// for messages received via pull.
 func (r *SubscriptionsService) Acknowledge(acknowledgerequest *AcknowledgeRequest) *SubscriptionsAcknowledgeCall {
 	c := &SubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.acknowledgerequest = acknowledgerequest
@@ -978,7 +908,7 @@ func (c *SubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1039,7 +969,7 @@ func (c *SubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges a particular received message: the Pub/Sub system can remove\nthe given message from the subscription. Acknowledging a message whose\nAck deadline has expired may succeed, but the message could have been\nalready redelivered. Acknowledging a message more than once will not\nresult in an error. This is only used for messages received via pull.",
+	//   "description": "Acknowledges a particular received message: the Pub/Sub system can remove the given message from the subscription. Acknowledging a message whose Ack deadline has expired may succeed, but the message could have been already redelivered. Acknowledging a message more than once will not result in an error. This is only used for messages received via pull.",
 	//   "flatPath": "v1beta1a/subscriptions/acknowledge",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.acknowledge",
@@ -1071,13 +1001,11 @@ type SubscriptionsCreateCall struct {
 }
 
 // Create: Creates a subscription on a given topic for a given
-// subscriber.
-// If the subscription already exists, returns ALREADY_EXISTS.
-// If the corresponding topic doesn't exist, returns NOT_FOUND.
-//
-// If the name is not provided in the request, the server will assign a
-// random
-// name for this subscription on the same project as the topic.
+// subscriber. If the subscription already exists, returns
+// ALREADY_EXISTS. If the corresponding topic doesn't exist, returns
+// NOT_FOUND. If the name is not provided in the request, the server
+// will assign a random name for this subscription on the same project
+// as the topic.
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
 	c := &SubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -1111,7 +1039,7 @@ func (c *SubscriptionsCreateCall) Header() http.Header {
 
 func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1172,7 +1100,7 @@ func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription on a given topic for a given subscriber.\nIf the subscription already exists, returns ALREADY_EXISTS.\nIf the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic.",
+	//   "description": "Creates a subscription on a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
 	//   "flatPath": "v1beta1a/subscriptions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.create",
@@ -1204,10 +1132,8 @@ type SubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes an existing subscription. All pending messages in the
-// subscription
-// are immediately dropped. Calls to Pull after deletion will
-// return
-// NOT_FOUND.
+// subscription are immediately dropped. Calls to Pull after deletion
+// will return NOT_FOUND.
 func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -1241,7 +1167,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1300,7 +1226,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing subscription. All pending messages in the subscription\nare immediately dropped. Calls to Pull after deletion will return\nNOT_FOUND.",
+	//   "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to Pull after deletion will return NOT_FOUND.",
 	//   "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.subscriptions.delete",
@@ -1383,7 +1309,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1497,8 +1423,7 @@ func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListC
 }
 
 // PageToken sets the optional parameter "pageToken": The value obtained
-// in the last <code>ListSubscriptionsResponse</code>
-// for continuation.
+// in the last ListSubscriptionsResponse for continuation.
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1548,7 +1473,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1620,7 +1545,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value obtained in the last \u003ccode\u003eListSubscriptionsResponse\u003c/code\u003e\nfor continuation.",
+	//       "description": "The value obtained in the last ListSubscriptionsResponse for continuation.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1708,7 +1633,7 @@ func (c *SubscriptionsModifyAckDeadlineCall) Header() http.Header {
 
 func (c *SubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1800,15 +1725,11 @@ type SubscriptionsModifyPushConfigCall struct {
 	header_                 http.Header
 }
 
-// ModifyPushConfig: Modifies the <code>PushConfig</code> for a
-// specified subscription.
-// This method can be used to suspend the flow of messages to an
-// endpoint
-// by clearing the <code>PushConfig</code> field in the request.
-// Messages
-// will be accumulated for delivery even if no push configuration
-// is
-// defined or while the configuration is modified.
+// ModifyPushConfig: Modifies the PushConfig for a specified
+// subscription. This method can be used to suspend the flow of messages
+// to an endpoint by clearing the PushConfig field in the request.
+// Messages will be accumulated for delivery even if no push
+// configuration is defined or while the configuration is modified.
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
 	c := &SubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.modifypushconfigrequest = modifypushconfigrequest
@@ -1842,7 +1763,7 @@ func (c *SubscriptionsModifyPushConfigCall) Header() http.Header {
 
 func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1903,7 +1824,7 @@ func (c *SubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the \u003ccode\u003ePushConfig\u003c/code\u003e for a specified subscription.\nThis method can be used to suspend the flow of messages to an endpoint\nby clearing the \u003ccode\u003ePushConfig\u003c/code\u003e field in the request. Messages\nwill be accumulated for delivery even if no push configuration is\ndefined or while the configuration is modified.",
+	//   "description": "Modifies the PushConfig for a specified subscription. This method can be used to suspend the flow of messages to an endpoint by clearing the PushConfig field in the request. Messages will be accumulated for delivery even if no push configuration is defined or while the configuration is modified.",
 	//   "flatPath": "v1beta1a/subscriptions/modifyPushConfig",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.modifyPushConfig",
@@ -1934,14 +1855,11 @@ type SubscriptionsPullCall struct {
 	header_     http.Header
 }
 
-// Pull: Pulls a single message from the server.
-// If return_immediately is true, and no messages are available in
-// the
-// subscription, this method returns FAILED_PRECONDITION. The system is
-// free
-// to return an UNAVAILABLE error if no messages are available in
-// a
-// reasonable amount of time (to reduce system load).
+// Pull: Pulls a single message from the server. If return_immediately
+// is true, and no messages are available in the subscription, this
+// method returns FAILED_PRECONDITION. The system is free to return an
+// UNAVAILABLE error if no messages are available in a reasonable amount
+// of time (to reduce system load).
 func (r *SubscriptionsService) Pull(pullrequest *PullRequest) *SubscriptionsPullCall {
 	c := &SubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pullrequest = pullrequest
@@ -1975,7 +1893,7 @@ func (c *SubscriptionsPullCall) Header() http.Header {
 
 func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2036,7 +1954,7 @@ func (c *SubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullResponse,
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls a single message from the server.\nIf return_immediately is true, and no messages are available in the\nsubscription, this method returns FAILED_PRECONDITION. The system is free\nto return an UNAVAILABLE error if no messages are available in a\nreasonable amount of time (to reduce system load).",
+	//   "description": "Pulls a single message from the server. If return_immediately is true, and no messages are available in the subscription, this method returns FAILED_PRECONDITION. The system is free to return an UNAVAILABLE error if no messages are available in a reasonable amount of time (to reduce system load).",
 	//   "flatPath": "v1beta1a/subscriptions/pull",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.pull",
@@ -2068,11 +1986,9 @@ type SubscriptionsPullBatchCall struct {
 }
 
 // PullBatch: Pulls messages from the server. Returns an empty list if
-// there are no
-// messages available in the backlog. The system is free to return
-// UNAVAILABLE
-// if there are too many pull requests outstanding for the given
-// subscription.
+// there are no messages available in the backlog. The system is free to
+// return UNAVAILABLE if there are too many pull requests outstanding
+// for the given subscription.
 func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *SubscriptionsPullBatchCall {
 	c := &SubscriptionsPullBatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pullbatchrequest = pullbatchrequest
@@ -2106,7 +2022,7 @@ func (c *SubscriptionsPullBatchCall) Header() http.Header {
 
 func (c *SubscriptionsPullBatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2167,7 +2083,7 @@ func (c *SubscriptionsPullBatchCall) Do(opts ...googleapi.CallOption) (*PullBatc
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. Returns an empty list if there are no\nmessages available in the backlog. The system is free to return UNAVAILABLE\nif there are too many pull requests outstanding for the given subscription.",
+	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The system is free to return UNAVAILABLE if there are too many pull requests outstanding for the given subscription.",
 	//   "flatPath": "v1beta1a/subscriptions/pullBatch",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.subscriptions.pullBatch",
@@ -2232,7 +2148,7 @@ func (c *TopicsCreateCall) Header() http.Header {
 
 func (c *TopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2325,10 +2241,8 @@ type TopicsDeleteCall struct {
 }
 
 // Delete: Deletes the topic with the given name. Returns NOT_FOUND if
-// the topic does
-// not exist. After a topic is deleted, a new topic may be created with
-// the
-// same name.
+// the topic does not exist. After a topic is deleted, a new topic may
+// be created with the same name.
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 	c := &TopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -2362,7 +2276,7 @@ func (c *TopicsDeleteCall) Header() http.Header {
 
 func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2421,7 +2335,7 @@ func (c *TopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does\nnot exist. After a topic is deleted, a new topic may be created with the\nsame name.",
+	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name.",
 	//   "flatPath": "v1beta1a/topics/{topicsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.topics.delete",
@@ -2461,11 +2375,9 @@ type TopicsGetCall struct {
 }
 
 // Get: Gets the configuration of a topic. Since the topic only has the
-// name
-// attribute, this method is only useful to check the existence of a
-// topic.
-// If other attributes are added in the future, they will be returned
-// here.
+// name attribute, this method is only useful to check the existence of
+// a topic. If other attributes are added in the future, they will be
+// returned here.
 func (r *TopicsService) Get(topic string) *TopicsGetCall {
 	c := &TopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -2509,7 +2421,7 @@ func (c *TopicsGetCall) Header() http.Header {
 
 func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2571,7 +2483,7 @@ func (c *TopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration of a topic. Since the topic only has the name\nattribute, this method is only useful to check the existence of a topic.\nIf other attributes are added in the future, they will be returned here.",
+	//   "description": "Gets the configuration of a topic. Since the topic only has the name attribute, this method is only useful to check the existence of a topic. If other attributes are added in the future, they will be returned here.",
 	//   "flatPath": "v1beta1a/topics/{topicsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.topics.get",
@@ -2623,8 +2535,7 @@ func (c *TopicsListCall) MaxResults(maxResults int64) *TopicsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": The value obtained
-// in the last <code>ListTopicsResponse</code>
-// for continuation.
+// in the last ListTopicsResponse for continuation.
 func (c *TopicsListCall) PageToken(pageToken string) *TopicsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2674,7 +2585,7 @@ func (c *TopicsListCall) Header() http.Header {
 
 func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2746,7 +2657,7 @@ func (c *TopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsResponse, 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value obtained in the last \u003ccode\u003eListTopicsResponse\u003c/code\u003e\nfor continuation.",
+	//       "description": "The value obtained in the last ListTopicsResponse for continuation.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2799,9 +2710,8 @@ type TopicsPublishCall struct {
 	header_        http.Header
 }
 
-// Publish: Adds a message to the topic.  Returns NOT_FOUND if the topic
-// does not
-// exist.
+// Publish: Adds a message to the topic. Returns NOT_FOUND if the topic
+// does not exist.
 func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCall {
 	c := &TopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.publishrequest = publishrequest
@@ -2835,7 +2745,7 @@ func (c *TopicsPublishCall) Header() http.Header {
 
 func (c *TopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2896,7 +2806,7 @@ func (c *TopicsPublishCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a message to the topic.  Returns NOT_FOUND if the topic does not\nexist.",
+	//   "description": "Adds a message to the topic. Returns NOT_FOUND if the topic does not exist.",
 	//   "flatPath": "v1beta1a/topics/publish",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.topics.publish",
@@ -2928,8 +2838,7 @@ type TopicsPublishBatchCall struct {
 }
 
 // PublishBatch: Adds one or more messages to the topic. Returns
-// NOT_FOUND if the topic does
-// not exist.
+// NOT_FOUND if the topic does not exist.
 func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *TopicsPublishBatchCall {
 	c := &TopicsPublishBatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.publishbatchrequest = publishbatchrequest
@@ -2963,7 +2872,7 @@ func (c *TopicsPublishBatchCall) Header() http.Header {
 
 func (c *TopicsPublishBatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3024,7 +2933,7 @@ func (c *TopicsPublishBatchCall) Do(opts ...googleapi.CallOption) (*PublishBatch
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does\nnot exist.",
+	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist.",
 	//   "flatPath": "v1beta1a/topics/publishBatch",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.topics.publishBatch",

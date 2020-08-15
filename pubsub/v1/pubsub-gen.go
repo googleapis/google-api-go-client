@@ -217,8 +217,8 @@ type ProjectsTopicsSubscriptionsService struct {
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckIds: Required. The acknowledgment ID for the messages being
-	// acknowledged that was returned
-	// by the Pub/Sub system in the `Pull` response. Must not be empty.
+	// acknowledged that was returned by the Pub/Sub system in the `Pull`
+	// response. Must not be empty.
 	AckIds []string `json:"ackIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AckIds") to
@@ -246,95 +246,53 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -362,23 +320,17 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 
 // CreateSnapshotRequest: Request for the `CreateSnapshot` method.
 type CreateSnapshotRequest struct {
-	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
-	// Creating and
-	// managing labels</a>.
+	// Labels: See Creating and managing labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Subscription: Required. The subscription whose backlog the snapshot
-	// retains.
-	// Specifically, the created snapshot is guaranteed to retain:
-	//  (a) The existing backlog on the subscription. More precisely, this
-	// is
-	//      defined as the messages in the subscription's backlog that are
-	//      unacknowledged upon the successful completion of the
-	//      `CreateSnapshot` request; as well as:
-	//  (b) Any messages published to the subscription's topic following
-	// the
-	//      successful completion of the CreateSnapshot request.
-	// Format is `projects/{project}/subscriptions/{sub}`.
+	// retains. Specifically, the created snapshot is guaranteed to retain:
+	// (a) The existing backlog on the subscription. More precisely, this is
+	// defined as the messages in the subscription's backlog that are
+	// unacknowledged upon the successful completion of the `CreateSnapshot`
+	// request; as well as: (b) Any messages published to the subscription's
+	// topic following the successful completion of the CreateSnapshot
+	// request. Format is `projects/{project}/subscriptions/{sub}`.
 	Subscription string `json:"subscription,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -405,46 +357,29 @@ func (s *CreateSnapshotRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeadLetterPolicy: Dead lettering is done on a best effort basis. The
-// same message might be
-// dead lettered multiple times.
-//
-// If validation on any of the fields fails at subscription
-// creation/updation,
-// the create/update subscription request will fail.
+// same message might be dead lettered multiple times. If validation on
+// any of the fields fails at subscription creation/updation, the
+// create/update subscription request will fail.
 type DeadLetterPolicy struct {
 	// DeadLetterTopic: The name of the topic to which dead letter messages
-	// should be published.
-	// Format is `projects/{project}/topics/{topic}`.The Cloud Pub/Sub
-	// service
-	// account associated with the enclosing subscription's parent project
-	// (i.e.,
-	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com)
-	//  must have
-	// permission to Publish() to this topic.
-	//
-	// The operation will fail if the topic does not exist.
-	// Users should ensure that there is a subscription attached to this
-	// topic
-	// since messages published to a topic with no subscriptions are lost.
+	// should be published. Format is
+	// `projects/{project}/topics/{topic}`.The Cloud Pub/Sub service account
+	// associated with the enclosing subscription's parent project (i.e.,
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must
+	// have permission to Publish() to this topic. The operation will fail
+	// if the topic does not exist. Users should ensure that there is a
+	// subscription attached to this topic since messages published to a
+	// topic with no subscriptions are lost.
 	DeadLetterTopic string `json:"deadLetterTopic,omitempty"`
 
 	// MaxDeliveryAttempts: The maximum number of delivery attempts for any
-	// message. The value must be
-	// between 5 and 100.
-	//
-	// The number of delivery attempts is defined as 1 + (the sum of number
-	// of
-	// NACKs and number of times the acknowledgement deadline has been
-	// exceeded
-	// for the message).
-	//
-	// A NACK is any call to ModifyAckDeadline with a 0 deadline. Note
-	// that
-	// client libraries may automatically extend ack_deadlines.
-	//
-	// This field will be honored on a best effort basis.
-	//
-	// If this parameter is 0, a default value of 5 is used.
+	// message. The value must be between 5 and 100. The number of delivery
+	// attempts is defined as 1 + (the sum of number of NACKs and number of
+	// times the acknowledgement deadline has been exceeded for the
+	// message). A NACK is any call to ModifyAckDeadline with a 0 deadline.
+	// Note that client libraries may automatically extend ack_deadlines.
+	// This field will be honored on a best effort basis. If this parameter
+	// is 0, a default value of 5 is used.
 	MaxDeliveryAttempts int64 `json:"maxDeliveryAttempts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeadLetterTopic") to
@@ -472,8 +407,7 @@ func (s *DeadLetterPolicy) MarshalJSON() ([]byte, error) {
 }
 
 // DetachSubscriptionResponse: Response for the DetachSubscription
-// method.
-// Reserved for future use.
+// method. Reserved for future use.
 type DetachSubscriptionResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -481,17 +415,11 @@ type DetachSubscriptionResponse struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -499,20 +427,14 @@ type Empty struct {
 }
 
 // ExpirationPolicy: A policy that specifies the conditions for resource
-// expiration (i.e.,
-// automatic resource deletion).
+// expiration (i.e., automatic resource deletion).
 type ExpirationPolicy struct {
 	// Ttl: Specifies the "time-to-live" duration for an associated
-	// resource. The
-	// resource expires if it is not active for a period of `ttl`. The
-	// definition
-	// of "activity" depends on the type of the associated resource. The
-	// minimum
-	// and maximum allowed values for `ttl` depend on the type of the
-	// associated
-	// resource, as well. If `ttl` is not set, the associated resource
-	// never
-	// expires.
+	// resource. The resource expires if it is not active for a period of
+	// `ttl`. The definition of "activity" depends on the type of the
+	// associated resource. The minimum and maximum allowed values for `ttl`
+	// depend on the type of the associated resource, as well. If `ttl` is
+	// not set, the associated resource never expires.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ttl") to
@@ -539,65 +461,40 @@ func (s *ExpirationPolicy) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -626,8 +523,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // ListSnapshotsResponse: Response for the `ListSnapshots` method.
 type ListSnapshotsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
-	// snapshot that match the
-	// request; this value should be passed in a new `ListSnapshotsRequest`.
+	// snapshot that match the request; this value should be passed in a new
+	// `ListSnapshotsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Snapshots: The resulting snapshots.
@@ -664,10 +561,8 @@ func (s *ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 // method.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
-	// subscriptions that match
-	// the request; this value should be passed in a
-	// new
-	// `ListSubscriptionsRequest` to get more subscriptions.
+	// subscriptions that match the request; this value should be passed in
+	// a new `ListSubscriptionsRequest` to get more subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The subscriptions that match the request.
@@ -704,10 +599,8 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // method.
 type ListTopicSnapshotsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
-	// snapshots that match
-	// the request; this value should be passed in a
-	// new
-	// `ListTopicSnapshotsRequest` to get more snapshots.
+	// snapshots that match the request; this value should be passed in a
+	// new `ListTopicSnapshotsRequest` to get more snapshots.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Snapshots: The names of the snapshots that match the request.
@@ -744,10 +637,8 @@ func (s *ListTopicSnapshotsResponse) MarshalJSON() ([]byte, error) {
 // `ListTopicSubscriptions` method.
 type ListTopicSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
-	// subscriptions that match
-	// the request; this value should be passed in a
-	// new
-	// `ListTopicSubscriptionsRequest` to get more subscriptions.
+	// subscriptions that match the request; this value should be passed in
+	// a new `ListTopicSubscriptionsRequest` to get more subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The names of subscriptions attached to the topic
@@ -784,8 +675,8 @@ func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 // ListTopicsResponse: Response for the `ListTopics` method.
 type ListTopicsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more topics
-	// that match the
-	// request; this value should be passed in a new `ListTopicsRequest`.
+	// that match the request; this value should be passed in a new
+	// `ListTopicsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Topics: The resulting topics.
@@ -822,14 +713,11 @@ func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 // published to the topic.
 type MessageStoragePolicy struct {
 	// AllowedPersistenceRegions: A list of IDs of GCP regions where
-	// messages that are published to the topic
-	// may be persisted in storage. Messages published by publishers running
-	// in
-	// non-allowed GCP regions (or running outside of GCP altogether) will
-	// be
-	// routed for storage in one of the allowed regions. An empty list means
-	// that
-	// no regions are allowed, and is not a valid configuration.
+	// messages that are published to the topic may be persisted in storage.
+	// Messages published by publishers running in non-allowed GCP regions
+	// (or running outside of GCP altogether) will be routed for storage in
+	// one of the allowed regions. An empty list means that no regions are
+	// allowed, and is not a valid configuration.
 	AllowedPersistenceRegions []string `json:"allowedPersistenceRegions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -860,18 +748,14 @@ func (s *MessageStoragePolicy) MarshalJSON() ([]byte, error) {
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
 type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: Required. The new ack deadline with respect to
-	// the time this request was sent to
-	// the Pub/Sub system. For example, if the value is 10, the new
-	// ack deadline will expire 10 seconds after the `ModifyAckDeadline`
-	// call
-	// was made. Specifying zero might immediately make the message
-	// available for
-	// delivery to another subscriber client. This typically results in
-	// an
-	// increase in the rate of message redeliveries (that is,
-	// duplicates).
-	// The minimum deadline you can specify is 0 seconds.
-	// The maximum deadline you can specify is 600 seconds (10 minutes).
+	// the time this request was sent to the Pub/Sub system. For example, if
+	// the value is 10, the new ack deadline will expire 10 seconds after
+	// the `ModifyAckDeadline` call was made. Specifying zero might
+	// immediately make the message available for delivery to another
+	// subscriber client. This typically results in an increase in the rate
+	// of message redeliveries (that is, duplicates). The minimum deadline
+	// you can specify is 0 seconds. The maximum deadline you can specify is
+	// 600 seconds (10 minutes).
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// AckIds: Required. List of acknowledgment IDs.
@@ -903,13 +787,11 @@ func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
-	// PushConfig: Required. The push configuration for future
-	// deliveries.
-	//
-	// An empty `pushConfig` indicates that the Pub/Sub system should
-	// stop pushing messages from the given subscription and allow
-	// messages to be pulled and acknowledged - effectively pausing
-	// the subscription if `Pull` or `StreamingPull` is not called.
+	// PushConfig: Required. The push configuration for future deliveries.
+	// An empty `pushConfig` indicates that the Pub/Sub system should stop
+	// pushing messages from the given subscription and allow messages to be
+	// pulled and acknowledged - effectively pausing the subscription if
+	// `Pull` or `StreamingPull` is not called.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PushConfig") to
@@ -935,34 +817,25 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OidcToken: Contains information needed for generating an
-// [OpenID
+// OidcToken: Contains information needed for generating an [OpenID
 // Connect
-// token](https://developers.google.com/identity/protocols/OpenID
-// Connect).
+// token](https://developers.google.com/identity/protocols/OpenIDConnect)
+// .
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. The
-	// audience claim
-	// identifies the recipients that the JWT is intended for. The
-	// audience
-	// value is a single case-sensitive string. Having multiple values
-	// (array)
-	// for the audience field is not supported. More info about the OIDC
-	// JWT
-	// token audience here:
-	// https://tools.ietf.org/html/rfc7519#section-4.1.3
-	// Note: if not specified, the Push endpoint URL will be used.
+	// audience claim identifies the recipients that the JWT is intended
+	// for. The audience value is a single case-sensitive string. Having
+	// multiple values (array) for the audience field is not supported. More
+	// info about the OIDC JWT token audience here:
+	// https://tools.ietf.org/html/rfc7519#section-4.1.3 Note: if not
+	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: [Service
-	// account
-	// email](https://cloud.google.com/iam/docs/service-accounts)
-	// to be used for generating the OIDC token. The caller
-	// (for
-	// CreateSubscription, UpdateSubscription, and ModifyPushConfig RPCs)
-	// must
-	// have the iam.serviceAccounts.actAs permission for the service
-	// account.
+	// ServiceAccountEmail: [Service account
+	// email](https://cloud.google.com/iam/docs/service-accounts) to be used
+	// for generating the OIDC token. The caller (for CreateSubscription,
+	// UpdateSubscription, and ModifyPushConfig RPCs) must have the
+	// iam.serviceAccounts.actAs permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -989,150 +862,73 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -1195,10 +991,8 @@ func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 // PublishResponse: Response for the `Publish` method.
 type PublishResponse struct {
 	// MessageIds: The server-assigned ID of each published message, in the
-	// same order as
-	// the messages in the request. IDs are guaranteed to be unique
-	// within
-	// the topic.
+	// same order as the messages in the request. IDs are guaranteed to be
+	// unique within the topic.
 	MessageIds []string `json:"messageIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1229,61 +1023,43 @@ func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 }
 
 // PubsubMessage: A message that is published by publishers and consumed
-// by subscribers. The
-// message must contain either a non-empty data field or at least one
-// attribute.
-// Note that client libraries represent this object
-// differently
-// depending on the language. See the corresponding [client
-// library
-// documentation](https://cloud.google.com/pubsub/docs/reference/
-// libraries) for
-// more information. See [quotas and
-// limits]
+// by subscribers. The message must contain either a non-empty data
+// field or at least one attribute. Note that client libraries represent
+// this object differently depending on the language. See the
+// corresponding [client library
+// documentation](https://cloud.google.com/pubsub/docs/reference/librarie
+// s) for more information. See [quotas and limits]
 // (https://cloud.google.com/pubsub/quotas) for more information about
-// message
-// limits.
+// message limits.
 type PubsubMessage struct {
 	// Attributes: Attributes for this message. If this field is empty, the
-	// message must
-	// contain non-empty data. This can be used to filter messages on
-	// the
-	// subscription.
+	// message must contain non-empty data. This can be used to filter
+	// messages on the subscription.
 	Attributes map[string]string `json:"attributes,omitempty"`
 
 	// Data: The message data field. If this field is empty, the message
-	// must contain
-	// at least one attribute.
+	// must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
 	// MessageId: ID of this message, assigned by the server when the
-	// message is published.
-	// Guaranteed to be unique within the topic. This value may be read by
-	// a
-	// subscriber that receives a `PubsubMessage` via a `Pull` call or a
-	// push
-	// delivery. It must not be populated by the publisher in a `Publish`
-	// call.
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// OrderingKey: If non-empty, identifies related messages for which
-	// publish order should be
-	// respected. If a `Subscription` has `enable_message_ordering` set to
-	// `true`,
-	// messages published with the same non-empty `ordering_key` value will
-	// be
-	// delivered to subscribers in the order in which they are received by
-	// the
-	// Pub/Sub system. All `PubsubMessage`s published in a given
-	// `PublishRequest`
-	// must specify the same `ordering_key` value.
+	// publish order should be respected. If a `Subscription` has
+	// `enable_message_ordering` set to `true`, messages published with the
+	// same non-empty `ordering_key` value will be delivered to subscribers
+	// in the order in which they are received by the Pub/Sub system. All
+	// `PubsubMessage`s published in a given `PublishRequest` must specify
+	// the same `ordering_key` value.
 	OrderingKey string `json:"orderingKey,omitempty"`
 
 	// PublishTime: The time at which the message was published, populated
-	// by the server when
-	// it receives the `Publish` call. It must not be populated by
-	// the
-	// publisher in a `Publish` call.
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -1312,25 +1088,17 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 // PullRequest: Request for the `Pull` method.
 type PullRequest struct {
 	// MaxMessages: Required. The maximum number of messages to return for
-	// this request. Must be a
-	// positive integer. The Pub/Sub system may return fewer than the
-	// number
-	// specified.
+	// this request. Must be a positive integer. The Pub/Sub system may
+	// return fewer than the number specified.
 	MaxMessages int64 `json:"maxMessages,omitempty"`
 
 	// ReturnImmediately: Optional. If this field set to true, the system
-	// will respond immediately even if
-	// it there are no messages available to return in the `Pull`
-	// response.
-	// Otherwise, the system may wait (for a bounded amount of time) until
-	// at
-	// least one message is available, rather than returning no messages.
-	// Warning:
-	// setting this field to `true` is discouraged because it adversely
-	// impacts
-	// the performance of `Pull` operations. We recommend that users do not
-	// set
-	// this field.
+	// will respond immediately even if it there are no messages available
+	// to return in the `Pull` response. Otherwise, the system may wait (for
+	// a bounded amount of time) until at least one message is available,
+	// rather than returning no messages. Warning: setting this field to
+	// `true` is discouraged because it adversely impacts the performance of
+	// `Pull` operations. We recommend that users do not set this field.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxMessages") to
@@ -1359,12 +1127,10 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 // PullResponse: Response for the `Pull` method.
 type PullResponse struct {
 	// ReceivedMessages: Received Pub/Sub messages. The list will be empty
-	// if there are no more
-	// messages available in the backlog. For JSON, the response can be
-	// entirely
-	// empty. The Pub/Sub system may return fewer than the `maxMessages`
-	// requested
-	// even if there are more messages available in the backlog.
+	// if there are no more messages available in the backlog. For JSON, the
+	// response can be entirely empty. The Pub/Sub system may return fewer
+	// than the `maxMessages` requested even if there are more messages
+	// available in the backlog.
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1398,47 +1164,30 @@ func (s *PullResponse) MarshalJSON() ([]byte, error) {
 // PushConfig: Configuration for a push delivery endpoint.
 type PushConfig struct {
 	// Attributes: Endpoint configuration attributes that can be used to
-	// control different
-	// aspects of the message delivery.
-	//
-	// The only currently supported attribute is `x-goog-version`, which you
-	// can
-	// use to change the format of the pushed message. This
-	// attribute
-	// indicates the version of the data expected by the endpoint.
-	// This
-	// controls the shape of the pushed message (i.e., its fields and
-	// metadata).
-	//
-	// If not present during the `CreateSubscription` call, it will default
-	// to
-	// the version of the Pub/Sub API used to make such call. If not present
-	// in a
+	// control different aspects of the message delivery. The only currently
+	// supported attribute is `x-goog-version`, which you can use to change
+	// the format of the pushed message. This attribute indicates the
+	// version of the data expected by the endpoint. This controls the shape
+	// of the pushed message (i.e., its fields and metadata). If not present
+	// during the `CreateSubscription` call, it will default to the version
+	// of the Pub/Sub API used to make such call. If not present in a
 	// `ModifyPushConfig` call, its value will not be changed.
-	// `GetSubscription`
-	// calls will always return a valid version, even if the subscription
-	// was
-	// created without this attribute.
-	//
-	// The only supported values for the `x-goog-version` attribute are:
-	//
-	// * `v1beta1`: uses the push format defined in the v1beta1 Pub/Sub
-	// API.
-	// * `v1` or `v1beta2`: uses the push format defined in the v1 Pub/Sub
-	// API.
-	//
-	// For example:
-	// <pre><code>attributes { "x-goog-version": "v1" } </code></pre>
+	// `GetSubscription` calls will always return a valid version, even if
+	// the subscription was created without this attribute. The only
+	// supported values for the `x-goog-version` attribute are: * `v1beta1`:
+	// uses the push format defined in the v1beta1 Pub/Sub API. * `v1` or
+	// `v1beta2`: uses the push format defined in the v1 Pub/Sub API. For
+	// example: attributes { "x-goog-version": "v1" }
 	Attributes map[string]string `json:"attributes,omitempty"`
 
 	// OidcToken: If specified, Pub/Sub will generate and attach an OIDC JWT
-	// token as an
-	// `Authorization` header in the HTTP request for every pushed message.
+	// token as an `Authorization` header in the HTTP request for every
+	// pushed message.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
 	// PushEndpoint: A URL locating the endpoint to which messages should be
-	// pushed.
-	// For example, a Webhook endpoint might use `https://example.com/push`.
+	// pushed. For example, a Webhook endpoint might use
+	// `https://example.com/push`.
 	PushEndpoint string `json:"pushEndpoint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -1470,28 +1219,16 @@ type ReceivedMessage struct {
 	AckId string `json:"ackId,omitempty"`
 
 	// DeliveryAttempt: The approximate number of times that Cloud Pub/Sub
-	// has attempted to deliver
-	// the associated message to a subscriber.
-	//
-	// More precisely, this is 1 + (number of NACKs) +
-	// (number of ack_deadline exceeds) for this message.
-	//
-	// A NACK is any call to ModifyAckDeadline with a 0 deadline. An
-	// ack_deadline
-	// exceeds event is whenever a message is not acknowledged
-	// within
-	// ack_deadline. Note that ack_deadline is
-	// initially
-	// Subscription.ackDeadlineSeconds, but may get extended automatically
-	// by
-	// the client library.
-	//
-	// Upon the first delivery of a given message, `delivery_attempt` will
-	// have a
-	// value of 1. The value is calculated at best effort and is
-	// approximate.
-	//
-	// If a DeadLetterPolicy is not set on the subscription, this will be 0.
+	// has attempted to deliver the associated message to a subscriber. More
+	// precisely, this is 1 + (number of NACKs) + (number of ack_deadline
+	// exceeds) for this message. A NACK is any call to ModifyAckDeadline
+	// with a 0 deadline. An ack_deadline exceeds event is whenever a
+	// message is not acknowledged within ack_deadline. Note that
+	// ack_deadline is initially Subscription.ackDeadlineSeconds, but may
+	// get extended automatically by the client library. Upon the first
+	// delivery of a given message, `delivery_attempt` will have a value of
+	// 1. The value is calculated at best effort and is approximate. If a
+	// DeadLetterPolicy is not set on the subscription, this will be 0.
 	DeliveryAttempt int64 `json:"deliveryAttempt,omitempty"`
 
 	// Message: The message.
@@ -1521,31 +1258,23 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 }
 
 // RetryPolicy: A policy that specifies how Cloud Pub/Sub retries
-// message delivery.
-//
-// Retry delay will be exponential based on provided minimum and
-// maximum
-// backoffs.
-// https://en.wikipedia.org/wiki/Exponential_backoff.
-//
-// RetryPolicy will be triggered on NACKs or acknowledgement deadline
-// exceeded
-// events for a given message.
-//
-// Retry Policy is implemented on a best effort basis. At times, the
-// delay
-// between consecutive deliveries may not match the configuration. That
-// is,
-// delay can be more or less than configured backoff.
+// message delivery. Retry delay will be exponential based on provided
+// minimum and maximum backoffs.
+// https://en.wikipedia.org/wiki/Exponential_backoff. RetryPolicy will
+// be triggered on NACKs or acknowledgement deadline exceeded events for
+// a given message. Retry Policy is implemented on a best effort basis.
+// At times, the delay between consecutive deliveries may not match the
+// configuration. That is, delay can be more or less than configured
+// backoff.
 type RetryPolicy struct {
 	// MaximumBackoff: The maximum delay between consecutive deliveries of a
-	// given message.
-	// Value should be between 0 and 600 seconds. Defaults to 600 seconds.
+	// given message. Value should be between 0 and 600 seconds. Defaults to
+	// 600 seconds.
 	MaximumBackoff string `json:"maximumBackoff,omitempty"`
 
 	// MinimumBackoff: The minimum delay between consecutive deliveries of a
-	// given message.
-	// Value should be between 0 and 600 seconds. Defaults to 10 seconds.
+	// given message. Value should be between 0 and 600 seconds. Defaults to
+	// 10 seconds.
 	MinimumBackoff string `json:"minimumBackoff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaximumBackoff") to
@@ -1575,30 +1304,21 @@ func (s *RetryPolicy) MarshalJSON() ([]byte, error) {
 // SeekRequest: Request for the `Seek` method.
 type SeekRequest struct {
 	// Snapshot: The snapshot to seek to. The snapshot's topic must be the
-	// same as that of
-	// the provided subscription.
-	// Format is `projects/{project}/snapshots/{snap}`.
+	// same as that of the provided subscription. Format is
+	// `projects/{project}/snapshots/{snap}`.
 	Snapshot string `json:"snapshot,omitempty"`
 
-	// Time: The time to seek to.
-	// Messages retained in the subscription that were published before
-	// this
-	// time are marked as acknowledged, and messages retained in
-	// the
-	// subscription that were published after this time are marked
-	// as
-	// unacknowledged. Note that this operation affects only those
-	// messages
-	// retained in the subscription (configured by the combination
-	// of
-	// `message_retention_duration` and `retain_acked_messages`). For
-	// example,
-	// if `time` corresponds to a point before the message retention
-	// window (or to a point before the system's notion of the
-	// subscription
-	// creation time), only retained messages will be marked as
-	// unacknowledged,
-	// and already-expunged messages will not be restored.
+	// Time: The time to seek to. Messages retained in the subscription that
+	// were published before this time are marked as acknowledged, and
+	// messages retained in the subscription that were published after this
+	// time are marked as unacknowledged. Note that this operation affects
+	// only those messages retained in the subscription (configured by the
+	// combination of `message_retention_duration` and
+	// `retain_acked_messages`). For example, if `time` corresponds to a
+	// point before the message retention window (or to a point before the
+	// system's notion of the subscription creation time), only retained
+	// messages will be marked as unacknowledged, and already-expunged
+	// messages will not be restored.
 	Time string `json:"time,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Snapshot") to
@@ -1635,11 +1355,9 @@ type SeekResponse struct {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -1665,38 +1383,26 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Snapshot: A snapshot resource. Snapshots are used
-// in
+// Snapshot: A snapshot resource. Snapshots are used in
 // [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operat
-// ions, which allow you to manage message acknowledgments in bulk.
-// That
-// is, you can set the acknowledgment state of messages in an
-// existing
-// subscription to the state captured by a snapshot.
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 type Snapshot struct {
-	// ExpireTime: The snapshot is guaranteed to exist up until this time.
-	// A newly-created snapshot expires no later than 7 days from the time
-	// of its
-	// creation. Its exact lifetime is determined at creation by the
-	// existing
-	// backlog in the source subscription. Specifically, the lifetime of
-	// the
-	// snapshot is `7 days - (age of oldest unacked message in the
-	// subscription)`.
-	// For example, consider a subscription whose oldest unacked message is
-	// 3 days
-	// old. If a snapshot is created from this subscription, the snapshot --
-	// which
-	// will always capture this 3-day-old backlog as long as the
-	// snapshot
-	// exists -- will expire in 4 days. The service will refuse to create
-	// a
-	// snapshot that would expire in less than 1 hour after creation.
+	// ExpireTime: The snapshot is guaranteed to exist up until this time. A
+	// newly-created snapshot expires no later than 7 days from the time of
+	// its creation. Its exact lifetime is determined at creation by the
+	// existing backlog in the source subscription. Specifically, the
+	// lifetime of the snapshot is `7 days - (age of oldest unacked message
+	// in the subscription)`. For example, consider a subscription whose
+	// oldest unacked message is 3 days old. If a snapshot is created from
+	// this subscription, the snapshot -- which will always capture this
+	// 3-day-old backlog as long as the snapshot exists -- will expire in 4
+	// days. The service will refuse to create a snapshot that would expire
+	// in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Labels: See [Creating and managing
-	// labels]
+	// Labels: See [Creating and managing labels]
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1737,163 +1443,104 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 // Subscription: A subscription resource.
 type Subscription struct {
 	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
-	// basis) Pub/Sub waits for
-	// the subscriber to acknowledge receipt before resending the message.
-	// In the
-	// interval after the message is delivered and before it is
-	// acknowledged, it
-	// is considered to be <i>outstanding</i>. During that time period,
-	// the
-	// message will not be redelivered (on a best-effort basis).
-	//
-	// For pull subscriptions, this value is used as the initial value for
-	// the ack
-	// deadline. To override this value for a given message,
-	// call
-	// `ModifyAckDeadline` with the corresponding `ack_id` if
-	// using
-	// non-streaming pull or send the `ack_id` in
-	// a
-	// `StreamingModifyAckDeadlineRequest` if using streaming pull.
-	// The minimum custom deadline you can specify is 10 seconds.
-	// The maximum custom deadline you can specify is 600 seconds (10
-	// minutes).
-	// If this parameter is 0, a default value of 10 seconds is used.
-	//
-	// For push delivery, this value is also used to set the request timeout
-	// for
-	// the call to the push endpoint.
-	//
-	// If the subscriber never acknowledges the message, the Pub/Sub
-	// system will eventually redeliver the message.
+	// basis) Pub/Sub waits for the subscriber to acknowledge receipt before
+	// resending the message. In the interval after the message is delivered
+	// and before it is acknowledged, it is considered to be *outstanding*.
+	// During that time period, the message will not be redelivered (on a
+	// best-effort basis). For pull subscriptions, this value is used as the
+	// initial value for the ack deadline. To override this value for a
+	// given message, call `ModifyAckDeadline` with the corresponding
+	// `ack_id` if using non-streaming pull or send the `ack_id` in a
+	// `StreamingModifyAckDeadlineRequest` if using streaming pull. The
+	// minimum custom deadline you can specify is 10 seconds. The maximum
+	// custom deadline you can specify is 600 seconds (10 minutes). If this
+	// parameter is 0, a default value of 10 seconds is used. For push
+	// delivery, this value is also used to set the request timeout for the
+	// call to the push endpoint. If the subscriber never acknowledges the
+	// message, the Pub/Sub system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// DeadLetterPolicy: A policy that specifies the conditions for dead
-	// lettering messages in
-	// this subscription. If dead_letter_policy is not set, dead
-	// lettering
-	// is disabled.
-	//
-	// The Cloud Pub/Sub service account associated with this
-	// subscriptions's
-	// parent project
-	// (i.e.,
-	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com)
-	//  must have
-	// permission to Acknowledge() messages on this subscription.
+	// lettering messages in this subscription. If dead_letter_policy is not
+	// set, dead lettering is disabled. The Cloud Pub/Sub service account
+	// associated with this subscriptions's parent project (i.e.,
+	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com) must
+	// have permission to Acknowledge() messages on this subscription.
 	DeadLetterPolicy *DeadLetterPolicy `json:"deadLetterPolicy,omitempty"`
 
 	// Detached: Indicates whether the subscription is detached from its
-	// topic. Detached
-	// subscriptions don't receive messages from their topic and don't
-	// retain any
-	// backlog. `Pull` and `StreamingPull` requests will
-	// return
-	// FAILED_PRECONDITION. If the subscription is a push subscription,
-	// pushes to
-	// the endpoint will not be made.
+	// topic. Detached subscriptions don't receive messages from their topic
+	// and don't retain any backlog. `Pull` and `StreamingPull` requests
+	// will return FAILED_PRECONDITION. If the subscription is a push
+	// subscription, pushes to the endpoint will not be made.
 	Detached bool `json:"detached,omitempty"`
 
 	// EnableMessageOrdering: If true, messages published with the same
-	// `ordering_key` in `PubsubMessage`
-	// will be delivered to the subscribers in the order in which they
-	// are received by the Pub/Sub system. Otherwise, they may be delivered
-	// in
-	// any order.
+	// `ordering_key` in `PubsubMessage` will be delivered to the
+	// subscribers in the order in which they are received by the Pub/Sub
+	// system. Otherwise, they may be delivered in any order.
 	EnableMessageOrdering bool `json:"enableMessageOrdering,omitempty"`
 
 	// ExpirationPolicy: A policy that specifies the conditions for this
-	// subscription's expiration.
-	// A subscription is considered active as long as any connected
-	// subscriber is
-	// successfully consuming messages from the subscription or is
-	// issuing
-	// operations on the subscription. If `expiration_policy` is not set,
-	// a
-	// *default policy* with `ttl` of 31 days will be used. The minimum
-	// allowed
-	// value for `expiration_policy.ttl` is 1 day.
+	// subscription's expiration. A subscription is considered active as
+	// long as any connected subscriber is successfully consuming messages
+	// from the subscription or is issuing operations on the subscription.
+	// If `expiration_policy` is not set, a *default policy* with `ttl` of
+	// 31 days will be used. The minimum allowed value for
+	// `expiration_policy.ttl` is 1 day.
 	ExpirationPolicy *ExpirationPolicy `json:"expirationPolicy,omitempty"`
 
-	// Filter: An expression written in the Pub/Sub
-	// [filter
+	// Filter: An expression written in the Pub/Sub [filter
 	// language](https://cloud.google.com/pubsub/docs/filtering). If
-	// non-empty,
-	// then only `PubsubMessage`s whose `attributes` field matches the
-	// filter are
-	// delivered on this subscription. If empty, then no messages are
-	// filtered
-	// out.
+	// non-empty, then only `PubsubMessage`s whose `attributes` field
+	// matches the filter are delivered on this subscription. If empty, then
+	// no messages are filtered out.
 	Filter string `json:"filter,omitempty"`
 
-	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
-	// Creating and
-	// managing labels</a>.
+	// Labels: See Creating and managing labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageRetentionDuration: How long to retain unacknowledged messages
-	// in the subscription's backlog,
-	// from the moment a message is published.
-	// If `retain_acked_messages` is true, then this also configures the
-	// retention
-	// of acknowledged messages, and thus configures how far back in time a
-	// `Seek`
-	// can be done. Defaults to 7 days. Cannot be more than 7 days or less
-	// than 10
-	// minutes.
+	// in the subscription's backlog, from the moment a message is
+	// published. If `retain_acked_messages` is true, then this also
+	// configures the retention of acknowledged messages, and thus
+	// configures how far back in time a `Seek` can be done. Defaults to 7
+	// days. Cannot be more than 7 days or less than 10 minutes.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
 
-	// Name: Required. The name of the subscription. It must have the
-	// format
+	// Name: Required. The name of the subscription. It must have the format
 	// "projects/{project}/subscriptions/{subscription}". `{subscription}`
-	// must
-	// start with a letter, and contain only letters (`[A-Za-z]`),
-	// numbers
-	// (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes
-	// (`~`),
-	// plus (`+`) or percent signs (`%`). It must be between 3 and 255
-	// characters
-	// in length, and it must not start with "goog".
+	// must start with a letter, and contain only letters (`[A-Za-z]`),
+	// numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`),
+	// tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3
+	// and 255 characters in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is
-	// used to configure it. An empty `pushConfig` signifies that the
-	// subscriber
-	// will pull and ack messages using API methods.
+	// field is used to configure it. An empty `pushConfig` signifies that
+	// the subscriber will pull and ack messages using API methods.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// RetainAckedMessages: Indicates whether to retain acknowledged
-	// messages. If true, then
-	// messages are not expunged from the subscription's backlog, even if
-	// they are
-	// acknowledged, until they fall out of the
-	// `message_retention_duration`
-	// window. This must be true if you would like to [Seek to a
-	// timestamp]
-	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_
-	// to_a_time).
+	// messages. If true, then messages are not expunged from the
+	// subscription's backlog, even if they are acknowledged, until they
+	// fall out of the `message_retention_duration` window. This must be
+	// true if you would like to [Seek to a timestamp]
+	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time).
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
 	// RetryPolicy: A policy that specifies how Pub/Sub retries message
-	// delivery for this
-	// subscription.
-	//
-	// If not set, the default retry policy is applied. This generally
-	// implies
-	// that messages will be retried as soon as possible for healthy
-	// subscribers.
-	// RetryPolicy will be triggered on NACKs or acknowledgement
-	// deadline
-	// exceeded events for a given message.
+	// delivery for this subscription. If not set, the default retry policy
+	// is applied. This generally implies that messages will be retried as
+	// soon as possible for healthy subscribers. RetryPolicy will be
+	// triggered on NACKs or acknowledgement deadline exceeded events for a
+	// given message.
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 
 	// Topic: Required. The name of the topic from which this subscription
-	// is receiving messages.
-	// Format is `projects/{project}/topics/{topic}`.
+	// is receiving messages. Format is `projects/{project}/topics/{topic}`.
 	// The value of this field will be `_deleted-topic_` if the topic has
-	// been
-	// deleted.
+	// been deleted.
 	Topic string `json:"topic,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1928,11 +1575,8 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -1963,8 +1607,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1997,36 +1640,25 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // Topic: A topic resource.
 type Topic struct {
 	// KmsKeyName: The resource name of the Cloud KMS CryptoKey to be used
-	// to protect access
-	// to messages published on this topic.
-	//
-	// The expected format is
-	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	// to protect access to messages published on this topic. The expected
+	// format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// Labels: See [Creating and managing
-	// labels]
+	// Labels: See [Creating and managing labels]
 	// (https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageStoragePolicy: Policy constraining the set of Google Cloud
-	// Platform regions where messages
-	// published to the topic may be stored. If not present, then no
-	// constraints
-	// are in effect.
+	// Platform regions where messages published to the topic may be stored.
+	// If not present, then no constraints are in effect.
 	MessageStoragePolicy *MessageStoragePolicy `json:"messageStoragePolicy,omitempty"`
 
-	// Name: Required. The name of the topic. It must have the
-	// format
+	// Name: Required. The name of the topic. It must have the format
 	// "projects/{project}/topics/{topic}". `{topic}` must start with a
-	// letter,
-	// and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes
-	// (`-`),
-	// underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or
-	// percent
-	// signs (`%`). It must be between 3 and 255 characters in length, and
-	// it
-	// must not start with "goog".
+	// letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+	// dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+	// (`+`) or percent signs (`%`). It must be between 3 and 255 characters
+	// in length, and it must not start with "goog".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2062,8 +1694,7 @@ type UpdateSnapshotRequest struct {
 	Snapshot *Snapshot `json:"snapshot,omitempty"`
 
 	// UpdateMask: Required. Indicates which fields in the provided snapshot
-	// to update.
-	// Must be specified and non-empty.
+	// to update. Must be specified and non-empty.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Snapshot") to
@@ -2095,8 +1726,7 @@ type UpdateSubscriptionRequest struct {
 	Subscription *Subscription `json:"subscription,omitempty"`
 
 	// UpdateMask: Required. Indicates which fields in the provided
-	// subscription to update.
-	// Must be specified and non-empty.
+	// subscription to update. Must be specified and non-empty.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
@@ -2128,14 +1758,11 @@ type UpdateTopicRequest struct {
 	Topic *Topic `json:"topic,omitempty"`
 
 	// UpdateMask: Required. Indicates which fields in the provided topic to
-	// update. Must be specified
-	// and non-empty. Note that if `update_mask`
-	// contains
-	// "message_storage_policy" but the `message_storage_policy` is not set
-	// in
-	// the `topic` provided above, then the updated value is determined by
-	// the
-	// policy configured at the project or organization level.
+	// update. Must be specified and non-empty. Note that if `update_mask`
+	// contains "message_storage_policy" but the `message_storage_policy` is
+	// not set in the `topic` provided above, then the updated value is
+	// determined by the policy configured at the project or organization
+	// level.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Topic") to
@@ -2173,33 +1800,22 @@ type ProjectsSnapshotsCreateCall struct {
 }
 
 // Create: Creates a snapshot from the requested subscription. Snapshots
-// are used
-// in
+// are used in
 // [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operations,
-// which allow you to manage message acknowledgments in bulk. That is,
-// you can
-// set the acknowledgment state of messages in an existing subscription
-// to the
-// state captured by a snapshot.
-// If the snapshot already exists, returns `ALREADY_EXISTS`.
-// If the requested subscription doesn't exist, returns `NOT_FOUND`.
-// If the backlog in the subscription is too old -- and the resulting
-// snapshot
-// would expire in less than 1 hour -- then `FAILED_PRECONDITION` is
-// returned.
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot. If the
+// snapshot already exists, returns `ALREADY_EXISTS`. If the requested
+// subscription doesn't exist, returns `NOT_FOUND`. If the backlog in
+// the subscription is too old -- and the resulting snapshot would
+// expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.
 // See also the `Snapshot.expire_time` field. If the name is not
-// provided in
-// the request, the server will assign a random
-// name for this snapshot on the same project as the subscription,
-// conforming
-// to the [resource name
-// format]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names).
-// The
+// provided in the request, the server will assign a random name for
+// this snapshot on the same project as the subscription, conforming to
+// the [resource name format]
+// (https://cloud.google.com/pubsub/docs/admin#resource_names). The
 // generated name is populated in the returned Snapshot object. Note
-// that for
-// REST API requests, you must specify a name in the request.
+// that for REST API requests, you must specify a name in the request.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
 	c := &ProjectsSnapshotsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2234,7 +1850,7 @@ func (c *ProjectsSnapshotsCreateCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2298,7 +1914,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n[Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,\nwhich allow you to manage message acknowledgments in bulk. That is, you can\nset the acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names). The\ngenerated name is populated in the returned Snapshot object. Note that for\nREST API requests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. If the snapshot already exists, returns `ALREADY_EXISTS`. If the requested subscription doesn't exist, returns `NOT_FOUND`. If the backlog in the subscription is too old -- and the resulting snapshot would expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Snapshot object. Note that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -2307,7 +1923,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. User-provided name for this snapshot. If the name is not provided in the\nrequest, the server will assign a random name for this snapshot on the same\nproject as the subscription. Note that for REST API requests, you must\nspecify a name.  See the \u003ca\nhref=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e resource\nname rules\u003c/a\u003e. Format is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. User-provided name for this snapshot. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription. Note that for REST API requests, you must specify a name. See the resource name rules. Format is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2339,21 +1955,14 @@ type ProjectsSnapshotsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes an existing snapshot. Snapshots are used in
-// [Seek]
+// Delete: Removes an existing snapshot. Snapshots are used in [Seek]
 // (https://cloud.google.com/pubsub/docs/replay-overview) operations,
-// which
-// allow you to manage message acknowledgments in bulk. That is, you can
-// set
-// the acknowledgment state of messages in an existing subscription to
-// the
-// state captured by a snapshot.
-// When the snapshot is deleted, all messages retained in the
-// snapshot
-// are immediately dropped. After a snapshot is deleted, a new one may
-// be
-// created with the same name, but the new one has no association with
-// the old
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can set the acknowledgment state of messages in an existing
+// subscription to the state captured by a snapshot. When the snapshot
+// is deleted, all messages retained in the snapshot are immediately
+// dropped. After a snapshot is deleted, a new one may be created with
+// the same name, but the new one has no association with the old
 // snapshot or its subscription, unless the same subscription is
 // specified.
 func (r *ProjectsSnapshotsService) Delete(snapshot string) *ProjectsSnapshotsDeleteCall {
@@ -2389,7 +1998,7 @@ func (c *ProjectsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2448,7 +2057,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an existing snapshot. Snapshots are used in [Seek]\n(https://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
+	//   "description": "Removes an existing snapshot. Snapshots are used in [Seek] (https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. When the snapshot is deleted, all messages retained in the snapshot are immediately dropped. After a snapshot is deleted, a new one may be created with the same name, but the new one has no association with the old snapshot or its subscription, unless the same subscription is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.snapshots.delete",
@@ -2457,7 +2066,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "snapshot": {
-	//       "description": "Required. The name of the snapshot to delete.\nFormat is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. The name of the snapshot to delete. Format is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2488,15 +2097,9 @@ type ProjectsSnapshotsGetCall struct {
 }
 
 // Get: Gets the configuration details of a snapshot. Snapshots are used
-// in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow you to manage message acknowledgments in bulk.
-// That
-// is, you can set the acknowledgment state of messages in an
-// existing
-// subscription to the state captured by a snapshot.
+// in Seek operations, which allow you to manage message acknowledgments
+// in bulk. That is, you can set the acknowledgment state of messages in
+// an existing subscription to the state captured by a snapshot.
 func (r *ProjectsSnapshotsService) Get(snapshot string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -2540,7 +2143,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2602,7 +2205,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow you to manage message acknowledgments in bulk. That\nis, you can set the acknowledgment state of messages in an existing\nsubscription to the state captured by a snapshot.",
+	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -2611,7 +2214,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	//   ],
 	//   "parameters": {
 	//     "snapshot": {
-	//       "description": "Required. The name of the snapshot to get.\nFormat is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Required. The name of the snapshot to get. Format is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2641,9 +2244,8 @@ type ProjectsSnapshotsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapshotsGetIamPolicyCall {
 	c := &ProjectsSnapshotsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2653,24 +2255,14 @@ func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapsh
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsSnapshotsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsSnapshotsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -2713,7 +2305,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2775,7 +2367,7 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.getIamPolicy",
@@ -2784,13 +2376,13 @@ func (c *ProjectsSnapshotsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -2820,15 +2412,11 @@ type ProjectsSnapshotsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the existing snapshots. Snapshots are used in
-// [Seek](
+// List: Lists the existing snapshots. Snapshots are used in [Seek](
 // https://cloud.google.com/pubsub/docs/replay-overview) operations,
-// which
-// allow you to manage message acknowledgments in bulk. That is, you can
-// set
-// the acknowledgment state of messages in an existing subscription to
-// the
-// state captured by a snapshot.
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can set the acknowledgment state of messages in an existing
+// subscription to the state captured by a snapshot.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2843,9 +2431,8 @@ func (c *ProjectsSnapshotsListCall) PageSize(pageSize int64) *ProjectsSnapshotsL
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListSnapshotsResponse`; indicates that this
-// is a continuation of a prior `ListSnapshots` call, and that the
-// system
+// by the last `ListSnapshotsResponse`; indicates that this is a
+// continuation of a prior `ListSnapshots` call, and that the system
 // should return the next page of data.
 func (c *ProjectsSnapshotsListCall) PageToken(pageToken string) *ProjectsSnapshotsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -2889,7 +2476,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2951,7 +2538,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing snapshots. Snapshots are used in [Seek](\nhttps://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.",
+	//   "description": "Lists the existing snapshots. Snapshots are used in [Seek]( https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.list",
@@ -2966,12 +2553,12 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListSnapshotsResponse`; indicates that this\nis a continuation of a prior `ListSnapshots` call, and that the system\nshould return the next page of data.",
+	//       "description": "The value returned by the last `ListSnapshotsResponse`; indicates that this is a continuation of a prior `ListSnapshots` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Required. The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list snapshots. Format is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3022,16 +2609,10 @@ type ProjectsSnapshotsPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates an existing snapshot. Snapshots are used in
-// <a
-// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
-// o
-// perations, which allow
-// you to manage message acknowledgments in bulk. That is, you can set
-// the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.
+// Patch: Updates an existing snapshot. Snapshots are used in Seek
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 func (r *ProjectsSnapshotsService) Patch(name string, updatesnapshotrequest *UpdateSnapshotRequest) *ProjectsSnapshotsPatchCall {
 	c := &ProjectsSnapshotsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3066,7 +2647,7 @@ func (c *ProjectsSnapshotsPatchCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3130,7 +2711,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Updates an existing snapshot. Snapshots are used in Seek operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -3173,11 +2754,8 @@ type ProjectsSnapshotsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsSnapshotsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSnapshotsSetIamPolicyCall {
 	c := &ProjectsSnapshotsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3212,7 +2790,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3276,7 +2854,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.snapshots.setIamPolicy",
@@ -3285,7 +2863,7 @@ func (c *ProjectsSnapshotsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -3319,16 +2897,11 @@ type ProjectsSnapshotsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsSnapshotsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSnapshotsTestIamPermissionsCall {
 	c := &ProjectsSnapshotsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3363,7 +2936,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3427,7 +3000,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.snapshots.testIamPermissions",
@@ -3436,7 +3009,7 @@ func (c *ProjectsSnapshotsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -3470,16 +3043,11 @@ type ProjectsSubscriptionsAcknowledgeCall struct {
 }
 
 // Acknowledge: Acknowledges the messages associated with the `ack_ids`
-// in the
-// `AcknowledgeRequest`. The Pub/Sub system can remove the relevant
-// messages
-// from the subscription.
-//
-// Acknowledging a message whose ack deadline has expired may
-// succeed,
-// but such a message may be redelivered later. Acknowledging a message
-// more
-// than once will not result in an error.
+// in the `AcknowledgeRequest`. The Pub/Sub system can remove the
+// relevant messages from the subscription. Acknowledging a message
+// whose ack deadline has expired may succeed, but such a message may be
+// redelivered later. Acknowledging a message more than once will not
+// result in an error.
 func (r *ProjectsSubscriptionsService) Acknowledge(subscription string, acknowledgerequest *AcknowledgeRequest) *ProjectsSubscriptionsAcknowledgeCall {
 	c := &ProjectsSubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -3514,7 +3082,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3578,7 +3146,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges the messages associated with the `ack_ids` in the\n`AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages\nfrom the subscription.\n\nAcknowledging a message whose ack deadline has expired may succeed,\nbut such a message may be redelivered later. Acknowledging a message more\nthan once will not result in an error.",
+	//   "description": "Acknowledges the messages associated with the `ack_ids` in the `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:acknowledge",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.acknowledge",
@@ -3587,7 +3155,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The subscription whose message is being acknowledged.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription whose message is being acknowledged. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3621,24 +3189,16 @@ type ProjectsSubscriptionsCreateCall struct {
 }
 
 // Create: Creates a subscription to a given topic. See the [resource
-// name
-// rules]
-// (https://cloud.google.com/pubsub/docs/admin#resource_names).
-// If
-//  the subscription already exists, returns `ALREADY_EXISTS`.
-// If the corresponding topic doesn't exist, returns `NOT_FOUND`.
-//
-// If the name is not provided in the request, the server will assign a
-// random
-// name for this subscription on the same project as the topic,
-// conforming
-// to the [resource name
-// format]
+// name rules]
+// (https://cloud.google.com/pubsub/docs/admin#resource_names). If the
+// subscription already exists, returns `ALREADY_EXISTS`. If the
+// corresponding topic doesn't exist, returns `NOT_FOUND`. If the name
+// is not provided in the request, the server will assign a random name
+// for this subscription on the same project as the topic, conforming to
+// the [resource name format]
 // (https://cloud.google.com/pubsub/docs/admin#resource_names). The
-// generated
-// name is populated in the returned Subscription object. Note that for
-// REST
-// API requests, you must specify a name in the request.
+// generated name is populated in the returned Subscription object. Note
+// that for REST API requests, you must specify a name in the request.
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3673,7 +3233,7 @@ func (c *ProjectsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3737,7 +3297,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic. See the [resource name rules]\n(https://cloud.google.com/pubsub/docs/admin#resource_names).\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the [resource name format]\n(https://cloud.google.com/pubsub/docs/admin#resource_names). The generated\nname is populated in the returned Subscription object. Note that for REST\nAPI requests, you must specify a name in the request.",
+	//   "description": "Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/admin#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
@@ -3746,7 +3306,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+	//       "description": "Required. The name of the subscription. It must have the format `\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3779,14 +3339,11 @@ type ProjectsSubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes an existing subscription. All messages retained in
-// the subscription
-// are immediately dropped. Calls to `Pull` after deletion will
-// return
-// `NOT_FOUND`. After a subscription is deleted, a new one may be
-// created with
-// the same name, but the new one has no association with the
-// old
-// subscription or its topic unless the same topic is specified.
+// the subscription are immediately dropped. Calls to `Pull` after
+// deletion will return `NOT_FOUND`. After a subscription is deleted, a
+// new one may be created with the same name, but the new one has no
+// association with the old subscription or its topic unless the same
+// topic is specified.
 func (r *ProjectsSubscriptionsService) Delete(subscription string) *ProjectsSubscriptionsDeleteCall {
 	c := &ProjectsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -3820,7 +3377,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +3436,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing subscription. All messages retained in the subscription\nare immediately dropped. Calls to `Pull` after deletion will return\n`NOT_FOUND`. After a subscription is deleted, a new one may be created with\nthe same name, but the new one has no association with the old\nsubscription or its topic unless the same topic is specified.",
+	//   "description": "Deletes an existing subscription. All messages retained in the subscription are immediately dropped. Calls to `Pull` after deletion will return `NOT_FOUND`. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription or its topic unless the same topic is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.subscriptions.delete",
@@ -3888,7 +3445,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The subscription to delete.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription to delete. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -3918,12 +3475,10 @@ type ProjectsSubscriptionsDetachCall struct {
 }
 
 // Detach: Detaches a subscription from this topic. All messages
-// retained in the
-// subscription are dropped. Subsequent `Pull` and `StreamingPull`
-// requests
-// will return FAILED_PRECONDITION. If the subscription is a
-// push
-// subscription, pushes to the endpoint will stop.
+// retained in the subscription are dropped. Subsequent `Pull` and
+// `StreamingPull` requests will return FAILED_PRECONDITION. If the
+// subscription is a push subscription, pushes to the endpoint will
+// stop.
 func (r *ProjectsSubscriptionsService) Detach(subscription string) *ProjectsSubscriptionsDetachCall {
 	c := &ProjectsSubscriptionsDetachCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -3957,7 +3512,7 @@ func (c *ProjectsSubscriptionsDetachCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsDetachCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4016,7 +3571,7 @@ func (c *ProjectsSubscriptionsDetachCall) Do(opts ...googleapi.CallOption) (*Det
 	}
 	return ret, nil
 	// {
-	//   "description": "Detaches a subscription from this topic. All messages retained in the\nsubscription are dropped. Subsequent `Pull` and `StreamingPull` requests\nwill return FAILED_PRECONDITION. If the subscription is a push\nsubscription, pushes to the endpoint will stop.",
+	//   "description": "Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:detach",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.detach",
@@ -4025,7 +3580,7 @@ func (c *ProjectsSubscriptionsDetachCall) Do(opts ...googleapi.CallOption) (*Det
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The subscription to detach.\nFormat is `projects/{project}/subscriptions/{subscription}`.",
+	//       "description": "Required. The subscription to detach. Format is `projects/{project}/subscriptions/{subscription}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4099,7 +3654,7 @@ func (c *ProjectsSubscriptionsGetCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4170,7 +3725,7 @@ func (c *ProjectsSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscr
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The name of the subscription to get.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription to get. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4200,9 +3755,8 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4212,24 +3766,14 @@ func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSu
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsSubscriptionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsSubscriptionsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -4272,7 +3816,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4334,7 +3878,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.subscriptions.getIamPolicy",
@@ -4343,13 +3887,13 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4394,10 +3938,9 @@ func (c *ProjectsSubscriptionsListCall) PageSize(pageSize int64) *ProjectsSubscr
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListSubscriptionsResponse`; indicates that
-// this is a continuation of a prior `ListSubscriptions` call, and that
-// the
-// system should return the next page of data.
+// by the last `ListSubscriptionsResponse`; indicates that this is a
+// continuation of a prior `ListSubscriptions` call, and that the system
+// should return the next page of data.
 func (c *ProjectsSubscriptionsListCall) PageToken(pageToken string) *ProjectsSubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4440,7 +3983,7 @@ func (c *ProjectsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4517,12 +4060,12 @@ func (c *ProjectsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListSubscriptionsResponse`; indicates that\nthis is a continuation of a prior `ListSubscriptions` call, and that the\nsystem should return the next page of data.",
+	//       "description": "The value returned by the last `ListSubscriptionsResponse`; indicates that this is a continuation of a prior `ListSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Required. The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list subscriptions. Format is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4574,14 +4117,11 @@ type ProjectsSubscriptionsModifyAckDeadlineCall struct {
 }
 
 // ModifyAckDeadline: Modifies the ack deadline for a specific message.
-// This method is useful
-// to indicate that more time is needed to process a message by
-// the
-// subscriber, or to make the message available for redelivery if
-// the
-// processing was interrupted. Note that this does not modify
-// the
-// subscription-level `ackDeadlineSeconds` used for subsequent messages.
+// This method is useful to indicate that more time is needed to process
+// a message by the subscriber, or to make the message available for
+// redelivery if the processing was interrupted. Note that this does not
+// modify the subscription-level `ackDeadlineSeconds` used for
+// subsequent messages.
 func (r *ProjectsSubscriptionsService) ModifyAckDeadline(subscription string, modifyackdeadlinerequest *ModifyAckDeadlineRequest) *ProjectsSubscriptionsModifyAckDeadlineCall {
 	c := &ProjectsSubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -4616,7 +4156,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4680,7 +4220,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the ack deadline for a specific message. This method is useful\nto indicate that more time is needed to process a message by the\nsubscriber, or to make the message available for redelivery if the\nprocessing was interrupted. Note that this does not modify the\nsubscription-level `ackDeadlineSeconds` used for subsequent messages.",
+	//   "description": "Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted. Note that this does not modify the subscription-level `ackDeadlineSeconds` used for subsequent messages.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:modifyAckDeadline",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.modifyAckDeadline",
@@ -4689,7 +4229,7 @@ func (c *ProjectsSubscriptionsModifyAckDeadlineCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4723,16 +4263,11 @@ type ProjectsSubscriptionsModifyPushConfigCall struct {
 }
 
 // ModifyPushConfig: Modifies the `PushConfig` for a specified
-// subscription.
-//
-// This may be used to change a push subscription to a pull one
-// (signified by
-// an empty `PushConfig`) or vice versa, or change the endpoint URL and
-// other
-// attributes of a push subscription. Messages will accumulate for
-// delivery
-// continuously through the call regardless of changes to the
-// `PushConfig`.
+// subscription. This may be used to change a push subscription to a
+// pull one (signified by an empty `PushConfig`) or vice versa, or
+// change the endpoint URL and other attributes of a push subscription.
+// Messages will accumulate for delivery continuously through the call
+// regardless of changes to the `PushConfig`.
 func (r *ProjectsSubscriptionsService) ModifyPushConfig(subscription string, modifypushconfigrequest *ModifyPushConfigRequest) *ProjectsSubscriptionsModifyPushConfigCall {
 	c := &ProjectsSubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -4767,7 +4302,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4831,7 +4366,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the `PushConfig` for a specified subscription.\n\nThis may be used to change a push subscription to a pull one (signified by\nan empty `PushConfig`) or vice versa, or change the endpoint URL and other\nattributes of a push subscription. Messages will accumulate for delivery\ncontinuously through the call regardless of changes to the `PushConfig`.",
+	//   "description": "Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:modifyPushConfig",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.modifyPushConfig",
@@ -4840,7 +4375,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The name of the subscription.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The name of the subscription. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -4874,8 +4409,7 @@ type ProjectsSubscriptionsPatchCall struct {
 }
 
 // Patch: Updates an existing subscription. Note that certain properties
-// of a
-// subscription, such as its topic, are not modifiable.
+// of a subscription, such as its topic, are not modifiable.
 func (r *ProjectsSubscriptionsService) Patch(name string, updatesubscriptionrequest *UpdateSubscriptionRequest) *ProjectsSubscriptionsPatchCall {
 	c := &ProjectsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4910,7 +4444,7 @@ func (c *ProjectsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4974,7 +4508,7 @@ func (c *ProjectsSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subs
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing subscription. Note that certain properties of a\nsubscription, such as its topic, are not modifiable.",
+	//   "description": "Updates an existing subscription. Note that certain properties of a subscription, such as its topic, are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.subscriptions.patch",
@@ -4983,7 +4517,7 @@ func (c *ProjectsSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Subs
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the subscription. It must have the format\n`\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must\nstart with a letter, and contain only letters (`[A-Za-z]`), numbers\n(`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`),\nplus (`+`) or percent signs (`%`). It must be between 3 and 255 characters\nin length, and it must not start with `\"goog\"`.",
+	//       "description": "Required. The name of the subscription. It must have the format `\"projects/{project}/subscriptions/{subscription}\"`. `{subscription}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -5017,10 +4551,8 @@ type ProjectsSubscriptionsPullCall struct {
 }
 
 // Pull: Pulls messages from the server. The server may return
-// `UNAVAILABLE` if
-// there are too many concurrent pull requests pending for the
-// given
-// subscription.
+// `UNAVAILABLE` if there are too many concurrent pull requests pending
+// for the given subscription.
 func (r *ProjectsSubscriptionsService) Pull(subscription string, pullrequest *PullRequest) *ProjectsSubscriptionsPullCall {
 	c := &ProjectsSubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5055,7 +4587,7 @@ func (c *ProjectsSubscriptionsPullCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5119,7 +4651,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. The server may return `UNAVAILABLE` if\nthere are too many concurrent pull requests pending for the given\nsubscription.",
+	//   "description": "Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many concurrent pull requests pending for the given subscription.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:pull",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.pull",
@@ -5128,7 +4660,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	//   ],
 	//   "parameters": {
 	//     "subscription": {
-	//       "description": "Required. The subscription from which messages should be pulled.\nFormat is `projects/{project}/subscriptions/{sub}`.",
+	//       "description": "Required. The subscription from which messages should be pulled. Format is `projects/{project}/subscriptions/{sub}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -5162,18 +4694,12 @@ type ProjectsSubscriptionsSeekCall struct {
 }
 
 // Seek: Seeks an existing subscription to a point in time or to a given
-// snapshot,
-// whichever is provided in the request. Snapshots are used in
-// [Seek](
-// https://cloud.google.com/pubsub/docs/replay-overview) operations,
-// which
-// allow you to manage message acknowledgments in bulk. That is, you can
-// set
-// the acknowledgment state of messages in an existing subscription to
-// the
-// state captured by a snapshot. Note that both the subscription and
-// the
-// snapshot must be on the same topic.
+// snapshot, whichever is provided in the request. Snapshots are used in
+// [Seek]( https://cloud.google.com/pubsub/docs/replay-overview)
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot. Note that
+// both the subscription and the snapshot must be on the same topic.
 func (r *ProjectsSubscriptionsService) Seek(subscription string, seekrequest *SeekRequest) *ProjectsSubscriptionsSeekCall {
 	c := &ProjectsSubscriptionsSeekCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5208,7 +4734,7 @@ func (c *ProjectsSubscriptionsSeekCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSeekCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5272,7 +4798,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	}
 	return ret, nil
 	// {
-	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in [Seek](\nhttps://cloud.google.com/pubsub/docs/replay-overview) operations, which\nallow you to manage message acknowledgments in bulk. That is, you can set\nthe acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot. Note that both the subscription and the\nsnapshot must be on the same topic.",
+	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot, whichever is provided in the request. Snapshots are used in [Seek]( https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. Note that both the subscription and the snapshot must be on the same topic.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:seek",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.seek",
@@ -5315,11 +4841,8 @@ type ProjectsSubscriptionsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSubscriptionsSetIamPolicyCall {
 	c := &ProjectsSubscriptionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5354,7 +4877,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5418,7 +4941,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.setIamPolicy",
@@ -5427,7 +4950,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -5461,16 +4984,11 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5505,7 +5023,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSubscriptionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5569,7 +5087,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.testIamPermissions",
@@ -5578,7 +5096,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/subscriptions/[^/]+$",
 	//       "required": true,
@@ -5612,8 +5130,7 @@ type ProjectsTopicsCreateCall struct {
 }
 
 // Create: Creates the given topic with the given name. See the
-// [resource name
-// rules](
+// [resource name rules](
 // https://cloud.google.com/pubsub/docs/admin#resource_names).
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5649,7 +5166,7 @@ func (c *ProjectsTopicsCreateCall) Header() http.Header {
 
 func (c *ProjectsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5713,7 +5230,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the given topic with the given name. See the [resource name rules](\nhttps://cloud.google.com/pubsub/docs/admin#resource_names).",
+	//   "description": "Creates the given topic with the given name. See the [resource name rules]( https://cloud.google.com/pubsub/docs/admin#resource_names).",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.topics.create",
@@ -5722,7 +5239,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+	//       "description": "Required. The name of the topic. It must have the format `\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -5755,14 +5272,11 @@ type ProjectsTopicsDeleteCall struct {
 }
 
 // Delete: Deletes the topic with the given name. Returns `NOT_FOUND` if
-// the topic
-// does not exist. After a topic is deleted, a new topic may be created
-// with
-// the same name; this is an entirely new topic with none of the
-// old
-// configuration or subscriptions. Existing subscriptions to this topic
-// are
-// not deleted, but their `topic` field is set to `_deleted-topic_`.
+// the topic does not exist. After a topic is deleted, a new topic may
+// be created with the same name; this is an entirely new topic with
+// none of the old configuration or subscriptions. Existing
+// subscriptions to this topic are not deleted, but their `topic` field
+// is set to `_deleted-topic_`.
 func (r *ProjectsTopicsService) Delete(topic string) *ProjectsTopicsDeleteCall {
 	c := &ProjectsTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -5796,7 +5310,7 @@ func (c *ProjectsTopicsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5855,7 +5369,7 @@ func (c *ProjectsTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the topic with the given name. Returns `NOT_FOUND` if the topic\ndoes not exist. After a topic is deleted, a new topic may be created with\nthe same name; this is an entirely new topic with none of the old\nconfiguration or subscriptions. Existing subscriptions to this topic are\nnot deleted, but their `topic` field is set to `_deleted-topic_`.",
+	//   "description": "Deletes the topic with the given name. Returns `NOT_FOUND` if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.topics.delete",
@@ -5864,7 +5378,7 @@ func (c *ProjectsTopicsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "Required. Name of the topic to delete.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. Name of the topic to delete. Format is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -5938,7 +5452,7 @@ func (c *ProjectsTopicsGetCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6009,7 +5523,7 @@ func (c *ProjectsTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error)
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "Required. The name of the topic to get.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The name of the topic to get. Format is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6039,9 +5553,8 @@ type ProjectsTopicsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6051,24 +5564,14 @@ func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGet
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsTopicsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsTopicsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -6111,7 +5614,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6173,7 +5676,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.getIamPolicy",
@@ -6182,13 +5685,13 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6233,9 +5736,8 @@ func (c *ProjectsTopicsListCall) PageSize(pageSize int64) *ProjectsTopicsListCal
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListTopicsResponse`; indicates that this is
-// a continuation of a prior `ListTopics` call, and that the system
-// should
+// by the last `ListTopicsResponse`; indicates that this is a
+// continuation of a prior `ListTopics` call, and that the system should
 // return the next page of data.
 func (c *ProjectsTopicsListCall) PageToken(pageToken string) *ProjectsTopicsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -6279,7 +5781,7 @@ func (c *ProjectsTopicsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6356,12 +5858,12 @@ func (c *ProjectsTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsRe
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicsResponse`; indicates that this is\na continuation of a prior `ListTopics` call, and that the system should\nreturn the next page of data.",
+	//       "description": "The value returned by the last `ListTopicsResponse`; indicates that this is a continuation of a prior `ListTopics` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Required. The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
+	//       "description": "Required. The name of the project in which to list topics. Format is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6412,8 +5914,7 @@ type ProjectsTopicsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing topic. Note that certain properties of
-// a
+// Patch: Updates an existing topic. Note that certain properties of a
 // topic are not modifiable.
 func (r *ProjectsTopicsService) Patch(name string, updatetopicrequest *UpdateTopicRequest) *ProjectsTopicsPatchCall {
 	c := &ProjectsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6449,7 +5950,7 @@ func (c *ProjectsTopicsPatchCall) Header() http.Header {
 
 func (c *ProjectsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6513,7 +6014,7 @@ func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing topic. Note that certain properties of a\ntopic are not modifiable.",
+	//   "description": "Updates an existing topic. Note that certain properties of a topic are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.topics.patch",
@@ -6522,7 +6023,7 @@ func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+	//       "description": "Required. The name of the topic. It must have the format `\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It must be between 3 and 255 characters in length, and it must not start with `\"goog\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6556,8 +6057,7 @@ type ProjectsTopicsPublishCall struct {
 }
 
 // Publish: Adds one or more messages to the topic. Returns `NOT_FOUND`
-// if the topic
-// does not exist.
+// if the topic does not exist.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -6592,7 +6092,7 @@ func (c *ProjectsTopicsPublishCall) Header() http.Header {
 
 func (c *ProjectsTopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6656,7 +6156,7 @@ func (c *ProjectsTopicsPublishCall) Do(opts ...googleapi.CallOption) (*PublishRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic\ndoes not exist.",
+	//   "description": "Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:publish",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.publish",
@@ -6665,7 +6165,7 @@ func (c *ProjectsTopicsPublishCall) Do(opts ...googleapi.CallOption) (*PublishRe
 	//   ],
 	//   "parameters": {
 	//     "topic": {
-	//       "description": "Required. The messages in the request will be published on this topic.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The messages in the request will be published on this topic. Format is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6699,11 +6199,8 @@ type ProjectsTopicsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsTopicsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsTopicsSetIamPolicyCall {
 	c := &ProjectsTopicsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6738,7 +6235,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsTopicsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6802,7 +6299,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.setIamPolicy",
@@ -6811,7 +6308,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Poli
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6845,16 +6342,11 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6889,7 +6381,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsTopicsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6953,7 +6445,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.testIamPermissions",
@@ -6962,7 +6454,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -6996,14 +6488,10 @@ type ProjectsTopicsSnapshotsListCall struct {
 }
 
 // List: Lists the names of the snapshots on this topic. Snapshots are
-// used in
-// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operations,
-// which allow you to manage message acknowledgments in bulk. That is,
-// you can
-// set the acknowledgment state of messages in an existing subscription
-// to the
-// state captured by a snapshot.
+// used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7018,10 +6506,9 @@ func (c *ProjectsTopicsSnapshotsListCall) PageSize(pageSize int64) *ProjectsTopi
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListTopicSnapshotsResponse`; indicates
-// that this is a continuation of a prior `ListTopicSnapshots` call,
-// and
-// that the system should return the next page of data.
+// by the last `ListTopicSnapshotsResponse`; indicates that this is a
+// continuation of a prior `ListTopicSnapshots` call, and that the
+// system should return the next page of data.
 func (c *ProjectsTopicsSnapshotsListCall) PageToken(pageToken string) *ProjectsTopicsSnapshotsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7064,7 +6551,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7126,7 +6613,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n[Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,\nwhich allow you to manage message acknowledgments in bulk. That is, you can\nset the acknowledgment state of messages in an existing subscription to the\nstate captured by a snapshot.",
+	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.snapshots.list",
@@ -7141,12 +6628,12 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicSnapshotsResponse`; indicates\nthat this is a continuation of a prior `ListTopicSnapshots` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTopicSnapshotsResponse`; indicates that this is a continuation of a prior `ListTopicSnapshots` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "topic": {
-	//       "description": "Required. The name of the topic that snapshots are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The name of the topic that snapshots are attached to. Format is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,
@@ -7212,10 +6699,9 @@ func (c *ProjectsTopicsSubscriptionsListCall) PageSize(pageSize int64) *Projects
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListTopicSubscriptionsResponse`; indicates
-// that this is a continuation of a prior `ListTopicSubscriptions` call,
-// and
-// that the system should return the next page of data.
+// by the last `ListTopicSubscriptionsResponse`; indicates that this is
+// a continuation of a prior `ListTopicSubscriptions` call, and that the
+// system should return the next page of data.
 func (c *ProjectsTopicsSubscriptionsListCall) PageToken(pageToken string) *ProjectsTopicsSubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7258,7 +6744,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Header() http.Header {
 
 func (c *ProjectsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7335,12 +6821,12 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTopicSubscriptionsResponse`; indicates\nthat this is a continuation of a prior `ListTopicSubscriptions` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTopicSubscriptionsResponse`; indicates that this is a continuation of a prior `ListTopicSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "topic": {
-	//       "description": "Required. The name of the topic that subscriptions are attached to.\nFormat is `projects/{project}/topics/{topic}`.",
+	//       "description": "Required. The name of the topic that subscriptions are attached to. Format is `projects/{project}/topics/{topic}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
 	//       "required": true,

@@ -188,44 +188,30 @@ type DeleteEventsResponse struct {
 }
 
 // ErrorContext: A description of the context in which an error
-// occurred.
-// This data should be provided by the application when reporting an
-// error,
-// unless the
-// error report has been generated automatically from Google App Engine
-// logs.
+// occurred. This data should be provided by the application when
+// reporting an error, unless the error report has been generated
+// automatically from Google App Engine logs.
 type ErrorContext struct {
-	// HttpRequest: The HTTP request which was processed when the error
-	// was
+	// HttpRequest: The HTTP request which was processed when the error was
 	// triggered.
 	HttpRequest *HttpRequestContext `json:"httpRequest,omitempty"`
 
 	// ReportLocation: The location in the source code where the decision
-	// was made to
-	// report the error, usually the place where it was logged.
-	// For a logged exception this would be the source line where
-	// the
-	// exception is logged, usually close to the place where it was
-	// caught.
+	// was made to report the error, usually the place where it was logged.
+	// For a logged exception this would be the source line where the
+	// exception is logged, usually close to the place where it was caught.
 	ReportLocation *SourceLocation `json:"reportLocation,omitempty"`
 
 	// SourceReferences: Source code that was used to build the executable
-	// which has
-	// caused the given error message.
+	// which has caused the given error message.
 	SourceReferences []*SourceReference `json:"sourceReferences,omitempty"`
 
-	// User: The user who caused or was affected by the crash.
-	// This can be a user ID, an email address, or an arbitrary token
-	// that
-	// uniquely identifies the user.
-	// When sending an error report, leave this field empty if the user was
-	// not
-	// logged in. In this case the
-	// Error Reporting system will use other data, such as remote IP
-	// address, to
-	// distinguish affected users. See `affected_users_count`
-	// in
-	// `ErrorGroupStats`.
+	// User: The user who caused or was affected by the crash. This can be a
+	// user ID, an email address, or an arbitrary token that uniquely
+	// identifies the user. When sending an error report, leave this field
+	// empty if the user was not logged in. In this case the Error Reporting
+	// system will use other data, such as remote IP address, to distinguish
+	// affected users. See `affected_users_count` in `ErrorGroupStats`.
 	User string `json:"user,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
@@ -258,10 +244,8 @@ type ErrorEvent struct {
 	Context *ErrorContext `json:"context,omitempty"`
 
 	// EventTime: Time when the event occurred as provided in the error
-	// report.
-	// If the report did not contain a timestamp, the time the error was
-	// received
-	// by the Error Reporting system is used.
+	// report. If the report did not contain a timestamp, the time the error
+	// was received by the Error Reporting system is used.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// Message: The stack trace that was reported or logged by the service.
@@ -297,30 +281,26 @@ func (s *ErrorEvent) MarshalJSON() ([]byte, error) {
 // ErrorGroup: Description of a group of similar error events.
 type ErrorGroup struct {
 	// GroupId: Group IDs are unique for a given project. If the same kind
-	// of error
-	// occurs in different service contexts, it will receive the same group
-	// ID.
+	// of error occurs in different service contexts, it will receive the
+	// same group ID.
 	GroupId string `json:"groupId,omitempty"`
 
-	// Name: The group resource name.
-	// Example: <code>projects/my-project-123/groups/CNSgkpnppqKCUw</code>
+	// Name: The group resource name. Example:
+	// projects/my-project-123/groups/CNSgkpnppqKCUw
 	Name string `json:"name,omitempty"`
 
-	// ResolutionStatus: Error group's resolution status.
-	//
-	// An unspecified resolution status will be interpreted as OPEN
+	// ResolutionStatus: Error group's resolution status. An unspecified
+	// resolution status will be interpreted as OPEN
 	//
 	// Possible values:
 	//   "RESOLUTION_STATUS_UNSPECIFIED" - Status is unknown.
 	//   "OPEN" - The error group is not being addressed. This is the
-	// default for
-	// new groups. It is also used for errors re-occuring after marked
-	// RESOLVED.
+	// default for new groups. It is also used for errors re-occuring after
+	// marked RESOLVED.
 	//   "ACKNOWLEDGED" - Error Group manually acknowledged, it can have an
 	// issue link attached.
 	//   "RESOLVED" - Error Group manually resolved, more events for this
-	// group are not expected
-	// to occur.
+	// group are not expected to occur.
 	//   "MUTED" - The error group is muted and excluded by default on group
 	// stats requests.
 	ResolutionStatus string `json:"resolutionStatus,omitempty"`
@@ -356,42 +336,32 @@ func (s *ErrorGroup) MarshalJSON() ([]byte, error) {
 }
 
 // ErrorGroupStats: Data extracted for a specific group based on certain
-// filter criteria,
-// such as a given time period and/or service filter.
+// filter criteria, such as a given time period and/or service filter.
 type ErrorGroupStats struct {
 	// AffectedServices: Service contexts with a non-zero error count for
-	// the given filter
-	// criteria. This list can be truncated if multiple services are
-	// affected.
-	// Refer to `num_affected_services` for the total count.
+	// the given filter criteria. This list can be truncated if multiple
+	// services are affected. Refer to `num_affected_services` for the total
+	// count.
 	AffectedServices []*ServiceContext `json:"affectedServices,omitempty"`
 
 	// AffectedUsersCount: Approximate number of affected users in the given
-	// group that
-	// match the filter criteria.
-	// Users are distinguished by data in the `ErrorContext` of
-	// the
-	// individual error events, such as their login name or their remote
-	// IP address in case of HTTP requests.
-	// The number of affected users can be zero even if the number of
-	// errors is non-zero if no data was provided from which the
-	// affected user could be deduced.
-	// Users are counted based on data in the request
-	// context that was provided in the error report. If more users
-	// are
-	// implicitly affected, such as due to a crash of the whole
-	// service,
-	// this is not reflected here.
+	// group that match the filter criteria. Users are distinguished by data
+	// in the `ErrorContext` of the individual error events, such as their
+	// login name or their remote IP address in case of HTTP requests. The
+	// number of affected users can be zero even if the number of errors is
+	// non-zero if no data was provided from which the affected user could
+	// be deduced. Users are counted based on data in the request context
+	// that was provided in the error report. If more users are implicitly
+	// affected, such as due to a crash of the whole service, this is not
+	// reflected here.
 	AffectedUsersCount int64 `json:"affectedUsersCount,omitempty,string"`
 
 	// Count: Approximate total number of events in the given group that
-	// match
-	// the filter criteria.
+	// match the filter criteria.
 	Count int64 `json:"count,omitempty,string"`
 
 	// FirstSeenTime: Approximate first occurrence that was ever seen for
-	// this group
-	// and which matches the given filter criteria, ignoring the
+	// this group and which matches the given filter criteria, ignoring the
 	// time_range that was specified in the request.
 	FirstSeenTime string `json:"firstSeenTime,omitempty"`
 
@@ -399,33 +369,26 @@ type ErrorGroupStats struct {
 	Group *ErrorGroup `json:"group,omitempty"`
 
 	// LastSeenTime: Approximate last occurrence that was ever seen for this
-	// group and
-	// which matches the given filter criteria, ignoring the time_range
-	// that was specified in the request.
+	// group and which matches the given filter criteria, ignoring the
+	// time_range that was specified in the request.
 	LastSeenTime string `json:"lastSeenTime,omitempty"`
 
 	// NumAffectedServices: The total number of services with a non-zero
-	// error count for the given
-	// filter criteria.
+	// error count for the given filter criteria.
 	NumAffectedServices int64 `json:"numAffectedServices,omitempty"`
 
 	// Representative: An arbitrary event that is chosen as representative
-	// for the whole group.
-	// The representative event is intended to be used as a quick preview
-	// for
-	// the whole group. Events in the group are usually sufficiently
-	// similar
-	// to each other such that showing an arbitrary representative
-	// provides
-	// insight into the characteristics of the group as a whole.
+	// for the whole group. The representative event is intended to be used
+	// as a quick preview for the whole group. Events in the group are
+	// usually sufficiently similar to each other such that showing an
+	// arbitrary representative provides insight into the characteristics of
+	// the group as a whole.
 	Representative *ErrorEvent `json:"representative,omitempty"`
 
-	// TimedCounts: Approximate number of occurrences over time.
-	// Timed counts returned by ListGroups are guaranteed to be:
-	//
-	// - Inside the requested time interval
-	// - Non-overlapping, and
-	// - Ordered by ascending time.
+	// TimedCounts: Approximate number of occurrences over time. Timed
+	// counts returned by ListGroups are guaranteed to be: - Inside the
+	// requested time interval - Non-overlapping, and - Ordered by ascending
+	// time.
 	TimedCounts []*TimedCount `json:"timedCounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AffectedServices") to
@@ -453,12 +416,9 @@ func (s *ErrorGroupStats) MarshalJSON() ([]byte, error) {
 }
 
 // HttpRequestContext: HTTP request data that is related to a reported
-// error.
-// This data should be provided by the application when reporting an
-// error,
-// unless the
-// error report has been generated automatically from Google App Engine
-// logs.
+// error. This data should be provided by the application when reporting
+// an error, unless the error report has been generated automatically
+// from Google App Engine logs.
 type HttpRequestContext struct {
 	// Method: The type of HTTP request, such as `GET`, `POST`, etc.
 	Method string `json:"method,omitempty"`
@@ -466,10 +426,9 @@ type HttpRequestContext struct {
 	// Referrer: The referrer information that is provided with the request.
 	Referrer string `json:"referrer,omitempty"`
 
-	// RemoteIp: The IP address from which the request originated.
-	// This can be IPv4, IPv6, or a token which is derived from the
-	// IP address, depending on the data that has been provided
-	// in the error report.
+	// RemoteIp: The IP address from which the request originated. This can
+	// be IPv4, IPv6, or a token which is derived from the IP address,
+	// depending on the data that has been provided in the error report.
 	RemoteIp string `json:"remoteIp,omitempty"`
 
 	// ResponseStatusCode: The HTTP response status code for the request.
@@ -510,10 +469,9 @@ type ListEventsResponse struct {
 	// ErrorEvents: The error events which match the given request.
 	ErrorEvents []*ErrorEvent `json:"errorEvents,omitempty"`
 
-	// NextPageToken: If non-empty, more results are available.
-	// Pass this token, along with the same query parameters as the
-	// first
-	// request, to view the next page of results.
+	// NextPageToken: If non-empty, more results are available. Pass this
+	// token, along with the same query parameters as the first request, to
+	// view the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TimeRangeBegin: The timestamp specifies the start time to which the
@@ -553,19 +511,15 @@ type ListGroupStatsResponse struct {
 	// ErrorGroupStats: The error group stats which match the given request.
 	ErrorGroupStats []*ErrorGroupStats `json:"errorGroupStats,omitempty"`
 
-	// NextPageToken: If non-empty, more results are available.
-	// Pass this token, along with the same query parameters as the
-	// first
-	// request, to view the next page of results.
+	// NextPageToken: If non-empty, more results are available. Pass this
+	// token, along with the same query parameters as the first request, to
+	// view the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TimeRangeBegin: The timestamp specifies the start time to which the
-	// request was restricted.
-	// The start time is set based on the requested time range. It may be
-	// adjusted
-	// to a later time if a project has exceeded the storage quota and older
-	// data
-	// has been deleted.
+	// request was restricted. The start time is set based on the requested
+	// time range. It may be adjusted to a later time if a project has
+	// exceeded the storage quota and older data has been deleted.
 	TimeRangeBegin string `json:"timeRangeBegin,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -597,8 +551,7 @@ func (s *ListGroupStatsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ReportErrorEventResponse: Response for reporting an individual error
-// event.
-// Data may be added to this message in the future.
+// event. Data may be added to this message in the future.
 type ReportErrorEventResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -612,52 +565,32 @@ type ReportedErrorEvent struct {
 	// occurred.
 	Context *ErrorContext `json:"context,omitempty"`
 
-	// EventTime: Optional. Time when the event occurred.
-	// If not provided, the time when the event was received by the
-	// Error Reporting system will be used.
+	// EventTime: Optional. Time when the event occurred. If not provided,
+	// the time when the event was received by the Error Reporting system
+	// will be used.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Message: Required. The error message.
-	// If no `context.reportLocation` is provided, the message must contain
-	// a
-	// header (typically consisting of the exception type name and an
-	// error
-	// message) and an exception stack trace in one of the supported
-	// programming
-	// languages and formats.
-	// Supported languages are Java, Python, JavaScript, Ruby, C#, PHP, and
-	// Go.
-	// Supported stack trace formats are:
-	//
-	// * **Java**: Must be the return value
-	// of
-	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/do
-	// cs/api/java/lang/Throwable.html#printStackTrace%28%29).
-	// * **Python**: Must be the return value
-	// of
-	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceb
-	// ack.html#traceback.format_exc).
-	// * **JavaScript**: Must be the value
-	// of
+	// Message: Required. The error message. If no `context.reportLocation`
+	// is provided, the message must contain a header (typically consisting
+	// of the exception type name and an error message) and an exception
+	// stack trace in one of the supported programming languages and
+	// formats. Supported languages are Java, Python, JavaScript, Ruby, C#,
+	// PHP, and Go. Supported stack trace formats are: * **Java**: Must be
+	// the return value of
+	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/
+	// api/java/lang/Throwable.html#printStackTrace%28%29). * **Python**:
+	// Must be the return value of
+	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceback
+	// .html#traceback.format_exc). * **JavaScript**: Must be the value of
 	// [`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API) as
-	// returned
-	// by V8.
-	// * **Ruby**: Must contain frames returned
-	// by
-	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.h
-	// tml#method-i-backtrace).
-	// * **C#**: Must be the return value
-	// of
-	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/s
-	// ystem.exception.tostring.aspx).
-	// * **PHP**: Must start with `PHP (Notice|Parse error|Fatal
-	// error|Warning)`
-	// and contain the result
-	// of
-	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.
-	// php).
-	// * **Go**: Must be the return value
-	// of
+	// returned by V8. * **Ruby**: Must contain frames returned by
+	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html
+	// #method-i-backtrace). * **C#**: Must be the return value of
+	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/syst
+	// em.exception.tostring.aspx). * **PHP**: Must start with `PHP
+	// (Notice|Parse error|Fatal error|Warning)` and contain the result of
+	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.php
+	// ). * **Go**: Must be the return value of
 	// [`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
 
@@ -688,40 +621,28 @@ func (s *ReportedErrorEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServiceContext: Describes a running service that sends errors.
-// Its version changes over time and multiple versions can run in
-// parallel.
+// ServiceContext: Describes a running service that sends errors. Its
+// version changes over time and multiple versions can run in parallel.
 type ServiceContext struct {
-	// ResourceType: Type of the MonitoredResource. List of possible
-	// values:
-	// https://cloud.google.com/monitoring/api/resources
-	//
-	// Value is set automatically for incoming errors and must not be set
-	// when
-	// reporting errors.
+	// ResourceType: Type of the MonitoredResource. List of possible values:
+	// https://cloud.google.com/monitoring/api/resources Value is set
+	// automatically for incoming errors and must not be set when reporting
+	// errors.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// Service: An identifier of the service, such as the name of
-	// the
+	// Service: An identifier of the service, such as the name of the
 	// executable, job, or Google App Engine service name. This field is
-	// expected
-	// to have a low number of values that are relatively stable over time,
-	// as
-	// opposed to `version`, which can be changed whenever new code is
-	// deployed.
-	//
-	// Contains the service name for error reports extracted from Google
-	// App Engine logs or `default` if the App Engine default service is
-	// used.
+	// expected to have a low number of values that are relatively stable
+	// over time, as opposed to `version`, which can be changed whenever new
+	// code is deployed. Contains the service name for error reports
+	// extracted from Google App Engine logs or `default` if the App Engine
+	// default service is used.
 	Service string `json:"service,omitempty"`
 
 	// Version: Represents the source code version that the developer
-	// provided,
-	// which could represent a version label or a Git SHA-1 hash, for
-	// example.
-	// For App Engine standard environment, the version is set to the
-	// version of
-	// the app.
+	// provided, which could represent a version label or a Git SHA-1 hash,
+	// for example. For App Engine standard environment, the version is set
+	// to the version of the app.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceType") to
@@ -748,22 +669,18 @@ func (s *ServiceContext) MarshalJSON() ([]byte, error) {
 }
 
 // SourceLocation: Indicates a location in the source code of the
-// service for which errors are
-// reported. `functionName` must be provided by the application when
-// reporting
-// an error, unless the error report contains a `message` with a
-// supported
-// exception stack trace. All fields are optional for the later case.
+// service for which errors are reported. `functionName` must be
+// provided by the application when reporting an error, unless the error
+// report contains a `message` with a supported exception stack trace.
+// All fields are optional for the later case.
 type SourceLocation struct {
 	// FilePath: The source code filename, which can include a truncated
-	// relative
-	// path, or a full path from a production machine.
+	// relative path, or a full path from a production machine.
 	FilePath string `json:"filePath,omitempty"`
 
-	// FunctionName: Human-readable name of a function or method.
-	// The value can include optional context like the class or package
-	// name.
-	// For example, `my.package.MyClass.method` in case of Java.
+	// FunctionName: Human-readable name of a function or method. The value
+	// can include optional context like the class or package name. For
+	// example, `my.package.MyClass.method` in case of Java.
 	FunctionName string `json:"functionName,omitempty"`
 
 	// LineNumber: 1-based. 0 indicates that the line number is unknown.
@@ -793,17 +710,14 @@ func (s *SourceLocation) MarshalJSON() ([]byte, error) {
 }
 
 // SourceReference: A reference to a particular snapshot of the source
-// tree used to build and
-// deploy an application.
+// tree used to build and deploy an application.
 type SourceReference struct {
-	// Repository: Optional. A URI string identifying the
-	// repository.
+	// Repository: Optional. A URI string identifying the repository.
 	// Example: "https://github.com/GoogleCloudPlatform/kubernetes.git"
 	Repository string `json:"repository,omitempty"`
 
 	// RevisionId: The canonical and persistent identifier of the deployed
-	// revision.
-	// Example (git): "0035781c50ec7aa23385dc841529ce8a4b70db1b"
+	// revision. Example (git): "0035781c50ec7aa23385dc841529ce8a4b70db1b"
 	RevisionId string `json:"revisionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Repository") to
@@ -829,9 +743,9 @@ func (s *SourceReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimedCount: The number of errors in a given time period.
-// All numbers are approximate since the error events are sampled
-// before counting them.
+// TimedCount: The number of errors in a given time period. All numbers
+// are approximate since the error events are sampled before counting
+// them.
 type TimedCount struct {
 	// Count: Approximate number of occurrences in the given time period.
 	Count int64 `json:"count,omitempty,string"`
@@ -869,8 +783,7 @@ func (s *TimedCount) MarshalJSON() ([]byte, error) {
 // TrackingIssue: Information related to tracking the progress on
 // resolving the error.
 type TrackingIssue struct {
-	// Url: A URL pointing to a related entry in an issue tracking
-	// system.
+	// Url: A URL pointing to a related entry in an issue tracking system.
 	// Example: `https://github.com/user/project/issues/4`
 	Url string `json:"url,omitempty"`
 
@@ -941,7 +854,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1009,7 +922,7 @@ func (c *ProjectsDeleteEventsCall) Do(opts ...googleapi.CallOption) (*DeleteEven
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}`, where `{projectID}` is the [Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840). Example: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1067,30 +980,27 @@ func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsList
 }
 
 // ServiceFilterResourceType sets the optional parameter
-// "serviceFilter.resourceType": The exact value to match
-// against
-// [`ServiceContext.resource_type`](/error-reporting/reference/re
-// st/v1beta1/ServiceContext#FIELDS.resource_type).
+// "serviceFilter.resourceType": The exact value to match against
+// [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1bet
+// a1/ServiceContext#FIELDS.resource_type).
 func (c *ProjectsEventsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
 	return c
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": The exact value to match
-// against
-// [`ServiceContext.service`](/error-reporting/reference/rest/v1b
-// eta1/ServiceContext#FIELDS.service).
+// "serviceFilter.service": The exact value to match against
+// [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/Ser
+// viceContext#FIELDS.service).
 func (c *ProjectsEventsListCall) ServiceFilterService(serviceFilterService string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
 	return c
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": The exact value to match
-// against
-// [`ServiceContext.version`](/error-reporting/reference/rest/v1b
-// eta1/ServiceContext#FIELDS.version).
+// "serviceFilter.version": The exact value to match against
+// [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/Ser
+// viceContext#FIELDS.version).
 func (c *ProjectsEventsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
 	return c
@@ -1100,12 +1010,17 @@ func (c *ProjectsEventsListCall) ServiceFilterVersion(serviceFilterVersion strin
 // Restricts the query to the specified time range.
 //
 // Possible values:
-//   "PERIOD_UNSPECIFIED"
-//   "PERIOD_1_HOUR"
-//   "PERIOD_6_HOURS"
-//   "PERIOD_1_DAY"
-//   "PERIOD_1_WEEK"
-//   "PERIOD_30_DAYS"
+//   "PERIOD_UNSPECIFIED" - Do not use.
+//   "PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
+// minimum timed count duration: 1 min.
+//   "PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
+// minimum timed count duration: 10 min.
+//   "PERIOD_1_DAY" - Retrieve data for the last day. Recommended
+// minimum timed count duration: 1 hour.
+//   "PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
+// minimum timed count duration: 6 hours.
+//   "PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
+// minimum timed count duration: 1 day.
 func (c *ProjectsEventsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsEventsListCall {
 	c.urlParams_.Set("timeRange.period", timeRangePeriod)
 	return c
@@ -1148,7 +1063,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1235,24 +1150,24 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}`, where `{projectID}` is the [Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840). Example: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.resourceType": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1265,6 +1180,14 @@ func (c *ProjectsEventsListCall) Do(opts ...googleapi.CallOption) (*ListEventsRe
 	//         "PERIOD_1_DAY",
 	//         "PERIOD_1_WEEK",
 	//         "PERIOD_30_DAYS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Do not use.",
+	//         "Retrieve data for the last hour. Recommended minimum timed count duration: 1 min.",
+	//         "Retrieve data for the last 6 hours. Recommended minimum timed count duration: 10 min.",
+	//         "Retrieve data for the last day. Recommended minimum timed count duration: 1 hour.",
+	//         "Retrieve data for the last week. Recommended minimum timed count duration: 6 hours.",
+	//         "Retrieve data for the last 30 days. Recommended minimum timed count duration: 1 day."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -1313,19 +1236,12 @@ type ProjectsEventsReportCall struct {
 	header_            http.Header
 }
 
-// Report: Report an individual error event.
-//
-// This endpoint accepts **either** an OAuth token,
-// **or** an [API
-// key](https://support.google.com/cloud/answer/6158862)
-// for authentication. To use an API key, append it to the URL as the
-// value of
-// a `key` parameter. For
-// example:
-//
-// `POST
-// https://clouderrorreporting.googleapis.com/v1beta1/{pr
-// ojectName}/events:report?key=123ABC456`
+// Report: Report an individual error event. This endpoint accepts
+// **either** an OAuth token, **or** an [API
+// key](https://support.google.com/cloud/answer/6158862) for
+// authentication. To use an API key, append it to the URL as the value
+// of a `key` parameter. For example: `POST
+// https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1360,7 +1276,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1424,7 +1340,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`",
+	//   "description": "Report an individual error event. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1433,7 +1349,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectId}`, where `{projectId}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: // `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectId}`, where `{projectId}` is the [Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840). Example: // `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1473,91 +1389,97 @@ func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStats
 }
 
 // Alignment sets the optional parameter "alignment": The alignment of
-// the timed counts to be returned.
-// Default is `ALIGNMENT_EQUAL_AT_END`.
+// the timed counts to be returned. Default is `ALIGNMENT_EQUAL_AT_END`.
 //
 // Possible values:
-//   "ERROR_COUNT_ALIGNMENT_UNSPECIFIED"
-//   "ALIGNMENT_EQUAL_ROUNDED"
-//   "ALIGNMENT_EQUAL_AT_END"
+//   "ERROR_COUNT_ALIGNMENT_UNSPECIFIED" - No alignment specified.
+//   "ALIGNMENT_EQUAL_ROUNDED" - The time periods shall be consecutive,
+// have width equal to the requested duration, and be aligned at the
+// `alignment_time` provided in the request. The `alignment_time` does
+// not have to be inside the query period but even if it is outside,
+// only time periods are returned which overlap with the query period. A
+// rounded alignment will typically result in a different size of the
+// first or the last time period.
+//   "ALIGNMENT_EQUAL_AT_END" - The time periods shall be consecutive,
+// have width equal to the requested duration, and be aligned at the end
+// of the requested time period. This can result in a different size of
+// the first time period.
 func (c *ProjectsGroupStatsListCall) Alignment(alignment string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("alignment", alignment)
 	return c
 }
 
 // AlignmentTime sets the optional parameter "alignmentTime": Time where
-// the timed counts shall be aligned if rounded
-// alignment is chosen. Default is 00:00 UTC.
+// the timed counts shall be aligned if rounded alignment is chosen.
+// Default is 00:00 UTC.
 func (c *ProjectsGroupStatsListCall) AlignmentTime(alignmentTime string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("alignmentTime", alignmentTime)
 	return c
 }
 
 // GroupId sets the optional parameter "groupId": List all
-// <code>ErrorGroupStats</code> with these IDs.
+// ErrorGroupStats with these IDs.
 func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupStatsListCall {
 	c.urlParams_.SetMulti("groupId", append([]string{}, groupId...))
 	return c
 }
 
 // Order sets the optional parameter "order": The sort order in which
-// the results are returned.
-// Default is `COUNT_DESC`.
+// the results are returned. Default is `COUNT_DESC`.
 //
 // Possible values:
-//   "GROUP_ORDER_UNSPECIFIED"
-//   "COUNT_DESC"
-//   "LAST_SEEN_DESC"
-//   "CREATED_DESC"
-//   "AFFECTED_USERS_DESC"
+//   "GROUP_ORDER_UNSPECIFIED" - No group order specified.
+//   "COUNT_DESC" - Total count of errors in the given time window in
+// descending order.
+//   "LAST_SEEN_DESC" - Timestamp when the group was last seen in the
+// given time window in descending order.
+//   "CREATED_DESC" - Timestamp when the group was created in descending
+// order.
+//   "AFFECTED_USERS_DESC" - Number of affected users in the given time
+// window in descending order.
 func (c *ProjectsGroupStatsListCall) Order(order string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("order", order)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return per response.
-// Default is 20.
+// of results to return per response. Default is 20.
 func (c *ProjectsGroupStatsListCall) PageSize(pageSize int64) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A
-// `next_page_token` provided by a previous response. To view
-// additional results, pass this token along with the identical
-// query
-// parameters as the first request.
+// `next_page_token` provided by a previous response. To view additional
+// results, pass this token along with the identical query parameters as
+// the first request.
 func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ServiceFilterResourceType sets the optional parameter
-// "serviceFilter.resourceType": The exact value to match
-// against
-// [`ServiceContext.resource_type`](/error-reporting/reference/re
-// st/v1beta1/ServiceContext#FIELDS.resource_type).
+// "serviceFilter.resourceType": The exact value to match against
+// [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1bet
+// a1/ServiceContext#FIELDS.resource_type).
 func (c *ProjectsGroupStatsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
 	return c
 }
 
 // ServiceFilterService sets the optional parameter
-// "serviceFilter.service": The exact value to match
-// against
-// [`ServiceContext.service`](/error-reporting/reference/rest/v1b
-// eta1/ServiceContext#FIELDS.service).
+// "serviceFilter.service": The exact value to match against
+// [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/Ser
+// viceContext#FIELDS.service).
 func (c *ProjectsGroupStatsListCall) ServiceFilterService(serviceFilterService string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
 	return c
 }
 
 // ServiceFilterVersion sets the optional parameter
-// "serviceFilter.version": The exact value to match
-// against
-// [`ServiceContext.version`](/error-reporting/reference/rest/v1b
-// eta1/ServiceContext#FIELDS.version).
+// "serviceFilter.version": The exact value to match against
+// [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/Ser
+// viceContext#FIELDS.version).
 func (c *ProjectsGroupStatsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
 	return c
@@ -1567,20 +1489,25 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterVersion(serviceFilterVersion s
 // Restricts the query to the specified time range.
 //
 // Possible values:
-//   "PERIOD_UNSPECIFIED"
-//   "PERIOD_1_HOUR"
-//   "PERIOD_6_HOURS"
-//   "PERIOD_1_DAY"
-//   "PERIOD_1_WEEK"
-//   "PERIOD_30_DAYS"
+//   "PERIOD_UNSPECIFIED" - Do not use.
+//   "PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
+// minimum timed count duration: 1 min.
+//   "PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
+// minimum timed count duration: 10 min.
+//   "PERIOD_1_DAY" - Retrieve data for the last day. Recommended
+// minimum timed count duration: 1 hour.
+//   "PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
+// minimum timed count duration: 6 hours.
+//   "PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
+// minimum timed count duration: 1 day.
 func (c *ProjectsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timeRange.period", timeRangePeriod)
 	return c
 }
 
 // TimedCountDuration sets the optional parameter "timedCountDuration":
-// The preferred duration for a single returned `TimedCount`.
-// If not set, no timed counts are returned.
+// The preferred duration for a single returned `TimedCount`. If not
+// set, no timed counts are returned.
 func (c *ProjectsGroupStatsListCall) TimedCountDuration(timedCountDuration string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timedCountDuration", timedCountDuration)
 	return c
@@ -1623,7 +1550,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1694,29 +1621,34 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//   ],
 	//   "parameters": {
 	//     "alignment": {
-	//       "description": "Optional. The alignment of the timed counts to be returned.\nDefault is `ALIGNMENT_EQUAL_AT_END`.",
+	//       "description": "Optional. The alignment of the timed counts to be returned. Default is `ALIGNMENT_EQUAL_AT_END`.",
 	//       "enum": [
 	//         "ERROR_COUNT_ALIGNMENT_UNSPECIFIED",
 	//         "ALIGNMENT_EQUAL_ROUNDED",
 	//         "ALIGNMENT_EQUAL_AT_END"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No alignment specified.",
+	//         "The time periods shall be consecutive, have width equal to the requested duration, and be aligned at the `alignment_time` provided in the request. The `alignment_time` does not have to be inside the query period but even if it is outside, only time periods are returned which overlap with the query period. A rounded alignment will typically result in a different size of the first or the last time period.",
+	//         "The time periods shall be consecutive, have width equal to the requested duration, and be aligned at the end of the requested time period. This can result in a different size of the first time period."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "alignmentTime": {
-	//       "description": "Optional. Time where the timed counts shall be aligned if rounded\nalignment is chosen. Default is 00:00 UTC.",
+	//       "description": "Optional. Time where the timed counts shall be aligned if rounded alignment is chosen. Default is 00:00 UTC.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "groupId": {
-	//       "description": "Optional. List all \u003ccode\u003eErrorGroupStats\u003c/code\u003e with these IDs.",
+	//       "description": "Optional. List all ErrorGroupStats with these IDs.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "order": {
-	//       "description": "Optional. The sort order in which the results are returned.\nDefault is `COUNT_DESC`.",
+	//       "description": "Optional. The sort order in which the results are returned. Default is `COUNT_DESC`.",
 	//       "enum": [
 	//         "GROUP_ORDER_UNSPECIFIED",
 	//         "COUNT_DESC",
@@ -1724,39 +1656,46 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//         "CREATED_DESC",
 	//         "AFFECTED_USERS_DESC"
 	//       ],
+	//       "enumDescriptions": [
+	//         "No group order specified.",
+	//         "Total count of errors in the given time window in descending order.",
+	//         "Timestamp when the group was last seen in the given time window in descending order.",
+	//         "Timestamp when the group was created in descending order.",
+	//         "Number of affected users in the given time window in descending order."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return per response.\nDefault is 20.",
+	//       "description": "Optional. The maximum number of results to return per response. Default is 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A `next_page_token` provided by a previous response. To view\nadditional results, pass this token along with the identical query\nparameters as the first request.",
+	//       "description": "Optional. A `next_page_token` provided by a previous response. To view additional results, pass this token along with the identical query parameters as the first request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written\nas `projects/{projectID}`, where `{projectID}` is the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840).\n\nExample: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}`, where `{projectID}` is the [Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840). Example: `projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.resourceType": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resource_type).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.service": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceFilter.version": {
-	//       "description": "Optional. The exact value to match against\n[`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
+	//       "description": "Optional. The exact value to match against [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1770,11 +1709,19 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//         "PERIOD_1_WEEK",
 	//         "PERIOD_30_DAYS"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Do not use.",
+	//         "Retrieve data for the last hour. Recommended minimum timed count duration: 1 min.",
+	//         "Retrieve data for the last 6 hours. Recommended minimum timed count duration: 10 min.",
+	//         "Retrieve data for the last day. Recommended minimum timed count duration: 1 hour.",
+	//         "Retrieve data for the last week. Recommended minimum timed count duration: 6 hours.",
+	//         "Retrieve data for the last 30 days. Recommended minimum timed count duration: 1 day."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timedCountDuration": {
-	//       "description": "Optional. The preferred duration for a single returned `TimedCount`.\nIf not set, no timed counts are returned.",
+	//       "description": "Optional. The preferred duration for a single returned `TimedCount`. If not set, no timed counts are returned.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
@@ -1867,7 +1814,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1938,7 +1885,7 @@ func (c *ProjectsGroupsGetCall) Do(opts ...googleapi.CallOption) (*ErrorGroup, e
 	//   ],
 	//   "parameters": {
 	//     "groupName": {
-	//       "description": "Required. The group resource name. Written as\n`projects/{projectID}/groups/{group_name}`. Call\n[`groupStats.list`](https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)\nto return a list of groups belonging to this project.\n\nExample: `projects/my-project-123/groups/my-group`",
+	//       "description": "Required. The group resource name. Written as `projects/{projectID}/groups/{group_name}`. Call [`groupStats.list`](https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list) to return a list of groups belonging to this project. Example: `projects/my-project-123/groups/my-group`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
@@ -1967,8 +1914,8 @@ type ProjectsGroupsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Replace the data for the specified group.
-// Fails if the group does not exist.
+// Update: Replace the data for the specified group. Fails if the group
+// does not exist.
 func (r *ProjectsGroupsService) Update(name string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2003,7 +1950,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2067,7 +2014,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 	}
 	return ret, nil
 	// {
-	//   "description": "Replace the data for the specified group.\nFails if the group does not exist.",
+	//   "description": "Replace the data for the specified group. Fails if the group does not exist.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/groups/{groupsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "clouderrorreporting.projects.groups.update",
@@ -2076,7 +2023,7 @@ func (c *ProjectsGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ErrorGroup
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The group resource name.\nExample: \u003ccode\u003eprojects/my-project-123/groups/CNSgkpnppqKCUw\u003c/code\u003e",
+	//       "description": "The group resource name. Example: projects/my-project-123/groups/CNSgkpnppqKCUw",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,

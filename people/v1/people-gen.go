@@ -757,10 +757,10 @@ type CopyOtherContactToMyContactsGroupRequest struct {
 	// membership fields if not set. Valid values are: * addresses *
 	// ageRanges * biographies * birthdays * calendarUrls * clientData *
 	// coverPhotos * emailAddresses * events * externalIds * genders *
-	// imClients * interests * locales * memberships * metadata *
-	// miscKeywords * names * nicknames * occupations * organizations *
-	// phoneNumbers * photos * relations * residences * sipAddresses *
-	// skills * urls * userDefined
+	// imClients * interests * locales * locations * memberships * metadata
+	// * miscKeywords * names * nicknames * occupations * organizations *
+	// phoneNumbers * photos * relations * sipAddresses * skills * urls *
+	// userDefined
 	ReadMask string `json:"readMask,omitempty"`
 
 	// Sources: Optional. A mask of what source types to return. Defaults to
@@ -1551,6 +1551,56 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Location: A person's location.
+type Location struct {
+	// BuildingId: The building identifier.
+	BuildingId string `json:"buildingId,omitempty"`
+
+	// Current: Whether the location is the current location.
+	Current bool `json:"current,omitempty"`
+
+	// DeskCode: The individual desk location.
+	DeskCode string `json:"deskCode,omitempty"`
+
+	// Floor: The floor name or number.
+	Floor string `json:"floor,omitempty"`
+
+	// FloorSection: The floor section in `floor_name`.
+	FloorSection string `json:"floorSection,omitempty"`
+
+	// Metadata: Metadata about the location.
+	Metadata *FieldMetadata `json:"metadata,omitempty"`
+
+	// Type: The type of the location. The type can be custom or one of
+	// these predefined values: * `desk` * `grewUp`
+	Type string `json:"type,omitempty"`
+
+	// Value: The free-form value of the location.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildingId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildingId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Membership: A person's membership in a group. Only contact group
 // memberships can be modified.
 type Membership struct {
@@ -2019,6 +2069,9 @@ type Person struct {
 	// Locales: The person's locale preferences.
 	Locales []*Locale `json:"locales,omitempty"`
 
+	// Locations: The person's locations.
+	Locations []*Location `json:"locations,omitempty"`
+
 	// Memberships: The person's group memberships.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
@@ -2058,7 +2111,8 @@ type Person struct {
 	// returned The person's relationship statuses.
 	RelationshipStatuses []*RelationshipStatus `json:"relationshipStatuses,omitempty"`
 
-	// Residences: The person's residences.
+	// Residences: **DEPRECATED**: (Please use `person.locations` instead)
+	// The person's residences.
 	Residences []*Residence `json:"residences,omitempty"`
 
 	// ResourceName: The resource name for the person, assigned by the
@@ -2461,7 +2515,8 @@ func (s *RelationshipStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Residence: A person's past or current residence.
+// Residence: **DEPRECATED**: Please use `person.locations` instead. A
+// person's past or current residence.
 type Residence struct {
 	// Current: True if the residence is the person's current residence;
 	// false if the residence is a past residence.
@@ -2791,9 +2846,10 @@ type UpdateContactPhotoRequest struct {
 	// post mutate get. Valid values are: * addresses * ageRanges *
 	// biographies * birthdays * calendarUrls * clientData * coverPhotos *
 	// emailAddresses * events * externalIds * genders * imClients *
-	// interests * locales * memberships * metadata * miscKeywords * names *
-	// nicknames * occupations * organizations * phoneNumbers * photos *
-	// relations * residences * sipAddresses * skills * urls * userDefined
+	// interests * locales * locations * memberships * metadata *
+	// miscKeywords * names * nicknames * occupations * organizations *
+	// phoneNumbers * photos * relations * sipAddresses * skills * urls *
+	// userDefined
 	PersonFields string `json:"personFields,omitempty"`
 
 	// PhotoBytes: Required. Raw photo bytes
@@ -3013,7 +3069,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3147,7 +3203,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3280,7 +3336,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3435,7 +3491,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3610,7 +3666,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3772,7 +3828,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3916,7 +3972,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4058,7 +4114,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4256,7 +4312,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4407,10 +4463,10 @@ func (r *PeopleService) CreateContact(person *Person) *PeopleCreateContactCall {
 // Defaults to all fields if not set. Valid values are: * addresses *
 // ageRanges * biographies * birthdays * calendarUrls * clientData *
 // coverPhotos * emailAddresses * events * externalIds * genders *
-// imClients * interests * locales * memberships * metadata *
-// miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * residences * sipAddresses *
-// skills * urls * userDefined
+// imClients * interests * locales * locations * memberships * metadata
+// * miscKeywords * names * nicknames * occupations * organizations *
+// phoneNumbers * photos * relations * sipAddresses * skills * urls *
+// userDefined
 func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreateContactCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
@@ -4459,7 +4515,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4527,7 +4583,7 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4610,7 +4666,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4719,9 +4775,9 @@ func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteCon
 // not set, which will skip the post mutate get. Valid values are: *
 // addresses * ageRanges * biographies * birthdays * calendarUrls *
 // clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * memberships * metadata *
-// miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * residences * sipAddresses *
+// genders * imClients * interests * locales * locations * memberships *
+// metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses *
 // skills * urls * userDefined
 func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.Set("personFields", personFields)
@@ -4771,7 +4827,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4839,7 +4895,7 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 	//   ],
 	//   "parameters": {
 	//     "personFields": {
-	//       "description": "Optional. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Defaults to empty if not set, which will skip the post mutate get. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Optional. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Defaults to empty if not set, which will skip the post mutate get. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4906,9 +4962,9 @@ func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 // Multiple fields can be specified by separating them with commas.
 // Valid values are: * addresses * ageRanges * biographies * birthdays *
 // calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * memberships
-// * metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * residences *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * metadata * miscKeywords * names * nicknames *
+// occupations * organizations * phoneNumbers * photos * relations *
 // sipAddresses * skills * urls * userDefined
 func (c *PeopleGetCall) PersonFields(personFields string) *PeopleGetCall {
 	c.urlParams_.Set("personFields", personFields)
@@ -4977,7 +5033,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5048,7 +5104,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   ],
 	//   "parameters": {
 	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5130,9 +5186,9 @@ func (r *PeopleService) GetBatchGet() *PeopleGetBatchGetCall {
 // Multiple fields can be specified by separating them with commas.
 // Valid values are: * addresses * ageRanges * biographies * birthdays *
 // calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * memberships
-// * metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * residences *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * metadata * miscKeywords * names * nicknames *
+// occupations * organizations * phoneNumbers * photos * relations *
 // sipAddresses * skills * urls * userDefined
 func (c *PeopleGetBatchGetCall) PersonFields(personFields string) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("personFields", personFields)
@@ -5214,7 +5270,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5280,7 +5336,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5389,9 +5445,9 @@ func (c *PeopleListDirectoryPeopleCall) PageToken(pageToken string) *PeopleListD
 // fields can be specified by separating them with commas. Valid values
 // are: * addresses * ageRanges * biographies * birthdays * calendarUrls
 // * clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * memberships * metadata *
-// miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * residences * sipAddresses *
+// genders * imClients * interests * locales * locations * memberships *
+// metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses *
 // skills * urls * userDefined
 func (c *PeopleListDirectoryPeopleCall) ReadMask(readMask string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("readMask", readMask)
@@ -5467,7 +5523,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5558,7 +5614,7 @@ func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListD
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5683,9 +5739,9 @@ func (c *PeopleSearchDirectoryPeopleCall) Query(query string) *PeopleSearchDirec
 // fields can be specified by separating them with commas. Valid values
 // are: * addresses * ageRanges * biographies * birthdays * calendarUrls
 // * clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * memberships * metadata *
-// miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * residences * sipAddresses *
+// genders * imClients * interests * locales * locations * memberships *
+// metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses *
 // skills * urls * userDefined
 func (c *PeopleSearchDirectoryPeopleCall) ReadMask(readMask string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("readMask", readMask)
@@ -5742,7 +5798,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5838,7 +5894,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*Sea
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5931,9 +5987,10 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 // fields if not set. Valid values are: * addresses * ageRanges *
 // biographies * birthdays * calendarUrls * clientData * coverPhotos *
 // emailAddresses * events * externalIds * genders * imClients *
-// interests * locales * memberships * metadata * miscKeywords * names *
-// nicknames * occupations * organizations * phoneNumbers * photos *
-// relations * residences * sipAddresses * skills * urls * userDefined
+// interests * locales * locations * memberships * metadata *
+// miscKeywords * names * nicknames * occupations * organizations *
+// phoneNumbers * photos * relations * sipAddresses * skills * urls *
+// userDefined
 func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdateContactCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
@@ -5961,8 +6018,8 @@ func (c *PeopleUpdateContactCall) Sources(sources ...string) *PeopleUpdateContac
 // commas. All updated fields will be replaced. Valid values are: *
 // addresses * biographies * birthdays * calendarUrls * clientData *
 // emailAddresses * events * externalIds * genders * imClients *
-// interests * locales * memberships * miscKeywords * names * nicknames
-// * occupations * organizations * phoneNumbers * relations * residences
+// interests * locales * locations * memberships * miscKeywords * names
+// * nicknames * occupations * organizations * phoneNumbers * relations
 // * sipAddresses * urls * userDefined
 func (c *PeopleUpdateContactCall) UpdatePersonFields(updatePersonFields string) *PeopleUpdateContactCall {
 	c.urlParams_.Set("updatePersonFields", updatePersonFields)
@@ -5996,7 +6053,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6069,7 +6126,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//   ],
 	//   "parameters": {
 	//     "personFields": {
-	//       "description": "Optional. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Optional. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6100,7 +6157,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "updatePersonFields": {
-	//       "description": "Required. A field mask to restrict which fields on the person are updated. Multiple fields can be specified by separating them with commas. All updated fields will be replaced. Valid values are: * addresses * biographies * birthdays * calendarUrls * clientData * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * relations * residences * sipAddresses * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on the person are updated. Multiple fields can be specified by separating them with commas. All updated fields will be replaced. Valid values are: * addresses * biographies * birthdays * calendarUrls * clientData * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * relations * sipAddresses * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6166,7 +6223,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6302,9 +6359,9 @@ func (c *PeopleConnectionsListCall) PageToken(pageToken string) *PeopleConnectio
 // Multiple fields can be specified by separating them with commas.
 // Valid values are: * addresses * ageRanges * biographies * birthdays *
 // calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * memberships
-// * metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * residences *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * metadata * miscKeywords * names * nicknames *
+// occupations * organizations * phoneNumbers * photos * relations *
 // sipAddresses * skills * urls * userDefined
 func (c *PeopleConnectionsListCall) PersonFields(personFields string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("personFields", personFields)
@@ -6410,7 +6467,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6492,7 +6549,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * residences * sipAddresses * skills * urls * userDefined",
+	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

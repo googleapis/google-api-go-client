@@ -281,64 +281,42 @@ type ProjectsInstancesOperationsService struct {
 // Backup: A backup of a Cloud Spanner database.
 type Backup struct {
 	// CreateTime: Output only. The backup will contain an externally
-	// consistent
-	// copy of the database at the timestamp specified by
-	// `create_time`. `create_time` is approximately the time
-	// the
+	// consistent copy of the database at the timestamp specified by
+	// `create_time`. `create_time` is approximately the time the
 	// CreateBackup request is received.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Database: Required for the CreateBackup operation.
-	// Name of the database from which this backup was
-	// created. This needs to be in the same instance as the backup.
-	// Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/databases/<database>`.
+	// Database: Required for the CreateBackup operation. Name of the
+	// database from which this backup was created. This needs to be in the
+	// same instance as the backup. Values are of the form
+	// `projects//instances//databases/`.
 	Database string `json:"database,omitempty"`
 
-	// ExpireTime: Required for the CreateBackup
-	// operation. The expiration time of the backup, with
-	// microseconds
-	// granularity that must be at least 6 hours and at most 366 days
-	// from the time the CreateBackup request is processed. Once the
-	// `expire_time`
-	// has passed, the backup is eligible to be automatically deleted by
-	// Cloud
-	// Spanner to free the resources used by the backup.
+	// ExpireTime: Required for the CreateBackup operation. The expiration
+	// time of the backup, with microseconds granularity that must be at
+	// least 6 hours and at most 366 days from the time the CreateBackup
+	// request is processed. Once the `expire_time` has passed, the backup
+	// is eligible to be automatically deleted by Cloud Spanner to free the
+	// resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Name: Output only for the CreateBackup operation.
-	// Required for the UpdateBackup operation.
-	//
-	// A globally unique identifier for the backup which cannot be
-	// changed. Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/backups/a-z*[a-z0-9]`
-	// Th
-	// e final segment of the name must be between 2 and 60 characters
-	// in length.
-	//
-	// The backup is stored in the location(s) specified in the
-	// instance
-	// configuration of the instance containing the backup, identified
-	// by the prefix of the backup name of the
-	// form
-	// `projects/<project>/instances/<instance>`.
+	// Name: Output only for the CreateBackup operation. Required for the
+	// UpdateBackup operation. A globally unique identifier for the backup
+	// which cannot be changed. Values are of the form
+	// `projects//instances//backups/a-z*[a-z0-9]` The final segment of the
+	// name must be between 2 and 60 characters in length. The backup is
+	// stored in the location(s) specified in the instance configuration of
+	// the instance containing the backup, identified by the prefix of the
+	// backup name of the form `projects//instances/`.
 	Name string `json:"name,omitempty"`
 
 	// ReferencingDatabases: Output only. The names of the restored
-	// databases that reference the backup.
-	// The database names are of
-	// the form
-	// `projects/<project>/instances/<instance>/databases/<database>`.
-	// Refere
-	// ncing databases may exist in different instances. The existence
-	// of
-	// any referencing database prevents the backup from being deleted. When
-	// a
-	// restored database from the backup enters the `READY` state, the
-	// reference
-	// to the backup is removed.
+	// databases that reference the backup. The database names are of the
+	// form `projects//instances//databases/`. Referencing databases may
+	// exist in different instances. The existence of any referencing
+	// database prevents the backup from being deleted. When a restored
+	// database from the backup enters the `READY` state, the reference to
+	// the backup is removed.
 	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
 
 	// SizeBytes: Output only. Size of the backup in bytes.
@@ -349,8 +327,7 @@ type Backup struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
 	//   "CREATING" - The pending backup is still being created. Operations
-	// on the
-	// backup may fail with `FAILED_PRECONDITION` in this state.
+	// on the backup may fail with `FAILED_PRECONDITION` in this state.
 	//   "READY" - The backup is complete and ready for use.
 	State string `json:"state,omitempty"`
 
@@ -387,8 +364,7 @@ type BackupInfo struct {
 	Backup string `json:"backup,omitempty"`
 
 	// CreateTime: The backup contains an externally consistent copy of
-	// `source_database` at
-	// the timestamp specified by `create_time`.
+	// `source_database` at the timestamp specified by `create_time`.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// SourceDatabase: Name of the database the backup was created from.
@@ -420,12 +396,9 @@ func (s *BackupInfo) MarshalJSON() ([]byte, error) {
 // BatchCreateSessionsRequest: The request for BatchCreateSessions.
 type BatchCreateSessionsRequest struct {
 	// SessionCount: Required. The number of sessions to be created in this
-	// batch call.
-	// The API may return fewer than the requested number of sessions. If
-	// a
-	// specific number of sessions are desired, the client can make
-	// additional
-	// calls to BatchCreateSessions (adjusting
+	// batch call. The API may return fewer than the requested number of
+	// sessions. If a specific number of sessions are desired, the client
+	// can make additional calls to BatchCreateSessions (adjusting
 	// session_count as necessary).
 	SessionCount int64 `json:"sessionCount,omitempty"`
 
@@ -517,95 +490,53 @@ func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -632,34 +563,24 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // ChildLink: Metadata associated with a parent-child relationship
-// appearing in a
-// PlanNode.
+// appearing in a PlanNode.
 type ChildLink struct {
 	// ChildIndex: The node to which the link points.
 	ChildIndex int64 `json:"childIndex,omitempty"`
 
 	// Type: The type of the link. For example, in Hash Joins this could be
-	// used to
-	// distinguish between the build child and the probe child, or in the
-	// case
-	// of the child being an output variable, to represent the tag
-	// associated
-	// with the output variable.
+	// used to distinguish between the build child and the probe child, or
+	// in the case of the child being an output variable, to represent the
+	// tag associated with the output variable.
 	Type string `json:"type,omitempty"`
 
-	// Variable: Only present if the child node is SCALAR and corresponds
-	// to an output variable of the parent node. The field carries the name
-	// of
-	// the output variable.
-	// For example, a `TableScan` operator that reads rows from a table
-	// will
-	// have child links to the `SCALAR` nodes representing the output
-	// variables
-	// created for each column that is read by the operator. The
-	// corresponding
-	// `variable` fields will be set to the variable names assigned to
-	// the
-	// columns.
+	// Variable: Only present if the child node is SCALAR and corresponds to
+	// an output variable of the parent node. The field carries the name of
+	// the output variable. For example, a `TableScan` operator that reads
+	// rows from a table will have child links to the `SCALAR` nodes
+	// representing the output variables created for each column that is
+	// read by the operator. The corresponding `variable` fields will be set
+	// to the variable names assigned to the columns.
 	Variable string `json:"variable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChildIndex") to
@@ -688,23 +609,18 @@ func (s *ChildLink) MarshalJSON() ([]byte, error) {
 // CommitRequest: The request for Commit.
 type CommitRequest struct {
 	// Mutations: The mutations to be executed when this transaction
-	// commits. All
-	// mutations are applied atomically, in the order they appear in
-	// this list.
+	// commits. All mutations are applied atomically, in the order they
+	// appear in this list.
 	Mutations []*Mutation `json:"mutations,omitempty"`
 
 	// SingleUseTransaction: Execute mutations in a temporary transaction.
-	// Note that unlike
-	// commit of a previously-started transaction, commit with a
-	// temporary transaction is non-idempotent. That is, if
-	// the
-	// `CommitRequest` is sent to Cloud Spanner more than once
-	// (for
-	// instance, due to retries in the application, or in the
-	// transport library), it is possible that the mutations are
-	// executed more than once. If this is undesirable, use
-	// BeginTransaction and
-	// Commit instead.
+	// Note that unlike commit of a previously-started transaction, commit
+	// with a temporary transaction is non-idempotent. That is, if the
+	// `CommitRequest` is sent to Cloud Spanner more than once (for
+	// instance, due to retries in the application, or in the transport
+	// library), it is possible that the mutations are executed more than
+	// once. If this is undesirable, use BeginTransaction and Commit
+	// instead.
 	SingleUseTransaction *TransactionOptions `json:"singleUseTransaction,omitempty"`
 
 	// TransactionId: Commit a previously-started transaction.
@@ -767,28 +683,19 @@ func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateBackupMetadata: Metadata type for the operation returned
-// by
+// CreateBackupMetadata: Metadata type for the operation returned by
 // CreateBackup.
 type CreateBackupMetadata struct {
 	// CancelTime: The time at which cancellation of this operation was
-	// received.
-	// Operations.CancelOperation
-	// starts asynchronous cancellation on a long-running operation. The
-	// server
-	// makes a best effort to cancel the operation, but success is not
-	// guaranteed.
-	// Clients can use
-	// Operations.GetOperation or
-	// other methods to check whether the cancellation succeeded or whether
-	// the
-	// operation completed despite cancellation. On successful
-	// cancellation,
-	// the operation is not deleted; instead, it becomes an operation
-	// with
-	// an Operation.error value with a google.rpc.Status.code of
-	// 1,
-	// corresponding to `Code.CANCELLED`.
+	// received. Operations.CancelOperation starts asynchronous cancellation
+	// on a long-running operation. The server makes a best effort to cancel
+	// the operation, but success is not guaranteed. Clients can use
+	// Operations.GetOperation or other methods to check whether the
+	// cancellation succeeded or whether the operation completed despite
+	// cancellation. On successful cancellation, the operation is not
+	// deleted; instead, it becomes an operation with an Operation.error
+	// value with a google.rpc.Status.code of 1, corresponding to
+	// `Code.CANCELLED`.
 	CancelTime string `json:"cancelTime,omitempty"`
 
 	// Database: The name of the database the backup is created from.
@@ -797,8 +704,7 @@ type CreateBackupMetadata struct {
 	// Name: The name of the backup being created.
 	Name string `json:"name,omitempty"`
 
-	// Progress: The progress of the
-	// CreateBackup operation.
+	// Progress: The progress of the CreateBackup operation.
 	Progress *OperationProgress `json:"progress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
@@ -824,8 +730,7 @@ func (s *CreateBackupMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateDatabaseMetadata: Metadata type for the operation returned
-// by
+// CreateDatabaseMetadata: Metadata type for the operation returned by
 // CreateDatabase.
 type CreateDatabaseMetadata struct {
 	// Database: The database being created.
@@ -857,21 +762,18 @@ func (s *CreateDatabaseMetadata) MarshalJSON() ([]byte, error) {
 // CreateDatabaseRequest: The request for CreateDatabase.
 type CreateDatabaseRequest struct {
 	// CreateStatement: Required. A `CREATE DATABASE` statement, which
-	// specifies the ID of the
-	// new database.  The database ID must conform to the regular
-	// expression
-	// `a-z*[a-z0-9]` and be between 2 and 30 characters in length.
-	// If the database ID is a reserved word or if it contains a hyphen,
-	// the
-	// database ID must be enclosed in backticks (`` ` ``).
+	// specifies the ID of the new database. The database ID must conform to
+	// the regular expression `a-z*[a-z0-9]` and be between 2 and 30
+	// characters in length. If the database ID is a reserved word or if it
+	// contains a hyphen, the database ID must be enclosed in backticks (``
+	// ` ``).
 	CreateStatement string `json:"createStatement,omitempty"`
 
 	// ExtraStatements: Optional. A list of DDL statements to run inside the
-	// newly created
-	// database. Statements can create tables, indexes, etc.
-	// These
-	// statements execute atomically with the creation of the database:
-	// if there is an error in any statement, the database is not created.
+	// newly created database. Statements can create tables, indexes, etc.
+	// These statements execute atomically with the creation of the
+	// database: if there is an error in any statement, the database is not
+	// created.
 	ExtraStatements []string `json:"extraStatements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateStatement") to
@@ -898,15 +800,12 @@ func (s *CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateInstanceMetadata: Metadata type for the operation returned
-// by
+// CreateInstanceMetadata: Metadata type for the operation returned by
 // CreateInstance.
 type CreateInstanceMetadata struct {
 	// CancelTime: The time at which this operation was cancelled. If set,
-	// this operation is
-	// in the process of undoing itself (which is guaranteed to succeed)
-	// and
-	// cannot be cancelled again.
+	// this operation is in the process of undoing itself (which is
+	// guaranteed to succeed) and cannot be cancelled again.
 	CancelTime string `json:"cancelTime,omitempty"`
 
 	// EndTime: The time at which this operation failed or was completed
@@ -916,9 +815,7 @@ type CreateInstanceMetadata struct {
 	// Instance: The instance being created.
 	Instance *Instance `json:"instance,omitempty"`
 
-	// StartTime: The time at which the
-	// CreateInstance request was
-	// received.
+	// StartTime: The time at which the CreateInstance request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
@@ -946,16 +843,13 @@ func (s *CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
 
 // CreateInstanceRequest: The request for CreateInstance.
 type CreateInstanceRequest struct {
-	// Instance: Required. The instance to create.  The name may be omitted,
-	// but if
-	// specified must be `<parent>/instances/<instance_id>`.
+	// Instance: Required. The instance to create. The name may be omitted,
+	// but if specified must be `/instances/`.
 	Instance *Instance `json:"instance,omitempty"`
 
-	// InstanceId: Required. The ID of the instance to create.  Valid
-	// identifiers are of the
-	// form `a-z*[a-z0-9]` and must be between 2 and 64 characters
-	// in
-	// length.
+	// InstanceId: Required. The ID of the instance to create. Valid
+	// identifiers are of the form `a-z*[a-z0-9]` and must be between 2 and
+	// 64 characters in length.
 	InstanceId string `json:"instanceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
@@ -1015,18 +909,14 @@ type Database struct {
 	// creation started.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Name: Required. The name of the database. Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/databases/<database>`,
-	// w
-	// here `<database>` is as specified in the `CREATE DATABASE`
-	// statement. This name can be passed to other API methods to
-	// identify the database.
+	// Name: Required. The name of the database. Values are of the form
+	// `projects//instances//databases/`, where `` is as specified in the
+	// `CREATE DATABASE` statement. This name can be passed to other API
+	// methods to identify the database.
 	Name string `json:"name,omitempty"`
 
 	// RestoreInfo: Output only. Applicable only for restored databases.
-	// Contains information
-	// about the restore source.
+	// Contains information about the restore source.
 	RestoreInfo *RestoreInfo `json:"restoreInfo,omitempty"`
 
 	// State: Output only. The current database state.
@@ -1034,20 +924,14 @@ type Database struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
 	//   "CREATING" - The database is still being created. Operations on the
-	// database may fail
-	// with `FAILED_PRECONDITION` in this state.
+	// database may fail with `FAILED_PRECONDITION` in this state.
 	//   "READY" - The database is fully created and ready for use.
 	//   "READY_OPTIMIZING" - The database is fully created and ready for
-	// use, but is still
-	// being optimized for performance and cannot handle full load.
-	//
-	// In this state, the database still references the backup
-	// it was restore from, preventing the backup
-	// from being deleted. When optimizations are complete, the full
-	// performance
-	// of the database will be restored, and the database will transition
-	// to
-	// `READY` state.
+	// use, but is still being optimized for performance and cannot handle
+	// full load. In this state, the database still references the backup it
+	// was restore from, preventing the backup from being deleted. When
+	// optimizations are complete, the full performance of the database will
+	// be restored, and the database will transition to `READY` state.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1080,15 +964,11 @@ func (s *Database) MarshalJSON() ([]byte, error) {
 // Delete: Arguments to delete operations.
 type Delete struct {
 	// KeySet: Required. The primary keys of the rows within table to
-	// delete.  The
-	// primary keys must be specified in the order in which they appear in
-	// the
-	// `PRIMARY KEY()` clause of the table's equivalent DDL statement (the
-	// DDL
-	// statement used to create the table).
-	// Delete is idempotent. The transaction will succeed even if some or
-	// all
-	// rows do not exist.
+	// delete. The primary keys must be specified in the order in which they
+	// appear in the `PRIMARY KEY()` clause of the table's equivalent DDL
+	// statement (the DDL statement used to create the table). Delete is
+	// idempotent. The transaction will succeed even if some or all rows do
+	// not exist.
 	KeySet *KeySet `json:"keySet,omitempty"`
 
 	// Table: Required. The table whose rows will be deleted.
@@ -1118,17 +998,11 @@ func (s *Delete) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1138,40 +1012,27 @@ type Empty struct {
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
 type ExecuteBatchDmlRequest struct {
 	// Seqno: Required. A per-transaction sequence number used to identify
-	// this request. This field
-	// makes each request idempotent such that if the request is received
-	// multiple
-	// times, at most one will succeed.
-	//
-	// The sequence number must be monotonically increasing within
-	// the
+	// this request. This field makes each request idempotent such that if
+	// the request is received multiple times, at most one will succeed. The
+	// sequence number must be monotonically increasing within the
 	// transaction. If a request arrives for the first time with an
-	// out-of-order
-	// sequence number, the transaction may be aborted. Replays of
-	// previously
-	// handled requests will yield the same response as the first execution.
+	// out-of-order sequence number, the transaction may be aborted. Replays
+	// of previously handled requests will yield the same response as the
+	// first execution.
 	Seqno int64 `json:"seqno,omitempty,string"`
 
 	// Statements: Required. The list of statements to execute in this
-	// batch. Statements are executed
-	// serially, such that the effects of statement `i` are visible to
-	// statement
-	// `i+1`. Each statement must be a DML statement. Execution stops at
-	// the
-	// first failed statement; the remaining statements are not
-	// executed.
-	//
-	// Callers must provide at least one statement.
+	// batch. Statements are executed serially, such that the effects of
+	// statement `i` are visible to statement `i+1`. Each statement must be
+	// a DML statement. Execution stops at the first failed statement; the
+	// remaining statements are not executed. Callers must provide at least
+	// one statement.
 	Statements []*Statement `json:"statements,omitempty"`
 
 	// Transaction: Required. The transaction to use. Must be a read-write
-	// transaction.
-	//
-	// To protect against replays, single-use transactions are not
-	// supported. The
-	// caller must either supply an existing transaction ID or begin a
-	// new
-	// transaction.
+	// transaction. To protect against replays, single-use transactions are
+	// not supported. The caller must either supply an existing transaction
+	// ID or begin a new transaction.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Seqno") to
@@ -1198,57 +1059,32 @@ func (s *ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ExecuteBatchDmlResponse: The response for ExecuteBatchDml. Contains a
-// list
-// of ResultSet messages, one for each DML statement that has
-// successfully
-// executed, in the same order as the statements in the request. If a
-// statement
-// fails, the status in the response body identifies the cause of the
-// failure.
-//
-// To check for DML statements that failed, use the following
-// approach:
-//
-// 1. Check the status in the response message. The google.rpc.Code
-// enum
-//    value `OK` indicates that all statements were executed
-// successfully.
-// 2. If the status was not `OK`, check the number of result sets in
-// the
-//    response. If the response contains `N` ResultSet messages, then
-//    statement `N+1` in the request failed.
-//
-// Example 1:
-//
-// * Request: 5 DML statements, all executed successfully.
-// * Response: 5 ResultSet messages, with the status `OK`.
-//
-// Example 2:
-//
-// * Request: 5 DML statements. The third statement has a syntax
-// error.
-// * Response: 2 ResultSet messages, and a syntax error
-// (`INVALID_ARGUMENT`)
-//   status. The number of ResultSet messages indicates that the third
-//   statement failed, and the fourth and fifth statements were not
-// executed.
+// list of ResultSet messages, one for each DML statement that has
+// successfully executed, in the same order as the statements in the
+// request. If a statement fails, the status in the response body
+// identifies the cause of the failure. To check for DML statements that
+// failed, use the following approach: 1. Check the status in the
+// response message. The google.rpc.Code enum value `OK` indicates that
+// all statements were executed successfully. 2. If the status was not
+// `OK`, check the number of result sets in the response. If the
+// response contains `N` ResultSet messages, then statement `N+1` in the
+// request failed. Example 1: * Request: 5 DML statements, all executed
+// successfully. * Response: 5 ResultSet messages, with the status `OK`.
+// Example 2: * Request: 5 DML statements. The third statement has a
+// syntax error. * Response: 2 ResultSet messages, and a syntax error
+// (`INVALID_ARGUMENT`) status. The number of ResultSet messages
+// indicates that the third statement failed, and the fourth and fifth
+// statements were not executed.
 type ExecuteBatchDmlResponse struct {
 	// ResultSets: One ResultSet for each statement in the request that ran
-	// successfully,
-	// in the same order as the statements in the request. Each ResultSet
-	// does
-	// not contain any rows. The ResultSetStats in each ResultSet
-	// contain
-	// the number of rows modified by the statement.
-	//
-	// Only the first ResultSet in the response contains
-	// valid
-	// ResultSetMetadata.
+	// successfully, in the same order as the statements in the request.
+	// Each ResultSet does not contain any rows. The ResultSetStats in each
+	// ResultSet contain the number of rows modified by the statement. Only
+	// the first ResultSet in the response contains valid ResultSetMetadata.
 	ResultSets []*ResultSet `json:"resultSets,omitempty"`
 
 	// Status: If all DML statements are executed successfully, the status
-	// is `OK`.
-	// Otherwise, the error status of the first failed statement.
+	// is `OK`. Otherwise, the error status of the first failed statement.
 	Status *Status `json:"status,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1278,66 +1114,47 @@ func (s *ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExecuteSqlRequest: The request for ExecuteSql
-// and
+// ExecuteSqlRequest: The request for ExecuteSql and
 // ExecuteStreamingSql.
 type ExecuteSqlRequest struct {
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the
-	// right SQL type
-	// from a JSON value.  For example, values of type `BYTES` and values
-	// of type `STRING` both appear in params as JSON strings.
-	//
-	// In these cases, `param_types` can be used to specify the exact
-	// SQL type for some or all of the SQL statement parameters. See
-	// the
-	// definition of Type for more information
-	// about SQL types.
+	// right SQL type from a JSON value. For example, values of type `BYTES`
+	// and values of type `STRING` both appear in params as JSON strings. In
+	// these cases, `param_types` can be used to specify the exact SQL type
+	// for some or all of the SQL statement parameters. See the definition
+	// of Type for more information about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
 	// Params: Parameter names and values that bind to placeholders in the
-	// SQL string.
-	//
-	// A parameter placeholder consists of the `@` character followed by
-	// the
-	// parameter name (for example, `@firstName`). Parameter names must
-	// conform
-	// to the naming requirements of identifiers as specified
-	// at
-	// https://cloud.google.com/spanner/docs/lexical#identifiers.
-	//
-	// Paramet
-	// ers can appear anywhere that a literal value is expected.  The
-	// same
-	// parameter name can be used more than once, for example:
-	//
-	// "WHERE id > @msg_id AND id < @msg_id + 100"
-	//
-	// It is an error to execute a SQL statement with unbound parameters.
+	// SQL string. A parameter placeholder consists of the `@` character
+	// followed by the parameter name (for example, `@firstName`). Parameter
+	// names must conform to the naming requirements of identifiers as
+	// specified at
+	// https://cloud.google.com/spanner/docs/lexical#identifiers. Parameters
+	// can appear anywhere that a literal value is expected. The same
+	// parameter name can be used more than once, for example: "WHERE id >
+	// @msg_id AND id < @msg_id + 100" It is an error to execute a SQL
+	// statement with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// PartitionToken: If present, results will be restricted to the
-	// specified partition
-	// previously created using PartitionQuery().  There must be an
-	// exact
-	// match for the values of fields common to this message and
-	// the
-	// PartitionQueryRequest message used to create this partition_token.
+	// specified partition previously created using PartitionQuery(). There
+	// must be an exact match for the values of fields common to this
+	// message and the PartitionQueryRequest message used to create this
+	// partition_token.
 	PartitionToken string `json:"partitionToken,omitempty"`
 
 	// QueryMode: Used to control the amount of debugging information
-	// returned in
-	// ResultSetStats. If partition_token is set, query_mode can only
-	// be set to QueryMode.NORMAL.
+	// returned in ResultSetStats. If partition_token is set, query_mode can
+	// only be set to QueryMode.NORMAL.
 	//
 	// Possible values:
 	//   "NORMAL" - The default mode. Only the statement results are
 	// returned.
 	//   "PLAN" - This mode returns only the query plan, without any results
-	// or
-	// execution statistics information.
+	// or execution statistics information.
 	//   "PROFILE" - This mode returns both the query plan and the execution
-	// statistics along
-	// with the results.
+	// statistics along with the results.
 	QueryMode string `json:"queryMode,omitempty"`
 
 	// QueryOptions: Query optimizer configuration to use for the given
@@ -1345,52 +1162,33 @@ type ExecuteSqlRequest struct {
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
 
 	// ResumeToken: If this request is resuming a previously interrupted SQL
-	// statement
-	// execution, `resume_token` should be copied from the
-	// last
-	// PartialResultSet yielded before the interruption. Doing this
-	// enables the new SQL statement execution to resume where the last one
-	// left
-	// off. The rest of the request parameters must exactly match
-	// the
+	// statement execution, `resume_token` should be copied from the last
+	// PartialResultSet yielded before the interruption. Doing this enables
+	// the new SQL statement execution to resume where the last one left
+	// off. The rest of the request parameters must exactly match the
 	// request that yielded this token.
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// Seqno: A per-transaction sequence number used to identify this
-	// request. This field
-	// makes each request idempotent such that if the request is received
-	// multiple
-	// times, at most one will succeed.
-	//
-	// The sequence number must be monotonically increasing within
-	// the
+	// request. This field makes each request idempotent such that if the
+	// request is received multiple times, at most one will succeed. The
+	// sequence number must be monotonically increasing within the
 	// transaction. If a request arrives for the first time with an
-	// out-of-order
-	// sequence number, the transaction may be aborted. Replays of
-	// previously
-	// handled requests will yield the same response as the first
-	// execution.
-	//
-	// Required for DML statements. Ignored for queries.
+	// out-of-order sequence number, the transaction may be aborted. Replays
+	// of previously handled requests will yield the same response as the
+	// first execution. Required for DML statements. Ignored for queries.
 	Seqno int64 `json:"seqno,omitempty,string"`
 
 	// Sql: Required. The SQL string.
 	Sql string `json:"sql,omitempty"`
 
-	// Transaction: The transaction to use.
-	//
-	// For queries, if none is provided, the default is a temporary
-	// read-only
-	// transaction with strong concurrency.
-	//
-	// Standard DML statements require a read-write transaction. To
-	// protect
-	// against replays, single-use transactions are not supported.  The
-	// caller
-	// must either supply an existing transaction ID or begin a new
-	// transaction.
-	//
-	// Partitioned DML requires an existing Partitioned DML transaction ID.
+	// Transaction: The transaction to use. For queries, if none is
+	// provided, the default is a temporary read-only transaction with
+	// strong concurrency. Standard DML statements require a read-write
+	// transaction. To protect against replays, single-use transactions are
+	// not supported. The caller must either supply an existing transaction
+	// ID or begin a new transaction. Partitioned DML requires an existing
+	// Partitioned DML transaction ID.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
@@ -1417,65 +1215,40 @@ func (s *ExecuteSqlRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1503,15 +1276,12 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // Field: Message representing a single field of a struct.
 type Field struct {
-	// Name: The name of the field. For reads, this is the column name.
-	// For
-	// SQL queries, it is the column alias (e.g., "Word" in the
-	// query "SELECT 'hello' AS Word"), or the column name
-	// (e.g.,
-	// "ColName" in the query "SELECT ColName FROM Table"). Some
-	// columns might have an empty name (e.g., !"SELECT
-	// UPPER(ColName)"). Note that a query result can contain
-	// multiple fields with the same name.
+	// Name: The name of the field. For reads, this is the column name. For
+	// SQL queries, it is the column alias (e.g., "Word" in the query
+	// "SELECT 'hello' AS Word"), or the column name (e.g., "ColName" in
+	// the query "SELECT ColName FROM Table"). Some columns might have an
+	// empty name (e.g., !"SELECT UPPER(ColName)"). Note that a query
+	// result can contain multiple fields with the same name.
 	Name string `json:"name,omitempty"`
 
 	// Type: The type of the field.
@@ -1543,8 +1313,7 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
 type GetDatabaseDdlResponse struct {
 	// Statements: A list of formatted DDL statements defining the schema of
-	// the database
-	// specified in the request.
+	// the database specified in the request.
 	Statements []string `json:"statements,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1577,8 +1346,7 @@ func (s *GetDatabaseDdlResponse) MarshalJSON() ([]byte, error) {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -1607,24 +1375,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1656,92 +1414,63 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // databases can be hosted.
 type Instance struct {
 	// Config: Required. The name of the instance's configuration. Values
-	// are of the form
-	// `projects/<project>/instanceConfigs/<configuration>`. See
-	// also InstanceConfig and
-	// ListInstanceConfigs.
+	// are of the form `projects//instanceConfigs/`. See also InstanceConfig
+	// and ListInstanceConfigs.
 	Config string `json:"config,omitempty"`
 
 	// DisplayName: Required. The descriptive name for this instance as it
-	// appears in UIs.
-	// Must be unique per project and between 4 and 30 characters in length.
+	// appears in UIs. Must be unique per project and between 4 and 30
+	// characters in length.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EndpointUris: Deprecated. This field is not populated.
 	EndpointUris []string `json:"endpointUris,omitempty"`
 
 	// Labels: Cloud Labels are a flexible and lightweight mechanism for
-	// organizing cloud
-	// resources into groups that reflect a customer's organizational needs
-	// and
-	// deployment strategies. Cloud Labels can be used to filter collections
-	// of
-	// resources. They can be used to control how resource metrics are
-	// aggregated.
-	// And they can be used as arguments to policy management rules (e.g.
-	// route,
-	// firewall, load balancing, etc.).
-	//
-	//  * Label keys must be between 1 and 63 characters long and must
-	// conform to
-	//    the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.
-	//  * Label values must be between 0 and 63 characters long and must
-	// conform
-	//    to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
-	//  * No more than 64 labels can be associated with a given
-	// resource.
-	//
-	// See https://goo.gl/xmQnxf for more information on and examples of
-	// labels.
-	//
-	// If you plan to use labels in your own code, please note that
-	// additional
-	// characters may be allowed in the future. And so you are advised to
-	// use an
-	// internal label representation, such as JSON, which doesn't rely
-	// upon
-	// specific characters being disallowed.  For example, representing
-	// labels
-	// as the string:  name + "_" + value  would prove problematic if we
-	// were to
+	// organizing cloud resources into groups that reflect a customer's
+	// organizational needs and deployment strategies. Cloud Labels can be
+	// used to filter collections of resources. They can be used to control
+	// how resource metrics are aggregated. And they can be used as
+	// arguments to policy management rules (e.g. route, firewall, load
+	// balancing, etc.). * Label keys must be between 1 and 63 characters
+	// long and must conform to the following regular expression:
+	// `[a-z]([-a-z0-9]*[a-z0-9])?`. * Label values must be between 0 and 63
+	// characters long and must conform to the regular expression
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`. * No more than 64 labels can be
+	// associated with a given resource. See https://goo.gl/xmQnxf for more
+	// information on and examples of labels. If you plan to use labels in
+	// your own code, please note that additional characters may be allowed
+	// in the future. And so you are advised to use an internal label
+	// representation, such as JSON, which doesn't rely upon specific
+	// characters being disallowed. For example, representing labels as the
+	// string: name + "_" + value would prove problematic if we were to
 	// allow "_" in a future release.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. A unique identifier for the instance, which cannot be
-	// changed
-	// after the instance is created. Values are of the
-	// form
-	// `projects/<project>/instances/a-z*[a-z0-9]`. The final
-	// segment of the name must be between 2 and 64 characters in length.
+	// changed after the instance is created. Values are of the form
+	// `projects//instances/a-z*[a-z0-9]`. The final segment of the name
+	// must be between 2 and 64 characters in length.
 	Name string `json:"name,omitempty"`
 
-	// NodeCount: The number of nodes allocated to this instance. This
-	// may be zero in API responses for instances that are not yet in
-	// state
-	// `READY`.
-	//
-	// See
-	// [the
-	// documentation](https://cloud.google.com/spanner/docs/instances#no
-	// de_count)
-	// for more information about nodes.
+	// NodeCount: The number of nodes allocated to this instance. This may
+	// be zero in API responses for instances that are not yet in state
+	// `READY`. See [the
+	// documentation](https://cloud.google.com/spanner/docs/instances#node_co
+	// unt) for more information about nodes.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
-	// State: Output only. The current instance state. For
-	// CreateInstance, the state must be
-	// either omitted or set to `CREATING`. For
-	// UpdateInstance, the state must be
-	// either omitted or set to `READY`.
+	// State: Output only. The current instance state. For CreateInstance,
+	// the state must be either omitted or set to `CREATING`. For
+	// UpdateInstance, the state must be either omitted or set to `READY`.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
 	//   "CREATING" - The instance is still being created. Resources may not
-	// be
-	// available yet, and operations such as database creation may not
+	// be available yet, and operations such as database creation may not
 	// work.
 	//   "READY" - The instance is fully created and ready to do work such
-	// as
-	// creating databases.
+	// as creating databases.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1772,21 +1501,19 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 }
 
 // InstanceConfig: A possible configuration for a Cloud Spanner
-// instance. Configurations
-// define the geographic placement of nodes and their replication.
+// instance. Configurations define the geographic placement of nodes and
+// their replication.
 type InstanceConfig struct {
 	// DisplayName: The name of this instance configuration as it appears in
 	// UIs.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: A unique identifier for the instance configuration.  Values
-	// are of the form
-	// `projects/<project>/instanceConfigs/a-z*`
+	// Name: A unique identifier for the instance configuration. Values are
+	// of the form `projects//instanceConfigs/a-z*`
 	Name string `json:"name,omitempty"`
 
 	// Replicas: The geographic placement of nodes in this instance
-	// configuration and their
-	// replication properties.
+	// configuration and their replication properties.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1816,126 +1543,60 @@ func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KeyRange: KeyRange represents a range of rows in a table or index.
-//
-// A range has a start key and an end key. These keys can be open
-// or
-// closed, indicating if the range includes rows with that key.
-//
-// Keys are represented by lists, where the ith value in the
-// list
-// corresponds to the ith component of the table or index primary
-// key.
-// Individual values are encoded as described
-// here.
-//
-// For example, consider the following table definition:
-//
-//     CREATE TABLE UserEvents (
-//       UserName STRING(MAX),
-//       EventDate STRING(10)
-//     ) PRIMARY KEY(UserName, EventDate);
-//
-// The following keys name rows in this table:
-//
-//     "Bob", "2014-09-23"
-//
-// Since the `UserEvents` table's `PRIMARY KEY` clause names
-// two
-// columns, each `UserEvents` key has two elements; the first is
-// the
-// `UserName`, and the second is the `EventDate`.
-//
-// Key ranges with multiple components are interpreted
-// lexicographically by component using the table or index key's
-// declared
-// sort order. For example, the following range returns all events
-// for
-// user "Bob" that occurred in the year 2015:
-//
-//     "start_closed": ["Bob", "2015-01-01"]
-//     "end_closed": ["Bob", "2015-12-31"]
-//
-// Start and end keys can omit trailing key components. This affects
-// the
-// inclusion and exclusion of rows that exactly match the provided
-// key
-// components: if the key is closed, then rows that exactly match
-// the
-// provided components are included; if the key is open, then rows
-// that exactly match are not included.
-//
-// For example, the following range includes all events for "Bob"
-// that
-// occurred during and after the year 2000:
-//
-//     "start_closed": ["Bob", "2000-01-01"]
-//     "end_closed": ["Bob"]
-//
-// The next example retrieves all events for "Bob":
-//
-//     "start_closed": ["Bob"]
-//     "end_closed": ["Bob"]
-//
-// To retrieve events before the year 2000:
-//
-//     "start_closed": ["Bob"]
-//     "end_open": ["Bob", "2000-01-01"]
-//
-// The following range includes all rows in the table:
-//
-//     "start_closed": []
-//     "end_closed": []
-//
-// This range returns all users whose `UserName` begins with
-// any
-// character from A to C:
-//
-//     "start_closed": ["A"]
-//     "end_open": ["D"]
-//
-// This range returns all users whose `UserName` begins with B:
-//
-//     "start_closed": ["B"]
-//     "end_open": ["C"]
-//
-// Key ranges honor column sort order. For example, suppose a table
-// is
-// defined as follows:
-//
-//     CREATE TABLE DescendingSortedTable {
-//       Key INT64,
-//       ...
-//     ) PRIMARY KEY(Key DESC);
-//
-// The following range retrieves all rows with key values between 1
-// and 100 inclusive:
-//
-//     "start_closed": ["100"]
-//     "end_closed": ["1"]
-//
-// Note that 100 is passed as the start, and 1 is passed as the
-// end,
-// because `Key` is a descending column in the schema.
+// KeyRange: KeyRange represents a range of rows in a table or index. A
+// range has a start key and an end key. These keys can be open or
+// closed, indicating if the range includes rows with that key. Keys are
+// represented by lists, where the ith value in the list corresponds to
+// the ith component of the table or index primary key. Individual
+// values are encoded as described here. For example, consider the
+// following table definition: CREATE TABLE UserEvents ( UserName
+// STRING(MAX), EventDate STRING(10) ) PRIMARY KEY(UserName, EventDate);
+// The following keys name rows in this table: "Bob", "2014-09-23" Since
+// the `UserEvents` table's `PRIMARY KEY` clause names two columns, each
+// `UserEvents` key has two elements; the first is the `UserName`, and
+// the second is the `EventDate`. Key ranges with multiple components
+// are interpreted lexicographically by component using the table or
+// index key's declared sort order. For example, the following range
+// returns all events for user "Bob" that occurred in the year 2015:
+// "start_closed": ["Bob", "2015-01-01"] "end_closed": ["Bob",
+// "2015-12-31"] Start and end keys can omit trailing key components.
+// This affects the inclusion and exclusion of rows that exactly match
+// the provided key components: if the key is closed, then rows that
+// exactly match the provided components are included; if the key is
+// open, then rows that exactly match are not included. For example, the
+// following range includes all events for "Bob" that occurred during
+// and after the year 2000: "start_closed": ["Bob", "2000-01-01"]
+// "end_closed": ["Bob"] The next example retrieves all events for
+// "Bob": "start_closed": ["Bob"] "end_closed": ["Bob"] To retrieve
+// events before the year 2000: "start_closed": ["Bob"] "end_open":
+// ["Bob", "2000-01-01"] The following range includes all rows in the
+// table: "start_closed": [] "end_closed": [] This range returns all
+// users whose `UserName` begins with any character from A to C:
+// "start_closed": ["A"] "end_open": ["D"] This range returns all users
+// whose `UserName` begins with B: "start_closed": ["B"] "end_open":
+// ["C"] Key ranges honor column sort order. For example, suppose a
+// table is defined as follows: CREATE TABLE DescendingSortedTable { Key
+// INT64, ... ) PRIMARY KEY(Key DESC); The following range retrieves all
+// rows with key values between 1 and 100 inclusive: "start_closed":
+// ["100"] "end_closed": ["1"] Note that 100 is passed as the start, and
+// 1 is passed as the end, because `Key` is a descending column in the
+// schema.
 type KeyRange struct {
 	// EndClosed: If the end is closed, then the range includes all rows
-	// whose
-	// first `len(end_closed)` key columns exactly match `end_closed`.
+	// whose first `len(end_closed)` key columns exactly match `end_closed`.
 	EndClosed []interface{} `json:"endClosed,omitempty"`
 
-	// EndOpen: If the end is open, then the range excludes rows whose
-	// first
+	// EndOpen: If the end is open, then the range excludes rows whose first
 	// `len(end_open)` key columns exactly match `end_open`.
 	EndOpen []interface{} `json:"endOpen,omitempty"`
 
 	// StartClosed: If the start is closed, then the range includes all rows
-	// whose
-	// first `len(start_closed)` key columns exactly match `start_closed`.
+	// whose first `len(start_closed)` key columns exactly match
+	// `start_closed`.
 	StartClosed []interface{} `json:"startClosed,omitempty"`
 
 	// StartOpen: If the start is open, then the range excludes rows whose
-	// first
-	// `len(start_open)` key columns exactly match `start_open`.
+	// first `len(start_open)` key columns exactly match `start_open`.
 	StartOpen []interface{} `json:"startOpen,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndClosed") to
@@ -1962,33 +1623,24 @@ func (s *KeyRange) MarshalJSON() ([]byte, error) {
 }
 
 // KeySet: `KeySet` defines a collection of Cloud Spanner keys and/or
-// key ranges. All
-// the keys are expected to be in the same table or index. The keys
-// need
-// not be sorted in any particular way.
-//
-// If the same key is specified multiple times in the set (for
-// example
-// if two ranges, two keys, or a key and a range overlap), Cloud
-// Spanner
+// key ranges. All the keys are expected to be in the same table or
+// index. The keys need not be sorted in any particular way. If the same
+// key is specified multiple times in the set (for example if two
+// ranges, two keys, or a key and a range overlap), Cloud Spanner
 // behaves as if the key were only specified once.
 type KeySet struct {
-	// All: For convenience `all` can be set to `true` to indicate that
-	// this
-	// `KeySet` matches all keys in the table or index. Note that any
-	// keys
+	// All: For convenience `all` can be set to `true` to indicate that this
+	// `KeySet` matches all keys in the table or index. Note that any keys
 	// specified in `keys` or `ranges` are only yielded once.
 	All bool `json:"all,omitempty"`
 
 	// Keys: A list of specific keys. Entries in `keys` should have exactly
-	// as
-	// many elements as there are columns in the primary or index key
-	// with which this `KeySet` is used.  Individual key values are
-	// encoded as described here.
+	// as many elements as there are columns in the primary or index key
+	// with which this `KeySet` is used. Individual key values are encoded
+	// as described here.
 	Keys [][]interface{} `json:"keys,omitempty"`
 
-	// Ranges: A list of key ranges. See KeyRange for more information
-	// about
+	// Ranges: A list of key ranges. See KeyRange for more information about
 	// key range specifications.
 	Ranges []*KeyRange `json:"ranges,omitempty"`
 
@@ -2015,28 +1667,19 @@ func (s *KeySet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListBackupOperationsResponse: The response for
-// ListBackupOperations.
+// ListBackupOperationsResponse: The response for ListBackupOperations.
 type ListBackupOperationsResponse struct {
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListBackupOperations
-	// call to fetch more of the matching metadata.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListBackupOperations call to fetch more of the matching metadata.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Operations: The list of matching backup long-running
-	// operations. Each operation's name will be
-	// prefixed by the backup's name and the operation's
-	// metadata will be of type
-	// CreateBackupMetadata. Operations returned include those that
-	// are
-	// pending or have completed/failed/canceled within the last 7
-	// days.
-	// Operations returned are ordered
-	// by
-	// `operation.metadata.value.progress.start_time` in descending order
-	// starting
-	// from the most recently started operation.
+	// Operations: The list of matching backup long-running operations. Each
+	// operation's name will be prefixed by the backup's name and the
+	// operation's metadata will be of type CreateBackupMetadata. Operations
+	// returned include those that are pending or have
+	// completed/failed/canceled within the last 7 days. Operations returned
+	// are ordered by `operation.metadata.value.progress.start_time` in
+	// descending order starting from the most recently started operation.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2069,14 +1712,12 @@ func (s *ListBackupOperationsResponse) MarshalJSON() ([]byte, error) {
 // ListBackupsResponse: The response for ListBackups.
 type ListBackupsResponse struct {
 	// Backups: The list of matching backups. Backups returned are ordered
-	// by `create_time`
-	// in descending order, starting from the most recent `create_time`.
+	// by `create_time` in descending order, starting from the most recent
+	// `create_time`.
 	Backups []*Backup `json:"backups,omitempty"`
 
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListBackups call to fetch more
-	// of the matching backups.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListBackups call to fetch more of the matching backups.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2106,21 +1747,17 @@ func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListDatabaseOperationsResponse: The response
-// for
+// ListDatabaseOperationsResponse: The response for
 // ListDatabaseOperations.
 type ListDatabaseOperationsResponse struct {
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListDatabaseOperations
-	// call to fetch more of the matching metadata.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListDatabaseOperations call to fetch more of the matching metadata.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Operations: The list of matching database long-running
-	// operations. Each operation's name will be
-	// prefixed by the database's name. The operation's
-	// metadata field type
-	// `metadata.type_url` describes the type of the metadata.
+	// Operations: The list of matching database long-running operations.
+	// Each operation's name will be prefixed by the database's name. The
+	// operation's metadata field type `metadata.type_url` describes the
+	// type of the metadata.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2155,10 +1792,8 @@ type ListDatabasesResponse struct {
 	// Databases: Databases that matched the request.
 	Databases []*Database `json:"databases,omitempty"`
 
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListDatabases call to fetch more
-	// of the matching databases.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListDatabases call to fetch more of the matching databases.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2193,10 +1828,9 @@ type ListInstanceConfigsResponse struct {
 	// InstanceConfigs: The list of requested instance configurations.
 	InstanceConfigs []*InstanceConfig `json:"instanceConfigs,omitempty"`
 
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListInstanceConfigs call to
-	// fetch more of the matching instance configurations.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListInstanceConfigs call to fetch more of the matching instance
+	// configurations.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2232,10 +1866,8 @@ type ListInstancesResponse struct {
 	// Instances: The list of requested instances.
 	Instances []*Instance `json:"instances,omitempty"`
 
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListInstances call to fetch more
-	// of the matching instances.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListInstances call to fetch more of the matching instances.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2304,10 +1936,8 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListSessionsResponse: The response for ListSessions.
 type ListSessionsResponse struct {
-	// NextPageToken: `next_page_token` can be sent in a
-	// subsequent
-	// ListSessions call to fetch more of the matching
-	// sessions.
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListSessions call to fetch more of the matching sessions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Sessions: The list of requested sessions.
@@ -2340,49 +1970,36 @@ func (s *ListSessionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Mutation: A modification to one or more Cloud Spanner rows.
-// Mutations can be
-// applied to a Cloud Spanner database by sending them in a
+// Mutation: A modification to one or more Cloud Spanner rows. Mutations
+// can be applied to a Cloud Spanner database by sending them in a
 // Commit call.
 type Mutation struct {
-	// Delete: Delete rows from a table. Succeeds whether or not the
-	// named
+	// Delete: Delete rows from a table. Succeeds whether or not the named
 	// rows were present.
 	Delete *Delete `json:"delete,omitempty"`
 
-	// Insert: Insert new rows in a table. If any of the rows already
-	// exist,
+	// Insert: Insert new rows in a table. If any of the rows already exist,
 	// the write or transaction fails with error `ALREADY_EXISTS`.
 	Insert *Write `json:"insert,omitempty"`
 
 	// InsertOrUpdate: Like insert, except that if the row already exists,
-	// then
-	// its column values are overwritten with the ones provided. Any
-	// column values not explicitly written are preserved.
-	//
-	// When using insert_or_update, just as when using insert, all
-	// `NOT
-	// NULL` columns in the table must be given a value. This holds
-	// true
-	// even when the row already exists and will therefore actually be
-	// updated.
+	// then its column values are overwritten with the ones provided. Any
+	// column values not explicitly written are preserved. When using
+	// insert_or_update, just as when using insert, all `NOT NULL` columns
+	// in the table must be given a value. This holds true even when the row
+	// already exists and will therefore actually be updated.
 	InsertOrUpdate *Write `json:"insertOrUpdate,omitempty"`
 
-	// Replace: Like insert, except that if the row already exists, it
-	// is
-	// deleted, and the column values provided are inserted
-	// instead. Unlike insert_or_update, this means any values
-	// not
-	// explicitly written become `NULL`.
-	//
-	// In an interleaved table, if you create the child table with the
-	// `ON DELETE CASCADE` annotation, then replacing a parent row
-	// also deletes the child rows. Otherwise, you must delete the
-	// child rows before you replace the parent row.
+	// Replace: Like insert, except that if the row already exists, it is
+	// deleted, and the column values provided are inserted instead. Unlike
+	// insert_or_update, this means any values not explicitly written become
+	// `NULL`. In an interleaved table, if you create the child table with
+	// the `ON DELETE CASCADE` annotation, then replacing a parent row also
+	// deletes the child rows. Otherwise, you must delete the child rows
+	// before you replace the parent row.
 	Replace *Write `json:"replace,omitempty"`
 
-	// Update: Update existing rows in a table. If any of the rows does
-	// not
+	// Update: Update existing rows in a table. If any of the rows does not
 	// already exist, the transaction fails with error `NOT_FOUND`.
 	Update *Write `json:"update,omitempty"`
 
@@ -2410,52 +2027,38 @@ func (s *Mutation) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2486,16 +2089,14 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // OperationProgress: Encapsulates progress related information for a
-// Cloud Spanner long
-// running operation.
+// Cloud Spanner long running operation.
 type OperationProgress struct {
 	// EndTime: If set, the time at which this operation failed or was
-	// completed
-	// successfully.
+	// completed successfully.
 	EndTime string `json:"endTime,omitempty"`
 
-	// ProgressPercent: Percent completion of the operation.
-	// Values are between 0 and 100 inclusive.
+	// ProgressPercent: Percent completion of the operation. Values are
+	// between 0 and 100 inclusive.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: Time the request was received.
@@ -2525,12 +2126,10 @@ func (s *OperationProgress) MarshalJSON() ([]byte, error) {
 }
 
 // OptimizeRestoredDatabaseMetadata: Metadata type for the long-running
-// operation used to track the progress
-// of optimizations performed on a newly restored database. This
-// long-running
-// operation is automatically created by the system after the
-// successful
-// completion of a database restore, and cannot be cancelled.
+// operation used to track the progress of optimizations performed on a
+// newly restored database. This long-running operation is automatically
+// created by the system after the successful completion of a database
+// restore, and cannot be cancelled.
 type OptimizeRestoredDatabaseMetadata struct {
 	// Name: Name of the restored database being optimized.
 	Name string `json:"name,omitempty"`
@@ -2562,126 +2161,69 @@ func (s *OptimizeRestoredDatabaseMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // PartialResultSet: Partial results from a streaming read or SQL query.
-// Streaming reads and
-// SQL queries better tolerate large result sets, large rows, and
-// large
-// values, but are a little trickier to consume.
+// Streaming reads and SQL queries better tolerate large result sets,
+// large rows, and large values, but are a little trickier to consume.
 type PartialResultSet struct {
 	// ChunkedValue: If true, then the final value in values is chunked, and
-	// must
-	// be combined with more values from subsequent `PartialResultSet`s
+	// must be combined with more values from subsequent `PartialResultSet`s
 	// to obtain a complete field value.
 	ChunkedValue bool `json:"chunkedValue,omitempty"`
 
 	// Metadata: Metadata about the result set, such as row type
-	// information.
-	// Only present in the first response.
+	// information. Only present in the first response.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
 
 	// ResumeToken: Streaming calls might be interrupted for a variety of
-	// reasons, such
-	// as TCP connection loss. If this occurs, the stream of results can
-	// be resumed by re-sending the original request and
-	// including
-	// `resume_token`. Note that executing any other transaction in the
-	// same session invalidates the token.
+	// reasons, such as TCP connection loss. If this occurs, the stream of
+	// results can be resumed by re-sending the original request and
+	// including `resume_token`. Note that executing any other transaction
+	// in the same session invalidates the token.
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// Stats: Query plan and execution statistics for the statement that
-	// produced this
-	// streaming result set. These can be requested by
-	// setting
-	// ExecuteSqlRequest.query_mode and are sent
-	// only once with the last response in the stream.
-	// This field will also be present in the last response for
-	// DML
-	// statements.
+	// produced this streaming result set. These can be requested by setting
+	// ExecuteSqlRequest.query_mode and are sent only once with the last
+	// response in the stream. This field will also be present in the last
+	// response for DML statements.
 	Stats *ResultSetStats `json:"stats,omitempty"`
 
 	// Values: A streamed result set consists of a stream of values, which
-	// might
-	// be split into many `PartialResultSet` messages to accommodate
-	// large rows and/or large values. Every N complete values defines
-	// a
-	// row, where N is equal to the number of entries
-	// in
-	// metadata.row_type.fields.
-	//
-	// Most values are encoded based on type as described
-	// here.
-	//
-	// It is possible that the last value in values is "chunked",
-	// meaning that the rest of the value is sent in
-	// subsequent
-	// `PartialResultSet`(s). This is denoted by the chunked_value
-	// field. Two or more chunked values can be merged to form a
-	// complete value as follows:
-	//
-	//   * `bool/number/null`: cannot be chunked
-	//   * `string`: concatenate the strings
-	//   * `list`: concatenate the lists. If the last element in a list is
-	// a
-	//     `string`, `list`, or `object`, merge it with the first element
-	// in
-	//     the next list by applying these rules recursively.
-	//   * `object`: concatenate the (field name, field value) pairs. If a
-	//     field name is duplicated, then apply these rules recursively
-	//     to merge the field values.
-	//
-	// Some examples of merging:
-	//
-	//     # Strings are concatenated.
-	//     "foo", "bar" => "foobar"
-	//
-	//     # Lists of non-strings are concatenated.
-	//     [2, 3], [4] => [2, 3, 4]
-	//
-	//     # Lists are concatenated, but the last and first elements are
-	// merged
-	//     # because they are strings.
-	//     ["a", "b"], ["c", "d"] => ["a", "bc", "d"]
-	//
-	//     # Lists are concatenated, but the last and first elements are
-	// merged
-	//     # because they are lists. Recursively, the last and first
-	// elements
-	//     # of the inner lists are merged because they are strings.
-	//     ["a", ["b", "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"]
-	//
-	//     # Non-overlapping object fields are combined.
-	//     {"a": "1"}, {"b": "2"} => {"a": "1", "b": 2"}
-	//
-	//     # Overlapping object fields are merged.
-	//     {"a": "1"}, {"a": "2"} => {"a": "12"}
-	//
-	//     # Examples of merging objects containing lists of strings.
-	//     {"a": ["1"]}, {"a": ["2"]} => {"a": ["12"]}
-	//
-	// For a more complete example, suppose a streaming SQL query
-	// is
-	// yielding a result set whose rows contain a single string
-	// field. The following `PartialResultSet`s might be yielded:
-	//
-	//     {
-	//       "metadata": { ... }
-	//       "values": ["Hello", "W"]
-	//       "chunked_value": true
-	//       "resume_token": "Af65..."
-	//     }
-	//     {
-	//       "values": ["orl"]
-	//       "chunked_value": true
-	//       "resume_token": "Bqp2..."
-	//     }
-	//     {
-	//       "values": ["d"]
-	//       "resume_token": "Zx1B..."
-	//     }
-	//
-	// This sequence of `PartialResultSet`s encodes two rows, one
-	// containing the field value "Hello", and a second containing
-	// the
-	// field value "World" = "W" + "orl" + "d".
+	// might be split into many `PartialResultSet` messages to accommodate
+	// large rows and/or large values. Every N complete values defines a
+	// row, where N is equal to the number of entries in
+	// metadata.row_type.fields. Most values are encoded based on type as
+	// described here. It is possible that the last value in values is
+	// "chunked", meaning that the rest of the value is sent in subsequent
+	// `PartialResultSet`(s). This is denoted by the chunked_value field.
+	// Two or more chunked values can be merged to form a complete value as
+	// follows: * `bool/number/null`: cannot be chunked * `string`:
+	// concatenate the strings * `list`: concatenate the lists. If the last
+	// element in a list is a `string`, `list`, or `object`, merge it with
+	// the first element in the next list by applying these rules
+	// recursively. * `object`: concatenate the (field name, field value)
+	// pairs. If a field name is duplicated, then apply these rules
+	// recursively to merge the field values. Some examples of merging: #
+	// Strings are concatenated. "foo", "bar" => "foobar" # Lists of
+	// non-strings are concatenated. [2, 3], [4] => [2, 3, 4] # Lists are
+	// concatenated, but the last and first elements are merged # because
+	// they are strings. ["a", "b"], ["c", "d"] => ["a", "bc", "d"] # Lists
+	// are concatenated, but the last and first elements are merged #
+	// because they are lists. Recursively, the last and first elements # of
+	// the inner lists are merged because they are strings. ["a", ["b",
+	// "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"] # Non-overlapping
+	// object fields are combined. {"a": "1"}, {"b": "2"} => {"a": "1", "b":
+	// 2"} # Overlapping object fields are merged. {"a": "1"}, {"a": "2"} =>
+	// {"a": "12"} # Examples of merging objects containing lists of
+	// strings. {"a": ["1"]}, {"a": ["2"]} => {"a": ["12"]} For a more
+	// complete example, suppose a streaming SQL query is yielding a result
+	// set whose rows contain a single string field. The following
+	// `PartialResultSet`s might be yielded: { "metadata": { ... } "values":
+	// ["Hello", "W"] "chunked_value": true "resume_token": "Af65..." } {
+	// "values": ["orl"] "chunked_value": true "resume_token": "Bqp2..." } {
+	// "values": ["d"] "resume_token": "Zx1B..." } This sequence of
+	// `PartialResultSet`s encodes two rows, one containing the field value
+	// "Hello", and a second containing the field value "World" = "W" +
+	// "orl" + "d".
 	Values []interface{} `json:"values,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2711,15 +2253,12 @@ func (s *PartialResultSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Partition: Information returned for each partition returned in
-// a
+// Partition: Information returned for each partition returned in a
 // PartitionResponse.
 type Partition struct {
 	// PartitionToken: This token can be passed to Read, StreamingRead,
-	// ExecuteSql, or
-	// ExecuteStreamingSql requests to restrict the results to those
-	// identified by
-	// this partition token.
+	// ExecuteSql, or ExecuteStreamingSql requests to restrict the results
+	// to those identified by this partition token.
 	PartitionToken string `json:"partitionToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PartitionToken") to
@@ -2746,34 +2285,23 @@ func (s *Partition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PartitionOptions: Options for a PartitionQueryRequest
-// and
+// PartitionOptions: Options for a PartitionQueryRequest and
 // PartitionReadRequest.
 type PartitionOptions struct {
 	// MaxPartitions: **Note:** This hint is currently ignored by
-	// PartitionQuery and
-	// PartitionRead requests.
-	//
-	// The desired maximum number of partitions to return.  For example,
-	// this may
-	// be set to the number of workers available.  The default for this
-	// option
-	// is currently 10,000. The maximum value is currently 200,000.  This is
-	// only
-	// a hint.  The actual number of partitions returned may be smaller or
-	// larger
+	// PartitionQuery and PartitionRead requests. The desired maximum number
+	// of partitions to return. For example, this may be set to the number
+	// of workers available. The default for this option is currently
+	// 10,000. The maximum value is currently 200,000. This is only a hint.
+	// The actual number of partitions returned may be smaller or larger
 	// than this maximum count request.
 	MaxPartitions int64 `json:"maxPartitions,omitempty,string"`
 
 	// PartitionSizeBytes: **Note:** This hint is currently ignored by
-	// PartitionQuery and
-	// PartitionRead requests.
-	//
-	// The desired data size for each partition generated.  The default for
-	// this
-	// option is currently 1 GiB.  This is only a hint. The actual size of
-	// each
-	// partition may be smaller or larger than this size request.
+	// PartitionQuery and PartitionRead requests. The desired data size for
+	// each partition generated. The default for this option is currently 1
+	// GiB. This is only a hint. The actual size of each partition may be
+	// smaller or larger than this size request.
 	PartitionSizeBytes int64 `json:"partitionSizeBytes,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxPartitions") to
@@ -2802,33 +2330,21 @@ func (s *PartitionOptions) MarshalJSON() ([]byte, error) {
 // PartitionQueryRequest: The request for PartitionQuery
 type PartitionQueryRequest struct {
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the
-	// right SQL type
-	// from a JSON value.  For example, values of type `BYTES` and values
-	// of type `STRING` both appear in params as JSON strings.
-	//
-	// In these cases, `param_types` can be used to specify the exact
-	// SQL type for some or all of the SQL query parameters. See
-	// the
-	// definition of Type for more information
-	// about SQL types.
+	// right SQL type from a JSON value. For example, values of type `BYTES`
+	// and values of type `STRING` both appear in params as JSON strings. In
+	// these cases, `param_types` can be used to specify the exact SQL type
+	// for some or all of the SQL query parameters. See the definition of
+	// Type for more information about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
 	// Params: Parameter names and values that bind to placeholders in the
-	// SQL string.
-	//
-	// A parameter placeholder consists of the `@` character followed by
-	// the
-	// parameter name (for example, `@firstName`). Parameter names can
-	// contain
-	// letters, numbers, and underscores.
-	//
-	// Parameters can appear anywhere that a literal value is expected.  The
-	// same
-	// parameter name can be used more than once, for example:
-	//
-	// "WHERE id > @msg_id AND id < @msg_id + 100"
-	//
-	// It is an error to execute a SQL statement with unbound parameters.
+	// SQL string. A parameter placeholder consists of the `@` character
+	// followed by the parameter name (for example, `@firstName`). Parameter
+	// names can contain letters, numbers, and underscores. Parameters can
+	// appear anywhere that a literal value is expected. The same parameter
+	// name can be used more than once, for example: "WHERE id > @msg_id
+	// AND id < @msg_id + 100" It is an error to execute a SQL statement
+	// with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// PartitionOptions: Additional options that affect how many partitions
@@ -2836,27 +2352,18 @@ type PartitionQueryRequest struct {
 	PartitionOptions *PartitionOptions `json:"partitionOptions,omitempty"`
 
 	// Sql: Required. The query request to generate partitions for. The
-	// request will fail if
-	// the query is not root partitionable. The query plan of a
-	// root
-	// partitionable query has a single distributed union operator. A
-	// distributed
-	// union operator conceptually divides one or more tables into
-	// multiple
-	// splits, remotely evaluates a subquery independently on each split,
-	// and
-	// then unions all results.
-	//
-	// This must not contain DML commands, such as INSERT, UPDATE,
-	// or
-	// DELETE. Use ExecuteStreamingSql with a
-	// PartitionedDml transaction for large, partition-friendly DML
-	// operations.
+	// request will fail if the query is not root partitionable. The query
+	// plan of a root partitionable query has a single distributed union
+	// operator. A distributed union operator conceptually divides one or
+	// more tables into multiple splits, remotely evaluates a subquery
+	// independently on each split, and then unions all results. This must
+	// not contain DML commands, such as INSERT, UPDATE, or DELETE. Use
+	// ExecuteStreamingSql with a PartitionedDml transaction for large,
+	// partition-friendly DML operations.
 	Sql string `json:"sql,omitempty"`
 
 	// Transaction: Read only snapshot transactions are supported,
-	// read/write and single use
-	// transactions are not.
+	// read/write and single use transactions are not.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
@@ -2884,25 +2391,21 @@ func (s *PartitionQueryRequest) MarshalJSON() ([]byte, error) {
 
 // PartitionReadRequest: The request for PartitionRead
 type PartitionReadRequest struct {
-	// Columns: The columns of table to be returned for each row
-	// matching
+	// Columns: The columns of table to be returned for each row matching
 	// this request.
 	Columns []string `json:"columns,omitempty"`
 
-	// Index: If non-empty, the name of an index on table. This index
-	// is
-	// used instead of the table primary key when interpreting key_set
-	// and sorting result rows. See key_set for further information.
+	// Index: If non-empty, the name of an index on table. This index is
+	// used instead of the table primary key when interpreting key_set and
+	// sorting result rows. See key_set for further information.
 	Index string `json:"index,omitempty"`
 
 	// KeySet: Required. `key_set` identifies the rows to be yielded.
-	// `key_set` names the
-	// primary keys of the rows in table to be yielded, unless index
-	// is present. If index is present, then key_set instead names
-	// index keys in index.
-	//
-	// It is not an error for the `key_set` to name rows that do not
-	// exist in the database. Read yields nothing for nonexistent rows.
+	// `key_set` names the primary keys of the rows in table to be yielded,
+	// unless index is present. If index is present, then key_set instead
+	// names index keys in index. It is not an error for the `key_set` to
+	// name rows that do not exist in the database. Read yields nothing for
+	// nonexistent rows.
 	KeySet *KeySet `json:"keySet,omitempty"`
 
 	// PartitionOptions: Additional options that affect how many partitions
@@ -2913,8 +2416,7 @@ type PartitionReadRequest struct {
 	Table string `json:"table,omitempty"`
 
 	// Transaction: Read only snapshot transactions are supported,
-	// read/write and single use
-	// transactions are not.
+	// read/write and single use transactions are not.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -2940,8 +2442,7 @@ func (s *PartitionReadRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PartitionResponse: The response for PartitionQuery
-// or PartitionRead
+// PartitionResponse: The response for PartitionQuery or PartitionRead
 type PartitionResponse struct {
 	// Partitions: Partitions created by this request.
 	Partitions []*Partition `json:"partitions,omitempty"`
@@ -2992,52 +2493,36 @@ type PlanNode struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExecutionStats: The execution statistics associated with the node,
-	// contained in a group of
-	// key-value pairs. Only present if the plan was returned as a result of
-	// a
-	// profile query. For example, number of executions, number of rows/time
-	// per
-	// execution etc.
+	// contained in a group of key-value pairs. Only present if the plan was
+	// returned as a result of a profile query. For example, number of
+	// executions, number of rows/time per execution etc.
 	ExecutionStats googleapi.RawMessage `json:"executionStats,omitempty"`
 
 	// Index: The `PlanNode`'s index in node list.
 	Index int64 `json:"index,omitempty"`
 
 	// Kind: Used to determine the type of node. May be needed for
-	// visualizing
-	// different kinds of nodes differently. For example, If the node is
-	// a
-	// SCALAR node, it will have a condensed representation
-	// which can be used to directly embed a description of the node in
-	// its
+	// visualizing different kinds of nodes differently. For example, If the
+	// node is a SCALAR node, it will have a condensed representation which
+	// can be used to directly embed a description of the node in its
 	// parent.
 	//
 	// Possible values:
 	//   "KIND_UNSPECIFIED" - Not specified.
 	//   "RELATIONAL" - Denotes a Relational operator node in the expression
-	// tree. Relational
-	// operators represent iterative processing of rows during query
-	// execution.
-	// For example, a `TableScan` operation that reads rows from a table.
+	// tree. Relational operators represent iterative processing of rows
+	// during query execution. For example, a `TableScan` operation that
+	// reads rows from a table.
 	//   "SCALAR" - Denotes a Scalar node in the expression tree. Scalar
-	// nodes represent
-	// non-iterable entities in the query plan. For example, constants
-	// or
-	// arithmetic operators appearing inside predicate expressions or
-	// references
-	// to column names.
+	// nodes represent non-iterable entities in the query plan. For example,
+	// constants or arithmetic operators appearing inside predicate
+	// expressions or references to column names.
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Attributes relevant to the node contained in a group of
-	// key-value pairs.
-	// For example, a Parameter Reference node could have the
-	// following
-	// information in its metadata:
-	//
-	//     {
-	//       "parameter_reference": "param1",
-	//       "parameter_type": "array"
-	//     }
+	// key-value pairs. For example, a Parameter Reference node could have
+	// the following information in its metadata: { "parameter_reference":
+	// "param1", "parameter_type": "array" }
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// ShortRepresentation: Condensed representation for SCALAR nodes.
@@ -3067,150 +2552,73 @@ func (s *PlanNode) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -3245,35 +2653,17 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // QueryOptions: Query optimizer configuration.
 type QueryOptions struct {
 	// OptimizerVersion: An option to control the selection of optimizer
-	// version.
-	//
-	// This parameter allows individual queries to pick different
-	// query
-	// optimizer versions.
-	//
-	// Specifying "latest" as a value instructs Cloud Spanner to use
-	// the
-	// latest supported query optimizer version. If not specified, Cloud
-	// Spanner
-	// uses optimizer version set at the database level options. Any
-	// other
-	// positive integer (from the list of supported optimizer
-	// versions)
-	// overrides the default optimizer version for query execution.
-	// The list of supported optimizer versions can be queried
-	// from
-	// SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a SQL
-	// statement
-	// with an invalid optimizer version will fail with a syntax
-	// error
-	// (`INVALID_ARGUMENT`)
-	// status.
-	// See
-	// https://cloud.google.com/spanner/docs/query-optimizer/mana
-	// ge-query-optimizer
-	// for more information on managing the query optimizer.
-	//
-	// The `optimizer_version` statement hint has precedence over this
+	// version. This parameter allows individual queries to pick different
+	// query optimizer versions. Specifying "latest" as a value instructs
+	// Cloud Spanner to use the latest supported query optimizer version. If
+	// not specified, Cloud Spanner uses optimizer version set at the
+	// database level options. Any other positive integer (from the list of
+	// supported optimizer versions) overrides the default optimizer version
+	// for query execution. The list of supported optimizer versions can be
+	// queried from SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a
+	// SQL statement with an invalid optimizer version will fail with a
+	// syntax error (`INVALID_ARGUMENT`) status. See
+	// https://cloud.google.com/spanner/docs/query-optimizer/manage-query-optimizer for more information on managing the query optimizer. The `optimizer_version` statement hint has precedence over this
 	// setting.
 	OptimizerVersion string `json:"optimizerVersion,omitempty"`
 
@@ -3305,10 +2695,8 @@ func (s *QueryOptions) MarshalJSON() ([]byte, error) {
 // plan.
 type QueryPlan struct {
 	// PlanNodes: The nodes in the query plan. Plan nodes are returned in
-	// pre-order starting
-	// with the plan root. Each PlanNode's `id` corresponds to its index
-	// in
-	// `plan_nodes`.
+	// pre-order starting with the plan root. Each PlanNode's `id`
+	// corresponds to its index in `plan_nodes`.
 	PlanNodes []*PlanNode `json:"planNodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlanNodes") to
@@ -3337,83 +2725,53 @@ func (s *QueryPlan) MarshalJSON() ([]byte, error) {
 // ReadOnly: Message type to initiate a read-only transaction.
 type ReadOnly struct {
 	// ExactStaleness: Executes all reads at a timestamp that is
-	// `exact_staleness`
-	// old. The timestamp is chosen soon after the read is
-	// started.
-	//
-	// Guarantees that all writes that have committed more than
-	// the
-	// specified number of seconds ago are visible. Because Cloud
-	// Spanner
-	// chooses the exact timestamp, this mode works even if the
-	// client's
-	// local clock is substantially skewed from Cloud Spanner
-	// commit
-	// timestamps.
-	//
-	// Useful for reading at nearby replicas without the
-	// distributed
-	// timestamp negotiation overhead of `max_staleness`.
+	// `exact_staleness` old. The timestamp is chosen soon after the read is
+	// started. Guarantees that all writes that have committed more than the
+	// specified number of seconds ago are visible. Because Cloud Spanner
+	// chooses the exact timestamp, this mode works even if the client's
+	// local clock is substantially skewed from Cloud Spanner commit
+	// timestamps. Useful for reading at nearby replicas without the
+	// distributed timestamp negotiation overhead of `max_staleness`.
 	ExactStaleness string `json:"exactStaleness,omitempty"`
 
-	// MaxStaleness: Read data at a timestamp >= `NOW -
-	// max_staleness`
-	// seconds. Guarantees that all writes that have committed more
-	// than the specified number of seconds ago are visible. Because
-	// Cloud Spanner chooses the exact timestamp, this mode works even
-	// if
-	// the client's local clock is substantially skewed from Cloud
-	// Spanner
-	// commit timestamps.
-	//
-	// Useful for reading the freshest data available at a nearby
-	// replica, while bounding the possible staleness if the local
-	// replica has fallen behind.
-	//
-	// Note that this option can only be used in single-use
-	// transactions.
+	// MaxStaleness: Read data at a timestamp >= `NOW - max_staleness`
+	// seconds. Guarantees that all writes that have committed more than the
+	// specified number of seconds ago are visible. Because Cloud Spanner
+	// chooses the exact timestamp, this mode works even if the client's
+	// local clock is substantially skewed from Cloud Spanner commit
+	// timestamps. Useful for reading the freshest data available at a
+	// nearby replica, while bounding the possible staleness if the local
+	// replica has fallen behind. Note that this option can only be used in
+	// single-use transactions.
 	MaxStaleness string `json:"maxStaleness,omitempty"`
 
 	// MinReadTimestamp: Executes all reads at a timestamp >=
-	// `min_read_timestamp`.
-	//
-	// This is useful for requesting fresher data than some previous
-	// read, or data that is fresh enough to observe the effects of
-	// some
-	// previously committed transaction whose timestamp is known.
-	//
-	// Note that this option can only be used in single-use transactions.
-	//
-	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
-	// nanoseconds.
-	// Example: "2014-10-02T15:01:23.045123456Z".
+	// `min_read_timestamp`. This is useful for requesting fresher data than
+	// some previous read, or data that is fresh enough to observe the
+	// effects of some previously committed transaction whose timestamp is
+	// known. Note that this option can only be used in single-use
+	// transactions. A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
+	// nanoseconds. Example: "2014-10-02T15:01:23.045123456Z".
 	MinReadTimestamp string `json:"minReadTimestamp,omitempty"`
 
 	// ReadTimestamp: Executes all reads at the given timestamp. Unlike
-	// other modes,
-	// reads at a specific timestamp are repeatable; the same read at
-	// the same timestamp always returns the same data. If the
-	// timestamp is in the future, the read will block until the
-	// specified timestamp, modulo the read's deadline.
-	//
-	// Useful for large scale consistent reads such as mapreduces, or
-	// for coordinating many reads against a consistent snapshot of
-	// the
-	// data.
-	//
-	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
-	// nanoseconds.
-	// Example: "2014-10-02T15:01:23.045123456Z".
+	// other modes, reads at a specific timestamp are repeatable; the same
+	// read at the same timestamp always returns the same data. If the
+	// timestamp is in the future, the read will block until the specified
+	// timestamp, modulo the read's deadline. Useful for large scale
+	// consistent reads such as mapreduces, or for coordinating many reads
+	// against a consistent snapshot of the data. A timestamp in RFC3339 UTC
+	// \"Zulu\" format, accurate to nanoseconds. Example:
+	// "2014-10-02T15:01:23.045123456Z".
 	ReadTimestamp string `json:"readTimestamp,omitempty"`
 
 	// ReturnReadTimestamp: If true, the Cloud Spanner-selected read
-	// timestamp is included in
-	// the Transaction message that describes the transaction.
+	// timestamp is included in the Transaction message that describes the
+	// transaction.
 	ReturnReadTimestamp bool `json:"returnReadTimestamp,omitempty"`
 
 	// Strong: Read at a timestamp where all previously committed
-	// transactions
-	// are visible.
+	// transactions are visible.
 	Strong bool `json:"strong,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExactStaleness") to
@@ -3440,66 +2798,52 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReadRequest: The request for Read and
-// StreamingRead.
+// ReadRequest: The request for Read and StreamingRead.
 type ReadRequest struct {
 	// Columns: Required. The columns of table to be returned for each row
-	// matching
-	// this request.
+	// matching this request.
 	Columns []string `json:"columns,omitempty"`
 
-	// Index: If non-empty, the name of an index on table. This index
-	// is
-	// used instead of the table primary key when interpreting key_set
-	// and sorting result rows. See key_set for further information.
+	// Index: If non-empty, the name of an index on table. This index is
+	// used instead of the table primary key when interpreting key_set and
+	// sorting result rows. See key_set for further information.
 	Index string `json:"index,omitempty"`
 
 	// KeySet: Required. `key_set` identifies the rows to be yielded.
-	// `key_set` names the
-	// primary keys of the rows in table to be yielded, unless index
-	// is present. If index is present, then key_set instead names
-	// index keys in index.
-	//
-	// If the partition_token field is empty, rows are yielded
-	// in table primary key order (if index is empty) or index key order
-	// (if index is non-empty).  If the partition_token field is not
-	// empty, rows will be yielded in an unspecified order.
-	//
-	// It is not an error for the `key_set` to name rows that do not
-	// exist in the database. Read yields nothing for nonexistent rows.
+	// `key_set` names the primary keys of the rows in table to be yielded,
+	// unless index is present. If index is present, then key_set instead
+	// names index keys in index. If the partition_token field is empty,
+	// rows are yielded in table primary key order (if index is empty) or
+	// index key order (if index is non-empty). If the partition_token field
+	// is not empty, rows will be yielded in an unspecified order. It is not
+	// an error for the `key_set` to name rows that do not exist in the
+	// database. Read yields nothing for nonexistent rows.
 	KeySet *KeySet `json:"keySet,omitempty"`
 
 	// Limit: If greater than zero, only the first `limit` rows are yielded.
-	// If `limit`
-	// is zero, the default is no limit. A limit cannot be specified
-	// if
-	// `partition_token` is set.
+	// If `limit` is zero, the default is no limit. A limit cannot be
+	// specified if `partition_token` is set.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// PartitionToken: If present, results will be restricted to the
-	// specified partition
-	// previously created using PartitionRead().    There must be an
-	// exact
-	// match for the values of fields common to this message and
-	// the
-	// PartitionReadRequest message used to create this partition_token.
+	// specified partition previously created using PartitionRead(). There
+	// must be an exact match for the values of fields common to this
+	// message and the PartitionReadRequest message used to create this
+	// partition_token.
 	PartitionToken string `json:"partitionToken,omitempty"`
 
 	// ResumeToken: If this request is resuming a previously interrupted
-	// read,
-	// `resume_token` should be copied from the last
-	// PartialResultSet yielded before the interruption. Doing this
-	// enables the new read to resume where the last read left off. The
-	// rest of the request parameters must exactly match the request
-	// that yielded this token.
+	// read, `resume_token` should be copied from the last PartialResultSet
+	// yielded before the interruption. Doing this enables the new read to
+	// resume where the last read left off. The rest of the request
+	// parameters must exactly match the request that yielded this token.
 	ResumeToken string `json:"resumeToken,omitempty"`
 
 	// Table: Required. The name of the table in the database to be read.
 	Table string `json:"table,omitempty"`
 
 	// Transaction: The transaction to use. If none is provided, the default
-	// is a
-	// temporary read-only transaction with strong concurrency.
+	// is a temporary read-only transaction with strong concurrency.
 	Transaction *TransactionSelector `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -3526,19 +2870,16 @@ func (s *ReadRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ReadWrite: Message type to initiate a read-write transaction.
-// Currently this
-// transaction type has no options.
+// Currently this transaction type has no options.
 type ReadWrite struct {
 }
 
 type ReplicaInfo struct {
 	// DefaultLeaderLocation: If true, this location is designated as the
-	// default leader location where
-	// leader replicas are placed. See the [region
-	// types
-	// documentation](https://cloud.google.com/spanner/docs/instances#r
-	// egion_types)
-	// for more details.
+	// default leader location where leader replicas are placed. See the
+	// [region types
+	// documentation](https://cloud.google.com/spanner/docs/instances#region_
+	// types) for more details.
 	DefaultLeaderLocation bool `json:"defaultLeaderLocation,omitempty"`
 
 	// Location: The location of the serving resources, e.g. "us-central1".
@@ -3549,29 +2890,18 @@ type ReplicaInfo struct {
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not specified.
 	//   "READ_WRITE" - Read-write replicas support both reads and writes.
-	// These replicas:
-	//
-	// * Maintain a full copy of your data.
-	// * Serve reads.
-	// * Can vote whether to commit a write.
-	// * Participate in leadership election.
-	// * Are eligible to become a leader.
+	// These replicas: * Maintain a full copy of your data. * Serve reads. *
+	// Can vote whether to commit a write. * Participate in leadership
+	// election. * Are eligible to become a leader.
 	//   "READ_ONLY" - Read-only replicas only support reads (not writes).
-	// Read-only replicas:
-	//
-	// * Maintain a full copy of your data.
-	// * Serve reads.
-	// * Do not participate in voting to commit writes.
-	// * Are not eligible to become a leader.
+	// Read-only replicas: * Maintain a full copy of your data. * Serve
+	// reads. * Do not participate in voting to commit writes. * Are not
+	// eligible to become a leader.
 	//   "WITNESS" - Witness replicas don't support reads but do participate
-	// in voting to
-	// commit writes. Witness replicas:
-	//
-	// * Do not maintain a full copy of data.
-	// * Do not serve reads.
-	// * Vote whether to commit writes.
-	// * Participate in leader election but are not eligible to become
-	// leader.
+	// in voting to commit writes. Witness replicas: * Do not maintain a
+	// full copy of data. * Do not serve reads. * Vote whether to commit
+	// writes. * Participate in leader election but are not eligible to
+	// become leader.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3600,61 +2930,41 @@ func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
 }
 
 // RestoreDatabaseMetadata: Metadata type for the long-running operation
-// returned by
-// RestoreDatabase.
+// returned by RestoreDatabase.
 type RestoreDatabaseMetadata struct {
 	// BackupInfo: Information about the backup used to restore the
 	// database.
 	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
 
 	// CancelTime: The time at which cancellation of this operation was
-	// received.
-	// Operations.CancelOperation
-	// starts asynchronous cancellation on a long-running operation. The
-	// server
-	// makes a best effort to cancel the operation, but success is not
-	// guaranteed.
-	// Clients can use
-	// Operations.GetOperation or
-	// other methods to check whether the cancellation succeeded or whether
-	// the
-	// operation completed despite cancellation. On successful
-	// cancellation,
-	// the operation is not deleted; instead, it becomes an operation
-	// with
-	// an Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	// received. Operations.CancelOperation starts asynchronous cancellation
+	// on a long-running operation. The server makes a best effort to cancel
+	// the operation, but success is not guaranteed. Clients can use
+	// Operations.GetOperation or other methods to check whether the
+	// cancellation succeeded or whether the operation completed despite
+	// cancellation. On successful cancellation, the operation is not
+	// deleted; instead, it becomes an operation with an Operation.error
+	// value with a google.rpc.Status.code of 1, corresponding to
+	// `Code.CANCELLED`.
 	CancelTime string `json:"cancelTime,omitempty"`
 
 	// Name: Name of the database being created and restored to.
 	Name string `json:"name,omitempty"`
 
 	// OptimizeDatabaseOperationName: If exists, the name of the
-	// long-running operation that will be used to
-	// track the post-restore optimization process to optimize the
-	// performance of
-	// the restored database, and remove the dependency on the restore
-	// source.
-	// The name is of the
-	// form
-	// `projects/<project>/instances/<instance>/databases/<database>/ope
-	// rations/<operation>`
-	// where the <database> is the name of database being created and
-	// restored to.
-	// The metadata type of the  long-running operation
-	// is
-	// OptimizeRestoredDatabaseMetadata. This long-running operation will
-	// be
+	// long-running operation that will be used to track the post-restore
+	// optimization process to optimize the performance of the restored
+	// database, and remove the dependency on the restore source. The name
+	// is of the form `projects//instances//databases//operations/` where
+	// the is the name of database being created and restored to. The
+	// metadata type of the long-running operation is
+	// OptimizeRestoredDatabaseMetadata. This long-running operation will be
 	// automatically created by the system after the RestoreDatabase
-	// long-running
-	// operation completes successfully. This operation will not be created
-	// if the
-	// restore was not successful.
+	// long-running operation completes successfully. This operation will
+	// not be created if the restore was not successful.
 	OptimizeDatabaseOperationName string `json:"optimizeDatabaseOperationName,omitempty"`
 
-	// Progress: The progress of the
-	// RestoreDatabase
-	// operation.
+	// Progress: The progress of the RestoreDatabase operation.
 	Progress *OperationProgress `json:"progress,omitempty"`
 
 	// SourceType: The type of the restore source.
@@ -3687,22 +2997,16 @@ func (s *RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreDatabaseRequest: The request for
-// RestoreDatabase.
+// RestoreDatabaseRequest: The request for RestoreDatabase.
 type RestoreDatabaseRequest struct {
-	// Backup: Name of the backup from which to restore.  Values are of the
-	// form
-	// `projects/<project>/instances/<instance>/backups/<backup>`.
+	// Backup: Name of the backup from which to restore. Values are of the
+	// form `projects//instances//backups/`.
 	Backup string `json:"backup,omitempty"`
 
 	// DatabaseId: Required. The id of the database to create and restore
-	// to. This
-	// database must not already exist. The `database_id` appended
-	// to
-	// `parent` forms the full database name of the
-	// form
-	// `projects/<project>/instances/<instance>/databases/<database_id>`
-	// .
+	// to. This database must not already exist. The `database_id` appended
+	// to `parent` forms the full database name of the form
+	// `projects//instances//databases/`.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Backup") to
@@ -3731,8 +3035,7 @@ func (s *RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
 // RestoreInfo: Information about the database restore.
 type RestoreInfo struct {
 	// BackupInfo: Information about the backup used to restore the
-	// database. The backup
-	// may no longer exist.
+	// database. The backup may no longer exist.
 	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
 
 	// SourceType: The type of the restore source.
@@ -3765,33 +3068,24 @@ func (s *RestoreInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResultSet: Results from Read or
-// ExecuteSql.
+// ResultSet: Results from Read or ExecuteSql.
 type ResultSet struct {
 	// Metadata: Metadata about the result set, such as row type
 	// information.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
 
-	// Rows: Each element in `rows` is a row whose format is defined
-	// by
-	// metadata.row_type. The ith element
-	// in each row matches the ith field in
-	// metadata.row_type. Elements are
-	// encoded based on type as described
+	// Rows: Each element in `rows` is a row whose format is defined by
+	// metadata.row_type. The ith element in each row matches the ith field
+	// in metadata.row_type. Elements are encoded based on type as described
 	// here.
 	Rows [][]interface{} `json:"rows,omitempty"`
 
-	// Stats: Query plan and execution statistics for the SQL statement
-	// that
-	// produced this result set. These can be requested by
-	// setting
-	// ExecuteSqlRequest.query_mode.
-	// DML statements always produce stats containing the number of
-	// rows
-	// modified, unless executed using the
-	// ExecuteSqlRequest.QueryMode.PLAN ExecuteSqlRequest.query_mode.
-	// Other fields may or may not be populated, based on
-	// the
+	// Stats: Query plan and execution statistics for the SQL statement that
+	// produced this result set. These can be requested by setting
+	// ExecuteSqlRequest.query_mode. DML statements always produce stats
+	// containing the number of rows modified, unless executed using the
+	// ExecuteSqlRequest.QueryMode.PLAN ExecuteSqlRequest.query_mode. Other
+	// fields may or may not be populated, based on the
 	// ExecuteSqlRequest.query_mode.
 	Stats *ResultSetStats `json:"stats,omitempty"`
 
@@ -3825,20 +3119,15 @@ func (s *ResultSet) MarshalJSON() ([]byte, error) {
 // ResultSetMetadata: Metadata about a ResultSet or PartialResultSet.
 type ResultSetMetadata struct {
 	// RowType: Indicates the field names and types for the rows in the
-	// result
-	// set.  For example, a SQL query like "SELECT UserId, UserName
-	// FROM
-	// Users" could return a `row_type` value like:
-	//
-	//     "fields": [
-	//       { "name": "UserId", "type": { "code": "INT64" } },
-	//       { "name": "UserName", "type": { "code": "STRING" } },
-	//     ]
+	// result set. For example, a SQL query like "SELECT UserId, UserName
+	// FROM Users" could return a `row_type` value like: "fields": [ {
+	// "name": "UserId", "type": { "code": "INT64" } }, { "name":
+	// "UserName", "type": { "code": "STRING" } }, ]
 	RowType *StructType `json:"rowType,omitempty"`
 
 	// Transaction: If the read or SQL query began a transaction as a
-	// side-effect, the
-	// information about the new transaction is yielded here.
+	// side-effect, the information about the new transaction is yielded
+	// here.
 	Transaction *Transaction `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RowType") to
@@ -3871,16 +3160,9 @@ type ResultSetStats struct {
 	QueryPlan *QueryPlan `json:"queryPlan,omitempty"`
 
 	// QueryStats: Aggregated statistics from the execution of the query.
-	// Only present when
-	// the query is profiled. For example, a query could return the
-	// statistics as
-	// follows:
-	//
-	//     {
-	//       "rows_returned": "3",
-	//       "elapsed_time": "1.22 secs",
-	//       "cpu_time": "1.19 secs"
-	//     }
+	// Only present when the query is profiled. For example, a query could
+	// return the statistics as follows: { "rows_returned": "3",
+	// "elapsed_time": "1.22 secs", "cpu_time": "1.19 secs" }
 	QueryStats googleapi.RawMessage `json:"queryStats,omitempty"`
 
 	// RowCountExact: Standard DML returns an exact count of rows that were
@@ -3888,8 +3170,7 @@ type ResultSetStats struct {
 	RowCountExact int64 `json:"rowCountExact,omitempty,string"`
 
 	// RowCountLowerBound: Partitioned DML does not offer exactly-once
-	// semantics, so it
-	// returns a lower bound of the rows modified.
+	// semantics, so it returns a lower bound of the rows modified.
 	RowCountLowerBound int64 `json:"rowCountLowerBound,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "QueryPlan") to
@@ -3946,26 +3227,20 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 // Session: A session in the Cloud Spanner API.
 type Session struct {
 	// ApproximateLastUseTime: Output only. The approximate timestamp when
-	// the session is last used. It is
-	// typically earlier than the actual last use time.
+	// the session is last used. It is typically earlier than the actual
+	// last use time.
 	ApproximateLastUseTime string `json:"approximateLastUseTime,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the session is created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Labels: The labels for the session.
-	//
-	//  * Label keys must be between 1 and 63 characters long and must
-	// conform to
-	//    the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`.
-	//  * Label values must be between 0 and 63 characters long and must
-	// conform
-	//    to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
-	//  * No more than 64 labels can be associated with a given
-	// session.
-	//
-	// See https://goo.gl/xmQnxf for more information on and examples of
-	// labels.
+	// Labels: The labels for the session. * Label keys must be between 1
+	// and 63 characters long and must conform to the following regular
+	// expression: `[a-z]([-a-z0-9]*[a-z0-9])?`. * Label values must be
+	// between 0 and 63 characters long and must conform to the regular
+	// expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. * No more than 64 labels
+	// can be associated with a given session. See https://goo.gl/xmQnxf for
+	// more information on and examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The name of the session. This is always
@@ -4004,11 +3279,9 @@ func (s *Session) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -4035,22 +3308,17 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ShortRepresentation: Condensed representation of a node and its
-// subtree. Only present for
-// `SCALAR` PlanNode(s).
+// subtree. Only present for `SCALAR` PlanNode(s).
 type ShortRepresentation struct {
 	// Description: A string representation of the expression subtree rooted
 	// at this node.
 	Description string `json:"description,omitempty"`
 
 	// Subqueries: A mapping of (subquery variable name) -> (subquery node
-	// id) for cases
-	// where the `description` string of this node references a
-	// `SCALAR`
-	// subquery contained in the expression subtree rooted at this node.
-	// The
-	// referenced `SCALAR` subquery may not necessarily be a direct child
-	// of
-	// this node.
+	// id) for cases where the `description` string of this node references
+	// a `SCALAR` subquery contained in the expression subtree rooted at
+	// this node. The referenced `SCALAR` subquery may not necessarily be a
+	// direct child of this node.
 	Subqueries map[string]int64 `json:"subqueries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -4079,33 +3347,21 @@ func (s *ShortRepresentation) MarshalJSON() ([]byte, error) {
 // Statement: A single DML statement.
 type Statement struct {
 	// ParamTypes: It is not always possible for Cloud Spanner to infer the
-	// right SQL type
-	// from a JSON value.  For example, values of type `BYTES` and values
-	// of type `STRING` both appear in params as JSON strings.
-	//
-	// In these cases, `param_types` can be used to specify the exact
-	// SQL type for some or all of the SQL statement parameters. See
-	// the
-	// definition of Type for more information
-	// about SQL types.
+	// right SQL type from a JSON value. For example, values of type `BYTES`
+	// and values of type `STRING` both appear in params as JSON strings. In
+	// these cases, `param_types` can be used to specify the exact SQL type
+	// for some or all of the SQL statement parameters. See the definition
+	// of Type for more information about SQL types.
 	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
 
 	// Params: Parameter names and values that bind to placeholders in the
-	// DML string.
-	//
-	// A parameter placeholder consists of the `@` character followed by
-	// the
-	// parameter name (for example, `@firstName`). Parameter names can
-	// contain
-	// letters, numbers, and underscores.
-	//
-	// Parameters can appear anywhere that a literal value is expected.
-	// The
-	// same parameter name can be used more than once, for example:
-	//
-	// "WHERE id > @msg_id AND id < @msg_id + 100"
-	//
-	// It is an error to execute a SQL statement with unbound parameters.
+	// DML string. A parameter placeholder consists of the `@` character
+	// followed by the parameter name (for example, `@firstName`). Parameter
+	// names can contain letters, numbers, and underscores. Parameters can
+	// appear anywhere that a literal value is expected. The same parameter
+	// name can be used more than once, for example: "WHERE id > @msg_id
+	// AND id < @msg_id + 100" It is an error to execute a SQL statement
+	// with unbound parameters.
 	Params googleapi.RawMessage `json:"params,omitempty"`
 
 	// Sql: Required. The DML string.
@@ -4135,32 +3391,24 @@ func (s *Statement) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -4188,15 +3436,12 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // StructType: `StructType` defines the fields of a STRUCT type.
 type StructType struct {
-	// Fields: The list of fields that make up this struct. Order
-	// is
-	// significant, because values of this struct type are represented
-	// as
-	// lists, where the order of field values matches the order of
-	// fields in the StructType. In turn, the order of fields
-	// matches the order of columns in a read request, or the order
-	// of
-	// fields in the `SELECT` clause of a query.
+	// Fields: The list of fields that make up this struct. Order is
+	// significant, because values of this struct type are represented as
+	// lists, where the order of field values matches the order of fields in
+	// the StructType. In turn, the order of fields matches the order of
+	// columns in a read request, or the order of fields in the `SELECT`
+	// clause of a query.
 	Fields []*Field `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -4226,8 +3471,7 @@ func (s *StructType) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: REQUIRED: The set of permissions to check for
-	// 'resource'.
-	// Permissions with wildcards (such as '*', 'spanner.*',
+	// 'resource'. Permissions with wildcards (such as '*', 'spanner.*',
 	// 'spanner.instances.*') are not allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -4258,8 +3502,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4291,26 +3534,17 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // Transaction: A transaction.
 type Transaction struct {
-	// Id: `id` may be used to identify the transaction in
-	// subsequent
-	// Read,
-	// ExecuteSql,
-	// Commit, or
-	// Rollback calls.
-	//
-	// Single-use read-only transactions do not have IDs, because
-	// single-use transactions do not support multiple requests.
+	// Id: `id` may be used to identify the transaction in subsequent Read,
+	// ExecuteSql, Commit, or Rollback calls. Single-use read-only
+	// transactions do not have IDs, because single-use transactions do not
+	// support multiple requests.
 	Id string `json:"id,omitempty"`
 
 	// ReadTimestamp: For snapshot read-only transactions, the read
-	// timestamp chosen
-	// for the transaction. Not returned by default:
-	// see
-	// TransactionOptions.ReadOnly.return_read_timestamp.
-	//
-	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
-	// nanoseconds.
-	// Example: "2014-10-02T15:01:23.045123456Z".
+	// timestamp chosen for the transaction. Not returned by default: see
+	// TransactionOptions.ReadOnly.return_read_timestamp. A timestamp in
+	// RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example:
+	// "2014-10-02T15:01:23.045123456Z".
 	ReadTimestamp string `json:"readTimestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4340,416 +3574,206 @@ func (s *Transaction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TransactionOptions: # Transactions
-//
-//
-// Each session can have at most one active transaction at a time (note
-// that
-// standalone reads and queries use a transaction internally and do
-// count
-// towards the one transaction limit). After the active transaction
-// is
-// completed, the session can immediately be re-used for the next
-// transaction.
-// It is not necessary to create a new session for each transaction.
-//
-// # Transaction Modes
-//
-// Cloud Spanner supports three transaction modes:
-//
-//   1. Locking read-write. This type of transaction is the only way
-//      to write data into Cloud Spanner. These transactions rely on
-//      pessimistic locking and, if necessary, two-phase commit.
-//      Locking read-write transactions may abort, requiring the
-//      application to retry.
-//
-//   2. Snapshot read-only. This transaction type provides guaranteed
-//      consistency across several reads, but does not allow
-//      writes. Snapshot read-only transactions can be configured to
-//      read at timestamps in the past. Snapshot read-only
-//      transactions do not need to be committed.
-//
-//   3. Partitioned DML. This type of transaction is used to execute
-//      a single Partitioned DML statement. Partitioned DML partitions
-//      the key space and runs the DML statement over each partition
-//      in parallel using separate, internal transactions that commit
-//      independently. Partitioned DML transactions do not need to be
-//      committed.
-//
-// For transactions that only read, snapshot read-only
-// transactions
-// provide simpler semantics and are almost always faster.
-// In
-// particular, read-only transactions do not take locks, so they do
-// not conflict with read-write transactions. As a consequence of
-// not
-// taking locks, they also do not abort, so retry loops are not
-// needed.
-//
-// Transactions may only read/write data in a single database. They
-// may, however, read/write data in different tables within
-// that
-// database.
-//
-// ## Locking Read-Write Transactions
-//
-// Locking transactions may be used to atomically read-modify-write
-// data anywhere in a database. This type of transaction is
-// externally
-// consistent.
-//
-// Clients should attempt to minimize the amount of time a
-// transaction
-// is active. Faster transactions commit with higher probability
-// and cause less contention. Cloud Spanner attempts to keep read
-// locks
-// active as long as the transaction continues to do reads, and
-// the
-// transaction has not been terminated by
-// Commit or
-// Rollback.  Long periods of
-// inactivity at the client may cause Cloud Spanner to release
-// a
-// transaction's locks and abort it.
-//
-// Conceptually, a read-write transaction consists of zero or more
-// reads or SQL statements followed by
-// Commit. At any time before
-// Commit, the client can send a
-// Rollback request to abort the
-// transaction.
-//
-// ### Semantics
-//
+// TransactionOptions: # Transactions Each session can have at most one
+// active transaction at a time (note that standalone reads and queries
+// use a transaction internally and do count towards the one transaction
+// limit). After the active transaction is completed, the session can
+// immediately be re-used for the next transaction. It is not necessary
+// to create a new session for each transaction. # Transaction Modes
+// Cloud Spanner supports three transaction modes: 1. Locking
+// read-write. This type of transaction is the only way to write data
+// into Cloud Spanner. These transactions rely on pessimistic locking
+// and, if necessary, two-phase commit. Locking read-write transactions
+// may abort, requiring the application to retry. 2. Snapshot read-only.
+// This transaction type provides guaranteed consistency across several
+// reads, but does not allow writes. Snapshot read-only transactions can
+// be configured to read at timestamps in the past. Snapshot read-only
+// transactions do not need to be committed. 3. Partitioned DML. This
+// type of transaction is used to execute a single Partitioned DML
+// statement. Partitioned DML partitions the key space and runs the DML
+// statement over each partition in parallel using separate, internal
+// transactions that commit independently. Partitioned DML transactions
+// do not need to be committed. For transactions that only read,
+// snapshot read-only transactions provide simpler semantics and are
+// almost always faster. In particular, read-only transactions do not
+// take locks, so they do not conflict with read-write transactions. As
+// a consequence of not taking locks, they also do not abort, so retry
+// loops are not needed. Transactions may only read/write data in a
+// single database. They may, however, read/write data in different
+// tables within that database. ## Locking Read-Write Transactions
+// Locking transactions may be used to atomically read-modify-write data
+// anywhere in a database. This type of transaction is externally
+// consistent. Clients should attempt to minimize the amount of time a
+// transaction is active. Faster transactions commit with higher
+// probability and cause less contention. Cloud Spanner attempts to keep
+// read locks active as long as the transaction continues to do reads,
+// and the transaction has not been terminated by Commit or Rollback.
+// Long periods of inactivity at the client may cause Cloud Spanner to
+// release a transaction's locks and abort it. Conceptually, a
+// read-write transaction consists of zero or more reads or SQL
+// statements followed by Commit. At any time before Commit, the client
+// can send a Rollback request to abort the transaction. ### Semantics
 // Cloud Spanner can commit the transaction if all read locks it
-// acquired
-// are still valid at commit time, and it is able to acquire write
-// locks for all writes. Cloud Spanner can abort the transaction for
-// any
-// reason. If a commit attempt returns `ABORTED`, Cloud Spanner
-// guarantees
-// that the transaction has not modified any user data in Cloud
-// Spanner.
-//
-// Unless the transaction commits, Cloud Spanner makes no guarantees
-// about
-// how long the transaction's locks were held for. It is an error to
-// use Cloud Spanner locks for any sort of mutual exclusion other
-// than
-// between Cloud Spanner transactions themselves.
-//
-// ### Retrying Aborted Transactions
-//
-// When a transaction aborts, the application can choose to retry
-// the
-// whole transaction again. To maximize the chances of
-// successfully
-// committing the retry, the client should execute the retry in the
-// same session as the original attempt. The original session's
-// lock
-// priority increases with each consecutive abort, meaning that
-// each
-// attempt has a slightly better chance of success than the
-// previous.
-//
-// Under some circumstances (e.g., many transactions attempting
-// to
-// modify the same row(s)), a transaction can abort many times in
-// a
-// short period before successfully committing. Thus, it is not a
-// good
-// idea to cap the number of retries a transaction can attempt;
-// instead, it is better to limit the total amount of wall time
-// spent
-// retrying.
-//
-// ### Idle Transactions
-//
-// A transaction is considered idle if it has no outstanding reads
-// or
-// SQL queries and has not started a read or SQL query within the last
-// 10
+// acquired are still valid at commit time, and it is able to acquire
+// write locks for all writes. Cloud Spanner can abort the transaction
+// for any reason. If a commit attempt returns `ABORTED`, Cloud Spanner
+// guarantees that the transaction has not modified any user data in
+// Cloud Spanner. Unless the transaction commits, Cloud Spanner makes no
+// guarantees about how long the transaction's locks were held for. It
+// is an error to use Cloud Spanner locks for any sort of mutual
+// exclusion other than between Cloud Spanner transactions themselves.
+// ### Retrying Aborted Transactions When a transaction aborts, the
+// application can choose to retry the whole transaction again. To
+// maximize the chances of successfully committing the retry, the client
+// should execute the retry in the same session as the original attempt.
+// The original session's lock priority increases with each consecutive
+// abort, meaning that each attempt has a slightly better chance of
+// success than the previous. Under some circumstances (e.g., many
+// transactions attempting to modify the same row(s)), a transaction can
+// abort many times in a short period before successfully committing.
+// Thus, it is not a good idea to cap the number of retries a
+// transaction can attempt; instead, it is better to limit the total
+// amount of wall time spent retrying. ### Idle Transactions A
+// transaction is considered idle if it has no outstanding reads or SQL
+// queries and has not started a read or SQL query within the last 10
 // seconds. Idle transactions can be aborted by Cloud Spanner so that
-// they
-// don't hold on to locks indefinitely. In that case, the commit
-// will
-// fail with error `ABORTED`.
-//
-// If this behavior is undesirable, periodically executing a simple
-// SQL query in the transaction (e.g., `SELECT 1`) prevents
-// the
-// transaction from becoming idle.
-//
-// ## Snapshot Read-Only Transactions
-//
-// Snapshot read-only transactions provides a simpler method
-// than
-// locking read-write transactions for doing several consistent
-// reads. However, this type of transaction does not support
-// writes.
-//
-// Snapshot transactions do not take locks. Instead, they work
-// by
-// choosing a Cloud Spanner timestamp, then executing all reads at
-// that
-// timestamp. Since they do not acquire locks, they do not
-// block
-// concurrent read-write transactions.
-//
-// Unlike locking read-write transactions, snapshot
-// read-only
-// transactions never abort. They can fail if the chosen read
-// timestamp is garbage collected; however, the default
-// garbage
-// collection policy is generous enough that most applications do
-// not
-// need to worry about this in practice.
-//
-// Snapshot read-only transactions do not need to call
-// Commit or
-// Rollback (and in fact are not
-// permitted to do so).
-//
-// To execute a snapshot transaction, the client specifies a
-// timestamp
-// bound, which tells Cloud Spanner how to choose a read timestamp.
-//
-// The types of timestamp bound are:
-//
-//   - Strong (the default).
-//   - Bounded staleness.
-//   - Exact staleness.
-//
-// If the Cloud Spanner database to be read is geographically
-// distributed,
-// stale read-only transactions can execute more quickly than strong
-// or read-write transaction, because they are able to execute far
-// from the leader replica.
-//
-// Each type of timestamp bound is discussed in detail below.
-//
-// ### Strong
-//
-// Strong reads are guaranteed to see the effects of all
-// transactions
-// that have committed before the start of the read. Furthermore,
-// all
-// rows yielded by a single read are consistent with each other --
-// if
-// any part of the read observes a transaction, all parts of the
-// read
-// see the transaction.
-//
-// Strong reads are not repeatable: two consecutive strong
-// read-only
-// transactions might return inconsistent results if there
-// are
-// concurrent writes. If consistency across reads is required, the
-// reads should be executed within a transaction or at an exact
-// read
-// timestamp.
-//
-// See TransactionOptions.ReadOnly.strong.
-//
-// ### Exact Staleness
-//
-// These timestamp bounds execute reads at a user-specified
-// timestamp. Reads at a timestamp are guaranteed to see a
-// consistent
-// prefix of the global transaction history: they observe
-// modifications done by all transactions with a commit timestamp <=
-// the read timestamp, and observe none of the modifications done
-// by
-// transactions with a larger commit timestamp. They will block
-// until
-// all conflicting transactions that may be assigned commit
-// timestamps
-// <= the read timestamp have finished.
-//
-// The timestamp can either be expressed as an absolute Cloud Spanner
-// commit
-// timestamp or a staleness relative to the current time.
-//
-// These modes do not require a "negotiation phase" to pick a
-// timestamp. As a result, they execute slightly faster than
-// the
-// equivalent boundedly stale concurrency modes. On the other
-// hand,
-// boundedly stale reads usually return fresher results.
-//
-// See TransactionOptions.ReadOnly.read_timestamp
-// and
-// TransactionOptions.ReadOnly.exact_staleness.
-//
-// ### Bounded Staleness
-//
+// they don't hold on to locks indefinitely. In that case, the commit
+// will fail with error `ABORTED`. If this behavior is undesirable,
+// periodically executing a simple SQL query in the transaction (e.g.,
+// `SELECT 1`) prevents the transaction from becoming idle. ## Snapshot
+// Read-Only Transactions Snapshot read-only transactions provides a
+// simpler method than locking read-write transactions for doing several
+// consistent reads. However, this type of transaction does not support
+// writes. Snapshot transactions do not take locks. Instead, they work
+// by choosing a Cloud Spanner timestamp, then executing all reads at
+// that timestamp. Since they do not acquire locks, they do not block
+// concurrent read-write transactions. Unlike locking read-write
+// transactions, snapshot read-only transactions never abort. They can
+// fail if the chosen read timestamp is garbage collected; however, the
+// default garbage collection policy is generous enough that most
+// applications do not need to worry about this in practice. Snapshot
+// read-only transactions do not need to call Commit or Rollback (and in
+// fact are not permitted to do so). To execute a snapshot transaction,
+// the client specifies a timestamp bound, which tells Cloud Spanner how
+// to choose a read timestamp. The types of timestamp bound are: -
+// Strong (the default). - Bounded staleness. - Exact staleness. If the
+// Cloud Spanner database to be read is geographically distributed,
+// stale read-only transactions can execute more quickly than strong or
+// read-write transaction, because they are able to execute far from the
+// leader replica. Each type of timestamp bound is discussed in detail
+// below. ### Strong Strong reads are guaranteed to see the effects of
+// all transactions that have committed before the start of the read.
+// Furthermore, all rows yielded by a single read are consistent with
+// each other -- if any part of the read observes a transaction, all
+// parts of the read see the transaction. Strong reads are not
+// repeatable: two consecutive strong read-only transactions might
+// return inconsistent results if there are concurrent writes. If
+// consistency across reads is required, the reads should be executed
+// within a transaction or at an exact read timestamp. See
+// TransactionOptions.ReadOnly.strong. ### Exact Staleness These
+// timestamp bounds execute reads at a user-specified timestamp. Reads
+// at a timestamp are guaranteed to see a consistent prefix of the
+// global transaction history: they observe modifications done by all
+// transactions with a commit timestamp <= the read timestamp, and
+// observe none of the modifications done by transactions with a larger
+// commit timestamp. They will block until all conflicting transactions
+// that may be assigned commit timestamps <= the read timestamp have
+// finished. The timestamp can either be expressed as an absolute Cloud
+// Spanner commit timestamp or a staleness relative to the current time.
+// These modes do not require a "negotiation phase" to pick a timestamp.
+// As a result, they execute slightly faster than the equivalent
+// boundedly stale concurrency modes. On the other hand, boundedly stale
+// reads usually return fresher results. See
+// TransactionOptions.ReadOnly.read_timestamp and
+// TransactionOptions.ReadOnly.exact_staleness. ### Bounded Staleness
 // Bounded staleness modes allow Cloud Spanner to pick the read
-// timestamp,
-// subject to a user-provided staleness bound. Cloud Spanner chooses
-// the
-// newest timestamp within the staleness bound that allows execution
-// of the reads at the closest available replica without blocking.
-//
-// All rows yielded are consistent with each other -- if any part of
-// the read observes a transaction, all parts of the read see
-// the
-// transaction. Boundedly stale reads are not repeatable: two
-// stale
-// reads, even if they use the same staleness bound, can execute
-// at
-// different timestamps and thus return inconsistent results.
-//
-// Boundedly stale reads execute in two phases: the first
-// phase
-// negotiates a timestamp among all replicas needed to serve the
-// read. In the second phase, reads are executed at the
-// negotiated
-// timestamp.
-//
-// As a result of the two phase execution, bounded staleness reads
-// are
-// usually a little slower than comparable exact staleness
-// reads. However, they are typically able to return fresher
-// results, and are more likely to execute at the closest
-// replica.
-//
-// Because the timestamp negotiation requires up-front knowledge
-// of
-// which rows will be read, it can only be used with
-// single-use
-// read-only transactions.
-//
-// See TransactionOptions.ReadOnly.max_staleness
-// and
-// TransactionOptions.ReadOnly.min_read_timestamp.
-//
-// ### Old Read Timestamps and Garbage Collection
-//
-// Cloud Spanner continuously garbage collects deleted and overwritten
-// data
-// in the background to reclaim storage space. This process is known
-// as "version GC". By default, version GC reclaims versions after
-// they
-// are one hour old. Because of this, Cloud Spanner cannot perform
-// reads
-// at read timestamps more than one hour in the past. This
-// restriction also applies to in-progress reads and/or SQL queries
-// whose
-// timestamp become too old while executing. Reads and SQL queries
-// with
-// too-old read timestamps fail with the error
-// `FAILED_PRECONDITION`.
-//
-// ## Partitioned DML Transactions
-//
+// timestamp, subject to a user-provided staleness bound. Cloud Spanner
+// chooses the newest timestamp within the staleness bound that allows
+// execution of the reads at the closest available replica without
+// blocking. All rows yielded are consistent with each other -- if any
+// part of the read observes a transaction, all parts of the read see
+// the transaction. Boundedly stale reads are not repeatable: two stale
+// reads, even if they use the same staleness bound, can execute at
+// different timestamps and thus return inconsistent results. Boundedly
+// stale reads execute in two phases: the first phase negotiates a
+// timestamp among all replicas needed to serve the read. In the second
+// phase, reads are executed at the negotiated timestamp. As a result of
+// the two phase execution, bounded staleness reads are usually a little
+// slower than comparable exact staleness reads. However, they are
+// typically able to return fresher results, and are more likely to
+// execute at the closest replica. Because the timestamp negotiation
+// requires up-front knowledge of which rows will be read, it can only
+// be used with single-use read-only transactions. See
+// TransactionOptions.ReadOnly.max_staleness and
+// TransactionOptions.ReadOnly.min_read_timestamp. ### Old Read
+// Timestamps and Garbage Collection Cloud Spanner continuously garbage
+// collects deleted and overwritten data in the background to reclaim
+// storage space. This process is known as "version GC". By default,
+// version GC reclaims versions after they are one hour old. Because of
+// this, Cloud Spanner cannot perform reads at read timestamps more than
+// one hour in the past. This restriction also applies to in-progress
+// reads and/or SQL queries whose timestamp become too old while
+// executing. Reads and SQL queries with too-old read timestamps fail
+// with the error `FAILED_PRECONDITION`. ## Partitioned DML Transactions
 // Partitioned DML transactions are used to execute DML statements with
-// a
-// different execution strategy that provides different, and often
-// better,
-// scalability properties for large, table-wide operations than DML in
-// a
-// ReadWrite transaction. Smaller scoped statements, such as an OLTP
-// workload,
-// should prefer using ReadWrite transactions.
-//
+// a different execution strategy that provides different, and often
+// better, scalability properties for large, table-wide operations than
+// DML in a ReadWrite transaction. Smaller scoped statements, such as an
+// OLTP workload, should prefer using ReadWrite transactions.
 // Partitioned DML partitions the keyspace and runs the DML statement on
-// each
-// partition in separate, internal transactions. These transactions
-// commit
-// automatically when complete, and run independently from one
-// another.
-//
-// To reduce lock contention, this execution strategy only acquires read
-// locks
-// on rows that match the WHERE clause of the statement. Additionally,
-// the
-// smaller per-partition transactions hold locks for less time.
-//
-// That said, Partitioned DML is not a drop-in replacement for standard
-// DML used
-// in ReadWrite transactions.
-//
-//  - The DML statement must be fully-partitionable. Specifically, the
-// statement
-//    must be expressible as the union of many statements which each
-// access only
-//    a single row of the table.
-//
-//  - The statement is not applied atomically to all rows of the table.
-// Rather,
-//    the statement is applied atomically to partitions of the table,
-// in
-//    independent transactions. Secondary index rows are updated
-// atomically
-//    with the base table rows.
-//
-//  - Partitioned DML does not guarantee exactly-once execution
-// semantics
-//    against a partition. The statement will be applied at least once
-// to each
-//    partition. It is strongly recommended that the DML statement
-// should be
-//    idempotent to avoid unexpected results. For instance, it is
-// potentially
-//    dangerous to run a statement such as
-//    `UPDATE table SET column = column + 1` as it could be run multiple
-// times
-//    against some rows.
-//
-//  - The partitions are committed automatically - there is no support
-// for
-//    Commit or Rollback. If the call returns an error, or if the client
-// issuing
-//    the ExecuteSql call dies, it is possible that some rows had the
-// statement
-//    executed on them successfully. It is also possible that statement
-// was
-//    never executed against other rows.
-//
-//  - Partitioned DML transactions may only contain the execution of a
-// single
-//    DML statement via ExecuteSql or ExecuteStreamingSql.
-//
-//  - If any error is encountered during the execution of the
-// partitioned DML
-//    operation (for instance, a UNIQUE INDEX violation, division by
-// zero, or a
-//    value that cannot be stored due to schema constraints), then the
-//    operation is stopped at that point and an error is returned. It
-// is
-//    possible that at this point, some partitions have been committed
-// (or even
-//    committed multiple times), and other partitions have not been run
-// at all.
-//
-// Given the above, Partitioned DML is good fit for large,
-// database-wide,
+// each partition in separate, internal transactions. These transactions
+// commit automatically when complete, and run independently from one
+// another. To reduce lock contention, this execution strategy only
+// acquires read locks on rows that match the WHERE clause of the
+// statement. Additionally, the smaller per-partition transactions hold
+// locks for less time. That said, Partitioned DML is not a drop-in
+// replacement for standard DML used in ReadWrite transactions. - The
+// DML statement must be fully-partitionable. Specifically, the
+// statement must be expressible as the union of many statements which
+// each access only a single row of the table. - The statement is not
+// applied atomically to all rows of the table. Rather, the statement is
+// applied atomically to partitions of the table, in independent
+// transactions. Secondary index rows are updated atomically with the
+// base table rows. - Partitioned DML does not guarantee exactly-once
+// execution semantics against a partition. The statement will be
+// applied at least once to each partition. It is strongly recommended
+// that the DML statement should be idempotent to avoid unexpected
+// results. For instance, it is potentially dangerous to run a statement
+// such as `UPDATE table SET column = column + 1` as it could be run
+// multiple times against some rows. - The partitions are committed
+// automatically - there is no support for Commit or Rollback. If the
+// call returns an error, or if the client issuing the ExecuteSql call
+// dies, it is possible that some rows had the statement executed on
+// them successfully. It is also possible that statement was never
+// executed against other rows. - Partitioned DML transactions may only
+// contain the execution of a single DML statement via ExecuteSql or
+// ExecuteStreamingSql. - If any error is encountered during the
+// execution of the partitioned DML operation (for instance, a UNIQUE
+// INDEX violation, division by zero, or a value that cannot be stored
+// due to schema constraints), then the operation is stopped at that
+// point and an error is returned. It is possible that at this point,
+// some partitions have been committed (or even committed multiple
+// times), and other partitions have not been run at all. Given the
+// above, Partitioned DML is good fit for large, database-wide,
 // operations that are idempotent, such as deleting old rows from a very
-// large
-// table.
+// large table.
 type TransactionOptions struct {
-	// PartitionedDml: Partitioned DML transaction.
-	//
-	// Authorization to begin a Partitioned DML transaction
-	// requires
-	// `spanner.databases.beginPartitionedDmlTransaction` permission
-	// on the `session` resource.
+	// PartitionedDml: Partitioned DML transaction. Authorization to begin a
+	// Partitioned DML transaction requires
+	// `spanner.databases.beginPartitionedDmlTransaction` permission on the
+	// `session` resource.
 	PartitionedDml *PartitionedDml `json:"partitionedDml,omitempty"`
 
-	// ReadOnly: Transaction will not write.
-	//
-	// Authorization to begin a read-only transaction
-	// requires
-	// `spanner.databases.beginReadOnlyTransaction` permission
-	// on the `session` resource.
+	// ReadOnly: Transaction will not write. Authorization to begin a
+	// read-only transaction requires
+	// `spanner.databases.beginReadOnlyTransaction` permission on the
+	// `session` resource.
 	ReadOnly *ReadOnly `json:"readOnly,omitempty"`
 
-	// ReadWrite: Transaction may write.
-	//
-	// Authorization to begin a read-write transaction
-	// requires
-	// `spanner.databases.beginOrRollbackReadWriteTransaction` permission
-	// on the `session` resource.
+	// ReadWrite: Transaction may write. Authorization to begin a read-write
+	// transaction requires
+	// `spanner.databases.beginOrRollbackReadWriteTransaction` permission on
+	// the `session` resource.
 	ReadWrite *ReadWrite `json:"readWrite,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PartitionedDml") to
@@ -4777,16 +3801,11 @@ func (s *TransactionOptions) MarshalJSON() ([]byte, error) {
 }
 
 // TransactionSelector: This message is used to select the transaction
-// in which a
-// Read or
-// ExecuteSql call runs.
-//
-// See TransactionOptions for more information about transactions.
+// in which a Read or ExecuteSql call runs. See TransactionOptions for
+// more information about transactions.
 type TransactionSelector struct {
-	// Begin: Begin a new transaction and execute this read or SQL query
-	// in
-	// it. The transaction ID of the new transaction is returned
-	// in
+	// Begin: Begin a new transaction and execute this read or SQL query in
+	// it. The transaction ID of the new transaction is returned in
 	// ResultSetMetadata.transaction, which is a Transaction.
 	Begin *TransactionOptions `json:"begin,omitempty"`
 
@@ -4794,10 +3813,9 @@ type TransactionSelector struct {
 	// transaction.
 	Id string `json:"id,omitempty"`
 
-	// SingleUse: Execute the read or SQL query in a temporary
-	// transaction.
-	// This is the most efficient way to execute a transaction that
-	// consists of a single SQL query.
+	// SingleUse: Execute the read or SQL query in a temporary transaction.
+	// This is the most efficient way to execute a transaction that consists
+	// of a single SQL query.
 	SingleUse *TransactionOptions `json:"singleUse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Begin") to
@@ -4824,11 +3842,10 @@ func (s *TransactionSelector) MarshalJSON() ([]byte, error) {
 }
 
 // Type: `Type` indicates the type of a Cloud Spanner value, as might be
-// stored in a
-// table cell or returned from an SQL query.
+// stored in a table cell or returned from an SQL query.
 type Type struct {
-	// ArrayElementType: If code == ARRAY, then `array_element_type`
-	// is the type of the array elements.
+	// ArrayElementType: If code == ARRAY, then `array_element_type` is the
+	// type of the array elements.
 	ArrayElementType *Type `json:"arrayElementType,omitempty"`
 
 	// Code: Required. The TypeCode for this type.
@@ -4838,48 +3855,31 @@ type Type struct {
 	//   "BOOL" - Encoded as JSON `true` or `false`.
 	//   "INT64" - Encoded as `string`, in decimal format.
 	//   "FLOAT64" - Encoded as `number`, or the strings "NaN",
-	// "Infinity", or
-	// "-Infinity".
+	// "Infinity", or "-Infinity".
 	//   "TIMESTAMP" - Encoded as `string` in RFC 3339 timestamp format. The
-	// time zone
-	// must be present, and must be "Z".
-	//
-	// If the schema has the column option
-	// `allow_commit_timestamp=true`, the placeholder
-	// string
-	// "spanner.commit_timestamp()" can be used to instruct the system
-	// to insert the commit timestamp associated with the
-	// transaction
-	// commit.
+	// time zone must be present, and must be "Z". If the schema has the
+	// column option `allow_commit_timestamp=true`, the placeholder string
+	// "spanner.commit_timestamp()" can be used to instruct the system to
+	// insert the commit timestamp associated with the transaction commit.
 	//   "DATE" - Encoded as `string` in RFC 3339 date format.
 	//   "STRING" - Encoded as `string`.
 	//   "BYTES" - Encoded as a base64-encoded `string`, as described in RFC
-	// 4648,
-	// section 4.
+	// 4648, section 4.
 	//   "ARRAY" - Encoded as `list`, where the list elements are
-	// represented
-	// according to
-	// array_element_type.
+	// represented according to array_element_type.
 	//   "STRUCT" - Encoded as `list`, where list element `i` is represented
-	// according
-	// to [struct_type.fields[i]][google.spanner.v1.StructType.fields].
+	// according to
+	// [struct_type.fields[i]][google.spanner.v1.StructType.fields].
 	//   "NUMERIC" - Encoded as `string`, in decimal format or scientific
-	// notation format.
-	// <br>Decimal format:
-	// <br>`[+-]Digits[.[Digits]]` or
-	// <br>`+-.Digits`
-	//
-	// Scientific
-	// notation:
-	// <br>`[+-]Digits[.[Digits]][ExponentIndicator[+-]Digits]`
-	// or
-	// <br>`+-.Digits[ExponentIndicator[+-]Digits]`
-	// <br>(ExponentIndicator
-	//  is "e" or "E")
+	// notation format. Decimal format: `[+-]Digits[.[Digits]]` or
+	// `+-.Digits` Scientific notation:
+	// `[+-]Digits[.[Digits]][ExponentIndicator[+-]Digits]` or
+	// `+-.Digits[ExponentIndicator[+-]Digits]` (ExponentIndicator is "e"
+	// or "E")
 	Code string `json:"code,omitempty"`
 
-	// StructType: If code == STRUCT, then `struct_type`
-	// provides type information for the struct's fields.
+	// StructType: If code == STRUCT, then `struct_type` provides type
+	// information for the struct's fields.
 	StructType *StructType `json:"structType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
@@ -4907,22 +3907,18 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 }
 
 // UpdateDatabaseDdlMetadata: Metadata type for the operation returned
-// by
-// UpdateDatabaseDdl.
+// by UpdateDatabaseDdl.
 type UpdateDatabaseDdlMetadata struct {
 	// CommitTimestamps: Reports the commit timestamps of all statements
-	// that have
-	// succeeded so far, where `commit_timestamps[i]` is the
-	// commit
-	// timestamp for the statement `statements[i]`.
+	// that have succeeded so far, where `commit_timestamps[i]` is the
+	// commit timestamp for the statement `statements[i]`.
 	CommitTimestamps []string `json:"commitTimestamps,omitempty"`
 
 	// Database: The database being modified.
 	Database string `json:"database,omitempty"`
 
 	// Statements: For an update this list contains all the statements. For
-	// an
-	// individual statement, this list contains only that statement.
+	// an individual statement, this list contains only that statement.
 	Statements []string `json:"statements,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommitTimestamps") to
@@ -4950,53 +3946,30 @@ func (s *UpdateDatabaseDdlMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // UpdateDatabaseDdlRequest: Enqueues the given DDL statements to be
-// applied, in order but not
-// necessarily all at once, to the database schema at some point
-// (or
-// points) in the future. The server checks that the statements
-// are executable (syntactically valid, name tables that exist,
-// etc.)
-// before enqueueing them, but they may still fail upon
-// later execution (e.g., if a statement from another batch
-// of
-// statements is applied first and it conflicts in some way, or if
-// there is some data-related problem like a `NULL` value in a column
-// to
-// which `NOT NULL` would be added). If a statement fails,
-// all
-// subsequent statements in the batch are automatically cancelled.
-//
-// Each batch of statements is assigned a name which can be used
-// with
-// the Operations API to monitor
-// progress. See the
-// operation_id field for more
-// details.
+// applied, in order but not necessarily all at once, to the database
+// schema at some point (or points) in the future. The server checks
+// that the statements are executable (syntactically valid, name tables
+// that exist, etc.) before enqueueing them, but they may still fail
+// upon later execution (e.g., if a statement from another batch of
+// statements is applied first and it conflicts in some way, or if there
+// is some data-related problem like a `NULL` value in a column to which
+// `NOT NULL` would be added). If a statement fails, all subsequent
+// statements in the batch are automatically cancelled. Each batch of
+// statements is assigned a name which can be used with the Operations
+// API to monitor progress. See the operation_id field for more details.
 type UpdateDatabaseDdlRequest struct {
-	// OperationId: If empty, the new update request is assigned
-	// an
-	// automatically-generated operation ID. Otherwise, `operation_id`
-	// is used to construct the name of the resulting
-	// Operation.
-	//
-	// Specifying an explicit operation ID simplifies determining
-	// whether the statements were executed in the event that
-	// the
-	// UpdateDatabaseDdl call is replayed,
-	// or the return value is otherwise lost: the database
-	// and
-	// `operation_id` fields can be combined to form the
-	// name of the resulting
-	// longrunning.Operation:
-	// `<database>/operations/<operation_id>`.
-	//
-	// `operation_id` should be unique within the database, and must be
-	// a valid identifier: `a-z*`. Note that
-	// automatically-generated operation IDs always begin with
-	// an
-	// underscore. If the named operation already exists,
-	// UpdateDatabaseDdl returns
-	// `ALREADY_EXISTS`.
+	// OperationId: If empty, the new update request is assigned an
+	// automatically-generated operation ID. Otherwise, `operation_id` is
+	// used to construct the name of the resulting Operation. Specifying an
+	// explicit operation ID simplifies determining whether the statements
+	// were executed in the event that the UpdateDatabaseDdl call is
+	// replayed, or the return value is otherwise lost: the database and
+	// `operation_id` fields can be combined to form the name of the
+	// resulting longrunning.Operation: `/operations/`. `operation_id`
+	// should be unique within the database, and must be a valid identifier:
+	// `a-z*`. Note that automatically-generated operation IDs always begin
+	// with an underscore. If the named operation already exists,
+	// UpdateDatabaseDdl returns `ALREADY_EXISTS`.
 	OperationId string `json:"operationId,omitempty"`
 
 	// Statements: Required. DDL statements to be applied to the database.
@@ -5025,15 +3998,12 @@ func (s *UpdateDatabaseDdlRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpdateInstanceMetadata: Metadata type for the operation returned
-// by
+// UpdateInstanceMetadata: Metadata type for the operation returned by
 // UpdateInstance.
 type UpdateInstanceMetadata struct {
 	// CancelTime: The time at which this operation was cancelled. If set,
-	// this operation is
-	// in the process of undoing itself (which is guaranteed to succeed)
-	// and
-	// cannot be cancelled again.
+	// this operation is in the process of undoing itself (which is
+	// guaranteed to succeed) and cannot be cancelled again.
 	CancelTime string `json:"cancelTime,omitempty"`
 
 	// EndTime: The time at which this operation failed or was completed
@@ -5043,8 +4013,7 @@ type UpdateInstanceMetadata struct {
 	// Instance: The desired end state of the update.
 	Instance *Instance `json:"instance,omitempty"`
 
-	// StartTime: The time at which UpdateInstance
-	// request was received.
+	// StartTime: The time at which UpdateInstance request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
@@ -5073,18 +4042,14 @@ func (s *UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 // UpdateInstanceRequest: The request for UpdateInstance.
 type UpdateInstanceRequest struct {
 	// FieldMask: Required. A mask specifying which fields in Instance
-	// should be updated.
-	// The field mask must always be specified; this prevents any future
-	// fields in
-	// Instance from being erased accidentally by clients that do not
-	// know
-	// about them.
+	// should be updated. The field mask must always be specified; this
+	// prevents any future fields in Instance from being erased accidentally
+	// by clients that do not know about them.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// Instance: Required. The instance to update, which must always include
-	// the instance
-	// name.  Otherwise, only fields mentioned in field_mask need be
-	// included.
+	// the instance name. Otherwise, only fields mentioned in field_mask
+	// need be included.
 	Instance *Instance `json:"instance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FieldMask") to
@@ -5110,30 +4075,24 @@ func (s *UpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Write: Arguments to insert, update, insert_or_update, and
-// replace operations.
+// Write: Arguments to insert, update, insert_or_update, and replace
+// operations.
 type Write struct {
-	// Columns: The names of the columns in table to be written.
-	//
-	// The list of columns must contain enough columns to allow
-	// Cloud Spanner to derive values for all primary key columns in
-	// the
-	// row(s) to be modified.
+	// Columns: The names of the columns in table to be written. The list of
+	// columns must contain enough columns to allow Cloud Spanner to derive
+	// values for all primary key columns in the row(s) to be modified.
 	Columns []string `json:"columns,omitempty"`
 
 	// Table: Required. The table whose rows will be written.
 	Table string `json:"table,omitempty"`
 
-	// Values: The values to be written. `values` can contain more than
-	// one
-	// list of values. If it does, then multiple rows are written, one
-	// for each entry in `values`. Each list in `values` must have
-	// exactly as many entries as there are entries in columns
-	// above. Sending multiple lists is equivalent to sending
-	// multiple
-	// `Mutation`s, each containing one `values` entry and repeating
-	// table and columns. Individual values in each list are
-	// encoded as described here.
+	// Values: The values to be written. `values` can contain more than one
+	// list of values. If it does, then multiple rows are written, one for
+	// each entry in `values`. Each list in `values` must have exactly as
+	// many entries as there are entries in columns above. Sending multiple
+	// lists is equivalent to sending multiple `Mutation`s, each containing
+	// one `values` entry and repeating table and columns. Individual values
+	// in each list are encoded as described here.
 	Values [][]interface{} `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -5214,7 +4173,7 @@ func (c *ProjectsInstanceConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5285,7 +4244,7 @@ func (c *ProjectsInstanceConfigsGetCall) Do(opts ...googleapi.CallOption) (*Inst
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the requested instance configuration. Values are of\nthe form `projects/\u003cproject\u003e/instanceConfigs/\u003cconfig\u003e`.",
+	//       "description": "Required. The name of the requested instance configuration. Values are of the form `projects//instanceConfigs/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instanceConfigs/[^/]+$",
 	//       "required": true,
@@ -5324,17 +4283,16 @@ func (r *ProjectsInstanceConfigsService) List(parent string) *ProjectsInstanceCo
 }
 
 // PageSize sets the optional parameter "pageSize": Number of instance
-// configurations to be returned in the response. If 0 or
-// less, defaults to the server's maximum allowed page size.
+// configurations to be returned in the response. If 0 or less, defaults
+// to the server's maximum allowed page size.
 func (c *ProjectsInstanceConfigsListCall) PageSize(pageSize int64) *ProjectsInstanceConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token
-// from a previous ListInstanceConfigsResponse.
+// `page_token` should contain a next_page_token from a previous
+// ListInstanceConfigsResponse.
 func (c *ProjectsInstanceConfigsListCall) PageToken(pageToken string) *ProjectsInstanceConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5377,7 +4335,7 @@ func (c *ProjectsInstanceConfigsListCall) Header() http.Header {
 
 func (c *ProjectsInstanceConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5448,18 +4406,18 @@ func (c *ProjectsInstanceConfigsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Number of instance configurations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "description": "Number of instance configurations to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListInstanceConfigsResponse.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListInstanceConfigsResponse.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project for which a list of supported instance\nconfigurations is requested. Values are of the form\n`projects/\u003cproject\u003e`.",
+	//       "description": "Required. The name of the project for which a list of supported instance configurations is requested. Values are of the form `projects/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5511,46 +4469,24 @@ type ProjectsInstancesCreateCall struct {
 }
 
 // Create: Creates an instance and begins preparing it to begin serving.
-// The
-// returned long-running operation
-// can be used to track the progress of preparing the new
-// instance. The instance name is assigned by the caller. If the
-// named instance already exists, `CreateInstance`
-// returns
-// `ALREADY_EXISTS`.
-//
-// Immediately upon completion of this request:
-//
-//   * The instance is readable via the API, with all requested
-// attributes
-//     but no allocated resources. Its state is `CREATING`.
-//
-// Until completion of the returned operation:
-//
-//   * Cancelling the operation renders the instance immediately
-// unreadable
-//     via the API.
-//   * The instance can be deleted.
-//   * All other attempts to modify the instance are rejected.
-//
-// Upon completion of the returned operation:
-//
-//   * Billing for all successfully-allocated resources begins (some
-// types
-//     may have lower than the requested levels).
-//   * Databases can be created in the instance.
-//   * The instance's allocated resource levels are readable via the
-// API.
-//   * The instance's state becomes `READY`.
-//
-// The returned long-running operation will
-// have a name of the format `<instance_name>/operations/<operation_id>`
-// and
-// can be used to track creation of the instance.  The
-// metadata field type is
-// CreateInstanceMetadata.
-// The response field type is
-// Instance, if successful.
+// The returned long-running operation can be used to track the progress
+// of preparing the new instance. The instance name is assigned by the
+// caller. If the named instance already exists, `CreateInstance`
+// returns `ALREADY_EXISTS`. Immediately upon completion of this
+// request: * The instance is readable via the API, with all requested
+// attributes but no allocated resources. Its state is `CREATING`. Until
+// completion of the returned operation: * Cancelling the operation
+// renders the instance immediately unreadable via the API. * The
+// instance can be deleted. * All other attempts to modify the instance
+// are rejected. Upon completion of the returned operation: * Billing
+// for all successfully-allocated resources begins (some types may have
+// lower than the requested levels). * Databases can be created in the
+// instance. * The instance's allocated resource levels are readable via
+// the API. * The instance's state becomes `READY`. The returned
+// long-running operation will have a name of the format `/operations/`
+// and can be used to track creation of the instance. The metadata field
+// type is CreateInstanceMetadata. The response field type is Instance,
+// if successful.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5585,7 +4521,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5649,7 +4585,7 @@ func (c *ProjectsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an instance and begins preparing it to begin serving. The\nreturned long-running operation\ncan be used to track the progress of preparing the new\ninstance. The instance name is assigned by the caller. If the\nnamed instance already exists, `CreateInstance` returns\n`ALREADY_EXISTS`.\n\nImmediately upon completion of this request:\n\n  * The instance is readable via the API, with all requested attributes\n    but no allocated resources. Its state is `CREATING`.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation renders the instance immediately unreadable\n    via the API.\n  * The instance can be deleted.\n  * All other attempts to modify the instance are rejected.\n\nUpon completion of the returned operation:\n\n  * Billing for all successfully-allocated resources begins (some types\n    may have lower than the requested levels).\n  * Databases can be created in the instance.\n  * The instance's allocated resource levels are readable via the API.\n  * The instance's state becomes `READY`.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track creation of the instance.  The\nmetadata field type is\nCreateInstanceMetadata.\nThe response field type is\nInstance, if successful.",
+	//   "description": "Creates an instance and begins preparing it to begin serving. The returned long-running operation can be used to track the progress of preparing the new instance. The instance name is assigned by the caller. If the named instance already exists, `CreateInstance` returns `ALREADY_EXISTS`. Immediately upon completion of this request: * The instance is readable via the API, with all requested attributes but no allocated resources. Its state is `CREATING`. Until completion of the returned operation: * Cancelling the operation renders the instance immediately unreadable via the API. * The instance can be deleted. * All other attempts to modify the instance are rejected. Upon completion of the returned operation: * Billing for all successfully-allocated resources begins (some types may have lower than the requested levels). * Databases can be created in the instance. * The instance's allocated resource levels are readable via the API. * The instance's state becomes `READY`. The returned long-running operation will have a name of the format `/operations/` and can be used to track creation of the instance. The metadata field type is CreateInstanceMetadata. The response field type is Instance, if successful.",
 	//   "flatPath": "v1/projects/{projectsId}/instances",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.create",
@@ -5658,7 +4594,7 @@ func (c *ProjectsInstancesCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the project in which to create the instance. Values\nare of the form `projects/\u003cproject\u003e`.",
+	//       "description": "Required. The name of the project in which to create the instance. Values are of the form `projects/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5690,18 +4626,11 @@ type ProjectsInstancesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an instance.
-//
-// Immediately upon completion of the request:
-//
-//   * Billing ceases for all of the instance's reserved
-// resources.
-//
-// Soon afterward:
-//
-//   * The instance and *all of its databases* immediately and
-//     irrevocably disappear from the API. All data in the databases
-//     is permanently deleted.
+// Delete: Deletes an instance. Immediately upon completion of the
+// request: * Billing ceases for all of the instance's reserved
+// resources. Soon afterward: * The instance and *all of its databases*
+// immediately and irrevocably disappear from the API. All data in the
+// databases is permanently deleted.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5735,7 +4664,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5794,7 +4723,7 @@ func (c *ProjectsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an instance.\n\nImmediately upon completion of the request:\n\n  * Billing ceases for all of the instance's reserved resources.\n\nSoon afterward:\n\n  * The instance and *all of its databases* immediately and\n    irrevocably disappear from the API. All data in the databases\n    is permanently deleted.",
+	//   "description": "Deletes an instance. Immediately upon completion of the request: * Billing ceases for all of the instance's reserved resources. Soon afterward: * The instance and *all of its databases* immediately and irrevocably disappear from the API. All data in the databases is permanently deleted.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.delete",
@@ -5803,7 +4732,7 @@ func (c *ProjectsInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the instance to be deleted. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`",
+	//       "description": "Required. The name of the instance to be deleted. Values are of the form `projects//instances/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -5841,9 +4770,8 @@ func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 }
 
 // FieldMask sets the optional parameter "fieldMask": If field_mask is
-// present, specifies the subset of Instance fields that
-// should be returned.
-// If absent, all Instance fields are returned.
+// present, specifies the subset of Instance fields that should be
+// returned. If absent, all Instance fields are returned.
 func (c *ProjectsInstancesGetCall) FieldMask(fieldMask string) *ProjectsInstancesGetCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
 	return c
@@ -5886,7 +4814,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5957,13 +4885,13 @@ func (c *ProjectsInstancesGetCall) Do(opts ...googleapi.CallOption) (*Instance, 
 	//   ],
 	//   "parameters": {
 	//     "fieldMask": {
-	//       "description": "If field_mask is present, specifies the subset of Instance fields that\nshould be returned.\nIf absent, all Instance fields are returned.",
+	//       "description": "If field_mask is present, specifies the subset of Instance fields that should be returned. If absent, all Instance fields are returned.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the requested instance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The name of the requested instance. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -5994,12 +4922,9 @@ type ProjectsInstancesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for an instance
-// resource. Returns an empty
-// policy if an instance exists but does not have a policy
-// set.
-//
-// Authorization requires `spanner.instances.getIamPolicy` on
-// resource.
+// resource. Returns an empty policy if an instance exists but does not
+// have a policy set. Authorization requires
+// `spanner.instances.getIamPolicy` on resource.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6034,7 +4959,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6098,7 +5023,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for an instance resource. Returns an empty\npolicy if an instance exists but does not have a policy set.\n\nAuthorization requires `spanner.instances.getIamPolicy` on\nresource.",
+	//   "description": "Gets the access control policy for an instance resource. Returns an empty policy if an instance exists but does not have a policy set. Authorization requires `spanner.instances.getIamPolicy` on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.getIamPolicy",
@@ -6107,7 +5032,7 @@ func (c *ProjectsInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -6148,45 +5073,33 @@ func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCal
 }
 
 // Filter sets the optional parameter "filter": An expression for
-// filtering the results of the request. Filter rules are
-// case insensitive. The fields eligible for filtering are:
-//
-//   * `name`
-//   * `display_name`
-//   * `labels.key` where key is the name of a label
-//
-// Some examples of using filters are:
-//
-//   * `name:*` --> The instance has a name.
-//   * `name:Howl` --> The instance's name contains the string "howl".
-//   * `name:HOWL` --> Equivalent to above.
-//   * `NAME:howl` --> Equivalent to above.
-//   * `labels.env:*` --> The instance has the label "env".
-//   * `labels.env:dev` --> The instance has the label "env" and the
-// value of
-//                        the label contains the string "dev".
-//   * `name:howl labels.env:dev` --> The instance's name contains
-// "howl" and
-//                                  it has the label "env" with its
-// value
-//                                  containing "dev".
+// filtering the results of the request. Filter rules are case
+// insensitive. The fields eligible for filtering are: * `name` *
+// `display_name` * `labels.key` where key is the name of a label Some
+// examples of using filters are: * `name:*` --> The instance has a
+// name. * `name:Howl` --> The instance's name contains the string
+// "howl". * `name:HOWL` --> Equivalent to above. * `NAME:howl` -->
+// Equivalent to above. * `labels.env:*` --> The instance has the label
+// "env". * `labels.env:dev` --> The instance has the label "env" and
+// the value of the label contains the string "dev". * `name:howl
+// labels.env:dev` --> The instance's name contains "howl" and it has
+// the label "env" with its value containing "dev".
 func (c *ProjectsInstancesListCall) Filter(filter string) *ProjectsInstancesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of instances
-// to be returned in the response. If 0 or less, defaults
-// to the server's maximum allowed page size.
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
 func (c *ProjectsInstancesListCall) PageSize(pageSize int64) *ProjectsInstancesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token from a
-// previous ListInstancesResponse.
+// `page_token` should contain a next_page_token from a previous
+// ListInstancesResponse.
 func (c *ProjectsInstancesListCall) PageToken(pageToken string) *ProjectsInstancesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6229,7 +5142,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6300,23 +5213,23 @@ func (c *ProjectsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInsta
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * `name`\n  * `display_name`\n  * `labels.key` where key is the name of a label\n\nSome examples of using filters are:\n\n  * `name:*` --\u003e The instance has a name.\n  * `name:Howl` --\u003e The instance's name contains the string \"howl\".\n  * `name:HOWL` --\u003e Equivalent to above.\n  * `NAME:howl` --\u003e Equivalent to above.\n  * `labels.env:*` --\u003e The instance has the label \"env\".\n  * `labels.env:dev` --\u003e The instance has the label \"env\" and the value of\n                       the label contains the string \"dev\".\n  * `name:howl labels.env:dev` --\u003e The instance's name contains \"howl\" and\n                                 it has the label \"env\" with its value\n                                 containing \"dev\".",
+	//       "description": "An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `display_name` * `labels.key` where key is the name of a label Some examples of using filters are: * `name:*` --\u003e The instance has a name. * `name:Howl` --\u003e The instance's name contains the string \"howl\". * `name:HOWL` --\u003e Equivalent to above. * `NAME:howl` --\u003e Equivalent to above. * `labels.env:*` --\u003e The instance has the label \"env\". * `labels.env:dev` --\u003e The instance has the label \"env\" and the value of the label contains the string \"dev\". * `name:howl labels.env:dev` --\u003e The instance's name contains \"howl\" and it has the label \"env\" with its value containing \"dev\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of instances to be returned in the response. If 0 or less, defaults\nto the server's maximum allowed page size.",
+	//       "description": "Number of instances to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListInstancesResponse.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListInstancesResponse.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project for which a list of instances is\nrequested. Values are of the form `projects/\u003cproject\u003e`.",
+	//       "description": "Required. The name of the project for which a list of instances is requested. Values are of the form `projects/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -6368,54 +5281,28 @@ type ProjectsInstancesPatchCall struct {
 }
 
 // Patch: Updates an instance, and begins allocating or releasing
-// resources
-// as requested. The returned long-running
-// operation can be used to track the
-// progress of updating the instance. If the named instance does
-// not
-// exist, returns `NOT_FOUND`.
-//
-// Immediately upon completion of this request:
-//
-//   * For resource types for which a decrease in the instance's
-// allocation
-//     has been requested, billing is based on the newly-requested
-// level.
-//
-// Until completion of the returned operation:
-//
-//   * Cancelling the operation sets its metadata's
-//     cancel_time, and begins
-//     restoring resources to their pre-request values. The operation
-//     is guaranteed to succeed at undoing all resource changes,
-//     after which point it terminates with a `CANCELLED` status.
-//   * All other attempts to modify the instance are rejected.
-//   * Reading the instance via the API continues to give the
-// pre-request
-//     resource levels.
-//
-// Upon completion of the returned operation:
-//
-//   * Billing begins for all successfully-allocated resources (some
-// types
-//     may have lower than the requested levels).
-//   * All newly-reserved resources are available for serving the
-// instance's
-//     tables.
-//   * The instance's new resource levels are readable via the API.
-//
-// The returned long-running operation will
-// have a name of the format `<instance_name>/operations/<operation_id>`
-// and
-// can be used to track the instance modification.  The
-// metadata field type is
-// UpdateInstanceMetadata.
-// The response field type is
-// Instance, if successful.
-//
-// Authorization requires `spanner.instances.update` permission
-// on
-// resource name.
+// resources as requested. The returned long-running operation can be
+// used to track the progress of updating the instance. If the named
+// instance does not exist, returns `NOT_FOUND`. Immediately upon
+// completion of this request: * For resource types for which a decrease
+// in the instance's allocation has been requested, billing is based on
+// the newly-requested level. Until completion of the returned
+// operation: * Cancelling the operation sets its metadata's
+// cancel_time, and begins restoring resources to their pre-request
+// values. The operation is guaranteed to succeed at undoing all
+// resource changes, after which point it terminates with a `CANCELLED`
+// status. * All other attempts to modify the instance are rejected. *
+// Reading the instance via the API continues to give the pre-request
+// resource levels. Upon completion of the returned operation: * Billing
+// begins for all successfully-allocated resources (some types may have
+// lower than the requested levels). * All newly-reserved resources are
+// available for serving the instance's tables. * The instance's new
+// resource levels are readable via the API. The returned long-running
+// operation will have a name of the format `/operations/` and can be
+// used to track the instance modification. The metadata field type is
+// UpdateInstanceMetadata. The response field type is Instance, if
+// successful. Authorization requires `spanner.instances.update`
+// permission on resource name.
 func (r *ProjectsInstancesService) Patch(nameid string, updateinstancerequest *UpdateInstanceRequest) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6450,7 +5337,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6514,7 +5401,7 @@ func (c *ProjectsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an instance, and begins allocating or releasing resources\nas requested. The returned long-running\noperation can be used to track the\nprogress of updating the instance. If the named instance does not\nexist, returns `NOT_FOUND`.\n\nImmediately upon completion of this request:\n\n  * For resource types for which a decrease in the instance's allocation\n    has been requested, billing is based on the newly-requested level.\n\nUntil completion of the returned operation:\n\n  * Cancelling the operation sets its metadata's\n    cancel_time, and begins\n    restoring resources to their pre-request values. The operation\n    is guaranteed to succeed at undoing all resource changes,\n    after which point it terminates with a `CANCELLED` status.\n  * All other attempts to modify the instance are rejected.\n  * Reading the instance via the API continues to give the pre-request\n    resource levels.\n\nUpon completion of the returned operation:\n\n  * Billing begins for all successfully-allocated resources (some types\n    may have lower than the requested levels).\n  * All newly-reserved resources are available for serving the instance's\n    tables.\n  * The instance's new resource levels are readable via the API.\n\nThe returned long-running operation will\nhave a name of the format `\u003cinstance_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track the instance modification.  The\nmetadata field type is\nUpdateInstanceMetadata.\nThe response field type is\nInstance, if successful.\n\nAuthorization requires `spanner.instances.update` permission on\nresource name.",
+	//   "description": "Updates an instance, and begins allocating or releasing resources as requested. The returned long-running operation can be used to track the progress of updating the instance. If the named instance does not exist, returns `NOT_FOUND`. Immediately upon completion of this request: * For resource types for which a decrease in the instance's allocation has been requested, billing is based on the newly-requested level. Until completion of the returned operation: * Cancelling the operation sets its metadata's cancel_time, and begins restoring resources to their pre-request values. The operation is guaranteed to succeed at undoing all resource changes, after which point it terminates with a `CANCELLED` status. * All other attempts to modify the instance are rejected. * Reading the instance via the API continues to give the pre-request resource levels. Upon completion of the returned operation: * Billing begins for all successfully-allocated resources (some types may have lower than the requested levels). * All newly-reserved resources are available for serving the instance's tables. * The instance's new resource levels are readable via the API. The returned long-running operation will have a name of the format `/operations/` and can be used to track the instance modification. The metadata field type is UpdateInstanceMetadata. The response field type is Instance, if successful. Authorization requires `spanner.instances.update` permission on resource name.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "spanner.projects.instances.patch",
@@ -6523,7 +5410,7 @@ func (c *ProjectsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 2 and 64 characters in length.",
+	//       "description": "Required. A unique identifier for the instance, which cannot be changed after the instance is created. Values are of the form `projects//instances/a-z*[a-z0-9]`. The final segment of the name must be between 2 and 64 characters in length.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -6557,11 +5444,8 @@ type ProjectsInstancesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on an instance resource.
-// Replaces any
-// existing policy.
-//
-// Authorization requires `spanner.instances.setIamPolicy` on
-// resource.
+// Replaces any existing policy. Authorization requires
+// `spanner.instances.setIamPolicy` on resource.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6596,7 +5480,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6660,7 +5544,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on an instance resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.instances.setIamPolicy` on\nresource.",
+	//   "description": "Sets the access control policy on an instance resource. Replaces any existing policy. Authorization requires `spanner.instances.setIamPolicy` on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.setIamPolicy",
@@ -6669,7 +5553,7 @@ func (c *ProjectsInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*P
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for databases resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -6703,15 +5587,10 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified instance resource.
-//
-// Attempting this RPC on a non-existent Cloud Spanner instance resource
-// will
-// result in a NOT_FOUND error if the user has
-// `spanner.instances.list`
-// permission on the containing Google Cloud Project. Otherwise returns
-// an
-// empty set of permissions.
+// specified instance resource. Attempting this RPC on a non-existent
+// Cloud Spanner instance resource will result in a NOT_FOUND error if
+// the user has `spanner.instances.list` permission on the containing
+// Google Cloud Project. Otherwise returns an empty set of permissions.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6746,7 +5625,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6810,7 +5689,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified instance resource.\n\nAttempting this RPC on a non-existent Cloud Spanner instance resource will\nresult in a NOT_FOUND error if the user has `spanner.instances.list`\npermission on the containing Google Cloud Project. Otherwise returns an\nempty set of permissions.",
+	//   "description": "Returns permissions that the caller has on the specified instance resource. Attempting this RPC on a non-existent Cloud Spanner instance resource will result in a NOT_FOUND error if the user has `spanner.instances.list` permission on the containing Google Cloud Project. Otherwise returns an empty set of permissions.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.testIamPermissions",
@@ -6819,7 +5698,7 @@ func (c *ProjectsInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -6852,22 +5731,15 @@ type ProjectsInstancesBackupOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the backup long-running operations in
-// the given instance. A backup operation has a name of the
-// form
-// `projects/<project>/instances/<instance>/backups/<backup>/operati
-// ons/<operation>`.
-// The long-running operation
-// metadata field type
-// `metadata.type_url` describes the type of the metadata. Operations
-// returned
-// include those that have completed/failed/canceled within the last 7
-// days,
-// and pending operations. Operations returned are ordered
-// by
+// List: Lists the backup long-running operations in the given instance.
+// A backup operation has a name of the form
+// `projects//instances//backups//operations/`. The long-running
+// operation metadata field type `metadata.type_url` describes the type
+// of the metadata. Operations returned include those that have
+// completed/failed/canceled within the last 7 days, and pending
+// operations. Operations returned are ordered by
 // `operation.metadata.value.progress.start_time` in descending order
-// starting
-// from the most recently started operation.
+// starting from the most recently started operation.
 func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
 	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6875,73 +5747,50 @@ func (r *ProjectsInstancesBackupOperationsService) List(parent string) *Projects
 }
 
 // Filter sets the optional parameter "filter": An expression that
-// filters the list of returned backup operations.
-//
-// A filter expression consists of a field name, a
-// comparison operator, and a value for filtering.
-// The value must be a string, a number, or a boolean. The comparison
-// operator
-// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
-// Colon `:` is the contains operator. Filter rules are not case
-// sensitive.
-//
-// The following fields in the operation
-// are eligible for filtering:
-//
-//   * `name` - The name of the long-running operation
-//   * `done` - False if the operation is in progress, else true.
-//   * `metadata.@type` - the type of metadata. For example, the type
-// string
-//      for CreateBackupMetadata is
-//
+// filters the list of returned backup operations. A filter expression
+// consists of a field name, a comparison operator, and a value for
+// filtering. The value must be a string, a number, or a boolean. The
+// comparison operator must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`,
+// or `:`. Colon `:` is the contains operator. Filter rules are not case
+// sensitive. The following fields in the operation are eligible for
+// filtering: * `name` - The name of the long-running operation * `done`
+// - False if the operation is in progress, else true. *
+// `metadata.@type` - the type of metadata. For example, the type string
+// for CreateBackupMetadata is
 // `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMeta
-// data`.
-//   * `metadata.<field_name>` - any field in metadata.value.
-//   * `error` - Error associated with the long-running operation.
-//   * `response.@type` - the type of response.
-//   * `response.<field_name>` - any field in response.value.
-//
-// You can combine multiple expressions by enclosing each expression
-// in
-// parentheses. By default, expressions are combined with AND logic,
-// but
-// you can specify AND, OR, and NOT logic explicitly.
-//
-// Here are a few examples:
-//
-//   * `done:true` - The operation is complete.
-//   * `metadata.database:prod` - The database the backup was taken from
-// has
-//      a name containing the string "prod".
-//   *
+// data`. * `metadata.` - any field in metadata.value. * `error` - Error
+// associated with the long-running operation. * `response.@type` - the
+// type of response. * `response.` - any field in response.value. You
+// can combine multiple expressions by enclosing each expression in
+// parentheses. By default, expressions are combined with AND logic, but
+// you can specify AND, OR, and NOT logic explicitly. Here are a few
+// examples: * `done:true` - The operation is complete. *
+// `metadata.database:prod` - The database the backup was taken from has
+// a name containing the string "prod". *
 // `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
-// CreateBackupMetadata) AND` \
-//     `(metadata.name:howl) AND` \
-//     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND`
-// \
-//     `(error:*)` - Returns operations where:
-//     * The operation's metadata type is CreateBackupMetadata.
-//     * The backup name contains the string "howl".
-//     * The operation started before 2018-03-28T14:50:00Z.
-//     * The operation resulted in an error.
+// CreateBackupMetadata) AND` \ `(metadata.name:howl) AND` \
+// `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND` \
+// `(error:*)` - Returns operations where: * The operation's metadata
+// type is CreateBackupMetadata. * The backup name contains the string
+// "howl". * The operation started before 2018-03-28T14:50:00Z. * The
+// operation resulted in an error.
 func (c *ProjectsInstancesBackupOperationsListCall) Filter(filter string) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of operations
-// to be returned in the response. If 0 or
-// less, defaults to the server's maximum allowed page size.
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
 func (c *ProjectsInstancesBackupOperationsListCall) PageSize(pageSize int64) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token
-// from a previous ListBackupOperationsResponse to the
-// same `parent` and with the same `filter`.
+// `page_token` should contain a next_page_token from a previous
+// ListBackupOperationsResponse to the same `parent` and with the same
+// `filter`.
 func (c *ProjectsInstancesBackupOperationsListCall) PageToken(pageToken string) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6984,7 +5833,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7046,7 +5895,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the backup long-running operations in\nthe given instance. A backup operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations. Operations returned are ordered by\n`operation.metadata.value.progress.start_time` in descending order starting\nfrom the most recently started operation.",
+	//   "description": "Lists the backup long-running operations in the given instance. A backup operation has a name of the form `projects//instances//backups//operations/`. The long-running operation metadata field type `metadata.type_url` describes the type of the metadata. Operations returned include those that have completed/failed/canceled within the last 7 days, and pending operations. Operations returned are ordered by `operation.metadata.value.progress.start_time` in descending order starting from the most recently started operation.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backupOperations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.backupOperations.list",
@@ -7055,23 +5904,23 @@ func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the list of returned backup operations.\n\nA filter expression consists of a field name, a\ncomparison operator, and a value for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the operation\nare eligible for filtering:\n\n  * `name` - The name of the long-running operation\n  * `done` - False if the operation is in progress, else true.\n  * `metadata.@type` - the type of metadata. For example, the type string\n     for CreateBackupMetadata is\n     `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`.\n  * `metadata.\u003cfield_name\u003e` - any field in metadata.value.\n  * `error` - Error associated with the long-running operation.\n  * `response.@type` - the type of response.\n  * `response.\u003cfield_name\u003e` - any field in response.value.\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic, but\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `done:true` - The operation is complete.\n  * `metadata.database:prod` - The database the backup was taken from has\n     a name containing the string \"prod\".\n  * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\\n    `(metadata.name:howl) AND` \\\n    `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\\n    `(error:*)` - Returns operations where:\n    * The operation's metadata type is CreateBackupMetadata.\n    * The backup name contains the string \"howl\".\n    * The operation started before 2018-03-28T14:50:00Z.\n    * The operation resulted in an error.",
+	//       "description": "An expression that filters the list of returned backup operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `metadata.database:prod` - The database the backup was taken from has a name containing the string \"prod\". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.name:howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The backup name contains the string \"howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "description": "Number of operations to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListBackupOperationsResponse to the\nsame `parent` and with the same `filter`.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListBackupOperationsResponse to the same `parent` and with the same `filter`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance of the backup operations. Values are of\nthe form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The instance of the backup operations. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7122,22 +5971,15 @@ type ProjectsInstancesBackupsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Starts creating a new Cloud Spanner Backup.
-// The returned backup long-running operation
-// will have a name of the
-// format
-// `projects/<project>/instances/<instance>/backups/<backup>/opera
-// tions/<operation_id>`
-// and can be used to track creation of the backup. The
-// metadata field type is
-// CreateBackupMetadata. The
-// response field type is
-// Backup, if successful. Cancelling the returned operation will stop
-// the
-// creation and delete the backup.
-// There can be only one pending backup creation per database. Backup
-// creation
-// of different databases can run concurrently.
+// Create: Starts creating a new Cloud Spanner Backup. The returned
+// backup long-running operation will have a name of the format
+// `projects//instances//backups//operations/` and can be used to track
+// creation of the backup. The metadata field type is
+// CreateBackupMetadata. The response field type is Backup, if
+// successful. Cancelling the returned operation will stop the creation
+// and delete the backup. There can be only one pending backup creation
+// per database. Backup creation of different databases can run
+// concurrently.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7146,10 +5988,8 @@ func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) 
 }
 
 // BackupId sets the optional parameter "backupId": Required. The id of
-// the backup to be created. The `backup_id` appended to
-// `parent` forms the full backup name of the
-// form
-// `projects/<project>/instances/<instance>/backups/<backup_id>`.
+// the backup to be created. The `backup_id` appended to `parent` forms
+// the full backup name of the form `projects//instances//backups/`.
 func (c *ProjectsInstancesBackupsCreateCall) BackupId(backupId string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("backupId", backupId)
 	return c
@@ -7182,7 +6022,7 @@ func (c *ProjectsInstancesBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7246,7 +6086,7 @@ func (c *ProjectsInstancesBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts creating a new Cloud Spanner Backup.\nThe returned backup long-running operation\nwill have a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e/operations/\u003coperation_id\u003e`\nand can be used to track creation of the backup. The\nmetadata field type is\nCreateBackupMetadata. The\nresponse field type is\nBackup, if successful. Cancelling the returned operation will stop the\ncreation and delete the backup.\nThere can be only one pending backup creation per database. Backup creation\nof different databases can run concurrently.",
+	//   "description": "Starts creating a new Cloud Spanner Backup. The returned backup long-running operation will have a name of the format `projects//instances//backups//operations/` and can be used to track creation of the backup. The metadata field type is CreateBackupMetadata. The response field type is Backup, if successful. Cancelling the returned operation will stop the creation and delete the backup. There can be only one pending backup creation per database. Backup creation of different databases can run concurrently.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.create",
@@ -7255,12 +6095,12 @@ func (c *ProjectsInstancesBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "backupId": {
-	//       "description": "Required. The id of the backup to be created. The `backup_id` appended to\n`parent` forms the full backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup_id\u003e`.",
+	//       "description": "Required. The id of the backup to be created. The `backup_id` appended to `parent` forms the full backup name of the form `projects//instances//backups/`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the instance in which the backup will be\ncreated. This must be the same instance that contains the database the\nbackup will be created from. The backup will be stored in the\nlocation(s) specified in the instance configuration of this\ninstance. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The name of the instance in which the backup will be created. This must be the same instance that contains the database the backup will be created from. The backup will be stored in the location(s) specified in the instance configuration of this instance. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7326,7 +6166,7 @@ func (c *ProjectsInstancesBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7394,7 +6234,7 @@ func (c *ProjectsInstancesBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the backup to delete.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+	//       "description": "Required. Name of the backup to delete. Values are of the form `projects//instances//backups/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -7468,7 +6308,7 @@ func (c *ProjectsInstancesBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7539,7 +6379,7 @@ func (c *ProjectsInstancesBackupsGetCall) Do(opts ...googleapi.CallOption) (*Bac
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the backup.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/\u003cbackup\u003e`.",
+	//       "description": "Required. Name of the backup. Values are of the form `projects//instances//backups/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -7570,17 +6410,11 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a database or backup
+// resource. Returns an empty policy if a database or backup exists but
+// does not have a policy set. Authorization requires
+// `spanner.databases.getIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
-// Returns an empty policy if a database or backup exists but does not
-// have a
-// policy set.
-//
-// Authorization requires `spanner.databases.getIamPolicy` permission
-// on
-// resource.
-// For backups, authorization requires
-// `spanner.backups.getIamPolicy`
-// permission on resource.
 func (r *ProjectsInstancesBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7615,7 +6449,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7679,7 +6513,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
+	//   "description": "Gets the access control policy for a database or backup resource. Returns an empty policy if a database or backup exists but does not have a policy set. Authorization requires `spanner.databases.getIamPolicy` permission on resource. For backups, authorization requires `spanner.backups.getIamPolicy` permission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.getIamPolicy",
@@ -7688,7 +6522,7 @@ func (c *ProjectsInstancesBackupsGetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -7721,10 +6555,9 @@ type ProjectsInstancesBackupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists completed and pending backups.
-// Backups returned are ordered by `create_time` in descending
-// order,
-// starting from the most recent `create_time`.
+// List: Lists completed and pending backups. Backups returned are
+// ordered by `create_time` in descending order, starting from the most
+// recent `create_time`.
 func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
 	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7732,68 +6565,44 @@ func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstances
 }
 
 // Filter sets the optional parameter "filter": An expression that
-// filters the list of returned backups.
-//
-// A filter expression consists of a field name, a comparison operator,
-// and a
-// value for filtering.
-// The value must be a string, a number, or a boolean. The comparison
-// operator
-// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// filters the list of returned backups. A filter expression consists of
+// a field name, a comparison operator, and a value for filtering. The
+// value must be a string, a number, or a boolean. The comparison
+// operator must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
 // Colon `:` is the contains operator. Filter rules are not case
-// sensitive.
-//
-// The following fields in the Backup are eligible for filtering:
-//
-//   * `name`
-//   * `database`
-//   * `state`
-//   * `create_time` (and values are of the format
-// YYYY-MM-DDTHH:MM:SSZ)
-//   * `expire_time` (and values are of the format
-// YYYY-MM-DDTHH:MM:SSZ)
-//   * `size_bytes`
-//
-// You can combine multiple expressions by enclosing each expression
-// in
-// parentheses. By default, expressions are combined with AND logic,
-// but
-// you can specify AND, OR, and NOT logic explicitly.
-//
-// Here are a few examples:
-//
-//   * `name:Howl` - The backup's name contains the string "howl".
-//   * `database:prod`
-//          - The database's name contains the string "prod".
-//   * `state:CREATING` - The backup is pending creation.
-//   * `state:READY` - The backup is fully created and ready for use.
-//   * `(name:howl) AND (create_time < \"2018-03-28T14:50:00Z\")`
-//          - The backup name contains the string "howl" and
-// `create_time`
-//              of the backup is before 2018-03-28T14:50:00Z.
-//   * `expire_time < \"2018-03-28T14:50:00Z\"
-//          - The backup `expire_time` is before 2018-03-28T14:50:00Z.
-//   * `size_bytes > 10000000000` - The backup's size is greater than
-// 10GB
+// sensitive. The following fields in the Backup are eligible for
+// filtering: * `name` * `database` * `state` * `create_time` (and
+// values are of the format YYYY-MM-DDTHH:MM:SSZ) * `expire_time` (and
+// values are of the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` You can
+// combine multiple expressions by enclosing each expression in
+// parentheses. By default, expressions are combined with AND logic, but
+// you can specify AND, OR, and NOT logic explicitly. Here are a few
+// examples: * `name:Howl` - The backup's name contains the string
+// "howl". * `database:prod` - The database's name contains the string
+// "prod". * `state:CREATING` - The backup is pending creation. *
+// `state:READY` - The backup is fully created and ready for use. *
+// `(name:howl) AND (create_time < \"2018-03-28T14:50:00Z\")` - The
+// backup name contains the string "howl" and `create_time` of the
+// backup is before 2018-03-28T14:50:00Z. * `expire_time <
+// \"2018-03-28T14:50:00Z\" - The backup `expire_time` is before
+// 2018-03-28T14:50:00Z. * `size_bytes > 10000000000` - The backup's
+// size is greater than 10GB
 func (c *ProjectsInstancesBackupsListCall) Filter(filter string) *ProjectsInstancesBackupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of backups to
-// be returned in the response. If 0 or
-// less, defaults to the server's maximum allowed page size.
+// be returned in the response. If 0 or less, defaults to the server's
+// maximum allowed page size.
 func (c *ProjectsInstancesBackupsListCall) PageSize(pageSize int64) *ProjectsInstancesBackupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token from a
-// previous ListBackupsResponse to the same `parent` and with the
-// same
-// `filter`.
+// `page_token` should contain a next_page_token from a previous
+// ListBackupsResponse to the same `parent` and with the same `filter`.
 func (c *ProjectsInstancesBackupsListCall) PageToken(pageToken string) *ProjectsInstancesBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7836,7 +6645,7 @@ func (c *ProjectsInstancesBackupsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7898,7 +6707,7 @@ func (c *ProjectsInstancesBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists completed and pending backups.\nBackups returned are ordered by `create_time` in descending order,\nstarting from the most recent `create_time`.",
+	//   "description": "Lists completed and pending backups. Backups returned are ordered by `create_time` in descending order, starting from the most recent `create_time`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.backups.list",
@@ -7907,23 +6716,23 @@ func (c *ProjectsInstancesBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the list of returned backups.\n\nA filter expression consists of a field name, a comparison operator, and a\nvalue for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the Backup are eligible for filtering:\n\n  * `name`\n  * `database`\n  * `state`\n  * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ)\n  * `size_bytes`\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic, but\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `name:Howl` - The backup's name contains the string \"howl\".\n  * `database:prod`\n         - The database's name contains the string \"prod\".\n  * `state:CREATING` - The backup is pending creation.\n  * `state:READY` - The backup is fully created and ready for use.\n  * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")`\n         - The backup name contains the string \"howl\" and `create_time`\n             of the backup is before 2018-03-28T14:50:00Z.\n  * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"`\n         - The backup `expire_time` is before 2018-03-28T14:50:00Z.\n  * `size_bytes \u003e 10000000000` - The backup's size is greater than 10GB",
+	//       "description": "An expression that filters the list of returned backups. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the Backup are eligible for filtering: * `name` * `database` * `state` * `create_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `expire_time` (and values are of the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `name:Howl` - The backup's name contains the string \"howl\". * `database:prod` - The database's name contains the string \"prod\". * `state:CREATING` - The backup is pending creation. * `state:READY` - The backup is fully created and ready for use. * `(name:howl) AND (create_time \u003c \\\"2018-03-28T14:50:00Z\\\")` - The backup name contains the string \"howl\" and `create_time` of the backup is before 2018-03-28T14:50:00Z. * `expire_time \u003c \\\"2018-03-28T14:50:00Z\\\"` - The backup `expire_time` is before 2018-03-28T14:50:00Z. * `size_bytes \u003e 10000000000` - The backup's size is greater than 10GB",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of backups to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "description": "Number of backups to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListBackupsResponse to the same `parent` and with the same\n`filter`.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListBackupsResponse to the same `parent` and with the same `filter`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance to list backups from.  Values are of the\nform `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The instance to list backups from. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -7983,14 +6792,11 @@ func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A mask
-// specifying which fields (e.g. `expire_time`) in the
-// Backup resource should be updated. This mask is relative to the
-// Backup
-// resource, not to the request message. The field mask must always
-// be
-// specified; this prevents any future fields from being erased
-// accidentally
-// by clients that do not know about them.
+// specifying which fields (e.g. `expire_time`) in the Backup resource
+// should be updated. This mask is relative to the Backup resource, not
+// to the request message. The field mask must always be specified; this
+// prevents any future fields from being erased accidentally by clients
+// that do not know about them.
 func (c *ProjectsInstancesBackupsPatchCall) UpdateMask(updateMask string) *ProjectsInstancesBackupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8023,7 +6829,7 @@ func (c *ProjectsInstancesBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8096,14 +6902,14 @@ func (c *ProjectsInstancesBackupsPatchCall) Do(opts ...googleapi.CallOption) (*B
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only for the CreateBackup operation.\nRequired for the UpdateBackup operation.\n\nA globally unique identifier for the backup which cannot be\nchanged. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/backups/a-z*[a-z0-9]`\nThe final segment of the name must be between 2 and 60 characters\nin length.\n\nThe backup is stored in the location(s) specified in the instance\nconfiguration of the instance containing the backup, identified\nby the prefix of the backup name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Output only for the CreateBackup operation. Required for the UpdateBackup operation. A globally unique identifier for the backup which cannot be changed. Values are of the form `projects//instances//backups/a-z*[a-z0-9]` The final segment of the name must be between 2 and 60 characters in length. The backup is stored in the location(s) specified in the instance configuration of the instance containing the backup, identified by the prefix of the backup name of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A mask specifying which fields (e.g. `expire_time`) in the\nBackup resource should be updated. This mask is relative to the Backup\nresource, not to the request message. The field mask must always be\nspecified; this prevents any future fields from being erased accidentally\nby clients that do not know about them.",
+	//       "description": "Required. A mask specifying which fields (e.g. `expire_time`) in the Backup resource should be updated. This mask is relative to the Backup resource, not to the request message. The field mask must always be specified; this prevents any future fields from being erased accidentally by clients that do not know about them.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8136,14 +6942,10 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on a database or backup
+// resource. Replaces any existing policy. Authorization requires
+// `spanner.databases.setIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
-// Replaces any existing policy.
-//
-// Authorization requires `spanner.databases.setIamPolicy`
-// permission on resource.
-// For backups, authorization requires
-// `spanner.backups.setIamPolicy`
-// permission on resource.
 func (r *ProjectsInstancesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8178,7 +6980,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8242,7 +7044,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
+	//   "description": "Sets the access control policy on a database or backup resource. Replaces any existing policy. Authorization requires `spanner.databases.setIamPolicy` permission on resource. For backups, authorization requires `spanner.backups.setIamPolicy` permission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.setIamPolicy",
@@ -8251,7 +7053,7 @@ func (c *ProjectsInstancesBackupsSetIamPolicyCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for databases resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -8285,18 +7087,13 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified database or backup
-// resource.
-//
-// Attempting this RPC on a non-existent Cloud Spanner database
-// will
-// result in a NOT_FOUND error if the user has
-// `spanner.databases.list` permission on the containing Cloud
-// Spanner instance. Otherwise returns an empty set of
-// permissions.
-// Calling this method on a backup that does not exist will
-// result in a NOT_FOUND error if the user has
-// `spanner.backups.list` permission on the containing instance.
+// specified database or backup resource. Attempting this RPC on a
+// non-existent Cloud Spanner database will result in a NOT_FOUND error
+// if the user has `spanner.databases.list` permission on the containing
+// Cloud Spanner instance. Otherwise returns an empty set of
+// permissions. Calling this method on a backup that does not exist will
+// result in a NOT_FOUND error if the user has `spanner.backups.list`
+// permission on the containing instance.
 func (r *ProjectsInstancesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8331,7 +7128,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8395,7 +7192,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
+	//   "description": "Returns permissions that the caller has on the specified database or backup resource. Attempting this RPC on a non-existent Cloud Spanner database will result in a NOT_FOUND error if the user has `spanner.databases.list` permission on the containing Cloud Spanner instance. Otherwise returns an empty set of permissions. Calling this method on a backup that does not exist will result in a NOT_FOUND error if the user has `spanner.backups.list` permission on the containing instance.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.testIamPermissions",
@@ -8404,7 +7201,7 @@ func (c *ProjectsInstancesBackupsTestIamPermissionsCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -8437,23 +7234,15 @@ type ProjectsInstancesBackupsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsInstancesBackupsOperationsService) Cancel(name string) *ProjectsInstancesBackupsOperationsCancelCall {
 	c := &ProjectsInstancesBackupsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8487,7 +7276,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8546,7 +7335,7 @@ func (c *ProjectsInstancesBackupsOperationsCancelCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.backups.operations.cancel",
@@ -8585,12 +7374,9 @@ type ProjectsInstancesBackupsOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsInstancesBackupsOperationsService) Delete(name string) *ProjectsInstancesBackupsOperationsDeleteCall {
 	c := &ProjectsInstancesBackupsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8624,7 +7410,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8683,7 +7469,7 @@ func (c *ProjectsInstancesBackupsOperationsDeleteCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.backups.operations.delete",
@@ -8722,11 +7508,9 @@ type ProjectsInstancesBackupsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsInstancesBackupsOperationsService) Get(name string) *ProjectsInstancesBackupsOperationsGetCall {
 	c := &ProjectsInstancesBackupsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8770,7 +7554,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8832,7 +7616,7 @@ func (c *ProjectsInstancesBackupsOperationsGetCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.backups.operations.get",
@@ -8872,22 +7656,15 @@ type ProjectsInstancesBackupsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsInstancesBackupsOperationsService) List(name string) *ProjectsInstancesBackupsOperationsListCall {
 	c := &ProjectsInstancesBackupsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8952,7 +7729,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesBackupsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9014,7 +7791,7 @@ func (c *ProjectsInstancesBackupsOperationsListCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/backups/{backupsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.backups.operations.list",
@@ -9090,18 +7867,12 @@ type ProjectsInstancesDatabaseOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists database longrunning-operations.
-// A database operation has a name of the
-// form
-// `projects/<project>/instances/<instance>/databases/<database>/ope
-// rations/<operation>`.
-// The long-running operation
-// metadata field type
-// `metadata.type_url` describes the type of the metadata. Operations
-// returned
-// include those that have completed/failed/canceled within the last 7
-// days,
-// and pending operations.
+// List: Lists database longrunning-operations. A database operation has
+// a name of the form `projects//instances//databases//operations/`. The
+// long-running operation metadata field type `metadata.type_url`
+// describes the type of the metadata. Operations returned include those
+// that have completed/failed/canceled within the last 7 days, and
+// pending operations.
 func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *ProjectsInstancesDatabaseOperationsListCall {
 	c := &ProjectsInstancesDatabaseOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9109,74 +7880,51 @@ func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": An expression that
-// filters the list of returned operations.
-//
-// A filter expression consists of a field name, a
-// comparison operator, and a value for filtering.
+// filters the list of returned operations. A filter expression consists
+// of a field name, a comparison operator, and a value for filtering.
 // The value must be a string, a number, or a boolean. The comparison
-// operator
-// must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// operator must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
 // Colon `:` is the contains operator. Filter rules are not case
-// sensitive.
-//
-// The following fields in the Operation
-// are eligible for filtering:
-//
-//   * `name` - The name of the long-running operation
-//   * `done` - False if the operation is in progress, else true.
-//   * `metadata.@type` - the type of metadata. For example, the type
-// string
-//      for RestoreDatabaseMetadata is
-//
+// sensitive. The following fields in the Operation are eligible for
+// filtering: * `name` - The name of the long-running operation * `done`
+// - False if the operation is in progress, else true. *
+// `metadata.@type` - the type of metadata. For example, the type string
+// for RestoreDatabaseMetadata is
 // `type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseM
-// etadata`.
-//   * `metadata.<field_name>` - any field in metadata.value.
-//   * `error` - Error associated with the long-running operation.
-//   * `response.@type` - the type of response.
-//   * `response.<field_name>` - any field in response.value.
-//
-// You can combine multiple expressions by enclosing each expression
-// in
+// etadata`. * `metadata.` - any field in metadata.value. * `error` -
+// Error associated with the long-running operation. * `response.@type`
+// - the type of response. * `response.` - any field in response.value.
+// You can combine multiple expressions by enclosing each expression in
 // parentheses. By default, expressions are combined with AND logic.
-// However,
-// you can specify AND, OR, and NOT logic explicitly.
-//
-// Here are a few examples:
-//
-//   * `done:true` - The operation is complete.
-//   *
+// However, you can specify AND, OR, and NOT logic explicitly. Here are
+// a few examples: * `done:true` - The operation is complete. *
 // `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
-// RestoreDatabaseMetadata) AND` \
-//     `(metadata.source_type:BACKUP) AND` \
-//     `(metadata.backup_info.backup:backup_howl) AND` \
-//     `(metadata.name:restored_howl) AND` \
-//     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND`
-// \
-//     `(error:*)` - Return operations where:
-//     * The operation's metadata type is RestoreDatabaseMetadata.
-//     * The database is restored from a backup.
-//     * The backup name contains "backup_howl".
-//     * The restored database's name contains "restored_howl".
-//     * The operation started before 2018-03-28T14:50:00Z.
-//     * The operation resulted in an error.
+// RestoreDatabaseMetadata) AND` \ `(metadata.source_type:BACKUP) AND` \
+// `(metadata.backup_info.backup:backup_howl) AND` \
+// `(metadata.name:restored_howl) AND` \ `(metadata.progress.start_time
+// < \"2018-03-28T14:50:00Z\") AND` \ `(error:*)` - Return operations
+// where: * The operation's metadata type is RestoreDatabaseMetadata. *
+// The database is restored from a backup. * The backup name contains
+// "backup_howl". * The restored database's name contains
+// "restored_howl". * The operation started before 2018-03-28T14:50:00Z.
+// * The operation resulted in an error.
 func (c *ProjectsInstancesDatabaseOperationsListCall) Filter(filter string) *ProjectsInstancesDatabaseOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of operations
-// to be returned in the response. If 0 or
-// less, defaults to the server's maximum allowed page size.
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
 func (c *ProjectsInstancesDatabaseOperationsListCall) PageSize(pageSize int64) *ProjectsInstancesDatabaseOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token
-// from a previous ListDatabaseOperationsResponse to the
-// same `parent` and with the same `filter`.
+// `page_token` should contain a next_page_token from a previous
+// ListDatabaseOperationsResponse to the same `parent` and with the same
+// `filter`.
 func (c *ProjectsInstancesDatabaseOperationsListCall) PageToken(pageToken string) *ProjectsInstancesDatabaseOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9219,7 +7967,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabaseOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9281,7 +8029,7 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists database longrunning-operations.\nA database operation has a name of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation\u003e`.\nThe long-running operation\nmetadata field type\n`metadata.type_url` describes the type of the metadata. Operations returned\ninclude those that have completed/failed/canceled within the last 7 days,\nand pending operations.",
+	//   "description": "Lists database longrunning-operations. A database operation has a name of the form `projects//instances//databases//operations/`. The long-running operation metadata field type `metadata.type_url` describes the type of the metadata. Operations returned include those that have completed/failed/canceled within the last 7 days, and pending operations.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databaseOperations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databaseOperations.list",
@@ -9290,23 +8038,23 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the list of returned operations.\n\nA filter expression consists of a field name, a\ncomparison operator, and a value for filtering.\nThe value must be a string, a number, or a boolean. The comparison operator\nmust be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`.\nColon `:` is the contains operator. Filter rules are not case sensitive.\n\nThe following fields in the Operation\nare eligible for filtering:\n\n  * `name` - The name of the long-running operation\n  * `done` - False if the operation is in progress, else true.\n  * `metadata.@type` - the type of metadata. For example, the type string\n     for RestoreDatabaseMetadata is\n     `type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata`.\n  * `metadata.\u003cfield_name\u003e` - any field in metadata.value.\n  * `error` - Error associated with the long-running operation.\n  * `response.@type` - the type of response.\n  * `response.\u003cfield_name\u003e` - any field in response.value.\n\nYou can combine multiple expressions by enclosing each expression in\nparentheses. By default, expressions are combined with AND logic. However,\nyou can specify AND, OR, and NOT logic explicitly.\n\nHere are a few examples:\n\n  * `done:true` - The operation is complete.\n  * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata) AND` \\\n    `(metadata.source_type:BACKUP) AND` \\\n    `(metadata.backup_info.backup:backup_howl) AND` \\\n    `(metadata.name:restored_howl) AND` \\\n    `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\\n    `(error:*)` - Return operations where:\n    * The operation's metadata type is RestoreDatabaseMetadata.\n    * The database is restored from a backup.\n    * The backup name contains \"backup_howl\".\n    * The restored database's name contains \"restored_howl\".\n    * The operation started before 2018-03-28T14:50:00Z.\n    * The operation resulted in an error.",
+	//       "description": "An expression that filters the list of returned operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the Operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for RestoreDatabaseMetadata is `type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata`. * `metadata.` - any field in metadata.value. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic. However, you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.RestoreDatabaseMetadata) AND` \\ `(metadata.source_type:BACKUP) AND` \\ `(metadata.backup_info.backup:backup_howl) AND` \\ `(metadata.name:restored_howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Return operations where: * The operation's metadata type is RestoreDatabaseMetadata. * The database is restored from a backup. * The backup name contains \"backup_howl\". * The restored database's name contains \"restored_howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of operations to be returned in the response. If 0 or\nless, defaults to the server's maximum allowed page size.",
+	//       "description": "Number of operations to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token\nfrom a previous ListDatabaseOperationsResponse to the\nsame `parent` and with the same `filter`.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListDatabaseOperationsResponse to the same `parent` and with the same `filter`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance of the database operations.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The instance of the database operations. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -9358,15 +8106,10 @@ type ProjectsInstancesDatabasesCreateCall struct {
 }
 
 // Create: Creates a new Cloud Spanner database and starts to prepare it
-// for serving.
-// The returned long-running operation will
-// have a name of the format `<database_name>/operations/<operation_id>`
-// and
-// can be used to track preparation of the database. The
-// metadata field type is
-// CreateDatabaseMetadata. The
-// response field type is
-// Database, if successful.
+// for serving. The returned long-running operation will have a name of
+// the format `/operations/` and can be used to track preparation of the
+// database. The metadata field type is CreateDatabaseMetadata. The
+// response field type is Database, if successful.
 func (r *ProjectsInstancesDatabasesService) Create(parent string, createdatabaserequest *CreateDatabaseRequest) *ProjectsInstancesDatabasesCreateCall {
 	c := &ProjectsInstancesDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9401,7 +8144,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9465,7 +8208,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Cloud Spanner database and starts to prepare it for serving.\nThe returned long-running operation will\nhave a name of the format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and\ncan be used to track preparation of the database. The\nmetadata field type is\nCreateDatabaseMetadata. The\nresponse field type is\nDatabase, if successful.",
+	//   "description": "Creates a new Cloud Spanner database and starts to prepare it for serving. The returned long-running operation will have a name of the format `/operations/` and can be used to track preparation of the database. The metadata field type is CreateDatabaseMetadata. The response field type is Database, if successful.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.create",
@@ -9474,7 +8217,7 @@ func (c *ProjectsInstancesDatabasesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the instance that will serve the new database.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The name of the instance that will serve the new database. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -9506,9 +8249,8 @@ type ProjectsInstancesDatabasesDropDatabaseCall struct {
 	header_    http.Header
 }
 
-// DropDatabase: Drops (aka deletes) a Cloud Spanner database.
-// Completed backups for the database will be retained according to
-// their
+// DropDatabase: Drops (aka deletes) a Cloud Spanner database. Completed
+// backups for the database will be retained according to their
 // `expire_time`.
 func (r *ProjectsInstancesDatabasesService) DropDatabase(database string) *ProjectsInstancesDatabasesDropDatabaseCall {
 	c := &ProjectsInstancesDatabasesDropDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9543,7 +8285,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesDropDatabaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9602,7 +8344,7 @@ func (c *ProjectsInstancesDatabasesDropDatabaseCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Drops (aka deletes) a Cloud Spanner database.\nCompleted backups for the database will be retained according to their\n`expire_time`.",
+	//   "description": "Drops (aka deletes) a Cloud Spanner database. Completed backups for the database will be retained according to their `expire_time`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.databases.dropDatabase",
@@ -9685,7 +8427,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9756,7 +8498,7 @@ func (c *ProjectsInstancesDatabasesGetCall) Do(opts ...googleapi.CallOption) (*D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the requested database. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`.",
+	//       "description": "Required. The name of the requested database. Values are of the form `projects//instances//databases/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -9787,10 +8529,8 @@ type ProjectsInstancesDatabasesGetDdlCall struct {
 }
 
 // GetDdl: Returns the schema of a Cloud Spanner database as a list of
-// formatted
-// DDL statements. This method does not show pending schema updates,
-// those may
-// be queried using the Operations API.
+// formatted DDL statements. This method does not show pending schema
+// updates, those may be queried using the Operations API.
 func (r *ProjectsInstancesDatabasesService) GetDdl(database string) *ProjectsInstancesDatabasesGetDdlCall {
 	c := &ProjectsInstancesDatabasesGetDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -9834,7 +8574,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9896,7 +8636,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the schema of a Cloud Spanner database as a list of formatted\nDDL statements. This method does not show pending schema updates, those may\nbe queried using the Operations API.",
+	//   "description": "Returns the schema of a Cloud Spanner database as a list of formatted DDL statements. This method does not show pending schema updates, those may be queried using the Operations API.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databases.getDdl",
@@ -9905,7 +8645,7 @@ func (c *ProjectsInstancesDatabasesGetDdlCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "database": {
-	//       "description": "Required. The database whose schema we wish to get.\nValues are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e`",
+	//       "description": "Required. The database whose schema we wish to get. Values are of the form `projects//instances//databases/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -9936,17 +8676,11 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy for a database or backup
+// resource. Returns an empty policy if a database or backup exists but
+// does not have a policy set. Authorization requires
+// `spanner.databases.getIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
-// Returns an empty policy if a database or backup exists but does not
-// have a
-// policy set.
-//
-// Authorization requires `spanner.databases.getIamPolicy` permission
-// on
-// resource.
-// For backups, authorization requires
-// `spanner.backups.getIamPolicy`
-// permission on resource.
 func (r *ProjectsInstancesDatabasesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesGetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9981,7 +8715,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10045,7 +8779,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a database or backup resource.\nReturns an empty policy if a database or backup exists but does not have a\npolicy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.\nFor backups, authorization requires `spanner.backups.getIamPolicy`\npermission on resource.",
+	//   "description": "Gets the access control policy for a database or backup resource. Returns an empty policy if a database or backup exists but does not have a policy set. Authorization requires `spanner.databases.getIamPolicy` permission on resource. For backups, authorization requires `spanner.backups.getIamPolicy` permission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.getIamPolicy",
@@ -10054,7 +8788,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being retrieved. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -10095,17 +8829,16 @@ func (r *ProjectsInstancesDatabasesService) List(parent string) *ProjectsInstanc
 }
 
 // PageSize sets the optional parameter "pageSize": Number of databases
-// to be returned in the response. If 0 or less,
-// defaults to the server's maximum allowed page size.
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
 func (c *ProjectsInstancesDatabasesListCall) PageSize(pageSize int64) *ProjectsInstancesDatabasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token from a
-// previous ListDatabasesResponse.
+// `page_token` should contain a next_page_token from a previous
+// ListDatabasesResponse.
 func (c *ProjectsInstancesDatabasesListCall) PageToken(pageToken string) *ProjectsInstancesDatabasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10148,7 +8881,7 @@ func (c *ProjectsInstancesDatabasesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10219,18 +8952,18 @@ func (c *ProjectsInstancesDatabasesListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Number of databases to be returned in the response. If 0 or less,\ndefaults to the server's maximum allowed page size.",
+	//       "description": "Number of databases to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token from a\nprevious ListDatabasesResponse.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListDatabasesResponse.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance whose databases should be listed.\nValues are of the form `projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The instance whose databases should be listed. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -10282,31 +9015,18 @@ type ProjectsInstancesDatabasesRestoreCall struct {
 }
 
 // Restore: Create a new database by restoring from a completed backup.
-// The new
-// database must be in the same project and in an instance with the
-// same
-// instance configuration as the instance containing
-// the backup. The returned database long-running
-// operation has a name of the
-// format
-// `projects/<project>/instances/<instance>/databases/<database>/o
-// perations/<operation_id>`,
-// and can be used to track the progress of the operation, and to cancel
-// it.
-// The metadata field type is
-// RestoreDatabaseMetadata.
-// The response type
-// is Database, if
-// successful. Cancelling the returned operation will stop the restore
-// and
-// delete the database.
-// There can be only one database being restored into an instance at a
-// time.
-// Once the restore operation completes, a new restore operation can
-// be
-// initiated, without waiting for the optimize operation associated with
-// the
-// first restore to complete.
+// The new database must be in the same project and in an instance with
+// the same instance configuration as the instance containing the
+// backup. The returned database long-running operation has a name of
+// the format `projects//instances//databases//operations/`, and can be
+// used to track the progress of the operation, and to cancel it. The
+// metadata field type is RestoreDatabaseMetadata. The response type is
+// Database, if successful. Cancelling the returned operation will stop
+// the restore and delete the database. There can be only one database
+// being restored into an instance at a time. Once the restore operation
+// completes, a new restore operation can be initiated, without waiting
+// for the optimize operation associated with the first restore to
+// complete.
 func (r *ProjectsInstancesDatabasesService) Restore(parent string, restoredatabaserequest *RestoreDatabaseRequest) *ProjectsInstancesDatabasesRestoreCall {
 	c := &ProjectsInstancesDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10341,7 +9061,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10405,7 +9125,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new database by restoring from a completed backup. The new\ndatabase must be in the same project and in an instance with the same\ninstance configuration as the instance containing\nthe backup. The returned database long-running\noperation has a name of the format\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/databases/\u003cdatabase\u003e/operations/\u003coperation_id\u003e`,\nand can be used to track the progress of the operation, and to cancel it.\nThe metadata field type is\nRestoreDatabaseMetadata.\nThe response type\nis Database, if\nsuccessful. Cancelling the returned operation will stop the restore and\ndelete the database.\nThere can be only one database being restored into an instance at a time.\nOnce the restore operation completes, a new restore operation can be\ninitiated, without waiting for the optimize operation associated with the\nfirst restore to complete.",
+	//   "description": "Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases:restore",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.restore",
@@ -10414,7 +9134,7 @@ func (c *ProjectsInstancesDatabasesRestoreCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the instance in which to create the\nrestored database. This instance must be in the same project and\nhave the same instance configuration as the instance containing\nthe source backup. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e`.",
+	//       "description": "Required. The name of the instance in which to create the restored database. This instance must be in the same project and have the same instance configuration as the instance containing the source backup. Values are of the form `projects//instances/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -10448,14 +9168,10 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on a database or backup
+// resource. Replaces any existing policy. Authorization requires
+// `spanner.databases.setIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
-// Replaces any existing policy.
-//
-// Authorization requires `spanner.databases.setIamPolicy`
-// permission on resource.
-// For backups, authorization requires
-// `spanner.backups.setIamPolicy`
-// permission on resource.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10490,7 +9206,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10554,7 +9270,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a database or backup resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.\nFor backups, authorization requires `spanner.backups.setIamPolicy`\npermission on resource.",
+	//   "description": "Sets the access control policy on a database or backup resource. Replaces any existing policy. Authorization requires `spanner.databases.setIamPolicy` permission on resource. For backups, authorization requires `spanner.backups.setIamPolicy` permission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.setIamPolicy",
@@ -10563,7 +9279,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for databases resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which the policy is being set. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for databases resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -10597,18 +9313,13 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that the caller has on the
-// specified database or backup
-// resource.
-//
-// Attempting this RPC on a non-existent Cloud Spanner database
-// will
-// result in a NOT_FOUND error if the user has
-// `spanner.databases.list` permission on the containing Cloud
-// Spanner instance. Otherwise returns an empty set of
-// permissions.
-// Calling this method on a backup that does not exist will
-// result in a NOT_FOUND error if the user has
-// `spanner.backups.list` permission on the containing instance.
+// specified database or backup resource. Attempting this RPC on a
+// non-existent Cloud Spanner database will result in a NOT_FOUND error
+// if the user has `spanner.databases.list` permission on the containing
+// Cloud Spanner instance. Otherwise returns an empty set of
+// permissions. Calling this method on a backup that does not exist will
+// result in a NOT_FOUND error if the user has `spanner.backups.list`
+// permission on the containing instance.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10643,7 +9354,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10707,7 +9418,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified database or backup\nresource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.\nCalling this method on a backup that does not exist will\nresult in a NOT_FOUND error if the user has\n`spanner.backups.list` permission on the containing instance.",
+	//   "description": "Returns permissions that the caller has on the specified database or backup resource. Attempting this RPC on a non-existent Cloud Spanner database will result in a NOT_FOUND error if the user has `spanner.databases.list` permission on the containing Cloud Spanner instance. Otherwise returns an empty set of permissions. Calling this method on a backup that does not exist will result in a NOT_FOUND error if the user has `spanner.backups.list` permission on the containing instance.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.testIamPermissions",
@@ -10716,7 +9427,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e` for instance resources and `projects/\u003cproject ID\u003e/instances/\u003cinstance ID\u003e/databases/\u003cdatabase ID\u003e` for database resources.",
+	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -10749,16 +9460,12 @@ type ProjectsInstancesDatabasesUpdateDdlCall struct {
 	header_                  http.Header
 }
 
-// UpdateDdl: Updates the schema of a Cloud Spanner database
-// by
+// UpdateDdl: Updates the schema of a Cloud Spanner database by
 // creating/altering/dropping tables, columns, indexes, etc. The
-// returned
-// long-running operation will have a name of
-// the format `<database_name>/operations/<operation_id>` and can be
-// used to
-// track execution of the schema change(s). The
-// metadata field type is
-// UpdateDatabaseDdlMetadata.  The operation has no response.
+// returned long-running operation will have a name of the format
+// `/operations/` and can be used to track execution of the schema
+// change(s). The metadata field type is UpdateDatabaseDdlMetadata. The
+// operation has no response.
 func (r *ProjectsInstancesDatabasesService) UpdateDdl(database string, updatedatabaseddlrequest *UpdateDatabaseDdlRequest) *ProjectsInstancesDatabasesUpdateDdlCall {
 	c := &ProjectsInstancesDatabasesUpdateDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -10793,7 +9500,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesUpdateDdlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10857,7 +9564,7 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the schema of a Cloud Spanner database by\ncreating/altering/dropping tables, columns, indexes, etc. The returned\nlong-running operation will have a name of\nthe format `\u003cdatabase_name\u003e/operations/\u003coperation_id\u003e` and can be used to\ntrack execution of the schema change(s). The\nmetadata field type is\nUpdateDatabaseDdlMetadata.  The operation has no response.",
+	//   "description": "Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema change(s). The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/ddl",
 	//   "httpMethod": "PATCH",
 	//   "id": "spanner.projects.instances.databases.updateDdl",
@@ -10899,23 +9606,15 @@ type ProjectsInstancesDatabasesOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsInstancesDatabasesOperationsService) Cancel(name string) *ProjectsInstancesDatabasesOperationsCancelCall {
 	c := &ProjectsInstancesDatabasesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10949,7 +9648,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11008,7 +9707,7 @@ func (c *ProjectsInstancesDatabasesOperationsCancelCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.operations.cancel",
@@ -11047,12 +9746,9 @@ type ProjectsInstancesDatabasesOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsInstancesDatabasesOperationsService) Delete(name string) *ProjectsInstancesDatabasesOperationsDeleteCall {
 	c := &ProjectsInstancesDatabasesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11086,7 +9782,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11145,7 +9841,7 @@ func (c *ProjectsInstancesDatabasesOperationsDeleteCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.databases.operations.delete",
@@ -11184,11 +9880,9 @@ type ProjectsInstancesDatabasesOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsInstancesDatabasesOperationsService) Get(name string) *ProjectsInstancesDatabasesOperationsGetCall {
 	c := &ProjectsInstancesDatabasesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11232,7 +9926,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11294,7 +9988,7 @@ func (c *ProjectsInstancesDatabasesOperationsGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databases.operations.get",
@@ -11334,22 +10028,15 @@ type ProjectsInstancesDatabasesOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsInstancesDatabasesOperationsService) List(name string) *ProjectsInstancesDatabasesOperationsListCall {
 	c := &ProjectsInstancesDatabasesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11414,7 +10101,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11476,7 +10163,7 @@ func (c *ProjectsInstancesDatabasesOperationsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databases.operations.list",
@@ -11552,12 +10239,9 @@ type ProjectsInstancesDatabasesSessionsBatchCreateCall struct {
 	header_                    http.Header
 }
 
-// BatchCreate: Creates multiple new sessions.
-//
-// This API can be used to initialize a session cache on the
-// clients.
-// See https://goo.gl/TgSFN2 for best practices on session cache
-// management.
+// BatchCreate: Creates multiple new sessions. This API can be used to
+// initialize a session cache on the clients. See https://goo.gl/TgSFN2
+// for best practices on session cache management.
 func (r *ProjectsInstancesDatabasesSessionsService) BatchCreate(database string, batchcreatesessionsrequest *BatchCreateSessionsRequest) *ProjectsInstancesDatabasesSessionsBatchCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -11592,7 +10276,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Header() http.Header
 
 func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11656,7 +10340,7 @@ func (c *ProjectsInstancesDatabasesSessionsBatchCreateCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates multiple new sessions.\n\nThis API can be used to initialize a session cache on the clients.\nSee https://goo.gl/TgSFN2 for best practices on session cache management.",
+	//   "description": "Creates multiple new sessions. This API can be used to initialize a session cache on the clients. See https://goo.gl/TgSFN2 for best practices on session cache management.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions:batchCreate",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.batchCreate",
@@ -11699,9 +10383,7 @@ type ProjectsInstancesDatabasesSessionsBeginTransactionCall struct {
 }
 
 // BeginTransaction: Begins a new transaction. This step can often be
-// skipped:
-// Read, ExecuteSql and
-// Commit can begin a new transaction as a
+// skipped: Read, ExecuteSql and Commit can begin a new transaction as a
 // side-effect.
 func (r *ProjectsInstancesDatabasesSessionsService) BeginTransaction(session string, begintransactionrequest *BeginTransactionRequest) *ProjectsInstancesDatabasesSessionsBeginTransactionCall {
 	c := &ProjectsInstancesDatabasesSessionsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -11737,7 +10419,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Header() http.H
 
 func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11801,7 +10483,7 @@ func (c *ProjectsInstancesDatabasesSessionsBeginTransactionCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Begins a new transaction. This step can often be skipped:\nRead, ExecuteSql and\nCommit can begin a new transaction as a\nside-effect.",
+	//   "description": "Begins a new transaction. This step can often be skipped: Read, ExecuteSql and Commit can begin a new transaction as a side-effect.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:beginTransaction",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.beginTransaction",
@@ -11844,27 +10526,17 @@ type ProjectsInstancesDatabasesSessionsCommitCall struct {
 }
 
 // Commit: Commits a transaction. The request includes the mutations to
-// be
-// applied to rows in the database.
-//
-// `Commit` might return an `ABORTED` error. This can occur at any
-// time;
-// commonly, the cause is conflicts with concurrent
-// transactions. However, it can also happen for a variety of
-// other
-// reasons. If `Commit` returns `ABORTED`, the caller should
-// re-attempt
-// the transaction from the beginning, re-using the same session.
-//
-// On very rare occasions, `Commit` might return `UNKNOWN`. This can
-// happen,
-// for example, if the client job experiences a 1+ hour networking
-// failure.
-// At that point, Cloud Spanner has lost track of the transaction
-// outcome and
-// we recommend that you perform another read from the database to see
-// the
-// state of things as they are now.
+// be applied to rows in the database. `Commit` might return an
+// `ABORTED` error. This can occur at any time; commonly, the cause is
+// conflicts with concurrent transactions. However, it can also happen
+// for a variety of other reasons. If `Commit` returns `ABORTED`, the
+// caller should re-attempt the transaction from the beginning, re-using
+// the same session. On very rare occasions, `Commit` might return
+// `UNKNOWN`. This can happen, for example, if the client job
+// experiences a 1+ hour networking failure. At that point, Cloud
+// Spanner has lost track of the transaction outcome and we recommend
+// that you perform another read from the database to see the state of
+// things as they are now.
 func (r *ProjectsInstancesDatabasesSessionsService) Commit(session string, commitrequest *CommitRequest) *ProjectsInstancesDatabasesSessionsCommitCall {
 	c := &ProjectsInstancesDatabasesSessionsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -11899,7 +10571,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11963,7 +10635,7 @@ func (c *ProjectsInstancesDatabasesSessionsCommitCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Commits a transaction. The request includes the mutations to be\napplied to rows in the database.\n\n`Commit` might return an `ABORTED` error. This can occur at any time;\ncommonly, the cause is conflicts with concurrent\ntransactions. However, it can also happen for a variety of other\nreasons. If `Commit` returns `ABORTED`, the caller should re-attempt\nthe transaction from the beginning, re-using the same session.\n\nOn very rare occasions, `Commit` might return `UNKNOWN`. This can happen,\nfor example, if the client job experiences a 1+ hour networking failure.\nAt that point, Cloud Spanner has lost track of the transaction outcome and\nwe recommend that you perform another read from the database to see the\nstate of things as they are now.",
+	//   "description": "Commits a transaction. The request includes the mutations to be applied to rows in the database. `Commit` might return an `ABORTED` error. This can occur at any time; commonly, the cause is conflicts with concurrent transactions. However, it can also happen for a variety of other reasons. If `Commit` returns `ABORTED`, the caller should re-attempt the transaction from the beginning, re-using the same session. On very rare occasions, `Commit` might return `UNKNOWN`. This can happen, for example, if the client job experiences a 1+ hour networking failure. At that point, Cloud Spanner has lost track of the transaction outcome and we recommend that you perform another read from the database to see the state of things as they are now.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:commit",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.commit",
@@ -12005,36 +10677,19 @@ type ProjectsInstancesDatabasesSessionsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Creates a new session. A session can be used to
-// perform
+// Create: Creates a new session. A session can be used to perform
 // transactions that read and/or modify data in a Cloud Spanner
-// database.
-// Sessions are meant to be reused for many
-// consecutive
-// transactions.
-//
-// Sessions can only execute one transaction at a time. To
-// execute
-// multiple concurrent read-write/write-only transactions,
-// create
-// multiple sessions. Note that standalone reads and queries use
-// a
-// transaction internally, and count toward the one
-// transaction
-// limit.
-//
+// database. Sessions are meant to be reused for many consecutive
+// transactions. Sessions can only execute one transaction at a time. To
+// execute multiple concurrent read-write/write-only transactions,
+// create multiple sessions. Note that standalone reads and queries use
+// a transaction internally, and count toward the one transaction limit.
 // Active sessions use additional server resources, so it is a good idea
-// to
-// delete idle and unneeded sessions.
-// Aside from explicit deletes, Cloud Spanner may delete sessions for
-// which no
-// operations are sent for more than an hour. If a session is
-// deleted,
-// requests to it return `NOT_FOUND`.
-//
-// Idle sessions can be kept alive by sending a trivial SQL
-// query
-// periodically, e.g., "SELECT 1".
+// to delete idle and unneeded sessions. Aside from explicit deletes,
+// Cloud Spanner may delete sessions for which no operations are sent
+// for more than an hour. If a session is deleted, requests to it return
+// `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL
+// query periodically, e.g., "SELECT 1".
 func (r *ProjectsInstancesDatabasesSessionsService) Create(database string, createsessionrequest *CreateSessionRequest) *ProjectsInstancesDatabasesSessionsCreateCall {
 	c := &ProjectsInstancesDatabasesSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -12069,7 +10724,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12133,7 +10788,7 @@ func (c *ProjectsInstancesDatabasesSessionsCreateCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new session. A session can be used to perform\ntransactions that read and/or modify data in a Cloud Spanner database.\nSessions are meant to be reused for many consecutive\ntransactions.\n\nSessions can only execute one transaction at a time. To execute\nmultiple concurrent read-write/write-only transactions, create\nmultiple sessions. Note that standalone reads and queries use a\ntransaction internally, and count toward the one transaction\nlimit.\n\nActive sessions use additional server resources, so it is a good idea to\ndelete idle and unneeded sessions.\nAside from explicit deletes, Cloud Spanner may delete sessions for which no\noperations are sent for more than an hour. If a session is deleted,\nrequests to it return `NOT_FOUND`.\n\nIdle sessions can be kept alive by sending a trivial SQL query\nperiodically, e.g., `\"SELECT 1\"`.",
+	//   "description": "Creates a new session. A session can be used to perform transactions that read and/or modify data in a Cloud Spanner database. Sessions are meant to be reused for many consecutive transactions. Sessions can only execute one transaction at a time. To execute multiple concurrent read-write/write-only transactions, create multiple sessions. Note that standalone reads and queries use a transaction internally, and count toward the one transaction limit. Active sessions use additional server resources, so it is a good idea to delete idle and unneeded sessions. Aside from explicit deletes, Cloud Spanner may delete sessions for which no operations are sent for more than an hour. If a session is deleted, requests to it return `NOT_FOUND`. Idle sessions can be kept alive by sending a trivial SQL query periodically, e.g., `\"SELECT 1\"`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.create",
@@ -12175,10 +10830,8 @@ type ProjectsInstancesDatabasesSessionsDeleteCall struct {
 }
 
 // Delete: Ends a session, releasing server resources associated with
-// it. This will
-// asynchronously trigger cancellation of any operations that are
-// running with
-// this session.
+// it. This will asynchronously trigger cancellation of any operations
+// that are running with this session.
 func (r *ProjectsInstancesDatabasesSessionsService) Delete(name string) *ProjectsInstancesDatabasesSessionsDeleteCall {
 	c := &ProjectsInstancesDatabasesSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12212,7 +10865,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12271,7 +10924,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Ends a session, releasing server resources associated with it. This will\nasynchronously trigger cancellation of any operations that are running with\nthis session.",
+	//   "description": "Ends a session, releasing server resources associated with it. This will asynchronously trigger cancellation of any operations that are running with this session.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.databases.sessions.delete",
@@ -12311,22 +10964,14 @@ type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
 }
 
 // ExecuteBatchDml: Executes a batch of SQL DML statements. This method
-// allows many statements
-// to be run with lower latency than submitting them sequentially
-// with
-// ExecuteSql.
-//
-// Statements are executed in sequential order. A request can succeed
-// even if
-// a statement fails. The ExecuteBatchDmlResponse.status field in
-// the
-// response provides information about the statement that failed.
-// Clients must
-// inspect this field to determine whether an error occurred.
-//
-// Execution stops after the first failed statement; the remaining
-// statements
-// are not executed.
+// allows many statements to be run with lower latency than submitting
+// them sequentially with ExecuteSql. Statements are executed in
+// sequential order. A request can succeed even if a statement fails.
+// The ExecuteBatchDmlResponse.status field in the response provides
+// information about the statement that failed. Clients must inspect
+// this field to determine whether an error occurred. Execution stops
+// after the first failed statement; the remaining statements are not
+// executed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12361,7 +11006,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.He
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12425,7 +11070,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in sequential order. A request can succeed even if\na statement fails. The ExecuteBatchDmlResponse.status field in the\nresponse provides information about the statement that failed. Clients must\ninspect this field to determine whether an error occurred.\n\nExecution stops after the first failed statement; the remaining statements\nare not executed.",
+	//   "description": "Executes a batch of SQL DML statements. This method allows many statements to be run with lower latency than submitting them sequentially with ExecuteSql. Statements are executed in sequential order. A request can succeed even if a statement fails. The ExecuteBatchDmlResponse.status field in the response provides information about the statement that failed. Clients must inspect this field to determine whether an error occurred. Execution stops after the first failed statement; the remaining statements are not executed.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeBatchDml",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.executeBatchDml",
@@ -12468,19 +11113,13 @@ type ProjectsInstancesDatabasesSessionsExecuteSqlCall struct {
 }
 
 // ExecuteSql: Executes an SQL statement, returning all results in a
-// single reply. This
-// method cannot be used to return a result set larger than 10 MiB;
-// if the query yields more data than that, the query fails with
-// a `FAILED_PRECONDITION` error.
-//
-// Operations inside read-write transactions might return `ABORTED`.
-// If
-// this occurs, the application should restart the transaction from
-// the beginning. See Transaction for more details.
-//
-// Larger result sets can be fetched in streaming fashion by
-// calling
-// ExecuteStreamingSql instead.
+// single reply. This method cannot be used to return a result set
+// larger than 10 MiB; if the query yields more data than that, the
+// query fails with a `FAILED_PRECONDITION` error. Operations inside
+// read-write transactions might return `ABORTED`. If this occurs, the
+// application should restart the transaction from the beginning. See
+// Transaction for more details. Larger result sets can be fetched in
+// streaming fashion by calling ExecuteStreamingSql instead.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12515,7 +11154,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Header() http.Header 
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12579,7 +11218,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteSqlCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Executes an SQL statement, returning all results in a single reply. This\nmethod cannot be used to return a result set larger than 10 MiB;\nif the query yields more data than that, the query fails with\na `FAILED_PRECONDITION` error.\n\nOperations inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be fetched in streaming fashion by calling\nExecuteStreamingSql instead.",
+	//   "description": "Executes an SQL statement, returning all results in a single reply. This method cannot be used to return a result set larger than 10 MiB; if the query yields more data than that, the query fails with a `FAILED_PRECONDITION` error. Operations inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be fetched in streaming fashion by calling ExecuteStreamingSql instead.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeSql",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.executeSql",
@@ -12621,12 +11260,10 @@ type ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall struct {
 	header_           http.Header
 }
 
-// ExecuteStreamingSql: Like ExecuteSql, except returns the result
-// set as a stream. Unlike ExecuteSql, there
-// is no limit on the size of the returned result set. However,
-// no
-// individual row in the result set can exceed 100 MiB, and no
-// column value can exceed 10 MiB.
+// ExecuteStreamingSql: Like ExecuteSql, except returns the result set
+// as a stream. Unlike ExecuteSql, there is no limit on the size of the
+// returned result set. However, no individual row in the result set can
+// exceed 100 MiB, and no column value can exceed 10 MiB.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteStreamingSql(session string, executesqlrequest *ExecuteSqlRequest) *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -12661,7 +11298,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Header() htt
 
 func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12725,7 +11362,7 @@ func (c *ProjectsInstancesDatabasesSessionsExecuteStreamingSqlCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Like ExecuteSql, except returns the result\nset as a stream. Unlike ExecuteSql, there\nis no limit on the size of the returned result set. However, no\nindividual row in the result set can exceed 100 MiB, and no\ncolumn value can exceed 10 MiB.",
+	//   "description": "Like ExecuteSql, except returns the result set as a stream. Unlike ExecuteSql, there is no limit on the size of the returned result set. However, no individual row in the result set can exceed 100 MiB, and no column value can exceed 10 MiB.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeStreamingSql",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.executeStreamingSql",
@@ -12768,10 +11405,8 @@ type ProjectsInstancesDatabasesSessionsGetCall struct {
 }
 
 // Get: Gets a session. Returns `NOT_FOUND` if the session does not
-// exist.
-// This is mainly useful for determining whether a session is
-// still
-// alive.
+// exist. This is mainly useful for determining whether a session is
+// still alive.
 func (r *ProjectsInstancesDatabasesSessionsService) Get(name string) *ProjectsInstancesDatabasesSessionsGetCall {
 	c := &ProjectsInstancesDatabasesSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12815,7 +11450,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12877,7 +11512,7 @@ func (c *ProjectsInstancesDatabasesSessionsGetCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a session. Returns `NOT_FOUND` if the session does not exist.\nThis is mainly useful for determining whether a session is still\nalive.",
+	//   "description": "Gets a session. Returns `NOT_FOUND` if the session does not exist. This is mainly useful for determining whether a session is still alive.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.databases.sessions.get",
@@ -12924,33 +11559,27 @@ func (r *ProjectsInstancesDatabasesSessionsService) List(database string) *Proje
 }
 
 // Filter sets the optional parameter "filter": An expression for
-// filtering the results of the request. Filter rules are
-// case insensitive. The fields eligible for filtering are:
-//
-//   * `labels.key` where key is the name of a label
-//
-// Some examples of using filters are:
-//
-//   * `labels.env:*` --> The session has the label "env".
-//   * `labels.env:dev` --> The session has the label "env" and the
-// value of
-//                        the label contains the string "dev".
+// filtering the results of the request. Filter rules are case
+// insensitive. The fields eligible for filtering are: * `labels.key`
+// where key is the name of a label Some examples of using filters are:
+// * `labels.env:*` --> The session has the label "env". *
+// `labels.env:dev` --> The session has the label "env" and the value of
+// the label contains the string "dev".
 func (c *ProjectsInstancesDatabasesSessionsListCall) Filter(filter string) *ProjectsInstancesDatabasesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of sessions
-// to be returned in the response. If 0 or less, defaults
-// to the server's maximum allowed page size.
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
 func (c *ProjectsInstancesDatabasesSessionsListCall) PageSize(pageSize int64) *ProjectsInstancesDatabasesSessionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If non-empty,
-// `page_token` should contain a
-// next_page_token from a previous
+// `page_token` should contain a next_page_token from a previous
 // ListSessionsResponse.
 func (c *ProjectsInstancesDatabasesSessionsListCall) PageToken(pageToken string) *ProjectsInstancesDatabasesSessionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12994,7 +11623,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13072,18 +11701,18 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * `labels.key` where key is the name of a label\n\nSome examples of using filters are:\n\n  * `labels.env:*` --\u003e The session has the label \"env\".\n  * `labels.env:dev` --\u003e The session has the label \"env\" and the value of\n                       the label contains the string \"dev\".",
+	//       "description": "An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `labels.key` where key is the name of a label Some examples of using filters are: * `labels.env:*` --\u003e The session has the label \"env\". * `labels.env:dev` --\u003e The session has the label \"env\" and the value of the label contains the string \"dev\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Number of sessions to be returned in the response. If 0 or less, defaults\nto the server's maximum allowed page size.",
+	//       "description": "Number of sessions to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If non-empty, `page_token` should contain a\nnext_page_token from a previous\nListSessionsResponse.",
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListSessionsResponse.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13133,24 +11762,16 @@ type ProjectsInstancesDatabasesSessionsPartitionQueryCall struct {
 }
 
 // PartitionQuery: Creates a set of partition tokens that can be used to
-// execute a query
-// operation in parallel.  Each of the returned partition tokens can be
-// used
-// by ExecuteStreamingSql to specify a subset
-// of the query result to read.  The same session and read-only
-// transaction
-// must be used by the PartitionQueryRequest used to create
-// the
-// partition tokens and the ExecuteSqlRequests that use the partition
-// tokens.
-//
-// Partition tokens become invalid when the session used to create
-// them
+// execute a query operation in parallel. Each of the returned partition
+// tokens can be used by ExecuteStreamingSql to specify a subset of the
+// query result to read. The same session and read-only transaction must
+// be used by the PartitionQueryRequest used to create the partition
+// tokens and the ExecuteSqlRequests that use the partition tokens.
+// Partition tokens become invalid when the session used to create them
 // is deleted, is idle for too long, begins a new transaction, or
-// becomes too
-// old.  When any of these happen, it is not possible to resume the
-// query, and
-// the whole operation must be restarted from the beginning.
+// becomes too old. When any of these happen, it is not possible to
+// resume the query, and the whole operation must be restarted from the
+// beginning.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionQuery(session string, partitionqueryrequest *PartitionQueryRequest) *ProjectsInstancesDatabasesSessionsPartitionQueryCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13185,7 +11806,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Header() http.Hea
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13249,7 +11870,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionQueryCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a set of partition tokens that can be used to execute a query\noperation in parallel.  Each of the returned partition tokens can be used\nby ExecuteStreamingSql to specify a subset\nof the query result to read.  The same session and read-only transaction\nmust be used by the PartitionQueryRequest used to create the\npartition tokens and the ExecuteSqlRequests that use the partition tokens.\n\nPartition tokens become invalid when the session used to create them\nis deleted, is idle for too long, begins a new transaction, or becomes too\nold.  When any of these happen, it is not possible to resume the query, and\nthe whole operation must be restarted from the beginning.",
+	//   "description": "Creates a set of partition tokens that can be used to execute a query operation in parallel. Each of the returned partition tokens can be used by ExecuteStreamingSql to specify a subset of the query result to read. The same session and read-only transaction must be used by the PartitionQueryRequest used to create the partition tokens and the ExecuteSqlRequests that use the partition tokens. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it is not possible to resume the query, and the whole operation must be restarted from the beginning.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:partitionQuery",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.partitionQuery",
@@ -13292,28 +11913,18 @@ type ProjectsInstancesDatabasesSessionsPartitionReadCall struct {
 }
 
 // PartitionRead: Creates a set of partition tokens that can be used to
-// execute a read
-// operation in parallel.  Each of the returned partition tokens can be
-// used
-// by StreamingRead to specify a subset of the read
-// result to read.  The same session and read-only transaction must be
-// used by
-// the PartitionReadRequest used to create the partition tokens and
-// the
-// ReadRequests that use the partition tokens.  There are no
-// ordering
-// guarantees on rows returned among the returned partition tokens, or
-// even
-// within each individual StreamingRead call issued with a
-// partition_token.
-//
-// Partition tokens become invalid when the session used to create
-// them
-// is deleted, is idle for too long, begins a new transaction, or
-// becomes too
-// old.  When any of these happen, it is not possible to resume the
-// read, and
-// the whole operation must be restarted from the beginning.
+// execute a read operation in parallel. Each of the returned partition
+// tokens can be used by StreamingRead to specify a subset of the read
+// result to read. The same session and read-only transaction must be
+// used by the PartitionReadRequest used to create the partition tokens
+// and the ReadRequests that use the partition tokens. There are no
+// ordering guarantees on rows returned among the returned partition
+// tokens, or even within each individual StreamingRead call issued with
+// a partition_token. Partition tokens become invalid when the session
+// used to create them is deleted, is idle for too long, begins a new
+// transaction, or becomes too old. When any of these happen, it is not
+// possible to resume the read, and the whole operation must be
+// restarted from the beginning.
 func (r *ProjectsInstancesDatabasesSessionsService) PartitionRead(session string, partitionreadrequest *PartitionReadRequest) *ProjectsInstancesDatabasesSessionsPartitionReadCall {
 	c := &ProjectsInstancesDatabasesSessionsPartitionReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13348,7 +11959,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13412,7 +12023,7 @@ func (c *ProjectsInstancesDatabasesSessionsPartitionReadCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a set of partition tokens that can be used to execute a read\noperation in parallel.  Each of the returned partition tokens can be used\nby StreamingRead to specify a subset of the read\nresult to read.  The same session and read-only transaction must be used by\nthe PartitionReadRequest used to create the partition tokens and the\nReadRequests that use the partition tokens.  There are no ordering\nguarantees on rows returned among the returned partition tokens, or even\nwithin each individual StreamingRead call issued with a partition_token.\n\nPartition tokens become invalid when the session used to create them\nis deleted, is idle for too long, begins a new transaction, or becomes too\nold.  When any of these happen, it is not possible to resume the read, and\nthe whole operation must be restarted from the beginning.",
+	//   "description": "Creates a set of partition tokens that can be used to execute a read operation in parallel. Each of the returned partition tokens can be used by StreamingRead to specify a subset of the read result to read. The same session and read-only transaction must be used by the PartitionReadRequest used to create the partition tokens and the ReadRequests that use the partition tokens. There are no ordering guarantees on rows returned among the returned partition tokens, or even within each individual StreamingRead call issued with a partition_token. Partition tokens become invalid when the session used to create them is deleted, is idle for too long, begins a new transaction, or becomes too old. When any of these happen, it is not possible to resume the read, and the whole operation must be restarted from the beginning.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:partitionRead",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.partitionRead",
@@ -13454,22 +12065,15 @@ type ProjectsInstancesDatabasesSessionsReadCall struct {
 	header_     http.Header
 }
 
-// Read: Reads rows from the database using key lookups and scans, as
-// a
-// simple key/value style alternative to
-// ExecuteSql.  This method cannot be used to
-// return a result set larger than 10 MiB; if the read matches more
-// data than that, the read fails with a
-// `FAILED_PRECONDITION`
-// error.
-//
-// Reads inside read-write transactions might return `ABORTED`. If
-// this occurs, the application should restart the transaction from
-// the beginning. See Transaction for more details.
-//
-// Larger result sets can be yielded in streaming fashion by
-// calling
-// StreamingRead instead.
+// Read: Reads rows from the database using key lookups and scans, as a
+// simple key/value style alternative to ExecuteSql. This method cannot
+// be used to return a result set larger than 10 MiB; if the read
+// matches more data than that, the read fails with a
+// `FAILED_PRECONDITION` error. Reads inside read-write transactions
+// might return `ABORTED`. If this occurs, the application should
+// restart the transaction from the beginning. See Transaction for more
+// details. Larger result sets can be yielded in streaming fashion by
+// calling StreamingRead instead.
 func (r *ProjectsInstancesDatabasesSessionsService) Read(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsReadCall {
 	c := &ProjectsInstancesDatabasesSessionsReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13504,7 +12108,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13568,7 +12172,7 @@ func (c *ProjectsInstancesDatabasesSessionsReadCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Reads rows from the database using key lookups and scans, as a\nsimple key/value style alternative to\nExecuteSql.  This method cannot be used to\nreturn a result set larger than 10 MiB; if the read matches more\ndata than that, the read fails with a `FAILED_PRECONDITION`\nerror.\n\nReads inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be yielded in streaming fashion by calling\nStreamingRead instead.",
+	//   "description": "Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ExecuteSql. This method cannot be used to return a result set larger than 10 MiB; if the read matches more data than that, the read fails with a `FAILED_PRECONDITION` error. Reads inside read-write transactions might return `ABORTED`. If this occurs, the application should restart the transaction from the beginning. See Transaction for more details. Larger result sets can be yielded in streaming fashion by calling StreamingRead instead.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:read",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.read",
@@ -13611,15 +12215,11 @@ type ProjectsInstancesDatabasesSessionsRollbackCall struct {
 }
 
 // Rollback: Rolls back a transaction, releasing any locks it holds. It
-// is a good
-// idea to call this for any transaction that includes one or more
-// Read or ExecuteSql requests and
-// ultimately decides not to commit.
-//
-// `Rollback` returns `OK` if it successfully aborts the transaction,
-// the
-// transaction was already aborted, or the transaction is not
-// found. `Rollback` never returns `ABORTED`.
+// is a good idea to call this for any transaction that includes one or
+// more Read or ExecuteSql requests and ultimately decides not to
+// commit. `Rollback` returns `OK` if it successfully aborts the
+// transaction, the transaction was already aborted, or the transaction
+// is not found. `Rollback` never returns `ABORTED`.
 func (r *ProjectsInstancesDatabasesSessionsService) Rollback(session string, rollbackrequest *RollbackRequest) *ProjectsInstancesDatabasesSessionsRollbackCall {
 	c := &ProjectsInstancesDatabasesSessionsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13654,7 +12254,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Header() http.Header {
 
 func (c *ProjectsInstancesDatabasesSessionsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13718,7 +12318,7 @@ func (c *ProjectsInstancesDatabasesSessionsRollbackCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Rolls back a transaction, releasing any locks it holds. It is a good\nidea to call this for any transaction that includes one or more\nRead or ExecuteSql requests and\nultimately decides not to commit.\n\n`Rollback` returns `OK` if it successfully aborts the transaction, the\ntransaction was already aborted, or the transaction is not\nfound. `Rollback` never returns `ABORTED`.",
+	//   "description": "Rolls back a transaction, releasing any locks it holds. It is a good idea to call this for any transaction that includes one or more Read or ExecuteSql requests and ultimately decides not to commit. `Rollback` returns `OK` if it successfully aborts the transaction, the transaction was already aborted, or the transaction is not found. `Rollback` never returns `ABORTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:rollback",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.rollback",
@@ -13760,11 +12360,10 @@ type ProjectsInstancesDatabasesSessionsStreamingReadCall struct {
 	header_     http.Header
 }
 
-// StreamingRead: Like Read, except returns the result set as a
-// stream. Unlike Read, there is no limit on the
-// size of the returned result set. However, no individual row in
-// the result set can exceed 100 MiB, and no column value can exceed
-// 10 MiB.
+// StreamingRead: Like Read, except returns the result set as a stream.
+// Unlike Read, there is no limit on the size of the returned result
+// set. However, no individual row in the result set can exceed 100 MiB,
+// and no column value can exceed 10 MiB.
 func (r *ProjectsInstancesDatabasesSessionsService) StreamingRead(session string, readrequest *ReadRequest) *ProjectsInstancesDatabasesSessionsStreamingReadCall {
 	c := &ProjectsInstancesDatabasesSessionsStreamingReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13799,7 +12398,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Header() http.Head
 
 func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13863,7 +12462,7 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Like Read, except returns the result set as a\nstream. Unlike Read, there is no limit on the\nsize of the returned result set. However, no individual row in\nthe result set can exceed 100 MiB, and no column value can exceed\n10 MiB.",
+	//   "description": "Like Read, except returns the result set as a stream. Unlike Read, there is no limit on the size of the returned result set. However, no individual row in the result set can exceed 100 MiB, and no column value can exceed 10 MiB.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:streamingRead",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.sessions.streamingRead",
@@ -13905,23 +12504,15 @@ type ProjectsInstancesOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsInstancesOperationsService) Cancel(name string) *ProjectsInstancesOperationsCancelCall {
 	c := &ProjectsInstancesOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13955,7 +12546,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14014,7 +12605,7 @@ func (c *ProjectsInstancesOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.operations.cancel",
@@ -14053,12 +12644,9 @@ type ProjectsInstancesOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsInstancesOperationsService) Delete(name string) *ProjectsInstancesOperationsDeleteCall {
 	c := &ProjectsInstancesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14092,7 +12680,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14151,7 +12739,7 @@ func (c *ProjectsInstancesOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.operations.delete",
@@ -14190,11 +12778,9 @@ type ProjectsInstancesOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsInstancesOperationsService) Get(name string) *ProjectsInstancesOperationsGetCall {
 	c := &ProjectsInstancesOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14238,7 +12824,7 @@ func (c *ProjectsInstancesOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14300,7 +12886,7 @@ func (c *ProjectsInstancesOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.operations.get",
@@ -14340,22 +12926,15 @@ type ProjectsInstancesOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsInstancesOperationsService) List(name string) *ProjectsInstancesOperationsListCall {
 	c := &ProjectsInstancesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14420,7 +12999,7 @@ func (c *ProjectsInstancesOperationsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14482,7 +13061,7 @@ func (c *ProjectsInstancesOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "spanner.projects.instances.operations.list",

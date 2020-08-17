@@ -217,9 +217,7 @@ type ProjectsZonesInstancesService struct {
 }
 
 // AptRepository: Represents a single Apt package repository. This
-// repository is added to
-// a repo file that is stored
-// at
+// repository is added to a repo file that is stored at
 // `/etc/apt/sources.list.d/google_osconfig.list`.
 type AptRepository struct {
 	// ArchiveType: Type of archive files in this repository. The default
@@ -239,11 +237,9 @@ type AptRepository struct {
 	// Distribution: Required. Distribution of this repository.
 	Distribution string `json:"distribution,omitempty"`
 
-	// GpgKey: URI of the key file for this repository. The agent
-	// maintains
+	// GpgKey: URI of the key file for this repository. The agent maintains
 	// a keyring at `/etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg`
-	// containing
-	// all the keys in any applied guest policy.
+	// containing all the keys in any applied guest policy.
 	GpgKey string `json:"gpgKey,omitempty"`
 
 	// Uri: Required. URI for this repository.
@@ -273,25 +269,21 @@ func (s *AptRepository) MarshalJSON() ([]byte, error) {
 }
 
 // AptSettings: Apt patching is completed by executing `apt-get update
-// && apt-get
-// upgrade`. Additional options can be set to control how this is
-// executed.
+// && apt-get upgrade`. Additional options can be set to control how
+// this is executed.
 type AptSettings struct {
 	// Excludes: List of packages to exclude from update. These packages
 	// will be excluded
 	Excludes []string `json:"excludes,omitempty"`
 
 	// ExclusivePackages: An exclusive list of packages to be updated. These
-	// are the only packages
-	// that will be updated. If these packages are not installed, they will
-	// be
-	// ignored. This field cannot be specified with any other patch
-	// configuration
-	// fields.
+	// are the only packages that will be updated. If these packages are not
+	// installed, they will be ignored. This field cannot be specified with
+	// any other patch configuration fields.
 	ExclusivePackages []string `json:"exclusivePackages,omitempty"`
 
-	// Type: By changing the type to DIST, the patching is performed
-	// using `apt-get dist-upgrade` instead.
+	// Type: By changing the type to DIST, the patching is performed using
+	// `apt-get dist-upgrade` instead.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - By default, upgrade will be performed.
@@ -323,64 +315,40 @@ func (s *AptSettings) MarshalJSON() ([]byte, error) {
 }
 
 // Assignment: An assignment represents the group or groups of VM
-// instances that the policy
-// applies to.
-//
-// If an assignment is empty, it applies to all VM instances. Otherwise,
-// the
-// targeted VM instances must meet all the criteria specified. So if
-// both
-// labels and zones are specified, the policy applies to VM instances
-// with those
-// labels and in those zones.
+// instances that the policy applies to. If an assignment is empty, it
+// applies to all VM instances. Otherwise, the targeted VM instances
+// must meet all the criteria specified. So if both labels and zones are
+// specified, the policy applies to VM instances with those labels and
+// in those zones.
 type Assignment struct {
 	// GroupLabels: Targets instances matching at least one of these label
-	// sets. This allows
-	// an assignment to target disparate groups, for example "env=prod
-	// or
-	// env=staging".
+	// sets. This allows an assignment to target disparate groups, for
+	// example "env=prod or env=staging".
 	GroupLabels []*AssignmentGroupLabel `json:"groupLabels,omitempty"`
 
 	// InstanceNamePrefixes: Targets VM instances whose name starts with one
-	// of these prefixes.
-	//
-	// Like labels, this is another way to group VM instances when
-	// targeting
-	// configs, for example prefix="prod-".
-	//
-	// Only supported for project-level policies.
+	// of these prefixes. Like labels, this is another way to group VM
+	// instances when targeting configs, for example prefix="prod-". Only
+	// supported for project-level policies.
 	InstanceNamePrefixes []string `json:"instanceNamePrefixes,omitempty"`
 
 	// Instances: Targets any of the instances specified. Instances are
-	// specified by their
-	// URI in the form `zones/[ZONE]/instances/[INSTANCE_NAME]`.
-	//
-	// Instance targeting is uncommon and is supported to facilitate
-	// the
-	// management of changes by the instance or to target specific VM
-	// instances
-	// for development and testing.
-	//
-	// Only supported for project-level policies and must reference
-	// instances
-	// within this project.
+	// specified by their URI in the form
+	// `zones/[ZONE]/instances/[INSTANCE_NAME]`. Instance targeting is
+	// uncommon and is supported to facilitate the management of changes by
+	// the instance or to target specific VM instances for development and
+	// testing. Only supported for project-level policies and must reference
+	// instances within this project.
 	Instances []string `json:"instances,omitempty"`
 
 	// OsTypes: Targets VM instances matching at least one of the following
-	// OS types.
-	//
-	// VM instances must match all supplied criteria for a given OsType to
-	// be
-	// included.
+	// OS types. VM instances must match all supplied criteria for a given
+	// OsType to be included.
 	OsTypes []*AssignmentOsType `json:"osTypes,omitempty"`
 
 	// Zones: Targets instances in any of these zones. Leave empty to target
-	// instances
-	// in any zone.
-	//
-	// Zonal targeting is uncommon and is supported to facilitate the
-	// management
-	// of changes by zone.
+	// instances in any zone. Zonal targeting is uncommon and is supported
+	// to facilitate the management of changes by zone.
 	Zones []string `json:"zones,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GroupLabels") to
@@ -407,12 +375,11 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 }
 
 // AssignmentGroupLabel: Represents a group of VM intances that can be
-// identified as having all
-// these labels, for example "env=prod and app=web".
+// identified as having all these labels, for example "env=prod and
+// app=web".
 type AssignmentGroupLabel struct {
 	// Labels: Google Compute Engine instance labels that must be present
-	// for an
-	// instance to be included in this assignment group.
+	// for an instance to be included in this assignment group.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -442,18 +409,16 @@ func (s *AssignmentGroupLabel) MarshalJSON() ([]byte, error) {
 // OS type.
 type AssignmentOsType struct {
 	// OsArchitecture: Targets VM instances with OS Inventory enabled and
-	// having the following
-	// OS architecture.
+	// having the following OS architecture.
 	OsArchitecture string `json:"osArchitecture,omitempty"`
 
 	// OsShortName: Targets VM instances with OS Inventory enabled and
-	// having the following
-	// OS short name, for example "debian" or "windows".
+	// having the following OS short name, for example "debian" or
+	// "windows".
 	OsShortName string `json:"osShortName,omitempty"`
 
 	// OsVersion: Targets VM instances with OS Inventory enabled and having
-	// the following
-	// following OS version.
+	// the following following OS version.
 	OsVersion string `json:"osVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OsArchitecture") to
@@ -625,17 +590,11 @@ func (s *EffectiveGuestPolicySourcedSoftwareRecipe) MarshalJSON() ([]byte, error
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -645,14 +604,13 @@ type Empty struct {
 // ExecResource: A resource that contains custom validation and
 // enforcement steps.
 type ExecResource struct {
-	// Enforce: What to run to bring this resource into the desired
-	// state.
+	// Enforce: What to run to bring this resource into the desired state.
 	// Optional if policy is in validate only mode.
 	Enforce *ExecResourceExec `json:"enforce,omitempty"`
 
 	// Validate: What to run to validate this resource is in the desired
+	// state. A successful exit code indicates resource is in the desired
 	// state.
-	// A successful exit code indicates resource is in the desired state.
 	Validate *ExecResourceExec `json:"validate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enforce") to
@@ -693,14 +651,12 @@ type ExecResourceExec struct {
 	//
 	// Possible values:
 	//   "INTERPRETER_UNSPECIFIED" - Defaults to NONE.
-	//   "NONE" - If no interpreter is specified the
-	// source will be executed directly, which will likely only succeed
-	// for
-	// executables and scripts with shebang lines.
-	// [Wikipedia shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+	//   "NONE" - If no interpreter is specified the source will be executed
+	// directly, which will likely only succeed for executables and scripts
+	// with shebang lines. [Wikipedia
+	// shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
 	//   "SHELL" - Indicates that the script will be run with /bin/sh on
-	// Linux and cmd.exe
-	// on windows.
+	// Linux and cmd.exe on windows.
 	//   "POWERSHELL" - Indicates that the script will be run with
 	// powershell.
 	Interpreter string `json:"interpreter,omitempty"`
@@ -769,32 +725,24 @@ func (s *ExecStep) MarshalJSON() ([]byte, error) {
 // ExecStepConfig: Common configurations for an ExecStep.
 type ExecStepConfig struct {
 	// AllowedSuccessCodes: Defaults to [0]. A list of possible return
-	// values that the
-	// execution can return to indicate a success.
+	// values that the execution can return to indicate a success.
 	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
 
 	// GcsObject: A Google Cloud Storage object containing the executable.
 	GcsObject *GcsObject `json:"gcsObject,omitempty"`
 
 	// Interpreter: The script interpreter to use to run the script. If no
-	// interpreter is
-	// specified the script will be executed directly, which will
-	// likely
-	// only succeed for scripts with [shebang
-	// lines]
+	// interpreter is specified the script will be executed directly, which
+	// will likely only succeed for scripts with [shebang lines]
 	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
 	//   "INTERPRETER_UNSPECIFIED" - Invalid for a Windows ExecStepConfig.
-	// For a Linux ExecStepConfig, the
-	// interpreter will be parsed from the shebang line of the script
-	// if
-	// unspecified.
+	// For a Linux ExecStepConfig, the interpreter will be parsed from the
+	// shebang line of the script if unspecified.
 	//   "SHELL" - Indicates that the script is run with `/bin/sh` on Linux
-	// and `cmd`
-	// on Windows.
-	//   "POWERSHELL" - Indicates that the file is run with PowerShell
-	// flags
+	// and `cmd` on Windows.
+	//   "POWERSHELL" - Indicates that the file is run with PowerShell flags
 	// `-NonInteractive`, `-NoProfile`, and `-ExecutionPolicy Bypass`.
 	Interpreter string `json:"interpreter,omitempty"`
 
@@ -829,32 +777,27 @@ func (s *ExecStepConfig) MarshalJSON() ([]byte, error) {
 // Compute Engine instances.
 type ExecutePatchJobRequest struct {
 	// Description: Description of the patch job. Length of the description
-	// is limited
-	// to 1024 characters.
+	// is limited to 1024 characters.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Display name for this patch job. This does not have to
 	// be unique.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DryRun: If this patch is a dry-run only, instances are contacted
-	// but
+	// DryRun: If this patch is a dry-run only, instances are contacted but
 	// will do nothing.
 	DryRun bool `json:"dryRun,omitempty"`
 
 	// Duration: Duration of the patch job. After the duration ends, the
-	// patch job
-	// times out.
+	// patch job times out.
 	Duration string `json:"duration,omitempty"`
 
 	// InstanceFilter: Required. Instances to patch, either explicitly or
-	// filtered by some criteria such
-	// as zone or labels.
+	// filtered by some criteria such as zone or labels.
 	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
 
 	// PatchConfig: Patch configuration being applied. If omitted, instances
-	// are
-	// patched using the default configurations.
+	// are patched using the default configurations.
 	PatchConfig *PatchConfig `json:"patchConfig,omitempty"`
 
 	// Rollout: Rollout strategy of the patch job.
@@ -886,20 +829,16 @@ func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
 // ExtractArchiveResource: A resource that extracts an archive
 type ExtractArchiveResource struct {
 	// Creates: Local file path that signals this resource is in the desired
-	// state.
-	// The absence of this file will indicate whether the archive needs to
-	// be
-	// extracted.
+	// state. The absence of this file will indicate whether the archive
+	// needs to be extracted.
 	Creates string `json:"creates,omitempty"`
 
 	// Destination: Directory to extract archive to.
 	Destination string `json:"destination,omitempty"`
 
 	// Overwrite: Whether to overwrite existing files during extraction. If
-	// this is set to
-	// true, any existing files in the destination location will be
-	// overwritten by
-	// the extraction.
+	// this is set to true, any existing files in the destination location
+	// will be overwritten by the extraction.
 	Overwrite bool `json:"overwrite,omitempty"`
 
 	// Source: The source archive to extract.
@@ -948,11 +887,8 @@ func (s *ExtractArchiveResource) MarshalJSON() ([]byte, error) {
 // File: A remote or local file.
 type File struct {
 	// AllowInsecure: Defaults to false. When false, files will be subject
-	// to validations
-	// based on the file type:
-	//
-	// Remote: A checksum must be specified.
-	// GCS:    An object generation number must be specified.
+	// to validations based on the file type: Remote: A checksum must be
+	// specified. GCS: An object generation number must be specified.
 	AllowInsecure bool `json:"allowInsecure,omitempty"`
 
 	// Gcs: A GCS object.
@@ -1027,8 +963,7 @@ type FileRemote struct {
 	Sha256Checksum string `json:"sha256Checksum,omitempty"`
 
 	// Uri: URI from which to fetch the object. It should contain both the
-	// protocol
-	// and path following the format {protocol}://{location}.
+	// protocol and path following the format {protocol}://{location}.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Sha256Checksum") to
@@ -1066,25 +1001,15 @@ type FileResource struct {
 	// Path: The absolute path of the file.
 	Path string `json:"path,omitempty"`
 
-	// Permissions: Consists of three octal digits which represent,
-	// in
-	// order, the permissions of the owner, group, and other users for
-	// the
-	// file (similarly to the numeric mode used in the linux chmod
-	// utility).
-	// Each digit represents a three bit number with the 4 bit
-	// corresponding to the read permissions, the 2 bit corresponds to
-	// the
-	// write bit, and the one bit corresponds to the execute
-	// permission.
-	// Default behavior is 755.
-	//
-	// Below are some examples of permissions and their associated
-	// values:
-	// read, write, and execute: 7
-	// read and execute: 5
-	// read and write: 6
-	// read only: 4
+	// Permissions: Consists of three octal digits which represent, in
+	// order, the permissions of the owner, group, and other users for the
+	// file (similarly to the numeric mode used in the linux chmod utility).
+	// Each digit represents a three bit number with the 4 bit corresponding
+	// to the read permissions, the 2 bit corresponds to the write bit, and
+	// the one bit corresponds to the execute permission. Default behavior
+	// is 755. Below are some examples of permissions and their associated
+	// values: read, write, and execute: 7 read and execute: 5 read and
+	// write: 6 read only: 4
 	Permissions string `json:"permissions,omitempty"`
 
 	// State: Desired state of the file.
@@ -1094,8 +1019,7 @@ type FileResource struct {
 	//   "PRESENT" - Ensure file at path is present.
 	//   "ABSENT" - Ensure file at path is absent.
 	//   "CONTENTS_MATCH" - Ensure the contents of the file at path matches.
-	// If the file does not
-	// exist it will be created.
+	// If the file does not exist it will be created.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -1122,15 +1046,13 @@ func (s *FileResource) MarshalJSON() ([]byte, error) {
 }
 
 // FixedOrPercent: Message encapsulating a value that can be either
-// absolute ("fixed") or
-// relative ("percent") to a value.
+// absolute ("fixed") or relative ("percent") to a value.
 type FixedOrPercent struct {
 	// Fixed: Specifies a fixed value.
 	Fixed int64 `json:"fixed,omitempty"`
 
 	// Percent: Specifies the relative value defined as a percentage, which
-	// will be
-	// multiplied by a reference value.
+	// will be multiplied by a reference value.
 	Percent int64 `json:"percent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fixed") to
@@ -1162,8 +1084,8 @@ type GcsObject struct {
 	Bucket string `json:"bucket,omitempty"`
 
 	// GenerationNumber: Required. Generation number of the Google Cloud
-	// Storage object. This is used to
-	// ensure that the ExecStep specified by this PatchJob does not change.
+	// Storage object. This is used to ensure that the ExecStep specified by
+	// this PatchJob does not change.
 	GenerationNumber int64 `json:"generationNumber,omitempty,string"`
 
 	// Object: Required. Name of the Google Cloud Storage object.
@@ -1193,8 +1115,8 @@ func (s *GcsObject) MarshalJSON() ([]byte, error) {
 }
 
 // GooRepository: Represents a Goo package repository. These is added to
-// a repo file
-// that is stored at C:/ProgramData/GooGet/repos/google_osconfig.repo.
+// a repo file that is stored at
+// C:/ProgramData/GooGet/repos/google_osconfig.repo.
 type GooRepository struct {
 	// Name: Required. The name of the repository.
 	Name string `json:"name,omitempty"`
@@ -1230,59 +1152,42 @@ type GooSettings struct {
 }
 
 // GuestPolicy: An OS Config resource representing a guest configuration
-// policy. These
-// policies represent the desired state for VM instance guest
-// environments
-// including packages to install or remove, package repository
-// configurations,
-// and software to install.
+// policy. These policies represent the desired state for VM instance
+// guest environments including packages to install or remove, package
+// repository configurations, and software to install.
 type GuestPolicy struct {
 	// Assignment: Required. Specifies the VM instances that are assigned to
-	// this policy. This allows
-	// you to target sets or groups of VM instances by different parameters
-	// such
-	// as labels, names, OS, or zones.
-	//
-	// If left empty, all VM instances underneath this policy are
-	// targeted.
-	//
-	// At the same level in the resource hierarchy (that is within a
-	// project), the
-	// service prevents the creation of multiple policies that conflict
-	// with
+	// this policy. This allows you to target sets or groups of VM instances
+	// by different parameters such as labels, names, OS, or zones. If left
+	// empty, all VM instances underneath this policy are targeted. At the
+	// same level in the resource hierarchy (that is within a project), the
+	// service prevents the creation of multiple policies that conflict with
 	// each other. For more information, see how the service [handles
 	// assignment
-	// conflicts](/compute/docs/os-config-management/create-guest-
-	// policy#handle-conflicts).
+	// conflicts](/compute/docs/os-config-management/create-guest-policy#hand
+	// le-conflicts).
 	Assignment *Assignment `json:"assignment,omitempty"`
 
 	// CreateTime: Output only. Time this guest policy was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Description of the guest policy. Length of the
-	// description is limited
-	// to 1024 characters.
+	// description is limited to 1024 characters.
 	Description string `json:"description,omitempty"`
 
-	// Etag: The etag for this guest policy.
-	// If this is provided on update, it must match the server's etag.
+	// Etag: The etag for this guest policy. If this is provided on update,
+	// it must match the server's etag.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Required. Unique name of the resource in this project using one
-	// of the
-	// following
-	// forms:
-	// `projects/{project_number}/guestPolicies/{guest_polic
-	// y_id}`.
+	// of the following forms:
+	// `projects/{project_number}/guestPolicies/{guest_policy_id}`.
 	Name string `json:"name,omitempty"`
 
 	// PackageRepositories: A list of package repositories to configure on
-	// the VM instance. This is
-	// done before any other configs are applied so they can use these
-	// repos.
-	// Package repositories are only configured if the corresponding
-	// package
-	// manager(s) are available.
+	// the VM instance. This is done before any other configs are applied so
+	// they can use these repos. Package repositories are only configured if
+	// the corresponding package manager(s) are available.
 	PackageRepositories []*PackageRepository `json:"packageRepositories,omitempty"`
 
 	// Packages: The software packages to be managed by this policy.
@@ -1328,8 +1233,7 @@ type ListGuestPoliciesResponse struct {
 	GuestPolicies []*GuestPolicy `json:"guestPolicies,omitempty"`
 
 	// NextPageToken: A pagination token that can be used to get the next
-	// page
-	// of guest policies.
+	// page of guest policies.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1363,8 +1267,7 @@ func (s *ListGuestPoliciesResponse) MarshalJSON() ([]byte, error) {
 // deployments.
 type ListPatchDeploymentsResponse struct {
 	// NextPageToken: A pagination token that can be used to get the next
-	// page of patch
-	// deployments.
+	// page of patch deployments.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// PatchDeployments: The list of patch deployments.
@@ -1471,28 +1374,21 @@ func (s *ListPatchJobsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LookupEffectiveGuestPolicyRequest: A request message for getting the
-// effective guest policy assigned to the
-// instance.
+// effective guest policy assigned to the instance.
 type LookupEffectiveGuestPolicyRequest struct {
 	// OsArchitecture: Architecture of OS running on the instance. The OS
-	// Config agent only
-	// provides this field for targeting if OS Inventory is enabled for
-	// that
-	// instance.
+	// Config agent only provides this field for targeting if OS Inventory
+	// is enabled for that instance.
 	OsArchitecture string `json:"osArchitecture,omitempty"`
 
 	// OsShortName: Short name of the OS running on the instance. The OS
-	// Config agent only
-	// provides this field for targeting if OS Inventory is enabled for
-	// that
-	// instance.
+	// Config agent only provides this field for targeting if OS Inventory
+	// is enabled for that instance.
 	OsShortName string `json:"osShortName,omitempty"`
 
 	// OsVersion: Version of the OS running on the instance. The OS Config
-	// agent only
-	// provides this field for targeting if OS Inventory is enabled for
-	// that
-	// VM instance.
+	// agent only provides this field for targeting if OS Inventory is
+	// enabled for that VM instance.
 	OsVersion string `json:"osVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OsArchitecture") to
@@ -1520,16 +1416,13 @@ func (s *LookupEffectiveGuestPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // MonthlySchedule: Represents a monthly schedule. An example of a valid
-// monthly schedule is
-// "on the third Tuesday of the month" or "on the 15th of the month".
+// monthly schedule is "on the third Tuesday of the month" or "on the
+// 15th of the month".
 type MonthlySchedule struct {
 	// MonthDay: Required. One day of the month. 1-31 indicates the 1st to
-	// the 31st day. -1
-	// indicates the last day of the month.
-	// Months without the target day will be skipped. For example, a
-	// schedule to
-	// run "every month on the 31st" will not run in February, April, June,
-	// etc.
+	// the 31st day. -1 indicates the last day of the month. Months without
+	// the target day will be skipped. For example, a schedule to run "every
+	// month on the 31st" will not run in February, April, June, etc.
 	MonthDay int64 `json:"monthDay,omitempty"`
 
 	// WeekDayOfMonth: Required. Week day in a month.
@@ -1559,8 +1452,8 @@ func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
 }
 
 // OneTimeSchedule: Sets the time for a one time patch deployment.
-// Timestamp is in
-// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+// format.
 type OneTimeSchedule struct {
 	// ExecuteTime: Required. The desired patch job execution time.
 	ExecuteTime string `json:"executeTime,omitempty"`
@@ -1589,63 +1482,37 @@ func (s *OneTimeSchedule) MarshalJSON() ([]byte, error) {
 }
 
 // Package: Package is a reference to the software package to be
-// installed or removed.
-// The agent on the VM instance uses the system package manager to apply
-// the
-// config.
-//
-//
-// These are the commands that the agent uses to install or
-// remove
-// packages.
-//
-// Apt
-// install: `apt-get update && apt-get -y install package1 package2
-// package3`
-// remove: `apt-get -y remove package1 package2 package3`
-//
-// Yum
-// install: `yum -y install package1 package2 package3`
-// remove: `yum -y remove package1 package2 package3`
-//
-// Zypper
-// install: `zypper install package1 package2 package3`
-// remove: `zypper rm package1 package2`
-//
-// Googet
-// install: `googet -noconfirm install package1 package2
-// package3`
-// remove: `googet -noconfirm remove package1 package2 package3`
+// installed or removed. The agent on the VM instance uses the system
+// package manager to apply the config. These are the commands that the
+// agent uses to install or remove packages. Apt install: `apt-get
+// update && apt-get -y install package1 package2 package3` remove:
+// `apt-get -y remove package1 package2 package3` Yum install: `yum -y
+// install package1 package2 package3` remove: `yum -y remove package1
+// package2 package3` Zypper install: `zypper install package1 package2
+// package3` remove: `zypper rm package1 package2` Googet install:
+// `googet -noconfirm install package1 package2 package3` remove:
+// `googet -noconfirm remove package1 package2 package3`
 type Package struct {
 	// DesiredState: The desired_state the agent should maintain for this
-	// package. The
-	// default is to ensure the package is installed.
+	// package. The default is to ensure the package is installed.
 	//
 	// Possible values:
 	//   "DESIRED_STATE_UNSPECIFIED" - The default is to ensure the package
 	// is installed.
 	//   "INSTALLED" - The agent ensures that the package is installed.
-	//   "UPDATED" - The agent ensures that the package is installed
-	// and
+	//   "UPDATED" - The agent ensures that the package is installed and
 	// periodically checks for and install any updates.
 	//   "REMOVED" - The agent ensures that the package is not installed and
-	// uninstall it
-	// if detected.
+	// uninstall it if detected.
 	DesiredState string `json:"desiredState,omitempty"`
 
 	// Manager: Type of package manager that can be used to install this
-	// package.
-	// If a system does not have the package manager, the package is
-	// not
-	// installed or removed no error message is returned. By default,
-	// or if you specify `ANY`,
-	// the agent attempts to install and remove this package using the
-	// default
-	// package manager. This is useful when creating a policy that applies
-	// to
-	// different types of systems.
-	//
-	// The default behavior is ANY.
+	// package. If a system does not have the package manager, the package
+	// is not installed or removed no error message is returned. By default,
+	// or if you specify `ANY`, the agent attempts to install and remove
+	// this package using the default package manager. This is useful when
+	// creating a policy that applies to different types of systems. The
+	// default behavior is ANY.
 	//
 	// Possible values:
 	//   "MANAGER_UNSPECIFIED" - The default behavior is ANY.
@@ -1662,10 +1529,8 @@ type Package struct {
 	Manager string `json:"manager,omitempty"`
 
 	// Name: Required. The name of the package. A package is uniquely
-	// identified for conflict
-	// validation by checking the package name and the manager(s) that
-	// the
-	// package targets.
+	// identified for conflict validation by checking the package name and
+	// the manager(s) that the package targets.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DesiredState") to
@@ -1737,15 +1602,13 @@ type PackageResource struct {
 	Deb *PackageResourceDeb `json:"deb,omitempty"`
 
 	// DesiredState: The desired_state the agent should maintain for this
-	// package. The
-	// default is to ensure the package is installed.
+	// package. The default is to ensure the package is installed.
 	//
 	// Possible values:
 	//   "DESIRED_STATE_UNSPECIFIED" - Unspecified is invalid.
 	//   "INSTALLED" - Ensure that the package is installed.
 	//   "REMOVED" - The agent will ensure that the package is not installed
-	// and uninstall it
-	// if detected.
+	// and uninstall it if detected.
 	DesiredState string `json:"desiredState,omitempty"`
 
 	// Googet: A package managed by GooGet.
@@ -1786,9 +1649,9 @@ func (s *PackageResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PackageResourceAPT: A package managed by APT.
-// install: `apt-get update && apt-get -y install [name]`
-// remove: `apt-get -y remove [name]`
+// PackageResourceAPT: A package managed by APT. install: `apt-get
+// update && apt-get -y install [name]` remove: `apt-get -y remove
+// [name]`
 type PackageResourceAPT struct {
 	// Name: Package name.
 	Name string `json:"name,omitempty"`
@@ -1819,9 +1682,9 @@ func (s *PackageResourceAPT) MarshalJSON() ([]byte, error) {
 // PackageResourceDeb: A deb package file. dpkg packages only support
 // INSTALLED state.
 type PackageResourceDeb struct {
-	// PullDeps: Whether dependencies should also be installed.
-	// install when false: `dpkg -i package`
-	// install when true: `apt-get update && apt-get -y install package.deb`
+	// PullDeps: Whether dependencies should also be installed. install when
+	// false: `dpkg -i package` install when true: `apt-get update &&
+	// apt-get -y install package.deb`
 	PullDeps bool `json:"pullDeps,omitempty"`
 
 	// Source: A deb package.
@@ -1850,9 +1713,9 @@ func (s *PackageResourceDeb) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PackageResourceGooGet: A package managed by GooGet.
-// install: `googet -noconfirm install package`
-// remove: `googet -noconfirm remove package`
+// PackageResourceGooGet: A package managed by GooGet. install: `googet
+// -noconfirm install package` remove: `googet -noconfirm remove
+// package`
 type PackageResourceGooGet struct {
 	// Name: Package name.
 	Name string `json:"name,omitempty"`
@@ -1881,16 +1744,14 @@ func (s *PackageResourceGooGet) MarshalJSON() ([]byte, error) {
 }
 
 // PackageResourceMSI: An MSI package. MSI packages only support
-// INSTALLED state.
-// Install msiexec /i /qn /norestart
+// INSTALLED state. Install msiexec /i /qn /norestart
 type PackageResourceMSI struct {
 	// AllowedSuccessCodes: Return codes that indicate that the software
-	// installed or updated
-	// successfully. Behaviour defaults to [0]
+	// installed or updated successfully. Behaviour defaults to [0]
 	AllowedSuccessCodes []int64 `json:"allowedSuccessCodes,omitempty"`
 
-	// Flags: Flags to use during package install.
-	// Appended to the defalts of "/i /qn /norestart"
+	// Flags: Flags to use during package install. Appended to the defalts
+	// of "/i /qn /norestart"
 	Flags []string `json:"flags,omitempty"`
 
 	// Source: The MSI package.
@@ -1923,10 +1784,9 @@ func (s *PackageResourceMSI) MarshalJSON() ([]byte, error) {
 // PackageResourceRPM: An RPM package file. RPM packages only support
 // INSTALLED state.
 type PackageResourceRPM struct {
-	// PullDeps: Whether dependencies should also be installed.
-	// install when false: `rpm --upgrade --replacepkgs package.rpm`
-	// install when true: `yum -y install package.rpm` or
-	// `zypper -y install package.rpm`
+	// PullDeps: Whether dependencies should also be installed. install when
+	// false: `rpm --upgrade --replacepkgs package.rpm` install when true:
+	// `yum -y install package.rpm` or `zypper -y install package.rpm`
 	PullDeps bool `json:"pullDeps,omitempty"`
 
 	// Source: An rpm package.
@@ -1955,9 +1815,8 @@ func (s *PackageResourceRPM) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PackageResourceYUM: A package managed by YUM.
-// install: `yum -y install package`
-// remove: `yum -y remove package`
+// PackageResourceYUM: A package managed by YUM. install: `yum -y
+// install package` remove: `yum -y remove package`
 type PackageResourceYUM struct {
 	// Name: Package name.
 	Name string `json:"name,omitempty"`
@@ -1985,9 +1844,8 @@ func (s *PackageResourceYUM) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PackageResourceZypper: A package managed by Zypper.
-// install: `zypper -y install package`
-// remove: `zypper -y rm package`
+// PackageResourceZypper: A package managed by Zypper. install: `zypper
+// -y install package` remove: `zypper -y rm package`
 type PackageResourceZypper struct {
 	// Name: Package name.
 	Name string `json:"name,omitempty"`
@@ -2016,17 +1874,14 @@ func (s *PackageResourceZypper) MarshalJSON() ([]byte, error) {
 }
 
 // PatchConfig: Patch configuration specifications. Contains details on
-// how to apply the
-// patch(es) to a VM instance.
+// how to apply the patch(es) to a VM instance.
 type PatchConfig struct {
 	// Apt: Apt update settings. Use this setting to override the default
-	// `apt` patch
-	// rules.
+	// `apt` patch rules.
 	Apt *AptSettings `json:"apt,omitempty"`
 
 	// Goo: Goo update settings. Use this setting to override the default
-	// `goo` patch
-	// rules.
+	// `goo` patch rules.
 	Goo *GooSettings `json:"goo,omitempty"`
 
 	// PostStep: The `ExecStep` to run after the patch update.
@@ -2040,12 +1895,10 @@ type PatchConfig struct {
 	// Possible values:
 	//   "REBOOT_CONFIG_UNSPECIFIED" - The default behavior is DEFAULT.
 	//   "DEFAULT" - The agent decides if a reboot is necessary by checking
-	// signals such as
-	// registry keys on Windows or `/var/run/reboot-required` on APT
-	// based
-	// systems. On RPM based systems, a set of core system package install
-	// times
-	// are compared with system boot time.
+	// signals such as registry keys on Windows or
+	// `/var/run/reboot-required` on APT based systems. On RPM based
+	// systems, a set of core system package install times are compared with
+	// system boot time.
 	//   "ALWAYS" - Always reboot the machine after the update completes.
 	//   "NEVER" - Never reboot the machine after the update completes.
 	RebootConfig string `json:"rebootConfig,omitempty"`
@@ -2055,13 +1908,11 @@ type PatchConfig struct {
 	WindowsUpdate *WindowsUpdateSettings `json:"windowsUpdate,omitempty"`
 
 	// Yum: Yum update settings. Use this setting to override the default
-	// `yum` patch
-	// rules.
+	// `yum` patch rules.
 	Yum *YumSettings `json:"yum,omitempty"`
 
 	// Zypper: Zypper update settings. Use this setting to override the
-	// default `zypper`
-	// patch rules.
+	// default `zypper` patch rules.
 	Zypper *ZypperSettings `json:"zypper,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Apt") to
@@ -2088,24 +1939,20 @@ func (s *PatchConfig) MarshalJSON() ([]byte, error) {
 }
 
 // PatchDeployment: Patch deployments are configurations that individual
-// patch jobs use to
-// complete a patch. These configurations include instance filter,
-// package
-// repository settings, and a schedule. For more information about
-// creating and
-// managing patch deployments, see [Scheduling
-// patch
-// jobs](https://cloud.google.com/compute/docs/os-patch-management/
-// schedule-patch-jobs).
+// patch jobs use to complete a patch. These configurations include
+// instance filter, package repository settings, and a schedule. For
+// more information about creating and managing patch deployments, see
+// [Scheduling patch
+// jobs](https://cloud.google.com/compute/docs/os-patch-management/schedu
+// le-patch-jobs).
 type PatchDeployment struct {
 	// CreateTime: Output only. Time the patch deployment was created.
-	// Timestamp is in
-	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+	// format.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. Description of the patch deployment. Length of
-	// the description is limited
-	// to 1024 characters.
+	// the description is limited to 1024 characters.
 	Description string `json:"description,omitempty"`
 
 	// Duration: Optional. Duration of the patch. After the duration ends,
@@ -2116,19 +1963,14 @@ type PatchDeployment struct {
 	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
 
 	// LastExecuteTime: Output only. The last time a patch job was started
-	// by this deployment.
-	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt)
-	// text
-	// format.
+	// by this deployment. Timestamp is in
+	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
 
 	// Name: Unique name for the patch deployment resource in a project. The
-	// patch
-	// deployment name is in the
-	// form:
-	// `projects/{project_id}/patchDeployments/{patch_deployment_id}`.
-	//
-	// This field is ignored when you create a new patch deployment.
+	// patch deployment name is in the form:
+	// `projects/{project_id}/patchDeployments/{patch_deployment_id}`. This
+	// field is ignored when you create a new patch deployment.
 	Name string `json:"name,omitempty"`
 
 	// OneTimeSchedule: Required. Schedule a one-time execution.
@@ -2144,8 +1986,8 @@ type PatchDeployment struct {
 	Rollout *PatchRollout `json:"rollout,omitempty"`
 
 	// UpdateTime: Output only. Time the patch deployment was last updated.
-	// Timestamp is in
-	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+	// format.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2176,44 +2018,34 @@ func (s *PatchDeployment) MarshalJSON() ([]byte, error) {
 }
 
 // PatchInstanceFilter: A filter to target VM instances for patching.
-// The targeted
-// VMs must meet all criteria specified. So if both labels and zones
-// are
-// specified, the patch job targets only VMs with those labels and in
-// those
-// zones.
+// The targeted VMs must meet all criteria specified. So if both labels
+// and zones are specified, the patch job targets only VMs with those
+// labels and in those zones.
 type PatchInstanceFilter struct {
 	// All: Target all VM instances in the project. If true, no other
-	// criteria is
-	// permitted.
+	// criteria is permitted.
 	All bool `json:"all,omitempty"`
 
 	// GroupLabels: Targets VM instances matching at least one of these
-	// label sets. This allows
-	// targeting of disparate groups, for example "env=prod or env=staging".
+	// label sets. This allows targeting of disparate groups, for example
+	// "env=prod or env=staging".
 	GroupLabels []*PatchInstanceFilterGroupLabel `json:"groupLabels,omitempty"`
 
 	// InstanceNamePrefixes: Targets VMs whose name starts with one of these
-	// prefixes. Similar to
-	// labels, this is another way to group VMs when targeting configs,
-	// for
-	// example prefix="prod-".
+	// prefixes. Similar to labels, this is another way to group VMs when
+	// targeting configs, for example prefix="prod-".
 	InstanceNamePrefixes []string `json:"instanceNamePrefixes,omitempty"`
 
 	// Instances: Targets any of the VM instances specified. Instances are
-	// specified by their
-	// URI in the form
+	// specified by their URI in the form
 	// `zones/[ZONE]/instances/[INSTANCE_NAME]`,
-	// `projects/[PROJECT_ID]/zones
-	// /[ZONE]/instances/[INSTANCE_NAME]`,
-	// or
-	// `https://www.googleapis.com/compute/v1/projects/[PROJECT_ID]/zones/
-	// [ZONE]/instances/[INSTANCE_NAME]`
+	// `projects/[PROJECT_ID]/zones/[ZONE]/instances/[INSTANCE_NAME]`, or
+	// `https://www.googleapis.com/compute/v1/projects/[PROJECT_ID]/zones/[ZO
+	// NE]/instances/[INSTANCE_NAME]`
 	Instances []string `json:"instances,omitempty"`
 
 	// Zones: Targets VM instances in ANY of these zones. Leave empty to
-	// target VM
-	// instances in any zone.
+	// target VM instances in any zone.
 	Zones []string `json:"zones,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "All") to
@@ -2240,12 +2072,11 @@ func (s *PatchInstanceFilter) MarshalJSON() ([]byte, error) {
 }
 
 // PatchInstanceFilterGroupLabel: Represents a group of VMs that can be
-// identified as having all these
-// labels, for example "env=prod and app=web".
+// identified as having all these labels, for example "env=prod and
+// app=web".
 type PatchInstanceFilterGroupLabel struct {
 	// Labels: Compute Engine instance labels that must be present for a VM
-	// instance to
-	// be targeted by this filter.
+	// instance to be targeted by this filter.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -2272,44 +2103,34 @@ func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 }
 
 // PatchJob: A high level representation of a patch job that is either
-// in progress
-// or has completed.
-//
-// Instance details are not included in the job. To paginate through
-// instance
-// details, use `ListPatchJobInstanceDetails`.
-//
-// For more information about patch jobs, see
-// [Creating
-// patch
-// jobs](https://cloud.google.com/compute/docs/os-patch-management/
-// create-patch-job).
+// in progress or has completed. Instance details are not included in
+// the job. To paginate through instance details, use
+// `ListPatchJobInstanceDetails`. For more information about patch jobs,
+// see [Creating patch
+// jobs](https://cloud.google.com/compute/docs/os-patch-management/create
+// -patch-job).
 type PatchJob struct {
 	// CreateTime: Time this patch job was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Description of the patch job. Length of the description
-	// is limited
-	// to 1024 characters.
+	// is limited to 1024 characters.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Display name for this patch job. This is not a unique
 	// identifier.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// DryRun: If this patch job is a dry run, the agent reports that it
-	// has
+	// DryRun: If this patch job is a dry run, the agent reports that it has
 	// finished without running any updates on the VM instance.
 	DryRun bool `json:"dryRun,omitempty"`
 
-	// Duration: Duration of the patch job. After the duration ends,
-	// the
+	// Duration: Duration of the patch job. After the duration ends, the
 	// patch job times out.
 	Duration string `json:"duration,omitempty"`
 
 	// ErrorMessage: If this patch job failed, this message provides
-	// information about the
-	// failure.
+	// information about the failure.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// InstanceDetailsSummary: Summary of instance details.
@@ -2318,8 +2139,7 @@ type PatchJob struct {
 	// InstanceFilter: Instances to patch.
 	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
 
-	// Name: Unique identifier for this patch job in the
-	// form
+	// Name: Unique identifier for this patch job in the form
 	// `projects/*/patchJobs/*`
 	Name string `json:"name,omitempty"`
 
@@ -2331,8 +2151,7 @@ type PatchJob struct {
 	PatchDeployment string `json:"patchDeployment,omitempty"`
 
 	// PercentComplete: Reflects the overall progress of the patch job in
-	// the range of
-	// 0.0 being no progress to 100.0 being complete.
+	// the range of 0.0 being no progress to 100.0 being complete.
 	PercentComplete float64 `json:"percentComplete,omitempty"`
 
 	// Rollout: Rollout strategy being applied.
@@ -2398,12 +2217,10 @@ func (s *PatchJob) UnmarshalJSON(data []byte) error {
 }
 
 // PatchJobInstanceDetails: Patch details for a VM instance. For more
-// information about reviewing VM
-// instance details, see
-// [Listing all VM instance details for a specific
-// patch
-// job](https://cloud.google.com/compute/docs/os-patch-management/m
-// anage-patch-jobs#list-instance-details).
+// information about reviewing VM instance details, see [Listing all VM
+// instance details for a specific patch
+// job](https://cloud.google.com/compute/docs/os-patch-management/manage-
+// patch-jobs#list-instance-details).
 type PatchJobInstanceDetails struct {
 	// AttemptCount: The number of times the agent that the agent attempts
 	// to apply the patch.
@@ -2413,8 +2230,7 @@ type PatchJobInstanceDetails struct {
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// InstanceSystemId: The unique identifier for the instance. This
-	// identifier is
-	// defined by the server.
+	// identifier is defined by the server.
 	InstanceSystemId string `json:"instanceSystemId,omitempty"`
 
 	// Name: The instance name in the form `projects/*/zones/*/instances/*`
@@ -2444,10 +2260,8 @@ type PatchJobInstanceDetails struct {
 	//   "RUNNING_POST_PATCH_STEP" - The instance is running the post-patch
 	// step.
 	//   "NO_AGENT_DETECTED" - The service could not detect the presence of
-	// the agent. Check to ensure
-	// that the agent is installed, running, and able to communicate with
-	// the
-	// service.
+	// the agent. Check to ensure that the agent is installed, running, and
+	// able to communicate with the service.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AttemptCount") to
@@ -2474,11 +2288,9 @@ func (s *PatchJobInstanceDetails) MarshalJSON() ([]byte, error) {
 }
 
 // PatchJobInstanceDetailsSummary: A summary of the current patch state
-// across all instances that this patch
-// job affects. Contains counts of instances in different states. These
-// states
-// map to `InstancePatchState`. List patch job instance details to see
-// the
+// across all instances that this patch job affects. Contains counts of
+// instances in different states. These states map to
+// `InstancePatchState`. List patch job instance details to see the
 // specific states of each instance.
 type PatchJobInstanceDetailsSummary struct {
 	// AckedInstanceCount: Number of instances that have acked and will
@@ -2500,10 +2312,8 @@ type PatchJobInstanceDetailsSummary struct {
 	InactiveInstanceCount int64 `json:"inactiveInstanceCount,omitempty,string"`
 
 	// NoAgentDetectedInstanceCount: Number of instances that do not appear
-	// to be running the agent. Check to
-	// ensure that the agent is installed, running, and able to communicate
-	// with
-	// the service.
+	// to be running the agent. Check to ensure that the agent is installed,
+	// running, and able to communicate with the service.
 	NoAgentDetectedInstanceCount int64 `json:"noAgentDetectedInstanceCount,omitempty,string"`
 
 	// NotifiedInstanceCount: Number of instances notified about patch job.
@@ -2563,46 +2373,29 @@ func (s *PatchJobInstanceDetailsSummary) MarshalJSON() ([]byte, error) {
 }
 
 // PatchRollout: Patch rollout configuration specifications. Contains
-// details on the
-// concurrency control when applying patch(es) to all targeted VMs.
+// details on the concurrency control when applying patch(es) to all
+// targeted VMs.
 type PatchRollout struct {
 	// DisruptionBudget: The maximum number (or percentage) of VMs per zone
-	// to disrupt at any given
-	// moment. The number of VMs calculated from multiplying the percentage
-	// by the
-	// total number of VMs in a zone is rounded up.
-	//
-	// During patching, a VM is considered disrupted from the time the agent
-	// is
-	// notified to begin until patching has completed. This disruption
-	// time
-	// includes the time to complete reboot and any post-patch steps.
-	//
-	// A VM contributes to the disruption budget if its patching operation
-	// fails
-	// either when applying the patches, running pre or post patch steps, or
-	// if it
-	// fails to respond with a success notification before timing out. VMs
-	// that
-	// are not running or do not have an active agent do not count toward
-	// this
-	// disruption budget.
-	//
-	// For zone-by-zone rollouts, if the disruption budget in a zone is
-	// exceeded,
-	// the patch job stops, because continuing to the next zone
-	// requires
-	// completion of the patch process in the previous zone.
-	//
-	// For example, if the disruption budget has a fixed value of `10`, and
-	// 8 VMs
-	// fail to patch in the current zone, the patch job continues to patch 2
-	// VMs
-	// at a time until the zone is completed. When that zone is
-	// completed
-	// successfully, patching begins with 10 VMs at a time in the next zone.
-	// If 10
-	// VMs in the next zone fail to patch, the patch job stops.
+	// to disrupt at any given moment. The number of VMs calculated from
+	// multiplying the percentage by the total number of VMs in a zone is
+	// rounded up. During patching, a VM is considered disrupted from the
+	// time the agent is notified to begin until patching has completed.
+	// This disruption time includes the time to complete reboot and any
+	// post-patch steps. A VM contributes to the disruption budget if its
+	// patching operation fails either when applying the patches, running
+	// pre or post patch steps, or if it fails to respond with a success
+	// notification before timing out. VMs that are not running or do not
+	// have an active agent do not count toward this disruption budget. For
+	// zone-by-zone rollouts, if the disruption budget in a zone is
+	// exceeded, the patch job stops, because continuing to the next zone
+	// requires completion of the patch process in the previous zone. For
+	// example, if the disruption budget has a fixed value of `10`, and 8
+	// VMs fail to patch in the current zone, the patch job continues to
+	// patch 2 VMs at a time until the zone is completed. When that zone is
+	// completed successfully, patching begins with 10 VMs at a time in the
+	// next zone. If 10 VMs in the next zone fail to patch, the patch job
+	// stops.
 	DisruptionBudget *FixedOrPercent `json:"disruptionBudget,omitempty"`
 
 	// Mode: Mode of the patch rollout.
@@ -2610,16 +2403,11 @@ type PatchRollout struct {
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Mode must be specified.
 	//   "ZONE_BY_ZONE" - Patches are applied one zone at a time. The patch
-	// job begins in the
-	// region with the lowest number of targeted VMs. Within the
-	// region,
-	// patching begins in the zone with the lowest number of targeted VMs.
-	// If
-	// multiple regions (or zones within a region) have the same number
-	// of
-	// targeted VMs, a tie-breaker is achieved by sorting the regions or
-	// zones
-	// in alphabetical order.
+	// job begins in the region with the lowest number of targeted VMs.
+	// Within the region, patching begins in the zone with the lowest number
+	// of targeted VMs. If multiple regions (or zones within a region) have
+	// the same number of targeted VMs, a tie-breaker is achieved by sorting
+	// the regions or zones in alphabetical order.
 	//   "CONCURRENT_ZONES" - Patches are applied to VMs in all zones at the
 	// same time.
 	Mode string `json:"mode,omitempty"`
@@ -2651,8 +2439,7 @@ func (s *PatchRollout) MarshalJSON() ([]byte, error) {
 // RecurringSchedule: Sets the time for recurring patch deployments.
 type RecurringSchedule struct {
 	// EndTime: Optional. The end time at which a recurring patch deployment
-	// schedule is no longer
-	// active.
+	// schedule is no longer active.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Frequency: Required. The frequency unit of this recurring schedule.
@@ -2660,11 +2447,9 @@ type RecurringSchedule struct {
 	// Possible values:
 	//   "FREQUENCY_UNSPECIFIED" - Invalid. A frequency must be specified.
 	//   "WEEKLY" - Indicates that the frequency should be expressed in
-	// terms of
-	// weeks.
+	// terms of weeks.
 	//   "MONTHLY" - Indicates that the frequency should be expressed in
-	// terms of
-	// months.
+	// terms of months.
 	Frequency string `json:"frequency,omitempty"`
 
 	// LastExecuteTime: Output only. The time the last patch job ran
@@ -2679,17 +2464,15 @@ type RecurringSchedule struct {
 	NextExecuteTime string `json:"nextExecuteTime,omitempty"`
 
 	// StartTime: Optional. The time that the recurring schedule becomes
-	// effective.
-	// Defaults to `create_time` of the patch deployment.
+	// effective. Defaults to `create_time` of the patch deployment.
 	StartTime string `json:"startTime,omitempty"`
 
 	// TimeOfDay: Required. Time of the day to run a recurring deployment.
 	TimeOfDay *TimeOfDay `json:"timeOfDay,omitempty"`
 
 	// TimeZone: Required. Defines the time zone that `time_of_day` is
-	// relative to.
-	// The rules for daylight saving time are determined by the chosen time
-	// zone.
+	// relative to. The rules for daylight saving time are determined by the
+	// chosen time zone.
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
 
 	// Weekly: Required. Schedule with weekly executions.
@@ -2756,9 +2539,8 @@ func (s *RepositoryResource) MarshalJSON() ([]byte, error) {
 }
 
 // RepositoryResourceAptRepository: Represents a single apt package
-// repository. These will be added to a repo
-// file that will be managed at
-// /etc/apt/sources.list.d/google_osconfig.list.
+// repository. These will be added to a repo file that will be managed
+// at /etc/apt/sources.list.d/google_osconfig.list.
 type RepositoryResourceAptRepository struct {
 	// ArchiveType: Type of archive files in this repository. The default
 	// behavior is DEB.
@@ -2778,8 +2560,8 @@ type RepositoryResourceAptRepository struct {
 	Distribution string `json:"distribution,omitempty"`
 
 	// GpgKey: URI of the key file for this repository. The agent will
-	// maintain
-	// a keyring at /etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg.
+	// maintain a keyring at
+	// /etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg.
 	GpgKey string `json:"gpgKey,omitempty"`
 
 	// Uri: URI for this repository.
@@ -2809,8 +2591,7 @@ func (s *RepositoryResourceAptRepository) MarshalJSON() ([]byte, error) {
 }
 
 // RepositoryResourceGooRepository: Represents a Goo package repository.
-// These will be added to a repo file
-// that will be managed at
+// These will be added to a repo file that will be managed at
 // C:/ProgramData/GooGet/repos/google_osconfig.repo.
 type RepositoryResourceGooRepository struct {
 	// Name: The name of the repository.
@@ -2843,8 +2624,8 @@ func (s *RepositoryResourceGooRepository) MarshalJSON() ([]byte, error) {
 }
 
 // RepositoryResourceYumRepository: Represents a single yum package
-// repository. These will be added to a repo
-// file that will be managed at /etc/yum.repos.d/google_osconfig.repo.
+// repository. These will be added to a repo file that will be managed
+// at /etc/yum.repos.d/google_osconfig.repo.
 type RepositoryResourceYumRepository struct {
 	// BaseUrl: The location of the repository directory.
 	BaseUrl string `json:"baseUrl,omitempty"`
@@ -2855,12 +2636,10 @@ type RepositoryResourceYumRepository struct {
 	// GpgKeys: URIs of GPG keys.
 	GpgKeys []string `json:"gpgKeys,omitempty"`
 
-	// Id: A one word, unique name for this repository. This will be
-	// the `repo id` in the yum config file and also the `display_name`
-	// if
+	// Id: A one word, unique name for this repository. This will be the
+	// `repo id` in the yum config file and also the `display_name` if
 	// `display_name` is omitted. This id is also used as the unique
-	// identifier
-	// when checking for resource conflicts.
+	// identifier when checking for resource conflicts.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
@@ -2887,9 +2666,8 @@ func (s *RepositoryResourceYumRepository) MarshalJSON() ([]byte, error) {
 }
 
 // RepositoryResourceZypperRepository: Represents a single zypper
-// package repository. These will be added to a
-// repo file that will be managed at
-// /etc/zypp/repos.d/google_osconfig.repo.
+// package repository. These will be added to a repo file that will be
+// managed at /etc/zypp/repos.d/google_osconfig.repo.
 type RepositoryResourceZypperRepository struct {
 	// BaseUrl: The location of the repository directory.
 	BaseUrl string `json:"baseUrl,omitempty"`
@@ -2900,12 +2678,10 @@ type RepositoryResourceZypperRepository struct {
 	// GpgKeys: URIs of GPG keys.
 	GpgKeys []string `json:"gpgKeys,omitempty"`
 
-	// Id: A one word, unique name for this repository. This will be
-	// the `repo id` in the zypper config file and also the `display_name`
-	// if
+	// Id: A one word, unique name for this repository. This will be the
+	// `repo id` in the zypper config file and also the `display_name` if
 	// `display_name` is omitted. This id is also used as the unique
-	// identifier
-	// when checking for GuestPolicy conflicts.
+	// identifier when checking for GuestPolicy conflicts.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
@@ -2936,96 +2712,64 @@ type ServiceResource struct {
 }
 
 // SoftwareRecipe: A software recipe is a set of instructions for
-// installing and configuring a
-// piece of software. It consists of a set of artifacts that
-// are
-// downloaded, and a set of steps that install, configure, and/or update
-// the
-// software.
-//
-// Recipes support installing and updating software from artifacts in
-// the
-// following formats:
-// Zip archive, Tar archive, Windows MSI, Debian package, and RPM
-// package.
-//
+// installing and configuring a piece of software. It consists of a set
+// of artifacts that are downloaded, and a set of steps that install,
+// configure, and/or update the software. Recipes support installing and
+// updating software from artifacts in the following formats: Zip
+// archive, Tar archive, Windows MSI, Debian package, and RPM package.
 // Additionally, recipes support executing a script (either defined in a
-// file or
-// directly in this api) in bash, sh, cmd, and powershell.
-//
-// Updating a software recipe
-//
-// If a recipe is assigned to an instance and there is a recipe with the
-// same
-// name but a lower version already installed and the assigned state
-// of the recipe is `UPDATED`, then the recipe is updated to
-// the new version.
-//
-// Script Working Directories
-//
-// Each script or execution step is run in its own temporary directory
-// which
+// file or directly in this api) in bash, sh, cmd, and powershell.
+// Updating a software recipe If a recipe is assigned to an instance and
+// there is a recipe with the same name but a lower version already
+// installed and the assigned state of the recipe is `UPDATED`, then the
+// recipe is updated to the new version. Script Working Directories Each
+// script or execution step is run in its own temporary directory which
 // is deleted after completing the step.
 type SoftwareRecipe struct {
 	// Artifacts: Resources available to be used in the steps in the recipe.
 	Artifacts []*SoftwareRecipeArtifact `json:"artifacts,omitempty"`
 
 	// DesiredState: Default is INSTALLED. The desired state the agent
-	// should maintain for this
-	// recipe.
-	//
-	// INSTALLED: The software recipe is installed on the instance but
-	//            won't be updated to new versions.
+	// should maintain for this recipe. INSTALLED: The software recipe is
+	// installed on the instance but won't be updated to new versions.
 	// UPDATED: The software recipe is installed on the instance. The recipe
-	// is
-	//          updated to a higher version, if a higher version of the
-	// recipe is
-	//          assigned to this instance.
-	// REMOVE: Remove is unsupported for software recipes and attempts to
-	//         create or update a recipe to the REMOVE state is rejected.
+	// is updated to a higher version, if a higher version of the recipe is
+	// assigned to this instance. REMOVE: Remove is unsupported for software
+	// recipes and attempts to create or update a recipe to the REMOVE state
+	// is rejected.
 	//
 	// Possible values:
 	//   "DESIRED_STATE_UNSPECIFIED" - The default is to ensure the package
 	// is installed.
 	//   "INSTALLED" - The agent ensures that the package is installed.
-	//   "UPDATED" - The agent ensures that the package is installed
-	// and
+	//   "UPDATED" - The agent ensures that the package is installed and
 	// periodically checks for and install any updates.
 	//   "REMOVED" - The agent ensures that the package is not installed and
-	// uninstall it
-	// if detected.
+	// uninstall it if detected.
 	DesiredState string `json:"desiredState,omitempty"`
 
 	// InstallSteps: Actions to be taken for installing this recipe. On
-	// failure it stops
-	// executing steps and does not attempt another installation. Any steps
-	// taken
-	// (including partially completed steps) are not rolled back.
+	// failure it stops executing steps and does not attempt another
+	// installation. Any steps taken (including partially completed steps)
+	// are not rolled back.
 	InstallSteps []*SoftwareRecipeStep `json:"installSteps,omitempty"`
 
 	// Name: Required. Unique identifier for the recipe. Only one recipe
-	// with a given name is
-	// installed on an instance.
-	//
-	// Names are also used to identify resources which helps to determine
-	// whether
-	// guest policies have conflicts. This means that requests to create
-	// multiple
-	// recipes with the same name and version are rejected since they
-	// could potentially have conflicting assignments.
+	// with a given name is installed on an instance. Names are also used to
+	// identify resources which helps to determine whether guest policies
+	// have conflicts. This means that requests to create multiple recipes
+	// with the same name and version are rejected since they could
+	// potentially have conflicting assignments.
 	Name string `json:"name,omitempty"`
 
 	// UpdateSteps: Actions to be taken for updating this recipe. On failure
-	// it stops
-	// executing steps and  does not attempt another update for this recipe.
-	// Any
-	// steps taken (including partially completed steps) are not rolled
-	// back.
+	// it stops executing steps and does not attempt another update for this
+	// recipe. Any steps taken (including partially completed steps) are not
+	// rolled back.
 	UpdateSteps []*SoftwareRecipeStep `json:"updateSteps,omitempty"`
 
 	// Version: The version of this software recipe. Version can be up to 4
-	// period
-	// separated numbers (e.g. 12.34.56.78).
+	// period separated numbers (e.g. 12.34.56.78).
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Artifacts") to
@@ -3055,21 +2799,17 @@ func (s *SoftwareRecipe) MarshalJSON() ([]byte, error) {
 // recipe.
 type SoftwareRecipeArtifact struct {
 	// AllowInsecure: Defaults to false. When false, recipes are subject to
-	// validations
-	// based on the artifact type:
-	//
-	// Remote: A checksum must be specified, and only protocols
-	// with
-	// transport-layer security are permitted.
-	// GCS:    An object generation number must be specified.
+	// validations based on the artifact type: Remote: A checksum must be
+	// specified, and only protocols with transport-layer security are
+	// permitted. GCS: An object generation number must be specified.
 	AllowInsecure bool `json:"allowInsecure,omitempty"`
 
 	// Gcs: A Google Cloud Storage artifact.
 	Gcs *SoftwareRecipeArtifactGcs `json:"gcs,omitempty"`
 
 	// Id: Required. Id of the artifact, which the installation and update
-	// steps of this
-	// recipe can reference. Artifacts in a recipe cannot have the same id.
+	// steps of this recipe can reference. Artifacts in a recipe cannot have
+	// the same id.
 	Id string `json:"id,omitempty"`
 
 	// Remote: A generic remote artifact.
@@ -3101,30 +2841,22 @@ func (s *SoftwareRecipeArtifact) MarshalJSON() ([]byte, error) {
 // SoftwareRecipeArtifactGcs: Specifies an artifact available as a
 // Google Cloud Storage object.
 type SoftwareRecipeArtifactGcs struct {
-	// Bucket: Bucket of the Google Cloud Storage object.
-	// Given an example
-	// URL:
-	// `https://storage.googleapis.com/my-bucket/foo/bar#1234567`
-	// this value would be `my-bucket`.
+	// Bucket: Bucket of the Google Cloud Storage object. Given an example
+	// URL: `https://storage.googleapis.com/my-bucket/foo/bar#1234567` this
+	// value would be `my-bucket`.
 	Bucket string `json:"bucket,omitempty"`
 
-	// Generation: Must be provided if allow_insecure is false.
-	// Generation number of the Google Cloud Storage
-	// object.
-	// `https://storage.googleapis.com/my-bucket/foo/bar#1234567`
-	// thi
-	// s value would be `1234567`.
+	// Generation: Must be provided if allow_insecure is false. Generation
+	// number of the Google Cloud Storage object.
+	// `https://storage.googleapis.com/my-bucket/foo/bar#1234567` this value
+	// would be `1234567`.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Object: Name of the Google Cloud Storage object.
-	// As specified
-	// [here]
-	// (https://cloud.google.com/storage/docs/naming#objectnames)
-	// Give
-	// n an example
-	// URL:
-	// `https://storage.googleapis.com/my-bucket/foo/bar#1234567`
-	// this value would be `foo/bar`.
+	// Object: Name of the Google Cloud Storage object. As specified [here]
+	// (https://cloud.google.com/storage/docs/naming#objectnames) Given an
+	// example URL:
+	// `https://storage.googleapis.com/my-bucket/foo/bar#1234567` this value
+	// would be `foo/bar`.
 	Object string `json:"object,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -3153,19 +2885,14 @@ func (s *SoftwareRecipeArtifactGcs) MarshalJSON() ([]byte, error) {
 // SoftwareRecipeArtifactRemote: Specifies an artifact available via
 // some URI.
 type SoftwareRecipeArtifactRemote struct {
-	// Checksum: Must be provided if `allow_insecure` is `false`.
-	// SHA256 checksum in hex format, to compare to the checksum of
-	// the
-	// artifact. If the checksum is not empty and it doesn't match
-	// the
-	// artifact then the recipe installation fails before running any of
-	// the
-	// steps.
+	// Checksum: Must be provided if `allow_insecure` is `false`. SHA256
+	// checksum in hex format, to compare to the checksum of the artifact.
+	// If the checksum is not empty and it doesn't match the artifact then
+	// the recipe installation fails before running any of the steps.
 	Checksum string `json:"checksum,omitempty"`
 
 	// Uri: URI from which to fetch the object. It should contain both the
-	// protocol
-	// and path following the format {protocol}://{location}.
+	// protocol and path following the format {protocol}://{location}.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Checksum") to
@@ -3250,30 +2977,19 @@ type SoftwareRecipeStepCopyFile struct {
 	Destination string `json:"destination,omitempty"`
 
 	// Overwrite: Whether to allow this step to overwrite existing files. If
-	// this is
-	// false and the file already exists the file is not overwritten
+	// this is false and the file already exists the file is not overwritten
 	// and the step is considered a success. Defaults to false.
 	Overwrite bool `json:"overwrite,omitempty"`
 
-	// Permissions: Consists of three octal digits which represent,
-	// in
-	// order, the permissions of the owner, group, and other users for
-	// the
-	// file (similarly to the numeric mode used in the linux chmod
-	// utility).
-	// Each digit represents a three bit number with the 4 bit
-	// corresponding to the read permissions, the 2 bit corresponds to
-	// the
-	// write bit, and the one bit corresponds to the execute
-	// permission.
-	// Default behavior is 755.
-	//
-	// Below are some examples of permissions and their associated
-	// values:
-	// read, write, and execute: 7
-	// read and execute: 5
-	// read and write: 6
-	// read only: 4
+	// Permissions: Consists of three octal digits which represent, in
+	// order, the permissions of the owner, group, and other users for the
+	// file (similarly to the numeric mode used in the linux chmod utility).
+	// Each digit represents a three bit number with the 4 bit corresponding
+	// to the read permissions, the 2 bit corresponds to the write bit, and
+	// the one bit corresponds to the execute permission. Default behavior
+	// is 755. Below are some examples of permissions and their associated
+	// values: read, write, and execute: 7 read and execute: 5 read and
+	// write: 6 read only: 4
 	Permissions string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
@@ -3302,8 +3018,7 @@ func (s *SoftwareRecipeStepCopyFile) MarshalJSON() ([]byte, error) {
 // SoftwareRecipeStepExecFile: Executes an artifact or local file.
 type SoftwareRecipeStepExecFile struct {
 	// AllowedExitCodes: Defaults to [0]. A list of possible return values
-	// that the program
-	// can return to indicate a success.
+	// that the program can return to indicate a success.
 	AllowedExitCodes []int64 `json:"allowedExitCodes,omitempty"`
 
 	// Args: Arguments to be passed to the provided executable.
@@ -3345,8 +3060,8 @@ type SoftwareRecipeStepExtractArchive struct {
 	// ArtifactId: Required. The id of the relevant artifact in the recipe.
 	ArtifactId string `json:"artifactId,omitempty"`
 
-	// Destination: Directory to extract archive to.
-	// Defaults to `/` on Linux or `C:\` on Windows.
+	// Destination: Directory to extract archive to. Defaults to `/` on
+	// Linux or `C:\` on Windows.
 	Destination string `json:"destination,omitempty"`
 
 	// Type: Required. The type of the archive to extract.
@@ -3421,15 +3136,14 @@ func (s *SoftwareRecipeStepInstallDpkg) MarshalJSON() ([]byte, error) {
 // SoftwareRecipeStepInstallMsi: Installs an MSI file.
 type SoftwareRecipeStepInstallMsi struct {
 	// AllowedExitCodes: Return codes that indicate that the software
-	// installed or updated
-	// successfully. Behaviour defaults to [0]
+	// installed or updated successfully. Behaviour defaults to [0]
 	AllowedExitCodes []int64 `json:"allowedExitCodes,omitempty"`
 
 	// ArtifactId: Required. The id of the relevant artifact in the recipe.
 	ArtifactId string `json:"artifactId,omitempty"`
 
-	// Flags: The flags to use when installing the MSI
-	// defaults to ["/i"] (i.e. the install flag).
+	// Flags: The flags to use when installing the MSI defaults to ["/i"]
+	// (i.e. the install flag).
 	Flags []string `json:"flags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedExitCodes") to
@@ -3488,21 +3202,18 @@ func (s *SoftwareRecipeStepInstallRpm) MarshalJSON() ([]byte, error) {
 // SoftwareRecipeStepRunScript: Runs a script through an interpreter.
 type SoftwareRecipeStepRunScript struct {
 	// AllowedExitCodes: Return codes that indicate that the software
-	// installed or updated
-	// successfully. Behaviour defaults to [0]
+	// installed or updated successfully. Behaviour defaults to [0]
 	AllowedExitCodes []int64 `json:"allowedExitCodes,omitempty"`
 
 	// Interpreter: The script interpreter to use to run the script. If no
-	// interpreter is
-	// specified the script is executed directly, which likely
-	// only succeed for scripts with
-	// [shebang lines](https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
+	// interpreter is specified the script is executed directly, which
+	// likely only succeed for scripts with [shebang
+	// lines](https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
 	//   "INTERPRETER_UNSPECIFIED" - Default value for ScriptType.
 	//   "SHELL" - Indicates that the script is run with `/bin/sh` on Linux
-	// and `cmd`
-	// on windows.
+	// and `cmd` on windows.
 	//   "POWERSHELL" - Indicates that the script is run with powershell.
 	Interpreter string `json:"interpreter,omitempty"`
 
@@ -3534,15 +3245,13 @@ func (s *SoftwareRecipeStepRunScript) MarshalJSON() ([]byte, error) {
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are
-// either not significant
-// or are specified elsewhere. An API may choose to allow leap seconds.
-// Related
-// types are google.type.Date and `google.protobuf.Timestamp`.
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
 type TimeOfDay struct {
 	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
-	// may choose
-	// to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
 	Hours int64 `json:"hours,omitempty"`
 
 	// Minutes: Minutes of hour of day. Must be from 0 to 59.
@@ -3553,8 +3262,7 @@ type TimeOfDay struct {
 	Nanos int64 `json:"nanos,omitempty"`
 
 	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
-	// 59. An API may
-	// allow the value 60 if it allows leap-seconds.
+	// 59. An API may allow the value 60 if it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
@@ -3580,8 +3288,8 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: Represents a time zone from the
-// [IANA Time Zone Database](https://www.iana.org/time-zones).
+// TimeZone: Represents a time zone from the [IANA Time Zone
+// Database](https://www.iana.org/time-zones).
 type TimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`
@@ -3630,8 +3338,7 @@ type WeekDayOfMonth struct {
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// WeekOrdinal: Required. Week number in a month. 1-4 indicates the 1st
-	// to 4th week of the month. -1
-	// indicates the last week of the month.
+	// to 4th week of the month. -1 indicates the last week of the month.
 	WeekOrdinal int64 `json:"weekOrdinal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
@@ -3699,67 +3406,50 @@ func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
 // Windows Update Agent.
 type WindowsUpdateSettings struct {
 	// Classifications: Only apply updates of these windows update
-	// classifications. If empty, all
-	// updates are applied.
+	// classifications. If empty, all updates are applied.
 	//
 	// Possible values:
 	//   "CLASSIFICATION_UNSPECIFIED" - Invalid. If classifications are
 	// included, they must be specified.
 	//   "CRITICAL" - "A widely released fix for a specific problem that
-	// addresses a critical,
-	// non-security-related bug." [1]
+	// addresses a critical, non-security-related bug." [1]
 	//   "SECURITY" - "A widely released fix for a product-specific,
-	// security-related
-	// vulnerability. Security vulnerabilities are rated by their severity.
-	// The
-	// severity rating is indicated in the Microsoft security bulletin
-	// as
-	// critical, important, moderate, or low." [1]
+	// security-related vulnerability. Security vulnerabilities are rated by
+	// their severity. The severity rating is indicated in the Microsoft
+	// security bulletin as critical, important, moderate, or low." [1]
 	//   "DEFINITION" - "A widely released and frequent software update that
-	// contains additions
-	// to a product's definition database. Definition databases are often
-	// used
-	// to detect objects that have specific attributes, such as malicious
-	// code,
-	// phishing websites, or junk mail." [1]
+	// contains additions to a product's definition database. Definition
+	// databases are often used to detect objects that have specific
+	// attributes, such as malicious code, phishing websites, or junk mail."
+	// [1]
 	//   "DRIVER" - "Software that controls the input and output of a
 	// device." [1]
 	//   "FEATURE_PACK" - "New product functionality that is first
-	// distributed outside the context
-	// of a product release and that is typically included in the next
-	// full
-	// product release." [1]
+	// distributed outside the context of a product release and that is
+	// typically included in the next full product release." [1]
 	//   "SERVICE_PACK" - "A tested, cumulative set of all hotfixes,
-	// security updates, critical
-	// updates, and updates. Additionally, service packs may contain
-	// additional
-	// fixes for problems that are found internally since the release of
-	// the
-	// product. Service packs my also contain a limited number
-	// of
-	// customer-requested design changes or features." [1]
+	// security updates, critical updates, and updates. Additionally,
+	// service packs may contain additional fixes for problems that are
+	// found internally since the release of the product. Service packs my
+	// also contain a limited number of customer-requested design changes or
+	// features." [1]
 	//   "TOOL" - "A utility or feature that helps complete a task or set of
 	// tasks." [1]
 	//   "UPDATE_ROLLUP" - "A tested, cumulative set of hotfixes, security
-	// updates, critical
-	// updates, and updates that are packaged together for easy deployment.
-	// A
-	// rollup generally targets a specific area, such as security, or
-	// a
-	// component of a product, such as Internet Information Services (IIS)."
-	// [1]
+	// updates, critical updates, and updates that are packaged together for
+	// easy deployment. A rollup generally targets a specific area, such as
+	// security, or a component of a product, such as Internet Information
+	// Services (IIS)." [1]
 	//   "UPDATE" - "A widely released fix for a specific problem. An update
-	// addresses a
-	// noncritical, non-security-related bug." [1]
+	// addresses a noncritical, non-security-related bug." [1]
 	Classifications []string `json:"classifications,omitempty"`
 
 	// Excludes: List of KBs to exclude from update.
 	Excludes []string `json:"excludes,omitempty"`
 
 	// ExclusivePatches: An exclusive list of kbs to be updated. These are
-	// the only patches
-	// that will be updated. This field must not be used with other
-	// patch configurations.
+	// the only patches that will be updated. This field must not be used
+	// with other patch configurations.
 	ExclusivePatches []string `json:"exclusivePatches,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Classifications") to
@@ -3787,8 +3477,8 @@ func (s *WindowsUpdateSettings) MarshalJSON() ([]byte, error) {
 }
 
 // YumRepository: Represents a single Yum package repository. This
-// repository is added to a
-// repo file that is stored at `/etc/yum.repos.d/google_osconfig.repo`.
+// repository is added to a repo file that is stored at
+// `/etc/yum.repos.d/google_osconfig.repo`.
 type YumRepository struct {
 	// BaseUrl: Required. The location of the repository directory.
 	BaseUrl string `json:"baseUrl,omitempty"`
@@ -3799,13 +3489,10 @@ type YumRepository struct {
 	// GpgKeys: URIs of GPG keys.
 	GpgKeys []string `json:"gpgKeys,omitempty"`
 
-	// Id: Required. A one word, unique name for this repository. This
-	// is
-	// the `repo id` in the Yum config file and also the `display_name`
-	// if
+	// Id: Required. A one word, unique name for this repository. This is
+	// the `repo id` in the Yum config file and also the `display_name` if
 	// `display_name` is omitted. This id is also used as the unique
-	// identifier
-	// when checking for guest policy conflicts.
+	// identifier when checking for guest policy conflicts.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
@@ -3832,31 +3519,24 @@ func (s *YumRepository) MarshalJSON() ([]byte, error) {
 }
 
 // YumSettings: Yum patching is performed by executing `yum update`.
-// Additional options
-// can be set to control how this is executed.
-//
-// Note that not all settings are supported on all platforms.
+// Additional options can be set to control how this is executed. Note
+// that not all settings are supported on all platforms.
 type YumSettings struct {
 	// Excludes: List of packages to exclude from update. These packages are
-	// excluded by
-	// using the yum `--exclude` flag.
+	// excluded by using the yum `--exclude` flag.
 	Excludes []string `json:"excludes,omitempty"`
 
 	// ExclusivePackages: An exclusive list of packages to be updated. These
-	// are the only packages
-	// that will be updated. If these packages are not installed, they will
-	// be
-	// ignored. This field must not be specified with any other
-	// patch
-	// configuration fields.
+	// are the only packages that will be updated. If these packages are not
+	// installed, they will be ignored. This field must not be specified
+	// with any other patch configuration fields.
 	ExclusivePackages []string `json:"exclusivePackages,omitempty"`
 
 	// Minimal: Will cause patch to run `yum update-minimal` instead.
 	Minimal bool `json:"minimal,omitempty"`
 
 	// Security: Adds the `--security` flag to `yum update`. Not supported
-	// on
-	// all platforms.
+	// on all platforms.
 	Security bool `json:"security,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Excludes") to
@@ -3883,8 +3563,8 @@ func (s *YumSettings) MarshalJSON() ([]byte, error) {
 }
 
 // ZypperRepository: Represents a single Zypper package repository. This
-// repository is added to a
-// repo file that is stored at `/etc/zypp/repos.d/google_osconfig.repo`.
+// repository is added to a repo file that is stored at
+// `/etc/zypp/repos.d/google_osconfig.repo`.
 type ZypperRepository struct {
 	// BaseUrl: Required. The location of the repository directory.
 	BaseUrl string `json:"baseUrl,omitempty"`
@@ -3895,13 +3575,10 @@ type ZypperRepository struct {
 	// GpgKeys: URIs of GPG keys.
 	GpgKeys []string `json:"gpgKeys,omitempty"`
 
-	// Id: Required. A one word, unique name for this repository. This
-	// is
+	// Id: Required. A one word, unique name for this repository. This is
 	// the `repo id` in the zypper config file and also the `display_name`
-	// if
-	// `display_name` is omitted. This id is also used as the unique
-	// identifier
-	// when checking for guest policy conflicts.
+	// if `display_name` is omitted. This id is also used as the unique
+	// identifier when checking for guest policy conflicts.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseUrl") to
@@ -3928,26 +3605,23 @@ func (s *ZypperRepository) MarshalJSON() ([]byte, error) {
 }
 
 // ZypperSettings: Zypper patching is performed by running `zypper
-// patch`.
-// See also https://en.opensuse.org/SDB:Zypper_manual.
+// patch`. See also https://en.opensuse.org/SDB:Zypper_manual.
 type ZypperSettings struct {
-	// Categories: Install only patches with these categories.
-	// Common categories include security, recommended, and feature.
+	// Categories: Install only patches with these categories. Common
+	// categories include security, recommended, and feature.
 	Categories []string `json:"categories,omitempty"`
 
 	// Excludes: List of patches to exclude from update.
 	Excludes []string `json:"excludes,omitempty"`
 
 	// ExclusivePatches: An exclusive list of patches to be updated. These
-	// are the only patches
-	// that will be installed using 'zypper patch patch:<patch_name>'
-	// command.
-	// This field must not be used with any other patch configuration
-	// fields.
+	// are the only patches that will be installed using 'zypper patch
+	// patch:' command. This field must not be used with any other patch
+	// configuration fields.
 	ExclusivePatches []string `json:"exclusivePatches,omitempty"`
 
-	// Severities: Install only patches with these severities.
-	// Common severities include critical, important, moderate, and low.
+	// Severities: Install only patches with these severities. Common
+	// severities include critical, important, moderate, and low.
 	Severities []string `json:"severities,omitempty"`
 
 	// WithOptional: Adds the `--with-optional` flag to `zypper patch`.
@@ -3999,14 +3673,11 @@ func (r *ProjectsGuestPoliciesService) Create(parent string, guestpolicy *GuestP
 }
 
 // GuestPolicyId sets the optional parameter "guestPolicyId": Required.
-// The logical name of the guest policy in the project
-// with the following restrictions:
-//
-// * Must contain only lowercase letters, numbers, and hyphens.
-// * Must start with a letter.
-// * Must be between 1-63 characters.
-// * Must end with a number or a letter.
-// * Must be unique within the project.
+// The logical name of the guest policy in the project with the
+// following restrictions: * Must contain only lowercase letters,
+// numbers, and hyphens. * Must start with a letter. * Must be between
+// 1-63 characters. * Must end with a number or a letter. * Must be
+// unique within the project.
 func (c *ProjectsGuestPoliciesCreateCall) GuestPolicyId(guestPolicyId string) *ProjectsGuestPoliciesCreateCall {
 	c.urlParams_.Set("guestPolicyId", guestPolicyId)
 	return c
@@ -4039,7 +3710,7 @@ func (c *ProjectsGuestPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,12 +3783,12 @@ func (c *ProjectsGuestPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Gue
 	//   ],
 	//   "parameters": {
 	//     "guestPolicyId": {
-	//       "description": "Required. The logical name of the guest policy in the project\nwith the following restrictions:\n\n* Must contain only lowercase letters, numbers, and hyphens.\n* Must start with a letter.\n* Must be between 1-63 characters.\n* Must end with a number or a letter.\n* Must be unique within the project.",
+	//       "description": "Required. The logical name of the guest policy in the project with the following restrictions: * Must contain only lowercase letters, numbers, and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the project.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent using one of the following forms:\n`projects/{project_number}`.",
+	//       "description": "Required. The resource name of the parent using one of the following forms: `projects/{project_number}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4182,7 +3853,7 @@ func (c *ProjectsGuestPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4250,7 +3921,7 @@ func (c *ProjectsGuestPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the guest policy  using one of the following forms:\n`projects/{project_number}/guestPolicies/{guest_policy_id}`.",
+	//       "description": "Required. The resource name of the guest policy using one of the following forms: `projects/{project_number}/guestPolicies/{guest_policy_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/guestPolicies/[^/]+$",
 	//       "required": true,
@@ -4323,7 +3994,7 @@ func (c *ProjectsGuestPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4394,7 +4065,7 @@ func (c *ProjectsGuestPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GuestP
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the guest policy using one of the following forms:\n`projects/{project_number}/guestPolicies/{guest_policy_id}`.",
+	//       "description": "Required. The resource name of the guest policy using one of the following forms: `projects/{project_number}/guestPolicies/{guest_policy_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/guestPolicies/[^/]+$",
 	//       "required": true,
@@ -4438,8 +4109,8 @@ func (c *ProjectsGuestPoliciesListCall) PageSize(pageSize int64) *ProjectsGuestP
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to `ListGuestPolicies`
-// that indicates where this listing should continue from.
+// returned from a previous call to `ListGuestPolicies` that indicates
+// where this listing should continue from.
 func (c *ProjectsGuestPoliciesListCall) PageToken(pageToken string) *ProjectsGuestPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4482,7 +4153,7 @@ func (c *ProjectsGuestPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4559,12 +4230,12 @@ func (c *ProjectsGuestPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListG
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to `ListGuestPolicies`\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to `ListGuestPolicies` that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent using one of the following forms:\n`projects/{project_number}`.",
+	//       "description": "Required. The resource name of the parent using one of the following forms: `projects/{project_number}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -4623,8 +4294,7 @@ func (r *ProjectsGuestPoliciesService) Patch(name string, guestpolicy *GuestPoli
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask that
-// controls which fields of the guest policy should be
-// updated.
+// controls which fields of the guest policy should be updated.
 func (c *ProjectsGuestPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsGuestPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4657,7 +4327,7 @@ func (c *ProjectsGuestPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4730,14 +4400,14 @@ func (c *ProjectsGuestPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Gues
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Unique name of the resource in this project using one of the following\nforms:\n`projects/{project_number}/guestPolicies/{guest_policy_id}`.",
+	//       "description": "Required. Unique name of the resource in this project using one of the following forms: `projects/{project_number}/guestPolicies/{guest_policy_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/guestPolicies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Field mask that controls which fields of the guest policy should be\nupdated.",
+	//       "description": "Field mask that controls which fields of the guest policy should be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4778,13 +4448,10 @@ func (r *ProjectsPatchDeploymentsService) Create(parent string, patchdeployment 
 
 // PatchDeploymentId sets the optional parameter "patchDeploymentId":
 // Required. A name for the patch deployment in the project. When
-// creating a name
-// the following rules apply:
-// * Must contain only lowercase letters, numbers, and hyphens.
-// * Must start with a letter.
-// * Must be between 1-63 characters.
-// * Must end with a number or a letter.
-// * Must be unique within the project.
+// creating a name the following rules apply: * Must contain only
+// lowercase letters, numbers, and hyphens. * Must start with a letter.
+// * Must be between 1-63 characters. * Must end with a number or a
+// letter. * Must be unique within the project.
 func (c *ProjectsPatchDeploymentsCreateCall) PatchDeploymentId(patchDeploymentId string) *ProjectsPatchDeploymentsCreateCall {
 	c.urlParams_.Set("patchDeploymentId", patchDeploymentId)
 	return c
@@ -4817,7 +4484,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4897,7 +4564,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "patchDeploymentId": {
-	//       "description": "Required. A name for the patch deployment in the project. When creating a name\nthe following rules apply:\n* Must contain only lowercase letters, numbers, and hyphens.\n* Must start with a letter.\n* Must be between 1-63 characters.\n* Must end with a number or a letter.\n* Must be unique within the project.",
+	//       "description": "Required. A name for the patch deployment in the project. When creating a name the following rules apply: * Must contain only lowercase letters, numbers, and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the project.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4960,7 +4627,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5028,7 +4695,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the patch deployment in the form\n`projects/*/patchDeployments/*`.",
+	//       "description": "Required. The resource name of the patch deployment in the form `projects/*/patchDeployments/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
 	//       "required": true,
@@ -5101,7 +4768,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5172,7 +4839,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*Pat
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the patch deployment in the form\n`projects/*/patchDeployments/*`.",
+	//       "description": "Required. The resource name of the patch deployment in the form `projects/*/patchDeployments/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/patchDeployments/[^/]+$",
 	//       "required": true,
@@ -5216,8 +4883,8 @@ func (c *ProjectsPatchDeploymentsListCall) PageSize(pageSize int64) *ProjectsPat
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListPatchDeployments
-// that indicates where this listing should continue from.
+// returned from a previous call to ListPatchDeployments that indicates
+// where this listing should continue from.
 func (c *ProjectsPatchDeploymentsListCall) PageToken(pageToken string) *ProjectsPatchDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5260,7 +4927,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5337,7 +5004,7 @@ func (c *ProjectsPatchDeploymentsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A pagination token returned from a previous call to ListPatchDeployments\nthat indicates where this listing should continue from.",
+	//       "description": "Optional. A pagination token returned from a previous call to ListPatchDeployments that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5393,8 +5060,7 @@ type ProjectsPatchJobsCancelCall struct {
 }
 
 // Cancel: Cancel a patch job. The patch job must be active. Canceled
-// patch jobs
-// cannot be restarted.
+// patch jobs cannot be restarted.
 func (r *ProjectsPatchJobsService) Cancel(name string, cancelpatchjobrequest *CancelPatchJobRequest) *ProjectsPatchJobsCancelCall {
 	c := &ProjectsPatchJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5429,7 +5095,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5493,7 +5159,7 @@ func (c *ProjectsPatchJobsCancelCall) Do(opts ...googleapi.CallOption) (*PatchJo
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancel a patch job. The patch job must be active. Canceled patch jobs\ncannot be restarted.",
+	//   "description": "Cancel a patch job. The patch job must be active. Canceled patch jobs cannot be restarted.",
 	//   "flatPath": "v1beta/projects/{projectsId}/patchJobs/{patchJobsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "osconfig.projects.patchJobs.cancel",
@@ -5569,7 +5235,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5674,8 +5340,7 @@ type ProjectsPatchJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the patch job. This can be used to track the progress of
-// an
+// Get: Get the patch job. This can be used to track the progress of an
 // ongoing patch job or review the details of completed jobs.
 func (r *ProjectsPatchJobsService) Get(name string) *ProjectsPatchJobsGetCall {
 	c := &ProjectsPatchJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5720,7 +5385,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5782,7 +5447,7 @@ func (c *ProjectsPatchJobsGetCall) Do(opts ...googleapi.CallOption) (*PatchJob, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the patch job. This can be used to track the progress of an\nongoing patch job or review the details of completed jobs.",
+	//   "description": "Get the patch job. This can be used to track the progress of an ongoing patch job or review the details of completed jobs.",
 	//   "flatPath": "v1beta/projects/{projectsId}/patchJobs/{patchJobsId}",
 	//   "httpMethod": "GET",
 	//   "id": "osconfig.projects.patchJobs.get",
@@ -5828,9 +5493,9 @@ func (r *ProjectsPatchJobsService) List(parent string) *ProjectsPatchJobsListCal
 }
 
 // Filter sets the optional parameter "filter": If provided, this field
-// specifies the criteria that must be met by patch
-// jobs to be included in the response.
-// Currently, filtering is only available on the patch_deployment field.
+// specifies the criteria that must be met by patch jobs to be included
+// in the response. Currently, filtering is only available on the
+// patch_deployment field.
 func (c *ProjectsPatchJobsListCall) Filter(filter string) *ProjectsPatchJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5844,8 +5509,8 @@ func (c *ProjectsPatchJobsListCall) PageSize(pageSize int64) *ProjectsPatchJobsL
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call
-// that indicates where this listing should continue from.
+// returned from a previous call that indicates where this listing
+// should continue from.
 func (c *ProjectsPatchJobsListCall) PageToken(pageToken string) *ProjectsPatchJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5888,7 +5553,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5959,7 +5624,7 @@ func (c *ProjectsPatchJobsListCall) Do(opts ...googleapi.CallOption) (*ListPatch
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "If provided, this field specifies the criteria that must be met by patch\njobs to be included in the response.\nCurrently, filtering is only available on the patch_deployment field.",
+	//       "description": "If provided, this field specifies the criteria that must be met by patch jobs to be included in the response. Currently, filtering is only available on the patch_deployment field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5970,7 +5635,7 @@ func (c *ProjectsPatchJobsListCall) Do(opts ...googleapi.CallOption) (*ListPatch
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6033,25 +5698,23 @@ func (r *ProjectsPatchJobsInstanceDetailsService) List(parent string) *ProjectsP
 }
 
 // Filter sets the optional parameter "filter": A filter expression that
-// filters results listed in the response. This
-// field supports filtering results by instance zone, name, state,
-// or
-// `failure_reason`.
+// filters results listed in the response. This field supports filtering
+// results by instance zone, name, state, or `failure_reason`.
 func (c *ProjectsPatchJobsInstanceDetailsListCall) Filter(filter string) *ProjectsPatchJobsInstanceDetailsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of instance details records to return.  Default is 100.
+// of instance details records to return. Default is 100.
 func (c *ProjectsPatchJobsInstanceDetailsListCall) PageSize(pageSize int64) *ProjectsPatchJobsInstanceDetailsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call
-// that indicates where this listing should continue from.
+// returned from a previous call that indicates where this listing
+// should continue from.
 func (c *ProjectsPatchJobsInstanceDetailsListCall) PageToken(pageToken string) *ProjectsPatchJobsInstanceDetailsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6094,7 +5757,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6166,18 +5829,18 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A filter expression that filters results listed in the response. This\nfield supports filtering results by instance zone, name, state, or\n`failure_reason`.",
+	//       "description": "A filter expression that filters results listed in the response. This field supports filtering results by instance zone, name, state, or `failure_reason`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of instance details records to return.  Default is 100.",
+	//       "description": "The maximum number of instance details records to return. Default is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call\nthat indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6233,9 +5896,8 @@ type ProjectsZonesInstancesLookupEffectiveGuestPolicyCall struct {
 }
 
 // LookupEffectiveGuestPolicy: Lookup the effective guest policy that
-// applies to a VM instance. This
-// lookup merges all policies that are assigned to the instance
-// ancestry.
+// applies to a VM instance. This lookup merges all policies that are
+// assigned to the instance ancestry.
 func (r *ProjectsZonesInstancesService) LookupEffectiveGuestPolicy(instance string, lookupeffectiveguestpolicyrequest *LookupEffectiveGuestPolicyRequest) *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall {
 	c := &ProjectsZonesInstancesLookupEffectiveGuestPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -6270,7 +5932,7 @@ func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) Header() http.Hea
 
 func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6334,7 +5996,7 @@ func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lookup the effective guest policy that applies to a VM instance. This\nlookup merges all policies that are assigned to the instance ancestry.",
+	//   "description": "Lookup the effective guest policy that applies to a VM instance. This lookup merges all policies that are assigned to the instance ancestry.",
 	//   "flatPath": "v1beta/projects/{projectsId}/zones/{zonesId}/instances/{instancesId}:lookupEffectiveGuestPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "osconfig.projects.zones.instances.lookupEffectiveGuestPolicy",

@@ -74,8 +74,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "doubleclickbidmanager:v1"
 const apiName = "doubleclickbidmanager"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/"
-const mtlsBasePath = "https://www.mtls.googleapis.com/"
+const basePath = "https://www.googleapis.com/doubleclickbidmanager/v1/"
+const mtlsBasePath = "https://www.mtls.googleapis.com/doubleclickbidmanager/v1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -183,16 +183,14 @@ type SdfService struct {
 // DownloadLineItemsRequest: Request to fetch stored line items.
 type DownloadLineItemsRequest struct {
 	// FileSpec: File specification (column names, types, order) in which
-	// the line items
-	// will be returned. Default to <code>EWF</code>.
+	// the line items will be returned. Default to EWF.
 	//
 	// Possible values:
 	//   "EWF"
 	FileSpec string `json:"fileSpec,omitempty"`
 
 	// FilterIds: Ids of the specified filter type used to filter line items
-	// to fetch. If
-	// omitted, all the line items will be returned.
+	// to fetch. If omitted, all the line items will be returned.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Filter type used to filter line items to fetch.
@@ -203,9 +201,8 @@ type DownloadLineItemsRequest struct {
 	//   "LINE_ITEM_ID"
 	FilterType string `json:"filterType,omitempty"`
 
-	// Format: Format in which the line items will be returned. Default
-	// to
-	// <code>CSV</code>.
+	// Format: Format in which the line items will be returned. Default to
+	// CSV.
 	//
 	// Possible values:
 	//   "CSV"
@@ -237,12 +234,7 @@ func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
 // DownloadLineItemsResponse: Download line items response.
 type DownloadLineItemsResponse struct {
 	// LineItems: Retrieved line items in CSV format. For more information
-	// about file
-	// formats, see
-	// <a
-	// href="https://developers.google.com/bid-manager/guides/entity-write
-	// /format">
-	// Entity Write File Format</a>.
+	// about file formats, see Entity Write File Format.
 	LineItems string `json:"lineItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -273,20 +265,12 @@ func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DownloadRequest: Request to fetch stored inventory sources,
-// campaigns, insertion orders, line
-// items, YouTube ad groups and ads.
+// campaigns, insertion orders, line items, YouTube ad groups and ads.
 type DownloadRequest struct {
 	// FileTypes: File types that will be returned. If INVENTORY_SOURCE is
-	// requested, no
-	// other file types may be requested. <br><br>Acceptable values are:
-	// <ul>
-	// <li>"<code>AD</code>"</li>
-	// <li>"<code>AD_GROUP</code>"</li>
-	// <li>"<code>CAMPAIGN</code>"</li>
-	// <li>"<code>INSERTION_ORDER</code>"</li>
-	// <li>"<code>INVENTORY_SOURCE</c
-	// ode>"</li> <li>"<code>LINE_ITEM</code>"</li>
-	// </ul>
+	// requested, no other file types may be requested. Acceptable values
+	// are: - "AD" - "AD_GROUP" - "CAMPAIGN" - "INSERTION_ORDER" -
+	// "INVENTORY_SOURCE" - "LINE_ITEM"
 	//
 	// Possible values:
 	//   "INSERTION_ORDER"
@@ -298,13 +282,11 @@ type DownloadRequest struct {
 	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// FilterIds: The IDs of the specified filter type. This is used to
-	// filter entities to
-	// fetch. At least one ID must be specified.
+	// filter entities to fetch. At least one ID must be specified.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Filter type used to filter entities to fetch. PARTNER_ID
-	// and
-	// INVENTORY_SOURCE_ID may only be used when downloading inventory
+	// and INVENTORY_SOURCE_ID may only be used when downloading inventory
 	// sources.
 	//
 	// Possible values:
@@ -317,8 +299,7 @@ type DownloadRequest struct {
 	FilterType string `json:"filterType,omitempty"`
 
 	// Version: SDF Version (column names, types, order) in which the
-	// entities will be
-	// returned. Default to <code>5</code>.
+	// entities will be returned. Default to 5.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileTypes") to
@@ -543,8 +524,7 @@ func (s *FilterPair) MarshalJSON() ([]byte, error) {
 // ListQueriesResponse: List queries response.
 type ListQueriesResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string
-	// <code>"doubleclickbidmanager#listQueriesResponse"</code>.
+	// string "doubleclickbidmanager#listQueriesResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// Queries: Retrieved queries.
@@ -580,8 +560,7 @@ func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
 // ListReportsResponse: List reports response.
 type ListReportsResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string
-	// <code>"doubleclickbidmanager#listReportsResponse"</code>.
+	// string "doubleclickbidmanager#listReportsResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// Reports: Retrieved reports.
@@ -1084,8 +1063,7 @@ func (s *Parameters) MarshalJSON() ([]byte, error) {
 // Query: Represents a query.
 type Query struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string
-	// <code>"doubleclickbidmanager#query"</code>.
+	// string "doubleclickbidmanager#query".
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Query metadata.
@@ -1098,29 +1076,20 @@ type Query struct {
 	QueryId int64 `json:"queryId,omitempty,string"`
 
 	// ReportDataEndTimeMs: The ending time for the data that is shown in
-	// the report. Note,
-	// <code>reportDataEndTimeMs</code> is required
-	// if
-	// <code>metadata.dataRange</code> is <code>CUSTOM_DATES</code> and
-	// ignored
-	// otherwise.
+	// the report. Note, reportDataEndTimeMs is required if
+	// metadata.dataRange is CUSTOM_DATES and ignored otherwise.
 	ReportDataEndTimeMs int64 `json:"reportDataEndTimeMs,omitempty,string"`
 
 	// ReportDataStartTimeMs: The starting time for the data that is shown
-	// in the report. Note,
-	// <code>reportDataStartTimeMs</code> is required
-	// if
-	// <code>metadata.dataRange</code> is <code>CUSTOM_DATES</code> and
-	// ignored
-	// otherwise.
+	// in the report. Note, reportDataStartTimeMs is required if
+	// metadata.dataRange is CUSTOM_DATES and ignored otherwise.
 	ReportDataStartTimeMs int64 `json:"reportDataStartTimeMs,omitempty,string"`
 
 	// Schedule: Information on how often and when to run a query.
 	Schedule *QuerySchedule `json:"schedule,omitempty"`
 
 	// TimezoneCode: Canonical timezone code for report data time. Defaults
-	// to
-	// <code>America/New_York</code>.
+	// to America/New_York.
 	TimezoneCode string `json:"timezoneCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1185,8 +1154,7 @@ type QueryMetadata struct {
 	Format string `json:"format,omitempty"`
 
 	// GoogleCloudStoragePathForLatestReport: The path to the location in
-	// Google Cloud Storage where the latest report is
-	// stored.
+	// Google Cloud Storage where the latest report is stored.
 	GoogleCloudStoragePathForLatestReport string `json:"googleCloudStoragePathForLatestReport,omitempty"`
 
 	// GoogleDrivePathForLatestReport: The path in Google Drive for the
@@ -1197,17 +1165,11 @@ type QueryMetadata struct {
 	// run.
 	LatestReportRunTimeMs int64 `json:"latestReportRunTimeMs,omitempty,string"`
 
-	// Locale: Locale of the generated reports. Valid values are cs
-	// CZECH de
-	// GERMAN en      ENGLISH es      SPANISH fr      FRENCH it      ITALIAN
-	// ja
-	// JAPANESE ko      KOREAN pl      POLISH pt-BR   BRAZILIAN_PORTUGUESE
-	// ru
-	// RUSSIAN tr      TURKISH uk      UKRAINIAN zh-CN   CHINA_CHINESE
-	// zh-TW
-	// TAIWAN_CHINESE <br><br> An locale string not in the list above
-	// will
-	// generate reports in English.
+	// Locale: Locale of the generated reports. Valid values are cs CZECH de
+	// GERMAN en ENGLISH es SPANISH fr FRENCH it ITALIAN ja JAPANESE ko
+	// KOREAN pl POLISH pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk
+	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE An locale string
+	// not in the list above will generate reports in English.
 	Locale string `json:"locale,omitempty"`
 
 	// ReportCount: Number of reports that have been generated for the
@@ -1218,13 +1180,12 @@ type QueryMetadata struct {
 	Running bool `json:"running,omitempty"`
 
 	// SendNotification: Whether to send an email notification when a report
-	// is ready. Default to
-	// false.
+	// is ready. Default to false.
 	SendNotification bool `json:"sendNotification,omitempty"`
 
 	// ShareEmailAddress: List of email addresses which are sent email
-	// notifications when the report
-	// is finished. Separate from <code>sendNotification</code>.
+	// notifications when the report is finished. Separate from
+	// sendNotification.
 	ShareEmailAddress []string `json:"shareEmailAddress,omitempty"`
 
 	// Title: Query title. It is used to name the reports generated from
@@ -1271,13 +1232,12 @@ type QuerySchedule struct {
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
-	// generated, represented as minutes
-	// past midnight. Range is 0 to 1439. Only applies to scheduled reports.
+	// generated, represented as minutes past midnight. Range is 0 to 1439.
+	// Only applies to scheduled reports.
 	NextRunMinuteOfDay int64 `json:"nextRunMinuteOfDay,omitempty"`
 
 	// NextRunTimezoneCode: Canonical timezone code for report generation
-	// time. Defaults to
-	// <code>America/New_York</code>.
+	// time. Defaults to America/New_York.
 	NextRunTimezoneCode string `json:"nextRunTimezoneCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
@@ -1419,8 +1379,7 @@ func (s *ReportKey) MarshalJSON() ([]byte, error) {
 // ReportMetadata: Report metadata.
 type ReportMetadata struct {
 	// GoogleCloudStoragePath: The path to the location in Google Cloud
-	// Storage where the report is
-	// stored.
+	// Storage where the report is stored.
 	GoogleCloudStoragePath string `json:"googleCloudStoragePath,omitempty"`
 
 	// ReportDataEndTimeMs: The ending time for the data that is shown in
@@ -1577,22 +1536,17 @@ type RunQueryRequest struct {
 	DataRange string `json:"dataRange,omitempty"`
 
 	// ReportDataEndTimeMs: The ending time for the data that is shown in
-	// the report. Note,
-	// <code>reportDataEndTimeMs</code> is required if
-	// <code>dataRange</code> is
-	// <code>CUSTOM_DATES</code> and ignored otherwise.
+	// the report. Note, reportDataEndTimeMs is required if dataRange is
+	// CUSTOM_DATES and ignored otherwise.
 	ReportDataEndTimeMs int64 `json:"reportDataEndTimeMs,omitempty,string"`
 
 	// ReportDataStartTimeMs: The starting time for the data that is shown
-	// in the report. Note,
-	// <code>reportDataStartTimeMs</code> is required if
-	// <code>dataRange</code> is
-	// <code>CUSTOM_DATES</code> and ignored otherwise.
+	// in the report. Note, reportDataStartTimeMs is required if dataRange
+	// is CUSTOM_DATES and ignored otherwise.
 	ReportDataStartTimeMs int64 `json:"reportDataStartTimeMs,omitempty,string"`
 
 	// TimezoneCode: Canonical timezone code for report data time. Defaults
-	// to
-	// <code>America/New_York</code>.
+	// to America/New_York.
 	TimezoneCode string `json:"timezoneCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
@@ -1620,22 +1574,18 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 
 // UploadLineItemsRequest: Request to upload line items.
 type UploadLineItemsRequest struct {
-	// DryRun: Set to <code>true</code> to get upload status without
-	// actually persisting
+	// DryRun: Set to true to get upload status without actually persisting
 	// the line items.
 	DryRun bool `json:"dryRun,omitempty"`
 
-	// Format: Format the line items are in. Default to <code>CSV</code>.
+	// Format: Format the line items are in. Default to CSV.
 	//
 	// Possible values:
 	//   "CSV"
 	Format string `json:"format,omitempty"`
 
-	// LineItems: Line items in CSV to upload. Refer to
-	// <a
-	// href="https://developers.google.com/bid-manager/guides/entity-write
-	// /format">
-	// Entity Write File Format</a> for more information on file format.
+	// LineItems: Line items in CSV to upload. Refer to Entity Write File
+	// Format for more information on file format.
 	LineItems string `json:"lineItems,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DryRun") to
@@ -1735,8 +1685,7 @@ type LineitemsDownloadlineitemsCall struct {
 }
 
 // Downloadlineitems: Retrieves line items in CSV format. YouTube &
-// partners line items are not
-// supported.
+// partners line items are not supported.
 func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
 	c := &LineitemsDownloadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.downloadlineitemsrequest = downloadlineitemsrequest
@@ -1770,7 +1719,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1783,7 +1732,7 @@ func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/lineitems/downloadlineitems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/downloadlineitems")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1831,13 +1780,13 @@ func (c *LineitemsDownloadlineitemsCall) Do(opts ...googleapi.CallOption) (*Down
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves line items in CSV format. YouTube \u0026 partners line items are not\nsupported.",
-	//   "flatPath": "doubleclickbidmanager/v1/lineitems/downloadlineitems",
+	//   "description": "Retrieves line items in CSV format. YouTube \u0026 partners line items are not supported.",
+	//   "flatPath": "lineitems/downloadlineitems",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.lineitems.downloadlineitems",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "doubleclickbidmanager/v1/lineitems/downloadlineitems",
+	//   "path": "lineitems/downloadlineitems",
 	//   "request": {
 	//     "$ref": "DownloadLineItemsRequest"
 	//   },
@@ -1862,8 +1811,7 @@ type LineitemsUploadlineitemsCall struct {
 }
 
 // Uploadlineitems: Uploads line items in CSV format. YouTube & partners
-// line items are not
-// supported.
+// line items are not supported.
 func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
 	c := &LineitemsUploadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.uploadlineitemsrequest = uploadlineitemsrequest
@@ -1897,7 +1845,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1910,7 +1858,7 @@ func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/lineitems/uploadlineitems")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/uploadlineitems")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1958,13 +1906,13 @@ func (c *LineitemsUploadlineitemsCall) Do(opts ...googleapi.CallOption) (*Upload
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads line items in CSV format. YouTube \u0026 partners line items are not\nsupported.",
-	//   "flatPath": "doubleclickbidmanager/v1/lineitems/uploadlineitems",
+	//   "description": "Uploads line items in CSV format. YouTube \u0026 partners line items are not supported.",
+	//   "flatPath": "lineitems/uploadlineitems",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.lineitems.uploadlineitems",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "doubleclickbidmanager/v1/lineitems/uploadlineitems",
+	//   "path": "lineitems/uploadlineitems",
 	//   "request": {
 	//     "$ref": "UploadLineItemsRequest"
 	//   },
@@ -2022,7 +1970,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2035,7 +1983,7 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/query")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2084,12 +2032,12 @@ func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error
 	return ret, nil
 	// {
 	//   "description": "Creates a query.",
-	//   "flatPath": "doubleclickbidmanager/v1/query",
+	//   "flatPath": "query",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.queries.createquery",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "doubleclickbidmanager/v1/query",
+	//   "path": "query",
 	//   "request": {
 	//     "$ref": "Query"
 	//   },
@@ -2148,7 +2096,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2156,7 +2104,7 @@ func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -2183,7 +2131,7 @@ func (c *QueriesDeletequeryCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a stored query as well as the associated stored reports.",
-	//   "flatPath": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "doubleclickbidmanager.queries.deletequery",
 	//   "parameterOrder": [
@@ -2198,7 +2146,7 @@ func (c *QueriesDeletequeryCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "path": "query/{queryId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
 	//   ]
@@ -2261,7 +2209,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2272,7 +2220,7 @@ func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2324,7 +2272,7 @@ func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a stored query.",
-	//   "flatPath": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.getquery",
 	//   "parameterOrder": [
@@ -2339,7 +2287,7 @@ func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "path": "query/{queryId}",
 	//   "response": {
 	//     "$ref": "Query"
 	//   },
@@ -2403,7 +2351,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2414,7 +2362,7 @@ func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/queries")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "queries")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2463,12 +2411,12 @@ func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesR
 	return ret, nil
 	// {
 	//   "description": "Retrieves stored queries.",
-	//   "flatPath": "doubleclickbidmanager/v1/queries",
+	//   "flatPath": "queries",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.queries.listqueries",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "doubleclickbidmanager/v1/queries",
+	//   "path": "queries",
 	//   "response": {
 	//     "$ref": "ListQueriesResponse"
 	//   },
@@ -2525,7 +2473,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,7 +2486,7 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/query/{queryId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2565,7 +2513,7 @@ func (c *QueriesRunqueryCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Runs a stored query to generate a report.",
-	//   "flatPath": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "flatPath": "query/{queryId}",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.queries.runquery",
 	//   "parameterOrder": [
@@ -2580,7 +2528,7 @@ func (c *QueriesRunqueryCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "doubleclickbidmanager/v1/query/{queryId}",
+	//   "path": "query/{queryId}",
 	//   "request": {
 	//     "$ref": "RunQueryRequest"
 	//   },
@@ -2646,7 +2594,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2657,7 +2605,7 @@ func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/queries/{queryId}/reports")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "queries/{queryId}/reports")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2709,7 +2657,7 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	return ret, nil
 	// {
 	//   "description": "Retrieves stored reports.",
-	//   "flatPath": "doubleclickbidmanager/v1/queries/{queryId}/reports",
+	//   "flatPath": "queries/{queryId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "doubleclickbidmanager.reports.listreports",
 	//   "parameterOrder": [
@@ -2724,7 +2672,7 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "doubleclickbidmanager/v1/queries/{queryId}/reports",
+	//   "path": "queries/{queryId}/reports",
 	//   "response": {
 	//     "$ref": "ListReportsResponse"
 	//   },
@@ -2779,7 +2727,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2792,7 +2740,7 @@ func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclickbidmanager/v1/sdf/download")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sdf/download")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2841,12 +2789,12 @@ func (c *SdfDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadResponse, e
 	return ret, nil
 	// {
 	//   "description": "Retrieves entities in SDF format.",
-	//   "flatPath": "doubleclickbidmanager/v1/sdf/download",
+	//   "flatPath": "sdf/download",
 	//   "httpMethod": "POST",
 	//   "id": "doubleclickbidmanager.sdf.download",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "doubleclickbidmanager/v1/sdf/download",
+	//   "path": "sdf/download",
 	//   "request": {
 	//     "$ref": "DownloadRequest"
 	//   },

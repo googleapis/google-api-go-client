@@ -145,12 +145,9 @@ type V1p4beta1Service struct {
 }
 
 // AccessSelector: Specifies roles and/or permissions to analyze, to
-// determine both the
-// identities possessing them and the resources they control. If
-// multiple
-// values are specified, results will include identities and
-// resources
-// matching any of them.
+// determine both the identities possessing them and the resources they
+// control. If multiple values are specified, results will include
+// identities and resources matching any of them.
 type AccessSelector struct {
 	// Permissions: Optional. The permissions to appear in result.
 	Permissions []string `json:"permissions,omitempty"`
@@ -185,25 +182,21 @@ func (s *AccessSelector) MarshalJSON() ([]byte, error) {
 // AssetService.AnalyzeIamPolicy.
 type AnalyzeIamPolicyResponse struct {
 	// FullyExplored: Represents whether all entries in the main_analysis
-	// and
-	// service_account_impersonation_analysis have been fully explored
-	// to
-	// answer the query in the request.
+	// and service_account_impersonation_analysis have been fully explored
+	// to answer the query in the request.
 	FullyExplored bool `json:"fullyExplored,omitempty"`
 
 	// MainAnalysis: The main analysis that matches the original request.
 	MainAnalysis *IamPolicyAnalysis `json:"mainAnalysis,omitempty"`
 
 	// NonCriticalErrors: A list of non-critical errors happened during the
-	// request handling to
-	// explain why `fully_explored` is false, or empty if no error happened.
+	// request handling to explain why `fully_explored` is false, or empty
+	// if no error happened.
 	NonCriticalErrors []*GoogleCloudAssetV1p4beta1AnalysisState `json:"nonCriticalErrors,omitempty"`
 
 	// ServiceAccountImpersonationAnalysis: The service account
-	// impersonation analysis
-	// if
-	// AnalyzeIamPolicyRequest.analyze_service_account_impersonation
-	// is
+	// impersonation analysis if
+	// AnalyzeIamPolicyRequest.analyze_service_account_impersonation is
 	// enabled.
 	ServiceAccountImpersonationAnalysis []*IamPolicyAnalysis `json:"serviceAccountImpersonationAnalysis,omitempty"`
 
@@ -236,95 +229,53 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -387,65 +338,40 @@ func (s *ExportIamPolicyAnalysisRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -474,14 +400,10 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
 	// Uri: Required. The uri of the Cloud Storage object. It's the same uri
-	// that is used by
-	// gsutil. For example: "gs://bucket_name/object_name". See [Viewing
-	// and
-	// Editing
-	// Object
-	// Metadata](https://cloud.google.com/storage/docs/viewing-editing
-	// -metadata)
-	// for more information.
+	// that is used by gsutil. For example: "gs://bucket_name/object_name".
+	// See [Viewing and Editing Object
+	// Metadata](https://cloud.google.com/storage/docs/viewing-editing-metada
+	// ta) for more information.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
@@ -543,47 +465,33 @@ func (s *GoogleCloudAssetV1p4beta1Access) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudAssetV1p4beta1AccessControlList: An access control list,
-// derived from the above IAM policy binding, which
-// contains a set of resources and accesses. May include one
-// item from each set to compose an access control entry.
-//
-// NOTICE that there could be multiple access control lists for one IAM
-// policy
-// binding. The access control lists are created based on resource and
-// access
-// combinations.
-//
-// For example, assume we have the following cases in one IAM policy
-// binding:
-// - Permission P1 and P2 apply to resource R1 and R2;
-// - Permission P3 applies to resource R2 and R3;
-//
-// This will result in the following access control lists:
-// - AccessControlList 1: [R1, R2], [P1, P2]
-// - AccessControlList 2: [R2, R3], [P3]
+// derived from the above IAM policy binding, which contains a set of
+// resources and accesses. May include one item from each set to compose
+// an access control entry. NOTICE that there could be multiple access
+// control lists for one IAM policy binding. The access control lists
+// are created based on resource and access combinations. For example,
+// assume we have the following cases in one IAM policy binding: -
+// Permission P1 and P2 apply to resource R1 and R2; - Permission P3
+// applies to resource R2 and R3; This will result in the following
+// access control lists: - AccessControlList 1: [R1, R2], [P1, P2] -
+// AccessControlList 2: [R2, R3], [P3]
 type GoogleCloudAssetV1p4beta1AccessControlList struct {
-	// Accesses: The accesses that match one of the following conditions:
-	// - The access_selector, if it is specified in request;
-	// - Otherwise, access specifiers reachable from the policy binding's
-	// role.
+	// Accesses: The accesses that match one of the following conditions: -
+	// The access_selector, if it is specified in request; - Otherwise,
+	// access specifiers reachable from the policy binding's role.
 	Accesses []*GoogleCloudAssetV1p4beta1Access `json:"accesses,omitempty"`
 
 	// ResourceEdges: Resource edges of the graph starting from the policy
-	// attached
-	// resource to any descendant resources. The Edge.source_node
-	// contains
-	// the full resource name of a parent resource and
-	// Edge.target_node
-	// contains the full resource name of a child resource. This field
-	// is
-	// present only if the output_resource_edges option is enabled in
-	// request.
+	// attached resource to any descendant resources. The Edge.source_node
+	// contains the full resource name of a parent resource and
+	// Edge.target_node contains the full resource name of a child resource.
+	// This field is present only if the output_resource_edges option is
+	// enabled in request.
 	ResourceEdges []*GoogleCloudAssetV1p4beta1Edge `json:"resourceEdges,omitempty"`
 
-	// Resources: The resources that match one of the following
-	// conditions:
-	// - The resource_selector, if it is specified in request;
-	// - Otherwise, resources reachable from the policy attached resource.
+	// Resources: The resources that match one of the following conditions:
+	// - The resource_selector, if it is specified in request; - Otherwise,
+	// resources reachable from the policy attached resource.
 	Resources []*GoogleCloudAssetV1p4beta1Resource `json:"resources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accesses") to
@@ -610,177 +518,106 @@ func (s *GoogleCloudAssetV1p4beta1AccessControlList) MarshalJSON() ([]byte, erro
 }
 
 // GoogleCloudAssetV1p4beta1AnalysisState: Represents the detailed state
-// of an entity under analysis, such as a
-// resource, an identity or an access.
+// of an entity under analysis, such as a resource, an identity or an
+// access.
 type GoogleCloudAssetV1p4beta1AnalysisState struct {
 	// Cause: The human-readable description of the cause of failure.
 	Cause string `json:"cause,omitempty"`
 
-	// Code: The Google standard error code that best describes the
-	// state.
-	// For example:
-	// - OK means the analysis on this entity has been successfully
-	// finished;
-	// - PERMISSION_DENIED means an access denied error is encountered;
-	// - DEADLINE_EXCEEDED means the analysis on this entity hasn't been
-	// started
-	// in time;
+	// Code: The Google standard error code that best describes the state.
+	// For example: - OK means the analysis on this entity has been
+	// successfully finished; - PERMISSION_DENIED means an access denied
+	// error is encountered; - DEADLINE_EXCEEDED means the analysis on this
+	// entity hasn't been started in time;
 	//
 	// Possible values:
-	//   "OK" - Not an error; returned on success
-	//
-	// HTTP Mapping: 200 OK
-	//   "CANCELLED" - The operation was cancelled, typically by the
-	// caller.
-	//
+	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "CANCELLED" - The operation was cancelled, typically by the caller.
 	// HTTP Mapping: 499 Client Closed Request
-	//   "UNKNOWN" - Unknown error.  For example, this error may be returned
-	// when
-	// a `Status` value received from another address space belongs to
-	// an error space that is not known in this address space.  Also
-	// errors raised by APIs that do not return enough error information
-	// may be converted to this error.
-	//
-	// HTTP Mapping: 500 Internal Server Error
-	//   "INVALID_ARGUMENT" - The client specified an invalid argument.
-	// Note that this differs
-	// from `FAILED_PRECONDITION`.  `INVALID_ARGUMENT` indicates
-	// arguments
-	// that are problematic regardless of the state of the system
-	// (e.g., a malformed file name).
-	//
-	// HTTP Mapping: 400 Bad Request
+	//   "UNKNOWN" - Unknown error. For example, this error may be returned
+	// when a `Status` value received from another address space belongs to
+	// an error space that is not known in this address space. Also errors
+	// raised by APIs that do not return enough error information may be
+	// converted to this error. HTTP Mapping: 500 Internal Server Error
+	//   "INVALID_ARGUMENT" - The client specified an invalid argument. Note
+	// that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT`
+	// indicates arguments that are problematic regardless of the state of
+	// the system (e.g., a malformed file name). HTTP Mapping: 400 Bad
+	// Request
 	//   "DEADLINE_EXCEEDED" - The deadline expired before the operation
-	// could complete. For operations
-	// that change the state of the system, this error may be returned
-	// even if the operation has completed successfully.  For example,
-	// a
-	// successful response from a server could have been delayed long
-	// enough for the deadline to expire.
-	//
-	// HTTP Mapping: 504 Gateway Timeout
+	// could complete. For operations that change the state of the system,
+	// this error may be returned even if the operation has completed
+	// successfully. For example, a successful response from a server could
+	// have been delayed long enough for the deadline to expire. HTTP
+	// Mapping: 504 Gateway Timeout
 	//   "NOT_FOUND" - Some requested entity (e.g., file or directory) was
-	// not found.
-	//
-	// Note to server developers: if a request is denied for an entire
-	// class
-	// of users, such as gradual feature rollout or undocumented
-	// allowlist,
-	// `NOT_FOUND` may be used. If a request is denied for some users
-	// within
-	// a class of users, such as user-based access control,
-	// `PERMISSION_DENIED`
-	// must be used.
-	//
-	// HTTP Mapping: 404 Not Found
+	// not found. Note to server developers: if a request is denied for an
+	// entire class of users, such as gradual feature rollout or
+	// undocumented allowlist, `NOT_FOUND` may be used. If a request is
+	// denied for some users within a class of users, such as user-based
+	// access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404
+	// Not Found
 	//   "ALREADY_EXISTS" - The entity that a client attempted to create
-	// (e.g., file or directory)
-	// already exists.
-	//
-	// HTTP Mapping: 409 Conflict
+	// (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict
 	//   "PERMISSION_DENIED" - The caller does not have permission to
-	// execute the specified
-	// operation. `PERMISSION_DENIED` must not be used for rejections
-	// caused by exhausting some resource (use `RESOURCE_EXHAUSTED`
-	// instead for those errors). `PERMISSION_DENIED` must not be
-	// used if the caller can not be identified (use
-	// `UNAUTHENTICATED`
-	// instead for those errors). This error code does not imply the
-	// request is valid or the requested entity exists or satisfies
-	// other pre-conditions.
-	//
-	// HTTP Mapping: 403 Forbidden
+	// execute the specified operation. `PERMISSION_DENIED` must not be used
+	// for rejections caused by exhausting some resource (use
+	// `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED`
+	// must not be used if the caller can not be identified (use
+	// `UNAUTHENTICATED` instead for those errors). This error code does not
+	// imply the request is valid or the requested entity exists or
+	// satisfies other pre-conditions. HTTP Mapping: 403 Forbidden
 	//   "UNAUTHENTICATED" - The request does not have valid authentication
-	// credentials for the
-	// operation.
-	//
-	// HTTP Mapping: 401 Unauthorized
+	// credentials for the operation. HTTP Mapping: 401 Unauthorized
 	//   "RESOURCE_EXHAUSTED" - Some resource has been exhausted, perhaps a
-	// per-user quota, or
-	// perhaps the entire file system is out of space.
-	//
+	// per-user quota, or perhaps the entire file system is out of space.
 	// HTTP Mapping: 429 Too Many Requests
 	//   "FAILED_PRECONDITION" - The operation was rejected because the
-	// system is not in a state
-	// required for the operation's execution.  For example, the
-	// directory
-	// to be deleted is non-empty, an rmdir operation is applied to
-	// a non-directory, etc.
-	//
-	// Service implementors can use the following guidelines to
-	// decide
-	// between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`:
-	//  (a) Use `UNAVAILABLE` if the client can retry just the failing
-	// call.
-	//  (b) Use `ABORTED` if the client should retry at a higher level
-	//      (e.g., when a client-specified test-and-set fails, indicating
-	// the
-	//      client should restart a read-modify-write sequence).
-	//  (c) Use `FAILED_PRECONDITION` if the client should not retry until
-	//      the system state has been explicitly fixed.  E.g., if an
-	// "rmdir"
-	//      fails because the directory is non-empty, `FAILED_PRECONDITION`
-	//      should be returned since the client should not retry unless
-	//      the files are deleted from the directory.
-	//
-	// HTTP Mapping: 400 Bad Request
+	// system is not in a state required for the operation's execution. For
+	// example, the directory to be deleted is non-empty, an rmdir operation
+	// is applied to a non-directory, etc. Service implementors can use the
+	// following guidelines to decide between `FAILED_PRECONDITION`,
+	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
+	// retry just the failing call. (b) Use `ABORTED` if the client should
+	// retry at a higher level (e.g., when a client-specified test-and-set
+	// fails, indicating the client should restart a read-modify-write
+	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
+	// retry until the system state has been explicitly fixed. E.g., if an
+	// "rmdir" fails because the directory is non-empty,
+	// `FAILED_PRECONDITION` should be returned since the client should not
+	// retry unless the files are deleted from the directory. HTTP Mapping:
+	// 400 Bad Request
 	//   "ABORTED" - The operation was aborted, typically due to a
-	// concurrency issue such as
-	// a sequencer check failure or transaction abort.
-	//
-	// See the guidelines above for deciding between
-	// `FAILED_PRECONDITION`,
-	// `ABORTED`, and `UNAVAILABLE`.
-	//
-	// HTTP Mapping: 409 Conflict
+	// concurrency issue such as a sequencer check failure or transaction
+	// abort. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 409 Conflict
 	//   "OUT_OF_RANGE" - The operation was attempted past the valid range.
-	// E.g., seeking or
-	// reading past end-of-file.
-	//
-	// Unlike `INVALID_ARGUMENT`, this error indicates a problem that may
-	// be fixed if the system state changes. For example, a 32-bit
-	// file
-	// system will generate `INVALID_ARGUMENT` if asked to read at an
-	// offset that is not in the range [0,2^32-1], but it will
-	// generate
-	// `OUT_OF_RANGE` if asked to read from an offset past the current
-	// file size.
-	//
-	// There is a fair bit of overlap between `FAILED_PRECONDITION`
-	// and
-	// `OUT_OF_RANGE`.  We recommend using `OUT_OF_RANGE` (the more
-	// specific
-	// error) when it applies so that callers who are iterating through
-	// a space can easily look for an `OUT_OF_RANGE` error to detect
-	// when
-	// they are done.
-	//
-	// HTTP Mapping: 400 Bad Request
+	// E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`,
+	// this error indicates a problem that may be fixed if the system state
+	// changes. For example, a 32-bit file system will generate
+	// `INVALID_ARGUMENT` if asked to read at an offset that is not in the
+	// range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to
+	// read from an offset past the current file size. There is a fair bit
+	// of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We
+	// recommend using `OUT_OF_RANGE` (the more specific error) when it
+	// applies so that callers who are iterating through a space can easily
+	// look for an `OUT_OF_RANGE` error to detect when they are done. HTTP
+	// Mapping: 400 Bad Request
 	//   "UNIMPLEMENTED" - The operation is not implemented or is not
-	// supported/enabled in this
-	// service.
-	//
-	// HTTP Mapping: 501 Not Implemented
-	//   "INTERNAL" - Internal errors.  This means that some invariants
-	// expected by the
-	// underlying system have been broken.  This error code is reserved
-	// for serious errors.
-	//
-	// HTTP Mapping: 500 Internal Server Error
-	//   "UNAVAILABLE" - The service is currently unavailable.  This is most
-	// likely a
-	// transient condition, which can be corrected by retrying with
-	// a backoff. Note that it is not always safe to retry
-	// non-idempotent operations.
-	//
-	// See the guidelines above for deciding between
-	// `FAILED_PRECONDITION`,
-	// `ABORTED`, and `UNAVAILABLE`.
-	//
-	// HTTP Mapping: 503 Service Unavailable
-	//   "DATA_LOSS" - Unrecoverable data loss or corruption.
-	//
-	// HTTP Mapping: 500 Internal Server Error
+	// supported/enabled in this service. HTTP Mapping: 501 Not Implemented
+	//   "INTERNAL" - Internal errors. This means that some invariants
+	// expected by the underlying system have been broken. This error code
+	// is reserved for serious errors. HTTP Mapping: 500 Internal Server
+	// Error
+	//   "UNAVAILABLE" - The service is currently unavailable. This is most
+	// likely a transient condition, which can be corrected by retrying with
+	// a backoff. Note that it is not always safe to retry non-idempotent
+	// operations. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 503 Service Unavailable
+	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping:
+	// 500 Internal Server Error
 	Code string `json:"code,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cause") to
@@ -842,19 +679,11 @@ type GoogleCloudAssetV1p4beta1Identity struct {
 	// AnalysisState: The analysis state of this identity.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
-	// Name: The identity name in any form of members appear in
-	// [IAM
-	// policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding
-	// ), such
-	// as:
-	// - user:foo@google.com
-	// - group:group1@google.com
-	// - serviceAccount:s1@prj1.iam.gserviceaccount.com
-	// - projectOwner:some_project_id
-	// - domain:google.com
-	// - allUsers
-	// - etc.
+	// Name: The identity name in any form of members appear in [IAM policy
+	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding),
+	// such as: - user:foo@google.com - group:group1@google.com -
+	// serviceAccount:s1@prj1.iam.gserviceaccount.com -
+	// projectOwner:some_project_id - domain:google.com - allUsers - etc.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -882,23 +711,17 @@ func (s *GoogleCloudAssetV1p4beta1Identity) MarshalJSON() ([]byte, error) {
 
 type GoogleCloudAssetV1p4beta1IdentityList struct {
 	// GroupEdges: Group identity edges of the graph starting from the
-	// binding's
-	// group members to any node of the identities. The
-	// Edge.source_node
-	// contains a group, such as "group:parent@google.com".
-	// The
-	// Edge.target_node contains a member of the group,
-	// such as "group:child@google.com" or "user:foo@google.com".
-	// This field is present only if the output_group_edges option is
-	// enabled in
-	// request.
+	// binding's group members to any node of the identities. The
+	// Edge.source_node contains a group, such as "group:parent@google.com".
+	// The Edge.target_node contains a member of the group, such as
+	// "group:child@google.com" or "user:foo@google.com". This field is
+	// present only if the output_group_edges option is enabled in request.
 	GroupEdges []*GoogleCloudAssetV1p4beta1Edge `json:"groupEdges,omitempty"`
 
 	// Identities: Only the identities that match one of the following
-	// conditions will be
-	// presented:
-	// - The identity_selector, if it is specified in request;
-	// - Otherwise, identities reachable from the policy binding's members.
+	// conditions will be presented: - The identity_selector, if it is
+	// specified in request; - Otherwise, identities reachable from the
+	// policy binding's members.
 	Identities []*GoogleCloudAssetV1p4beta1Identity `json:"identities,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GroupEdges") to
@@ -930,10 +753,9 @@ type GoogleCloudAssetV1p4beta1Resource struct {
 	// AnalysisState: The analysis state of this resource.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
-	// FullResourceName: The [full
-	// resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-
-	// name-format)
+	// FullResourceName: The [full resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+	// at)
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -966,13 +788,11 @@ type IamPolicyAnalysis struct {
 	AnalysisQuery *IamPolicyAnalysisQuery `json:"analysisQuery,omitempty"`
 
 	// AnalysisResults: A list of IamPolicyAnalysisResult that matches the
-	// analysis query, or
-	// empty if no result is found.
+	// analysis query, or empty if no result is found.
 	AnalysisResults []*IamPolicyAnalysisResult `json:"analysisResults,omitempty"`
 
 	// FullyExplored: Represents whether all entries in the analysis_results
-	// have been
-	// fully explored to answer the query.
+	// have been fully explored to answer the query.
 	FullyExplored bool `json:"fullyExplored,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisQuery") to
@@ -1038,21 +858,15 @@ type IamPolicyAnalysisQuery struct {
 	IdentitySelector *IdentitySelector `json:"identitySelector,omitempty"`
 
 	// Parent: Required. The relative name of the root asset. Only resources
-	// and IAM policies within
-	// the parent will be analyzed. This can only be an organization number
-	// (such
-	// as "organizations/123") or a folder number (such as
-	// "folders/123").
-	//
-	// To know how to get organization id, visit
-	// [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managi
-	// ng-organization#retrieving_your_organization_id).
-	//
-	// To know how to get folder id, visit
-	// [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managi
-	// ng-folders#viewing_or_listing_folders_and_projects).
+	// and IAM policies within the parent will be analyzed. This can only be
+	// an organization number (such as "organizations/123") or a folder
+	// number (such as "folders/123"). To know how to get organization id,
+	// visit [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managing-org
+	// anization#retrieving_your_organization_id). To know how to get folder
+	// id, visit [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managing-fol
+	// ders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceSelector: Optional. Specifies a resource for analysis.
@@ -1083,33 +897,28 @@ func (s *IamPolicyAnalysisQuery) MarshalJSON() ([]byte, error) {
 }
 
 // IamPolicyAnalysisResult: IAM Policy analysis result, consisting of
-// one IAM policy binding and derived
-// access control lists.
+// one IAM policy binding and derived access control lists.
 type IamPolicyAnalysisResult struct {
 	// AccessControlLists: The access control lists derived from the
-	// iam_binding that match or
-	// potentially match resource and access selectors specified in the
-	// request.
+	// iam_binding that match or potentially match resource and access
+	// selectors specified in the request.
 	AccessControlLists []*GoogleCloudAssetV1p4beta1AccessControlList `json:"accessControlLists,omitempty"`
 
-	// AttachedResourceFullName: The [full
-	// resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-
-	// name-format)
-	// of the resource to which the iam_binding policy attaches.
+	// AttachedResourceFullName: The [full resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+	// at) of the resource to which the iam_binding policy attaches.
 	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
 
 	// FullyExplored: Represents whether all analyses on the iam_binding
-	// have successfully
-	// finished.
+	// have successfully finished.
 	FullyExplored bool `json:"fullyExplored,omitempty"`
 
 	// IamBinding: The Cloud IAM policy binding under analysis.
 	IamBinding *Binding `json:"iamBinding,omitempty"`
 
 	// IdentityList: The identity list derived from members of the
-	// iam_binding that match or
-	// potentially match identity selector specified in the request.
+	// iam_binding that match or potentially match identity selector
+	// specified in the request.
 	IdentityList *GoogleCloudAssetV1p4beta1IdentityList `json:"identityList,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessControlLists")
@@ -1137,30 +946,17 @@ func (s *IamPolicyAnalysisResult) MarshalJSON() ([]byte, error) {
 }
 
 // IdentitySelector: Specifies an identity for which to determine
-// resource access, based on
-// roles assigned either directly to them or to the groups they belong
-// to,
-// directly or indirectly.
+// resource access, based on roles assigned either directly to them or
+// to the groups they belong to, directly or indirectly.
 type IdentitySelector struct {
-	// Identity: Required. The identity appear in the form of members
-	// in
-	// [IAM
-	// policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding
-	// ).
-	//
-	// The examples of supported forms
-	// are:
-	// "user:mike@example.com",
-	// "group:admins@example.com",
-	// "domain:goog
-	// le.com",
-	// "serviceAccount:my-project-id@appspot.gserviceaccount.com".
-	//
-	//
-	// Notice that wildcard characters (such as * and ?) are not
-	// supported.
-	// You must give a specific identity.
+	// Identity: Required. The identity appear in the form of members in
+	// [IAM policy
+	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+	// examples of supported forms are: "user:mike@example.com",
+	// "group:admins@example.com", "domain:google.com",
+	// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
+	// that wildcard characters (such as * and ?) are not supported. You
+	// must give a specific identity.
 	Identity string `json:"identity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Identity") to
@@ -1187,52 +983,38 @@ func (s *IdentitySelector) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1265,97 +1047,59 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // Options: Contains request options.
 type Options struct {
 	// AnalyzeServiceAccountImpersonation: Optional. If true, the response
-	// will include access analysis from identities to
-	// resources via service account impersonation. This is a very
-	// expensive
-	// operation, because many derived queries will be executed.
-	//
-	// For example, if the request analyzes for which resources user A
-	// has
-	// permission P, and there's an IAM policy states user A
-	// has
-	// iam.serviceAccounts.getAccessToken permission to a service account
-	// SA,
-	// and there's another IAM policy states service account SA has
-	// permission P
-	// to a GCP folder F, then user A potentially has access to the GCP
-	// folder
-	// F. And those advanced analysis results will be included
-	// in
+	// will include access analysis from identities to resources via service
+	// account impersonation. This is a very expensive operation, because
+	// many derived queries will be executed. For example, if the request
+	// analyzes for which resources user A has permission P, and there's an
+	// IAM policy states user A has iam.serviceAccounts.getAccessToken
+	// permission to a service account SA, and there's another IAM policy
+	// states service account SA has permission P to a GCP folder F, then
+	// user A potentially has access to the GCP folder F. And those advanced
+	// analysis results will be included in
 	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-	//
-	// A
-	// nother example, if the request analyzes for who has
-	// permission P to a GCP folder F, and there's an IAM policy states user
-	// A
-	// has iam.serviceAccounts.actAs permission to a service account SA,
-	// and
+	// Another example, if the request analyzes for who has permission P to
+	// a GCP folder F, and there's an IAM policy states user A has
+	// iam.serviceAccounts.actAs permission to a service account SA, and
 	// there's another IAM policy states service account SA has permission P
-	// to
-	// the GCP folder F, then user A potentially has access to the GCP
-	// folder
-	// F. And those advanced analysis results will be included
-	// in
+	// to the GCP folder F, then user A potentially has access to the GCP
+	// folder F. And those advanced analysis results will be included in
 	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-	//
-	// D
-	// efault is false.
+	// Default is false.
 	AnalyzeServiceAccountImpersonation bool `json:"analyzeServiceAccountImpersonation,omitempty"`
 
 	// ExpandGroups: Optional. If true, the identities section of the result
-	// will expand any
-	// Google groups appearing in an IAM policy binding.
-	//
-	// If identity_selector is specified, the identity in the result will
-	// be determined by the selector, and this flag will have no
-	// effect.
-	//
+	// will expand any Google groups appearing in an IAM policy binding. If
+	// identity_selector is specified, the identity in the result will be
+	// determined by the selector, and this flag will have no effect.
 	// Default is false.
 	ExpandGroups bool `json:"expandGroups,omitempty"`
 
 	// ExpandResources: Optional. If true, the resource section of the
-	// result will expand any
-	// resource attached to an IAM policy to include resources lower in
-	// the
-	// resource hierarchy.
-	//
-	// For example, if the request analyzes for which resources user A
-	// has
-	// permission P, and the results include an IAM policy with P on a
-	// GCP
-	// folder, the results will also include resources in that folder
-	// with
-	// permission P.
-	//
-	// If resource_selector is specified, the resource section of the
-	// result
+	// result will expand any resource attached to an IAM policy to include
+	// resources lower in the resource hierarchy. For example, if the
+	// request analyzes for which resources user A has permission P, and the
+	// results include an IAM policy with P on a GCP folder, the results
+	// will also include resources in that folder with permission P. If
+	// resource_selector is specified, the resource section of the result
 	// will be determined by the selector, and this flag will have no
-	// effect.
-	// Default is false.
+	// effect. Default is false.
 	ExpandResources bool `json:"expandResources,omitempty"`
 
 	// ExpandRoles: Optional. If true, the access section of result will
-	// expand any roles
-	// appearing in IAM policy bindings to include their permissions.
-	//
-	// If access_selector is specified, the access section of the
-	// result
-	// will be determined by the selector, and this flag will have no
-	// effect.
-	//
-	// Default is false.
+	// expand any roles appearing in IAM policy bindings to include their
+	// permissions. If access_selector is specified, the access section of
+	// the result will be determined by the selector, and this flag will
+	// have no effect. Default is false.
 	ExpandRoles bool `json:"expandRoles,omitempty"`
 
 	// OutputGroupEdges: Optional. If true, the result will output group
-	// identity edges, starting
-	// from the binding's group members, to any expanded identities.
-	// Default is false.
+	// identity edges, starting from the binding's group members, to any
+	// expanded identities. Default is false.
 	OutputGroupEdges bool `json:"outputGroupEdges,omitempty"`
 
 	// OutputResourceEdges: Optional. If true, the result will output
-	// resource edges, starting
-	// from the policy attached resource, to any expanded resources.
-	// Default is false.
+	// resource edges, starting from the policy attached resource, to any
+	// expanded resources. Default is false.
 	OutputResourceEdges bool `json:"outputResourceEdges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1384,19 +1128,14 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSelector: Specifies the resource to analyze for access
-// policies, which may be set
-// directly on the resource, or on ancestors such as organizations,
-// folders or
-// projects.
+// policies, which may be set directly on the resource, or on ancestors
+// such as organizations, folders or projects.
 type ResourceSelector struct {
-	// FullResourceName: Required. The [full
-	// resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-
-	// name-format)
-	// of a resource of [supported
-	// resource
-	// types](https://cloud.google.com/asset-inventory/docs/supporte
-	// d-asset-types#analyzable_asset_types).
+	// FullResourceName: Required. The [full resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+	// at) of a resource of [supported resource
+	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
+	// ypes#analyzable_asset_types).
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -1424,32 +1163,24 @@ func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1487,8 +1218,7 @@ type V1p4beta1AnalyzeIamPolicyCall struct {
 }
 
 // AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
-// have what accesses on
-// which resources.
+// have what accesses on which resources.
 func (r *V1p4beta1Service) AnalyzeIamPolicy(parent string) *V1p4beta1AnalyzeIamPolicyCall {
 	c := &V1p4beta1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1512,24 +1242,13 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysi
 
 // AnalysisQueryIdentitySelectorIdentity sets the optional parameter
 // "analysisQuery.identitySelector.identity": Required. The identity
-// appear in the form of members in
-// [IAM
-// policy
-// binding](https://cloud.google.com/iam/reference/rest/v1/Binding
-// ).
-//
-// The examples of supported forms
-// are:
-// "user:mike@example.com",
-// "group:admins@example.com",
-// "domain:goog
-// le.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com".
-//
-//
-// Notice that wildcard characters (such as * and ?) are not
-// supported.
-// You must give a specific identity.
+// appear in the form of members in [IAM policy
+// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+// examples of supported forms are: "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
+// that wildcard characters (such as * and ?) are not supported. You
+// must give a specific identity.
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(analysisQueryIdentitySelectorIdentity string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.identitySelector.identity", analysisQueryIdentitySelectorIdentity)
 	return c
@@ -1537,14 +1256,11 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(an
 
 // AnalysisQueryResourceSelectorFullResourceName sets the optional
 // parameter "analysisQuery.resourceSelector.fullResourceName":
-// Required. The [full
-// resource
-// name](https://cloud.google.com/asset-inventory/docs/resource-
-// name-format)
-// of a resource of [supported
-// resource
-// types](https://cloud.google.com/asset-inventory/docs/supporte
-// d-asset-types#analyzable_asset_types).
+// Required. The [full resource
+// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+// at) of a resource of [supported resource
+// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
+// ypes#analyzable_asset_types).
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c
@@ -1552,44 +1268,26 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourc
 
 // OptionsAnalyzeServiceAccountImpersonation sets the optional parameter
 // "options.analyzeServiceAccountImpersonation": If true, the response
-// will include access analysis from identities to
-// resources via service account impersonation. This is a very
-// expensive
-// operation, because many derived queries will be executed. We
-// highly
-// recommend you use AssetService.ExportIamPolicyAnalysis rpc
-// instead.
-//
-// For example, if the request analyzes for which resources user A
-// has
-// permission P, and there's an IAM policy states user A
-// has
+// will include access analysis from identities to resources via service
+// account impersonation. This is a very expensive operation, because
+// many derived queries will be executed. We highly recommend you use
+// AssetService.ExportIamPolicyAnalysis rpc instead. For example, if the
+// request analyzes for which resources user A has permission P, and
+// there's an IAM policy states user A has
 // iam.serviceAccounts.getAccessToken permission to a service account
-// SA,
-// and there's another IAM policy states service account SA has
-// permission P
-// to a GCP folder F, then user A potentially has access to the GCP
-// folder
-// F. And those advanced analysis results will be included
-// in
+// SA, and there's another IAM policy states service account SA has
+// permission P to a GCP folder F, then user A potentially has access to
+// the GCP folder F. And those advanced analysis results will be
+// included in
 // AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-//
-// A
-// nother example, if the request analyzes for who has
-// permission P to a GCP folder F, and there's an IAM policy states user
-// A
-// has iam.serviceAccounts.actAs permission to a service account SA,
-// and
+// Another example, if the request analyzes for who has permission P to
+// a GCP folder F, and there's an IAM policy states user A has
+// iam.serviceAccounts.actAs permission to a service account SA, and
 // there's another IAM policy states service account SA has permission P
-// to
-// the GCP folder F, then user A potentially has access to the GCP
-// folder
-// F. And those advanced analysis results will be included
-// in
+// to the GCP folder F, then user A potentially has access to the GCP
+// folder F. And those advanced analysis results will be included in
 // AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
-//
-// D
-// efault is false.
+// Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsAnalyzeServiceAccountImpersonation(optionsAnalyzeServiceAccountImpersonation bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.analyzeServiceAccountImpersonation", fmt.Sprint(optionsAnalyzeServiceAccountImpersonation))
 	return c
@@ -1597,22 +1295,14 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsAnalyzeServiceAccountImpersonatio
 
 // OptionsExecutionTimeout sets the optional parameter
 // "options.executionTimeout": Amount of time executable has to
-// complete.  See JSON representation
-// of
-// [Duration](https://developers.google.com/protocol-buffers/docs/prot
-// o3#json).
-//
-// If this field is set with a value less than the RPC deadline, and
-// the
-// execution of your query hasn't finished in the specified
-// execution timeout,  you will get a response with partial
-// result.
+// complete. See JSON representation of
+// [Duration](https://developers.google.com/protocol-buffers/docs/proto3#
+// json). If this field is set with a value less than the RPC deadline,
+// and the execution of your query hasn't finished in the specified
+// execution timeout, you will get a response with partial result.
 // Otherwise, your query's execution will continue until the RPC
-// deadline.
-// If it's not finished until then, you will get a  DEADLINE_EXCEEDED
-// error.
-//
-// Default is empty.
+// deadline. If it's not finished until then, you will get a
+// DEADLINE_EXCEEDED error. Default is empty.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExecutionTimeout(optionsExecutionTimeout string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.executionTimeout", optionsExecutionTimeout)
 	return c
@@ -1620,13 +1310,9 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExecutionTimeout(optionsExecution
 
 // OptionsExpandGroups sets the optional parameter
 // "options.expandGroups": If true, the identities section of the result
-// will expand any
-// Google groups appearing in an IAM policy binding.
-//
-// If identity_selector is specified, the identity in the result will
-// be determined by the selector, and this flag will have no
-// effect.
-//
+// will expand any Google groups appearing in an IAM policy binding. If
+// identity_selector is specified, the identity in the result will be
+// determined by the selector, and this flag will have no effect.
 // Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExpandGroups(optionsExpandGroups bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.expandGroups", fmt.Sprint(optionsExpandGroups))
@@ -1635,38 +1321,24 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExpandGroups(optionsExpandGroups 
 
 // OptionsExpandResources sets the optional parameter
 // "options.expandResources": If true, the resource section of the
-// result will expand any
-// resource attached to an IAM policy to include resources lower in
-// the
-// resource hierarchy.
-//
-// For example, if the request analyzes for which resources user A
-// has
-// permission P, and the results include an IAM policy with P on a
-// GCP
-// folder, the results will also include resources in that folder
-// with
-// permission P.
-//
-// If resource_selector is specified, the resource section of the
-// result
+// result will expand any resource attached to an IAM policy to include
+// resources lower in the resource hierarchy. For example, if the
+// request analyzes for which resources user A has permission P, and the
+// results include an IAM policy with P on a GCP folder, the results
+// will also include resources in that folder with permission P. If
+// resource_selector is specified, the resource section of the result
 // will be determined by the selector, and this flag will have no
-// effect.
-// Default is false.
+// effect. Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExpandResources(optionsExpandResources bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.expandResources", fmt.Sprint(optionsExpandResources))
 	return c
 }
 
 // OptionsExpandRoles sets the optional parameter "options.expandRoles":
-// If true, the access section of result will expand any roles
-// appearing in IAM policy bindings to include their permissions.
-//
-// If access_selector is specified, the access section of the
-// result
-// will be determined by the selector, and this flag will have no
-// effect.
-//
+// If true, the access section of result will expand any roles appearing
+// in IAM policy bindings to include their permissions. If
+// access_selector is specified, the access section of the result will
+// be determined by the selector, and this flag will have no effect.
 // Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExpandRoles(optionsExpandRoles bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.expandRoles", fmt.Sprint(optionsExpandRoles))
@@ -1675,9 +1347,8 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExpandRoles(optionsExpandRoles bo
 
 // OptionsOutputGroupEdges sets the optional parameter
 // "options.outputGroupEdges": If true, the result will output group
-// identity edges, starting
-// from the binding's group members, to any expanded identities.
-// Default is false.
+// identity edges, starting from the binding's group members, to any
+// expanded identities. Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsOutputGroupEdges(optionsOutputGroupEdges bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.outputGroupEdges", fmt.Sprint(optionsOutputGroupEdges))
 	return c
@@ -1685,9 +1356,8 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsOutputGroupEdges(optionsOutputGro
 
 // OptionsOutputResourceEdges sets the optional parameter
 // "options.outputResourceEdges": If true, the result will output
-// resource edges, starting
-// from the policy attached resource, to any expanded resources.
-// Default is false.
+// resource edges, starting from the policy attached resource, to any
+// expanded resources. Default is false.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsOutputResourceEdges(optionsOutputResourceEdges bool) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.outputResourceEdges", fmt.Sprint(optionsOutputResourceEdges))
 	return c
@@ -1730,7 +1400,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1792,7 +1462,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes IAM policies to answer which identities have what accesses on\nwhich resources.",
+	//   "description": "Analyzes IAM policies to answer which identities have what accesses on which resources.",
 	//   "flatPath": "v1p4beta1/{v1p4beta1Id}/{v1p4beta1Id1}:analyzeIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeIamPolicy",
@@ -1813,53 +1483,53 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
-	//       "description": "Required. The identity appear in the form of members in\n[IAM policy\nbinding](https://cloud.google.com/iam/reference/rest/v1/Binding).\n\nThe examples of supported forms are:\n\"user:mike@example.com\",\n\"group:admins@example.com\",\n\"domain:google.com\",\n\"serviceAccount:my-project-id@appspot.gserviceaccount.com\".\n\nNotice that wildcard characters (such as * and ?) are not supported.\nYou must give a specific identity.",
+	//       "description": "Required. The identity appear in the form of members in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.resourceSelector.fullResourceName": {
-	//       "description": "Required. The [full resource\nname](https://cloud.google.com/asset-inventory/docs/resource-name-format)\nof a resource of [supported resource\ntypes](https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).",
+	//       "description": "Required. The [full resource name](https://cloud.google.com/asset-inventory/docs/resource-name-format) of a resource of [supported resource types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "options.analyzeServiceAccountImpersonation": {
-	//       "description": "Optional. If true, the response will include access analysis from identities to\nresources via service account impersonation. This is a very expensive\noperation, because many derived queries will be executed. We highly\nrecommend you use AssetService.ExportIamPolicyAnalysis rpc instead.\n\nFor example, if the request analyzes for which resources user A has\npermission P, and there's an IAM policy states user A has\niam.serviceAccounts.getAccessToken permission to a service account SA,\nand there's another IAM policy states service account SA has permission P\nto a GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nAnother example, if the request analyzes for who has\npermission P to a GCP folder F, and there's an IAM policy states user A\nhas iam.serviceAccounts.actAs permission to a service account SA, and\nthere's another IAM policy states service account SA has permission P to\nthe GCP folder F, then user A potentially has access to the GCP folder\nF. And those advanced analysis results will be included in\nAnalyzeIamPolicyResponse.service_account_impersonation_analysis.\n\nDefault is false.",
+	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.ExportIamPolicyAnalysis rpc instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a GCP folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "options.executionTimeout": {
-	//       "description": "Optional. Amount of time executable has to complete.  See JSON representation of\n[Duration](https://developers.google.com/protocol-buffers/docs/proto3#json).\n\nIf this field is set with a value less than the RPC deadline, and the\nexecution of your query hasn't finished in the specified\nexecution timeout,  you will get a response with partial result.\nOtherwise, your query's execution will continue until the RPC deadline.\nIf it's not finished until then, you will get a  DEADLINE_EXCEEDED error.\n\nDefault is empty.",
+	//       "description": "Optional. Amount of time executable has to complete. See JSON representation of [Duration](https://developers.google.com/protocol-buffers/docs/proto3#json). If this field is set with a value less than the RPC deadline, and the execution of your query hasn't finished in the specified execution timeout, you will get a response with partial result. Otherwise, your query's execution will continue until the RPC deadline. If it's not finished until then, you will get a DEADLINE_EXCEEDED error. Default is empty.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "options.expandGroups": {
-	//       "description": "Optional. If true, the identities section of the result will expand any\nGoogle groups appearing in an IAM policy binding.\n\nIf identity_selector is specified, the identity in the result will\nbe determined by the selector, and this flag will have no effect.\n\nDefault is false.",
+	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If identity_selector is specified, the identity in the result will be determined by the selector, and this flag will have no effect. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "options.expandResources": {
-	//       "description": "Optional. If true, the resource section of the result will expand any\nresource attached to an IAM policy to include resources lower in the\nresource hierarchy.\n\nFor example, if the request analyzes for which resources user A has\npermission P, and the results include an IAM policy with P on a GCP\nfolder, the results will also include resources in that folder with\npermission P.\n\nIf resource_selector is specified, the resource section of the result\nwill be determined by the selector, and this flag will have no effect.\nDefault is false.",
+	//       "description": "Optional. If true, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If resource_selector is specified, the resource section of the result will be determined by the selector, and this flag will have no effect. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "options.expandRoles": {
-	//       "description": "Optional. If true, the access section of result will expand any roles\nappearing in IAM policy bindings to include their permissions.\n\nIf access_selector is specified, the access section of the result\nwill be determined by the selector, and this flag will have no effect.\n\nDefault is false.",
+	//       "description": "Optional. If true, the access section of result will expand any roles appearing in IAM policy bindings to include their permissions. If access_selector is specified, the access section of the result will be determined by the selector, and this flag will have no effect. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "options.outputGroupEdges": {
-	//       "description": "Optional. If true, the result will output group identity edges, starting\nfrom the binding's group members, to any expanded identities.\nDefault is false.",
+	//       "description": "Optional. If true, the result will output group identity edges, starting from the binding's group members, to any expanded identities. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "options.outputResourceEdges": {
-	//       "description": "Optional. If true, the result will output resource edges, starting\nfrom the policy attached resource, to any expanded resources.\nDefault is false.",
+	//       "description": "Optional. If true, the result will output resource edges, starting from the policy attached resource, to any expanded resources. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").\n\nTo know how to get organization id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).\n\nTo know how to get folder id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\") or a folder number (such as \"folders/123\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1889,19 +1559,13 @@ type V1p4beta1ExportIamPolicyAnalysisCall struct {
 }
 
 // ExportIamPolicyAnalysis: Exports the answers of which identities have
-// what accesses on which
-// resources to a Google Cloud Storage destination. The output format
-// is
-// the JSON format that represents a AnalyzeIamPolicyResponse
-// in the JSON format.
-// This method implements the google.longrunning.Operation, which
-// allows
-// you to keep track of the export. We recommend intervals of at least
-// 2
-// seconds with exponential retry to poll the export operation result.
-// The
-// metadata contains the request to help callers to map responses to
-// requests.
+// what accesses on which resources to a Google Cloud Storage
+// destination. The output format is the JSON format that represents a
+// AnalyzeIamPolicyResponse in the JSON format. This method implements
+// the google.longrunning.Operation, which allows you to keep track of
+// the export. We recommend intervals of at least 2 seconds with
+// exponential retry to poll the export operation result. The metadata
+// contains the request to help callers to map responses to requests.
 func (r *V1p4beta1Service) ExportIamPolicyAnalysis(parent string, exportiampolicyanalysisrequest *ExportIamPolicyAnalysisRequest) *V1p4beta1ExportIamPolicyAnalysisCall {
 	c := &V1p4beta1ExportIamPolicyAnalysisCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1936,7 +1600,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2000,7 +1664,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports the answers of which identities have what accesses on which\nresources to a Google Cloud Storage destination. The output format is\nthe JSON format that represents a AnalyzeIamPolicyResponse\nin the JSON format.\nThis method implements the google.longrunning.Operation, which allows\nyou to keep track of the export. We recommend intervals of at least 2\nseconds with exponential retry to poll the export operation result. The\nmetadata contains the request to help callers to map responses to requests.",
+	//   "description": "Exports the answers of which identities have what accesses on which resources to a Google Cloud Storage destination. The output format is the JSON format that represents a AnalyzeIamPolicyResponse in the JSON format. This method implements the google.longrunning.Operation, which allows you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. The metadata contains the request to help callers to map responses to requests.",
 	//   "flatPath": "v1p4beta1/{v1p4beta1Id}/{v1p4beta1Id1}:exportIamPolicyAnalysis",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.exportIamPolicyAnalysis",
@@ -2009,7 +1673,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within\nthe parent will be analyzed. This can only be an organization number (such\nas \"organizations/123\") or a folder number (such as \"folders/123\").\n\nTo know how to get organization id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).\n\nTo know how to get folder id, visit [here\n](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\") or a folder number (such as \"folders/123\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

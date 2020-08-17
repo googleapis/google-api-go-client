@@ -10,9 +10,9 @@ require (
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
-	golang.org/x/sys 3ff754bf58a9
-	golang.org/x/tools d00afeaade8f
+	golang.org/x/sys v0.0.0-20200817085935-3ff754bf58a9
+	golang.org/x/tools v0.0.0-20200817023811-d00afeaade8f
 	google.golang.org/appengine v1.6.6
-	google.golang.org/genproto f69a88009b70
+	google.golang.org/genproto v0.0.0-20200815001618-f69a88009b70
 	google.golang.org/grpc v1.31.0
 )

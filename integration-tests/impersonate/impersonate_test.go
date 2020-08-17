@@ -72,7 +72,7 @@ func TestImpersonatedCredentials(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			svc, err := storage.NewService(ctx,
 				option.WithCredentialsFile(tt.baseSALocation),
-				option.WithImpersonatedCredentials(writerSA, tt.delgates...),
+				option.ImpersonateCredentials(writerSA, tt.delgates...),
 			)
 			if err != nil {
 				t.Fatalf("failed to create client: %v", err)

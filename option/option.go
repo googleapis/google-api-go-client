@@ -271,7 +271,7 @@ func (w withClientCertSource) Apply(o *internal.DialSettings) {
 	o.ClientCertSource = w.s
 }
 
-// WithImpersonatedCredentials returns a ClientOption that will impersonate the
+// ImpersonateCredentials returns a ClientOption that will impersonate the
 // target service account.
 //
 // In order to impersonate the target service account
@@ -305,7 +305,7 @@ func (w withClientCertSource) Apply(o *internal.DialSettings) {
 // roles/serviceusage.serviceUsageConsumer.
 //
 // This is an EXPERIMENTAL API and may be changed or removed in the future.
-func WithImpersonatedCredentials(target string, delegates ...string) ClientOption {
+func ImpersonateCredentials(target string, delegates ...string) ClientOption {
 	return impersonateServiceAccount{
 		target:    target,
 		delegates: delegates,

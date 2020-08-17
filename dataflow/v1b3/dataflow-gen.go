@@ -282,6 +282,7 @@ func NewProjectsLocationsJobsService(s *Service) *ProjectsLocationsJobsService {
 	rs.Debug = NewProjectsLocationsJobsDebugService(s)
 	rs.Messages = NewProjectsLocationsJobsMessagesService(s)
 	rs.Snapshots = NewProjectsLocationsJobsSnapshotsService(s)
+	rs.Stages = NewProjectsLocationsJobsStagesService(s)
 	rs.WorkItems = NewProjectsLocationsJobsWorkItemsService(s)
 	return rs
 }
@@ -294,6 +295,8 @@ type ProjectsLocationsJobsService struct {
 	Messages *ProjectsLocationsJobsMessagesService
 
 	Snapshots *ProjectsLocationsJobsSnapshotsService
+
+	Stages *ProjectsLocationsJobsStagesService
 
 	WorkItems *ProjectsLocationsJobsWorkItemsService
 }
@@ -322,6 +325,15 @@ func NewProjectsLocationsJobsSnapshotsService(s *Service) *ProjectsLocationsJobs
 }
 
 type ProjectsLocationsJobsSnapshotsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsJobsStagesService(s *Service) *ProjectsLocationsJobsStagesService {
+	rs := &ProjectsLocationsJobsStagesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsJobsStagesService struct {
 	s *Service
 }
 
@@ -442,63 +454,42 @@ func (s *ApproximateProgress) UnmarshalJSON(data []byte) error {
 // a worker.
 type ApproximateReportedProgress struct {
 	// ConsumedParallelism: Total amount of parallelism in the portion of
-	// input of this task that has
-	// already been consumed and is no longer active. In the first two
-	// examples
-	// above (see remaining_parallelism), the value should be 29 or
-	// 2
-	// respectively.  The sum of remaining_parallelism and
-	// consumed_parallelism
-	// should equal the total amount of parallelism in this work item.
-	// If
-	// specified, must be finite.
+	// input of this task that has already been consumed and is no longer
+	// active. In the first two examples above (see remaining_parallelism),
+	// the value should be 29 or 2 respectively. The sum of
+	// remaining_parallelism and consumed_parallelism should equal the total
+	// amount of parallelism in this work item. If specified, must be
+	// finite.
 	ConsumedParallelism *ReportedParallelism `json:"consumedParallelism,omitempty"`
 
 	// FractionConsumed: Completion as fraction of the input consumed, from
-	// 0.0 (beginning, nothing
-	// consumed), to 1.0 (end of the input, entire input consumed).
+	// 0.0 (beginning, nothing consumed), to 1.0 (end of the input, entire
+	// input consumed).
 	FractionConsumed float64 `json:"fractionConsumed,omitempty"`
 
 	// Position: A Position within the work to represent a progress.
 	Position *Position `json:"position,omitempty"`
 
 	// RemainingParallelism: Total amount of parallelism in the input of
-	// this task that remains,
-	// (i.e. can be delegated to this task and any new tasks via
-	// dynamic
-	// splitting). Always at least 1 for non-finished work items and 0
-	// for
-	// finished.
-	//
-	// "Amount of parallelism" refers to how many non-empty parts of the
-	// input
-	// can be read in parallel. This does not necessarily equal number
-	// of records. An input that can be read in parallel down to
-	// the
-	// individual records is called "perfectly splittable".
-	// An example of non-perfectly parallelizable input is a
-	// block-compressed
-	// file format where a block of records has to be read as a whole,
-	// but different blocks can be read in parallel.
-	//
-	// Examples:
-	// * If we are processing record #30 (starting at 1) out of 50 in a
-	// perfectly
-	//   splittable 50-record input, this value should be 21 (20 remaining +
-	// 1
-	//   current).
-	// * If we are reading through block 3 in a block-compressed file
-	// consisting
-	//   of 5 blocks, this value should be 3 (since blocks 4 and 5 can be
-	//   processed in parallel by new tasks via dynamic splitting and the
-	// current
-	//   task remains processing block 3).
-	// * If we are reading through the last block in a block-compressed
-	// file,
-	//   or reading or processing the last record in a perfectly splittable
-	//   input, this value should be 1, because apart from the current task,
-	// no
-	//   additional remainder can be split off.
+	// this task that remains, (i.e. can be delegated to this task and any
+	// new tasks via dynamic splitting). Always at least 1 for non-finished
+	// work items and 0 for finished. "Amount of parallelism" refers to how
+	// many non-empty parts of the input can be read in parallel. This does
+	// not necessarily equal number of records. An input that can be read in
+	// parallel down to the individual records is called "perfectly
+	// splittable". An example of non-perfectly parallelizable input is a
+	// block-compressed file format where a block of records has to be read
+	// as a whole, but different blocks can be read in parallel. Examples: *
+	// If we are processing record #30 (starting at 1) out of 50 in a
+	// perfectly splittable 50-record input, this value should be 21 (20
+	// remaining + 1 current). * If we are reading through block 3 in a
+	// block-compressed file consisting of 5 blocks, this value should be 3
+	// (since blocks 4 and 5 can be processed in parallel by new tasks via
+	// dynamic splitting and the current task remains processing block 3). *
+	// If we are reading through the last block in a block-compressed file,
+	// or reading or processing the last record in a perfectly splittable
+	// input, this value should be 1, because apart from the current task,
+	// no additional remainder can be split off.
 	RemainingParallelism *ReportedParallelism `json:"remainingParallelism,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumedParallelism")
@@ -543,13 +534,12 @@ func (s *ApproximateReportedProgress) UnmarshalJSON(data []byte) error {
 // dynamically split the WorkItem.
 type ApproximateSplitRequest struct {
 	// FractionConsumed: A fraction at which to split the work item, from
-	// 0.0 (beginning of the
-	// input) to 1.0 (end of the input).
+	// 0.0 (beginning of the input) to 1.0 (end of the input).
 	FractionConsumed float64 `json:"fractionConsumed,omitempty"`
 
 	// FractionOfRemainder: The fraction of the remainder of work to split
-	// the work item at, from 0.0
-	// (split at the current position) to 1.0 (end of the input).
+	// the work item at, from 0.0 (split at the current position) to 1.0
+	// (end of the input).
 	FractionOfRemainder float64 `json:"fractionOfRemainder,omitempty"`
 
 	// Position: A Position at which to split the work item.
@@ -630,45 +620,36 @@ func (s *Artifact) MarshalJSON() ([]byte, error) {
 }
 
 // AutoscalingEvent: A structured message reporting an autoscaling
-// decision made by the Dataflow
-// service.
+// decision made by the Dataflow service.
 type AutoscalingEvent struct {
 	// CurrentNumWorkers: The current number of workers the job has.
 	CurrentNumWorkers int64 `json:"currentNumWorkers,omitempty,string"`
 
 	// Description: A message describing why the system decided to adjust
-	// the current
-	// number of workers, why it failed, or why the system decided to
-	// not make any changes to the number of workers.
+	// the current number of workers, why it failed, or why the system
+	// decided to not make any changes to the number of workers.
 	Description *StructuredMessage `json:"description,omitempty"`
 
 	// EventType: The type of autoscaling event to report.
 	//
 	// Possible values:
-	//   "TYPE_UNKNOWN" - Default type for the enum.  Value should never be
+	//   "TYPE_UNKNOWN" - Default type for the enum. Value should never be
 	// returned.
 	//   "TARGET_NUM_WORKERS_CHANGED" - The TARGET_NUM_WORKERS_CHANGED type
-	// should be used when the target
-	// worker pool size has changed at the start of an actuation. An
-	// event
-	// should always be specified as TARGET_NUM_WORKERS_CHANGED if it
-	// reflects
-	// a change in the target_num_workers.
+	// should be used when the target worker pool size has changed at the
+	// start of an actuation. An event should always be specified as
+	// TARGET_NUM_WORKERS_CHANGED if it reflects a change in the
+	// target_num_workers.
 	//   "CURRENT_NUM_WORKERS_CHANGED" - The CURRENT_NUM_WORKERS_CHANGED
-	// type should be used when actual worker
-	// pool size has been changed, but the target_num_workers has not
-	// changed.
+	// type should be used when actual worker pool size has been changed,
+	// but the target_num_workers has not changed.
 	//   "ACTUATION_FAILURE" - The ACTUATION_FAILURE type should be used
-	// when we want to report
-	// an error to the user indicating why the current number of workers
-	// in the pool could not be changed.
-	// Displayed in the current status and history widgets.
+	// when we want to report an error to the user indicating why the
+	// current number of workers in the pool could not be changed. Displayed
+	// in the current status and history widgets.
 	//   "NO_CHANGE" - Used when we want to report to the user a reason why
-	// we are
-	// not currently adjusting the number of workers.
-	// Should specify both target_num_workers, current_num_workers and
-	// a
-	// decision_message.
+	// we are not currently adjusting the number of workers. Should specify
+	// both target_num_workers, current_num_workers and a decision_message.
 	EventType string `json:"eventType,omitempty"`
 
 	// TargetNumWorkers: The target number of workers the worker pool wants
@@ -676,13 +657,12 @@ type AutoscalingEvent struct {
 	TargetNumWorkers int64 `json:"targetNumWorkers,omitempty,string"`
 
 	// Time: The time this event was emitted to indicate a new target or
-	// current
-	// num_workers value.
+	// current num_workers value.
 	Time string `json:"time,omitempty"`
 
 	// WorkerPool: A short and friendly name for the worker pool this event
-	// refers to,
-	// populated from the value of PoolStageRelation::user_pool_name.
+	// refers to, populated from the value of
+	// PoolStageRelation::user_pool_name.
 	WorkerPool string `json:"workerPool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentNumWorkers")
@@ -821,16 +801,14 @@ func (s *BigTableIODetails) MarshalJSON() ([]byte, error) {
 // CPUTime: Modeled after information exposed by /proc/stat.
 type CPUTime struct {
 	// Rate: Average CPU utilization rate (% non-idle cpu / second) since
-	// previous
-	// sample.
+	// previous sample.
 	Rate float64 `json:"rate,omitempty"`
 
 	// Timestamp: Timestamp of the measurement.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// TotalMs: Total active CPU time across all cores (ie., non-idle) in
-	// milliseconds
-	// since start-up.
+	// milliseconds since start-up.
 	TotalMs uint64 `json:"totalMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Rate") to
@@ -901,15 +879,14 @@ func (s *CommitTemplateVersionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ComponentSource: Description of an interstitial value between
-// transforms in an execution
-// stage.
+// transforms in an execution stage.
 type ComponentSource struct {
 	// Name: Dataflow service generated name for this source.
 	Name string `json:"name,omitempty"`
 
 	// OriginalTransformOrCollection: User name for the original user
-	// transform or collection with which this
-	// source is most closely associated.
+	// transform or collection with which this source is most closely
+	// associated.
 	OriginalTransformOrCollection string `json:"originalTransformOrCollection,omitempty"`
 
 	// UserName: Human-readable name for this transform; may be user or
@@ -946,8 +923,7 @@ type ComponentTransform struct {
 	Name string `json:"name,omitempty"`
 
 	// OriginalTransform: User name for the original user transform with
-	// which this transform is
-	// most closely associated.
+	// which this transform is most closely associated.
 	OriginalTransform string `json:"originalTransform,omitempty"`
 
 	// UserName: Human-readable name for this transform; may be user or
@@ -1022,10 +998,8 @@ func (s *ComputationTopology) MarshalJSON() ([]byte, error) {
 }
 
 // ConcatPosition: A position that encapsulates an inner position and an
-// index for the inner
-// position. A ConcatPosition can be used by a reader of a source
-// that
-// encapsulates a set of other sources.
+// index for the inner position. A ConcatPosition can be used by a
+// reader of a source that encapsulates a set of other sources.
 type ConcatPosition struct {
 	// Index: Index of the inner source.
 	Index int64 `json:"index,omitempty"`
@@ -1157,8 +1131,8 @@ func (s *CounterMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // CounterStructuredName: Identifies a counter within a per-job
-// namespace. Counters whose structured
-// names are the same get merged into a single value for the job.
+// namespace. Counters whose structured names are the same get merged
+// into a single value for the job.
 type CounterStructuredName struct {
 	// ComponentStepName: Name of the optimized step being executed by the
 	// workers.
@@ -1169,20 +1143,15 @@ type CounterStructuredName struct {
 	ExecutionStepName string `json:"executionStepName,omitempty"`
 
 	// InputIndex: Index of an input collection that's being read
-	// from/written to as a side
-	// input.
-	// The index identifies a step's side inputs starting by 1 (e.g. the
-	// first
-	// side input has input_index 1, the third has input_index 3).
-	// Side inputs are identified by a pair of (original_step_name,
-	// input_index).
-	// This field helps uniquely identify them.
+	// from/written to as a side input. The index identifies a step's side
+	// inputs starting by 1 (e.g. the first side input has input_index 1,
+	// the third has input_index 3). Side inputs are identified by a pair of
+	// (original_step_name, input_index). This field helps uniquely identify
+	// them.
 	InputIndex int64 `json:"inputIndex,omitempty"`
 
 	// Name: Counter name. Not necessarily globally-unique, but unique
-	// within the
-	// context of the other fields.
-	// Required.
+	// within the context of the other fields. Required.
 	Name string `json:"name,omitempty"`
 
 	// Origin: One of the standard Origins defined above.
@@ -1197,14 +1166,12 @@ type CounterStructuredName struct {
 	OriginNamespace string `json:"originNamespace,omitempty"`
 
 	// OriginalRequestingStepName: The step name requesting an operation,
-	// such as GBK.
-	// I.e. the ParDo causing a read/write from shuffle to occur, or a
-	// read from side inputs.
+	// such as GBK. I.e. the ParDo causing a read/write from shuffle to
+	// occur, or a read from side inputs.
 	OriginalRequestingStepName string `json:"originalRequestingStepName,omitempty"`
 
 	// OriginalStepName: System generated name of the original step in the
-	// user's graph, before
-	// optimization.
+	// user's graph, before optimization.
 	OriginalStepName string `json:"originalStepName,omitempty"`
 
 	// Portion: Portion of this counter, either key or value.
@@ -1243,8 +1210,7 @@ func (s *CounterStructuredName) MarshalJSON() ([]byte, error) {
 }
 
 // CounterStructuredNameAndMetadata: A single message which encapsulates
-// structured name and metadata for a given
-// counter.
+// structured name and metadata for a given counter.
 type CounterStructuredNameAndMetadata struct {
 	// Metadata: Metadata associated with a counter
 	Metadata *CounterMetadata `json:"metadata,omitempty"`
@@ -1281,11 +1247,9 @@ type CounterUpdate struct {
 	Boolean bool `json:"boolean,omitempty"`
 
 	// Cumulative: True if this counter is reported as the total cumulative
-	// aggregate
-	// value accumulated since the worker started working on this
-	// WorkItem.
-	// By default this is false, indicating that this counter is reported
-	// as a delta.
+	// aggregate value accumulated since the worker started working on this
+	// WorkItem. By default this is false, indicating that this counter is
+	// reported as a delta.
 	Cumulative bool `json:"cumulative,omitempty"`
 
 	// Distribution: Distribution data
@@ -1319,9 +1283,8 @@ type CounterUpdate struct {
 	// NameAndKind: Counter name and aggregation type.
 	NameAndKind *NameAndKind `json:"nameAndKind,omitempty"`
 
-	// ShortId: The service-generated short identifier for this counter.
-	// The short_id -> (name, metadata) mapping is constant for the lifetime
-	// of
+	// ShortId: The service-generated short identifier for this counter. The
+	// short_id -> (name, metadata) mapping is constant for the lifetime of
 	// a job.
 	ShortId int64 `json:"shortId,omitempty,string"`
 
@@ -1374,20 +1337,17 @@ type CreateJobFromTemplateRequest struct {
 	// Environment: The runtime environment for the job.
 	Environment *RuntimeEnvironment `json:"environment,omitempty"`
 
-	// GcsPath: Required. A Cloud Storage path to the template from which
-	// to
-	// create the job.
-	// Must be a valid Cloud Storage URL, beginning with `gs://`.
+	// GcsPath: Required. A Cloud Storage path to the template from which to
+	// create the job. Must be a valid Cloud Storage URL, beginning with
+	// `gs://`.
 	GcsPath string `json:"gcsPath,omitempty"`
 
 	// JobName: Required. The job name to use for the created job.
 	JobName string `json:"jobName,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) to
-	// which to direct the request.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// to which to direct the request.
 	Location string `json:"location,omitempty"`
 
 	// Parameters: The runtime parameters to pass to the job.
@@ -1477,16 +1437,13 @@ func (s *CustomSourceLocation) MarshalJSON() ([]byte, error) {
 // DataDiskAssignment: Data disk assignment for a given VM instance.
 type DataDiskAssignment struct {
 	// DataDisks: Mounted data disks. The order is important a data disk's
-	// 0-based index in
-	// this list defines which persistent directory the disk is mounted to,
-	// for
-	// example the list of { "myproject-1014-104817-4c2-harness-0-disk-0"
-	// },
-	// { "myproject-1014-104817-4c2-harness-0-disk-1" }.
+	// 0-based index in this list defines which persistent directory the
+	// disk is mounted to, for example the list of {
+	// "myproject-1014-104817-4c2-harness-0-disk-0" }, {
+	// "myproject-1014-104817-4c2-harness-0-disk-1" }.
 	DataDisks []string `json:"dataDisks,omitempty"`
 
-	// VmInstance: VM instance name the data disks mounted to, for
-	// example
+	// VmInstance: VM instance name the data disks mounted to, for example
 	// "myproject-1014-104817-4c2-harness-0".
 	VmInstance string `json:"vmInstance,omitempty"`
 
@@ -1553,11 +1510,10 @@ type DeleteSnapshotResponse struct {
 }
 
 // DerivedSource: Specification of one of the bundles produced as a
-// result of splitting
-// a Source (e.g. when executing a SourceSplitRequest, or when
-// splitting an active task using
-// WorkItemStatus.dynamic_source_split),
-// relative to the source being split.
+// result of splitting a Source (e.g. when executing a
+// SourceSplitRequest, or when splitting an active task using
+// WorkItemStatus.dynamic_source_split), relative to the source being
+// split.
 type DerivedSource struct {
 	// DerivationMode: What source to base the produced source on (if any).
 	//
@@ -1602,38 +1558,26 @@ func (s *DerivedSource) MarshalJSON() ([]byte, error) {
 // Disk: Describes the data disk used by a workflow job.
 type Disk struct {
 	// DiskType: Disk storage type, as defined by Google Compute Engine.
-	// This
-	// must be a disk type appropriate to the project and zone in which
-	// the workers will run.  If unknown or unspecified, the service
-	// will attempt to choose a reasonable default.
-	//
-	// For example, the standard persistent disk type is a resource
-	// name
-	// typically ending in "pd-standard".  If SSD persistent disks
-	// are
-	// available, the resource name typically ends with "pd-ssd".
-	// The
-	// actual valid values are defined the Google Compute Engine API,
-	// not by the Cloud Dataflow API; consult the Google Compute
-	// Engine
-	// documentation for more information about determining the set
-	// of
-	// available disk types for a particular project and zone.
-	//
-	// Google Compute Engine Disk types are local to a particular
-	// project in a particular zone, and so the resource name will
-	// typically look something like
-	// this:
-	//
-	// compute.googleapis.com/projects/project-id/zones/zone/diskTypes
-	// /pd-standard
+	// This must be a disk type appropriate to the project and zone in which
+	// the workers will run. If unknown or unspecified, the service will
+	// attempt to choose a reasonable default. For example, the standard
+	// persistent disk type is a resource name typically ending in
+	// "pd-standard". If SSD persistent disks are available, the resource
+	// name typically ends with "pd-ssd". The actual valid values are
+	// defined the Google Compute Engine API, not by the Cloud Dataflow API;
+	// consult the Google Compute Engine documentation for more information
+	// about determining the set of available disk types for a particular
+	// project and zone. Google Compute Engine Disk types are local to a
+	// particular project in a particular zone, and so the resource name
+	// will typically look something like this:
+	// compute.googleapis.com/projects/project-id/zones/zone/diskTypes/pd-sta
+	// ndard
 	DiskType string `json:"diskType,omitempty"`
 
 	// MountPoint: Directory in a VM where disk is mounted.
 	MountPoint string `json:"mountPoint,omitempty"`
 
-	// SizeGb: Size of disk in GB.  If zero or unspecified, the service
-	// will
+	// SizeGb: Size of disk in GB. If zero or unspecified, the service will
 	// attempt to choose a reasonable default.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
@@ -1678,29 +1622,25 @@ type DisplayData struct {
 	// JavaClassValue: Contains value if the data is of java class type.
 	JavaClassValue string `json:"javaClassValue,omitempty"`
 
-	// Key: The key identifying the display data.
-	// This is intended to be used as a label for the display data
-	// when viewed in a dax monitoring system.
+	// Key: The key identifying the display data. This is intended to be
+	// used as a label for the display data when viewed in a dax monitoring
+	// system.
 	Key string `json:"key,omitempty"`
 
 	// Label: An optional label to display in a dax UI for the element.
 	Label string `json:"label,omitempty"`
 
 	// Namespace: The namespace for the key. This is usually a class name or
-	// programming
-	// language namespace (i.e. python module) which defines the display
-	// data.
-	// This allows a dax monitoring system to specially handle the data
-	// and perform custom rendering.
+	// programming language namespace (i.e. python module) which defines the
+	// display data. This allows a dax monitoring system to specially handle
+	// the data and perform custom rendering.
 	Namespace string `json:"namespace,omitempty"`
 
-	// ShortStrValue: A possible additional shorter value to display.
-	// For example a java_class_name_value of com.mypackage.MyDoFn
-	// will be stored with MyDoFn as the short_str_value
-	// and
-	// com.mypackage.MyDoFn as the java_class_name value.
-	// short_str_value can be displayed and java_class_name_value
-	// will be displayed as a tooltip.
+	// ShortStrValue: A possible additional shorter value to display. For
+	// example a java_class_name_value of com.mypackage.MyDoFn will be
+	// stored with MyDoFn as the short_str_value and com.mypackage.MyDoFn as
+	// the java_class_name value. short_str_value can be displayed and
+	// java_class_name_value will be displayed as a tooltip.
 	ShortStrValue string `json:"shortStrValue,omitempty"`
 
 	// StrValue: Contains value if the data is of string type.
@@ -1765,8 +1705,8 @@ type DistributionUpdate struct {
 	Min *SplitInt64 `json:"min,omitempty"`
 
 	// Sum: Use an int64 since we'd prefer the added precision. If overflow
-	// is a common
-	// problem we can detect it and use an additional int64 or a double.
+	// is a common problem we can detect it and use an additional int64 or a
+	// double.
 	Sum *SplitInt64 `json:"sum,omitempty"`
 
 	// SumOfSquares: Use a double since the sum of squares is likely to
@@ -1811,19 +1751,16 @@ func (s *DistributionUpdate) UnmarshalJSON(data []byte) error {
 }
 
 // DynamicSourceSplit: When a task splits using
-// WorkItemStatus.dynamic_source_split, this
-// message describes the two parts of the split relative to
-// the
-// description of the current task's input.
+// WorkItemStatus.dynamic_source_split, this message describes the two
+// parts of the split relative to the description of the current task's
+// input.
 type DynamicSourceSplit struct {
-	// Primary: Primary part (continued to be processed by
-	// worker).
-	// Specified relative to the previously-current source.
-	// Becomes current.
+	// Primary: Primary part (continued to be processed by worker).
+	// Specified relative to the previously-current source. Becomes current.
 	Primary *DerivedSource `json:"primary,omitempty"`
 
-	// Residual: Residual part (returned to the pool of work).
-	// Specified relative to the previously-current source.
+	// Residual: Residual part (returned to the pool of work). Specified
+	// relative to the previously-current source.
 	Residual *DerivedSource `json:"residual,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Primary") to
@@ -1850,17 +1787,11 @@ func (s *DynamicSourceSplit) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1869,21 +1800,15 @@ type Empty struct {
 
 // Environment: Describes the environment in which a Dataflow Job runs.
 type Environment struct {
-	// ClusterManagerApiService: The type of cluster manager API to use.  If
-	// unknown or
-	// unspecified, the service will attempt to choose a reasonable
-	// default.  This should be in the form of the API service name,
-	// e.g. "compute.googleapis.com".
+	// ClusterManagerApiService: The type of cluster manager API to use. If
+	// unknown or unspecified, the service will attempt to choose a
+	// reasonable default. This should be in the form of the API service
+	// name, e.g. "compute.googleapis.com".
 	ClusterManagerApiService string `json:"clusterManagerApiService,omitempty"`
 
-	// Dataset: The dataset for the current project where various
-	// workflow
-	// related tables are stored.
-	//
-	// The supported resource type is:
-	//
-	// Google BigQuery:
-	//   bigquery.googleapis.com/{dataset}
+	// Dataset: The dataset for the current project where various workflow
+	// related tables are stored. The supported resource type is: Google
+	// BigQuery: bigquery.googleapis.com/{dataset}
 	Dataset string `json:"dataset,omitempty"`
 
 	// Experiments: The list of experiments to enable.
@@ -1902,12 +1827,9 @@ type Environment struct {
 	InternalExperiments googleapi.RawMessage `json:"internalExperiments,omitempty"`
 
 	// SdkPipelineOptions: The Cloud Dataflow SDK pipeline options specified
-	// by the user. These
-	// options are passed through the service and are used to recreate
-	// the
-	// SDK pipeline options on the worker in a language agnostic and
-	// platform
-	// independent way.
+	// by the user. These options are passed through the service and are
+	// used to recreate the SDK pipeline options on the worker in a language
+	// agnostic and platform independent way.
 	SdkPipelineOptions googleapi.RawMessage `json:"sdkPipelineOptions,omitempty"`
 
 	// ServiceAccountEmail: Identity to run virtual machines as. Defaults to
@@ -1915,65 +1837,47 @@ type Environment struct {
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ServiceKmsKeyName: If set, contains the Cloud KMS key identifier used
-	// to encrypt data
-	// at rest, AKA a Customer Managed Encryption Key (CMEK).
-	//
-	// Format:
-	//
+	// to encrypt data at rest, AKA a Customer Managed Encryption Key
+	// (CMEK). Format:
 	// projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KE
 	// Y
 	ServiceKmsKeyName string `json:"serviceKmsKeyName,omitempty"`
 
 	// TempStoragePrefix: The prefix of the resources the system should use
-	// for temporary
-	// storage.  The system will append the suffix "/temp-{JOBNAME} to
-	// this resource prefix, where {JOBNAME} is the value of the
-	// job_name field.  The resulting bucket and object prefix is used
-	// as the prefix of the resources used to store temporary data
-	// needed during the job execution.  NOTE: This will override the
-	// value in taskrunner_settings.
-	// The supported resource type is:
-	//
-	// Google Cloud Storage:
-	//
-	//   storage.googleapis.com/{bucket}/{object}
-	//   bucket.storage.googleapis.com/{object}
+	// for temporary storage. The system will append the suffix
+	// "/temp-{JOBNAME} to this resource prefix, where {JOBNAME} is the
+	// value of the job_name field. The resulting bucket and object prefix
+	// is used as the prefix of the resources used to store temporary data
+	// needed during the job execution. NOTE: This will override the value
+	// in taskrunner_settings. The supported resource type is: Google Cloud
+	// Storage: storage.googleapis.com/{bucket}/{object}
+	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// UserAgent: A description of the process that generated the request.
 	UserAgent googleapi.RawMessage `json:"userAgent,omitempty"`
 
 	// Version: A structure describing which components and their versions
-	// of the service
-	// are required in order to run the job.
+	// of the service are required in order to run the job.
 	Version googleapi.RawMessage `json:"version,omitempty"`
 
 	// WorkerPools: The worker pools. At least one "harness" worker pool
-	// must be
-	// specified in order for the job to have workers.
+	// must be specified in order for the job to have workers.
 	WorkerPools []*WorkerPool `json:"workerPools,omitempty"`
 
-	// WorkerRegion: The Compute Engine
-	// region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zo
-	// nes) in
-	// which worker processing should occur, e.g. "us-west1". Mutually
-	// exclusive
-	// with worker_zone. If neither worker_region nor worker_zone is
-	// specified,
-	// default to the control plane's region.
+	// WorkerRegion: The Compute Engine region
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
+	// in which worker processing should occur, e.g. "us-west1". Mutually
+	// exclusive with worker_zone. If neither worker_region nor worker_zone
+	// is specified, default to the control plane's region.
 	WorkerRegion string `json:"workerRegion,omitempty"`
 
-	// WorkerZone: The Compute Engine
-	// zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zone
-	// s) in
-	// which worker processing should occur, e.g. "us-west1-a". Mutually
-	// exclusive
-	// with worker_region. If neither worker_region nor worker_zone is
-	// specified,
-	// a zone in the control plane's region is chosen based on available
-	// capacity.
+	// WorkerZone: The Compute Engine zone
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
+	// in which worker processing should occur, e.g. "us-west1-a". Mutually
+	// exclusive with worker_region. If neither worker_region nor
+	// worker_zone is specified, a zone in the control plane's region is
+	// chosen based on available capacity.
 	WorkerZone string `json:"workerZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2017,74 +1921,50 @@ type ExecutionStageState struct {
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN" - The job's run state isn't specified.
 	//   "JOB_STATE_STOPPED" - `JOB_STATE_STOPPED` indicates that the job
-	// has not
-	// yet started to run.
+	// has not yet started to run.
 	//   "JOB_STATE_RUNNING" - `JOB_STATE_RUNNING` indicates that the job is
 	// currently running.
 	//   "JOB_STATE_DONE" - `JOB_STATE_DONE` indicates that the job has
-	// successfully completed.
-	// This is a terminal job state.  This state may be set by the Cloud
-	// Dataflow
-	// service, as a transition from `JOB_STATE_RUNNING`. It may also be set
-	// via a
-	// Cloud Dataflow `UpdateJob` call, if the job has not yet reached a
-	// terminal
-	// state.
+	// successfully completed. This is a terminal job state. This state may
+	// be set by the Cloud Dataflow service, as a transition from
+	// `JOB_STATE_RUNNING`. It may also be set via a Cloud Dataflow
+	// `UpdateJob` call, if the job has not yet reached a terminal state.
 	//   "JOB_STATE_FAILED" - `JOB_STATE_FAILED` indicates that the job has
-	// failed.  This is a
-	// terminal job state.  This state may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_RUNNING`.
-	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
-	// job has been explicitly
-	// cancelled. This is a terminal job state. This state may only be
-	// set via a Cloud Dataflow `UpdateJob` call, and only if the job has
-	// not
-	// yet reached another terminal state.
-	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
-	// was successfully updated,
-	// meaning that this job was stopped and another job was started,
-	// inheriting
-	// state from this one. This is a terminal job state. This state may
-	// only be
-	// set by the Cloud Dataflow service, and only as a transition
-	// from
+	// failed. This is a terminal job state. This state may only be set by
+	// the Cloud Dataflow service, and only as a transition from
 	// `JOB_STATE_RUNNING`.
+	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
+	// job has been explicitly cancelled. This is a terminal job state. This
+	// state may only be set via a Cloud Dataflow `UpdateJob` call, and only
+	// if the job has not yet reached another terminal state.
+	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
+	// was successfully updated, meaning that this job was stopped and
+	// another job was started, inheriting state from this one. This is a
+	// terminal job state. This state may only be set by the Cloud Dataflow
+	// service, and only as a transition from `JOB_STATE_RUNNING`.
 	//   "JOB_STATE_DRAINING" - `JOB_STATE_DRAINING` indicates that the job
-	// is in the process of draining.
-	// A draining job has stopped pulling from its input sources and is
-	// processing
-	// any data that remains in-flight. This state may be set via a Cloud
-	// Dataflow
-	// `UpdateJob` call, but only as a transition from `JOB_STATE_RUNNING`.
-	// Jobs
-	// that are draining may only transition to
-	// `JOB_STATE_DRAINED`,
+	// is in the process of draining. A draining job has stopped pulling
+	// from its input sources and is processing any data that remains
+	// in-flight. This state may be set via a Cloud Dataflow `UpdateJob`
+	// call, but only as a transition from `JOB_STATE_RUNNING`. Jobs that
+	// are draining may only transition to `JOB_STATE_DRAINED`,
 	// `JOB_STATE_CANCELLED`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_DRAINED" - `JOB_STATE_DRAINED` indicates that the job
-	// has been drained.
-	// A drained job terminated by stopping pulling from its input sources
-	// and
-	// processing any data that remained in-flight when draining was
-	// requested.
-	// This state is a terminal state, may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_DRAINING`.
+	// has been drained. A drained job terminated by stopping pulling from
+	// its input sources and processing any data that remained in-flight
+	// when draining was requested. This state is a terminal state, may only
+	// be set by the Cloud Dataflow service, and only as a transition from
+	// `JOB_STATE_DRAINING`.
 	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
-	// has been created but is not yet
-	// running.  Jobs that are pending may only transition to
-	// `JOB_STATE_RUNNING`,
-	// or `JOB_STATE_FAILED`.
+	// has been created but is not yet running. Jobs that are pending may
+	// only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
-	// job has been explicitly cancelled
-	// and is in the process of stopping.  Jobs that are cancelling may
-	// only
-	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	// job has been explicitly cancelled and is in the process of stopping.
+	// Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED`
+	// or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
-	// been created but is being
-	// delayed until launch. Jobs that are queued may only transition
-	// to
-	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
+	// been created but is being delayed until launch. Jobs that are queued
+	// may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	ExecutionStageState string `json:"executionStageState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentStateTime") to
@@ -2112,10 +1992,9 @@ func (s *ExecutionStageState) MarshalJSON() ([]byte, error) {
 }
 
 // ExecutionStageSummary: Description of the composing transforms,
-// names/ids, and input/outputs of a
-// stage of execution.  Some composing transforms and sources may have
-// been
-// generated by the Dataflow service during execution planning.
+// names/ids, and input/outputs of a stage of execution. Some composing
+// transforms and sources may have been generated by the Dataflow
+// service during execution planning.
 type ExecutionStageSummary struct {
 	// ComponentSource: Collections produced and consumed by component
 	// transforms of this stage.
@@ -2176,17 +2055,13 @@ func (s *ExecutionStageSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailedLocation: Indicates which [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) failed
-// to respond to a request for data.
+// FailedLocation: Indicates which [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// failed to respond to a request for data.
 type FailedLocation struct {
-	// Name: The name of the [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// failed to respond.
+	// Name: The name of the [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that failed to respond.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2348,15 +2223,12 @@ func (s *FloatingPointMean) UnmarshalJSON(data []byte) error {
 // component.
 type GetDebugConfigRequest struct {
 	// ComponentId: The internal component id for which debug configuration
-	// is
-	// requested.
+	// is requested.
 	ComponentId string `json:"componentId,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains the job specified by job_id.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains the job specified by job_id.
 	Location string `json:"location,omitempty"`
 
 	// WorkerId: The worker id, i.e., VM hostname.
@@ -2421,16 +2293,14 @@ func (s *GetDebugConfigResponse) MarshalJSON() ([]byte, error) {
 // GetTemplateResponse: The response to a GetTemplate request.
 type GetTemplateResponse struct {
 	// Metadata: The template metadata describing the template name,
-	// available
-	// parameters, etc.
+	// available parameters, etc.
 	Metadata *TemplateMetadata `json:"metadata,omitempty"`
 
 	// RuntimeMetadata: Describes the runtime metadata with SDKInfo and
 	// available parameters.
 	RuntimeMetadata *RuntimeMetadata `json:"runtimeMetadata,omitempty"`
 
-	// Status: The status of the get template request. Any problems with
-	// the
+	// Status: The status of the get template request. Any problems with the
 	// request will be indicated in the error_details.
 	Status *Status `json:"status,omitempty"`
 
@@ -2469,31 +2339,22 @@ func (s *GetTemplateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Histogram: Histogram of value counts for a distribution.
-//
-// Buckets have an inclusive lower bound and exclusive upper bound and
-// use
-// "1,2,5 bucketing": The first bucket range is from [0,1) and all
-// subsequent
+// Histogram: Histogram of value counts for a distribution. Buckets have
+// an inclusive lower bound and exclusive upper bound and use "1,2,5
+// bucketing": The first bucket range is from [0,1) and all subsequent
 // bucket boundaries are powers of ten multiplied by 1, 2, or 5. Thus,
-// bucket
-// boundaries are 0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000,
-// ...
-// Negative values are not supported.
+// bucket boundaries are 0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000,
+// ... Negative values are not supported.
 type Histogram struct {
 	// BucketCounts: Counts of values in each bucket. For efficiency, prefix
-	// and trailing
-	// buckets with count = 0 are elided. Buckets can store the full range
-	// of
-	// values of an unsigned long, with ULLONG_MAX falling into the 59th
-	// bucket
-	// with range [1e19, 2e19).
+	// and trailing buckets with count = 0 are elided. Buckets can store the
+	// full range of values of an unsigned long, with ULLONG_MAX falling
+	// into the 59th bucket with range [1e19, 2e19).
 	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
 
 	// FirstBucketOffset: Starting index of first stored bucket. The
-	// non-inclusive upper-bound of
-	// the ith bucket is given by:
-	//   pow(10,(i-first_bucket_offset)/3) *
+	// non-inclusive upper-bound of the ith bucket is given by:
+	// pow(10,(i-first_bucket_offset)/3) *
 	// (1,2,5)[(i-first_bucket_offset)%3]
 	FirstBucketOffset int64 `json:"firstBucketOffset,omitempty"`
 
@@ -2527,8 +2388,7 @@ type HotKeyDetection struct {
 	// detected.
 	HotKeyAge string `json:"hotKeyAge,omitempty"`
 
-	// SystemName: System-defined name of the step containing this hot
-	// key.
+	// SystemName: System-defined name of the step containing this hot key.
 	// Unique across the workflow.
 	SystemName string `json:"systemName,omitempty"`
 
@@ -2560,17 +2420,15 @@ func (s *HotKeyDetection) MarshalJSON() ([]byte, error) {
 }
 
 // InstructionInput: An input of an instruction, as a reference to an
-// output of a
-// producer instruction.
+// output of a producer instruction.
 type InstructionInput struct {
 	// OutputNum: The output index (origin zero) within the producer.
 	OutputNum int64 `json:"outputNum,omitempty"`
 
 	// ProducerInstructionIndex: The index (origin zero) of the parallel
-	// instruction that produces
-	// the output to be consumed by this input.  This index is relative
-	// to the list of instructions in this input's instruction's
-	// containing MapTask.
+	// instruction that produces the output to be consumed by this input.
+	// This index is relative to the list of instructions in this input's
+	// instruction's containing MapTask.
 	ProducerInstructionIndex int64 `json:"producerInstructionIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputNum") to
@@ -2605,23 +2463,20 @@ type InstructionOutput struct {
 	Name string `json:"name,omitempty"`
 
 	// OnlyCountKeyBytes: For system-generated byte and mean byte metrics,
-	// certain instructions
-	// should only report the key size.
+	// certain instructions should only report the key size.
 	OnlyCountKeyBytes bool `json:"onlyCountKeyBytes,omitempty"`
 
 	// OnlyCountValueBytes: For system-generated byte and mean byte metrics,
-	// certain instructions
-	// should only report the value size.
+	// certain instructions should only report the value size.
 	OnlyCountValueBytes bool `json:"onlyCountValueBytes,omitempty"`
 
 	// OriginalName: System-defined name for this output in the original
-	// workflow graph.
-	// Outputs that do not contribute to an original instruction do not set
-	// this.
+	// workflow graph. Outputs that do not contribute to an original
+	// instruction do not set this.
 	OriginalName string `json:"originalName,omitempty"`
 
-	// SystemName: System-defined name of this output.
-	// Unique across the workflow.
+	// SystemName: System-defined name of this output. Unique across the
+	// workflow.
 	SystemName string `json:"systemName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Codec") to
@@ -2742,112 +2597,77 @@ func (s *IntegerMean) MarshalJSON() ([]byte, error) {
 // Job: Defines a job to be run by the Cloud Dataflow service.
 type Job struct {
 	// ClientRequestId: The client's unique identifier of the job, re-used
-	// across retried attempts.
-	// If this field is set, the service will ensure its uniqueness.
-	// The request to create a job will fail if the service has knowledge of
-	// a
-	// previously submitted job with the same client's ID and job name.
-	// The caller may use this field to ensure idempotence of job
-	// creation across retried attempts to create a job.
+	// across retried attempts. If this field is set, the service will
+	// ensure its uniqueness. The request to create a job will fail if the
+	// service has knowledge of a previously submitted job with the same
+	// client's ID and job name. The caller may use this field to ensure
+	// idempotence of job creation across retried attempts to create a job.
 	// By default, the field is empty and, in that case, the service ignores
 	// it.
 	ClientRequestId string `json:"clientRequestId,omitempty"`
 
 	// CreateTime: The timestamp when the job was initially created.
-	// Immutable and set by the
-	// Cloud Dataflow service.
+	// Immutable and set by the Cloud Dataflow service.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CreatedFromSnapshotId: If this is specified, the job's initial state
-	// is populated from the given
-	// snapshot.
+	// is populated from the given snapshot.
 	CreatedFromSnapshotId string `json:"createdFromSnapshotId,omitempty"`
 
-	// CurrentState: The current state of the job.
-	//
-	// Jobs are created in the `JOB_STATE_STOPPED` state unless
-	// otherwise
-	// specified.
-	//
-	// A job in the `JOB_STATE_RUNNING` state may asynchronously enter
-	// a
-	// terminal state. After a job has reached a terminal state, no
-	// further state updates may be made.
-	//
-	// This field may be mutated by the Cloud Dataflow service;
+	// CurrentState: The current state of the job. Jobs are created in the
+	// `JOB_STATE_STOPPED` state unless otherwise specified. A job in the
+	// `JOB_STATE_RUNNING` state may asynchronously enter a terminal state.
+	// After a job has reached a terminal state, no further state updates
+	// may be made. This field may be mutated by the Cloud Dataflow service;
 	// callers cannot mutate it.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN" - The job's run state isn't specified.
 	//   "JOB_STATE_STOPPED" - `JOB_STATE_STOPPED` indicates that the job
-	// has not
-	// yet started to run.
+	// has not yet started to run.
 	//   "JOB_STATE_RUNNING" - `JOB_STATE_RUNNING` indicates that the job is
 	// currently running.
 	//   "JOB_STATE_DONE" - `JOB_STATE_DONE` indicates that the job has
-	// successfully completed.
-	// This is a terminal job state.  This state may be set by the Cloud
-	// Dataflow
-	// service, as a transition from `JOB_STATE_RUNNING`. It may also be set
-	// via a
-	// Cloud Dataflow `UpdateJob` call, if the job has not yet reached a
-	// terminal
-	// state.
+	// successfully completed. This is a terminal job state. This state may
+	// be set by the Cloud Dataflow service, as a transition from
+	// `JOB_STATE_RUNNING`. It may also be set via a Cloud Dataflow
+	// `UpdateJob` call, if the job has not yet reached a terminal state.
 	//   "JOB_STATE_FAILED" - `JOB_STATE_FAILED` indicates that the job has
-	// failed.  This is a
-	// terminal job state.  This state may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_RUNNING`.
-	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
-	// job has been explicitly
-	// cancelled. This is a terminal job state. This state may only be
-	// set via a Cloud Dataflow `UpdateJob` call, and only if the job has
-	// not
-	// yet reached another terminal state.
-	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
-	// was successfully updated,
-	// meaning that this job was stopped and another job was started,
-	// inheriting
-	// state from this one. This is a terminal job state. This state may
-	// only be
-	// set by the Cloud Dataflow service, and only as a transition
-	// from
+	// failed. This is a terminal job state. This state may only be set by
+	// the Cloud Dataflow service, and only as a transition from
 	// `JOB_STATE_RUNNING`.
+	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
+	// job has been explicitly cancelled. This is a terminal job state. This
+	// state may only be set via a Cloud Dataflow `UpdateJob` call, and only
+	// if the job has not yet reached another terminal state.
+	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
+	// was successfully updated, meaning that this job was stopped and
+	// another job was started, inheriting state from this one. This is a
+	// terminal job state. This state may only be set by the Cloud Dataflow
+	// service, and only as a transition from `JOB_STATE_RUNNING`.
 	//   "JOB_STATE_DRAINING" - `JOB_STATE_DRAINING` indicates that the job
-	// is in the process of draining.
-	// A draining job has stopped pulling from its input sources and is
-	// processing
-	// any data that remains in-flight. This state may be set via a Cloud
-	// Dataflow
-	// `UpdateJob` call, but only as a transition from `JOB_STATE_RUNNING`.
-	// Jobs
-	// that are draining may only transition to
-	// `JOB_STATE_DRAINED`,
+	// is in the process of draining. A draining job has stopped pulling
+	// from its input sources and is processing any data that remains
+	// in-flight. This state may be set via a Cloud Dataflow `UpdateJob`
+	// call, but only as a transition from `JOB_STATE_RUNNING`. Jobs that
+	// are draining may only transition to `JOB_STATE_DRAINED`,
 	// `JOB_STATE_CANCELLED`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_DRAINED" - `JOB_STATE_DRAINED` indicates that the job
-	// has been drained.
-	// A drained job terminated by stopping pulling from its input sources
-	// and
-	// processing any data that remained in-flight when draining was
-	// requested.
-	// This state is a terminal state, may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_DRAINING`.
+	// has been drained. A drained job terminated by stopping pulling from
+	// its input sources and processing any data that remained in-flight
+	// when draining was requested. This state is a terminal state, may only
+	// be set by the Cloud Dataflow service, and only as a transition from
+	// `JOB_STATE_DRAINING`.
 	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
-	// has been created but is not yet
-	// running.  Jobs that are pending may only transition to
-	// `JOB_STATE_RUNNING`,
-	// or `JOB_STATE_FAILED`.
+	// has been created but is not yet running. Jobs that are pending may
+	// only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
-	// job has been explicitly cancelled
-	// and is in the process of stopping.  Jobs that are cancelling may
-	// only
-	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	// job has been explicitly cancelled and is in the process of stopping.
+	// Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED`
+	// or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
-	// been created but is being
-	// delayed until launch. Jobs that are queued may only transition
-	// to
-	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
+	// been created but is being delayed until launch. Jobs that are queued
+	// may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	CurrentState string `json:"currentState,omitempty"`
 
 	// CurrentStateTime: The timestamp associated with the current state.
@@ -2859,59 +2679,40 @@ type Job struct {
 	// ExecutionInfo: Deprecated.
 	ExecutionInfo *JobExecutionInfo `json:"executionInfo,omitempty"`
 
-	// Id: The unique ID of this job.
-	//
-	// This field is set by the Cloud Dataflow service when the Job
-	// is
-	// created, and is immutable for the life of the job.
+	// Id: The unique ID of this job. This field is set by the Cloud
+	// Dataflow service when the Job is created, and is immutable for the
+	// life of the job.
 	Id string `json:"id,omitempty"`
 
 	// JobMetadata: This field is populated by the Dataflow service to
-	// support filtering jobs
-	// by the metadata values provided here. Populated for ListJobs and all
-	// GetJob
-	// views SUMMARY and higher.
+	// support filtering jobs by the metadata values provided here.
+	// Populated for ListJobs and all GetJob views SUMMARY and higher.
 	JobMetadata *JobMetadata `json:"jobMetadata,omitempty"`
 
-	// Labels: User-defined labels for this job.
-	//
-	// The labels map can contain no more than 64 entries.  Entries of the
-	// labels
-	// map are UTF8 strings that comply with the following restrictions:
-	//
-	// * Keys must conform to regexp:  \p{Ll}\p{Lo}{0,62}
-	// * Values must conform to regexp:  [\p{Ll}\p{Lo}\p{N}_-]{0,63}
-	// * Both keys and values are additionally constrained to be <= 128
-	// bytes in
-	// size.
+	// Labels: User-defined labels for this job. The labels map can contain
+	// no more than 64 entries. Entries of the labels map are UTF8 strings
+	// that comply with the following restrictions: * Keys must conform to
+	// regexp: \p{Ll}\p{Lo}{0,62} * Values must conform to regexp:
+	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
+	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains this job.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains this job.
 	Location string `json:"location,omitempty"`
 
-	// Name: The user-specified Cloud Dataflow job name.
-	//
-	// Only one Job with a given name may exist in a project at any
-	// given time. If a caller attempts to create a Job with the same
-	// name as an already-existing Job, the attempt returns the
-	// existing Job.
-	//
-	// The name must match the regular
-	// expression
-	// `[a-z]([-a-z0-9]{0,38}[a-z0-9])?`
+	// Name: The user-specified Cloud Dataflow job name. Only one Job with a
+	// given name may exist in a project at any given time. If a caller
+	// attempts to create a Job with the same name as an already-existing
+	// Job, the attempt returns the existing Job. The name must match the
+	// regular expression `[a-z]([-a-z0-9]{0,38}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 
 	// PipelineDescription: Preliminary field: The format of this data may
-	// change at any time.
-	// A description of the user pipeline and stages through which it is
-	// executed.
-	// Created by Cloud Dataflow service.  Only retrieved
-	// with
-	// JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.
+	// change at any time. A description of the user pipeline and stages
+	// through which it is executed. Created by Cloud Dataflow service. Only
+	// retrieved with JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.
 	PipelineDescription *PipelineDescription `json:"pipelineDescription,omitempty"`
 
 	// ProjectId: The ID of the Cloud Platform project that the job belongs
@@ -2919,153 +2720,103 @@ type Job struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReplaceJobId: If this job is an update of an existing job, this field
-	// is the job ID
-	// of the job it replaced.
-	//
-	// When sending a `CreateJobRequest`, you can update a job by specifying
-	// it
-	// here. The job named here is stopped, and its intermediate state
-	// is
-	// transferred to this job.
+	// is the job ID of the job it replaced. When sending a
+	// `CreateJobRequest`, you can update a job by specifying it here. The
+	// job named here is stopped, and its intermediate state is transferred
+	// to this job.
 	ReplaceJobId string `json:"replaceJobId,omitempty"`
 
 	// ReplacedByJobId: If another job is an update of this job (and thus,
-	// this job is in
-	// `JOB_STATE_UPDATED`), this field contains the ID of that job.
+	// this job is in `JOB_STATE_UPDATED`), this field contains the ID of
+	// that job.
 	ReplacedByJobId string `json:"replacedByJobId,omitempty"`
 
-	// RequestedState: The job's requested state.
-	//
-	// `UpdateJob` may be used to switch between the `JOB_STATE_STOPPED`
-	// and
-	// `JOB_STATE_RUNNING` states, by setting requested_state.  `UpdateJob`
-	// may
-	// also be used to directly set a job's requested state
-	// to
-	// `JOB_STATE_CANCELLED` or `JOB_STATE_DONE`, irrevocably terminating
-	// the
-	// job if it has not already reached a terminal state.
+	// RequestedState: The job's requested state. `UpdateJob` may be used to
+	// switch between the `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING`
+	// states, by setting requested_state. `UpdateJob` may also be used to
+	// directly set a job's requested state to `JOB_STATE_CANCELLED` or
+	// `JOB_STATE_DONE`, irrevocably terminating the job if it has not
+	// already reached a terminal state.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN" - The job's run state isn't specified.
 	//   "JOB_STATE_STOPPED" - `JOB_STATE_STOPPED` indicates that the job
-	// has not
-	// yet started to run.
+	// has not yet started to run.
 	//   "JOB_STATE_RUNNING" - `JOB_STATE_RUNNING` indicates that the job is
 	// currently running.
 	//   "JOB_STATE_DONE" - `JOB_STATE_DONE` indicates that the job has
-	// successfully completed.
-	// This is a terminal job state.  This state may be set by the Cloud
-	// Dataflow
-	// service, as a transition from `JOB_STATE_RUNNING`. It may also be set
-	// via a
-	// Cloud Dataflow `UpdateJob` call, if the job has not yet reached a
-	// terminal
-	// state.
+	// successfully completed. This is a terminal job state. This state may
+	// be set by the Cloud Dataflow service, as a transition from
+	// `JOB_STATE_RUNNING`. It may also be set via a Cloud Dataflow
+	// `UpdateJob` call, if the job has not yet reached a terminal state.
 	//   "JOB_STATE_FAILED" - `JOB_STATE_FAILED` indicates that the job has
-	// failed.  This is a
-	// terminal job state.  This state may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_RUNNING`.
-	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
-	// job has been explicitly
-	// cancelled. This is a terminal job state. This state may only be
-	// set via a Cloud Dataflow `UpdateJob` call, and only if the job has
-	// not
-	// yet reached another terminal state.
-	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
-	// was successfully updated,
-	// meaning that this job was stopped and another job was started,
-	// inheriting
-	// state from this one. This is a terminal job state. This state may
-	// only be
-	// set by the Cloud Dataflow service, and only as a transition
-	// from
+	// failed. This is a terminal job state. This state may only be set by
+	// the Cloud Dataflow service, and only as a transition from
 	// `JOB_STATE_RUNNING`.
+	//   "JOB_STATE_CANCELLED" - `JOB_STATE_CANCELLED` indicates that the
+	// job has been explicitly cancelled. This is a terminal job state. This
+	// state may only be set via a Cloud Dataflow `UpdateJob` call, and only
+	// if the job has not yet reached another terminal state.
+	//   "JOB_STATE_UPDATED" - `JOB_STATE_UPDATED` indicates that the job
+	// was successfully updated, meaning that this job was stopped and
+	// another job was started, inheriting state from this one. This is a
+	// terminal job state. This state may only be set by the Cloud Dataflow
+	// service, and only as a transition from `JOB_STATE_RUNNING`.
 	//   "JOB_STATE_DRAINING" - `JOB_STATE_DRAINING` indicates that the job
-	// is in the process of draining.
-	// A draining job has stopped pulling from its input sources and is
-	// processing
-	// any data that remains in-flight. This state may be set via a Cloud
-	// Dataflow
-	// `UpdateJob` call, but only as a transition from `JOB_STATE_RUNNING`.
-	// Jobs
-	// that are draining may only transition to
-	// `JOB_STATE_DRAINED`,
+	// is in the process of draining. A draining job has stopped pulling
+	// from its input sources and is processing any data that remains
+	// in-flight. This state may be set via a Cloud Dataflow `UpdateJob`
+	// call, but only as a transition from `JOB_STATE_RUNNING`. Jobs that
+	// are draining may only transition to `JOB_STATE_DRAINED`,
 	// `JOB_STATE_CANCELLED`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_DRAINED" - `JOB_STATE_DRAINED` indicates that the job
-	// has been drained.
-	// A drained job terminated by stopping pulling from its input sources
-	// and
-	// processing any data that remained in-flight when draining was
-	// requested.
-	// This state is a terminal state, may only be set by the Cloud
-	// Dataflow
-	// service, and only as a transition from `JOB_STATE_DRAINING`.
+	// has been drained. A drained job terminated by stopping pulling from
+	// its input sources and processing any data that remained in-flight
+	// when draining was requested. This state is a terminal state, may only
+	// be set by the Cloud Dataflow service, and only as a transition from
+	// `JOB_STATE_DRAINING`.
 	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
-	// has been created but is not yet
-	// running.  Jobs that are pending may only transition to
-	// `JOB_STATE_RUNNING`,
-	// or `JOB_STATE_FAILED`.
+	// has been created but is not yet running. Jobs that are pending may
+	// only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
-	// job has been explicitly cancelled
-	// and is in the process of stopping.  Jobs that are cancelling may
-	// only
-	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	// job has been explicitly cancelled and is in the process of stopping.
+	// Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED`
+	// or `JOB_STATE_FAILED`.
 	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
-	// been created but is being
-	// delayed until launch. Jobs that are queued may only transition
-	// to
-	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
+	// been created but is being delayed until launch. Jobs that are queued
+	// may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	RequestedState string `json:"requestedState,omitempty"`
 
-	// StageStates: This field may be mutated by the Cloud Dataflow
-	// service;
+	// StageStates: This field may be mutated by the Cloud Dataflow service;
 	// callers cannot mutate it.
 	StageStates []*ExecutionStageState `json:"stageStates,omitempty"`
 
 	// StartTime: The timestamp when the job was started (transitioned to
-	// JOB_STATE_PENDING).
-	// Flexible resource scheduling jobs are started with some delay after
-	// job
-	// creation, so start_time is unset before start and is updated when
-	// the
-	// job is started by the Cloud Dataflow service. For other jobs,
-	// start_time
-	// always equals to create_time and is immutable and set by the Cloud
-	// Dataflow
-	// service.
+	// JOB_STATE_PENDING). Flexible resource scheduling jobs are started
+	// with some delay after job creation, so start_time is unset before
+	// start and is updated when the job is started by the Cloud Dataflow
+	// service. For other jobs, start_time always equals to create_time and
+	// is immutable and set by the Cloud Dataflow service.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Steps: Exactly one of step or steps_location should be
-	// specified.
-	//
-	// The top-level steps that constitute the entire job. Only retrieved
-	// with
+	// Steps: Exactly one of step or steps_location should be specified. The
+	// top-level steps that constitute the entire job. Only retrieved with
 	// JOB_VIEW_ALL.
 	Steps []*Step `json:"steps,omitempty"`
 
 	// StepsLocation: The GCS location where the steps are stored.
 	StepsLocation string `json:"stepsLocation,omitempty"`
 
-	// TempFiles: A set of files the system should be aware of that are
-	// used
-	// for temporary storage. These temporary files will be
-	// removed on job completion.
-	// No duplicates are allowed.
-	// No file patterns are supported.
-	//
-	// The supported files are:
-	//
-	// Google Cloud Storage:
-	//
-	//    storage.googleapis.com/{bucket}/{object}
-	//    bucket.storage.googleapis.com/{object}
+	// TempFiles: A set of files the system should be aware of that are used
+	// for temporary storage. These temporary files will be removed on job
+	// completion. No duplicates are allowed. No file patterns are
+	// supported. The supported files are: Google Cloud Storage:
+	// storage.googleapis.com/{bucket}/{object}
+	// bucket.storage.googleapis.com/{object}
 	TempFiles []string `json:"tempFiles,omitempty"`
 
 	// TransformNameMapping: The map of transform name prefixes of the job
-	// to be replaced to the
-	// corresponding name prefixes of the new job.
+	// to be replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
 	// Type: The type of Cloud Dataflow job.
@@ -3074,11 +2825,9 @@ type Job struct {
 	//   "JOB_TYPE_UNKNOWN" - The type of the job is unspecified, or
 	// unknown.
 	//   "JOB_TYPE_BATCH" - A batch job with a well-defined end point: data
-	// is read, data is
-	// processed, data is written, and the job is done.
+	// is read, data is processed, data is written, and the job is done.
 	//   "JOB_TYPE_STREAMING" - A continuously streaming job with no end:
-	// data is read,
-	// processed, and written continuously.
+	// data is read, processed, and written continuously.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3109,9 +2858,40 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobExecutionDetails: Information about the execution of a job.
+type JobExecutionDetails struct {
+	// Stages: The stages of the job execution.
+	Stages []*StageSummary `json:"stages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Stages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Stages") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobExecutionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod JobExecutionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // JobExecutionInfo: Additional information about how a Cloud Dataflow
-// job will be executed that
-// isn't contained in the submitted job.
+// job will be executed that isn't contained in the submitted job.
 type JobExecutionInfo struct {
 	// Stages: A mapping from each stage to the information about that
 	// stage.
@@ -3140,13 +2920,12 @@ func (s *JobExecutionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobExecutionStageInfo: Contains information about how a
-// particular
+// JobExecutionStageInfo: Contains information about how a particular
 // google.dataflow.v1beta3.Step will be executed.
 type JobExecutionStageInfo struct {
-	// StepName: The steps associated with the execution stage.
-	// Note that stages may have several steps, and that a given step
-	// might be run by more than one stage.
+	// StepName: The steps associated with the execution stage. Note that
+	// stages may have several steps, and that a given step might be run by
+	// more than one stage.
 	StepName []string `json:"stepName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StepName") to
@@ -3183,37 +2962,29 @@ type JobMessage struct {
 	//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN" - The message importance isn't
 	// specified, or is unknown.
 	//   "JOB_MESSAGE_DEBUG" - The message is at the 'debug' level:
-	// typically only useful for
-	// software engineers working on the code the job is running.
-	// Typically, Dataflow pipeline runners do not display log messages
-	// at this level by default.
+	// typically only useful for software engineers working on the code the
+	// job is running. Typically, Dataflow pipeline runners do not display
+	// log messages at this level by default.
 	//   "JOB_MESSAGE_DETAILED" - The message is at the 'detailed' level:
-	// somewhat verbose, but
-	// potentially useful to users.  Typically, Dataflow pipeline
-	// runners do not display log messages at this level by default.
-	// These messages are displayed by default in the Dataflow
+	// somewhat verbose, but potentially useful to users. Typically,
+	// Dataflow pipeline runners do not display log messages at this level
+	// by default. These messages are displayed by default in the Dataflow
 	// monitoring UI.
 	//   "JOB_MESSAGE_BASIC" - The message is at the 'basic' level: useful
-	// for keeping
-	// track of the execution of a Dataflow pipeline.  Typically,
-	// Dataflow pipeline runners display log messages at this level
-	// by
-	// default, and these messages are displayed by default in the
-	// Dataflow monitoring UI.
+	// for keeping track of the execution of a Dataflow pipeline. Typically,
+	// Dataflow pipeline runners display log messages at this level by
+	// default, and these messages are displayed by default in the Dataflow
+	// monitoring UI.
 	//   "JOB_MESSAGE_WARNING" - The message is at the 'warning' level:
-	// indicating a condition
-	// pertaining to a job which may require human intervention.
-	// Typically, Dataflow pipeline runners display log messages at
-	// this
-	// level by default, and these messages are displayed by default in
-	// the Dataflow monitoring UI.
+	// indicating a condition pertaining to a job which may require human
+	// intervention. Typically, Dataflow pipeline runners display log
+	// messages at this level by default, and these messages are displayed
+	// by default in the Dataflow monitoring UI.
 	//   "JOB_MESSAGE_ERROR" - The message is at the 'error' level:
-	// indicating a condition
-	// preventing a job from succeeding.  Typically, Dataflow
-	// pipeline
-	// runners display log messages at this level by default, and
-	// these
-	// messages are displayed by default in the Dataflow monitoring UI.
+	// indicating a condition preventing a job from succeeding. Typically,
+	// Dataflow pipeline runners display log messages at this level by
+	// default, and these messages are displayed by default in the Dataflow
+	// monitoring UI.
 	MessageImportance string `json:"messageImportance,omitempty"`
 
 	// MessageText: The text of the message.
@@ -3246,8 +3017,7 @@ func (s *JobMessage) MarshalJSON() ([]byte, error) {
 }
 
 // JobMetadata: Metadata available primarily for filtering jobs. Will be
-// included in the
-// ListJob response and Job SUMMARY view.
+// included in the ListJob response and Job SUMMARY view.
 type JobMetadata struct {
 	// BigTableDetails: Identification of a BigTable source used in the
 	// Dataflow job.
@@ -3301,16 +3071,11 @@ func (s *JobMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // JobMetrics: JobMetrics contains a collection of metrics describing
-// the detailed progress
-// of a Dataflow job. Metrics correspond to user-defined and
-// system-defined
-// metrics in the job.
-//
-// This resource captures only the most recent values of each
-// metric;
-// time-series data can be queried for them (under the same metric
-// names)
-// from Cloud Monitoring.
+// the detailed progress of a Dataflow job. Metrics correspond to
+// user-defined and system-defined metrics in the job. This resource
+// captures only the most recent values of each metric; time-series data
+// can be queried for them (under the same metric names) from Cloud
+// Monitoring.
 type JobMetrics struct {
 	// MetricTime: Timestamp as of which metric values are current.
 	MetricTime string `json:"metricTime,omitempty"`
@@ -3346,18 +3111,12 @@ func (s *JobMetrics) MarshalJSON() ([]byte, error) {
 }
 
 // KeyRangeDataDiskAssignment: Data disk assignment information for a
-// specific key-range of a sharded
-// computation.
-// Currently we only support UTF-8 character splits to simplify encoding
-// into
-// JSON.
+// specific key-range of a sharded computation. Currently we only
+// support UTF-8 character splits to simplify encoding into JSON.
 type KeyRangeDataDiskAssignment struct {
 	// DataDisk: The name of the data disk where data for this range is
-	// stored.
-	// This name is local to the Google Cloud Platform project and
-	// uniquely
-	// identifies the disk within that project, for
-	// example
+	// stored. This name is local to the Google Cloud Platform project and
+	// uniquely identifies the disk within that project, for example
 	// "myproject-1014-104817-4c2-harness-0-disk-1".
 	DataDisk string `json:"dataDisk,omitempty"`
 
@@ -3391,28 +3150,22 @@ func (s *KeyRangeDataDiskAssignment) MarshalJSON() ([]byte, error) {
 }
 
 // KeyRangeLocation: Location information for a specific key-range of a
-// sharded computation.
-// Currently we only support UTF-8 character splits to simplify encoding
-// into
-// JSON.
+// sharded computation. Currently we only support UTF-8 character splits
+// to simplify encoding into JSON.
 type KeyRangeLocation struct {
 	// DataDisk: The name of the data disk where data for this range is
-	// stored.
-	// This name is local to the Google Cloud Platform project and
-	// uniquely
-	// identifies the disk within that project, for
-	// example
+	// stored. This name is local to the Google Cloud Platform project and
+	// uniquely identifies the disk within that project, for example
 	// "myproject-1014-104817-4c2-harness-0-disk-1".
 	DataDisk string `json:"dataDisk,omitempty"`
 
 	// DeliveryEndpoint: The physical location of this range assignment to
-	// be used for
-	// streaming computation cross-worker message delivery.
+	// be used for streaming computation cross-worker message delivery.
 	DeliveryEndpoint string `json:"deliveryEndpoint,omitempty"`
 
 	// DeprecatedPersistentDirectory: DEPRECATED. The location of the
-	// persistent state for this range, as a
-	// persistent directory in the worker local filesystem.
+	// persistent state for this range, as a persistent directory in the
+	// worker local filesystem.
 	DeprecatedPersistentDirectory string `json:"deprecatedPersistentDirectory,omitempty"`
 
 	// End: The end (exclusive) of the key range.
@@ -3457,14 +3210,11 @@ type LaunchFlexTemplateParameter struct {
 	JobName string `json:"jobName,omitempty"`
 
 	// LaunchOptions: Launch options for this flex template job. This is a
-	// common set of options
-	// across languages and templates. This should not be used to pass
-	// job
-	// parameters.
+	// common set of options across languages and templates. This should not
+	// be used to pass job parameters.
 	LaunchOptions map[string]string `json:"launchOptions,omitempty"`
 
-	// Parameters: The parameters for FlexTemplate.
-	// Ex. {"num_workers":"5"}
+	// Parameters: The parameters for FlexTemplate. Ex. {"num_workers":"5"}
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerSpec") to
@@ -3498,8 +3248,7 @@ type LaunchFlexTemplateRequest struct {
 	LaunchParameter *LaunchFlexTemplateParameter `json:"launchParameter,omitempty"`
 
 	// ValidateOnly: If true, the request is validated but not actually
-	// executed.
-	// Defaults to false.
+	// executed. Defaults to false.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LaunchParameter") to
@@ -3529,8 +3278,7 @@ func (s *LaunchFlexTemplateRequest) MarshalJSON() ([]byte, error) {
 // LaunchFlexTemplateResponse: Response to the request to launch a job
 // from Flex Template.
 type LaunchFlexTemplateResponse struct {
-	// Job: The job that was launched, if the request was not a dry run
-	// and
+	// Job: The job that was launched, if the request was not a dry run and
 	// the job was successfully launched.
 	Job *Job `json:"job,omitempty"`
 
@@ -3574,14 +3322,12 @@ type LaunchTemplateParameters struct {
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// TransformNameMapping: Only applicable when updating a pipeline. Map
-	// of transform name prefixes of
-	// the job to be replaced to the corresponding name prefixes of the new
-	// job.
+	// of transform name prefixes of the job to be replaced to the
+	// corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
 	// Update: If set, replace the existing pipeline with the name specified
-	// by jobName
-	// with this pipeline, preserving state.
+	// by jobName with this pipeline, preserving state.
 	Update bool `json:"update,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -3609,8 +3355,7 @@ func (s *LaunchTemplateParameters) MarshalJSON() ([]byte, error) {
 
 // LaunchTemplateResponse: Response to the request to launch a template.
 type LaunchTemplateResponse struct {
-	// Job: The job that was launched, if the request was not a dry run
-	// and
+	// Job: The job that was launched, if the request was not a dry run and
 	// the job was successfully launched.
 	Job *Job `json:"job,omitempty"`
 
@@ -3646,11 +3391,9 @@ type LeaseWorkItemRequest struct {
 	// CurrentWorkerTime: The current timestamp at the worker.
 	CurrentWorkerTime string `json:"currentWorkerTime,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains the WorkItem's job.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains the WorkItem's job.
 	Location string `json:"location,omitempty"`
 
 	// RequestedLeaseDuration: The initial lease period.
@@ -3664,13 +3407,11 @@ type LeaseWorkItemRequest struct {
 	WorkItemTypes []string `json:"workItemTypes,omitempty"`
 
 	// WorkerCapabilities: Worker capabilities. WorkItems might be limited
-	// to workers with specific
-	// capabilities.
+	// to workers with specific capabilities.
 	WorkerCapabilities []string `json:"workerCapabilities,omitempty"`
 
 	// WorkerId: Identifies the worker leasing work -- typically the ID of
-	// the
-	// virtual machine running the worker.
+	// the virtual machine running the worker.
 	WorkerId string `json:"workerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentWorkerTime")
@@ -3776,19 +3517,15 @@ func (s *ListJobMessagesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListJobsResponse: Response to a request to list Cloud Dataflow jobs
-// in a project. This might
-// be a partial response, depending on the page size in the
-// ListJobsRequest.
-// However, if the project does not have any jobs, an instance
-// of
-// ListJobsResponse is not returned and the requests's response
-// body is empty {}.
+// in a project. This might be a partial response, depending on the page
+// size in the ListJobsRequest. However, if the project does not have
+// any jobs, an instance of ListJobsResponse is not returned and the
+// requests's response body is empty {}.
 type ListJobsResponse struct {
 	// FailedLocation: Zero or more messages describing the [regional
 	// endpoints]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-e
-	// ndpoints) that
-	// failed to respond.
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that failed to respond.
 	FailedLocation []*FailedLocation `json:"failedLocation,omitempty"`
 
 	// Jobs: A subset of the requested job information.
@@ -3861,8 +3598,8 @@ func (s *ListSnapshotsResponse) MarshalJSON() ([]byte, error) {
 // ListTemplateVersionsResponse: Respond a list of TemplateVersions.
 type ListTemplateVersionsResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page.
-	// If this field is omitted, there are no subsequent pages.
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TemplateVersions: A list of TemplateVersions.
@@ -3896,30 +3633,24 @@ func (s *ListTemplateVersionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // MapTask: MapTask consists of an ordered set of instructions, each of
-// which
-// describes one particular low-level operation for the worker
-// to
-// perform in order to accomplish the MapTask's WorkItem.
-//
-// Each instruction must appear in the list before any instructions
-// which
+// which describes one particular low-level operation for the worker to
+// perform in order to accomplish the MapTask's WorkItem. Each
+// instruction must appear in the list before any instructions which
 // depends on its output.
 type MapTask struct {
 	// CounterPrefix: Counter prefix that can be used to prefix counters.
-	// Not currently used in
-	// Dataflow.
+	// Not currently used in Dataflow.
 	CounterPrefix string `json:"counterPrefix,omitempty"`
 
 	// Instructions: The instructions in the MapTask.
 	Instructions []*ParallelInstruction `json:"instructions,omitempty"`
 
-	// StageName: System-defined name of the stage containing this
-	// MapTask.
+	// StageName: System-defined name of the stage containing this MapTask.
 	// Unique across the workflow.
 	StageName string `json:"stageName,omitempty"`
 
-	// SystemName: System-defined name of this MapTask.
-	// Unique across the workflow.
+	// SystemName: System-defined name of this MapTask. Unique across the
+	// workflow.
 	SystemName string `json:"systemName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CounterPrefix") to
@@ -3946,8 +3677,7 @@ func (s *MapTask) MarshalJSON() ([]byte, error) {
 }
 
 // MemInfo: Information about the memory usage of a worker or a
-// container within a
-// worker.
+// container within a worker.
 type MemInfo struct {
 	// CurrentLimitBytes: Instantenous memory limit in bytes.
 	CurrentLimitBytes uint64 `json:"currentLimitBytes,omitempty,string"`
@@ -3986,11 +3716,10 @@ func (s *MemInfo) MarshalJSON() ([]byte, error) {
 }
 
 // MetricShortId: The metric short id is returned to the user alongside
-// an offset into
-// ReportWorkItemStatusRequest
+// an offset into ReportWorkItemStatusRequest
 type MetricShortId struct {
-	// MetricIndex: The index of the corresponding metric in
-	// the ReportWorkItemStatusRequest. Required.
+	// MetricIndex: The index of the corresponding metric in the
+	// ReportWorkItemStatusRequest. Required.
 	MetricIndex int64 `json:"metricIndex,omitempty"`
 
 	// ShortId: The service-generated short identifier for the metric.
@@ -4020,28 +3749,21 @@ func (s *MetricShortId) MarshalJSON() ([]byte, error) {
 }
 
 // MetricStructuredName: Identifies a metric, by describing the source
-// which generated the
-// metric.
+// which generated the metric.
 type MetricStructuredName struct {
 	// Context: Zero or more labeled fields which identify the part of the
-	// job this
-	// metric is associated with, such as the name of a step or
-	// collection.
-	//
-	// For example, built-in counters associated with steps will
-	// have
-	// context['step'] = <step-name>. Counters associated with
-	// PCollections
-	// in the SDK will have context['pcollection'] = <pcollection-name>.
+	// job this metric is associated with, such as the name of a step or
+	// collection. For example, built-in counters associated with steps will
+	// have context['step'] = . Counters associated with PCollections in the
+	// SDK will have context['pcollection'] = .
 	Context map[string]string `json:"context,omitempty"`
 
 	// Name: Worker-defined metric name.
 	Name string `json:"name,omitempty"`
 
 	// Origin: Origin (namespace) of metric name. May be blank for
-	// user-define metrics;
-	// will be "dataflow" for metrics defined by the Dataflow service or
-	// SDK.
+	// user-define metrics; will be "dataflow" for metrics defined by the
+	// Dataflow service or SDK.
 	Origin string `json:"origin,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
@@ -4070,77 +3792,60 @@ func (s *MetricStructuredName) MarshalJSON() ([]byte, error) {
 // MetricUpdate: Describes the state of a metric.
 type MetricUpdate struct {
 	// Cumulative: True if this metric is reported as the total cumulative
-	// aggregate
-	// value accumulated since the worker started working on this
-	// WorkItem.
-	// By default this is false, indicating that this metric is reported
-	// as a delta that is not associated with any WorkItem.
+	// aggregate value accumulated since the worker started working on this
+	// WorkItem. By default this is false, indicating that this metric is
+	// reported as a delta that is not associated with any WorkItem.
 	Cumulative bool `json:"cumulative,omitempty"`
 
 	// Distribution: A struct value describing properties of a distribution
 	// of numeric values.
 	Distribution interface{} `json:"distribution,omitempty"`
 
-	// Gauge: A struct value describing properties of a Gauge.
-	// Metrics of gauge type show the value of a metric across time, and
-	// is
-	// aggregated based on the newest value.
+	// Gauge: A struct value describing properties of a Gauge. Metrics of
+	// gauge type show the value of a metric across time, and is aggregated
+	// based on the newest value.
 	Gauge interface{} `json:"gauge,omitempty"`
 
 	// Internal: Worker-computed aggregate value for internal use by the
-	// Dataflow
-	// service.
+	// Dataflow service.
 	Internal interface{} `json:"internal,omitempty"`
 
-	// Kind: Metric aggregation kind.  The possible metric aggregation kinds
-	// are
-	// "Sum", "Max", "Min", "Mean", "Set", "And", "Or", and
-	// "Distribution".
-	// The specified aggregation kind is case-insensitive.
-	//
-	// If omitted, this is not an aggregated value but instead
-	// a single metric sample value.
+	// Kind: Metric aggregation kind. The possible metric aggregation kinds
+	// are "Sum", "Max", "Min", "Mean", "Set", "And", "Or", and
+	// "Distribution". The specified aggregation kind is case-insensitive.
+	// If omitted, this is not an aggregated value but instead a single
+	// metric sample value.
 	Kind string `json:"kind,omitempty"`
 
 	// MeanCount: Worker-computed aggregate value for the "Mean" aggregation
-	// kind.
-	// This holds the count of the aggregated values and is used in
-	// combination
-	// with mean_sum above to obtain the actual mean aggregate value.
-	// The only possible value type is Long.
+	// kind. This holds the count of the aggregated values and is used in
+	// combination with mean_sum above to obtain the actual mean aggregate
+	// value. The only possible value type is Long.
 	MeanCount interface{} `json:"meanCount,omitempty"`
 
 	// MeanSum: Worker-computed aggregate value for the "Mean" aggregation
-	// kind.
-	// This holds the sum of the aggregated values and is used in
-	// combination
-	// with mean_count below to obtain the actual mean aggregate value.
-	// The only possible value types are Long and Double.
+	// kind. This holds the sum of the aggregated values and is used in
+	// combination with mean_count below to obtain the actual mean aggregate
+	// value. The only possible value types are Long and Double.
 	MeanSum interface{} `json:"meanSum,omitempty"`
 
 	// Name: Name of the metric.
 	Name *MetricStructuredName `json:"name,omitempty"`
 
 	// Scalar: Worker-computed aggregate value for aggregation kinds "Sum",
-	// "Max", "Min",
-	// "And", and "Or".  The possible value types are Long, Double, and
-	// Boolean.
+	// "Max", "Min", "And", and "Or". The possible value types are Long,
+	// Double, and Boolean.
 	Scalar interface{} `json:"scalar,omitempty"`
 
 	// Set: Worker-computed aggregate value for the "Set" aggregation kind.
-	// The only
-	// possible value type is a list of Values whose type can be Long,
-	// Double,
-	// or String, according to the metric's type.  All Values in the list
-	// must
-	// be of the same type.
+	// The only possible value type is a list of Values whose type can be
+	// Long, Double, or String, according to the metric's type. All Values
+	// in the list must be of the same type.
 	Set interface{} `json:"set,omitempty"`
 
 	// UpdateTime: Timestamp associated with the metric value. Optional when
-	// workers are
-	// reporting work progress; it will be filled in responses from
-	// the
-	// metrics API.
+	// workers are reporting work progress; it will be filled in responses
+	// from the metrics API.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cumulative") to
@@ -4167,14 +3872,12 @@ func (s *MetricUpdate) MarshalJSON() ([]byte, error) {
 }
 
 // ModifyTemplateVersionLabelRequest: Either add the label to
-// TemplateVersion or remove it from the
-// TemplateVersion.
+// TemplateVersion or remove it from the TemplateVersion.
 type ModifyTemplateVersionLabelRequest struct {
 	// Key: The label key for update.
 	Key string `json:"key,omitempty"`
 
-	// Op: Requests for add label to TemplateVersion or remove label
-	// from
+	// Op: Requests for add label to TemplateVersion or remove label from
 	// TemplateVersion.
 	//
 	// Possible values:
@@ -4243,16 +3946,13 @@ func (s *ModifyTemplateVersionLabelResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ModifyTemplateVersionTagRequest: Add a tag to the current
-// TemplateVersion. If tag exist in another
-// TemplateVersion in the Template, remove the tag before add it to the
-// current
-// TemplateVersion. If remove_only set, remove the tag from the
-// current
+// TemplateVersion. If tag exist in another TemplateVersion in the
+// Template, remove the tag before add it to the current
+// TemplateVersion. If remove_only set, remove the tag from the current
 // TemplateVersion.
 type ModifyTemplateVersionTagRequest struct {
 	// RemoveOnly: The flag that indicates if the request is only for remove
-	// tag from
-	// TemplateVersion.
+	// tag from TemplateVersion.
 	RemoveOnly bool `json:"removeOnly,omitempty"`
 
 	// Tag: The tag for update.
@@ -4316,12 +4016,9 @@ func (s *ModifyTemplateVersionTagResponse) MarshalJSON() ([]byte, error) {
 
 // MountedDataDisk: Describes mounted data disk.
 type MountedDataDisk struct {
-	// DataDisk: The name of the data disk.
-	// This name is local to the Google Cloud Platform project and
-	// uniquely
-	// identifies the disk within that project, for
-	// example
-	// "myproject-1014-104817-4c2-harness-0-disk-1".
+	// DataDisk: The name of the data disk. This name is local to the Google
+	// Cloud Platform project and uniquely identifies the disk within that
+	// project, for example "myproject-1014-104817-4c2-harness-0-disk-1".
 	DataDisk string `json:"dataDisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataDisk") to
@@ -4350,8 +4047,7 @@ func (s *MountedDataDisk) MarshalJSON() ([]byte, error) {
 // MultiOutputInfo: Information about an output of a multi-output DoFn.
 type MultiOutputInfo struct {
 	// Tag: The id of the tag the user code will emit to this output by;
-	// this
-	// should correspond to the tag of some SideInputInfo.
+	// this should correspond to the tag of some SideInputInfo.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -4425,28 +4121,16 @@ func (s *NameAndKind) MarshalJSON() ([]byte, error) {
 }
 
 // Package: The packages that must be installed in order for a worker to
-// run the
-// steps of the Cloud Dataflow job that will be assigned to its
-// worker
-// pool.
-//
-// This is the mechanism by which the Cloud Dataflow SDK causes code
-// to
-// be loaded onto the workers. For example, the Cloud Dataflow Java
-// SDK
-// might use this to install jars containing the user's code and all of
-// the
-// various dependencies (libraries, data files, etc.) required in
-// order
-// for that code to run.
+// run the steps of the Cloud Dataflow job that will be assigned to its
+// worker pool. This is the mechanism by which the Cloud Dataflow SDK
+// causes code to be loaded onto the workers. For example, the Cloud
+// Dataflow Java SDK might use this to install jars containing the
+// user's code and all of the various dependencies (libraries, data
+// files, etc.) required in order for that code to run.
 type Package struct {
 	// Location: The resource to read the package from. The supported
-	// resource type is:
-	//
-	// Google Cloud Storage:
-	//
-	//   storage.googleapis.com/{bucket}
-	//   bucket.storage.googleapis.com/
+	// resource type is: Google Cloud Storage:
+	// storage.googleapis.com/{bucket} bucket.storage.googleapis.com/
 	Location string `json:"location,omitempty"`
 
 	// Name: The name of the package.
@@ -4475,16 +4159,15 @@ func (s *Package) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ParDoInstruction: An instruction that does a ParDo operation.
-// Takes one main input and zero or more side inputs, and produces
-// zero or more outputs.
-// Runs user code.
+// ParDoInstruction: An instruction that does a ParDo operation. Takes
+// one main input and zero or more side inputs, and produces zero or
+// more outputs. Runs user code.
 type ParDoInstruction struct {
 	// Input: The input.
 	Input *InstructionInput `json:"input,omitempty"`
 
 	// MultiOutputInfos: Information about each of the outputs, if user_fn
-	// is a  MultiDoFn.
+	// is a MultiDoFn.
 	MultiOutputInfos []*MultiOutputInfo `json:"multiOutputInfos,omitempty"`
 
 	// NumOutputs: The number of outputs.
@@ -4545,8 +4228,8 @@ type ParallelInstruction struct {
 	// Read: Additional information for Read instructions.
 	Read *ReadInstruction `json:"read,omitempty"`
 
-	// SystemName: System-defined name of this operation.
-	// Unique across the workflow.
+	// SystemName: System-defined name of this operation. Unique across the
+	// workflow.
 	SystemName string `json:"systemName,omitempty"`
 
 	// Write: Additional information for Write instructions.
@@ -4621,8 +4304,8 @@ type ParameterMetadata struct {
 	// Name: Required. The name of the parameter.
 	Name string `json:"name,omitempty"`
 
-	// ParamType: Optional. The type of the parameter.
-	// Used for selecting input picker.
+	// ParamType: Optional. The type of the parameter. Used for selecting
+	// input picker.
 	//
 	// Possible values:
 	//   "DEFAULT" - Default input type.
@@ -4671,8 +4354,7 @@ func (s *ParameterMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // PartialGroupByKeyInstruction: An instruction that does a partial
-// group-by-key.
-// One input and one output.
+// group-by-key. One input and one output.
 type PartialGroupByKeyInstruction struct {
 	// Input: Describes the input to the partial group-by-key instruction.
 	Input *InstructionInput `json:"input,omitempty"`
@@ -4682,13 +4364,13 @@ type PartialGroupByKeyInstruction struct {
 	InputElementCodec googleapi.RawMessage `json:"inputElementCodec,omitempty"`
 
 	// OriginalCombineValuesInputStoreName: If this instruction includes a
-	// combining function this is the name of the
-	// intermediate store between the GBK and the CombineValues.
+	// combining function this is the name of the intermediate store between
+	// the GBK and the CombineValues.
 	OriginalCombineValuesInputStoreName string `json:"originalCombineValuesInputStoreName,omitempty"`
 
 	// OriginalCombineValuesStepName: If this instruction includes a
-	// combining function, this is the name of the
-	// CombineValues instruction lifted into this instruction.
+	// combining function, this is the name of the CombineValues instruction
+	// lifted into this instruction.
 	OriginalCombineValuesStepName string `json:"originalCombineValuesStepName,omitempty"`
 
 	// SideInputs: Zero or more side inputs.
@@ -4721,10 +4403,9 @@ func (s *PartialGroupByKeyInstruction) MarshalJSON() ([]byte, error) {
 }
 
 // PipelineDescription: A descriptive representation of submitted
-// pipeline as well as the executed
-// form.  This data is provided by the Dataflow service for ease of
-// visualizing
-// the pipeline and interpreting Dataflow provided metrics.
+// pipeline as well as the executed form. This data is provided by the
+// Dataflow service for ease of visualizing the pipeline and
+// interpreting Dataflow provided metrics.
 type PipelineDescription struct {
 	// DisplayData: Pipeline level display data.
 	DisplayData []*DisplayData `json:"displayData,omitempty"`
@@ -4760,10 +4441,53 @@ func (s *PipelineDescription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Point: A point in the timeseries.
+type Point struct {
+	// Time: The timestamp of the point.
+	Time string `json:"time,omitempty"`
+
+	// Value: The value of the point.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Time") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Time") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Point) MarshalJSON() ([]byte, error) {
+	type NoMethod Point
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Point) UnmarshalJSON(data []byte) error {
+	type NoMethod Point
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
 // Position: Position defines a position within a collection of data.
-// The value
-// can be either the end position, a key (used with
-// ordered
+// The value can be either the end position, a key (used with ordered
 // collections), a byte offset, or a record index.
 type Position struct {
 	// ByteOffset: Position is a byte offset.
@@ -4772,8 +4496,7 @@ type Position struct {
 	// ConcatPosition: CloudPosition is a concat position.
 	ConcatPosition *ConcatPosition `json:"concatPosition,omitempty"`
 
-	// End: Position is past all other positions. Also useful for the
-	// end
+	// End: Position is past all other positions. Also useful for the end
 	// position of an unbounded range.
 	End bool `json:"end,omitempty"`
 
@@ -4784,8 +4507,7 @@ type Position struct {
 	RecordIndex int64 `json:"recordIndex,omitempty,string"`
 
 	// ShufflePosition: CloudPosition is a base64 encoded
-	// BatchShufflePosition (with FIXED
-	// sharding).
+	// BatchShufflePosition (with FIXED sharding).
 	ShufflePosition string `json:"shufflePosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ByteOffset") to
@@ -4809,6 +4531,55 @@ func (s *Position) MarshalJSON() ([]byte, error) {
 	type NoMethod Position
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProgressTimeseries: Information about the progress of some component
+// of job execution.
+type ProgressTimeseries struct {
+	// CurrentProgress: The current progress of the component, in the range
+	// [0,1].
+	CurrentProgress float64 `json:"currentProgress,omitempty"`
+
+	// DataPoints: History of progress for the component. Points are sorted
+	// by time.
+	DataPoints []*Point `json:"dataPoints,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentProgress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentProgress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProgressTimeseries) MarshalJSON() ([]byte, error) {
+	type NoMethod ProgressTimeseries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ProgressTimeseries) UnmarshalJSON(data []byte) error {
+	type NoMethod ProgressTimeseries
+	var s1 struct {
+		CurrentProgress gensupport.JSONFloat64 `json:"currentProgress"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CurrentProgress = float64(s1.CurrentProgress)
+	return nil
 }
 
 // PubSubIODetails: Metadata for a PubSub connector used by the job.
@@ -4843,37 +4614,33 @@ func (s *PubSubIODetails) MarshalJSON() ([]byte, error) {
 }
 
 // PubsubLocation: Identifies a pubsub location to use for transferring
-// data into or
-// out of a streaming Dataflow job.
+// data into or out of a streaming Dataflow job.
 type PubsubLocation struct {
 	// DropLateData: Indicates whether the pipeline allows late-arriving
 	// data.
 	DropLateData bool `json:"dropLateData,omitempty"`
 
 	// IdLabel: If set, contains a pubsub label from which to extract record
-	// ids.
-	// If left empty, record deduplication will be strictly best effort.
+	// ids. If left empty, record deduplication will be strictly best
+	// effort.
 	IdLabel string `json:"idLabel,omitempty"`
 
-	// Subscription: A pubsub subscription, in the form
-	// of
-	// "pubsub.googleapis.com/subscriptions/<project-id>/<subscription-nam
-	// e>"
+	// Subscription: A pubsub subscription, in the form of
+	// "pubsub.googleapis.com/subscriptions//"
 	Subscription string `json:"subscription,omitempty"`
 
 	// TimestampLabel: If set, contains a pubsub label from which to extract
-	// record timestamps.
-	// If left empty, record timestamps will be generated upon arrival.
+	// record timestamps. If left empty, record timestamps will be generated
+	// upon arrival.
 	TimestampLabel string `json:"timestampLabel,omitempty"`
 
-	// Topic: A pubsub topic, in the form
-	// of
-	// "pubsub.googleapis.com/topics/<project-id>/<topic-name>"
+	// Topic: A pubsub topic, in the form of
+	// "pubsub.googleapis.com/topics//"
 	Topic string `json:"topic,omitempty"`
 
 	// TrackingSubscription: If set, specifies the pubsub subscription that
-	// will be used for tracking
-	// custom time timestamps for watermark estimation.
+	// will be used for tracking custom time timestamps for watermark
+	// estimation.
 	TrackingSubscription string `json:"trackingSubscription,omitempty"`
 
 	// WithAttributes: If true, then the client has requested to get pubsub
@@ -4971,8 +4738,8 @@ func (s *QueryInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReadInstruction: An instruction that reads records.
-// Takes no inputs, produces one output.
+// ReadInstruction: An instruction that reads records. Takes no inputs,
+// produces one output.
 type ReadInstruction struct {
 	// Source: The source to read from.
 	Source *Source `json:"source,omitempty"`
@@ -5006,11 +4773,9 @@ type ReportWorkItemStatusRequest struct {
 	// CurrentWorkerTime: The current timestamp at the worker.
 	CurrentWorkerTime string `json:"currentWorkerTime,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains the WorkItem's job.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains the WorkItem's job.
 	Location string `json:"location,omitempty"`
 
 	// UnifiedWorkerRequest: Untranslated bag-of-bytes
@@ -5018,18 +4783,14 @@ type ReportWorkItemStatusRequest struct {
 	UnifiedWorkerRequest googleapi.RawMessage `json:"unifiedWorkerRequest,omitempty"`
 
 	// WorkItemStatuses: The order is unimportant, except that the order of
-	// the
-	// WorkItemServiceState messages in the
-	// ReportWorkItemStatusResponse
+	// the WorkItemServiceState messages in the ReportWorkItemStatusResponse
 	// corresponds to the order of WorkItemStatus messages here.
 	WorkItemStatuses []*WorkItemStatus `json:"workItemStatuses,omitempty"`
 
-	// WorkerId: The ID of the worker reporting the WorkItem status.  If
-	// this
-	// does not match the ID of the worker which the Dataflow
-	// service
-	// believes currently has the lease on the WorkItem, the report
-	// will be dropped (with an error response).
+	// WorkerId: The ID of the worker reporting the WorkItem status. If this
+	// does not match the ID of the worker which the Dataflow service
+	// believes currently has the lease on the WorkItem, the report will be
+	// dropped (with an error response).
 	WorkerId string `json:"workerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentWorkerTime")
@@ -5064,12 +4825,9 @@ type ReportWorkItemStatusResponse struct {
 	UnifiedWorkerResponse googleapi.RawMessage `json:"unifiedWorkerResponse,omitempty"`
 
 	// WorkItemServiceStates: A set of messages indicating the service-side
-	// state for each
-	// WorkItem whose status was reported, in the same order as
-	// the
-	// WorkItemStatus messages in the ReportWorkItemStatusRequest
-	// which
-	// resulting in this response.
+	// state for each WorkItem whose status was reported, in the same order
+	// as the WorkItemStatus messages in the ReportWorkItemStatusRequest
+	// which resulting in this response.
 	WorkItemServiceStates []*WorkItemServiceState `json:"workItemServiceStates,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5102,19 +4860,13 @@ func (s *ReportWorkItemStatusResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ReportedParallelism: Represents the level of parallelism in a
-// WorkItem's input,
-// reported by the worker.
+// WorkItem's input, reported by the worker.
 type ReportedParallelism struct {
 	// IsInfinite: Specifies whether the parallelism is infinite. If true,
-	// "value" is
-	// ignored.
-	// Infinite parallelism means the service will assume that the work
-	// item
-	// can always be split into more non-empty work items by dynamic
-	// splitting.
-	// This is a work-around for lack of support for infinity by the
-	// current
-	// JSON-based Java RPC stack.
+	// "value" is ignored. Infinite parallelism means the service will
+	// assume that the work item can always be split into more non-empty
+	// work items by dynamic splitting. This is a work-around for lack of
+	// support for infinity by the current JSON-based Java RPC stack.
 	IsInfinite bool `json:"isInfinite,omitempty"`
 
 	// Value: Specifies the level of parallelism in case it is finite.
@@ -5158,13 +4910,10 @@ func (s *ReportedParallelism) UnmarshalJSON(data []byte) error {
 }
 
 // ResourceUtilizationReport: Worker metrics exported from workers. This
-// contains resource utilization
-// metrics accumulated from a variety of sources. For more information,
-// see
-// go/df-resource-signals.
+// contains resource utilization metrics accumulated from a variety of
+// sources. For more information, see go/df-resource-signals.
 type ResourceUtilizationReport struct {
-	// Containers: Per container information.
-	// Key: container name.
+	// Containers: Per container information. Key: container name.
 	Containers map[string]ResourceUtilizationReport `json:"containers,omitempty"`
 
 	// CpuTime: CPU utilization samples.
@@ -5207,18 +4956,19 @@ type RuntimeEnvironment struct {
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
 
 	// AdditionalUserLabels: Additional user labels to be specified for the
-	// job.
-	// Keys and values should follow the restrictions specified in the
+	// job. Keys and values should follow the restrictions specified in the
 	// [labeling
-	// restrictions](https://cloud.google.com/compute/docs/labeling
-	// -resources#restrictions)
-	// page.
+	// restrictions](https://cloud.google.com/compute/docs/labeling-resources
+	// #restrictions) page.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
 
 	// BypassTempDirValidation: Whether to bypass the safety checks for the
-	// job's temporary directory.
-	// Use with caution.
+	// job's temporary directory. Use with caution.
 	BypassTempDirValidation bool `json:"bypassTempDirValidation,omitempty"`
+
+	// EnableStreamingEngine: Whether to enable Streaming Engine for the
+	// job.
+	EnableStreamingEngine bool `json:"enableStreamingEngine,omitempty"`
 
 	// IpConfiguration: Configuration for VM IPs.
 	//
@@ -5229,26 +4979,20 @@ type RuntimeEnvironment struct {
 	//   "WORKER_IP_PRIVATE" - Workers should have private IP addresses.
 	IpConfiguration string `json:"ipConfiguration,omitempty"`
 
-	// KmsKeyName: Optional. Name for the Cloud KMS key for the job.
-	// Key format
-	// is:
-	// projects/<project>/locations/<location>/keyRings/<keyring>/cryptoK
-	// eys/<key>
+	// KmsKeyName: Optional. Name for the Cloud KMS key for the job. Key
+	// format is: projects//locations//keyRings//cryptoKeys/
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// MachineType: The machine type to use for the job. Defaults to the
-	// value from the
-	// template if not specified.
+	// value from the template if not specified.
 	MachineType string `json:"machineType,omitempty"`
 
 	// MaxWorkers: The maximum number of Google Compute Engine instances to
-	// be made
-	// available to your pipeline during execution, from 1 to 1000.
+	// be made available to your pipeline during execution, from 1 to 1000.
 	MaxWorkers int64 `json:"maxWorkers,omitempty"`
 
-	// Network: Network to which VMs will be assigned.  If empty or
-	// unspecified,
-	// the service will use the network "default".
+	// Network: Network to which VMs will be assigned. If empty or
+	// unspecified, the service will use the network "default".
 	Network string `json:"network,omitempty"`
 
 	// NumWorkers: The initial number of Google Compute Engine instnaces for
@@ -5260,45 +5004,33 @@ type RuntimeEnvironment struct {
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
-	// Expected to be of
-	// the form "regions/REGION/subnetworks/SUBNETWORK".
+	// Expected to be of the form "regions/REGION/subnetworks/SUBNETWORK".
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// TempLocation: The Cloud Storage path to use for temporary files.
-	// Must be a valid Cloud Storage URL, beginning with `gs://`.
+	// TempLocation: The Cloud Storage path to use for temporary files. Must
+	// be a valid Cloud Storage URL, beginning with `gs://`.
 	TempLocation string `json:"tempLocation,omitempty"`
 
-	// WorkerRegion: The Compute Engine
-	// region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zo
-	// nes) in
-	// which worker processing should occur, e.g. "us-west1". Mutually
-	// exclusive
-	// with worker_zone. If neither worker_region nor worker_zone is
-	// specified,
-	// default to the control plane's region.
+	// WorkerRegion: The Compute Engine region
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
+	// in which worker processing should occur, e.g. "us-west1". Mutually
+	// exclusive with worker_zone. If neither worker_region nor worker_zone
+	// is specified, default to the control plane's region.
 	WorkerRegion string `json:"workerRegion,omitempty"`
 
-	// WorkerZone: The Compute Engine
-	// zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zone
-	// s) in
-	// which worker processing should occur, e.g. "us-west1-a". Mutually
-	// exclusive
-	// with worker_region. If neither worker_region nor worker_zone is
-	// specified,
-	// a zone in the control plane's region is chosen based on available
-	// capacity.
-	// If both `worker_zone` and `zone` are set, `worker_zone` takes
-	// precedence.
+	// WorkerZone: The Compute Engine zone
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones)
+	// in which worker processing should occur, e.g. "us-west1-a". Mutually
+	// exclusive with worker_region. If neither worker_region nor
+	// worker_zone is specified, a zone in the control plane's region is
+	// chosen based on available capacity. If both `worker_zone` and `zone`
+	// are set, `worker_zone` takes precedence.
 	WorkerZone string `json:"workerZone,omitempty"`
 
-	// Zone: The Compute Engine
-	// [availability
-	// zone](https://cloud.google.com/compute/docs/regions-zone
-	// s/regions-zones)
-	// for launching worker instances to run your pipeline.
-	// In the future, worker_zone will take precedence.
+	// Zone: The Compute Engine [availability
+	// zone](https://cloud.google.com/compute/docs/regions-zones/regions-zone
+	// s) for launching worker instances to run your pipeline. In the
+	// future, worker_zone will take precedence.
 	Zone string `json:"zone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5401,14 +5133,10 @@ type SdkHarnessContainerImage struct {
 	ContainerImage string `json:"containerImage,omitempty"`
 
 	// UseSingleCorePerContainer: If true, recommends the Dataflow service
-	// to use only one core per SDK
-	// container instance with this image. If false (or unset) recommends
-	// using
-	// more than one core per SDK container instance with this image
-	// for
-	// efficiency. Note that Dataflow service may choose to override this
-	// property
-	// if needed.
+	// to use only one core per SDK container instance with this image. If
+	// false (or unset) recommends using more than one core per SDK
+	// container instance with this image for efficiency. Note that Dataflow
+	// service may choose to override this property if needed.
 	UseSingleCorePerContainer bool `json:"useSingleCorePerContainer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerImage") to
@@ -5445,8 +5173,7 @@ type SdkVersion struct {
 	//   "STALE" - A newer version of the SDK family exists, and an update
 	// is recommended.
 	//   "DEPRECATED" - This version of the SDK is deprecated and will
-	// eventually be no
-	// longer supported.
+	// eventually be no longer supported.
 	//   "UNSUPPORTED" - Support for this SDK version has ended and it
 	// should no longer be used.
 	SdkSupportStatus string `json:"sdkSupportStatus,omitempty"`
@@ -5491,11 +5218,9 @@ type SendDebugCaptureRequest struct {
 	// Data: The encoded debug information.
 	Data string `json:"data,omitempty"`
 
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains the job specified by job_id.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains the job specified by job_id.
 	Location string `json:"location,omitempty"`
 
 	// WorkerId: The worker id, i.e., VM hostname.
@@ -5524,8 +5249,7 @@ func (s *SendDebugCaptureRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SendDebugCaptureResponse: Response to a send capture request.
-// nothing
+// SendDebugCaptureResponse: Response to a send capture request. nothing
 type SendDebugCaptureResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -5535,11 +5259,9 @@ type SendDebugCaptureResponse struct {
 // SendWorkerMessagesRequest: A request for sending worker messages to
 // the service.
 type SendWorkerMessagesRequest struct {
-	// Location: The [regional
-	// endpoint]
-	// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-	// dpoints) that
-	// contains the job.
+	// Location: The [regional endpoint]
+	// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+	// that contains the job.
 	Location string `json:"location,omitempty"`
 
 	// WorkerMessages: The WorkerMessages to send.
@@ -5614,12 +5336,11 @@ type SeqMapTask struct {
 	OutputInfos []*SeqMapTaskOutputInfo `json:"outputInfos,omitempty"`
 
 	// StageName: System-defined name of the stage containing the SeqDo
-	// operation.
-	// Unique across the workflow.
+	// operation. Unique across the workflow.
 	StageName string `json:"stageName,omitempty"`
 
-	// SystemName: System-defined name of the SeqDo operation.
-	// Unique across the workflow.
+	// SystemName: System-defined name of the SeqDo operation. Unique across
+	// the workflow.
 	SystemName string `json:"systemName,omitempty"`
 
 	// UserFn: The user function to invoke.
@@ -5719,15 +5440,12 @@ type SideInputInfo struct {
 	Kind googleapi.RawMessage `json:"kind,omitempty"`
 
 	// Sources: The source(s) to read element(s) from to get the value of
-	// this side input.
-	// If more than one source, then the elements are taken from
-	// the
-	// sources, in the specified order if order matters.
-	// At least one source is required.
+	// this side input. If more than one source, then the elements are taken
+	// from the sources, in the specified order if order matters. At least
+	// one source is required.
 	Sources []*Source `json:"sources,omitempty"`
 
-	// Tag: The id of the tag the user code will access this side input
-	// by;
+	// Tag: The id of the tag the user code will access this side input by;
 	// this should correspond to the tag of some MultiOutputInfo.
 	Tag string `json:"tag,omitempty"`
 
@@ -5794,8 +5512,7 @@ type Snapshot struct {
 	Description string `json:"description,omitempty"`
 
 	// DiskSizeBytes: The disk byte size of the snapshot. Only available for
-	// snapshots in READY
-	// state.
+	// snapshots in READY state.
 	DiskSizeBytes int64 `json:"diskSizeBytes,omitempty,string"`
 
 	// Id: The unique ID of this snapshot.
@@ -5815,8 +5532,7 @@ type Snapshot struct {
 	// Possible values:
 	//   "UNKNOWN_SNAPSHOT_STATE" - Unknown state.
 	//   "PENDING" - Snapshot intent to create has been persisted,
-	// snapshotting of state has not
-	// yet started.
+	// snapshotting of state has not yet started.
 	//   "RUNNING" - Snapshotting is being performed.
 	//   "READY" - Snapshot has been created and is ready to be used.
 	//   "FAILED" - Snapshot failed to be created.
@@ -5894,55 +5610,39 @@ func (s *SnapshotJobRequest) MarshalJSON() ([]byte, error) {
 
 // Source: A source that records can be read and decoded from.
 type Source struct {
-	// BaseSpecs: While splitting, sources may specify the produced
-	// bundles
-	// as differences against another source, in order to save
-	// backend-side
-	// memory and allow bigger jobs. For details, see SourceSplitRequest.
-	// To support this use case, the full set of parameters of the source
-	// is logically obtained by taking the latest explicitly specified
-	// value
-	// of each parameter in the order:
-	// base_specs (later items win), spec (overrides anything in
-	// base_specs).
+	// BaseSpecs: While splitting, sources may specify the produced bundles
+	// as differences against another source, in order to save backend-side
+	// memory and allow bigger jobs. For details, see SourceSplitRequest. To
+	// support this use case, the full set of parameters of the source is
+	// logically obtained by taking the latest explicitly specified value of
+	// each parameter in the order: base_specs (later items win), spec
+	// (overrides anything in base_specs).
 	BaseSpecs []googleapi.RawMessage `json:"baseSpecs,omitempty"`
 
 	// Codec: The codec to use to decode data read from the source.
 	Codec googleapi.RawMessage `json:"codec,omitempty"`
 
 	// DoesNotNeedSplitting: Setting this value to true hints to the
-	// framework that the source
-	// doesn't need splitting, and using SourceSplitRequest on it
-	// would
-	// yield SOURCE_SPLIT_OUTCOME_USE_CURRENT.
-	//
-	// E.g. a file splitter may set this to true when splitting a single
-	// file
-	// into a set of byte ranges of appropriate size, and set this
-	// to false when splitting a filepattern into individual files.
-	// However, for efficiency, a file splitter may decide to produce
-	// file subranges directly from the filepattern to avoid a
-	// splitting
-	// round-trip.
-	//
-	// See SourceSplitRequest for an overview of the splitting
-	// process.
-	//
-	// This field is meaningful only in the Source objects populated
-	// by the user (e.g. when filling in a DerivedSource).
-	// Source objects supplied by the framework to the user don't have
-	// this field populated.
+	// framework that the source doesn't need splitting, and using
+	// SourceSplitRequest on it would yield
+	// SOURCE_SPLIT_OUTCOME_USE_CURRENT. E.g. a file splitter may set this
+	// to true when splitting a single file into a set of byte ranges of
+	// appropriate size, and set this to false when splitting a filepattern
+	// into individual files. However, for efficiency, a file splitter may
+	// decide to produce file subranges directly from the filepattern to
+	// avoid a splitting round-trip. See SourceSplitRequest for an overview
+	// of the splitting process. This field is meaningful only in the Source
+	// objects populated by the user (e.g. when filling in a DerivedSource).
+	// Source objects supplied by the framework to the user don't have this
+	// field populated.
 	DoesNotNeedSplitting bool `json:"doesNotNeedSplitting,omitempty"`
 
 	// Metadata: Optionally, metadata for this source can be supplied right
-	// away,
-	// avoiding a SourceGetMetadataOperation roundtrip
-	// (see SourceOperationRequest).
-	//
-	// This field is meaningful only in the Source objects populated
-	// by the user (e.g. when filling in a DerivedSource).
-	// Source objects supplied by the framework to the user don't have
-	// this field populated.
+	// away, avoiding a SourceGetMetadataOperation roundtrip (see
+	// SourceOperationRequest). This field is meaningful only in the Source
+	// objects populated by the user (e.g. when filling in a DerivedSource).
+	// Source objects supplied by the framework to the user don't have this
+	// field populated.
 	Metadata *SourceMetadata `json:"metadata,omitempty"`
 
 	// Spec: The source to read from, plus its parameters.
@@ -6068,25 +5768,20 @@ func (s *SourceGetMetadataResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SourceMetadata: Metadata about a Source useful for automatically
-// optimizing
-// and tuning the pipeline, etc.
+// optimizing and tuning the pipeline, etc.
 type SourceMetadata struct {
 	// EstimatedSizeBytes: An estimate of the total size (in bytes) of the
-	// data that would be
-	// read from this source.  This estimate is in terms of external
-	// storage
-	// size, before any decompression or other processing done by the
-	// reader.
+	// data that would be read from this source. This estimate is in terms
+	// of external storage size, before any decompression or other
+	// processing done by the reader.
 	EstimatedSizeBytes int64 `json:"estimatedSizeBytes,omitempty,string"`
 
 	// Infinite: Specifies that the size of this source is known to be
-	// infinite
-	// (this is a streaming source).
+	// infinite (this is a streaming source).
 	Infinite bool `json:"infinite,omitempty"`
 
 	// ProducesSortedKeys: Whether this source is known to produce key/value
-	// pairs with
-	// the (encoded) keys in lexicographically sorted order.
+	// pairs with the (encoded) keys in lexicographically sorted order.
 	ProducesSortedKeys bool `json:"producesSortedKeys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EstimatedSizeBytes")
@@ -6114,8 +5809,8 @@ func (s *SourceMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // SourceOperationRequest: A work item that represents the different
-// operations that can be
-// performed on a user-defined Source specification.
+// operations that can be performed on a user-defined Source
+// specification.
 type SourceOperationRequest struct {
 	// GetMetadata: Information about a request to get metadata about a
 	// source.
@@ -6125,21 +5820,18 @@ type SourceOperationRequest struct {
 	Name string `json:"name,omitempty"`
 
 	// OriginalName: System-defined name for the Read instruction for this
-	// source
-	// in the original workflow graph.
+	// source in the original workflow graph.
 	OriginalName string `json:"originalName,omitempty"`
 
 	// Split: Information about a request to split a source.
 	Split *SourceSplitRequest `json:"split,omitempty"`
 
 	// StageName: System-defined name of the stage containing the source
-	// operation.
-	// Unique across the workflow.
+	// operation. Unique across the workflow.
 	StageName string `json:"stageName,omitempty"`
 
 	// SystemName: System-defined name of the Read instruction for this
-	// source.
-	// Unique across the workflow.
+	// source. Unique across the workflow.
 	SystemName string `json:"systemName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GetMetadata") to
@@ -6166,9 +5858,8 @@ func (s *SourceOperationRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SourceOperationResponse: The result of a SourceOperationRequest,
-// specified in
-// ReportWorkItemStatusRequest.source_operation when the work item
-// is completed.
+// specified in ReportWorkItemStatusRequest.source_operation when the
+// work item is completed.
 type SourceOperationResponse struct {
 	// GetMetadata: A response to a request to get metadata about a source.
 	GetMetadata *SourceGetMetadataResponse `json:"getMetadata,omitempty"`
@@ -6200,12 +5891,11 @@ func (s *SourceOperationResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SourceSplitOptions: Hints for splitting a Source into bundles (parts
-// for parallel
-// processing) using SourceSplitRequest.
+// for parallel processing) using SourceSplitRequest.
 type SourceSplitOptions struct {
 	// DesiredBundleSizeBytes: The source should be split into a set of
-	// bundles where the estimated size
-	// of each is approximately this many bytes.
+	// bundles where the estimated size of each is approximately this many
+	// bytes.
 	DesiredBundleSizeBytes int64 `json:"desiredBundleSizeBytes,omitempty,string"`
 
 	// DesiredShardSizeBytes: DEPRECATED in favor of
@@ -6238,28 +5928,17 @@ func (s *SourceSplitOptions) MarshalJSON() ([]byte, error) {
 }
 
 // SourceSplitRequest: Represents the operation to split a high-level
-// Source specification
-// into bundles (parts for parallel processing).
-//
-// At a high level, splitting of a source into bundles happens as
-// follows:
-// SourceSplitRequest is applied to the source. If it
-// returns
+// Source specification into bundles (parts for parallel processing). At
+// a high level, splitting of a source into bundles happens as follows:
+// SourceSplitRequest is applied to the source. If it returns
 // SOURCE_SPLIT_OUTCOME_USE_CURRENT, no further splitting happens and
-// the source
-// is used "as is". Otherwise, splitting is applied recursively to
-// each
-// produced DerivedSource.
-//
-// As an optimization, for any Source, if its does_not_need_splitting
-// is
-// true, the framework assumes that splitting this source would
-// return
+// the source is used "as is". Otherwise, splitting is applied
+// recursively to each produced DerivedSource. As an optimization, for
+// any Source, if its does_not_need_splitting is true, the framework
+// assumes that splitting this source would return
 // SOURCE_SPLIT_OUTCOME_USE_CURRENT, and doesn't initiate a
-// SourceSplitRequest.
-// This applies both to the initial source being split and to
-// bundles
-// produced from it.
+// SourceSplitRequest. This applies both to the initial source being
+// split and to bundles produced from it.
 type SourceSplitRequest struct {
 	// Options: Hints for tuning the splitting process.
 	Options *SourceSplitOptions `json:"options,omitempty"`
@@ -6293,21 +5972,16 @@ func (s *SourceSplitRequest) MarshalJSON() ([]byte, error) {
 // SourceSplitResponse: The response to a SourceSplitRequest.
 type SourceSplitResponse struct {
 	// Bundles: If outcome is SPLITTING_HAPPENED, then this is a list of
-	// bundles
-	// into which the source was split. Otherwise this field is
-	// ignored.
-	// This list can be empty, which means the source represents an empty
-	// input.
+	// bundles into which the source was split. Otherwise this field is
+	// ignored. This list can be empty, which means the source represents an
+	// empty input.
 	Bundles []*DerivedSource `json:"bundles,omitempty"`
 
 	// Outcome: Indicates whether splitting happened and produced a list of
-	// bundles.
-	// If this is USE_CURRENT_SOURCE_AS_IS, the current source should
-	// be processed "as is" without splitting. "bundles" is ignored in this
-	// case.
-	// If this is SPLITTING_HAPPENED, then "bundles" contains a list
-	// of
-	// bundles into which the source was split.
+	// bundles. If this is USE_CURRENT_SOURCE_AS_IS, the current source
+	// should be processed "as is" without splitting. "bundles" is ignored
+	// in this case. If this is SPLITTING_HAPPENED, then "bundles" contains
+	// a list of bundles into which the source was split.
 	//
 	// Possible values:
 	//   "SOURCE_SPLIT_OUTCOME_UNKNOWN" - The source split outcome is
@@ -6421,8 +6095,7 @@ func (s *SpannerIODetails) MarshalJSON() ([]byte, error) {
 }
 
 // SplitInt64: A representation of an int64, n, that is immune to
-// precision loss when
-// encoded in JSON.
+// precision loss when encoded in JSON.
 type SplitInt64 struct {
 	// HighBits: The high order bits, including the sign: n >> 32.
 	HighBits int64 `json:"highBits,omitempty"`
@@ -6453,14 +6126,52 @@ func (s *SplitInt64) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StageExecutionDetails: Information about the workers and work items
+// within a stage.
+type StageExecutionDetails struct {
+	// NextPageToken: If present, this response does not contain all
+	// requested tasks. To obtain the next page of results, repeat the
+	// request with page_token set to this value.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Workers: Workers that have done work on the stage.
+	Workers []*WorkerDetails `json:"workers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StageExecutionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod StageExecutionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StageSource: Description of an input or output of an execution stage.
 type StageSource struct {
 	// Name: Dataflow service generated name for this source.
 	Name string `json:"name,omitempty"`
 
 	// OriginalTransformOrCollection: User name for the original user
-	// transform or collection with which this
-	// source is most closely associated.
+	// transform or collection with which this source is most closely
+	// associated.
 	OriginalTransformOrCollection string `json:"originalTransformOrCollection,omitempty"`
 
 	// SizeBytes: Size of the source, if measurable.
@@ -6489,6 +6200,62 @@ type StageSource struct {
 
 func (s *StageSource) MarshalJSON() ([]byte, error) {
 	type NoMethod StageSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StageSummary: Information about a particular execution stage of a
+// job.
+type StageSummary struct {
+	// EndTime: End time of this stage. If the work item is completed, this
+	// is the actual end time of the stage. Otherwise, it is the predicted
+	// end time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Metrics: Metrics for this stage.
+	Metrics []*MetricUpdate `json:"metrics,omitempty"`
+
+	// Progress: Progress for this stage. Only applicable to Batch jobs.
+	Progress *ProgressTimeseries `json:"progress,omitempty"`
+
+	// StageId: ID of this stage
+	StageId string `json:"stageId,omitempty"`
+
+	// StartTime: Start time of this stage.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: State of this stage.
+	//
+	// Possible values:
+	//   "EXECUTION_STATE_UNKNOWN" - The component state is unknown or
+	// unspecified.
+	//   "EXECUTION_STATE_NOT_STARTED" - The component is not yet running.
+	//   "EXECUTION_STATE_RUNNING" - The component is currently running.
+	//   "EXECUTION_STATE_SUCCEEDED" - The component succeeded.
+	//   "EXECUTION_STATE_FAILED" - The component failed.
+	//   "EXECUTION_STATE_CANCELLED" - Execution of the component was
+	// cancelled.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StageSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod StageSummary
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6525,32 +6292,24 @@ func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -6576,48 +6335,30 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Step: Defines a particular step within a Cloud Dataflow job.
-//
-// A job consists of multiple steps, each of which performs
-// some
-// specific operation as part of the overall job.  Data is
-// typically
-// passed from one step to another as part of the job.
-//
-// Here's an example of a sequence of steps which together implement
-// a
-// Map-Reduce job:
-//
-//   * Read a collection of data from some source, parsing the
-//     collection's elements.
-//
-//   * Validate the elements.
-//
-//   * Apply a user-defined function to map each element to some value
-//     and extract an element-specific key value.
-//
-//   * Group elements with the same key into a single element with
-//     that key, transforming a multiply-keyed collection into a
-//     uniquely-keyed collection.
-//
-//   * Write the elements out to some data sink.
-//
-// Note that the Cloud Dataflow service may be used to run many
-// different
-// types of jobs, not just Map-Reduce.
+// Step: Defines a particular step within a Cloud Dataflow job. A job
+// consists of multiple steps, each of which performs some specific
+// operation as part of the overall job. Data is typically passed from
+// one step to another as part of the job. Here's an example of a
+// sequence of steps which together implement a Map-Reduce job: * Read a
+// collection of data from some source, parsing the collection's
+// elements. * Validate the elements. * Apply a user-defined function to
+// map each element to some value and extract an element-specific key
+// value. * Group elements with the same key into a single element with
+// that key, transforming a multiply-keyed collection into a
+// uniquely-keyed collection. * Write the elements out to some data
+// sink. Note that the Cloud Dataflow service may be used to run many
+// different types of jobs, not just Map-Reduce.
 type Step struct {
 	// Kind: The kind of step in the Cloud Dataflow job.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The name that identifies the step. This must be unique for
-	// each
+	// Name: The name that identifies the step. This must be unique for each
 	// step with respect to all other steps in the Cloud Dataflow job.
 	Name string `json:"name,omitempty"`
 
-	// Properties: Named properties associated with the step. Each kind
-	// of
-	// predefined step has its own required set of properties.
-	// Must be provided on Create.  Only retrieved with JOB_VIEW_ALL.
+	// Properties: Named properties associated with the step. Each kind of
+	// predefined step has its own required set of properties. Must be
+	// provided on Create. Only retrieved with JOB_VIEW_ALL.
 	Properties googleapi.RawMessage `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -6644,8 +6385,7 @@ func (s *Step) MarshalJSON() ([]byte, error) {
 }
 
 // StreamLocation: Describes a stream of data, either as input to be
-// processed or as
-// output of a streaming Dataflow job.
+// processed or as output of a streaming Dataflow job.
 type StreamLocation struct {
 	// CustomSourceLocation: The stream is a custom source.
 	CustomSourceLocation *CustomSourceLocation `json:"customSourceLocation,omitempty"`
@@ -6657,8 +6397,7 @@ type StreamLocation struct {
 	SideInputLocation *StreamingSideInputLocation `json:"sideInputLocation,omitempty"`
 
 	// StreamingStageLocation: The stream is part of another computation
-	// within the current
-	// streaming Dataflow job.
+	// within the current streaming Dataflow job.
 	StreamingStageLocation *StreamingStageLocation `json:"streamingStageLocation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6737,8 +6476,7 @@ type StreamingComputationConfig struct {
 	SystemName string `json:"systemName,omitempty"`
 
 	// TransformUserNameToStateFamily: Map from user name of stateful
-	// transforms in this stage to their state
-	// family.
+	// transforms in this stage to their state family.
 	TransformUserNameToStateFamily map[string]string `json:"transformUserNameToStateFamily,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComputationId") to
@@ -6765,8 +6503,7 @@ func (s *StreamingComputationConfig) MarshalJSON() ([]byte, error) {
 }
 
 // StreamingComputationRanges: Describes full or partial data disk
-// assignment information of the computation
-// ranges.
+// assignment information of the computation ranges.
 type StreamingComputationRanges struct {
 	// ComputationId: The ID of the computation.
 	ComputationId string `json:"computationId,omitempty"`
@@ -6799,8 +6536,7 @@ func (s *StreamingComputationRanges) MarshalJSON() ([]byte, error) {
 }
 
 // StreamingComputationTask: A task which describes what action should
-// be performed for the specified
-// streaming computation ranges.
+// be performed for the specified streaming computation ranges.
 type StreamingComputationTask struct {
 	// ComputationRanges: Contains ranges of a streaming computation this
 	// task should apply to.
@@ -6868,17 +6604,13 @@ type StreamingConfigTask struct {
 	UserStepToStateFamilyNameMap map[string]string `json:"userStepToStateFamilyNameMap,omitempty"`
 
 	// WindmillServiceEndpoint: If present, the worker must use this
-	// endpoint to communicate with Windmill
-	// Service dispatchers, otherwise the worker must continue to use
-	// whatever
-	// endpoint it had been using.
+	// endpoint to communicate with Windmill Service dispatchers, otherwise
+	// the worker must continue to use whatever endpoint it had been using.
 	WindmillServiceEndpoint string `json:"windmillServiceEndpoint,omitempty"`
 
 	// WindmillServicePort: If present, the worker must use this port to
-	// communicate with Windmill
-	// Service dispatchers. Only applicable when windmill_service_endpoint
-	// is
-	// specified.
+	// communicate with Windmill Service dispatchers. Only applicable when
+	// windmill_service_endpoint is specified.
 	WindmillServicePort int64 `json:"windmillServicePort,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6913,8 +6645,7 @@ type StreamingSetupTask struct {
 	Drain bool `json:"drain,omitempty"`
 
 	// ReceiveWorkPort: The TCP port on which the worker should listen for
-	// messages from
-	// other streaming computation workers.
+	// messages from other streaming computation workers.
 	ReceiveWorkPort int64 `json:"receiveWorkPort,omitempty"`
 
 	// SnapshotConfig: Configures streaming appliance snapshot.
@@ -6925,8 +6656,7 @@ type StreamingSetupTask struct {
 	StreamingComputationTopology *TopologyConfig `json:"streamingComputationTopology,omitempty"`
 
 	// WorkerHarnessPort: The TCP port used by the worker to communicate
-	// with the Dataflow
-	// worker harness.
+	// with the Dataflow worker harness.
 	WorkerHarnessPort int64 `json:"workerHarnessPort,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Drain") to
@@ -6987,12 +6717,10 @@ func (s *StreamingSideInputLocation) MarshalJSON() ([]byte, error) {
 }
 
 // StreamingStageLocation: Identifies the location of a streaming
-// computation stage, for
-// stage-to-stage communication.
+// computation stage, for stage-to-stage communication.
 type StreamingStageLocation struct {
 	// StreamId: Identifies the particular stream within the streaming
-	// Dataflow
-	// job.
+	// Dataflow job.
 	StreamId string `json:"streamId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StreamId") to
@@ -7047,14 +6775,11 @@ func (s *StringList) MarshalJSON() ([]byte, error) {
 }
 
 // StructuredMessage: A rich message format, including a human readable
-// string, a key for
-// identifying the message, and structured data associated with the
-// message for
-// programmatic consumption.
+// string, a key for identifying the message, and structured data
+// associated with the message for programmatic consumption.
 type StructuredMessage struct {
-	// MessageKey: Identifier for this message type.  Used by external
-	// systems to
-	// internationalize or personalize message.
+	// MessageKey: Identifier for this message type. Used by external
+	// systems to internationalize or personalize message.
 	MessageKey string `json:"messageKey,omitempty"`
 
 	// MessageText: Human-readable version of message.
@@ -7096,18 +6821,12 @@ type TaskRunnerSettings struct {
 	BaseTaskDir string `json:"baseTaskDir,omitempty"`
 
 	// BaseUrl: The base URL for the taskrunner to use when accessing Google
-	// Cloud APIs.
-	//
-	// When workers access Google Cloud APIs, they logically do so
-	// via
-	// relative URLs.  If this field is specified, it supplies the base
-	// URL to use for resolving these relative URLs.  The
-	// normative
-	// algorithm used is defined by RFC 1808, "Relative Uniform
-	// Resource
-	// Locators".
-	//
-	// If not specified, the default value is "http://www.googleapis.com/"
+	// Cloud APIs. When workers access Google Cloud APIs, they logically do
+	// so via relative URLs. If this field is specified, it supplies the
+	// base URL to use for resolving these relative URLs. The normative
+	// algorithm used is defined by RFC 1808, "Relative Uniform Resource
+	// Locators". If not specified, the default value is
+	// "http://www.googleapis.com/"
 	BaseUrl string `json:"baseUrl,omitempty"`
 
 	// CommandlinesFileName: The file to store preprocessing commands in.
@@ -7130,24 +6849,17 @@ type TaskRunnerSettings struct {
 	LogDir string `json:"logDir,omitempty"`
 
 	// LogToSerialconsole: Whether to send taskrunner log info to Google
-	// Compute Engine VM serial
-	// console.
+	// Compute Engine VM serial console.
 	LogToSerialconsole bool `json:"logToSerialconsole,omitempty"`
 
-	// LogUploadLocation: Indicates where to put logs.  If this is not
-	// specified, the logs
-	// will not be uploaded.
-	//
-	// The supported resource type is:
-	//
-	// Google Cloud Storage:
-	//   storage.googleapis.com/{bucket}/{object}
-	//   bucket.storage.googleapis.com/{object}
+	// LogUploadLocation: Indicates where to put logs. If this is not
+	// specified, the logs will not be uploaded. The supported resource type
+	// is: Google Cloud Storage: storage.googleapis.com/{bucket}/{object}
+	// bucket.storage.googleapis.com/{object}
 	LogUploadLocation string `json:"logUploadLocation,omitempty"`
 
 	// OauthScopes: The OAuth2 scopes to be requested by the taskrunner in
-	// order to
-	// access the Cloud Dataflow API.
+	// order to access the Cloud Dataflow API.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
 	// ParallelWorkerSettings: The settings to pass to the parallel worker
@@ -7158,24 +6870,17 @@ type TaskRunnerSettings struct {
 	StreamingWorkerMainClass string `json:"streamingWorkerMainClass,omitempty"`
 
 	// TaskGroup: The UNIX group ID on the worker VM to use for tasks
-	// launched by
-	// taskrunner; e.g. "wheel".
+	// launched by taskrunner; e.g. "wheel".
 	TaskGroup string `json:"taskGroup,omitempty"`
 
 	// TaskUser: The UNIX user ID on the worker VM to use for tasks launched
-	// by
-	// taskrunner; e.g. "root".
+	// by taskrunner; e.g. "root".
 	TaskUser string `json:"taskUser,omitempty"`
 
 	// TempStoragePrefix: The prefix of the resources the taskrunner should
-	// use for
-	// temporary storage.
-	//
-	// The supported resource type is:
-	//
-	// Google Cloud Storage:
-	//   storage.googleapis.com/{bucket}/{object}
-	//   bucket.storage.googleapis.com/{object}
+	// use for temporary storage. The supported resource type is: Google
+	// Cloud Storage: storage.googleapis.com/{bucket}/{object}
+	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// VmId: The ID string of the VM.
@@ -7244,23 +6949,16 @@ func (s *TemplateMetadata) MarshalJSON() ([]byte, error) {
 
 // TemplateVersion:
 // //////////////////////////////////////////////////////////////////////
-// ///////
-// //// Template Catalog is used to organize user TemplateVersions.
-// //// TemplateVersions that have the same project_id and display_name
-// are
-// //// belong to the same Template.
-// //// Templates with the same project_id belong to the same
-// Project.
-// //// TemplateVersion may have labels and multiple labels are
-// allowed.
-// //// Duplicated labels in the same `TemplateVersion` are not
-// allowed.
-// //// TemplateVersion may have tags and multiple tags are allowed.
-// Duplicated
-// //// tags in the same `Template` are not allowed!
+// /////// //// Template Catalog is used to organize user
+// TemplateVersions. //// TemplateVersions that have the same project_id
+// and display_name are //// belong to the same Template. //// Templates
+// with the same project_id belong to the same Project. ////
+// TemplateVersion may have labels and multiple labels are allowed. ////
+// Duplicated labels in the same `TemplateVersion` are not allowed. ////
+// TemplateVersion may have tags and multiple tags are allowed.
+// Duplicated //// tags in the same `Template` are not allowed!
 type TemplateVersion struct {
-	// Artifact: Job graph and metadata if it is a legacy
-	// Template.
+	// Artifact: Job graph and metadata if it is a legacy Template.
 	// Container image path and metadata if it is flex Template.
 	Artifact *Artifact `json:"artifact,omitempty"`
 
@@ -7325,8 +7023,7 @@ func (s *TemplateVersion) MarshalJSON() ([]byte, error) {
 }
 
 // TopologyConfig: Global topology of the streaming Dataflow job,
-// including all
-// computations and their sharded locations.
+// including all computations and their sharded locations.
 type TopologyConfig struct {
 	// Computations: The computations associated with a streaming Dataflow
 	// job.
@@ -7401,7 +7098,7 @@ type TransformSummary struct {
 	// Name: User provided name for this transform instance.
 	Name string `json:"name,omitempty"`
 
-	// OutputCollectionName: User  names for all collection outputs to this
+	// OutputCollectionName: User names for all collection outputs to this
 	// transform.
 	OutputCollectionName []string `json:"outputCollectionName,omitempty"`
 
@@ -7465,8 +7162,7 @@ func (s *ValidateResponse) MarshalJSON() ([]byte, error) {
 }
 
 // WorkItem: WorkItem represents basic information about a WorkItem to
-// be executed
-// in the cloud.
+// be executed in the cloud.
 type WorkItem struct {
 	// Configuration: Work item-specific configuration as an opaque blob.
 	Configuration string `json:"configuration,omitempty"`
@@ -7488,8 +7184,7 @@ type WorkItem struct {
 	MapTask *MapTask `json:"mapTask,omitempty"`
 
 	// Packages: Any required packages that need to be fetched in order to
-	// execute
-	// this WorkItem.
+	// execute this WorkItem.
 	Packages []*Package `json:"packages,omitempty"`
 
 	// ProjectId: Identifies the cloud project this WorkItem belongs to.
@@ -7543,58 +7238,104 @@ func (s *WorkItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WorkItemDetails: Information about an individual work item execution.
+type WorkItemDetails struct {
+	// AttemptId: Attempt ID of this work item
+	AttemptId string `json:"attemptId,omitempty"`
+
+	// EndTime: End time of this work item attempt. If the work item is
+	// completed, this is the actual end time of the work item. Otherwise,
+	// it is the predicted end time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Metrics: Metrics for this work item.
+	Metrics []*MetricUpdate `json:"metrics,omitempty"`
+
+	// Progress: Progress of this work item.
+	Progress *ProgressTimeseries `json:"progress,omitempty"`
+
+	// StartTime: Start time of this work item attempt.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: State of this work item.
+	//
+	// Possible values:
+	//   "EXECUTION_STATE_UNKNOWN" - The component state is unknown or
+	// unspecified.
+	//   "EXECUTION_STATE_NOT_STARTED" - The component is not yet running.
+	//   "EXECUTION_STATE_RUNNING" - The component is currently running.
+	//   "EXECUTION_STATE_SUCCEEDED" - The component succeeded.
+	//   "EXECUTION_STATE_FAILED" - The component failed.
+	//   "EXECUTION_STATE_CANCELLED" - Execution of the component was
+	// cancelled.
+	State string `json:"state,omitempty"`
+
+	// TaskId: Name of this work item.
+	TaskId string `json:"taskId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttemptId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttemptId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkItemDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkItemDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WorkItemServiceState: The Dataflow service's idea of the current
-// state of a WorkItem
-// being processed by a worker.
+// state of a WorkItem being processed by a worker.
 type WorkItemServiceState struct {
 	// CompleteWorkStatus: If set, a request to complete the work item with
-	// the given status. This
-	// will not be set to OK, unless supported by the specific kind of
-	// WorkItem.
-	// It can be used for the backend to indicate a WorkItem must terminate,
-	// e.g.,
-	// for aborting work.
+	// the given status. This will not be set to OK, unless supported by the
+	// specific kind of WorkItem. It can be used for the backend to indicate
+	// a WorkItem must terminate, e.g., for aborting work.
 	CompleteWorkStatus *Status `json:"completeWorkStatus,omitempty"`
 
 	// HarnessData: Other data returned by the service, specific to the
-	// particular
-	// worker harness.
+	// particular worker harness.
 	HarnessData googleapi.RawMessage `json:"harnessData,omitempty"`
 
 	// HotKeyDetection: A hot key is a symptom of poor data distribution in
-	// which there are enough
-	// elements mapped to a single key to impact pipeline performance.
-	// When
-	// present, this field includes metadata associated with any hot key.
+	// which there are enough elements mapped to a single key to impact
+	// pipeline performance. When present, this field includes metadata
+	// associated with any hot key.
 	HotKeyDetection *HotKeyDetection `json:"hotKeyDetection,omitempty"`
 
 	// LeaseExpireTime: Time at which the current lease will expire.
 	LeaseExpireTime string `json:"leaseExpireTime,omitempty"`
 
 	// MetricShortId: The short ids that workers should use in subsequent
-	// metric updates.
-	// Workers should strive to use short ids whenever possible, but it is
-	// ok
-	// to request the short_id again if a worker lost track of it
-	// (e.g. if the worker is recovering from a crash).
-	// NOTE: it is possible that the response may have short ids for a
-	// subset
-	// of the metrics.
+	// metric updates. Workers should strive to use short ids whenever
+	// possible, but it is ok to request the short_id again if a worker lost
+	// track of it (e.g. if the worker is recovering from a crash). NOTE: it
+	// is possible that the response may have short ids for a subset of the
+	// metrics.
 	MetricShortId []*MetricShortId `json:"metricShortId,omitempty"`
 
 	// NextReportIndex: The index value to use for the next report sent by
-	// the worker.
-	// Note: If the report call fails for whatever reason, the worker
-	// should
-	// reuse this index for subsequent report attempts.
+	// the worker. Note: If the report call fails for whatever reason, the
+	// worker should reuse this index for subsequent report attempts.
 	NextReportIndex int64 `json:"nextReportIndex,omitempty,string"`
 
 	// ReportStatusInterval: New recommended reporting interval.
 	ReportStatusInterval string `json:"reportStatusInterval,omitempty"`
 
 	// SplitRequest: The progress point in the WorkItem where the Dataflow
-	// service
-	// suggests that the worker truncate the task.
+	// service suggests that the worker truncate the task.
 	SplitRequest *ApproximateSplitRequest `json:"splitRequest,omitempty"`
 
 	// SuggestedStopPoint: DEPRECATED in favor of split_request.
@@ -7640,9 +7381,8 @@ type WorkItemStatus struct {
 	// DynamicSourceSplit: See documentation of stop_position.
 	DynamicSourceSplit *DynamicSourceSplit `json:"dynamicSourceSplit,omitempty"`
 
-	// Errors: Specifies errors which occurred during processing.  If errors
-	// are
-	// provided, and completed = true, then the WorkItem is considered
+	// Errors: Specifies errors which occurred during processing. If errors
+	// are provided, and completed = true, then the WorkItem is considered
 	// to have failed.
 	Errors []*Status `json:"errors,omitempty"`
 
@@ -7652,24 +7392,17 @@ type WorkItemStatus struct {
 	// Progress: DEPRECATED in favor of reported_progress.
 	Progress *ApproximateProgress `json:"progress,omitempty"`
 
-	// ReportIndex: The report index.  When a WorkItem is leased, the lease
-	// will
-	// contain an initial report index.  When a WorkItem's status
-	// is
-	// reported to the system, the report should be sent with
-	// that report index, and the response will contain the index the
-	// worker should use for the next report.  Reports received
-	// with
-	// unexpected index values will be rejected by the service.
-	//
-	// In order to preserve idempotency, the worker should not alter
-	// the
-	// contents of a report, even if the worker must submit the same
-	// report multiple times before getting back a response.  The
-	// worker
-	// should not submit a subsequent report until the response for
-	// the
-	// previous report had been received from the service.
+	// ReportIndex: The report index. When a WorkItem is leased, the lease
+	// will contain an initial report index. When a WorkItem's status is
+	// reported to the system, the report should be sent with that report
+	// index, and the response will contain the index the worker should use
+	// for the next report. Reports received with unexpected index values
+	// will be rejected by the service. In order to preserve idempotency,
+	// the worker should not alter the contents of a report, even if the
+	// worker must submit the same report multiple times before getting back
+	// a response. The worker should not submit a subsequent report until
+	// the response for the previous report had been received from the
+	// service.
 	ReportIndex int64 `json:"reportIndex,omitempty,string"`
 
 	// ReportedProgress: The worker's progress through this WorkItem.
@@ -7683,51 +7416,35 @@ type WorkItemStatus struct {
 	SourceFork *SourceFork `json:"sourceFork,omitempty"`
 
 	// SourceOperationResponse: If the work item represented a
-	// SourceOperationRequest, and the work
-	// is completed, contains the result of the operation.
+	// SourceOperationRequest, and the work is completed, contains the
+	// result of the operation.
 	SourceOperationResponse *SourceOperationResponse `json:"sourceOperationResponse,omitempty"`
 
 	// StopPosition: A worker may split an active map task in two parts,
-	// "primary" and
-	// "residual", continuing to process the primary part and returning
-	// the
-	// residual part into the pool of available work.
-	// This event is called a "dynamic split" and is critical to the
-	// dynamic
-	// work rebalancing feature. The two obtained sub-tasks are
-	// called
-	// "parts" of the split.
-	// The parts, if concatenated, must represent the same input as would
-	// be read by the current task if the split did not happen.
-	// The exact way in which the original task is decomposed into the
-	// two
-	// parts is specified either as a position demarcating
-	// them
-	// (stop_position), or explicitly as two DerivedSources, if this
-	// task consumes a user-defined source type (dynamic_source_split).
-	//
-	// The "current" task is adjusted as a result of the split: after a
-	// task
-	// with range [A, B) sends a stop_position update at C, its range
-	// is
-	// considered to be [A, C), e.g.:
-	// * Progress should be interpreted relative to the new range, e.g.
-	//   "75% completed" means "75% of [A, C) completed"
-	// * The worker should interpret proposed_stop_position relative to the
-	//   new range, e.g. "split at 68%" should be interpreted as
-	//   "split at 68% of [A, C)".
-	// * If the worker chooses to split again using stop_position, only
-	//   stop_positions in [A, C) will be accepted.
-	// * Etc.
-	// dynamic_source_split has similar semantics: e.g., if a task
-	// with
-	// source S splits using dynamic_source_split into {P, R}
-	// (where P and R must be together equivalent to S), then
-	// subsequent
-	// progress and proposed_stop_position should be interpreted relative
-	// to P, and in a potential subsequent dynamic_source_split into {P',
-	// R'},
-	// P' and R' must be together equivalent to P, etc.
+	// "primary" and "residual", continuing to process the primary part and
+	// returning the residual part into the pool of available work. This
+	// event is called a "dynamic split" and is critical to the dynamic work
+	// rebalancing feature. The two obtained sub-tasks are called "parts" of
+	// the split. The parts, if concatenated, must represent the same input
+	// as would be read by the current task if the split did not happen. The
+	// exact way in which the original task is decomposed into the two parts
+	// is specified either as a position demarcating them (stop_position),
+	// or explicitly as two DerivedSources, if this task consumes a
+	// user-defined source type (dynamic_source_split). The "current" task
+	// is adjusted as a result of the split: after a task with range [A, B)
+	// sends a stop_position update at C, its range is considered to be [A,
+	// C), e.g.: * Progress should be interpreted relative to the new range,
+	// e.g. "75% completed" means "75% of [A, C) completed" * The worker
+	// should interpret proposed_stop_position relative to the new range,
+	// e.g. "split at 68%" should be interpreted as "split at 68% of [A,
+	// C)". * If the worker chooses to split again using stop_position, only
+	// stop_positions in [A, C) will be accepted. * Etc.
+	// dynamic_source_split has similar semantics: e.g., if a task with
+	// source S splits using dynamic_source_split into {P, R} (where P and R
+	// must be together equivalent to S), then subsequent progress and
+	// proposed_stop_position should be interpreted relative to P, and in a
+	// potential subsequent dynamic_source_split into {P', R'}, P' and R'
+	// must be together equivalent to P, etc.
 	StopPosition *Position `json:"stopPosition,omitempty"`
 
 	// TotalThrottlerWaitTimeSeconds: Total time the worker spent being
@@ -7774,36 +7491,56 @@ func (s *WorkItemStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// WorkerDetails: Information about a worker
+type WorkerDetails struct {
+	// WorkItems: Work items processed by this worker, sorted by time.
+	WorkItems []*WorkItemDetails `json:"workItems,omitempty"`
+
+	// WorkerName: Name of this worker
+	WorkerName string `json:"workerName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WorkItems") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WorkItems") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WorkerHealthReport: WorkerHealthReport contains information about the
-// health of a worker.
-//
-// The VM should be identified by the labels attached to the
-// WorkerMessage that
-// this health ping belongs to.
+// health of a worker. The VM should be identified by the labels
+// attached to the WorkerMessage that this health ping belongs to.
 type WorkerHealthReport struct {
 	// Msg: A message describing any unusual health reports.
 	Msg string `json:"msg,omitempty"`
 
-	// Pods: The pods running on the worker.
-	// See:
-	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#
-	// _v1_pod
-	//
-	// This field is used by the worker to send the status of the
-	// indvidual
-	// containers running on each worker.
+	// Pods: The pods running on the worker. See:
+	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod This field is used by the worker to send the status of the indvidual containers running on each
+	// worker.
 	Pods []googleapi.RawMessage `json:"pods,omitempty"`
 
 	// ReportInterval: The interval at which the worker is sending health
-	// reports.
-	// The default value of 0 should be interpreted as the field is not
-	// being
-	// explicitly set by the worker.
+	// reports. The default value of 0 should be interpreted as the field is
+	// not being explicitly set by the worker.
 	ReportInterval string `json:"reportInterval,omitempty"`
 
-	// VmIsBroken: Whether the VM is in a permanently broken state.
-	// Broken VMs should be abandoned or deleted ASAP to avoid assigning
-	// or
+	// VmIsBroken: Whether the VM is in a permanently broken state. Broken
+	// VMs should be abandoned or deleted ASAP to avoid assigning or
 	// completing any work.
 	VmIsBroken bool `json:"vmIsBroken,omitempty"`
 
@@ -7837,16 +7574,11 @@ func (s *WorkerHealthReport) MarshalJSON() ([]byte, error) {
 }
 
 // WorkerHealthReportResponse: WorkerHealthReportResponse contains
-// information returned to the worker
-// in response to a health ping.
+// information returned to the worker in response to a health ping.
 type WorkerHealthReportResponse struct {
 	// ReportInterval: A positive value indicates the worker should change
-	// its reporting interval
-	// to the specified value.
-	//
-	// The default value of zero means no change in report rate is requested
-	// by
-	// the server.
+	// its reporting interval to the specified value. The default value of
+	// zero means no change in report rate is requested by the server.
 	ReportInterval string `json:"reportInterval,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReportInterval") to
@@ -7873,19 +7605,16 @@ func (s *WorkerHealthReportResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkerLifecycleEvent: A report of an event in a worker's
-// lifecycle.
-// The proto contains one event, because the worker is expected
-// to
-// asynchronously send each message immediately after the event.
-// Due to this asynchrony, messages may arrive out of order (or
-// missing), and it
-// is up to the consumer to interpret.
-// The timestamp of the event is in the enclosing WorkerMessage proto.
+// WorkerLifecycleEvent: A report of an event in a worker's lifecycle.
+// The proto contains one event, because the worker is expected to
+// asynchronously send each message immediately after the event. Due to
+// this asynchrony, messages may arrive out of order (or missing), and
+// it is up to the consumer to interpret. The timestamp of the event is
+// in the enclosing WorkerMessage proto.
 type WorkerLifecycleEvent struct {
 	// ContainerStartTime: The start time of this container. All events will
-	// report this so that
-	// events can be grouped together across container/VM restarts.
+	// report this so that events can be grouped together across
+	// container/VM restarts.
 	ContainerStartTime string `json:"containerStartTime,omitempty"`
 
 	// Event: The event being reported.
@@ -7894,8 +7623,8 @@ type WorkerLifecycleEvent struct {
 	//   "UNKNOWN_EVENT" - Invalid event.
 	//   "OS_START" - The time the VM started.
 	//   "CONTAINER_START" - Our container code starts running. Multiple
-	// containers could be
-	// distinguished with WorkerMessage.labels if desired.
+	// containers could be distinguished with WorkerMessage.labels if
+	// desired.
 	//   "NETWORK_UP" - The worker has a functional external network
 	// connection.
 	//   "STAGING_FILES_DOWNLOAD_START" - Started downloading staging files.
@@ -7906,8 +7635,8 @@ type WorkerLifecycleEvent struct {
 	//   "SDK_INSTALL_FINISH" - Finished installing SDK.
 	Event string `json:"event,omitempty"`
 
-	// Metadata: Other stats that can accompany an event. E.g.
-	// { "downloaded_bytes" : "123456" }
+	// Metadata: Other stats that can accompany an event. E.g. {
+	// "downloaded_bytes" : "123456" }
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerStartTime")
@@ -7937,18 +7666,13 @@ func (s *WorkerLifecycleEvent) MarshalJSON() ([]byte, error) {
 // WorkerMessage: WorkerMessage provides information to the backend
 // about a worker.
 type WorkerMessage struct {
-	// Labels: Labels are used to group WorkerMessages.
-	// For example, a worker_message about a particular container
-	// might have the labels:
-	// { "JOB_ID": "2015-04-22",
-	//   "WORKER_ID": "wordcount-vm-2015…"
-	//   "CONTAINER_TYPE": "worker",
-	//   "CONTAINER_ID": "ac1234def"}
-	// Label tags typically correspond to Label enum values. However, for
-	// ease
-	// of development other strings can be used as tags. LABEL_UNSPECIFIED
-	// should
-	// not be used here.
+	// Labels: Labels are used to group WorkerMessages. For example, a
+	// worker_message about a particular container might have the labels: {
+	// "JOB_ID": "2015-04-22", "WORKER_ID": "wordcount-vm-2015…"
+	// "CONTAINER_TYPE": "worker", "CONTAINER_ID": "ac1234def"} Label tags
+	// typically correspond to Label enum values. However, for ease of
+	// development other strings can be used as tags. LABEL_UNSPECIFIED
+	// should not be used here.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Time: The timestamp of the worker_message.
@@ -7993,65 +7717,34 @@ func (s *WorkerMessage) MarshalJSON() ([]byte, error) {
 }
 
 // WorkerMessageCode: A message code is used to report status and error
-// messages to the service.
-// The message codes are intended to be machine readable. The service
-// will
-// take care of translating these into user understandable messages
-// if
-// necessary.
-//
-// Example use cases:
-//   1. Worker processes reporting successful startup.
-//   2. Worker processes reporting specific errors (e.g. package
-// staging
-//      failure).
+// messages to the service. The message codes are intended to be machine
+// readable. The service will take care of translating these into user
+// understandable messages if necessary. Example use cases: 1. Worker
+// processes reporting successful startup. 2. Worker processes reporting
+// specific errors (e.g. package staging failure).
 type WorkerMessageCode struct {
 	// Code: The code is a string intended for consumption by a machine that
-	// identifies
-	// the type of message being sent.
-	// Examples:
-	//  1. "HARNESS_STARTED" might be used to indicate the worker harness
-	// has
-	//      started.
-	//  2. "GCS_DOWNLOAD_ERROR" might be used to indicate an error
-	// downloading
-	//     a GCS file as part of the boot process of one of the worker
-	// containers.
-	//
-	// This is a string and not an enum to make it easy to add new codes
-	// without
-	// waiting for an API change.
+	// identifies the type of message being sent. Examples: 1.
+	// "HARNESS_STARTED" might be used to indicate the worker harness has
+	// started. 2. "GCS_DOWNLOAD_ERROR" might be used to indicate an error
+	// downloading a GCS file as part of the boot process of one of the
+	// worker containers. This is a string and not an enum to make it easy
+	// to add new codes without waiting for an API change.
 	Code string `json:"code,omitempty"`
 
-	// Parameters: Parameters contains specific information about the
-	// code.
-	//
-	// This is a struct to allow parameters of different types.
-	//
-	// Examples:
-	//  1. For a "HARNESS_STARTED" message parameters might provide the
-	// name
-	//     of the worker and additional data like timing information.
-	//  2. For a "GCS_DOWNLOAD_ERROR" parameters might contain fields
-	// listing
-	//     the GCS objects being downloaded and fields containing
-	// errors.
-	//
-	// In general complex data structures should be avoided. If a
-	// worker
-	// needs to send a specific and complicated data structure then
-	// please
-	// consider defining a new proto and adding it to the data oneof
-	// in
-	// WorkerMessageResponse.
-	//
-	// Conventions:
-	//  Parameters should only be used for information that isn't typically
-	// passed
-	//  as a label.
-	//  hostname and other worker identifiers should almost always be
-	// passed
-	//  as labels since they will be included on most messages.
+	// Parameters: Parameters contains specific information about the code.
+	// This is a struct to allow parameters of different types. Examples: 1.
+	// For a "HARNESS_STARTED" message parameters might provide the name of
+	// the worker and additional data like timing information. 2. For a
+	// "GCS_DOWNLOAD_ERROR" parameters might contain fields listing the GCS
+	// objects being downloaded and fields containing errors. In general
+	// complex data structures should be avoided. If a worker needs to send
+	// a specific and complicated data structure then please consider
+	// defining a new proto and adding it to the data oneof in
+	// WorkerMessageResponse. Conventions: Parameters should only be used
+	// for information that isn't typically passed as a label. hostname and
+	// other worker identifiers should almost always be passed as labels
+	// since they will be included on most messages.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -8078,8 +7771,7 @@ func (s *WorkerMessageCode) MarshalJSON() ([]byte, error) {
 }
 
 // WorkerMessageResponse: A worker_message response allows the server to
-// pass information to the
-// sender.
+// pass information to the sender.
 type WorkerMessageResponse struct {
 	// WorkerHealthReportResponse: The service's response to a worker's
 	// health report.
@@ -8119,13 +7811,9 @@ func (s *WorkerMessageResponse) MarshalJSON() ([]byte, error) {
 }
 
 // WorkerPool: Describes one particular pool of Cloud Dataflow workers
-// to be
-// instantiated by the Cloud Dataflow service in order to perform
-// the
-// computations required by a job.  Note that a workflow job may
-// use
-// multiple pools, in order to match the various
-// computational
+// to be instantiated by the Cloud Dataflow service in order to perform
+// the computations required by a job. Note that a workflow job may use
+// multiple pools, in order to match the various computational
 // requirements of the various stages of the job.
 type WorkerPool struct {
 	// AutoscalingSettings: Settings for autoscaling of this WorkerPool.
@@ -8134,34 +7822,30 @@ type WorkerPool struct {
 	// DataDisks: Data disks that are used by a VM in this workflow.
 	DataDisks []*Disk `json:"dataDisks,omitempty"`
 
-	// DefaultPackageSet: The default package set to install.  This allows
-	// the service to
-	// select a default set of packages which are useful to worker
-	// harnesses written in a particular language.
+	// DefaultPackageSet: The default package set to install. This allows
+	// the service to select a default set of packages which are useful to
+	// worker harnesses written in a particular language.
 	//
 	// Possible values:
 	//   "DEFAULT_PACKAGE_SET_UNKNOWN" - The default set of packages to
 	// stage is unknown, or unspecified.
 	//   "DEFAULT_PACKAGE_SET_NONE" - Indicates that no packages should be
-	// staged at the worker unless
-	// explicitly specified by the job.
+	// staged at the worker unless explicitly specified by the job.
 	//   "DEFAULT_PACKAGE_SET_JAVA" - Stage packages typically useful to
 	// workers written in Java.
 	//   "DEFAULT_PACKAGE_SET_PYTHON" - Stage pacakges typically useful to
 	// workers written in Python.
 	DefaultPackageSet string `json:"defaultPackageSet,omitempty"`
 
-	// DiskSizeGb: Size of root disk for VMs, in GB.  If zero or
-	// unspecified, the service will
-	// attempt to choose a reasonable default.
+	// DiskSizeGb: Size of root disk for VMs, in GB. If zero or unspecified,
+	// the service will attempt to choose a reasonable default.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
 	// DiskSourceImage: Fully qualified source image for disks.
 	DiskSourceImage string `json:"diskSourceImage,omitempty"`
 
-	// DiskType: Type of root disk for VMs.  If empty or unspecified, the
-	// service will
-	// attempt to choose a reasonable default.
+	// DiskType: Type of root disk for VMs. If empty or unspecified, the
+	// service will attempt to choose a reasonable default.
 	DiskType string `json:"diskType,omitempty"`
 
 	// IpConfiguration: Configuration for VM IPs.
@@ -8174,40 +7858,33 @@ type WorkerPool struct {
 	IpConfiguration string `json:"ipConfiguration,omitempty"`
 
 	// Kind: The kind of the worker pool; currently only `harness` and
-	// `shuffle`
-	// are supported.
+	// `shuffle` are supported.
 	Kind string `json:"kind,omitempty"`
 
-	// MachineType: Machine type (e.g. "n1-standard-1").  If empty or
-	// unspecified, the
-	// service will attempt to choose a reasonable default.
+	// MachineType: Machine type (e.g. "n1-standard-1"). If empty or
+	// unspecified, the service will attempt to choose a reasonable default.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Metadata: Metadata to set on the Google Compute Engine VMs.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// Network: Network to which VMs will be assigned.  If empty or
-	// unspecified,
-	// the service will use the network "default".
+	// Network: Network to which VMs will be assigned. If empty or
+	// unspecified, the service will use the network "default".
 	Network string `json:"network,omitempty"`
 
 	// NumThreadsPerWorker: The number of threads per worker harness. If
-	// empty or unspecified, the
-	// service will choose a number of threads (according to the number of
-	// cores
-	// on the selected machine type for batch, or 1 by convention for
-	// streaming).
+	// empty or unspecified, the service will choose a number of threads
+	// (according to the number of cores on the selected machine type for
+	// batch, or 1 by convention for streaming).
 	NumThreadsPerWorker int64 `json:"numThreadsPerWorker,omitempty"`
 
 	// NumWorkers: Number of Google Compute Engine workers in this pool
-	// needed to
-	// execute the job.  If zero or unspecified, the service will
+	// needed to execute the job. If zero or unspecified, the service will
 	// attempt to choose a reasonable default.
 	NumWorkers int64 `json:"numWorkers,omitempty"`
 
 	// OnHostMaintenance: The action to take on host maintenance, as defined
-	// by the Google
-	// Compute Engine API.
+	// by the Google Compute Engine API.
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 
 	// Packages: Packages to be installed on workers.
@@ -8217,73 +7894,51 @@ type WorkerPool struct {
 	PoolArgs googleapi.RawMessage `json:"poolArgs,omitempty"`
 
 	// SdkHarnessContainerImages: Set of SDK harness containers needed to
-	// execute this pipeline. This will
-	// only be set in the Fn API path. For non-cross-language pipelines
-	// this
-	// should have only one entry. Cross-language pipelines will have two or
-	// more
-	// entries.
+	// execute this pipeline. This will only be set in the Fn API path. For
+	// non-cross-language pipelines this should have only one entry.
+	// Cross-language pipelines will have two or more entries.
 	SdkHarnessContainerImages []*SdkHarnessContainerImage `json:"sdkHarnessContainerImages,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
-	// Expected to be of
-	// the form "regions/REGION/subnetworks/SUBNETWORK".
+	// Expected to be of the form "regions/REGION/subnetworks/SUBNETWORK".
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// TaskrunnerSettings: Settings passed through to Google Compute Engine
-	// workers when
-	// using the standard Dataflow task runner.  Users should ignore
-	// this field.
+	// workers when using the standard Dataflow task runner. Users should
+	// ignore this field.
 	TaskrunnerSettings *TaskRunnerSettings `json:"taskrunnerSettings,omitempty"`
 
 	// TeardownPolicy: Sets the policy for determining when to turndown
-	// worker pool.
-	// Allowed values are: `TEARDOWN_ALWAYS`, `TEARDOWN_ON_SUCCESS`,
-	// and
-	// `TEARDOWN_NEVER`.
-	// `TEARDOWN_ALWAYS` means workers are always torn down regardless of
-	// whether
-	// the job succeeds. `TEARDOWN_ON_SUCCESS` means workers are torn
-	// down
-	// if the job succeeds. `TEARDOWN_NEVER` means the workers are never
-	// torn
-	// down.
-	//
-	// If the workers are not torn down by the service, they will
-	// continue to run and use Google Compute Engine VM resources in
-	// the
-	// user's project until they are explicitly terminated by the
-	// user.
-	// Because of this, Google recommends using the `TEARDOWN_ALWAYS`
-	// policy except for small, manually supervised test jobs.
-	//
-	// If unknown or unspecified, the service will attempt to choose a
-	// reasonable
-	// default.
+	// worker pool. Allowed values are: `TEARDOWN_ALWAYS`,
+	// `TEARDOWN_ON_SUCCESS`, and `TEARDOWN_NEVER`. `TEARDOWN_ALWAYS` means
+	// workers are always torn down regardless of whether the job succeeds.
+	// `TEARDOWN_ON_SUCCESS` means workers are torn down if the job
+	// succeeds. `TEARDOWN_NEVER` means the workers are never torn down. If
+	// the workers are not torn down by the service, they will continue to
+	// run and use Google Compute Engine VM resources in the user's project
+	// until they are explicitly terminated by the user. Because of this,
+	// Google recommends using the `TEARDOWN_ALWAYS` policy except for
+	// small, manually supervised test jobs. If unknown or unspecified, the
+	// service will attempt to choose a reasonable default.
 	//
 	// Possible values:
 	//   "TEARDOWN_POLICY_UNKNOWN" - The teardown policy isn't specified, or
 	// is unknown.
 	//   "TEARDOWN_ALWAYS" - Always teardown the resource.
 	//   "TEARDOWN_ON_SUCCESS" - Teardown the resource on success. This is
-	// useful for debugging
-	// failures.
+	// useful for debugging failures.
 	//   "TEARDOWN_NEVER" - Never teardown the resource. This is useful for
-	// debugging and
-	// development.
+	// debugging and development.
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
 	// WorkerHarnessContainerImage: Required. Docker container image that
-	// executes the Cloud Dataflow worker
-	// harness, residing in Google Container Registry.
-	//
-	// Deprecated for the Fn API path. Use sdk_harness_container_images
-	// instead.
+	// executes the Cloud Dataflow worker harness, residing in Google
+	// Container Registry. Deprecated for the Fn API path. Use
+	// sdk_harness_container_images instead.
 	WorkerHarnessContainerImage string `json:"workerHarnessContainerImage,omitempty"`
 
-	// Zone: Zone to run the worker pools in.  If empty or unspecified, the
-	// service
-	// will attempt to choose a reasonable default.
+	// Zone: Zone to run the worker pools in. If empty or unspecified, the
+	// service will attempt to choose a reasonable default.
 	Zone string `json:"zone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoscalingSettings")
@@ -8312,18 +7967,12 @@ func (s *WorkerPool) MarshalJSON() ([]byte, error) {
 
 // WorkerSettings: Provides data to pass through to the worker harness.
 type WorkerSettings struct {
-	// BaseUrl: The base URL for accessing Google Cloud APIs.
-	//
-	// When workers access Google Cloud APIs, they logically do so
-	// via
-	// relative URLs.  If this field is specified, it supplies the base
-	// URL to use for resolving these relative URLs.  The
-	// normative
-	// algorithm used is defined by RFC 1808, "Relative Uniform
-	// Resource
-	// Locators".
-	//
-	// If not specified, the default value is "http://www.googleapis.com/"
+	// BaseUrl: The base URL for accessing Google Cloud APIs. When workers
+	// access Google Cloud APIs, they logically do so via relative URLs. If
+	// this field is specified, it supplies the base URL to use for
+	// resolving these relative URLs. The normative algorithm used is
+	// defined by RFC 1808, "Relative Uniform Resource Locators". If not
+	// specified, the default value is "http://www.googleapis.com/"
 	BaseUrl string `json:"baseUrl,omitempty"`
 
 	// ReportingEnabled: Whether to send work progress updates to the
@@ -8331,25 +7980,17 @@ type WorkerSettings struct {
 	ReportingEnabled bool `json:"reportingEnabled,omitempty"`
 
 	// ServicePath: The Cloud Dataflow service path relative to the root
-	// URL, for example,
-	// "dataflow/v1b3/projects".
+	// URL, for example, "dataflow/v1b3/projects".
 	ServicePath string `json:"servicePath,omitempty"`
 
 	// ShuffleServicePath: The Shuffle service path relative to the root
-	// URL, for example,
-	// "shuffle/v1beta1".
+	// URL, for example, "shuffle/v1beta1".
 	ShuffleServicePath string `json:"shuffleServicePath,omitempty"`
 
 	// TempStoragePrefix: The prefix of the resources the system should use
-	// for temporary
-	// storage.
-	//
-	// The supported resource type is:
-	//
-	// Google Cloud Storage:
-	//
-	//   storage.googleapis.com/{bucket}/{object}
-	//   bucket.storage.googleapis.com/{object}
+	// for temporary storage. The supported resource type is: Google Cloud
+	// Storage: storage.googleapis.com/{bucket}/{object}
+	// bucket.storage.googleapis.com/{object}
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// WorkerId: The ID of the worker running this pipeline.
@@ -8379,16 +8020,13 @@ func (s *WorkerSettings) MarshalJSON() ([]byte, error) {
 }
 
 // WorkerShutdownNotice: Shutdown notification from workers. This is to
-// be sent by the shutdown
-// script of the worker VM so that the backend knows that the VM is
-// being
-// shut down.
+// be sent by the shutdown script of the worker VM so that the backend
+// knows that the VM is being shut down.
 type WorkerShutdownNotice struct {
-	// Reason: The reason for the worker shutdown.
-	// Current possible values are:
-	//   "UNKNOWN": shutdown reason is unknown.
-	//   "PREEMPTION": shutdown reason is preemption.
-	// Other possible reasons may be added in the future.
+	// Reason: The reason for the worker shutdown. Current possible values
+	// are: "UNKNOWN": shutdown reason is unknown. "PREEMPTION": shutdown
+	// reason is preemption. Other possible reasons may be added in the
+	// future.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
@@ -8419,8 +8057,8 @@ func (s *WorkerShutdownNotice) MarshalJSON() ([]byte, error) {
 type WorkerShutdownNoticeResponse struct {
 }
 
-// WriteInstruction: An instruction that writes records.
-// Takes one input, produces no outputs.
+// WriteInstruction: An instruction that writes records. Takes one
+// input, produces no outputs.
 type WriteInstruction struct {
 	// Input: The input.
 	Input *InstructionInput `json:"input,omitempty"`
@@ -8509,7 +8147,7 @@ func (c *ProjectsDeleteSnapshotsCall) Header() http.Header {
 
 func (c *ProjectsDeleteSnapshotsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8653,7 +8291,7 @@ func (c *ProjectsWorkerMessagesCall) Header() http.Header {
 
 func (c *ProjectsWorkerMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8761,8 +8399,8 @@ type ProjectsCatalogTemplatesCommitCall struct {
 }
 
 // Commit: Creates a new TemplateVersion (Important: not new Template)
-// entry in the
-// spanner table. Requires project_id and display_name (template).
+// entry in the spanner table. Requires project_id and display_name
+// (template).
 func (r *ProjectsCatalogTemplatesService) Commit(name string, committemplateversionrequest *CommitTemplateVersionRequest) *ProjectsCatalogTemplatesCommitCall {
 	c := &ProjectsCatalogTemplatesCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8797,7 +8435,7 @@ func (c *ProjectsCatalogTemplatesCommitCall) Header() http.Header {
 
 func (c *ProjectsCatalogTemplatesCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8861,7 +8499,7 @@ func (c *ProjectsCatalogTemplatesCommitCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new TemplateVersion (Important: not new Template) entry in the\nspanner table. Requires project_id and display_name (template).",
+	//   "description": "Creates a new TemplateVersion (Important: not new Template) entry in the spanner table. Requires project_id and display_name (template).",
 	//   "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:commit",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.catalogTemplates.commit",
@@ -8870,7 +8508,7 @@ func (c *ProjectsCatalogTemplatesCommitCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The location of the template, name includes project_id and display_name.\n\nCommit using project_id(pid1) and display_name(tid1).\n  Format: projects/{pid1}/catalogTemplates/{tid1}",
+	//       "description": "The location of the template, name includes project_id and display_name. Commit using project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -8937,7 +8575,7 @@ func (c *ProjectsCatalogTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsCatalogTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9005,7 +8643,7 @@ func (c *ProjectsCatalogTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "name includes project_id and display_name.\n\nDelete by project_id(pid1) and display_name(tid1).\n  Format: projects/{pid1}/catalogTemplates/{tid1}",
+	//       "description": "name includes project_id and display_name. Delete by project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -9036,10 +8674,8 @@ type ProjectsCatalogTemplatesGetCall struct {
 }
 
 // Get: Get TemplateVersion using project_id and display_name with an
-// optional
-// version_id field. Get latest (has tag "latest") TemplateVersion
-// if
-// version_id not set.
+// optional version_id field. Get latest (has tag "latest")
+// TemplateVersion if version_id not set.
 func (r *ProjectsCatalogTemplatesService) Get(name string) *ProjectsCatalogTemplatesGetCall {
 	c := &ProjectsCatalogTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9083,7 +8719,7 @@ func (c *ProjectsCatalogTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsCatalogTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9145,7 +8781,7 @@ func (c *ProjectsCatalogTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Tem
 	}
 	return ret, nil
 	// {
-	//   "description": "Get TemplateVersion using project_id and display_name with an optional\nversion_id field. Get latest (has tag \"latest\") TemplateVersion if\nversion_id not set.",
+	//   "description": "Get TemplateVersion using project_id and display_name with an optional version_id field. Get latest (has tag \"latest\") TemplateVersion if version_id not set.",
 	//   "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.catalogTemplates.get",
@@ -9154,7 +8790,7 @@ func (c *ProjectsCatalogTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Tem
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name includes project_id and display_name. version_id is optional.\nGet the latest TemplateVersion if version_id not set.\n\nGet by project_id(pid1) and display_name(tid1):\n  Format: projects/{pid1}/catalogTemplates/{tid1}\n\nGet by project_id(pid1), display_name(tid1), and version_id(vid1):\n  Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
+	//       "description": "Resource name includes project_id and display_name. version_id is optional. Get the latest TemplateVersion if version_id not set. Get by project_id(pid1) and display_name(tid1): Format: projects/{pid1}/catalogTemplates/{tid1} Get by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -9185,8 +8821,8 @@ type ProjectsCatalogTemplatesLabelCall struct {
 }
 
 // Label: Updates the label of the TemplateVersion. Label can be
-// duplicated in
-// Template, so either add or remove the label in the TemplateVersion.
+// duplicated in Template, so either add or remove the label in the
+// TemplateVersion.
 func (r *ProjectsCatalogTemplatesService) Label(name string, modifytemplateversionlabelrequest *ModifyTemplateVersionLabelRequest) *ProjectsCatalogTemplatesLabelCall {
 	c := &ProjectsCatalogTemplatesLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9221,7 +8857,7 @@ func (c *ProjectsCatalogTemplatesLabelCall) Header() http.Header {
 
 func (c *ProjectsCatalogTemplatesLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9286,7 +8922,7 @@ func (c *ProjectsCatalogTemplatesLabelCall) Do(opts ...googleapi.CallOption) (*M
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the label of the TemplateVersion. Label can be duplicated in\nTemplate, so either add or remove the label in the TemplateVersion.",
+	//   "description": "Updates the label of the TemplateVersion. Label can be duplicated in Template, so either add or remove the label in the TemplateVersion.",
 	//   "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:label",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.catalogTemplates.label",
@@ -9295,7 +8931,7 @@ func (c *ProjectsCatalogTemplatesLabelCall) Do(opts ...googleapi.CallOption) (*M
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name includes project_id, display_name, and version_id.\n\nUpdates by project_id(pid1), display_name(tid1), and version_id(vid1):\n  Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
+	//       "description": "Resource name includes project_id, display_name, and version_id. Updates by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -9329,14 +8965,11 @@ type ProjectsCatalogTemplatesTagCall struct {
 }
 
 // Tag: Updates the tag of the TemplateVersion, and tag is unique in
-// Template.
-// If tag exists in another TemplateVersion in the Template, updates the
-// tag
-// to this TemplateVersion will remove it from the old TemplateVersion
-// and add
-// it to this TemplateVersion. If request is remove_only (remove_only =
-// true),
-// remove the tag from this TemplateVersion.
+// Template. If tag exists in another TemplateVersion in the Template,
+// updates the tag to this TemplateVersion will remove it from the old
+// TemplateVersion and add it to this TemplateVersion. If request is
+// remove_only (remove_only = true), remove the tag from this
+// TemplateVersion.
 func (r *ProjectsCatalogTemplatesService) Tag(name string, modifytemplateversiontagrequest *ModifyTemplateVersionTagRequest) *ProjectsCatalogTemplatesTagCall {
 	c := &ProjectsCatalogTemplatesTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9371,7 +9004,7 @@ func (c *ProjectsCatalogTemplatesTagCall) Header() http.Header {
 
 func (c *ProjectsCatalogTemplatesTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9435,7 +9068,7 @@ func (c *ProjectsCatalogTemplatesTagCall) Do(opts ...googleapi.CallOption) (*Mod
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the tag of the TemplateVersion, and tag is unique in Template.\nIf tag exists in another TemplateVersion in the Template, updates the tag\nto this TemplateVersion will remove it from the old TemplateVersion and add\nit to this TemplateVersion. If request is remove_only (remove_only = true),\nremove the tag from this TemplateVersion.",
+	//   "description": "Updates the tag of the TemplateVersion, and tag is unique in Template. If tag exists in another TemplateVersion in the Template, updates the tag to this TemplateVersion will remove it from the old TemplateVersion and add it to this TemplateVersion. If request is remove_only (remove_only = true), remove the tag from this TemplateVersion.",
 	//   "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:tag",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.catalogTemplates.tag",
@@ -9444,7 +9077,7 @@ func (c *ProjectsCatalogTemplatesTagCall) Do(opts ...googleapi.CallOption) (*Mod
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name includes project_id, display_name, and version_id.\n\nUpdates by project_id(pid1), display_name(tid1), and version_id(vid1):\n  Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
+	//       "description": "Resource name includes project_id, display_name, and version_id. Updates by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -9477,10 +9110,9 @@ type ProjectsCatalogTemplatesTemplateVersionsCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates a new Template with TemplateVersion.
-// Requires
-// project_id(projects) and template display_name(catalogTemplates).
-// The template display_name is set by the user.
+// Create: Creates a new Template with TemplateVersion. Requires
+// project_id(projects) and template display_name(catalogTemplates). The
+// template display_name is set by the user.
 func (r *ProjectsCatalogTemplatesTemplateVersionsService) Create(parent string, createtemplateversionrequest *CreateTemplateVersionRequest) *ProjectsCatalogTemplatesTemplateVersionsCreateCall {
 	c := &ProjectsCatalogTemplatesTemplateVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9515,7 +9147,7 @@ func (c *ProjectsCatalogTemplatesTemplateVersionsCreateCall) Header() http.Heade
 
 func (c *ProjectsCatalogTemplatesTemplateVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9579,7 +9211,7 @@ func (c *ProjectsCatalogTemplatesTemplateVersionsCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Template with TemplateVersion. Requires\nproject_id(projects) and template display_name(catalogTemplates).\nThe template display_name is set by the user.",
+	//   "description": "Creates a new Template with TemplateVersion. Requires project_id(projects) and template display_name(catalogTemplates). The template display_name is set by the user.",
 	//   "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}/templateVersions",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.catalogTemplates.templateVersions.create",
@@ -9588,7 +9220,7 @@ func (c *ProjectsCatalogTemplatesTemplateVersionsCreateCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent project and template that the TemplateVersion will be created\nunder.\n\nCreate using project_id(pid1) and display_name(tid1).\n  Format: projects/{pid1}/catalogTemplates/{tid1}",
+	//       "description": "The parent project and template that the TemplateVersion will be created under. Create using project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
 	//       "required": true,
@@ -9632,10 +9264,16 @@ func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregat
 // use.
 //
 // Possible values:
-//   "UNKNOWN"
-//   "ALL"
-//   "TERMINATED"
-//   "ACTIVE"
+//   "UNKNOWN" - The filter isn't specified, or is unknown. This returns
+// all jobs ordered on descending `JobUuid`.
+//   "ALL" - Returns all running jobs first ordered on creation
+// timestamp, then returns all terminated jobs ordered on the
+// termination timestamp.
+//   "TERMINATED" - Filters the jobs that have a terminated state,
+// ordered on the termination timestamp. Example terminated states:
+// `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.
+//   "ACTIVE" - Filters the jobs that are running ordered on the
+// creation timestamp.
 func (c *ProjectsJobsAggregatedCall) Filter(filter string) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9643,27 +9281,25 @@ func (c *ProjectsJobsAggregatedCall) Filter(filter string) *ProjectsJobsAggregat
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains this job.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains this job.
 func (c *ProjectsJobsAggregatedCall) Location(location string) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": If there are many
-// jobs, limit response to at most this many.
-// The actual number of jobs returned will be the lesser of
-// max_responses
-// and an unspecified server-defined limit.
+// jobs, limit response to at most this many. The actual number of jobs
+// returned will be the lesser of max_responses and an unspecified
+// server-defined limit.
 func (c *ProjectsJobsAggregatedCall) PageSize(pageSize int64) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Set this to the
-// 'next_page_token' field of a previous response
-// to request additional results in a long list.
+// 'next_page_token' field of a previous response to request additional
+// results in a long list.
 func (c *ProjectsJobsAggregatedCall) PageToken(pageToken string) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9673,10 +9309,15 @@ func (c *ProjectsJobsAggregatedCall) PageToken(pageToken string) *ProjectsJobsAg
 // requested in response. Default is `JOB_VIEW_SUMMARY`.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsJobsAggregatedCall) View(view string) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9719,7 +9360,7 @@ func (c *ProjectsJobsAggregatedCall) Header() http.Header {
 
 func (c *ProjectsJobsAggregatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9797,22 +9438,28 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//         "TERMINATED",
 	//         "ACTIVE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The filter isn't specified, or is unknown. This returns all jobs ordered on descending `JobUuid`.",
+	//         "Returns all running jobs first ordered on creation timestamp, then returns all terminated jobs ordered on the termination timestamp.",
+	//         "Filters the jobs that have a terminated state, ordered on the termination timestamp. Example terminated states: `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.",
+	//         "Filters the jobs that are running ordered on the creation timestamp."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "If there are many jobs, limit response to at most this many.\nThe actual number of jobs returned will be the lesser of max_responses\nand an unspecified server-defined limit.",
+	//       "description": "If there are many jobs, limit response to at most this many. The actual number of jobs returned will be the lesser of max_responses and an unspecified server-defined limit.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Set this to the 'next_page_token' field of a previous response\nto request additional results in a long list.",
+	//       "description": "Set this to the 'next_page_token' field of a previous response to request additional results in a long list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9829,6 +9476,12 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -9880,17 +9533,11 @@ type ProjectsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Cloud Dataflow job.
-//
-// To create a job, we recommend using `projects.locations.jobs.create`
-// with a
-// [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.create` is not recommended, as your job will always
-// start
-// in `us-central1`.
+// Create: Creates a Cloud Dataflow job. To create a job, we recommend
+// using `projects.locations.jobs.create` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.create` is not recommended, as your job will
+// always start in `us-central1`.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9900,9 +9547,8 @@ func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCr
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains this job.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains this job.
 func (c *ProjectsJobsCreateCall) Location(location string) *ProjectsJobsCreateCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -9919,10 +9565,15 @@ func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobs
 // requested in response.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsJobsCreateCall) View(view string) *ProjectsJobsCreateCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9955,7 +9606,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10019,7 +9670,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud Dataflow job.\n\nTo create a job, we recommend using `projects.locations.jobs.create` with a\n[regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.create` is not recommended, as your job will always start\nin `us-central1`.",
+	//   "description": "Creates a Cloud Dataflow job. To create a job, we recommend using `projects.locations.jobs.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.create` is not recommended, as your job will always start in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.jobs.create",
@@ -10028,7 +9679,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10050,6 +9701,12 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10084,17 +9741,12 @@ type ProjectsJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the state of the specified Cloud Dataflow job.
-//
-// To get the state of a job, we recommend using
-// `projects.locations.jobs.get`
-// with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.get` is not recommended, as you can only get the state
-// of
-// jobs that are running in `us-central1`.
+// Get: Gets the state of the specified Cloud Dataflow job. To get the
+// state of a job, we recommend using `projects.locations.jobs.get` with
+// a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.get` is not recommended, as you can only get the
+// state of jobs that are running in `us-central1`.
 func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10104,9 +9756,8 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains this job.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains this job.
 func (c *ProjectsJobsGetCall) Location(location string) *ProjectsJobsGetCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -10116,10 +9767,15 @@ func (c *ProjectsJobsGetCall) Location(location string) *ProjectsJobsGetCall {
 // requested in response.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsJobsGetCall) View(view string) *ProjectsJobsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -10162,7 +9818,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10225,7 +9881,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the state of the specified Cloud Dataflow job.\n\nTo get the state of a job, we recommend using `projects.locations.jobs.get`\nwith a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.get` is not recommended, as you can only get the state of\njobs that are running in `us-central1`.",
+	//   "description": "Gets the state of the specified Cloud Dataflow job. To get the state of a job, we recommend using `projects.locations.jobs.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.get` is not recommended, as you can only get the state of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.get",
@@ -10241,7 +9897,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10258,6 +9914,12 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10289,17 +9951,12 @@ type ProjectsJobsGetMetricsCall struct {
 	header_      http.Header
 }
 
-// GetMetrics: Request the job status.
-//
-// To request the status of a job, we recommend
-// using
-// `projects.locations.jobs.getMetrics` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.getMetrics` is not recommended, as you can only
-// request the
-// status of jobs that are running in `us-central1`.
+// GetMetrics: Request the job status. To request the status of a job,
+// we recommend using `projects.locations.jobs.getMetrics` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.getMetrics` is not recommended, as you can only
+// request the status of jobs that are running in `us-central1`.
 func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *ProjectsJobsGetMetricsCall {
 	c := &ProjectsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10309,17 +9966,16 @@ func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *Projec
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains the job specified by job_id.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains the job specified by job_id.
 func (c *ProjectsJobsGetMetricsCall) Location(location string) *ProjectsJobsGetMetricsCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Return only metric
-// data that has changed since this time.
-// Default is to return all information about all metrics for the job.
+// data that has changed since this time. Default is to return all
+// information about all metrics for the job.
 func (c *ProjectsJobsGetMetricsCall) StartTime(startTime string) *ProjectsJobsGetMetricsCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -10362,7 +10018,7 @@ func (c *ProjectsJobsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10425,7 +10081,7 @@ func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetri
 	}
 	return ret, nil
 	// {
-	//   "description": "Request the job status.\n\nTo request the status of a job, we recommend using\n`projects.locations.jobs.getMetrics` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.getMetrics` is not recommended, as you can only request the\nstatus of jobs that are running in `us-central1`.",
+	//   "description": "Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.getMetrics` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.getMetrics` is not recommended, as you can only request the status of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}/metrics",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.getMetrics",
@@ -10435,13 +10091,13 @@ func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetri
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "The job to get messages for.",
+	//       "description": "The job to get metrics for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10452,7 +10108,7 @@ func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetri
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "Return only metric data that has changed since this time.\nDefault is to return all information about all metrics for the job.",
+	//       "description": "Return only metric data that has changed since this time. Default is to return all information about all metrics for the job.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -10483,19 +10139,14 @@ type ProjectsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List the jobs of a project.
-//
-// To list the jobs of a project in a region, we recommend
-// using
-// `projects.locations.jobs.list` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). To
-// list the all jobs across all regions, use `projects.jobs.aggregated`.
-// Using
-// `projects.jobs.list` is not recommended, as you can only get the list
-// of
-// jobs that are running in `us-central1`.
+// List: List the jobs of a project. To list the jobs of a project in a
+// region, we recommend using `projects.locations.jobs.list` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// To list the all jobs across all regions, use
+// `projects.jobs.aggregated`. Using `projects.jobs.list` is not
+// recommended, as you can only get the list of jobs that are running in
+// `us-central1`.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10506,10 +10157,16 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 // use.
 //
 // Possible values:
-//   "UNKNOWN"
-//   "ALL"
-//   "TERMINATED"
-//   "ACTIVE"
+//   "UNKNOWN" - The filter isn't specified, or is unknown. This returns
+// all jobs ordered on descending `JobUuid`.
+//   "ALL" - Returns all running jobs first ordered on creation
+// timestamp, then returns all terminated jobs ordered on the
+// termination timestamp.
+//   "TERMINATED" - Filters the jobs that have a terminated state,
+// ordered on the termination timestamp. Example terminated states:
+// `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.
+//   "ACTIVE" - Filters the jobs that are running ordered on the
+// creation timestamp.
 func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -10517,27 +10174,25 @@ func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains this job.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains this job.
 func (c *ProjectsJobsListCall) Location(location string) *ProjectsJobsListCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": If there are many
-// jobs, limit response to at most this many.
-// The actual number of jobs returned will be the lesser of
-// max_responses
-// and an unspecified server-defined limit.
+// jobs, limit response to at most this many. The actual number of jobs
+// returned will be the lesser of max_responses and an unspecified
+// server-defined limit.
 func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Set this to the
-// 'next_page_token' field of a previous response
-// to request additional results in a long list.
+// 'next_page_token' field of a previous response to request additional
+// results in a long list.
 func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10547,10 +10202,15 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 // requested in response. Default is `JOB_VIEW_SUMMARY`.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsJobsListCall) View(view string) *ProjectsJobsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -10593,7 +10253,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10655,7 +10315,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project.\n\nTo list the jobs of a project in a region, we recommend using\n`projects.locations.jobs.list` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To\nlist the all jobs across all regions, use `projects.jobs.aggregated`. Using\n`projects.jobs.list` is not recommended, as you can only get the list of\njobs that are running in `us-central1`.",
+	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.list",
@@ -10671,22 +10331,28 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//         "TERMINATED",
 	//         "ACTIVE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The filter isn't specified, or is unknown. This returns all jobs ordered on descending `JobUuid`.",
+	//         "Returns all running jobs first ordered on creation timestamp, then returns all terminated jobs ordered on the termination timestamp.",
+	//         "Filters the jobs that have a terminated state, ordered on the termination timestamp. Example terminated states: `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.",
+	//         "Filters the jobs that are running ordered on the creation timestamp."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "If there are many jobs, limit response to at most this many.\nThe actual number of jobs returned will be the lesser of max_responses\nand an unspecified server-defined limit.",
+	//       "description": "If there are many jobs, limit response to at most this many. The actual number of jobs returned will be the lesser of max_responses and an unspecified server-defined limit.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Set this to the 'next_page_token' field of a previous response\nto request additional results in a long list.",
+	//       "description": "Set this to the 'next_page_token' field of a previous response to request additional results in a long list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10703,6 +10369,12 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -10791,7 +10463,7 @@ func (c *ProjectsJobsSnapshotCall) Header() http.Header {
 
 func (c *ProjectsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10907,17 +10579,12 @@ type ProjectsJobsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the state of an existing Cloud Dataflow job.
-//
-// To update the state of an existing job, we recommend
-// using
-// `projects.locations.jobs.update` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.update` is not recommended, as you can only update the
-// state
-// of jobs that are running in `us-central1`.
+// Update: Updates the state of an existing Cloud Dataflow job. To
+// update the state of an existing job, we recommend using
+// `projects.locations.jobs.update` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.update` is not recommended, as you can only
+// update the state of jobs that are running in `us-central1`.
 func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
 	c := &ProjectsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10928,9 +10595,8 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains this job.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains this job.
 func (c *ProjectsJobsUpdateCall) Location(location string) *ProjectsJobsUpdateCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -10963,7 +10629,7 @@ func (c *ProjectsJobsUpdateCall) Header() http.Header {
 
 func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11028,7 +10694,7 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the state of an existing Cloud Dataflow job.\n\nTo update the state of an existing job, we recommend using\n`projects.locations.jobs.update` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.update` is not recommended, as you can only update the state\nof jobs that are running in `us-central1`.",
+	//   "description": "Updates the state of an existing Cloud Dataflow job. To update the state of an existing job, we recommend using `projects.locations.jobs.update` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.update` is not recommended, as you can only update the state of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}",
 	//   "httpMethod": "PUT",
 	//   "id": "dataflow.projects.jobs.update",
@@ -11044,7 +10710,7 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11121,7 +10787,7 @@ func (c *ProjectsJobsDebugGetConfigCall) Header() http.Header {
 
 func (c *ProjectsJobsDebugGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11273,7 +10939,7 @@ func (c *ProjectsJobsDebugSendCaptureCall) Header() http.Header {
 
 func (c *ProjectsJobsDebugSendCaptureCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11389,17 +11055,12 @@ type ProjectsJobsMessagesListCall struct {
 	header_      http.Header
 }
 
-// List: Request the job status.
-//
-// To request the status of a job, we recommend
-// using
-// `projects.locations.jobs.messages.list` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.messages.list` is not recommended, as you can only
-// request
-// the status of jobs that are running in `us-central1`.
+// List: Request the job status. To request the status of a job, we
+// recommend using `projects.locations.jobs.messages.list` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.messages.list` is not recommended, as you can
+// only request the status of jobs that are running in `us-central1`.
 func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *ProjectsJobsMessagesListCall {
 	c := &ProjectsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11408,8 +11069,8 @@ func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *Proj
 }
 
 // EndTime sets the optional parameter "endTime": Return only messages
-// with timestamps < end_time. The default is now
-// (i.e. return up to the latest messages available).
+// with timestamps < end_time. The default is now (i.e. return up to the
+// latest messages available).
 func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -11417,9 +11078,8 @@ func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMess
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) that
-// contains the job specified by job_id.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// that contains the job specified by job_id.
 func (c *ProjectsJobsMessagesListCall) Location(location string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -11429,39 +11089,57 @@ func (c *ProjectsJobsMessagesListCall) Location(location string) *ProjectsJobsMe
 // Filter to only get messages with importance >= level
 //
 // Possible values:
-//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN"
-//   "JOB_MESSAGE_DEBUG"
-//   "JOB_MESSAGE_DETAILED"
-//   "JOB_MESSAGE_BASIC"
-//   "JOB_MESSAGE_WARNING"
-//   "JOB_MESSAGE_ERROR"
+//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN" - The message importance isn't
+// specified, or is unknown.
+//   "JOB_MESSAGE_DEBUG" - The message is at the 'debug' level:
+// typically only useful for software engineers working on the code the
+// job is running. Typically, Dataflow pipeline runners do not display
+// log messages at this level by default.
+//   "JOB_MESSAGE_DETAILED" - The message is at the 'detailed' level:
+// somewhat verbose, but potentially useful to users. Typically,
+// Dataflow pipeline runners do not display log messages at this level
+// by default. These messages are displayed by default in the Dataflow
+// monitoring UI.
+//   "JOB_MESSAGE_BASIC" - The message is at the 'basic' level: useful
+// for keeping track of the execution of a Dataflow pipeline. Typically,
+// Dataflow pipeline runners display log messages at this level by
+// default, and these messages are displayed by default in the Dataflow
+// monitoring UI.
+//   "JOB_MESSAGE_WARNING" - The message is at the 'warning' level:
+// indicating a condition pertaining to a job which may require human
+// intervention. Typically, Dataflow pipeline runners display log
+// messages at this level by default, and these messages are displayed
+// by default in the Dataflow monitoring UI.
+//   "JOB_MESSAGE_ERROR" - The message is at the 'error' level:
+// indicating a condition preventing a job from succeeding. Typically,
+// Dataflow pipeline runners display log messages at this level by
+// default, and these messages are displayed by default in the Dataflow
+// monitoring UI.
 func (c *ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("minimumImportance", minimumImportance)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": If specified,
-// determines the maximum number of messages to
-// return.  If unspecified, the service may choose an
-// appropriate
-// default, or may return an arbitrarily large number of results.
+// determines the maximum number of messages to return. If unspecified,
+// the service may choose an appropriate default, or may return an
+// arbitrarily large number of results.
 func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If supplied, this
-// should be the value of next_page_token returned
-// by an earlier call. This will cause the next page of results to
-// be returned.
+// should be the value of next_page_token returned by an earlier call.
+// This will cause the next page of results to be returned.
 func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": If specified,
-// return only messages with timestamps >= start_time.
-// The default is the job creation time (i.e. beginning of messages).
+// return only messages with timestamps >= start_time. The default is
+// the job creation time (i.e. beginning of messages).
 func (c *ProjectsJobsMessagesListCall) StartTime(startTime string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -11504,7 +11182,7 @@ func (c *ProjectsJobsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11567,7 +11245,7 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	}
 	return ret, nil
 	// {
-	//   "description": "Request the job status.\n\nTo request the status of a job, we recommend using\n`projects.locations.jobs.messages.list` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.messages.list` is not recommended, as you can only request\nthe status of jobs that are running in `us-central1`.",
+	//   "description": "Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}/messages",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.jobs.messages.list",
@@ -11577,7 +11255,7 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "Return only messages with timestamps \u003c end_time. The default is now\n(i.e. return up to the latest messages available).",
+	//       "description": "Return only messages with timestamps \u003c end_time. The default is now (i.e. return up to the latest messages available).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -11589,7 +11267,7 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11603,17 +11281,25 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	//         "JOB_MESSAGE_WARNING",
 	//         "JOB_MESSAGE_ERROR"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The message importance isn't specified, or is unknown.",
+	//         "The message is at the 'debug' level: typically only useful for software engineers working on the code the job is running. Typically, Dataflow pipeline runners do not display log messages at this level by default.",
+	//         "The message is at the 'detailed' level: somewhat verbose, but potentially useful to users. Typically, Dataflow pipeline runners do not display log messages at this level by default. These messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'basic' level: useful for keeping track of the execution of a Dataflow pipeline. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'warning' level: indicating a condition pertaining to a job which may require human intervention. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'error' level: indicating a condition preventing a job from succeeding. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "If specified, determines the maximum number of messages to\nreturn.  If unspecified, the service may choose an appropriate\ndefault, or may return an arbitrarily large number of results.",
+	//       "description": "If specified, determines the maximum number of messages to return. If unspecified, the service may choose an appropriate default, or may return an arbitrarily large number of results.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If supplied, this should be the value of next_page_token returned\nby an earlier call. This will cause the next page of results to\nbe returned.",
+	//       "description": "If supplied, this should be the value of next_page_token returned by an earlier call. This will cause the next page of results to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11624,7 +11310,7 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "If specified, return only messages with timestamps \u003e= start_time.\nThe default is the job creation time (i.e. beginning of messages).",
+	//       "description": "If specified, return only messages with timestamps \u003e= start_time. The default is the job creation time (i.e. beginning of messages).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -11713,7 +11399,7 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Header() http.Header {
 
 func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11866,7 +11552,7 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Header() http.Header {
 
 func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12018,7 +11704,7 @@ func (c *ProjectsLocationsWorkerMessagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12093,7 +11779,7 @@ func (c *ProjectsLocationsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12170,7 +11856,7 @@ func (c *ProjectsLocationsFlexTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFlexTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12245,7 +11931,7 @@ func (c *ProjectsLocationsFlexTemplatesLaunchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "Required. The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request. E.g., us-central1, us-west1.",
+	//       "description": "Required. The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request. E.g., us-central1, us-west1.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12286,17 +11972,11 @@ type ProjectsLocationsJobsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Cloud Dataflow job.
-//
-// To create a job, we recommend using `projects.locations.jobs.create`
-// with a
-// [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.create` is not recommended, as your job will always
-// start
-// in `us-central1`.
+// Create: Creates a Cloud Dataflow job. To create a job, we recommend
+// using `projects.locations.jobs.create` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.create` is not recommended, as your job will
+// always start in `us-central1`.
 func (r *ProjectsLocationsJobsService) Create(projectId string, location string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12316,10 +11996,15 @@ func (c *ProjectsLocationsJobsCreateCall) ReplaceJobId(replaceJobId string) *Pro
 // requested in response.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsLocationsJobsCreateCall) View(view string) *ProjectsLocationsJobsCreateCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -12352,7 +12037,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12417,7 +12102,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud Dataflow job.\n\nTo create a job, we recommend using `projects.locations.jobs.create` with a\n[regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.create` is not recommended, as your job will always start\nin `us-central1`.",
+	//   "description": "Creates a Cloud Dataflow job. To create a job, we recommend using `projects.locations.jobs.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.create` is not recommended, as your job will always start in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs",
 	//   "httpMethod": "POST",
 	//   "id": "dataflow.projects.locations.jobs.create",
@@ -12427,7 +12112,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12450,6 +12135,12 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -12485,17 +12176,12 @@ type ProjectsLocationsJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the state of the specified Cloud Dataflow job.
-//
-// To get the state of a job, we recommend using
-// `projects.locations.jobs.get`
-// with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.get` is not recommended, as you can only get the state
-// of
-// jobs that are running in `us-central1`.
+// Get: Gets the state of the specified Cloud Dataflow job. To get the
+// state of a job, we recommend using `projects.locations.jobs.get` with
+// a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.get` is not recommended, as you can only get the
+// state of jobs that are running in `us-central1`.
 func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jobId string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12508,10 +12194,15 @@ func (r *ProjectsLocationsJobsService) Get(projectId string, location string, jo
 // requested in response.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsLocationsJobsGetCall) View(view string) *ProjectsLocationsJobsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -12554,7 +12245,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12618,7 +12309,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the state of the specified Cloud Dataflow job.\n\nTo get the state of a job, we recommend using `projects.locations.jobs.get`\nwith a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.get` is not recommended, as you can only get the state of\njobs that are running in `us-central1`.",
+	//   "description": "Gets the state of the specified Cloud Dataflow job. To get the state of a job, we recommend using `projects.locations.jobs.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.get` is not recommended, as you can only get the state of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.get",
@@ -12635,7 +12326,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12654,6 +12345,12 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -12661,6 +12358,174 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}",
 	//   "response": {
 	//     "$ref": "Job"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
+// method id "dataflow.projects.locations.jobs.getExecutionDetails":
+
+type ProjectsLocationsJobsGetExecutionDetailsCall struct {
+	s            *Service
+	projectId    string
+	location     string
+	jobId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetExecutionDetails: Request detailed information about the execution
+// status of the job. EXPERIMENTAL. This API is subject to change or
+// removal without notice.
+func (r *ProjectsLocationsJobsService) GetExecutionDetails(projectId string, location string, jobId string) *ProjectsLocationsJobsGetExecutionDetailsCall {
+	c := &ProjectsLocationsJobsGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.location = location
+	c.jobId = jobId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsGetExecutionDetailsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsGetExecutionDetailsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Context(ctx context.Context) *ProjectsLocationsJobsGetExecutionDetailsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/executionDetails")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"location":  c.location,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.jobs.getExecutionDetails" call.
+// Exactly one of *JobExecutionDetails or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *JobExecutionDetails.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Do(opts ...googleapi.CallOption) (*JobExecutionDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &JobExecutionDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice.",
+	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/executionDetails",
+	//   "httpMethod": "GET",
+	//   "id": "dataflow.projects.locations.jobs.getExecutionDetails",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "location",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "The job to get execution details for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/executionDetails",
+	//   "response": {
+	//     "$ref": "JobExecutionDetails"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -12685,17 +12550,12 @@ type ProjectsLocationsJobsGetMetricsCall struct {
 	header_      http.Header
 }
 
-// GetMetrics: Request the job status.
-//
-// To request the status of a job, we recommend
-// using
-// `projects.locations.jobs.getMetrics` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.getMetrics` is not recommended, as you can only
-// request the
-// status of jobs that are running in `us-central1`.
+// GetMetrics: Request the job status. To request the status of a job,
+// we recommend using `projects.locations.jobs.getMetrics` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.getMetrics` is not recommended, as you can only
+// request the status of jobs that are running in `us-central1`.
 func (r *ProjectsLocationsJobsService) GetMetrics(projectId string, location string, jobId string) *ProjectsLocationsJobsGetMetricsCall {
 	c := &ProjectsLocationsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12705,8 +12565,8 @@ func (r *ProjectsLocationsJobsService) GetMetrics(projectId string, location str
 }
 
 // StartTime sets the optional parameter "startTime": Return only metric
-// data that has changed since this time.
-// Default is to return all information about all metrics for the job.
+// data that has changed since this time. Default is to return all
+// information about all metrics for the job.
 func (c *ProjectsLocationsJobsGetMetricsCall) StartTime(startTime string) *ProjectsLocationsJobsGetMetricsCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -12749,7 +12609,7 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12813,7 +12673,7 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Request the job status.\n\nTo request the status of a job, we recommend using\n`projects.locations.jobs.getMetrics` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.getMetrics` is not recommended, as you can only request the\nstatus of jobs that are running in `us-central1`.",
+	//   "description": "Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.getMetrics` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.getMetrics` is not recommended, as you can only request the status of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/metrics",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.getMetrics",
@@ -12824,13 +12684,13 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "The job to get messages for.",
+	//       "description": "The job to get metrics for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12842,7 +12702,7 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "Return only metric data that has changed since this time.\nDefault is to return all information about all metrics for the job.",
+	//       "description": "Return only metric data that has changed since this time. Default is to return all information about all metrics for the job.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -12874,19 +12734,14 @@ type ProjectsLocationsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List the jobs of a project.
-//
-// To list the jobs of a project in a region, we recommend
-// using
-// `projects.locations.jobs.list` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). To
-// list the all jobs across all regions, use `projects.jobs.aggregated`.
-// Using
-// `projects.jobs.list` is not recommended, as you can only get the list
-// of
-// jobs that are running in `us-central1`.
+// List: List the jobs of a project. To list the jobs of a project in a
+// region, we recommend using `projects.locations.jobs.list` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// To list the all jobs across all regions, use
+// `projects.jobs.aggregated`. Using `projects.jobs.list` is not
+// recommended, as you can only get the list of jobs that are running in
+// `us-central1`.
 func (r *ProjectsLocationsJobsService) List(projectId string, location string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12898,28 +12753,33 @@ func (r *ProjectsLocationsJobsService) List(projectId string, location string) *
 // use.
 //
 // Possible values:
-//   "UNKNOWN"
-//   "ALL"
-//   "TERMINATED"
-//   "ACTIVE"
+//   "UNKNOWN" - The filter isn't specified, or is unknown. This returns
+// all jobs ordered on descending `JobUuid`.
+//   "ALL" - Returns all running jobs first ordered on creation
+// timestamp, then returns all terminated jobs ordered on the
+// termination timestamp.
+//   "TERMINATED" - Filters the jobs that have a terminated state,
+// ordered on the termination timestamp. Example terminated states:
+// `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.
+//   "ACTIVE" - Filters the jobs that are running ordered on the
+// creation timestamp.
 func (c *ProjectsLocationsJobsListCall) Filter(filter string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": If there are many
-// jobs, limit response to at most this many.
-// The actual number of jobs returned will be the lesser of
-// max_responses
-// and an unspecified server-defined limit.
+// jobs, limit response to at most this many. The actual number of jobs
+// returned will be the lesser of max_responses and an unspecified
+// server-defined limit.
 func (c *ProjectsLocationsJobsListCall) PageSize(pageSize int64) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Set this to the
-// 'next_page_token' field of a previous response
-// to request additional results in a long list.
+// 'next_page_token' field of a previous response to request additional
+// results in a long list.
 func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12929,10 +12789,15 @@ func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLoc
 // requested in response. Default is `JOB_VIEW_SUMMARY`.
 //
 // Possible values:
-//   "JOB_VIEW_UNKNOWN"
-//   "JOB_VIEW_SUMMARY"
-//   "JOB_VIEW_ALL"
-//   "JOB_VIEW_DESCRIPTION"
+//   "JOB_VIEW_UNKNOWN" - The job view to return isn't specified, or is
+// unknown. Responses will contain at least the `JOB_VIEW_SUMMARY`
+// information, and may contain additional information.
+//   "JOB_VIEW_SUMMARY" - Request summary information only: Project ID,
+// Job ID, job name, job type, job status, start/end time, and Cloud SDK
+// version details.
+//   "JOB_VIEW_ALL" - Request all information available for this job.
+//   "JOB_VIEW_DESCRIPTION" - Request summary info and limited job
+// description data for steps, labels and environment.
 func (c *ProjectsLocationsJobsListCall) View(view string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -12975,7 +12840,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13038,7 +12903,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	}
 	return ret, nil
 	// {
-	//   "description": "List the jobs of a project.\n\nTo list the jobs of a project in a region, we recommend using\n`projects.locations.jobs.list` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To\nlist the all jobs across all regions, use `projects.jobs.aggregated`. Using\n`projects.jobs.list` is not recommended, as you can only get the list of\njobs that are running in `us-central1`.",
+	//   "description": "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.list",
@@ -13055,23 +12920,29 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//         "TERMINATED",
 	//         "ACTIVE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The filter isn't specified, or is unknown. This returns all jobs ordered on descending `JobUuid`.",
+	//         "Returns all running jobs first ordered on creation timestamp, then returns all terminated jobs ordered on the termination timestamp.",
+	//         "Filters the jobs that have a terminated state, ordered on the termination timestamp. Example terminated states: `JOB_STATE_STOPPED`, `JOB_STATE_UPDATED`, `JOB_STATE_DRAINED`, etc.",
+	//         "Filters the jobs that are running ordered on the creation timestamp."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "If there are many jobs, limit response to at most this many.\nThe actual number of jobs returned will be the lesser of max_responses\nand an unspecified server-defined limit.",
+	//       "description": "If there are many jobs, limit response to at most this many. The actual number of jobs returned will be the lesser of max_responses and an unspecified server-defined limit.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Set this to the 'next_page_token' field of a previous response\nto request additional results in a long list.",
+	//       "description": "Set this to the 'next_page_token' field of a previous response to request additional results in a long list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13088,6 +12959,12 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//         "JOB_VIEW_SUMMARY",
 	//         "JOB_VIEW_ALL",
 	//         "JOB_VIEW_DESCRIPTION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
+	//         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
+	//         "Request all information available for this job.",
+	//         "Request summary info and limited job description data for steps, labels and environment."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13178,7 +13055,7 @@ func (c *ProjectsLocationsJobsSnapshotCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13303,17 +13180,12 @@ type ProjectsLocationsJobsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the state of an existing Cloud Dataflow job.
-//
-// To update the state of an existing job, we recommend
-// using
-// `projects.locations.jobs.update` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.update` is not recommended, as you can only update the
-// state
-// of jobs that are running in `us-central1`.
+// Update: Updates the state of an existing Cloud Dataflow job. To
+// update the state of an existing job, we recommend using
+// `projects.locations.jobs.update` with a [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.update` is not recommended, as you can only
+// update the state of jobs that are running in `us-central1`.
 func (r *ProjectsLocationsJobsService) Update(projectId string, location string, jobId string, job *Job) *ProjectsLocationsJobsUpdateCall {
 	c := &ProjectsLocationsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13350,7 +13222,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13416,7 +13288,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the state of an existing Cloud Dataflow job.\n\nTo update the state of an existing job, we recommend using\n`projects.locations.jobs.update` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.update` is not recommended, as you can only update the state\nof jobs that are running in `us-central1`.",
+	//   "description": "Updates the state of an existing Cloud Dataflow job. To update the state of an existing job, we recommend using `projects.locations.jobs.update` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.update` is not recommended, as you can only update the state of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}",
 	//   "httpMethod": "PUT",
 	//   "id": "dataflow.projects.locations.jobs.update",
@@ -13433,7 +13305,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains this job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13513,7 +13385,7 @@ func (c *ProjectsLocationsJobsDebugGetConfigCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDebugGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13596,7 +13468,7 @@ func (c *ProjectsLocationsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13675,7 +13547,7 @@ func (c *ProjectsLocationsJobsDebugSendCaptureCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDebugSendCaptureCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13758,7 +13630,7 @@ func (c *ProjectsLocationsJobsDebugSendCaptureCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -13800,17 +13672,12 @@ type ProjectsLocationsJobsMessagesListCall struct {
 	header_      http.Header
 }
 
-// List: Request the job status.
-//
-// To request the status of a job, we recommend
-// using
-// `projects.locations.jobs.messages.list` with a [regional
-// endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints). Using
-// `projects.jobs.messages.list` is not recommended, as you can only
-// request
-// the status of jobs that are running in `us-central1`.
+// List: Request the job status. To request the status of a job, we
+// recommend using `projects.locations.jobs.messages.list` with a
+// [regional endpoint]
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints).
+// Using `projects.jobs.messages.list` is not recommended, as you can
+// only request the status of jobs that are running in `us-central1`.
 func (r *ProjectsLocationsJobsMessagesService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsMessagesListCall {
 	c := &ProjectsLocationsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13820,8 +13687,8 @@ func (r *ProjectsLocationsJobsMessagesService) List(projectId string, location s
 }
 
 // EndTime sets the optional parameter "endTime": Return only messages
-// with timestamps < end_time. The default is now
-// (i.e. return up to the latest messages available).
+// with timestamps < end_time. The default is now (i.e. return up to the
+// latest messages available).
 func (c *ProjectsLocationsJobsMessagesListCall) EndTime(endTime string) *ProjectsLocationsJobsMessagesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -13831,39 +13698,57 @@ func (c *ProjectsLocationsJobsMessagesListCall) EndTime(endTime string) *Project
 // Filter to only get messages with importance >= level
 //
 // Possible values:
-//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN"
-//   "JOB_MESSAGE_DEBUG"
-//   "JOB_MESSAGE_DETAILED"
-//   "JOB_MESSAGE_BASIC"
-//   "JOB_MESSAGE_WARNING"
-//   "JOB_MESSAGE_ERROR"
+//   "JOB_MESSAGE_IMPORTANCE_UNKNOWN" - The message importance isn't
+// specified, or is unknown.
+//   "JOB_MESSAGE_DEBUG" - The message is at the 'debug' level:
+// typically only useful for software engineers working on the code the
+// job is running. Typically, Dataflow pipeline runners do not display
+// log messages at this level by default.
+//   "JOB_MESSAGE_DETAILED" - The message is at the 'detailed' level:
+// somewhat verbose, but potentially useful to users. Typically,
+// Dataflow pipeline runners do not display log messages at this level
+// by default. These messages are displayed by default in the Dataflow
+// monitoring UI.
+//   "JOB_MESSAGE_BASIC" - The message is at the 'basic' level: useful
+// for keeping track of the execution of a Dataflow pipeline. Typically,
+// Dataflow pipeline runners display log messages at this level by
+// default, and these messages are displayed by default in the Dataflow
+// monitoring UI.
+//   "JOB_MESSAGE_WARNING" - The message is at the 'warning' level:
+// indicating a condition pertaining to a job which may require human
+// intervention. Typically, Dataflow pipeline runners display log
+// messages at this level by default, and these messages are displayed
+// by default in the Dataflow monitoring UI.
+//   "JOB_MESSAGE_ERROR" - The message is at the 'error' level:
+// indicating a condition preventing a job from succeeding. Typically,
+// Dataflow pipeline runners display log messages at this level by
+// default, and these messages are displayed by default in the Dataflow
+// monitoring UI.
 func (c *ProjectsLocationsJobsMessagesListCall) MinimumImportance(minimumImportance string) *ProjectsLocationsJobsMessagesListCall {
 	c.urlParams_.Set("minimumImportance", minimumImportance)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": If specified,
-// determines the maximum number of messages to
-// return.  If unspecified, the service may choose an
-// appropriate
-// default, or may return an arbitrarily large number of results.
+// determines the maximum number of messages to return. If unspecified,
+// the service may choose an appropriate default, or may return an
+// arbitrarily large number of results.
 func (c *ProjectsLocationsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsLocationsJobsMessagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": If supplied, this
-// should be the value of next_page_token returned
-// by an earlier call. This will cause the next page of results to
-// be returned.
+// should be the value of next_page_token returned by an earlier call.
+// This will cause the next page of results to be returned.
 func (c *ProjectsLocationsJobsMessagesListCall) PageToken(pageToken string) *ProjectsLocationsJobsMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": If specified,
-// return only messages with timestamps >= start_time.
-// The default is the job creation time (i.e. beginning of messages).
+// return only messages with timestamps >= start_time. The default is
+// the job creation time (i.e. beginning of messages).
 func (c *ProjectsLocationsJobsMessagesListCall) StartTime(startTime string) *ProjectsLocationsJobsMessagesListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -13906,7 +13791,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13970,7 +13855,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Request the job status.\n\nTo request the status of a job, we recommend using\n`projects.locations.jobs.messages.list` with a [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using\n`projects.jobs.messages.list` is not recommended, as you can only request\nthe status of jobs that are running in `us-central1`.",
+	//   "description": "Request the job status. To request the status of a job, we recommend using `projects.locations.jobs.messages.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.messages.list` is not recommended, as you can only request the status of jobs that are running in `us-central1`.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/messages",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.jobs.messages.list",
@@ -13981,7 +13866,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "Return only messages with timestamps \u003c end_time. The default is now\n(i.e. return up to the latest messages available).",
+	//       "description": "Return only messages with timestamps \u003c end_time. The default is now (i.e. return up to the latest messages available).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -13993,7 +13878,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the job specified by job_id.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14008,17 +13893,25 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	//         "JOB_MESSAGE_WARNING",
 	//         "JOB_MESSAGE_ERROR"
 	//       ],
+	//       "enumDescriptions": [
+	//         "The message importance isn't specified, or is unknown.",
+	//         "The message is at the 'debug' level: typically only useful for software engineers working on the code the job is running. Typically, Dataflow pipeline runners do not display log messages at this level by default.",
+	//         "The message is at the 'detailed' level: somewhat verbose, but potentially useful to users. Typically, Dataflow pipeline runners do not display log messages at this level by default. These messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'basic' level: useful for keeping track of the execution of a Dataflow pipeline. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'warning' level: indicating a condition pertaining to a job which may require human intervention. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI.",
+	//         "The message is at the 'error' level: indicating a condition preventing a job from succeeding. Typically, Dataflow pipeline runners display log messages at this level by default, and these messages are displayed by default in the Dataflow monitoring UI."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "If specified, determines the maximum number of messages to\nreturn.  If unspecified, the service may choose an appropriate\ndefault, or may return an arbitrarily large number of results.",
+	//       "description": "If specified, determines the maximum number of messages to return. If unspecified, the service may choose an appropriate default, or may return an arbitrarily large number of results.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If supplied, this should be the value of next_page_token returned\nby an earlier call. This will cause the next page of results to\nbe returned.",
+	//       "description": "If supplied, this should be the value of next_page_token returned by an earlier call. This will cause the next page of results to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14029,7 +13922,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "If specified, return only messages with timestamps \u003e= start_time.\nThe default is the job creation time (i.e. beginning of messages).",
+	//       "description": "If specified, return only messages with timestamps \u003e= start_time. The default is the job creation time (i.e. beginning of messages).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -14129,7 +14022,7 @@ func (c *ProjectsLocationsJobsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14236,6 +14129,259 @@ func (c *ProjectsLocationsJobsSnapshotsListCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "dataflow.projects.locations.jobs.stages.getExecutionDetails":
+
+type ProjectsLocationsJobsStagesGetExecutionDetailsCall struct {
+	s            *Service
+	projectId    string
+	location     string
+	jobId        string
+	stageId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetExecutionDetails: Request detailed information about the execution
+// status of a stage of the job. EXPERIMENTAL. This API is subject to
+// change or removal without notice.
+func (r *ProjectsLocationsJobsStagesService) GetExecutionDetails(projectId string, location string, jobId string, stageId string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c := &ProjectsLocationsJobsStagesGetExecutionDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.location = location
+	c.jobId = jobId
+	c.stageId = stageId
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Upper time bound of
+// work items to include, by start time.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) EndTime(endTime string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": If specified,
+// determines the maximum number of work items to return. If
+// unspecified, the service may choose an appropriate default, or may
+// return an arbitrarily large number of results.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) PageSize(pageSize int64) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If supplied, this
+// should be the value of next_page_token returned by an earlier call.
+// This will cause the next page of results to be returned.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) PageToken(pageToken string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Lower time bound
+// of work items to include, by start time.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) StartTime(startTime string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Context(ctx context.Context) *ProjectsLocationsJobsStagesGetExecutionDetailsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/stages/{stageId}/executionDetails")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"location":  c.location,
+		"jobId":     c.jobId,
+		"stageId":   c.stageId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.jobs.stages.getExecutionDetails" call.
+// Exactly one of *StageExecutionDetails or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StageExecutionDetails.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Do(opts ...googleapi.CallOption) (*StageExecutionDetails, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StageExecutionDetails{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.",
+	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/stages/{stageId}/executionDetails",
+	//   "httpMethod": "GET",
+	//   "id": "dataflow.projects.locations.jobs.stages.getExecutionDetails",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "location",
+	//     "jobId",
+	//     "stageId"
+	//   ],
+	//   "parameters": {
+	//     "endTime": {
+	//       "description": "Upper time bound of work items to include, by start time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "jobId": {
+	//       "description": "The job to get execution details for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "If specified, determines the maximum number of work items to return. If unspecified, the service may choose an appropriate default, or may return an arbitrarily large number of results.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If supplied, this should be the value of next_page_token returned by an earlier call. This will cause the next page of results to be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "A project id.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "stageId": {
+	//       "description": "The stage for which to fetch information.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Lower time bound of work items to include, by start time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/stages/{stageId}/executionDetails",
+	//   "response": {
+	//     "$ref": "StageExecutionDetails"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Pages(ctx context.Context, f func(*StageExecutionDetails) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "dataflow.projects.locations.jobs.workItems.lease":
 
 type ProjectsLocationsJobsWorkItemsLeaseCall struct {
@@ -14286,7 +14432,7 @@ func (c *ProjectsLocationsJobsWorkItemsLeaseCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14369,7 +14515,7 @@ func (c *ProjectsLocationsJobsWorkItemsLeaseCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the WorkItem's job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the WorkItem's job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14449,7 +14595,7 @@ func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14532,7 +14678,7 @@ func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that\ncontains the WorkItem's job.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the WorkItem's job.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14609,7 +14755,7 @@ func (c *ProjectsLocationsSnapshotsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14772,7 +14918,7 @@ func (c *ProjectsLocationsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14943,7 +15089,7 @@ func (c *ProjectsLocationsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15060,11 +15206,8 @@ type ProjectsLocationsSqlValidateCall struct {
 }
 
 // Validate: Validates a GoogleSQL query for Cloud Dataflow syntax. Will
-// always
-// confirm the given query parses correctly, and if able to look
-// up
-// schema information from DataCatalog, will validate that the
-// query
+// always confirm the given query parses correctly, and if able to look
+// up schema information from DataCatalog, will validate that the query
 // analyzes properly as well.
 func (r *ProjectsLocationsSqlService) Validate(projectId string, location string) *ProjectsLocationsSqlValidateCall {
 	c := &ProjectsLocationsSqlValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15116,7 +15259,7 @@ func (c *ProjectsLocationsSqlValidateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSqlValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15179,7 +15322,7 @@ func (c *ProjectsLocationsSqlValidateCall) Do(opts ...googleapi.CallOption) (*Va
 	}
 	return ret, nil
 	// {
-	//   "description": "Validates a GoogleSQL query for Cloud Dataflow syntax. Will always\nconfirm the given query parses correctly, and if able to look up\nschema information from DataCatalog, will validate that the query\nanalyzes properly as well.",
+	//   "description": "Validates a GoogleSQL query for Cloud Dataflow syntax. Will always confirm the given query parses correctly, and if able to look up schema information from DataCatalog, will validate that the query analyzes properly as well.",
 	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/sql:validate",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.locations.sql.validate",
@@ -15189,7 +15332,7 @@ func (c *ProjectsLocationsSqlValidateCall) Do(opts ...googleapi.CallOption) (*Va
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15266,7 +15409,7 @@ func (c *ProjectsLocationsTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15341,7 +15484,7 @@ func (c *ProjectsLocationsTemplatesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15391,9 +15534,8 @@ func (r *ProjectsLocationsTemplatesService) Get(projectId string, location strin
 }
 
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
-// Storage path to the template from which to
-// create the job.
-// Must be valid Cloud Storage URL, beginning with 'gs://'.
+// Storage path to the template from which to create the job. Must be
+// valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsLocationsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesGetCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -15403,7 +15545,8 @@ func (c *ProjectsLocationsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsLoc
 // Defaults to METADATA_ONLY.
 //
 // Possible values:
-//   "METADATA_ONLY"
+//   "METADATA_ONLY" - Template view that retrieves only the metadata
+// associated with the template.
 func (c *ProjectsLocationsTemplatesGetCall) View(view string) *ProjectsLocationsTemplatesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -15446,7 +15589,7 @@ func (c *ProjectsLocationsTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15519,12 +15662,12 @@ func (c *ProjectsLocationsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "Required. A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15539,6 +15682,9 @@ func (c *ProjectsLocationsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*G
 	//       "description": "The view to retrieve. Defaults to METADATA_ONLY.",
 	//       "enum": [
 	//         "METADATA_ONLY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Template view that retrieves only the metadata associated with the template."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -15580,8 +15726,7 @@ func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location st
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
-// GCS.
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on GCS.
 // The file must be a Json serialized DynamicTemplateFieSpec object.
 func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
@@ -15590,25 +15735,23 @@ func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTem
 
 // DynamicTemplateStagingLocation sets the optional parameter
 // "dynamicTemplate.stagingLocation": Cloud Storage path for staging
-// dependencies.
-// Must be a valid Cloud Storage URL, beginning with `gs://`.
+// dependencies. Must be a valid Cloud Storage URL, beginning with
+// `gs://`.
 func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateStagingLocation(dynamicTemplateStagingLocation string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.stagingLocation", dynamicTemplateStagingLocation)
 	return c
 }
 
 // GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
-// to the template from which to create
-// the job.
-// Must be valid Cloud Storage URL, beginning with 'gs://'.
+// to the template from which to create the job. Must be valid Cloud
+// Storage URL, beginning with 'gs://'.
 func (c *ProjectsLocationsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If true, the
-// request is validated but not actually executed.
-// Defaults to false.
+// request is validated but not actually executed. Defaults to false.
 func (c *ProjectsLocationsTemplatesLaunchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -15641,7 +15784,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15716,22 +15859,22 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on GCS.\nThe file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "dynamicTemplate.stagingLocation": {
-	//       "description": "Cloud Storage path for staging dependencies.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "description": "Cloud Storage path for staging dependencies. Must be a valid Cloud Storage URL, beginning with `gs://`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gcsPath": {
-	//       "description": "A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -15743,7 +15886,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If true, the request is validated but not actually executed.\nDefaults to false.",
+	//       "description": "If true, the request is validated but not actually executed. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -15829,7 +15972,7 @@ func (c *ProjectsSnapshotsGetCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16002,7 +16145,7 @@ func (c *ProjectsSnapshotsListCall) Header() http.Header {
 
 func (c *ProjectsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16115,9 +16258,9 @@ type ProjectsTemplateVersionsListCall struct {
 }
 
 // List: List TemplateVersions using project_id and an optional
-// display_name field.
-// List all the TemplateVersions in the Template if display set.
-// List all the TemplateVersions in the Project if display_name not set.
+// display_name field. List all the TemplateVersions in the Template if
+// display set. List all the TemplateVersions in the Project if
+// display_name not set.
 func (r *ProjectsTemplateVersionsService) List(parent string) *ProjectsTemplateVersionsListCall {
 	c := &ProjectsTemplateVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16132,8 +16275,8 @@ func (c *ProjectsTemplateVersionsListCall) PageSize(pageSize int64) *ProjectsTem
 }
 
 // PageToken sets the optional parameter "pageToken": The page token,
-// received from a previous ListTemplateVersions call.
-// Provide this to retrieve the subsequent page.
+// received from a previous ListTemplateVersions call. Provide this to
+// retrieve the subsequent page.
 func (c *ProjectsTemplateVersionsListCall) PageToken(pageToken string) *ProjectsTemplateVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16176,7 +16319,7 @@ func (c *ProjectsTemplateVersionsListCall) Header() http.Header {
 
 func (c *ProjectsTemplateVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16238,7 +16381,7 @@ func (c *ProjectsTemplateVersionsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "List TemplateVersions using project_id and an optional display_name field.\nList all the TemplateVersions in the Template if display set.\nList all the TemplateVersions in the Project if display_name not set.",
+	//   "description": "List TemplateVersions using project_id and an optional display_name field. List all the TemplateVersions in the Template if display set. List all the TemplateVersions in the Project if display_name not set.",
 	//   "flatPath": "v1b3/projects/{projectsId}/templateVersions",
 	//   "httpMethod": "GET",
 	//   "id": "dataflow.projects.templateVersions.list",
@@ -16253,12 +16396,12 @@ func (c *ProjectsTemplateVersionsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The page token, received from a previous ListTemplateVersions call.\nProvide this to retrieve the subsequent page.",
+	//       "description": "The page token, received from a previous ListTemplateVersions call. Provide this to retrieve the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "parent includes project_id, and display_name is optional.\n\nList by project_id(pid1) and display_name(tid1).\n  Format: projects/{pid1}/catalogTemplates/{tid1}\n\nList by project_id(pid1).\n  Format: projects/{pid1}",
+	//       "description": "parent includes project_id, and display_name is optional. List by project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1} List by project_id(pid1). Format: projects/{pid1}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16344,7 +16487,7 @@ func (c *ProjectsTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16459,9 +16602,8 @@ func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCa
 }
 
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
-// Storage path to the template from which to
-// create the job.
-// Must be valid Cloud Storage URL, beginning with 'gs://'.
+// Storage path to the template from which to create the job. Must be
+// valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsTemplatesGetCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -16469,9 +16611,8 @@ func (c *ProjectsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsTemplatesGet
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) to
-// which to direct the request.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// to which to direct the request.
 func (c *ProjectsTemplatesGetCall) Location(location string) *ProjectsTemplatesGetCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -16481,7 +16622,8 @@ func (c *ProjectsTemplatesGetCall) Location(location string) *ProjectsTemplatesG
 // Defaults to METADATA_ONLY.
 //
 // Possible values:
-//   "METADATA_ONLY"
+//   "METADATA_ONLY" - Template view that retrieves only the metadata
+// associated with the template.
 func (c *ProjectsTemplatesGetCall) View(view string) *ProjectsTemplatesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -16524,7 +16666,7 @@ func (c *ProjectsTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16595,12 +16737,12 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GetTemplat
 	//   ],
 	//   "parameters": {
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "Required. A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16614,6 +16756,9 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GetTemplat
 	//       "description": "The view to retrieve. Defaults to METADATA_ONLY.",
 	//       "enum": [
 	//         "METADATA_ONLY"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Template view that retrieves only the metadata associated with the template."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -16653,8 +16798,7 @@ func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparame
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
-// GCS.
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on GCS.
 // The file must be a Json serialized DynamicTemplateFieSpec object.
 func (c *ProjectsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
@@ -16663,17 +16807,16 @@ func (c *ProjectsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsP
 
 // DynamicTemplateStagingLocation sets the optional parameter
 // "dynamicTemplate.stagingLocation": Cloud Storage path for staging
-// dependencies.
-// Must be a valid Cloud Storage URL, beginning with `gs://`.
+// dependencies. Must be a valid Cloud Storage URL, beginning with
+// `gs://`.
 func (c *ProjectsTemplatesLaunchCall) DynamicTemplateStagingLocation(dynamicTemplateStagingLocation string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.stagingLocation", dynamicTemplateStagingLocation)
 	return c
 }
 
 // GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
-// to the template from which to create
-// the job.
-// Must be valid Cloud Storage URL, beginning with 'gs://'.
+// to the template from which to create the job. Must be valid Cloud
+// Storage URL, beginning with 'gs://'.
 func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -16681,17 +16824,15 @@ func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplates
 
 // Location sets the optional parameter "location": The [regional
 // endpoint]
-// (https://cloud.google.com/dataflow/docs/concepts/regional-en
-// dpoints) to
-// which to direct the request.
+// (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints)
+// to which to direct the request.
 func (c *ProjectsTemplatesLaunchCall) Location(location string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("location", location)
 	return c
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If true, the
-// request is validated but not actually executed.
-// Defaults to false.
+// request is validated but not actually executed. Defaults to false.
 func (c *ProjectsTemplatesLaunchCall) ValidateOnly(validateOnly bool) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -16724,7 +16865,7 @@ func (c *ProjectsTemplatesLaunchCall) Header() http.Header {
 
 func (c *ProjectsTemplatesLaunchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16797,22 +16938,22 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on GCS.\nThe file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "dynamicTemplate.stagingLocation": {
-	//       "description": "Cloud Storage path for staging dependencies.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "description": "Cloud Storage path for staging dependencies. Must be a valid Cloud Storage URL, beginning with `gs://`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "gcsPath": {
-	//       "description": "A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The [regional endpoint]\n(https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to\nwhich to direct the request.",
+	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16823,7 +16964,7 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "If true, the request is validated but not actually executed.\nDefaults to false.",
+	//       "description": "If true, the request is validated but not actually executed. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

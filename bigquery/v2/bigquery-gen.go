@@ -249,25 +249,19 @@ type TablesService struct {
 }
 
 // AggregateClassificationMetrics: Aggregate metrics for
-// classification/classifier models. For multi-class
-// models, the metrics are either macro-averaged or micro-averaged.
-// When
-// macro-averaged, the metrics are calculated for each label and then
-// an
-// unweighted average is taken of those values. When micro-averaged,
-// the
-// metric is calculated globally by counting the total number of
-// correctly
+// classification/classifier models. For multi-class models, the metrics
+// are either macro-averaged or micro-averaged. When macro-averaged, the
+// metrics are calculated for each label and then an unweighted average
+// is taken of those values. When micro-averaged, the metric is
+// calculated globally by counting the total number of correctly
 // predicted rows.
 type AggregateClassificationMetrics struct {
 	// Accuracy: Accuracy is the fraction of predictions given the correct
-	// label. For
-	// multiclass this is a micro-averaged metric.
+	// label. For multiclass this is a micro-averaged metric.
 	Accuracy float64 `json:"accuracy,omitempty"`
 
 	// F1Score: The F1 score is an average of recall and precision. For
-	// multiclass
-	// this is a macro-averaged metric.
+	// multiclass this is a macro-averaged metric.
 	F1Score float64 `json:"f1Score,omitempty"`
 
 	// LogLoss: Logarithmic Loss. For multiclass this is a macro-averaged
@@ -275,28 +269,22 @@ type AggregateClassificationMetrics struct {
 	LogLoss float64 `json:"logLoss,omitempty"`
 
 	// Precision: Precision is the fraction of actual positive predictions
-	// that had
-	// positive actual labels. For multiclass this is a
-	// macro-averaged
-	// metric treating each class as a binary classifier.
+	// that had positive actual labels. For multiclass this is a
+	// macro-averaged metric treating each class as a binary classifier.
 	Precision float64 `json:"precision,omitempty"`
 
 	// Recall: Recall is the fraction of actual positive labels that were
-	// given a
-	// positive prediction. For multiclass this is a macro-averaged metric.
+	// given a positive prediction. For multiclass this is a macro-averaged
+	// metric.
 	Recall float64 `json:"recall,omitempty"`
 
 	// RocAuc: Area Under a ROC Curve. For multiclass this is a
-	// macro-averaged
-	// metric.
+	// macro-averaged metric.
 	RocAuc float64 `json:"rocAuc,omitempty"`
 
-	// Threshold: Threshold at which the metrics are computed. For
-	// binary
-	// classification models this is the positive class threshold.
-	// For multi-class classfication models this is the
-	// confidence
-	// threshold.
+	// Threshold: Threshold at which the metrics are computed. For binary
+	// classification models this is the positive class threshold. For
+	// multi-class classfication models this is the confidence threshold.
 	Threshold float64 `json:"threshold,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accuracy") to
@@ -355,18 +343,15 @@ type Argument struct {
 	// Possible values:
 	//   "ARGUMENT_KIND_UNSPECIFIED"
 	//   "FIXED_TYPE" - The argument is a variable with fully specified
-	// type, which can be a
-	// struct or an array, but not a table.
+	// type, which can be a struct or an array, but not a table.
 	//   "ANY_TYPE" - The argument is any type, including struct or array,
-	// but not a table.
-	// To be added: FIXED_TABLE, ANY_TABLE
+	// but not a table. To be added: FIXED_TABLE, ANY_TABLE
 	ArgumentKind string `json:"argumentKind,omitempty"`
 
 	// DataType: Required unless argument_kind = ANY_TYPE.
 	DataType *StandardSqlDataType `json:"dataType,omitempty"`
 
-	// Mode: Optional. Specifies whether the argument is input or
-	// output.
+	// Mode: Optional. Specifies whether the argument is input or output.
 	// Can be set for procedures only.
 	//
 	// Possible values:
@@ -515,21 +500,19 @@ type ArimaForecastingMetrics struct {
 	ArimaFittingMetrics []*ArimaFittingMetrics `json:"arimaFittingMetrics,omitempty"`
 
 	// ArimaSingleModelForecastingMetrics: Repeated as there can be many
-	// metric sets (one for each model) in
-	// auto-arima and the large-scale case.
+	// metric sets (one for each model) in auto-arima and the large-scale
+	// case.
 	ArimaSingleModelForecastingMetrics []*ArimaSingleModelForecastingMetrics `json:"arimaSingleModelForecastingMetrics,omitempty"`
 
 	// HasDrift: Whether Arima model fitted with drift or not. It is always
-	// false when d
-	// is not 1.
+	// false when d is not 1.
 	HasDrift []bool `json:"hasDrift,omitempty"`
 
 	// NonSeasonalOrder: Non-seasonal order.
 	NonSeasonalOrder []*ArimaOrder `json:"nonSeasonalOrder,omitempty"`
 
 	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
-	// are supported for one
-	// time series.
+	// are supported for one time series.
 	//
 	// Possible values:
 	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
@@ -578,16 +561,14 @@ type ArimaModelInfo struct {
 	ArimaFittingMetrics *ArimaFittingMetrics `json:"arimaFittingMetrics,omitempty"`
 
 	// HasDrift: Whether Arima model fitted with drift or not. It is always
-	// false
-	// when d is not 1.
+	// false when d is not 1.
 	HasDrift bool `json:"hasDrift,omitempty"`
 
 	// NonSeasonalOrder: Non-seasonal order.
 	NonSeasonalOrder *ArimaOrder `json:"nonSeasonalOrder,omitempty"`
 
 	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
-	// are supported
-	// for one time series.
+	// are supported for one time series.
 	//
 	// Possible values:
 	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
@@ -662,17 +643,16 @@ func (s *ArimaOrder) MarshalJSON() ([]byte, error) {
 }
 
 // ArimaResult: (Auto-)arima fitting result. Wrap everything in
-// ArimaResult for easier
-// refactoring if we want to use model-specific iteration results.
+// ArimaResult for easier refactoring if we want to use model-specific
+// iteration results.
 type ArimaResult struct {
 	// ArimaModelInfo: This message is repeated because there are multiple
-	// arima models
-	// fitted in auto-arima. For non-auto-arima model, its size is one.
+	// arima models fitted in auto-arima. For non-auto-arima model, its size
+	// is one.
 	ArimaModelInfo []*ArimaModelInfo `json:"arimaModelInfo,omitempty"`
 
 	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
-	// are supported for
-	// one time series.
+	// are supported for one time series.
 	//
 	// Possible values:
 	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
@@ -715,16 +695,14 @@ type ArimaSingleModelForecastingMetrics struct {
 	ArimaFittingMetrics *ArimaFittingMetrics `json:"arimaFittingMetrics,omitempty"`
 
 	// HasDrift: Is arima model fitted with drift or not. It is always false
-	// when d
-	// is not 1.
+	// when d is not 1.
 	HasDrift bool `json:"hasDrift,omitempty"`
 
 	// NonSeasonalOrder: Non-seasonal order.
 	NonSeasonalOrder *ArimaOrder `json:"nonSeasonalOrder,omitempty"`
 
 	// SeasonalPeriods: Seasonal periods. Repeated because multiple periods
-	// are supported
-	// for one time series.
+	// are supported for one time series.
 	//
 	// Possible values:
 	//   "SEASONAL_PERIOD_TYPE_UNSPECIFIED"
@@ -763,72 +741,31 @@ func (s *ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE"
-//             },
-//             {
-//               "log_type": "ADMIN_READ"
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ"
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// AuditConfig: Specifies the audit configuration for a service. The
+// configuration determines which permission types are logged, and what
+// identities, if any, are exempted from logging. An AuditConfig must
+// have one or more AuditLogConfigs. If there are AuditConfigs for both
+// `allServices` and a specific service, the union of the two
+// AuditConfigs is used for that service: the log_types specified in
+// each AuditConfig are enabled, and the exempted_members in each
+// AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// jose@example.com from DATA_READ logging, and aliya@example.com from
+// DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
@@ -857,31 +794,15 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE"
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -1183,13 +1104,11 @@ type BinaryConfusionMatrix struct {
 	PositiveClassThreshold float64 `json:"positiveClassThreshold,omitempty"`
 
 	// Precision: The fraction of actual positive predictions that had
-	// positive actual
-	// labels.
+	// positive actual labels.
 	Precision float64 `json:"precision,omitempty"`
 
 	// Recall: The fraction of actual positive labels that were given a
-	// positive
-	// prediction.
+	// positive prediction.
 	Recall float64 `json:"recall,omitempty"`
 
 	// TrueNegatives: Number of true samples predicted as false.
@@ -1245,95 +1164,53 @@ func (s *BinaryConfusionMatrix) UnmarshalJSON(data []byte) error {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1546,10 +1423,9 @@ func (s *BqmlTrainingRunTrainingOptions) UnmarshalJSON(data []byte) error {
 // CategoricalValue: Representative value of a categorical feature.
 type CategoricalValue struct {
 	// CategoryCounts: Counts of all categories for the categorical feature.
-	// If there are
-	// more than ten categories, we return top ten (by count) and return
-	// one more CategoryCount with category "_OTHER_" and count as
-	// aggregate counts of remaining categories.
+	// If there are more than ten categories, we return top ten (by count)
+	// and return one more CategoryCount with category "_OTHER_" and count
+	// as aggregate counts of remaining categories.
 	CategoryCounts []*CategoryCount `json:"categoryCounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoryCounts") to
@@ -1582,8 +1458,7 @@ type CategoryCount struct {
 	// Category: The name of category.
 	Category string `json:"category,omitempty"`
 
-	// Count: The count of training samples matching the category within
-	// the
+	// Count: The count of training samples matching the category within the
 	// cluster.
 	Count int64 `json:"count,omitempty,string"`
 
@@ -1650,8 +1525,8 @@ type ClusterInfo struct {
 	// CentroidId: Centroid id.
 	CentroidId int64 `json:"centroidId,omitempty,string"`
 
-	// ClusterRadius: Cluster radius, the average distance from centroid
-	// to each point assigned to the cluster.
+	// ClusterRadius: Cluster radius, the average distance from centroid to
+	// each point assigned to the cluster.
 	ClusterRadius float64 `json:"clusterRadius,omitempty"`
 
 	// ClusterSize: Cluster size, the total number of points assigned to the
@@ -1781,8 +1656,7 @@ func (s *ClusteringMetrics) UnmarshalJSON(data []byte) error {
 // models.
 type ConfusionMatrix struct {
 	// ConfidenceThreshold: Confidence threshold used when computing the
-	// entries of the
-	// confusion matrix.
+	// entries of the confusion matrix.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// Rows: One row per actual label.
@@ -1934,8 +1808,8 @@ func (s *CsvOptions) MarshalJSON() ([]byte, error) {
 }
 
 // DataSplitResult: Data split result. This contains references to the
-// training and evaluation
-// data tables that were used to train the model.
+// training and evaluation data tables that were used to train the
+// model.
 type DataSplitResult struct {
 	// EvaluationTable: Table reference of the evaluation data after split.
 	EvaluationTable *TableReference `json:"evaluationTable,omitempty"`
@@ -2350,8 +2224,7 @@ type Entry struct {
 	ItemCount int64 `json:"itemCount,omitempty,string"`
 
 	// PredictedLabel: The predicted label. For confidence_threshold > 0, we
-	// will
-	// also add an entry indicating the number of items under the
+	// will also add an entry indicating the number of items under the
 	// confidence threshold.
 	PredictedLabel string `json:"predictedLabel,omitempty"`
 
@@ -2416,10 +2289,9 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 }
 
 // EvaluationMetrics: Evaluation metrics of a model. These are either
-// computed on all training
-// data or just the eval data based on whether eval data was used
-// during
-// training. These are not present for imported models.
+// computed on all training data or just the eval data based on whether
+// eval data was used during training. These are not present for
+// imported models.
 type EvaluationMetrics struct {
 	// ArimaForecastingMetrics: Populated for ARIMA models.
 	ArimaForecastingMetrics *ArimaForecastingMetrics `json:"arimaForecastingMetrics,omitempty"`
@@ -2440,8 +2312,7 @@ type EvaluationMetrics struct {
 	RankingMetrics *RankingMetrics `json:"rankingMetrics,omitempty"`
 
 	// RegressionMetrics: Populated for regression models and explicit
-	// feedback type matrix
-	// factorization models.
+	// feedback type matrix factorization models.
 	RegressionMetrics *RegressionMetrics `json:"regressionMetrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2658,65 +2529,40 @@ func (s *ExplainQueryStep) MarshalJSON() ([]byte, error) {
 }
 
 // Expr: Represents a textual expression in the Common Expression
-// Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Language (CEL) syntax. CEL is a C-like expression language. The
+// syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2851,8 +2697,7 @@ type FeatureValue struct {
 	FeatureColumn string `json:"featureColumn,omitempty"`
 
 	// NumericalValue: The numerical feature value. This is the centroid
-	// value for this
-	// feature.
+	// value for this feature.
 	NumericalValue float64 `json:"numericalValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoricalValue") to
@@ -2896,8 +2741,7 @@ func (s *FeatureValue) UnmarshalJSON(data []byte) error {
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to
-	// `GetIamPolicy`.
+	// to `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
@@ -2926,24 +2770,14 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
 	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned.
-	//
-	// Valid values are 0, 1, and 3. Requests specifying an invalid value
-	// will be
-	// rejected.
-	//
-	// Requests for policies with any conditional bindings must specify
-	// version 3.
-	// Policies without any conditional bindings may specify any valid value
-	// or
-	// leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// returned. Valid values are 0, 1, and 3. Requests specifying an
+	// invalid value will be rejected. Requests for policies with any
+	// conditional bindings must specify version 3. Policies without any
+	// conditional bindings may specify any valid value or leave the field
+	// unset. To learn which resources support conditions in their IAM
+	// policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4472,10 +4306,8 @@ type JsonValue interface{}
 
 type ListModelsResponse struct {
 	// Models: Models in the requested dataset. Only the following fields
-	// are populated:
-	// model_reference, model_type, creation_time, last_modified_time
-	// and
-	// labels.
+	// are populated: model_reference, model_type, creation_time,
+	// last_modified_time and labels.
 	Models []*Model `json:"models,omitempty"`
 
 	// NextPageToken: A token to request the next page of results.
@@ -4513,10 +4345,8 @@ type ListRoutinesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Routines: Routines in the requested dataset. Unless read_mask is set
-	// in the request,
-	// only the following fields are populated:
-	// etag, project_id, dataset_id, routine_id, routine_type,
-	// creation_time,
+	// in the request, only the following fields are populated: etag,
+	// project_id, dataset_id, routine_id, routine_type, creation_time,
 	// last_modified_time, and language.
 	Routines []*Routine `json:"routines,omitempty"`
 
@@ -4548,15 +4378,12 @@ func (s *ListRoutinesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LocationMetadata: BigQuery-specific metadata about a location. This
-// will be set on
-// google.cloud.location.Location.metadata in Cloud Location
-// API
-// responses.
+// will be set on google.cloud.location.Location.metadata in Cloud
+// Location API responses.
 type LocationMetadata struct {
 	// LegacyLocationId: The legacy BigQuery location ID, e.g. “EU” for
-	// the “europe” location.
-	// This is for any API consumers that need the legacy “US” and
-	// “EU” locations.
+	// the “europe” location. This is for any API consumers that need
+	// the legacy “US” and “EU” locations.
 	LegacyLocationId string `json:"legacyLocationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LegacyLocationId") to
@@ -4633,26 +4460,20 @@ type Model struct {
 	Description string `json:"description,omitempty"`
 
 	// EncryptionConfiguration: Custom encryption configuration (e.g., Cloud
-	// KMS keys). This shows the
-	// encryption configuration of the model data while stored in
-	// BigQuery
-	// storage. This field can be used with PatchModel to update encryption
-	// key
-	// for an already encrypted model.
+	// KMS keys). This shows the encryption configuration of the model data
+	// while stored in BigQuery storage. This field can be used with
+	// PatchModel to update encryption key for an already encrypted model.
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
 	// Etag: Output only. A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
 	// ExpirationTime: Optional. The time when this model expires, in
-	// milliseconds since the epoch.
-	// If not present, the model will persist indefinitely. Expired
-	// models
-	// will be deleted and their storage reclaimed.  The
-	// defaultTableExpirationMs
-	// property of the encapsulating dataset can be used to set a
-	// default
-	// expirationTime on newly created models.
+	// milliseconds since the epoch. If not present, the model will persist
+	// indefinitely. Expired models will be deleted and their storage
+	// reclaimed. The defaultTableExpirationMs property of the encapsulating
+	// dataset can be used to set a default expirationTime on newly created
+	// models.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
 	// FeatureColumns: Output only. Input feature columns that were used to
@@ -4663,21 +4484,16 @@ type Model struct {
 	FriendlyName string `json:"friendlyName,omitempty"`
 
 	// LabelColumns: Output only. Label columns that were used to train this
-	// model.
-	// The output of the model will have a "predicted_" prefix to these
-	// columns.
+	// model. The output of the model will have a "predicted_" prefix to
+	// these columns.
 	LabelColumns []*StandardSqlField `json:"labelColumns,omitempty"`
 
 	// Labels: The labels associated with this model. You can use these to
-	// organize
-	// and group your models. Label keys and values can be no longer
-	// than 63 characters, can only contain lowercase letters,
-	// numeric
-	// characters, underscores and dashes. International characters are
-	// allowed.
-	// Label values are optional. Label keys must start with a letter and
-	// each
-	// label in the list must have a different key.
+	// organize and group your models. Label keys and values can be no
+	// longer than 63 characters, can only contain lowercase letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. Label values are optional. Label keys must start with a
+	// letter and each label in the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: Output only. The time when this model was last
@@ -4685,8 +4501,7 @@ type Model struct {
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
 	// Location: Output only. The geographic location where the model
-	// resides. This value
-	// is inherited from the dataset.
+	// resides. This value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
 
 	// ModelReference: Required. Unique identifier for this model.
@@ -4882,154 +4697,77 @@ func (s *MultiClassClassificationMetrics) MarshalJSON() ([]byte, error) {
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which
-// specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
-// `members` to a single `role`. Members can be user accounts, service
-// accounts,
+// specifies access controls for Google Cloud resources. A `Policy` is a
+// collection of `bindings`. A `binding` binds one or more `members` to
+// a single `role`. Members can be user accounts, service accounts,
 // Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// list of permissions; each `role` can be an IAM predefined role or a
+// user-created custom role. For some types of Google Cloud resources, a
+// `binding` can also specify a `condition`, which is a logical
+// expression that allows access to a resource only if the expression
+// evaluates to `true`. A condition can add constraints based on
+// attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -5636,33 +5374,28 @@ func (s *RangePartitioningRange) MarshalJSON() ([]byte, error) {
 }
 
 // RankingMetrics: Evaluation metrics used by weighted-ALS models
-// specified by
-// feedback_type=implicit.
+// specified by feedback_type=implicit.
 type RankingMetrics struct {
 	// AverageRank: Determines the goodness of a ranking by computing the
-	// percentile rank
-	// from the predicted confidence and dividing it by the original rank.
+	// percentile rank from the predicted confidence and dividing it by the
+	// original rank.
 	AverageRank float64 `json:"averageRank,omitempty"`
 
 	// MeanAveragePrecision: Calculates a precision per user for all the
-	// items by ranking them and
-	// then averages all the precisions across all the users.
+	// items by ranking them and then averages all the precisions across all
+	// the users.
 	MeanAveragePrecision float64 `json:"meanAveragePrecision,omitempty"`
 
 	// MeanSquaredError: Similar to the mean squared error computed in
-	// regression and explicit
-	// recommendation models except instead of computing the rating
-	// directly,
-	// the output from evaluate is computed against a preference which is 1
-	// or 0
-	// depending on if the rating exists or not.
+	// regression and explicit recommendation models except instead of
+	// computing the rating directly, the output from evaluate is computed
+	// against a preference which is 1 or 0 depending on if the rating
+	// exists or not.
 	MeanSquaredError float64 `json:"meanSquaredError,omitempty"`
 
 	// NormalizedDiscountedCumulativeGain: A metric to determine the
-	// goodness of a ranking calculated from the
-	// predicted confidence by comparing it to an ideal rank measured by
-	// the
-	// original ratings.
+	// goodness of a ranking calculated from the predicted confidence by
+	// comparing it to an ideal rank measured by the original ratings.
 	NormalizedDiscountedCumulativeGain float64 `json:"normalizedDiscountedCumulativeGain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AverageRank") to
@@ -5709,8 +5442,7 @@ func (s *RankingMetrics) UnmarshalJSON(data []byte) error {
 }
 
 // RegressionMetrics: Evaluation metrics for regression and explicit
-// feedback type matrix
-// factorization models.
+// feedback type matrix factorization models.
 type RegressionMetrics struct {
 	// MeanAbsoluteError: Mean absolute error.
 	MeanAbsoluteError float64 `json:"meanAbsoluteError,omitempty"`
@@ -5779,40 +5511,20 @@ type Routine struct {
 	Arguments []*Argument `json:"arguments,omitempty"`
 
 	// CreationTime: Output only. The time when this routine was created, in
-	// milliseconds since
-	// the epoch.
+	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DefinitionBody: Required. The body of the routine.
-	//
-	// For functions, this is the expression in the AS clause.
-	//
-	// If language=SQL, it is the substring inside (but excluding)
-	// the
-	// parentheses. For example, for the function created with the
-	// following
-	// statement:
-	//
-	// `CREATE FUNCTION JoinLines(x string, y string) as (concat(x, "\n",
-	// y))`
-	//
-	// The definition_body is `concat(x, "\n", y)` (\n is not replaced
-	// with
-	// linebreak).
-	//
-	// If language=JAVASCRIPT, it is the evaluated string in the AS
-	// clause.
-	// For example, for the function created with the following
-	// statement:
-	//
-	// `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
-	// "\n";\n'`
-	//
-	// The definition_body is
-	//
-	// `return "\n";\n`
-	//
-	// Note that both \n are replaced with linebreaks.
+	// DefinitionBody: Required. The body of the routine. For functions,
+	// this is the expression in the AS clause. If language=SQL, it is the
+	// substring inside (but excluding) the parentheses. For example, for
+	// the function created with the following statement: `CREATE FUNCTION
+	// JoinLines(x string, y string) as (concat(x, "\n", y))` The
+	// definition_body is `concat(x, "\n", y)` (\n is not replaced with
+	// linebreak). If language=JAVASCRIPT, it is the evaluated string in the
+	// AS clause. For example, for the function created with the following
+	// statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
+	// "\n";\n'` The definition_body is `return "\n";\n` Note that both \n
+	// are replaced with linebreaks.
 	DefinitionBody string `json:"definitionBody,omitempty"`
 
 	// Description: Optional. [Experimental] The description of the routine
@@ -5826,8 +5538,8 @@ type Routine struct {
 	//   "DETERMINISM_LEVEL_UNSPECIFIED" - The determinism of the UDF is
 	// unspecified.
 	//   "DETERMINISTIC" - The UDF is deterministic, meaning that 2 function
-	// calls with the same
-	// inputs always produce the same result, even across 2 query runs.
+	// calls with the same inputs always produce the same result, even
+	// across 2 query runs.
 	//   "NOT_DETERMINISTIC" - The UDF is not deterministic.
 	DeterminismLevel string `json:"determinismLevel,omitempty"`
 
@@ -5835,8 +5547,7 @@ type Routine struct {
 	Etag string `json:"etag,omitempty"`
 
 	// ImportedLibraries: Optional. If language = "JAVASCRIPT", this field
-	// stores the path of the
-	// imported JAVASCRIPT libraries.
+	// stores the path of the imported JAVASCRIPT libraries.
 	ImportedLibraries []string `json:"importedLibraries,omitempty"`
 
 	// Language: Optional. Defaults to "SQL".
@@ -5848,41 +5559,22 @@ type Routine struct {
 	Language string `json:"language,omitempty"`
 
 	// LastModifiedTime: Output only. The time when this routine was last
-	// modified, in milliseconds
-	// since the epoch.
+	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
-	// ReturnType: Optional if language = "SQL"; required otherwise.
-	//
-	// If absent, the return type is inferred from definition_body at query
-	// time
-	// in each query that references this routine. If present, then the
-	// evaluated
-	// result will be cast to the specified returned type at query
-	// time.
-	//
-	// For example, for the functions created with the following
-	// statements:
-	//
-	// * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x +
-	// y);`
-	//
-	// * `CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));`
-	//
-	// * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x,
-	// -1));`
-	//
-	// The return_type is `{type_kind: "FLOAT64"}` for `Add` and
-	// `Decrement`, and
-	// is absent for `Increment` (inferred as FLOAT64 at query
-	// time).
-	//
-	// Suppose the function `Add` is replaced by
-	//   `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x +
-	// y);`
-	//
-	// Then the inferred return type of `Increment` is automatically changed
-	// to
+	// ReturnType: Optional if language = "SQL"; required otherwise. If
+	// absent, the return type is inferred from definition_body at query
+	// time in each query that references this routine. If present, then the
+	// evaluated result will be cast to the specified returned type at query
+	// time. For example, for the functions created with the following
+	// statements: * `CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS
+	// FLOAT64 AS (x + y);` * `CREATE FUNCTION Increment(x FLOAT64) AS
+	// (Add(x, 1));` * `CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64
+	// AS (Add(x, -1));` The return_type is `{type_kind: "FLOAT64"}` for
+	// `Add` and `Decrement`, and is absent for `Increment` (inferred as
+	// FLOAT64 at query time). Suppose the function `Add` is replaced by
+	// `CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);` Then
+	// the inferred return type of `Increment` is automatically changed to
 	// INT64 at query time, while the return type of `Decrement` remains
 	// FLOAT64.
 	ReturnType *StandardSqlDataType `json:"returnType,omitempty"`
@@ -6144,20 +5836,15 @@ func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -6217,17 +5904,11 @@ func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 }
 
 // StandardSqlDataType: The type of a variable, e.g., a function
-// argument.
-// Examples:
-// INT64: {type_kind="INT64"}
-// ARRAY<STRING>: {type_kind="ARRAY",
-// array_element_type="STRING"}
-// STRUCT<x STRING, y ARRAY<DATE>>:
-//   {type_kind="STRUCT",
-//    struct_type={fields=[
-//      {name="x", type={type_kind="STRING"}},
-//      {name="y", type={type_kind="ARRAY", array_element_type="DATE"}}
-//    ]}}
+// argument. Examples: INT64: {type_kind="INT64"} ARRAY:
+// {type_kind="ARRAY", array_element_type="STRING"} STRUCT>:
+// {type_kind="STRUCT", struct_type={fields=[ {name="x",
+// type={type_kind="STRING"}}, {name="y", type={type_kind="ARRAY",
+// array_element_type="DATE"}} ]}}
 type StandardSqlDataType struct {
 	// ArrayElementType: The type of the array's elements, if type_kind =
 	// "ARRAY".
@@ -6237,8 +5918,8 @@ type StandardSqlDataType struct {
 	// "STRUCT".
 	StructType *StandardSqlStructType `json:"structType,omitempty"`
 
-	// TypeKind: Required. The top level type of this field.
-	// Can be any standard SQL data type (e.g., "INT64", "DATE", "ARRAY").
+	// TypeKind: Required. The top level type of this field. Can be any
+	// standard SQL data type (e.g., "INT64", "DATE", "ARRAY").
 	//
 	// Possible values:
 	//   "TYPE_KIND_UNSPECIFIED" - Invalid type.
@@ -6249,8 +5930,7 @@ type StandardSqlDataType struct {
 	//   "STRING" - Encoded as a string value.
 	//   "BYTES" - Encoded as a base64 string per RFC 4648, section 4.
 	//   "TIMESTAMP" - Encoded as an RFC 3339 timestamp with mandatory "Z"
-	// time zone string:
-	// 1985-04-12T23:20:50.52Z
+	// time zone string: 1985-04-12T23:20:50.52Z
 	//   "DATE" - Encoded as RFC 3339 full-date format string: 1985-04-12
 	//   "TIME" - Encoded as RFC 3339 partial-time format string:
 	// 23:20:50.52
@@ -6261,8 +5941,8 @@ type StandardSqlDataType struct {
 	//   "BIGNUMERIC" - Encoded as a decimal string.
 	//   "ARRAY" - Encoded as a list with types matching Type.array_type.
 	//   "STRUCT" - Encoded as a list with fields of type
-	// Type.struct_type[i]. List is used
-	// because a JSON object cannot have duplicate field names.
+	// Type.struct_type[i]. List is used because a JSON object cannot have
+	// duplicate field names.
 	TypeKind string `json:"typeKind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
@@ -6295,10 +5975,8 @@ type StandardSqlField struct {
 	// fields.
 	Name string `json:"name,omitempty"`
 
-	// Type: Optional. The type of this parameter. Absent if not
-	// explicitly
-	// specified (e.g., CREATE FUNCTION statement can omit the return
-	// type;
+	// Type: Optional. The type of this parameter. Absent if not explicitly
+	// specified (e.g., CREATE FUNCTION statement can omit the return type;
 	// in this case the output parameter does not have this "type" field).
 	Type *StandardSqlDataType `json:"type,omitempty"`
 
@@ -7117,11 +6795,8 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -7152,8 +6827,7 @@ func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // method.
 type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7230,6 +6904,9 @@ type TrainingOptions struct {
 	// AutoArima: Whether to enable auto ARIMA or not.
 	AutoArima bool `json:"autoArima,omitempty"`
 
+	// AutoArimaMaxOrder: The max value of non-seasonal p and q.
+	AutoArimaMaxOrder int64 `json:"autoArimaMaxOrder,omitempty,string"`
+
 	// BatchSize: Batch size for dnn models.
 	BatchSize int64 `json:"batchSize,omitempty,string"`
 
@@ -7247,31 +6924,20 @@ type TrainingOptions struct {
 	DataFrequency string `json:"dataFrequency,omitempty"`
 
 	// DataSplitColumn: The column to split data with. This column won't be
-	// used as a
-	// feature.
-	// 1. When data_split_method is CUSTOM, the corresponding column
-	// should
-	// be boolean. The rows with true value tag are eval data, and the
-	// false
-	// are training data.
-	// 2. When data_split_method is SEQ, the first
-	// DATA_SPLIT_EVAL_FRACTION
-	// rows (from smallest to largest) in the corresponding column are
-	// used
-	// as training data, and the rest are eval data. It respects the
-	// order
-	// in Orderable data
-	// types:
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/d
-	// ata-types#data-type-properties
+	// used as a feature. 1. When data_split_method is CUSTOM, the
+	// corresponding column should be boolean. The rows with true value tag
+	// are eval data, and the false are training data. 2. When
+	// data_split_method is SEQ, the first DATA_SPLIT_EVAL_FRACTION rows
+	// (from smallest to largest) in the corresponding column are used as
+	// training data, and the rest are eval data. It respects the order in
+	// Orderable data types:
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#data-type-properties
 	DataSplitColumn string `json:"dataSplitColumn,omitempty"`
 
 	// DataSplitEvalFraction: The fraction of evaluation data over the whole
-	// input data. The rest
-	// of data will be used as training data. The format should be
-	// double.
-	// Accurate to two decimal places.
-	// Default value is 0.2.
+	// input data. The rest of data will be used as training data. The
+	// format should be double. Accurate to two decimal places. Default
+	// value is 0.2.
 	DataSplitEvalFraction float64 `json:"dataSplitEvalFraction,omitempty"`
 
 	// DataSplitMethod: The data split type for training and evaluation,
@@ -7284,8 +6950,7 @@ type TrainingOptions struct {
 	//   "SEQUENTIAL" - Splits data sequentially.
 	//   "NO_SPLIT" - Data split will be skipped.
 	//   "AUTO_SPLIT" - Splits data automatically: Uses NO_SPLIT if the data
-	// size is small.
-	// Otherwise uses RANDOM.
+	// size is small. Otherwise uses RANDOM.
 	DataSplitMethod string `json:"dataSplitMethod,omitempty"`
 
 	// DistanceType: Distance type for clustering models.
@@ -7300,15 +6965,12 @@ type TrainingOptions struct {
 	Dropout float64 `json:"dropout,omitempty"`
 
 	// EarlyStop: Whether to stop early when the loss doesn't improve
-	// significantly
-	// any more (compared to min_relative_progress). Used only for
-	// iterative
-	// training algorithms.
+	// significantly any more (compared to min_relative_progress). Used only
+	// for iterative training algorithms.
 	EarlyStop bool `json:"earlyStop,omitempty"`
 
 	// FeedbackType: Feedback type that specifies which algorithm to run for
-	// matrix
-	// factorization.
+	// matrix factorization.
 	//
 	// Possible values:
 	//   "FEEDBACK_TYPE_UNSPECIFIED"
@@ -7320,18 +6982,15 @@ type TrainingOptions struct {
 	HiddenUnits googleapi.Int64s `json:"hiddenUnits,omitempty"`
 
 	// HolidayRegion: The geographical region based on which the holidays
-	// are considered in
-	// time series modeling. If a valid value is specified, then
-	// holiday
-	// effects modeling is enabled.
+	// are considered in time series modeling. If a valid value is
+	// specified, then holiday effects modeling is enabled.
 	//
 	// Possible values:
 	//   "HOLIDAY_REGION_UNSPECIFIED" - Holiday region unspecified.
 	//   "GLOBAL" - Global.
 	//   "NA" - North America.
 	//   "JAPAC" - Japan and Asia Pacific: Korea, Greater China, India,
-	// Australia, and New
-	// Zealand.
+	// Australia, and New Zealand.
 	//   "EMEA" - Europe, the Middle East and Africa.
 	//   "LAC" - Latin America and the Caribbean.
 	//   "AE" - United Arab Emirates
@@ -7406,8 +7065,7 @@ type TrainingOptions struct {
 	IncludeDrift bool `json:"includeDrift,omitempty"`
 
 	// InitialLearnRate: Specifies the initial learning rate for the line
-	// search learn rate
-	// strategy.
+	// search learn rate strategy.
 	InitialLearnRate float64 `json:"initialLearnRate,omitempty"`
 
 	// InputLabelColumns: Name of input label columns in training data.
@@ -7417,8 +7075,8 @@ type TrainingOptions struct {
 	ItemColumn string `json:"itemColumn,omitempty"`
 
 	// KmeansInitializationColumn: The column used to provide the initial
-	// centroids for kmeans algorithm
-	// when kmeans_initialization_method is CUSTOM.
+	// centroids for kmeans algorithm when kmeans_initialization_method is
+	// CUSTOM.
 	KmeansInitializationColumn string `json:"kmeansInitializationColumn,omitempty"`
 
 	// KmeansInitializationMethod: The method used to initialize the
@@ -7427,8 +7085,7 @@ type TrainingOptions struct {
 	// Possible values:
 	//   "KMEANS_INITIALIZATION_METHOD_UNSPECIFIED"
 	//   "RANDOM" - Initializes the centroids randomly.
-	//   "CUSTOM" - Initializes the centroids using data specified
-	// in
+	//   "CUSTOM" - Initializes the centroids using data specified in
 	// kmeans_initialization_column.
 	//   "KMEANS_PLUS_PLUS" - Initializes with kmeans++.
 	KmeansInitializationMethod string `json:"kmeansInitializationMethod,omitempty"`
@@ -7440,8 +7097,8 @@ type TrainingOptions struct {
 	L2Regularization float64 `json:"l2Regularization,omitempty"`
 
 	// LabelClassWeights: Weights associated with each label class, for
-	// rebalancing the
-	// training data. Only applicable for classification models.
+	// rebalancing the training data. Only applicable for classification
+	// models.
 	LabelClassWeights map[string]float64 `json:"labelClassWeights,omitempty"`
 
 	// LearnRate: Learning rate in training. Used only for iterative
@@ -7467,33 +7124,27 @@ type TrainingOptions struct {
 	LossType string `json:"lossType,omitempty"`
 
 	// MaxIterations: The maximum number of iterations in training. Used
-	// only for iterative
-	// training algorithms.
+	// only for iterative training algorithms.
 	MaxIterations int64 `json:"maxIterations,omitempty,string"`
 
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
 
 	// MinRelativeProgress: When early_stop is true, stops training when
-	// accuracy improvement is
-	// less than 'min_relative_progress'. Used only for iterative
-	// training
-	// algorithms.
+	// accuracy improvement is less than 'min_relative_progress'. Used only
+	// for iterative training algorithms.
 	MinRelativeProgress float64 `json:"minRelativeProgress,omitempty"`
 
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
 
 	// ModelUri: [Beta] Google Cloud Storage URI from which the model was
-	// imported. Only
-	// applicable for imported models.
+	// imported. Only applicable for imported models.
 	ModelUri string `json:"modelUri,omitempty"`
 
 	// NonSeasonalOrder: A specification of the non-seasonal part of the
-	// ARIMA model: the three
-	// components (p, d, q) are the AR order, the degree of differencing,
-	// and
-	// the MA order.
+	// ARIMA model: the three components (p, d, q) are the AR order, the
+	// degree of differencing, and the MA order.
 	NonSeasonalOrder *ArimaOrder `json:"nonSeasonalOrder,omitempty"`
 
 	// NumClusters: Number of clusters for clustering models.
@@ -7514,15 +7165,13 @@ type TrainingOptions struct {
 	OptimizationStrategy string `json:"optimizationStrategy,omitempty"`
 
 	// PreserveInputStructs: Whether to preserve the input structs in output
-	// feature names.
-	// Suppose there is a struct A with field b.
-	// When false (default), the output feature name is A_b.
-	// When true, the output feature name is A.b.
+	// feature names. Suppose there is a struct A with field b. When false
+	// (default), the output feature name is A_b. When true, the output
+	// feature name is A.b.
 	PreserveInputStructs bool `json:"preserveInputStructs,omitempty"`
 
 	// Subsample: Subsample fraction of the training data to grow tree to
-	// prevent
-	// overfitting for boosted tree models.
+	// prevent overfitting for boosted tree models.
 	Subsample float64 `json:"subsample,omitempty"`
 
 	// TimeSeriesDataColumn: Column to be designated as time series data for
@@ -7530,8 +7179,7 @@ type TrainingOptions struct {
 	TimeSeriesDataColumn string `json:"timeSeriesDataColumn,omitempty"`
 
 	// TimeSeriesIdColumn: The id column that will be used to indicate
-	// different time series to
-	// forecast in parallel.
+	// different time series to forecast in parallel.
 	TimeSeriesIdColumn string `json:"timeSeriesIdColumn,omitempty"`
 
 	// TimeSeriesTimestampColumn: Column to be designated as time series
@@ -7542,8 +7190,7 @@ type TrainingOptions struct {
 	UserColumn string `json:"userColumn,omitempty"`
 
 	// WalsAlpha: Hyperparameter for matrix factoration when implicit
-	// feedback type is
-	// specified.
+	// feedback type is specified.
 	WalsAlpha float64 `json:"walsAlpha,omitempty"`
 
 	// WarmStart: Whether to train a model from the last checkpoint.
@@ -7608,13 +7255,11 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 // model.
 type TrainingRun struct {
 	// DataSplitResult: Data split result of the training run. Only set when
-	// the input data is
-	// actually split.
+	// the input data is actually split.
 	DataSplitResult *DataSplitResult `json:"dataSplitResult,omitempty"`
 
 	// EvaluationMetrics: The evaluation metrics over training/eval data
-	// that were computed at the
-	// end of training.
+	// that were computed at the end of training.
 	EvaluationMetrics *EvaluationMetrics `json:"evaluationMetrics,omitempty"`
 
 	// Results: Output of each iteration run, results.size() <=
@@ -7625,8 +7270,7 @@ type TrainingRun struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// TrainingOptions: Options that were used for this training run,
-	// includes
-	// user specified and default options that were used.
+	// includes user specified and default options that were used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataSplitResult") to
@@ -7788,7 +7432,7 @@ func (c *DatasetsDeleteCall) Header() http.Header {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7915,7 +7559,7 @@ func (c *DatasetsGetCall) Header() http.Header {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8059,7 +7703,7 @@ func (c *DatasetsInsertCall) Header() http.Header {
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8239,7 +7883,7 @@ func (c *DatasetsListCall) Header() http.Header {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8422,7 +8066,7 @@ func (c *DatasetsPatchCall) Header() http.Header {
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8573,7 +8217,7 @@ func (c *DatasetsUpdateCall) Header() http.Header {
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8731,7 +8375,7 @@ func (c *JobsCancelCall) Header() http.Header {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8896,7 +8540,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9095,7 +8739,7 @@ func (c *JobsGetQueryResultsCall) Header() http.Header {
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9329,7 +8973,7 @@ func (c *JobsInsertCall) Header() http.Header {
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9596,7 +9240,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9816,7 +9460,7 @@ func (c *JobsQueryCall) Header() http.Header {
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9959,7 +9603,7 @@ func (c *ModelsDeleteCall) Header() http.Header {
 
 func (c *ModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10095,7 +9739,7 @@ func (c *ModelsGetCall) Header() http.Header {
 
 func (c *ModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10218,8 +9862,7 @@ type ModelsListCall struct {
 }
 
 // List: Lists all models in the specified dataset. Requires the READER
-// dataset
-// role.
+// dataset role.
 func (r *ModelsService) List(projectId string, datasetId string) *ModelsListCall {
 	c := &ModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10228,16 +9871,15 @@ func (r *ModelsService) List(projectId string, datasetId string) *ModelsListCall
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results to return in a single response page.
-// Leverage the page tokens to iterate through the entire collection.
+// number of results to return in a single response page. Leverage the
+// page tokens to iterate through the entire collection.
 func (c *ModelsListCall) MaxResults(maxResults int64) *ModelsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call to request the next page of
-// results
+// returned by a previous call to request the next page of results
 func (c *ModelsListCall) PageToken(pageToken string) *ModelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10280,7 +9922,7 @@ func (c *ModelsListCall) Header() http.Header {
 
 func (c *ModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10343,7 +9985,7 @@ func (c *ModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all models in the specified dataset. Requires the READER dataset\nrole.",
+	//   "description": "Lists all models in the specified dataset. Requires the READER dataset role.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/models",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.models.list",
@@ -10360,13 +10002,13 @@ func (c *ModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, 
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call to request the next page of\nresults",
+	//       "description": "Page token, returned by a previous call to request the next page of results",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10463,7 +10105,7 @@ func (c *ModelsPatchCall) Header() http.Header {
 
 func (c *ModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10632,7 +10274,7 @@ func (c *ProjectsGetServiceAccountCall) Header() http.Header {
 
 func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10790,7 +10432,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10948,7 +10590,7 @@ func (c *RoutinesDeleteCall) Header() http.Header {
 
 func (c *RoutinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11048,8 +10690,8 @@ func (r *RoutinesService) Get(projectId string, datasetId string, routineId stri
 }
 
 // ReadMask sets the optional parameter "readMask": If set, only the
-// Routine fields in the field mask are returned in the
-// response. If unset, all Routine fields are returned.
+// Routine fields in the field mask are returned in the response. If
+// unset, all Routine fields are returned.
 func (c *RoutinesGetCall) ReadMask(readMask string) *RoutinesGetCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -11092,7 +10734,7 @@ func (c *RoutinesGetCall) Header() http.Header {
 
 func (c *RoutinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11181,7 +10823,7 @@ func (c *RoutinesGetCall) Do(opts ...googleapi.CallOption) (*Routine, error) {
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "If set, only the Routine fields in the field mask are returned in the\nresponse. If unset, all Routine fields are returned.",
+	//       "description": "If set, only the Routine fields in the field mask are returned in the response. If unset, all Routine fields are returned.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -11256,7 +10898,7 @@ func (c *RoutinesInsertCall) Header() http.Header {
 
 func (c *RoutinesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11373,8 +11015,7 @@ type RoutinesListCall struct {
 }
 
 // List: Lists all routines in the specified dataset. Requires the
-// READER dataset
-// role.
+// READER dataset role.
 func (r *RoutinesService) List(projectId string, datasetId string) *RoutinesListCall {
 	c := &RoutinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11383,40 +11024,34 @@ func (r *RoutinesService) List(projectId string, datasetId string) *RoutinesList
 }
 
 // Filter sets the optional parameter "filter": If set, then only the
-// Routines matching this filter are returned.
-// The current supported form is either "routine_type:<RoutineType>"
-// or
-// "routineType:<RoutineType>", where <RoutineType> is a RoutineType
-// enum.
-// Example: "routineType:SCALAR_FUNCTION".
+// Routines matching this filter are returned. The current supported
+// form is either "routine_type:" or "routineType:", where is a
+// RoutineType enum. Example: "routineType:SCALAR_FUNCTION".
 func (c *RoutinesListCall) Filter(filter string) *RoutinesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results to return in a single response page.
-// Leverage the page tokens to iterate through the entire collection.
+// number of results to return in a single response page. Leverage the
+// page tokens to iterate through the entire collection.
 func (c *RoutinesListCall) MaxResults(maxResults int64) *RoutinesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of
-// results
+// returned by a previous call, to request the next page of results
 func (c *RoutinesListCall) PageToken(pageToken string) *RoutinesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ReadMask sets the optional parameter "readMask": If set, then only
-// the Routine fields in the field mask, as well as
-// project_id, dataset_id and routine_id, are returned in the
-// response.
-// If unset, then the following Routine fields are returned:
-// etag, project_id, dataset_id, routine_id, routine_type,
-// creation_time,
+// the Routine fields in the field mask, as well as project_id,
+// dataset_id and routine_id, are returned in the response. If unset,
+// then the following Routine fields are returned: etag, project_id,
+// dataset_id, routine_id, routine_type, creation_time,
 // last_modified_time, and language.
 func (c *RoutinesListCall) ReadMask(readMask string) *RoutinesListCall {
 	c.urlParams_.Set("readMask", readMask)
@@ -11460,7 +11095,7 @@ func (c *RoutinesListCall) Header() http.Header {
 
 func (c *RoutinesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11523,7 +11158,7 @@ func (c *RoutinesListCall) Do(opts ...googleapi.CallOption) (*ListRoutinesRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all routines in the specified dataset. Requires the READER dataset\nrole.",
+	//   "description": "Lists all routines in the specified dataset. Requires the READER dataset role.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.routines.list",
@@ -11540,18 +11175,18 @@ func (c *RoutinesListCall) Do(opts ...googleapi.CallOption) (*ListRoutinesRespon
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "If set, then only the Routines matching this filter are returned.\nThe current supported form is either \"routine_type:\u003cRoutineType\u003e\" or\n\"routineType:\u003cRoutineType\u003e\", where \u003cRoutineType\u003e is a RoutineType enum.\nExample: \"routineType:SCALAR_FUNCTION\".",
+	//       "description": "If set, then only the Routines matching this filter are returned. The current supported form is either \"routine_type:\" or \"routineType:\", where is a RoutineType enum. Example: \"routineType:SCALAR_FUNCTION\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results to return in a single response page.\nLeverage the page tokens to iterate through the entire collection.",
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of\nresults",
+	//       "description": "Page token, returned by a previous call, to request the next page of results",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11563,7 +11198,7 @@ func (c *RoutinesListCall) Do(opts ...googleapi.CallOption) (*ListRoutinesRespon
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "If set, then only the Routine fields in the field mask, as well as\nproject_id, dataset_id and routine_id, are returned in the response.\nIf unset, then the following Routine fields are returned:\netag, project_id, dataset_id, routine_id, routine_type, creation_time,\nlast_modified_time, and language.",
+	//       "description": "If set, then only the Routine fields in the field mask, as well as project_id, dataset_id and routine_id, are returned in the response. If unset, then the following Routine fields are returned: etag, project_id, dataset_id, routine_id, routine_type, creation_time, last_modified_time, and language.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -11618,8 +11253,7 @@ type RoutinesUpdateCall struct {
 }
 
 // Update: Updates information in an existing routine. The update method
-// replaces the
-// entire Routine resource.
+// replaces the entire Routine resource.
 func (r *RoutinesService) Update(projectId string, datasetId string, routineId string, routine *Routine) *RoutinesUpdateCall {
 	c := &RoutinesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11656,7 +11290,7 @@ func (c *RoutinesUpdateCall) Header() http.Header {
 
 func (c *RoutinesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11722,7 +11356,7 @@ func (c *RoutinesUpdateCall) Do(opts ...googleapi.CallOption) (*Routine, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing routine. The update method replaces the\nentire Routine resource.",
+	//   "description": "Updates information in an existing routine. The update method replaces the entire Routine resource.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigquery.routines.update",
@@ -11820,7 +11454,7 @@ func (c *TabledataInsertAllCall) Header() http.Header {
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12019,7 +11653,7 @@ func (c *TabledataListCall) Header() http.Header {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12217,7 +11851,7 @@ func (c *TablesDeleteCall) Header() http.Header {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12359,7 +11993,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12481,9 +12115,8 @@ type TablesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12519,7 +12152,7 @@ func (c *TablesGetIamPolicyCall) Header() http.Header {
 
 func (c *TablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12583,7 +12216,7 @@ func (c *TablesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tables.getIamPolicy",
@@ -12592,7 +12225,7 @@ func (c *TablesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -12664,7 +12297,7 @@ func (c *TablesInsertCall) Header() http.Header {
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12837,7 +12470,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13020,7 +12653,7 @@ func (c *TablesPatchCall) Header() http.Header {
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13141,11 +12774,8 @@ type TablesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13180,7 +12810,7 @@ func (c *TablesSetIamPolicyCall) Header() http.Header {
 
 func (c *TablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13244,7 +12874,7 @@ func (c *TablesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tables.setIamPolicy",
@@ -13253,7 +12883,7 @@ func (c *TablesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -13287,16 +12917,11 @@ type TablesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13331,7 +12956,7 @@ func (c *TablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13395,7 +13020,7 @@ func (c *TablesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIa
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tables.testIamPermissions",
@@ -13404,7 +13029,7 @@ func (c *TablesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIa
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/datasets/[^/]+/tables/[^/]+$",
 	//       "required": true,
@@ -13480,7 +13105,7 @@ func (c *TablesUpdateCall) Header() http.Header {
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

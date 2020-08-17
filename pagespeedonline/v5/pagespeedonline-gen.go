@@ -145,8 +145,7 @@ type PagespeedapiService struct {
 }
 
 // AuditRefs: A light reference to an audit by id, used to group and
-// weight audits in a
-// given category.
+// weight audits in a given category.
 type AuditRefs struct {
 	// Group: The category group that the audit belongs to (optional).
 	Group string `json:"group,omitempty"`
@@ -196,10 +195,8 @@ func (s *AuditRefs) UnmarshalJSON(data []byte) error {
 }
 
 // Bucket: A proportion of data in the total distribution, bucketed by a
-// min/max
-// percentage. Each bucket's range is bounded by min <= x < max,
-// In
-// millisecond.
+// min/max percentage. Each bucket's range is bounded by min <= x < max,
+// In millisecond.
 type Bucket struct {
 	// Max: Upper bound for a bucket's range.
 	Max int64 `json:"max,omitempty"`
@@ -254,8 +251,7 @@ type Categories struct {
 	Accessibility *LighthouseCategoryV5 `json:"accessibility,omitempty"`
 
 	// BestPractices: The best practices category, containing all best
-	// practices related
-	// audits.
+	// practices related audits.
 	BestPractices *LighthouseCategoryV5 `json:"best-practices,omitempty"`
 
 	// Performance: The performance category, containing all performance
@@ -263,13 +259,11 @@ type Categories struct {
 	Performance *LighthouseCategoryV5 `json:"performance,omitempty"`
 
 	// Pwa: The Progressive-Web-App (PWA) category, containing all pwa
-	// related
-	// audits.
+	// related audits.
 	Pwa *LighthouseCategoryV5 `json:"pwa,omitempty"`
 
 	// Seo: The Search-Engine-Optimization (SEO) category, containing all
-	// seo related
-	// audits.
+	// seo related audits.
 	Seo *LighthouseCategoryV5 `json:"seo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accessibility") to
@@ -330,8 +324,7 @@ func (s *CategoryGroupV5) MarshalJSON() ([]byte, error) {
 // Lighthouse run.
 type ConfigSettings struct {
 	// Channel: How Lighthouse was run, e.g. from the Chrome extension or
-	// from the npm
-	// module.
+	// from the npm module.
 	Channel string `json:"channel,omitempty"`
 
 	// EmulatedFormFactor: The form factor the emulation should use.
@@ -421,8 +414,7 @@ func (s *Environment) UnmarshalJSON(data []byte) error {
 // I18n: Message containing the i18n data for the LHR - Version 1.
 type I18n struct {
 	// RendererFormattedStrings: Internationalized strings that are
-	// formatted to the locale in
-	// configSettings.
+	// formatted to the locale in configSettings.
 	RendererFormattedStrings *RendererFormattedStrings `json:"rendererFormattedStrings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -473,10 +465,9 @@ type LighthouseAuditResultV5 struct {
 	Id string `json:"id,omitempty"`
 
 	// NumericValue: A numeric value that has a meaning specific to the
-	// audit, e.g. the number
-	// of nodes in the DOM or the timestamp of a specific load event.
-	// More
-	// information can be found in the audit details, if present.
+	// audit, e.g. the number of nodes in the DOM or the timestamp of a
+	// specific load event. More information can be found in the audit
+	// details, if present.
 	NumericValue float64 `json:"numericValue,omitempty"`
 
 	// Score: The score of the audit, can be null.
@@ -546,8 +537,7 @@ type LighthouseCategoryV5 struct {
 	ManualDescription string `json:"manualDescription,omitempty"`
 
 	// Score: The overall score of the category, the weighted average of all
-	// its audits.
-	// (The category's score, can be null.)
+	// its audits. (The category's score, can be null.)
 	Score interface{} `json:"score,omitempty"`
 
 	// Title: The human-friendly name of the category.
@@ -611,13 +601,13 @@ type LighthouseResultV5 struct {
 	// RequestedUrl: The original requested url.
 	RequestedUrl string `json:"requestedUrl,omitempty"`
 
-	// RunWarnings: List of all run warnings in the LHR.  Will always output
+	// RunWarnings: List of all run warnings in the LHR. Will always output
 	// to at least `[]`.
 	RunWarnings []interface{} `json:"runWarnings,omitempty"`
 
 	// RuntimeError: A top-level error message that, if present, indicates a
-	// serious enough
-	// problem that this Lighthouse result may need to be discarded.
+	// serious enough problem that this Lighthouse result may need to be
+	// discarded.
 	RuntimeError *RuntimeError `json:"runtimeError,omitempty"`
 
 	// StackPacks: The Stack Pack advice strings.
@@ -662,7 +652,7 @@ type PagespeedApiLoadingExperienceV5 struct {
 	// "id".
 	InitialUrl string `json:"initial_url,omitempty"`
 
-	// Metrics: The map of <metrics, data>.
+	// Metrics: The map of .
 	Metrics map[string]UserPageLoadMetricV5 `json:"metrics,omitempty"`
 
 	// OriginFallback: True if the result is an origin fallback from a page,
@@ -704,8 +694,7 @@ type PagespeedApiPagespeedResponseV5 struct {
 	CaptchaResult string `json:"captchaResult,omitempty"`
 
 	// Id: Canonicalized and final URL for the document, after following
-	// page
-	// redirects (if any).
+	// page redirects (if any).
 	Id string `json:"id,omitempty"`
 
 	// Kind: Kind of result.
@@ -813,13 +802,11 @@ type RendererFormattedStrings struct {
 	LabDataTitle string `json:"labDataTitle,omitempty"`
 
 	// LsPerformanceCategoryDescription: The disclaimer shown under
-	// performance explaning that the network can
-	// vary.
+	// performance explaning that the network can vary.
 	LsPerformanceCategoryDescription string `json:"lsPerformanceCategoryDescription,omitempty"`
 
 	// ManualAuditsGroupTitle: The heading shown above a list of audits that
-	// were not computerd in the
-	// run.
+	// were not computerd in the run.
 	ManualAuditsGroupTitle string `json:"manualAuditsGroupTitle,omitempty"`
 
 	// NotApplicableAuditsGroupTitle: The heading shown above a list of
@@ -827,8 +814,7 @@ type RendererFormattedStrings struct {
 	NotApplicableAuditsGroupTitle string `json:"notApplicableAuditsGroupTitle,omitempty"`
 
 	// OpportunityResourceColumnLabel: The heading for the estimated page
-	// load savings opportunity of an
-	// audit.
+	// load savings opportunity of an audit.
 	OpportunityResourceColumnLabel string `json:"opportunityResourceColumnLabel,omitempty"`
 
 	// OpportunitySavingsColumnLabel: The heading for the estimated page
@@ -844,8 +830,7 @@ type RendererFormattedStrings struct {
 	ScorescaleLabel string `json:"scorescaleLabel,omitempty"`
 
 	// ToplevelWarningsMessage: The label shown preceding important warnings
-	// that may have invalidated
-	// an entire report.
+	// that may have invalidated an entire report.
 	ToplevelWarningsMessage string `json:"toplevelWarningsMessage,omitempty"`
 
 	// VarianceDisclaimer: The disclaimer shown below a performance metric
@@ -1010,9 +995,8 @@ type UserPageLoadMetricV5 struct {
 	MetricId string `json:"metricId,omitempty"`
 
 	// Percentile: We use this field to store certain percentile value for
-	// this metric.
-	// For v4, this field contains pc50.
-	// For v5, this field contains pc90.
+	// this metric. For v4, this field contains pc50. For v5, this field
+	// contains pc90.
 	Percentile int64 `json:"percentile,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
@@ -1049,10 +1033,8 @@ type PagespeedapiRunpagespeedCall struct {
 }
 
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
-// URL, and returns
-// PageSpeed scores, a list of suggestions to make that page faster, and
-// other
-// information.
+// URL, and returns PageSpeed scores, a list of suggestions to make that
+// page faster, and other information.
 func (r *PagespeedapiService) Runpagespeed() *PagespeedapiRunpagespeedCall {
 	c := &PagespeedapiRunpagespeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1066,16 +1048,21 @@ func (c *PagespeedapiRunpagespeedCall) CaptchaToken(captchaToken string) *Pagesp
 }
 
 // Category sets the optional parameter "category": A Lighthouse
-// category to run; if none are given, only Performance category
-// will be run
+// category to run; if none are given, only Performance category will be
+// run
 //
 // Possible values:
-//   "CATEGORY_UNSPECIFIED"
-//   "ACCESSIBILITY"
-//   "BEST_PRACTICES"
-//   "PERFORMANCE"
-//   "PWA"
-//   "SEO"
+//   "CATEGORY_UNSPECIFIED" - Default UNDEFINED category.
+//   "ACCESSIBILITY" - Accessibility (a11y), category pertaining to a
+// website's capacity to be accessible to all users.
+//   "BEST_PRACTICES" - Best Practices, category pertaining to a
+// website's conformance to web best practice.
+//   "PERFORMANCE" - Performance, category pertaining to a website's
+// performance.
+//   "PWA" - Progressive Web App (PWA), category pertaining to a
+// website's ability to be run as a PWA.
+//   "SEO" - Search Engine Optimization (SEO), category pertaining to a
+// website's ability to be indexed by search engines.
 func (c *PagespeedapiRunpagespeedCall) Category(category ...string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.SetMulti("category", append([]string{}, category...))
 	return c
@@ -1089,19 +1076,19 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 }
 
 // Strategy sets the optional parameter "strategy": The analysis
-// strategy (desktop or mobile) to use, and desktop is the
-// default
+// strategy (desktop or mobile) to use, and desktop is the default
 //
 // Possible values:
-//   "STRATEGY_UNSPECIFIED"
-//   "DESKTOP"
-//   "MOBILE"
+//   "STRATEGY_UNSPECIFIED" - UNDEFINED.
+//   "DESKTOP" - Fetch and analyze the URL for desktop browsers.
+//   "MOBILE" - Fetch and analyze the URL for mobile devices.
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
 	return c
 }
 
-// Url sets the optional parameter "url": The URL to fetch and analyze
+// Url sets the optional parameter "url": Required. The URL to fetch and
+// analyze
 func (c *PagespeedapiRunpagespeedCall) Url(url string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("url", url)
 	return c
@@ -1158,7 +1145,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1217,7 +1204,7 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs PageSpeed analysis on the page at the specified URL, and returns\nPageSpeed scores, a list of suggestions to make that page faster, and other\ninformation.",
+	//   "description": "Runs PageSpeed analysis on the page at the specified URL, and returns PageSpeed scores, a list of suggestions to make that page faster, and other information.",
 	//   "flatPath": "pagespeedonline/v5/runPagespeed",
 	//   "httpMethod": "GET",
 	//   "id": "pagespeedonline.pagespeedapi.runpagespeed",
@@ -1229,7 +1216,7 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//       "type": "string"
 	//     },
 	//     "category": {
-	//       "description": "A Lighthouse category to run; if none are given, only Performance category\nwill be run",
+	//       "description": "A Lighthouse category to run; if none are given, only Performance category will be run",
 	//       "enum": [
 	//         "CATEGORY_UNSPECIFIED",
 	//         "ACCESSIBILITY",
@@ -1237,6 +1224,14 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//         "PERFORMANCE",
 	//         "PWA",
 	//         "SEO"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default UNDEFINED category.",
+	//         "Accessibility (a11y), category pertaining to a website's capacity to be accessible to all users.",
+	//         "Best Practices, category pertaining to a website's conformance to web best practice.",
+	//         "Performance, category pertaining to a website's performance.",
+	//         "Progressive Web App (PWA), category pertaining to a website's ability to be run as a PWA.",
+	//         "Search Engine Optimization (SEO), category pertaining to a website's ability to be indexed by search engines."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -1248,17 +1243,22 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//       "type": "string"
 	//     },
 	//     "strategy": {
-	//       "description": "The analysis strategy (desktop or mobile) to use, and desktop is the\ndefault",
+	//       "description": "The analysis strategy (desktop or mobile) to use, and desktop is the default",
 	//       "enum": [
 	//         "STRATEGY_UNSPECIFIED",
 	//         "DESKTOP",
 	//         "MOBILE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "UNDEFINED.",
+	//         "Fetch and analyze the URL for desktop browsers.",
+	//         "Fetch and analyze the URL for mobile devices."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "url": {
-	//       "description": "The URL to fetch and analyze",
+	//       "description": "Required. The URL to fetch and analyze",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

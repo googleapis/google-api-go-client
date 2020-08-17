@@ -249,50 +249,22 @@ type ProjectsOperationsService struct {
 }
 
 // GoogleApi__HttpBody: Message that represents an arbitrary HTTP body.
-// It should only be used for
-// payload formats that can't be represented as JSON, such as raw binary
-// or
-// an HTML page.
-//
-//
-// This message can be used both in streaming and non-streaming API
-// methods in
-// the request as well as the response.
-//
-// It can be used as a top-level request field, which is convenient if
-// one
-// wants to extract parameters from either the URL or HTTP template into
-// the
-// request fields and also want access to the raw HTTP body.
-//
-// Example:
-//
-//     message GetResourceRequest {
-//       // A unique request id.
-//       string request_id = 1;
-//
-//       // The raw HTTP body is bound to this field.
-//       google.api.HttpBody http_body = 2;
-//     }
-//
-//     service ResourceService {
-//       rpc GetResource(GetResourceRequest) returns
-// (google.api.HttpBody);
-//       rpc UpdateResource(google.api.HttpBody) returns
-//       (google.protobuf.Empty);
-//     }
-//
-// Example with streaming methods:
-//
-//     service CaldavService {
-//       rpc GetCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//       rpc UpdateCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//     }
-//
-// Use of this type only changes how the request and response bodies
-// are
+// It should only be used for payload formats that can't be represented
+// as JSON, such as raw binary or an HTML page. This message can be used
+// both in streaming and non-streaming API methods in the request as
+// well as the response. It can be used as a top-level request field,
+// which is convenient if one wants to extract parameters from either
+// the URL or HTTP template into the request fields and also want access
+// to the raw HTTP body. Example: message GetResourceRequest { // A
+// unique request id. string request_id = 1; // The raw HTTP body is
+// bound to this field. google.api.HttpBody http_body = 2; } service
+// ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody)
+// returns (google.protobuf.Empty); } Example with streaming methods:
+// service CaldavService { rpc GetCalendar(stream google.api.HttpBody)
+// returns (stream google.api.HttpBody); rpc UpdateCalendar(stream
+// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
+// this type only changes how the request and response bodies are
 // handled, all other features will continue to work unchanged.
 type GoogleApi__HttpBody struct {
 	// ContentType: The HTTP Content-Type header value specifying the
@@ -303,8 +275,7 @@ type GoogleApi__HttpBody struct {
 	Data string `json:"data,omitempty"`
 
 	// Extensions: Application specific response metadata. Must be set in
-	// the first response
-	// for streaming APIs.
+	// the first response for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -336,10 +307,8 @@ func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
 
 type GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig struct {
 	// UseElapsedTime: If true, measurement.elapsed_time is used as the
-	// x-axis of each
-	// Trials Decay Curve. Otherwise, Measurement.steps will be used as
-	// the
-	// x-axis.
+	// x-axis of each Trials Decay Curve. Otherwise, Measurement.steps will
+	// be used as the x-axis.
 	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
@@ -368,22 +337,15 @@ func (s *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig
 
 // GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig:
 // The median automated stopping rule stops a pending trial if the
-// trial's
-// best objective_value is strictly below the median 'performance' of
-// all
-// completed trials reported up to the trial's last
-// measurement.
-// Currently, 'performance' refers to the running average of the
-// objective
-// values reported by the trial in each measurement.
+// trial's best objective_value is strictly below the median
+// 'performance' of all completed trials reported up to the trial's last
+// measurement. Currently, 'performance' refers to the running average
+// of the objective values reported by the trial in each measurement.
 type GoogleCloudMlV1AutomatedStoppingConfigMedianAutomatedStoppingConfig struct {
 	// UseElapsedTime: If true, the median automated stopping rule applies
-	// to
-	// measurement.use_elapsed_time, which means the elapsed_time field
-	// of
-	// the current trial's
-	// latest measurement is used to compute the median objective
-	// value for each completed trial.
+	// to measurement.use_elapsed_time, which means the elapsed_time field
+	// of the current trial's latest measurement is used to compute the
+	// median objective value for each completed trial.
 	UseElapsedTime bool `json:"useElapsedTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "UseElapsedTime") to
@@ -504,8 +466,8 @@ func (s *GoogleCloudMlV1MeasurementMetric) UnmarshalJSON(data []byte) error {
 }
 
 type GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec struct {
-	// Values: Must be specified if type is `CATEGORICAL`.
-	// The list of possible categories.
+	// Values: Must be specified if type is `CATEGORICAL`. The list of
+	// possible categories.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -532,13 +494,10 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec) MarshalJSO
 }
 
 type GoogleCloudMlV1StudyConfigParameterSpecDiscreteValueSpec struct {
-	// Values: Must be specified if type is `DISCRETE`.
-	// A list of feasible points.
-	// The list should be in strictly increasing order. For instance,
-	// this
-	// parameter might have possible settings of 1.5, 2.5, and 4.0. This
-	// list
-	// should not contain more than 1,000 values.
+	// Values: Must be specified if type is `DISCRETE`. A list of feasible
+	// points. The list should be in strictly increasing order. For
+	// instance, this parameter might have possible settings of 1.5, 2.5,
+	// and 4.0. This list should not contain more than 1,000 values.
 	Values []float64 `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -649,9 +608,8 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecIntegerValueSpec) MarshalJSON() 
 // parameter.
 type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSpec struct {
 	// Values: Matches values of the parent parameter with type
-	// 'CATEGORICAL'.
-	// All values must exist in `categorical_value_spec` of parent
-	// parameter.
+	// 'CATEGORICAL'. All values must exist in `categorical_value_spec` of
+	// parent parameter.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -680,8 +638,7 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentCategoricalValueSp
 // GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec
 // : Represents the spec to match discrete values from parent parameter.
 type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec struct {
-	// Values: Matches values of the parent parameter with type
-	// 'DISCRETE'.
+	// Values: Matches values of the parent parameter with type 'DISCRETE'.
 	// All values must exist in `discrete_value_spec` of parent parameter.
 	Values []float64 `json:"values,omitempty"`
 
@@ -711,8 +668,7 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentDiscreteValueSpec)
 // GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec:
 // Represents the spec to match integer values from parent parameter.
 type GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec struct {
-	// Values: Matches values of the parent parameter with type
-	// 'INTEGER'.
+	// Values: Matches values of the parent parameter with type 'INTEGER'.
 	// All values must lie in `integer_value_spec` of parent parameter.
 	Values googleapi.Int64s `json:"values,omitempty"`
 
@@ -783,12 +739,9 @@ type GoogleCloudMlV1StudyConfigParameterSpec struct {
 	CategoricalValueSpec *GoogleCloudMlV1StudyConfigParameterSpecCategoricalValueSpec `json:"categoricalValueSpec,omitempty"`
 
 	// ChildParameterSpecs: A child node is active if the parameter's value
-	// matches the child node's
+	// matches the child node's matching_parent_values. If two items in
+	// child_parameter_specs have the same name, they must have disjoint
 	// matching_parent_values.
-	//
-	// If two items in child_parameter_specs have the same name, they must
-	// have
-	// disjoint matching_parent_values.
 	ChildParameterSpecs []*GoogleCloudMlV1StudyConfigParameterSpec `json:"childParameterSpecs,omitempty"`
 
 	// DiscreteValueSpec: The value spec for a 'DISCRETE' parameter.
@@ -810,39 +763,32 @@ type GoogleCloudMlV1StudyConfigParameterSpec struct {
 
 	ParentIntValues *GoogleCloudMlV1StudyConfigParameterSpecMatchingParentIntValueSpec `json:"parentIntValues,omitempty"`
 
-	// ScaleType: How the parameter should be scaled.
-	// Leave unset for categorical parameters.
+	// ScaleType: How the parameter should be scaled. Leave unset for
+	// categorical parameters.
 	//
 	// Possible values:
 	//   "SCALE_TYPE_UNSPECIFIED" - By default, no scaling is applied.
 	//   "UNIT_LINEAR_SCALE" - Scales the feasible space to (0, 1) linearly.
 	//   "UNIT_LOG_SCALE" - Scales the feasible space logarithmically to (0,
-	// 1). The entire
-	// feasible space must be strictly positive.
+	// 1). The entire feasible space must be strictly positive.
 	//   "UNIT_REVERSE_LOG_SCALE" - Scales the feasible space "reverse"
-	// logarithmically to (0, 1). The
-	// result is that values close to the top of the feasible space are
-	// spread
-	// out more than points near the bottom. The entire feasible space must
-	// be
-	// strictly positive.
+	// logarithmically to (0, 1). The result is that values close to the top
+	// of the feasible space are spread out more than points near the
+	// bottom. The entire feasible space must be strictly positive.
 	ScaleType string `json:"scaleType,omitempty"`
 
 	// Type: Required. The type of the parameter.
 	//
 	// Possible values:
 	//   "PARAMETER_TYPE_UNSPECIFIED" - You must specify a valid type. Using
-	// this unspecified type will result
-	// in an error.
+	// this unspecified type will result in an error.
 	//   "DOUBLE" - Type for real-valued parameters.
 	//   "INTEGER" - Type for integral parameters.
 	//   "CATEGORICAL" - The parameter is categorical, with a value chosen
-	// from the categories
-	// field.
+	// from the categories field.
 	//   "DISCRETE" - The parameter is real valued, with a fixed set of
-	// feasible points. If
-	// `type==DISCRETE`, feasible_points must be provided, and
-	// {`min_value`, `max_value`} will be ignored.
+	// feasible points. If `type==DISCRETE`, feasible_points must be
+	// provided, and {`min_value`, `max_value`} will be ignored.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -871,8 +817,8 @@ func (s *GoogleCloudMlV1StudyConfigParameterSpec) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudMlV1TrialParameter: A message representing a parameter to
-// be tuned. Contains the name of
-// the parameter and the suggested value to use for this trial.
+// be tuned. Contains the name of the parameter and the suggested value
+// to use for this trial.
 type GoogleCloudMlV1TrialParameter struct {
 	// FloatValue: Must be set if ParameterType is DOUBLE or DISCRETE.
 	FloatValue float64 `json:"floatValue,omitempty"`
@@ -924,15 +870,10 @@ func (s *GoogleCloudMlV1TrialParameter) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudMlV1__AcceleratorConfig: Represents a hardware accelerator
-// request config.
-// Note that the AcceleratorConfig can be used in both Jobs and
-// Versions.
-// Learn more about [accelerators for
-// training](/ml-engine/docs/using-gpus) and
-// [accelerators for
-// online
-// prediction](/ml-engine/docs/machine-types-online-prediction#gpu
-// s).
+// request config. Note that the AcceleratorConfig can be used in both
+// Jobs and Versions. Learn more about [accelerators for
+// training](/ml-engine/docs/using-gpus) and [accelerators for online
+// prediction](/ml-engine/docs/machine-types-online-prediction#gpus).
 type GoogleCloudMlV1__AcceleratorConfig struct {
 	// Count: The number of accelerators to attach to each machine running
 	// the job.
@@ -1008,71 +949,33 @@ func (s *GoogleCloudMlV1__AddTrialMeasurementRequest) MarshalJSON() ([]byte, err
 // model.
 type GoogleCloudMlV1__AutoScaling struct {
 	// MinNodes: Optional. The minimum number of nodes to allocate for this
-	// model. These
-	// nodes are always up, starting from the time the model is
-	// deployed.
-	// Therefore, the cost of operating this model will be at least
-	// `rate` * `min_nodes` * number of hours since last billing
-	// cycle,
-	// where `rate` is the cost per node-hour as documented in the
-	// [pricing guide](/ml-engine/docs/pricing),
-	// even if no predictions are performed. There is additional cost for
-	// each
-	// prediction performed.
-	//
-	// Unlike manual scaling, if the load gets too heavy for the nodes
-	// that are up, the service will automatically add nodes to handle
-	// the
+	// model. These nodes are always up, starting from the time the model is
+	// deployed. Therefore, the cost of operating this model will be at
+	// least `rate` * `min_nodes` * number of hours since last billing
+	// cycle, where `rate` is the cost per node-hour as documented in the
+	// [pricing guide](/ml-engine/docs/pricing), even if no predictions are
+	// performed. There is additional cost for each prediction performed.
+	// Unlike manual scaling, if the load gets too heavy for the nodes that
+	// are up, the service will automatically add nodes to handle the
 	// increased load as well as scale back as traffic drops, always
-	// maintaining
-	// at least `min_nodes`. You will be charged for the time in which
-	// additional
-	// nodes are used.
-	//
-	// If `min_nodes` is not specified and AutoScaling is used with a
-	// [legacy
-	// (MLS1) machine
-	// type](/ml-engine/docs/machine-types-online-prediction),
-	// `min_nodes` defaults to 0, in which case, when traffic to a model
-	// stops
-	// (and after a cool-down period), nodes will be shut down and no
-	// charges will
-	// be incurred until traffic to the model resumes.
-	//
-	// If `min_nodes` is not specified and AutoScaling is used with a
-	// [Compute
-	// Engine (N1) machine
-	// type](/ml-engine/docs/machine-types-online-prediction),
+	// maintaining at least `min_nodes`. You will be charged for the time in
+	// which additional nodes are used. If `min_nodes` is not specified and
+	// AutoScaling is used with a [legacy (MLS1) machine
+	// type](/ml-engine/docs/machine-types-online-prediction), `min_nodes`
+	// defaults to 0, in which case, when traffic to a model stops (and
+	// after a cool-down period), nodes will be shut down and no charges
+	// will be incurred until traffic to the model resumes. If `min_nodes`
+	// is not specified and AutoScaling is used with a [Compute Engine (N1)
+	// machine type](/ml-engine/docs/machine-types-online-prediction),
 	// `min_nodes` defaults to 1. `min_nodes` must be at least 1 for use
-	// with a
-	// Compute Engine machine type.
-	//
-	// Note that you cannot use AutoScaling if your version
-	// uses
-	// [GPUs](#Version.FIELDS.accelerator_config). Instead, you must
-	// use
-	// ManualScaling.
-	//
-	// You can set `min_nodes` when creating the model version, and you can
-	// also
-	// update `min_nodes` for an existing
-	// version:
-	// <pre>
-	// update_body.json:
-	// {
-	//   'autoScaling': {
-	//     'minNodes': 5
-	//   }
-	// }
-	// </pre>
-	// HTTP request:
-	// <pre style="max-width:
-	// 626px;">
+	// with a Compute Engine machine type. Note that you cannot use
+	// AutoScaling if your version uses
+	// [GPUs](#Version.FIELDS.accelerator_config). Instead, you must use
+	// ManualScaling. You can set `min_nodes` when creating the model
+	// version, and you can also update `min_nodes` for an existing version:
+	// update_body.json: { 'autoScaling': { 'minNodes': 5 } } HTTP request:
 	// PATCH
-	// https://ml.googleapis.com/v1/{name=projects/*/models/*/
-	// versions/*}?update_mask=autoScaling.minNodes
-	// -d @./update_body.json
-	// </pre>
+	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d @./update_body.json
 	MinNodes int64 `json:"minNodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinNodes") to
@@ -1099,9 +1002,8 @@ func (s *GoogleCloudMlV1__AutoScaling) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__AutomatedStoppingConfig: Configuration for Automated
-// Early Stopping of Trials. If no
-// implementation_config is set, automated early stopping will not be
-// run.
+// Early Stopping of Trials. If no implementation_config is set,
+// automated early stopping will not be run.
 type GoogleCloudMlV1__AutomatedStoppingConfig struct {
 	DecayCurveStoppingConfig *GoogleCloudMlV1AutomatedStoppingConfigDecayCurveAutomatedStoppingConfig `json:"decayCurveStoppingConfig,omitempty"`
 
@@ -1139,10 +1041,8 @@ type GoogleCloudMlV1__BuiltInAlgorithmOutput struct {
 	Framework string `json:"framework,omitempty"`
 
 	// ModelPath: The Cloud Storage path to the `model/` directory where the
-	// training job
-	// saves the trained model. Only set for successful jobs that don't
-	// use
-	// hyperparameter tuning.
+	// training job saves the trained model. Only set for successful jobs
+	// that don't use hyperparameter tuning.
 	ModelPath string `json:"modelPath,omitempty"`
 
 	// PythonVersion: Python version on which the built-in algorithm was
@@ -1150,8 +1050,7 @@ type GoogleCloudMlV1__BuiltInAlgorithmOutput struct {
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// RuntimeVersion: AI Platform runtime version on which the built-in
-	// algorithm was
-	// trained.
+	// algorithm was trained.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Framework") to
@@ -1230,11 +1129,9 @@ func (s *GoogleCloudMlV1__Capability) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata: This message
-// will be placed in the metadata field of
-// a
+// will be placed in the metadata field of a
 // google.longrunning.Operation associated with a
-// CheckTrialEarlyStoppingState
-// request.
+// CheckTrialEarlyStoppingState request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateMetatdata struct {
 	// CreateTime: The time at which the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1274,11 +1171,9 @@ type GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest struct {
 }
 
 // GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse: The message
-// will be placed in the response field of a
-// completed
+// will be placed in the response field of a completed
 // google.longrunning.Operation associated with a
-// CheckTrialEarlyStoppingState
-// request.
+// CheckTrialEarlyStoppingState request.
 type GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse struct {
 	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
@@ -1316,20 +1211,18 @@ func (s *GoogleCloudMlV1__CheckTrialEarlyStoppingStateResponse) MarshalJSON() ([
 // CompleteTrial service method.
 type GoogleCloudMlV1__CompleteTrialRequest struct {
 	// FinalMeasurement: Optional. If provided, it will be used as the
-	// completed trial's
-	// final_measurement; Otherwise, the service will auto-select
-	// a
-	// previously reported measurement as the final-measurement
+	// completed trial's final_measurement; Otherwise, the service will
+	// auto-select a previously reported measurement as the
+	// final-measurement
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
 	// InfeasibleReason: Optional. A human readable reason why the trial was
-	// infeasible. This should
-	// only be provided if `trial_infeasible` is true.
+	// infeasible. This should only be provided if `trial_infeasible` is
+	// true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
 
 	// TrialInfeasible: Optional. True if the trial cannot be run with the
-	// given Parameter, and
-	// final_measurement will be ignored.
+	// given Parameter, and final_measurement will be ignored.
 	TrialInfeasible bool `json:"trialInfeasible,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FinalMeasurement") to
@@ -1386,16 +1279,13 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__EncryptionConfig: Represents a custom encryption key
-// configuration that can be applied to
-// a resource.
+// configuration that can be applied to a resource.
 type GoogleCloudMlV1__EncryptionConfig struct {
 	// KmsKeyName: The Cloud KMS resource identifier of the customer-managed
-	// encryption key
-	// used to protect a resource, such as a training job. It has the
-	// following
-	// format:
-	// `projects/{PROJECT_ID}/locations/{REGION}/keyRings/{
-	// KEY_RING_NAME}/cryptoKeys/{KEY_NAME}`
+	// encryption key used to protect a resource, such as a training job. It
+	// has the following format:
+	// `projects/{PROJECT_ID}/locations/{REGION}/keyRings/{KEY_RING_NAME}/cry
+	// ptoKeys/{KEY_NAME}`
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
@@ -1421,11 +1311,49 @@ func (s *GoogleCloudMlV1__EncryptionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__EndpointMap:  EndpointMap is used to provide paths
+// for predict/explain/healthcheck to customers. It's an output only
+// field in the version proto which can be only set on the server side.
+// Public endpoints follow the format specified on the user facing doc,
+// and private endpoints are customized for each privately deploymed
+// model/version.
+type GoogleCloudMlV1__EndpointMap struct {
+	// Explain: Optional. Http(s) path to send explain requests.
+	Explain string `json:"explain,omitempty"`
+
+	// Health: Http(s) path to send health check requests.
+	Health string `json:"health,omitempty"`
+
+	// Predict: Http(s) path to send prediction requests.
+	Predict string `json:"predict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Explain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Explain") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__EndpointMap) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__EndpointMap
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__ExplainRequest: Request for explanations to be
 // issued against a trained model.
 type GoogleCloudMlV1__ExplainRequest struct {
-	// HttpBody: Required.
-	// The explanation request body.
+	// HttpBody: Required. The explanation request body.
 	HttpBody *GoogleApi__HttpBody `json:"httpBody,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpBody") to
@@ -1452,35 +1380,26 @@ func (s *GoogleCloudMlV1__ExplainRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__ExplanationConfig: Message holding configuration
-// options for explaining model predictions.
-// There are two feature attribution methods supported for TensorFlow
-// models:
-// integrated gradients and sampled Shapley.
-// [Learn more about
-// feature
-// attributions.](/ai-platform/prediction/docs/ai-explanations/ov
-// erview)
+// options for explaining model predictions. There are two feature
+// attribution methods supported for TensorFlow models: integrated
+// gradients and sampled Shapley. [Learn more about feature
+// attributions.](/ai-platform/prediction/docs/ai-explanations/overview)
 type GoogleCloudMlV1__ExplanationConfig struct {
 	// IntegratedGradientsAttribution: Attributes credit by computing the
-	// Aumann-Shapley value taking advantage
-	// of the model's fully differentiable structure. Refer to this paper
-	// for
-	// more details: https://arxiv.org/abs/1703.01365
+	// Aumann-Shapley value taking advantage of the model's fully
+	// differentiable structure. Refer to this paper for more details:
+	// https://arxiv.org/abs/1703.01365
 	IntegratedGradientsAttribution *GoogleCloudMlV1__IntegratedGradientsAttribution `json:"integratedGradientsAttribution,omitempty"`
 
 	// SampledShapleyAttribution: An attribution method that approximates
-	// Shapley values for features that
-	// contribute to the label being predicted. A sampling strategy is used
-	// to
-	// approximate the value rather than considering all subsets of
-	// features.
+	// Shapley values for features that contribute to the label being
+	// predicted. A sampling strategy is used to approximate the value
+	// rather than considering all subsets of features.
 	SampledShapleyAttribution *GoogleCloudMlV1__SampledShapleyAttribution `json:"sampledShapleyAttribution,omitempty"`
 
 	// XraiAttribution: Attributes credit by computing the XRAI taking
-	// advantage
-	// of the model's fully differentiable structure. Refer to this paper
-	// for
-	// more details: https://arxiv.org/abs/1906.02825
+	// advantage of the model's fully differentiable structure. Refer to
+	// this paper for more details: https://arxiv.org/abs/1906.02825
 	// Currently only implemented for models with natural image inputs.
 	XraiAttribution *GoogleCloudMlV1__XraiAttribution `json:"xraiAttribution,omitempty"`
 
@@ -1549,20 +1468,16 @@ func (s *GoogleCloudMlV1__GetConfigResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__HyperparameterOutput: Represents the result of a
-// single hyperparameter tuning trial from a
-// training job. The TrainingOutput object that is returned on
-// successful
-// completion of a training job with hyperparameter tuning includes a
-// list
-// of HyperparameterOutput objects, one for each successful trial.
+// single hyperparameter tuning trial from a training job. The
+// TrainingOutput object that is returned on successful completion of a
+// training job with hyperparameter tuning includes a list of
+// HyperparameterOutput objects, one for each successful trial.
 type GoogleCloudMlV1__HyperparameterOutput struct {
 	// AllMetrics: All recorded object metrics for this trial. This field is
-	// not currently
-	// populated.
+	// not currently populated.
 	AllMetrics []*GoogleCloudMlV1HyperparameterOutputHyperparameterMetric `json:"allMetrics,omitempty"`
 
-	// BuiltInAlgorithmOutput: Details related to built-in algorithms
-	// jobs.
+	// BuiltInAlgorithmOutput: Details related to built-in algorithms jobs.
 	// Only set for trials of built-in algorithms jobs that have succeeded.
 	BuiltInAlgorithmOutput *GoogleCloudMlV1__BuiltInAlgorithmOutput `json:"builtInAlgorithmOutput,omitempty"`
 
@@ -1590,12 +1505,12 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 	//   "PREPARING" - The service is preparing to run the job.
 	//   "RUNNING" - The job is in progress.
 	//   "SUCCEEDED" - The job completed successfully.
-	//   "FAILED" - The job failed.
-	// `error_message` should contain the details of the failure.
-	//   "CANCELLING" - The job is being cancelled.
-	// `error_message` should describe the reason for the cancellation.
-	//   "CANCELLED" - The job has been cancelled.
-	// `error_message` should describe the reason for the cancellation.
+	//   "FAILED" - The job failed. `error_message` should contain the
+	// details of the failure.
+	//   "CANCELLING" - The job is being cancelled. `error_message` should
+	// describe the reason for the cancellation.
+	//   "CANCELLED" - The job has been cancelled. `error_message` should
+	// describe the reason for the cancellation.
 	State string `json:"state,omitempty"`
 
 	// TrialId: The trial id for these results.
@@ -1628,31 +1543,25 @@ func (s *GoogleCloudMlV1__HyperparameterOutput) MarshalJSON() ([]byte, error) {
 // hyperparameters to optimize.
 type GoogleCloudMlV1__HyperparameterSpec struct {
 	// Algorithm: Optional. The search algorithm specified for the
-	// hyperparameter
-	// tuning job.
-	// Uses the default AI Platform hyperparameter tuning
-	// algorithm if unspecified.
+	// hyperparameter tuning job. Uses the default AI Platform
+	// hyperparameter tuning algorithm if unspecified.
 	//
 	// Possible values:
 	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by the
-	// hyperparameter tuning service. This is
-	// a Bayesian optimization algorithm.
+	// hyperparameter tuning service. This is a Bayesian optimization
+	// algorithm.
 	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
-	// use grid search,
-	// all parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.
+	// use grid search, all parameters must be `INTEGER`, `CATEGORICAL`, or
+	// `DISCRETE`.
 	//   "RANDOM_SEARCH" - Simple random search within the feasible space.
 	Algorithm string `json:"algorithm,omitempty"`
 
 	// EnableTrialEarlyStopping: Optional. Indicates if the hyperparameter
-	// tuning job enables auto trial
-	// early stopping.
+	// tuning job enables auto trial early stopping.
 	EnableTrialEarlyStopping bool `json:"enableTrialEarlyStopping,omitempty"`
 
 	// Goal: Required. The type of goal to use for tuning. Available types
-	// are
-	// `MAXIMIZE` and `MINIMIZE`.
-	//
-	// Defaults to `MAXIMIZE`.
+	// are `MAXIMIZE` and `MINIMIZE`. Defaults to `MAXIMIZE`.
 	//
 	// Possible values:
 	//   "GOAL_TYPE_UNSPECIFIED" - Goal Type will default to maximize.
@@ -1661,59 +1570,40 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	Goal string `json:"goal,omitempty"`
 
 	// HyperparameterMetricTag: Optional. The TensorFlow summary tag name to
-	// use for optimizing trials. For
-	// current versions of TensorFlow, this tag name should exactly match
-	// what is
-	// shown in TensorBoard, including all scopes.  For versions of
-	// TensorFlow
-	// prior to 0.12, this should be only the tag passed to tf.Summary.
-	// By default, "training/hptuning/metric" will be used.
+	// use for optimizing trials. For current versions of TensorFlow, this
+	// tag name should exactly match what is shown in TensorBoard, including
+	// all scopes. For versions of TensorFlow prior to 0.12, this should be
+	// only the tag passed to tf.Summary. By default,
+	// "training/hptuning/metric" will be used.
 	HyperparameterMetricTag string `json:"hyperparameterMetricTag,omitempty"`
 
 	// MaxFailedTrials: Optional. The number of failed trials that need to
-	// be seen before failing
-	// the hyperparameter tuning job. You can specify this field to override
-	// the
-	// default failing criteria for AI Platform hyperparameter tuning
-	// jobs.
-	//
-	// Defaults to zero, which means the service decides when a
-	// hyperparameter
-	// job should fail.
+	// be seen before failing the hyperparameter tuning job. You can specify
+	// this field to override the default failing criteria for AI Platform
+	// hyperparameter tuning jobs. Defaults to zero, which means the service
+	// decides when a hyperparameter job should fail.
 	MaxFailedTrials int64 `json:"maxFailedTrials,omitempty"`
 
 	// MaxParallelTrials: Optional. The number of training trials to run
-	// concurrently.
-	// You can reduce the time it takes to perform hyperparameter tuning by
-	// adding
-	// trials in parallel. However, each trail only benefits from the
-	// information
-	// gained in completed trials. That means that a trial does not get
-	// access to
-	// the results of trials running at the same time, which could reduce
-	// the
-	// quality of the overall optimization.
-	//
-	// Each trial will use the same scale tier and machine types.
-	//
-	// Defaults to one.
+	// concurrently. You can reduce the time it takes to perform
+	// hyperparameter tuning by adding trials in parallel. However, each
+	// trail only benefits from the information gained in completed trials.
+	// That means that a trial does not get access to the results of trials
+	// running at the same time, which could reduce the quality of the
+	// overall optimization. Each trial will use the same scale tier and
+	// machine types. Defaults to one.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty"`
 
 	// MaxTrials: Optional. How many training trials should be attempted to
-	// optimize
-	// the specified hyperparameters.
-	//
-	// Defaults to one.
+	// optimize the specified hyperparameters. Defaults to one.
 	MaxTrials int64 `json:"maxTrials,omitempty"`
 
 	// Params: Required. The set of parameters to tune.
 	Params []*GoogleCloudMlV1__ParameterSpec `json:"params,omitempty"`
 
 	// ResumePreviousJobId: Optional. The prior hyperparameter tuning job id
-	// that users hope to
-	// continue with. The job id will be used to find the corresponding
-	// vizier
-	// study guid and resume the study.
+	// that users hope to continue with. The job id will be used to find the
+	// corresponding vizier study guid and resume the study.
 	ResumePreviousJobId string `json:"resumePreviousJobId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
@@ -1740,15 +1630,13 @@ func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__IntegratedGradientsAttribution: Attributes credit by
-// computing the Aumann-Shapley value taking advantage
-// of the model's fully differentiable structure. Refer to this paper
-// for
-// more details: https://arxiv.org/abs/1703.01365
+// computing the Aumann-Shapley value taking advantage of the model's
+// fully differentiable structure. Refer to this paper for more details:
+// https://arxiv.org/abs/1703.01365
 type GoogleCloudMlV1__IntegratedGradientsAttribution struct {
 	// NumIntegralSteps: Number of steps for approximating the path
-	// integral.
-	// A good value to start is 50 and gradually increase until the
-	// sum to diff property is met within the desired error range.
+	// integral. A good value to start is 50 and gradually increase until
+	// the sum to diff property is met within the desired error range.
 	NumIntegralSteps int64 `json:"numIntegralSteps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumIntegralSteps") to
@@ -1788,31 +1676,22 @@ type GoogleCloudMlV1__Job struct {
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a job from overwriting each other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform job updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `GetJob`,
-	// and
-	// systems are expected to put that etag in the request to `UpdateJob`
-	// to
-	// ensure that their change will be applied to the same version of the
-	// job.
+	// help prevent simultaneous updates of a job from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform job updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `GetJob`, and systems are expected to put that etag in the request to
+	// `UpdateJob` to ensure that their change will be applied to the same
+	// version of the job.
 	Etag string `json:"etag,omitempty"`
 
 	// JobId: Required. The user-specified id of the job.
 	JobId string `json:"jobId,omitempty"`
 
 	// Labels: Optional. One or more labels that you can add, to organize
-	// your jobs.
-	// Each label is a key-value pair, where both the key and the value
-	// are
-	// arbitrary strings that you supply.
-	// For more information, see the documentation on
-	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
-	// labels</a>.
+	// your jobs. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings that you supply. For more information,
+	// see the documentation on using labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// PredictionInput: Input parameters to create a prediction job.
@@ -1833,12 +1712,12 @@ type GoogleCloudMlV1__Job struct {
 	//   "PREPARING" - The service is preparing to run the job.
 	//   "RUNNING" - The job is in progress.
 	//   "SUCCEEDED" - The job completed successfully.
-	//   "FAILED" - The job failed.
-	// `error_message` should contain the details of the failure.
-	//   "CANCELLING" - The job is being cancelled.
-	// `error_message` should describe the reason for the cancellation.
-	//   "CANCELLED" - The job has been cancelled.
-	// `error_message` should describe the reason for the cancellation.
+	//   "FAILED" - The job failed. `error_message` should contain the
+	// details of the failure.
+	//   "CANCELLING" - The job is being cancelled. `error_message` should
+	// describe the reason for the cancellation.
+	//   "CANCELLED" - The job has been cancelled. `error_message` should
+	// describe the reason for the cancellation.
 	State string `json:"state,omitempty"`
 
 	// TrainingInput: Input parameters to create a training job.
@@ -1881,8 +1760,7 @@ type GoogleCloudMlV1__ListJobsResponse struct {
 	Jobs []*GoogleCloudMlV1__Job `json:"jobs,omitempty"`
 
 	// NextPageToken: Optional. Pass this token as the `page_token` field of
-	// the request for a
-	// subsequent call.
+	// the request for a subsequent call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1918,8 +1796,7 @@ type GoogleCloudMlV1__ListLocationsResponse struct {
 	Locations []*GoogleCloudMlV1__Location `json:"locations,omitempty"`
 
 	// NextPageToken: Optional. Pass this token as the `page_token` field of
-	// the request for a
-	// subsequent call.
+	// the request for a subsequent call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1956,8 +1833,7 @@ type GoogleCloudMlV1__ListModelsResponse struct {
 	Models []*GoogleCloudMlV1__Model `json:"models,omitempty"`
 
 	// NextPageToken: Optional. Pass this token as the `page_token` field of
-	// the request for a
-	// subsequent call.
+	// the request for a subsequent call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2055,8 +1931,7 @@ func (s *GoogleCloudMlV1__ListTrialsResponse) MarshalJSON() ([]byte, error) {
 // ListVersions method.
 type GoogleCloudMlV1__ListVersionsResponse struct {
 	// NextPageToken: Optional. Pass this token as the `page_token` field of
-	// the request for a
-	// subsequent call.
+	// the request for a subsequent call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Versions: The list of versions.
@@ -2125,12 +2000,10 @@ func (s *GoogleCloudMlV1__Location) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__ManualScaling: Options for manually scaling a model.
 type GoogleCloudMlV1__ManualScaling struct {
 	// Nodes: The number of nodes to allocate for this model. These nodes
-	// are always up,
-	// starting from the time the model is deployed, so the cost of
-	// operating
-	// this model will be proportional to `nodes` * number of hours
-	// since
-	// last billing cycle plus the cost for each prediction performed.
+	// are always up, starting from the time the model is deployed, so the
+	// cost of operating this model will be proportional to `nodes` * number
+	// of hours since last billing cycle plus the cost for each prediction
+	// performed.
 	Nodes int64 `json:"nodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Nodes") to
@@ -2159,18 +2032,15 @@ func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__Measurement: A message representing a measurement.
 type GoogleCloudMlV1__Measurement struct {
 	// ElapsedTime: Output only. Time that the trial has been running at the
-	// point of
-	// this measurement.
+	// point of this measurement.
 	ElapsedTime string `json:"elapsedTime,omitempty"`
 
 	// Metrics: Provides a list of metrics that act as inputs into the
-	// objective
-	// function.
+	// objective function.
 	Metrics []*GoogleCloudMlV1MeasurementMetric `json:"metrics,omitempty"`
 
 	// StepCount: The number of steps a machine learning model has been
-	// trained for.
-	// Must be non-negative.
+	// trained for. Must be non-negative.
 	StepCount int64 `json:"stepCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "ElapsedTime") to
@@ -2196,20 +2066,14 @@ func (s *GoogleCloudMlV1__Measurement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__Model: Represents a machine learning solution.
-//
-// A model can have multiple versions, each of which is a deployed,
-// trained
-// model ready to receive prediction requests. The model itself is just
-// a
-// container.
+// GoogleCloudMlV1__Model: Represents a machine learning solution. A
+// model can have multiple versions, each of which is a deployed,
+// trained model ready to receive prediction requests. The model itself
+// is just a container.
 type GoogleCloudMlV1__Model struct {
 	// DefaultVersion: Output only. The default version of the model. This
-	// version will be used to
-	// handle prediction requests that do not specify a version.
-	//
-	// You can change the default version by
-	// calling
+	// version will be used to handle prediction requests that do not
+	// specify a version. You can change the default version by calling
 	// projects.models.versions.setDefault.
 	DefaultVersion *GoogleCloudMlV1__Version `json:"defaultVersion,omitempty"`
 
@@ -2218,83 +2082,52 @@ type GoogleCloudMlV1__Model struct {
 	Description string `json:"description,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a model from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform model updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `GetModel`,
-	// and
-	// systems are expected to put that etag in the request to `UpdateModel`
-	// to
-	// ensure that their change will be applied to the model as intended.
+	// help prevent simultaneous updates of a model from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform model updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `GetModel`, and systems are expected to put that etag in the request
+	// to `UpdateModel` to ensure that their change will be applied to the
+	// model as intended.
 	Etag string `json:"etag,omitempty"`
 
 	// Labels: Optional. One or more labels that you can add, to organize
-	// your models.
-	// Each label is a key-value pair, where both the key and the value
-	// are
-	// arbitrary strings that you supply.
-	// For more information, see the documentation on
-	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
-	// labels</a>.
+	// your models. Each label is a key-value pair, where both the key and
+	// the value are arbitrary strings that you supply. For more
+	// information, see the documentation on using labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. The name specified for the model when it was
-	// created.
-	//
+	// Name: Required. The name specified for the model when it was created.
 	// The model name must be unique within the project it is created in.
 	Name string `json:"name,omitempty"`
 
 	// OnlinePredictionConsoleLogging: Optional. If true, online prediction
-	// nodes send `stderr` and `stdout`
-	// streams to Stackdriver Logging. These can be more verbose than the
-	// standard
-	// access logs (see `onlinePredictionLogging`) and can incur higher
-	// cost.
-	// However, they are helpful for debugging. Note that
-	// [Stackdriver logs may incur a cost](/stackdriver/pricing), especially
-	// if
-	// your project receives prediction requests at a high QPS. Estimate
-	// your
-	// costs before enabling this option.
-	//
-	// Default is false.
+	// nodes send `stderr` and `stdout` streams to Stackdriver Logging.
+	// These can be more verbose than the standard access logs (see
+	// `onlinePredictionLogging`) and can incur higher cost. However, they
+	// are helpful for debugging. Note that [Stackdriver logs may incur a
+	// cost](/stackdriver/pricing), especially if your project receives
+	// prediction requests at a high QPS. Estimate your costs before
+	// enabling this option. Default is false.
 	OnlinePredictionConsoleLogging bool `json:"onlinePredictionConsoleLogging,omitempty"`
 
 	// OnlinePredictionLogging: Optional. If true, online prediction access
-	// logs are sent to StackDriver
-	// Logging. These logs are like standard server access logs,
-	// containing
-	// information like timestamp and latency for each request. Note
-	// that
-	// [Stackdriver logs may incur a cost](/stackdriver/pricing), especially
-	// if
-	// your project receives prediction requests at a high queries per
-	// second rate
-	// (QPS). Estimate your costs before enabling this option.
-	//
-	// Default is false.
+	// logs are sent to StackDriver Logging. These logs are like standard
+	// server access logs, containing information like timestamp and latency
+	// for each request. Note that [Stackdriver logs may incur a
+	// cost](/stackdriver/pricing), especially if your project receives
+	// prediction requests at a high queries per second rate (QPS). Estimate
+	// your costs before enabling this option. Default is false.
 	OnlinePredictionLogging bool `json:"onlinePredictionLogging,omitempty"`
 
 	// Regions: Optional. The list of regions where the model is going to be
-	// deployed.
-	// Only one region per model is supported.
-	// Defaults to 'us-central1' if nothing is set.
-	// See the <a href="/ml-engine/docs/tensorflow/regions">available
-	// regions</a>
-	// for AI Platform services.
-	// Note:
-	// *   No matter where a model is deployed, it can always be accessed
-	// by
-	//     users from anywhere, both for online and batch prediction.
-	// *   The region for a batch prediction job is set by the region field
-	// when
-	//     submitting the batch prediction job and does not take its value
-	// from
-	//     this field.
+	// deployed. Only one region per model is supported. Defaults to
+	// 'us-central1' if nothing is set. See the available regions for AI
+	// Platform services. Note: * No matter where a model is deployed, it
+	// can always be accessed by users from anywhere, both for online and
+	// batch prediction. * The region for a batch prediction job is set by
+	// the region field when submitting the batch prediction job and does
+	// not take its value from this field.
 	Regions []string `json:"regions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2339,8 +2172,7 @@ type GoogleCloudMlV1__OperationMetadata struct {
 	IsCancellationRequested bool `json:"isCancellationRequested,omitempty"`
 
 	// Labels: The user labels, inherited from the model or the model
-	// version being
-	// operated on.
+	// version being operated on.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ModelName: Contains the name of the model associated with the
@@ -2399,71 +2231,55 @@ type GoogleCloudMlV1__ParameterSpec struct {
 	// possible categories.
 	CategoricalValues []string `json:"categoricalValues,omitempty"`
 
-	// DiscreteValues: Required if type is `DISCRETE`.
-	// A list of feasible points.
-	// The list should be in strictly increasing order. For instance,
-	// this
-	// parameter might have possible settings of 1.5, 2.5, and 4.0. This
-	// list
-	// should not contain more than 1,000 values.
+	// DiscreteValues: Required if type is `DISCRETE`. A list of feasible
+	// points. The list should be in strictly increasing order. For
+	// instance, this parameter might have possible settings of 1.5, 2.5,
+	// and 4.0. This list should not contain more than 1,000 values.
 	DiscreteValues []float64 `json:"discreteValues,omitempty"`
 
-	// MaxValue: Required if type is `DOUBLE` or `INTEGER`. This
-	// field
+	// MaxValue: Required if type is `DOUBLE` or `INTEGER`. This field
 	// should be unset if type is `CATEGORICAL`. This value should be
-	// integers if
-	// type is `INTEGER`.
+	// integers if type is `INTEGER`.
 	MaxValue float64 `json:"maxValue,omitempty"`
 
-	// MinValue: Required if type is `DOUBLE` or `INTEGER`. This
-	// field
+	// MinValue: Required if type is `DOUBLE` or `INTEGER`. This field
 	// should be unset if type is `CATEGORICAL`. This value should be
-	// integers if
-	// type is INTEGER.
+	// integers if type is INTEGER.
 	MinValue float64 `json:"minValue,omitempty"`
 
 	// ParameterName: Required. The parameter name must be unique amongst
-	// all ParameterConfigs in
-	// a HyperparameterSpec message. E.g., "learning_rate".
+	// all ParameterConfigs in a HyperparameterSpec message. E.g.,
+	// "learning_rate".
 	ParameterName string `json:"parameterName,omitempty"`
 
 	// ScaleType: Optional. How the parameter should be scaled to the
-	// hypercube.
-	// Leave unset for categorical parameters.
-	// Some kind of scaling is strongly recommended for real or
-	// integral
-	// parameters (e.g., `UNIT_LINEAR_SCALE`).
+	// hypercube. Leave unset for categorical parameters. Some kind of
+	// scaling is strongly recommended for real or integral parameters
+	// (e.g., `UNIT_LINEAR_SCALE`).
 	//
 	// Possible values:
 	//   "NONE" - By default, no scaling is applied.
 	//   "UNIT_LINEAR_SCALE" - Scales the feasible space to (0, 1) linearly.
 	//   "UNIT_LOG_SCALE" - Scales the feasible space logarithmically to (0,
-	// 1). The entire feasible
-	// space must be strictly positive.
+	// 1). The entire feasible space must be strictly positive.
 	//   "UNIT_REVERSE_LOG_SCALE" - Scales the feasible space "reverse"
-	// logarithmically to (0, 1). The result
-	// is that values close to the top of the feasible space are spread out
-	// more
-	// than points near the bottom. The entire feasible space must be
-	// strictly
-	// positive.
+	// logarithmically to (0, 1). The result is that values close to the top
+	// of the feasible space are spread out more than points near the
+	// bottom. The entire feasible space must be strictly positive.
 	ScaleType string `json:"scaleType,omitempty"`
 
 	// Type: Required. The type of the parameter.
 	//
 	// Possible values:
 	//   "PARAMETER_TYPE_UNSPECIFIED" - You must specify a valid type. Using
-	// this unspecified type will result in
-	// an error.
+	// this unspecified type will result in an error.
 	//   "DOUBLE" - Type for real-valued parameters.
 	//   "INTEGER" - Type for integral parameters.
 	//   "CATEGORICAL" - The parameter is categorical, with a value chosen
-	// from the categories
-	// field.
+	// from the categories field.
 	//   "DISCRETE" - The parameter is real valued, with a fixed set of
-	// feasible points. If
-	// `type==DISCRETE`, feasible_points must be provided, and
-	// {`min_value`, `max_value`} will be ignored.
+	// feasible points. If `type==DISCRETE`, feasible_points must be
+	// provided, and {`min_value`, `max_value`} will be ignored.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CategoricalValues")
@@ -2509,12 +2325,9 @@ func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
 // GoogleCloudMlV1__PredictRequest: Request for predictions to be issued
 // against a trained model.
 type GoogleCloudMlV1__PredictRequest struct {
-	// HttpBody:
-	// Required. The prediction request body. Refer to the [request body
-	// details
-	// section](#request-body-details) for more information on how to
-	// structure
-	// your request.
+	// HttpBody:  Required. The prediction request body. Refer to the
+	// [request body details section](#request-body-details) for more
+	// information on how to structure your request.
 	HttpBody *GoogleApi__HttpBody `json:"httpBody,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpBody") to
@@ -2543,12 +2356,10 @@ func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__PredictionInput: Represents input parameters for a
 // prediction job.
 type GoogleCloudMlV1__PredictionInput struct {
-	// BatchSize: Optional. Number of records per batch, defaults to 64.
-	// The service will buffer batch_size number of records in memory
-	// before
+	// BatchSize: Optional. Number of records per batch, defaults to 64. The
+	// service will buffer batch_size number of records in memory before
 	// invoking one Tensorflow prediction call internally. So take the
-	// record
-	// size and memory available into consideration when setting this
+	// record size and memory available into consideration when setting this
 	// parameter.
 	BatchSize int64 `json:"batchSize,omitempty,string"`
 
@@ -2559,31 +2370,24 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//   "JSON" - Each line of the file is a JSON dictionary representing
 	// one record.
 	//   "TEXT" - Deprecated. Use JSON instead.
-	//   "TF_RECORD" - The source file is a TFRecord file.
-	// Currently available only for input data.
+	//   "TF_RECORD" - The source file is a TFRecord file. Currently
+	// available only for input data.
 	//   "TF_RECORD_GZIP" - The source file is a GZIP-compressed TFRecord
-	// file.
-	// Currently available only for input data.
+	// file. Currently available only for input data.
 	//   "CSV" - Values are comma-separated rows, with keys in a separate
-	// file.
-	// Currently available only for output data.
+	// file. Currently available only for output data.
 	DataFormat string `json:"dataFormat,omitempty"`
 
 	// InputPaths: Required. The Cloud Storage location of the input data
-	// files. May contain
-	// <a href="/storage/docs/gsutil/addlhelp/WildcardNames">wildcards</a>.
+	// files. May contain wildcards.
 	InputPaths []string `json:"inputPaths,omitempty"`
 
 	// MaxWorkerCount: Optional. The maximum number of workers to be used
-	// for parallel processing.
-	// Defaults to 10 if not specified.
+	// for parallel processing. Defaults to 10 if not specified.
 	MaxWorkerCount int64 `json:"maxWorkerCount,omitempty,string"`
 
 	// ModelName: Use this field if you want to use the default version for
-	// the specified
-	// model. The string must use the following
-	// format:
-	//
+	// the specified model. The string must use the following format:
 	// "projects/YOUR_PROJECT/models/YOUR_MODEL"
 	ModelName string `json:"modelName,omitempty"`
 
@@ -2595,66 +2399,46 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//   "JSON" - Each line of the file is a JSON dictionary representing
 	// one record.
 	//   "TEXT" - Deprecated. Use JSON instead.
-	//   "TF_RECORD" - The source file is a TFRecord file.
-	// Currently available only for input data.
+	//   "TF_RECORD" - The source file is a TFRecord file. Currently
+	// available only for input data.
 	//   "TF_RECORD_GZIP" - The source file is a GZIP-compressed TFRecord
-	// file.
-	// Currently available only for input data.
+	// file. Currently available only for input data.
 	//   "CSV" - Values are comma-separated rows, with keys in a separate
-	// file.
-	// Currently available only for output data.
+	// file. Currently available only for output data.
 	OutputDataFormat string `json:"outputDataFormat,omitempty"`
 
 	// OutputPath: Required. The output Google Cloud Storage location.
 	OutputPath string `json:"outputPath,omitempty"`
 
 	// Region: Required. The Google Compute Engine region to run the
-	// prediction job in.
-	// See the <a href="/ml-engine/docs/tensorflow/regions">available
-	// regions</a>
-	// for AI Platform services.
+	// prediction job in. See the available regions for AI Platform
+	// services.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
-	// this batch
-	// prediction. If not set, AI Platform will pick the runtime version
-	// used
-	// during the CreateVersion request for this model version, or choose
-	// the
-	// latest stable version when model version information is not
-	// available
-	// such as when the model is specified by uri.
+	// this batch prediction. If not set, AI Platform will pick the runtime
+	// version used during the CreateVersion request for this model version,
+	// or choose the latest stable version when model version information is
+	// not available such as when the model is specified by uri.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// SignatureName: Optional. The name of the signature defined in the
-	// SavedModel to use for
-	// this job. Please refer
-	// to
-	// [SavedModel](https://tensorflow.github.io/serving/serving_basic.htm
-	// l)
-	// for information about how to use signatures.
-	//
-	// Defaults
-	// to
-	// [DEFAULT_SERVING_SIGNATURE_DEF_KEY](https://www.tensorflow.org/api_
-	// docs/python/tf/saved_model/signature_constants)
-	// , which is "serving_default".
+	// SavedModel to use for this job. Please refer to
+	// [SavedModel](https://tensorflow.github.io/serving/serving_basic.html)
+	// for information about how to use signatures. Defaults to
+	// [DEFAULT_SERVING_SIGNATURE_DEF_KEY](https://www.tensorflow.org/api_doc
+	// s/python/tf/saved_model/signature_constants) , which is
+	// "serving_default".
 	SignatureName string `json:"signatureName,omitempty"`
 
 	// Uri: Use this field if you want to specify a Google Cloud Storage
-	// path for
-	// the model to use.
+	// path for the model to use.
 	Uri string `json:"uri,omitempty"`
 
 	// VersionName: Use this field if you want to specify a version of the
-	// model to use. The
-	// string is formatted the same way as `model_version`, with the
-	// addition
-	// of the version
-	// information:
-	//
-	// "projects/YOUR_PROJECT/models/YOUR_MODEL/versions/YOUR_
-	// VERSION"
+	// model to use. The string is formatted the same way as
+	// `model_version`, with the addition of the version information:
+	// "projects/YOUR_PROJECT/models/YOUR_MODEL/versions/YOUR_VERSION"
 	VersionName string `json:"versionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
@@ -2737,82 +2521,54 @@ func (s *GoogleCloudMlV1__PredictionOutput) UnmarshalJSON(data []byte) error {
 // replica in a cluster.
 type GoogleCloudMlV1__ReplicaConfig struct {
 	// AcceleratorConfig: Represents the type and number of accelerators
-	// used by the replica.
-	// [Learn about restrictions on accelerator configurations
-	// for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
-	// chine-types-with-gpu)
+	// used by the replica. [Learn about restrictions on accelerator
+	// configurations for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
+	// e-types-with-gpu)
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
-	// ContainerArgs: Arguments to the entrypoint command.
-	// The following rules apply for container_command and container_args:
-	// - If you do not supply command or args:
-	//   The defaults defined in the Docker image are used.
-	// - If you supply a command but no args:
-	//   The default EntryPoint and the default Cmd defined in the Docker
-	// image
-	//   are ignored. Your command is run without any arguments.
-	// - If you supply only args:
-	//   The default Entrypoint defined in the Docker image is run with the
-	// args
-	//   that you supplied.
-	// - If you supply a command and args:
-	//   The default Entrypoint and the default Cmd defined in the Docker
-	// image
-	//   are ignored. Your command is run with your args.
-	// It cannot be set if custom container image is
-	// not provided.
-	// Note that this field and [TrainingInput.args] are mutually exclusive,
-	// i.e.,
-	// both cannot be set at the same time.
+	// ContainerArgs: Arguments to the entrypoint command. The following
+	// rules apply for container_command and container_args: - If you do not
+	// supply command or args: The defaults defined in the Docker image are
+	// used. - If you supply a command but no args: The default EntryPoint
+	// and the default Cmd defined in the Docker image are ignored. Your
+	// command is run without any arguments. - If you supply only args: The
+	// default Entrypoint defined in the Docker image is run with the args
+	// that you supplied. - If you supply a command and args: The default
+	// Entrypoint and the default Cmd defined in the Docker image are
+	// ignored. Your command is run with your args. It cannot be set if
+	// custom container image is not provided. Note that this field and
+	// [TrainingInput.args] are mutually exclusive, i.e., both cannot be set
+	// at the same time.
 	ContainerArgs []string `json:"containerArgs,omitempty"`
 
 	// ContainerCommand: The command with which the replica's custom
-	// container is run.
-	// If provided, it will override default ENTRYPOINT of the docker
-	// image.
-	// If not provided, the docker image's ENTRYPOINT is used.
-	// It cannot be set if custom container image is
-	// not provided.
+	// container is run. If provided, it will override default ENTRYPOINT of
+	// the docker image. If not provided, the docker image's ENTRYPOINT is
+	// used. It cannot be set if custom container image is not provided.
 	// Note that this field and [TrainingInput.args] are mutually exclusive,
-	// i.e.,
-	// both cannot be set at the same time.
+	// i.e., both cannot be set at the same time.
 	ContainerCommand []string `json:"containerCommand,omitempty"`
 
 	// ImageUri: The Docker image to run on the replica. This image must be
-	// in Container
-	// Registry. Learn more about [configuring
-	// custom
-	// containers](/ai-platform/training/docs/distributed-training-con
-	// tainers).
+	// in Container Registry. Learn more about [configuring custom
+	// containers](/ai-platform/training/docs/distributed-training-containers
+	// ).
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// TpuTfVersion: The AI Platform runtime version that includes a
-	// TensorFlow version matching
-	// the one used in the custom container. This field is required if the
-	// replica
-	// is a TPU worker that uses a custom container. Otherwise, do not
-	// specify
-	// this field. This must be a [runtime version that currently
-	// supports
-	// training
-	// with
-	// TPUs](/ml-engine/docs/tensorflow/runtime-version-list#tpu-support
-	// ).
-	//
-	// Note that the version of TensorFlow included in a runtime version
-	// may
+	// TensorFlow version matching the one used in the custom container.
+	// This field is required if the replica is a TPU worker that uses a
+	// custom container. Otherwise, do not specify this field. This must be
+	// a [runtime version that currently supports training with
+	// TPUs](/ml-engine/docs/tensorflow/runtime-version-list#tpu-support).
+	// Note that the version of TensorFlow included in a runtime version may
 	// differ from the numbering of the runtime version itself, because it
-	// may
-	// have a different
-	// [patch
-	// version](https://www.tensorflow.org/guide/version_compat#semant
-	// ic_versioning_20).
-	// In this field, you must specify the runtime version (TensorFlow
-	// minor
-	// version). For example, if your custom container runs TensorFlow
-	// `1.x.y`,
-	// specify `1.x`.
+	// may have a different [patch
+	// version](https://www.tensorflow.org/guide/version_compat#semantic_vers
+	// ioning_20). In this field, you must specify the runtime version
+	// (TensorFlow minor version). For example, if your custom container
+	// runs TensorFlow `1.x.y`, specify `1.x`.
 	TpuTfVersion string `json:"tpuTfVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
@@ -2840,57 +2596,31 @@ func (s *GoogleCloudMlV1__ReplicaConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__RequestLoggingConfig: Configuration for logging
-// request-response pairs to a BigQuery table.
-// Online prediction requests to a model version and the responses to
-// these
-// requests are converted to raw strings and saved to the specified
-// BigQuery
-// table. Logging is constrained by [BigQuery quotas
-// and
+// request-response pairs to a BigQuery table. Online prediction
+// requests to a model version and the responses to these requests are
+// converted to raw strings and saved to the specified BigQuery table.
+// Logging is constrained by [BigQuery quotas and
 // limits](/bigquery/quotas). If your project exceeds BigQuery quotas or
-// limits,
-// AI Platform Prediction does not log request-response pairs, but it
-// continues
-// to serve predictions.
-//
-// If you are using
-// [continuous
+// limits, AI Platform Prediction does not log request-response pairs,
+// but it continues to serve predictions. If you are using [continuous
 // evaluation](/ml-engine/docs/continuous-evaluation/), you do not need
-// to
-// specify this configuration manually. Setting up continuous
-// evaluation
-// automatically enables logging of request-response pairs.
+// to specify this configuration manually. Setting up continuous
+// evaluation automatically enables logging of request-response pairs.
 type GoogleCloudMlV1__RequestLoggingConfig struct {
 	// BigqueryTableName: Required. Fully qualified BigQuery table name in
-	// the following
-	// format:
-	// "<var>project_id</var>.<var>dataset_name</var>.<var>table_name
-	// </var>"
-	//
-	// The specified table must already exist, and the "Cloud ML Service
-	// Agent"
+	// the following format: " project_id.dataset_name.table_name" The
+	// specified table must already exist, and the "Cloud ML Service Agent"
 	// for your project must have permission to write to it. The table must
-	// have
-	// the following [schema](/bigquery/docs/schemas):
-	//
-	// <table>
-	//   <tr><th>Field name</th><th style="display: table-cell">Type</th>
-	//     <th style="display: table-cell">Mode</th></tr>
-	//   <tr><td>model</td><td>STRING</td><td>REQUIRED</td></tr>
-	//   <tr><td>model_version</td><td>STRING</td><td>REQUIRED</td></tr>
-	//   <tr><td>time</td><td>TIMESTAMP</td><td>REQUIRED</td></tr>
-	//   <tr><td>raw_data</td><td>STRING</td><td>REQUIRED</td></tr>
-	//   <tr><td>raw_prediction</td><td>STRING</td><td>NULLABLE</td></tr>
-	//
-	// <tr><td>groundtruth</td><td>STRING</td><td>NULLABLE</td></tr>
-	// </table>
+	// have the following [schema](/bigquery/docs/schemas): Field nameType
+	// Mode model STRING REQUIRED model_version STRING REQUIRED time
+	// TIMESTAMP REQUIRED raw_data STRING REQUIRED raw_prediction STRING
+	// NULLABLE groundtruth STRING NULLABLE
 	BigqueryTableName string `json:"bigqueryTableName,omitempty"`
 
 	// SamplingPercentage: Percentage of requests to be logged, expressed as
-	// a fraction from 0 to 1.
-	// For example, if you want to log 10% of requests, enter `0.1`. The
-	// sampling
-	// window is the lifetime of the model version. Defaults to 0.
+	// a fraction from 0 to 1. For example, if you want to log 10% of
+	// requests, enter `0.1`. The sampling window is the lifetime of the
+	// model version. Defaults to 0.
 	SamplingPercentage float64 `json:"samplingPercentage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigqueryTableName")
@@ -2932,15 +2662,12 @@ func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error
 }
 
 // GoogleCloudMlV1__SampledShapleyAttribution: An attribution method
-// that approximates Shapley values for features that
-// contribute to the label being predicted. A sampling strategy is used
-// to
-// approximate the value rather than considering all subsets of
-// features.
+// that approximates Shapley values for features that contribute to the
+// label being predicted. A sampling strategy is used to approximate the
+// value rather than considering all subsets of features.
 type GoogleCloudMlV1__SampledShapleyAttribution struct {
 	// NumPaths: The number of feature permutations to consider when
-	// approximating the
-	// Shapley values.
+	// approximating the Shapley values.
 	NumPaths int64 `json:"numPaths,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumPaths") to
@@ -2970,36 +2697,17 @@ func (s *GoogleCloudMlV1__SampledShapleyAttribution) MarshalJSON() ([]byte, erro
 // training jobs.
 type GoogleCloudMlV1__Scheduling struct {
 	// MaxRunningTime: Optional. The maximum job running time, expressed in
-	// seconds. The field can
-	// contain up to nine fractional digits, terminated by `s`. If not
-	// specified,
-	// this field defaults to `604800s` (seven days).
-	//
-	// If the training job is still running after this duration, AI
-	// Platform
-	// Training cancels it.
-	//
-	// For example, if you want to ensure your job runs for no more than 2
-	// hours,
-	// set this field to `7200s` (2 hours * 60 minutes / hour * 60 seconds
-	// /
-	// minute).
-	//
-	// If you submit your training job using the `gcloud` tool, you can
-	// [provide
-	// this field in a
-	// `config.yaml`
-	// file](/ai-platform/training/docs/training-jobs#formattin
-	// g_your_configuration_parameters).
-	// For example:
-	//
-	// ```yaml
-	// trainingInput:
-	//   ...
-	//   scheduling:
-	//     maxRunningTime: 7200s
-	//   ...
-	// ```
+	// seconds. The field can contain up to nine fractional digits,
+	// terminated by `s`. If not specified, this field defaults to `604800s`
+	// (seven days). If the training job is still running after this
+	// duration, AI Platform Training cancels it. For example, if you want
+	// to ensure your job runs for no more than 2 hours, set this field to
+	// `7200s` (2 hours * 60 minutes / hour * 60 seconds / minute). If you
+	// submit your training job using the `gcloud` tool, you can [provide
+	// this field in a `config.yaml`
+	// file](/ai-platform/training/docs/training-jobs#formatting_your_configu
+	// ration_parameters). For example: ```yaml trainingInput: ...
+	// scheduling: maxRunningTime: 7200s ... ```
 	MaxRunningTime string `json:"maxRunningTime,omitempty"`
 
 	MaxWaitTime string `json:"maxWaitTime,omitempty"`
@@ -3042,8 +2750,7 @@ type GoogleCloudMlV1__Study struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// InactiveReason: Output only. A human readable reason why the Study is
-	// inactive.
-	// This should be empty if a study is ACTIVE or COMPLETED.
+	// inactive. This should be empty if a study is ACTIVE or COMPLETED.
 	InactiveReason string `json:"inactiveReason,omitempty"`
 
 	// Name: Output only. The name of a study.
@@ -3056,8 +2763,7 @@ type GoogleCloudMlV1__Study struct {
 	//   "ACTIVE" - The study is active.
 	//   "INACTIVE" - The study is stopped due to an internal error.
 	//   "COMPLETED" - The study is done when the service exhausts the
-	// parameter search space
-	// or max_trial_count is reached.
+	// parameter search space or max_trial_count is reached.
 	State string `json:"state,omitempty"`
 
 	// StudyConfig: Required. Configuration of the study.
@@ -3099,8 +2805,8 @@ type GoogleCloudMlV1__StudyConfig struct {
 	// AI Platform Optimization service.
 	//   "GAUSSIAN_PROCESS_BANDIT" - Gaussian Process Bandit.
 	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
-	// use grid search,
-	// all parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.
+	// use grid search, all parameters must be `INTEGER`, `CATEGORICAL`, or
+	// `DISCRETE`.
 	//   "RANDOM_SEARCH" - Simple random search within the feasible space.
 	Algorithm string `json:"algorithm,omitempty"`
 
@@ -3138,8 +2844,7 @@ func (s *GoogleCloudMlV1__StudyConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__SuggestTrialsMetadata: Metadata field of a
-// google.longrunning.Operation associated
-// with a SuggestTrialsRequest.
+// google.longrunning.Operation associated with a SuggestTrialsRequest.
 type GoogleCloudMlV1__SuggestTrialsMetadata struct {
 	// ClientId: The identifier of the client that is requesting the
 	// suggestion.
@@ -3181,13 +2886,10 @@ func (s *GoogleCloudMlV1__SuggestTrialsMetadata) MarshalJSON() ([]byte, error) {
 // SuggestTrial service method.
 type GoogleCloudMlV1__SuggestTrialsRequest struct {
 	// ClientId: Required. The identifier of the client that is requesting
-	// the suggestion.
-	//
-	// If multiple SuggestTrialsRequests have the same `client_id`,
-	// the service will return the identical suggested trial if the trial
-	// is
-	// pending, and provide a new trial if the last suggested trial was
-	// completed.
+	// the suggestion. If multiple SuggestTrialsRequests have the same
+	// `client_id`, the service will return the identical suggested trial if
+	// the trial is pending, and provide a new trial if the last suggested
+	// trial was completed.
 	ClientId string `json:"clientId,omitempty"`
 
 	// SuggestionCount: Required. The number of suggestions requested.
@@ -3217,8 +2919,8 @@ func (s *GoogleCloudMlV1__SuggestTrialsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__SuggestTrialsResponse: This message will be placed
-// in the response field of a completed
-// google.longrunning.Operation associated with a SuggestTrials request.
+// in the response field of a completed google.longrunning.Operation
+// associated with a SuggestTrials request.
 type GoogleCloudMlV1__SuggestTrialsResponse struct {
 	// EndTime: The time at which operation processing completed.
 	EndTime string `json:"endTime,omitempty"`
@@ -3233,8 +2935,7 @@ type GoogleCloudMlV1__SuggestTrialsResponse struct {
 	//   "ACTIVE" - The study is active.
 	//   "INACTIVE" - The study is stopped due to an internal error.
 	//   "COMPLETED" - The study is done when the service exhausts the
-	// parameter search space
-	// or max_trial_count is reached.
+	// parameter search space or max_trial_count is reached.
 	StudyState string `json:"studyState,omitempty"`
 
 	// Trials: A list of trials.
@@ -3264,266 +2965,148 @@ func (s *GoogleCloudMlV1__SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__TrainingInput: Represents input parameters for a
-// training job. When using the gcloud command
-// to submit your training job, you can specify the input parameters
-// as
-// command-line arguments and/or in a YAML configuration file referenced
-// from
-// the --config command-line argument. For details, see the guide to
-// [submitting
-// a training job](/ai-platform/training/docs/training-jobs).
+// training job. When using the gcloud command to submit your training
+// job, you can specify the input parameters as command-line arguments
+// and/or in a YAML configuration file referenced from the --config
+// command-line argument. For details, see the guide to [submitting a
+// training job](/ai-platform/training/docs/training-jobs).
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command-line arguments passed to the training
-	// application when it
-	// starts. If your job uses a custom container, then the arguments are
-	// passed
-	// to the container's <a class="external"
-	// target="_blank"
-	// href="https://docs.docker.com/engine/reference/builder
-	// /#entrypoint">
-	// `ENTRYPOINT`</a> command.
+	// application when it starts. If your job uses a custom container, then
+	// the arguments are passed to the container's `ENTRYPOINT` command.
 	Args []string `json:"args,omitempty"`
 
 	// EncryptionConfig: Optional. Options for using customer-managed
-	// encryption keys (CMEK) to
-	// protect resources created by a training job, instead of using
-	// Google's
-	// default encryption. If this is set, then all resources created by
-	// the
-	// training job will be encrypted with the customer-managed encryption
-	// key
-	// that you specify.
-	//
-	// [Learn how and when to use CMEK with AI
-	// Platform
+	// encryption keys (CMEK) to protect resources created by a training
+	// job, instead of using Google's default encryption. If this is set,
+	// then all resources created by the training job will be encrypted with
+	// the customer-managed encryption key that you specify. [Learn how and
+	// when to use CMEK with AI Platform
 	// Training](/ai-platform/training/docs/cmek).
 	EncryptionConfig *GoogleCloudMlV1__EncryptionConfig `json:"encryptionConfig,omitempty"`
 
-	// EvaluatorConfig: Optional. The configuration for evaluators.
-	//
-	// You should only set `evaluatorConfig.acceleratorConfig`
-	// if
-	// `evaluatorType` is set to a Compute Engine machine type. [Learn
-	// about restrictions on accelerator configurations
-	// for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
-	// chine-types-with-gpu)
-	//
-	// Set `evaluatorConfig.imageUri` only if you build a custom image
-	// for
-	// your evaluator. If `evaluatorConfig.imageUri` has not been
-	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
-	// more about [configuring
-	// custom
-	// containers](/ai-platform/training/docs/distributed-training-con
-	// tainers).
+	// EvaluatorConfig: Optional. The configuration for evaluators. You
+	// should only set `evaluatorConfig.acceleratorConfig` if
+	// `evaluatorType` is set to a Compute Engine machine type. [Learn about
+	// restrictions on accelerator configurations for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
+	// e-types-with-gpu) Set `evaluatorConfig.imageUri` only if you build a
+	// custom image for your evaluator. If `evaluatorConfig.imageUri` has
+	// not been set, AI Platform uses the value of `masterConfig.imageUri`.
+	// Learn more about [configuring custom
+	// containers](/ai-platform/training/docs/distributed-training-containers
+	// ).
 	EvaluatorConfig *GoogleCloudMlV1__ReplicaConfig `json:"evaluatorConfig,omitempty"`
 
 	// EvaluatorCount: Optional. The number of evaluator replicas to use for
-	// the training job.
-	// Each replica in the cluster will be of the type specified
-	// in
-	// `evaluator_type`.
-	//
-	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
-	// you
-	// set this value, you must also set `evaluator_type`.
-	//
-	// The default value is zero.
+	// the training job. Each replica in the cluster will be of the type
+	// specified in `evaluator_type`. This value can only be used when
+	// `scale_tier` is set to `CUSTOM`. If you set this value, you must also
+	// set `evaluator_type`. The default value is zero.
 	EvaluatorCount int64 `json:"evaluatorCount,omitempty,string"`
 
 	// EvaluatorType: Optional. Specifies the type of virtual machine to use
-	// for your training
-	// job's evaluator nodes.
-	//
-	// The supported values are the same as those described in the entry
-	// for
-	// `masterType`.
-	//
-	// This value must be consistent with the category of machine type
-	// that
+	// for your training job's evaluator nodes. The supported values are the
+	// same as those described in the entry for `masterType`. This value
+	// must be consistent with the category of machine type that
 	// `masterType` uses. In other words, both must be Compute Engine
-	// machine
-	// types or both must be legacy machine types.
-	//
-	// This value must be present when `scaleTier` is set to `CUSTOM`
-	// and
-	// `evaluatorCount` is greater than zero.
+	// machine types or both must be legacy machine types. This value must
+	// be present when `scaleTier` is set to `CUSTOM` and `evaluatorCount`
+	// is greater than zero.
 	EvaluatorType string `json:"evaluatorType,omitempty"`
 
 	// Hyperparameters: Optional. The set of Hyperparameters to tune.
 	Hyperparameters *GoogleCloudMlV1__HyperparameterSpec `json:"hyperparameters,omitempty"`
 
 	// JobDir: Optional. A Google Cloud Storage path in which to store
-	// training outputs
-	// and other data needed for training. This path is passed to your
-	// TensorFlow
-	// program as the '--job-dir' command-line argument. The benefit of
-	// specifying
-	// this field is that Cloud ML validates the path for use in training.
+	// training outputs and other data needed for training. This path is
+	// passed to your TensorFlow program as the '--job-dir' command-line
+	// argument. The benefit of specifying this field is that Cloud ML
+	// validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
 
-	// MasterConfig: Optional. The configuration for your master
-	// worker.
-	//
-	// You should only set `masterConfig.acceleratorConfig` if `masterType`
-	// is set
-	// to a Compute Engine machine type. Learn about [restrictions on
-	// accelerator
-	// configurations
-	// for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
-	// chine-types-with-gpu)
-	//
-	// Set `masterConfig.imageUri` only if you build a custom image. Only
-	// one of
-	// `masterConfig.imageUri` and `runtimeVersion` should be set. Learn
-	// more
-	// about [configuring
-	// custom
-	// containers](/ai-platform/training/docs/distributed-training-con
-	// tainers).
+	// MasterConfig: Optional. The configuration for your master worker. You
+	// should only set `masterConfig.acceleratorConfig` if `masterType` is
+	// set to a Compute Engine machine type. Learn about [restrictions on
+	// accelerator configurations for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
+	// e-types-with-gpu) Set `masterConfig.imageUri` only if you build a
+	// custom image. Only one of `masterConfig.imageUri` and
+	// `runtimeVersion` should be set. Learn more about [configuring custom
+	// containers](/ai-platform/training/docs/distributed-training-containers
+	// ).
 	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
-	// for your training
-	// job's master worker. You must specify this field when `scaleTier` is
-	// set to
-	// `CUSTOM`.
-	//
-	// You can use certain Compute Engine machine types directly in this
-	// field.
-	// The following types are supported:
-	//
-	// - `n1-standard-4`
-	// - `n1-standard-8`
-	// - `n1-standard-16`
-	// - `n1-standard-32`
-	// - `n1-standard-64`
-	// - `n1-standard-96`
-	// - `n1-highmem-2`
-	// - `n1-highmem-4`
-	// - `n1-highmem-8`
-	// - `n1-highmem-16`
-	// - `n1-highmem-32`
-	// - `n1-highmem-64`
-	// - `n1-highmem-96`
-	// - `n1-highcpu-16`
-	// - `n1-highcpu-32`
-	// - `n1-highcpu-64`
-	// - `n1-highcpu-96`
-	//
-	// Learn more about [using Compute Engine
-	// machine
-	// types](/ml-engine/docs/machine-types#compute-engine-machine-ty
-	// pes).
-	//
-	// Alternatively, you can use the following legacy machine types:
-	//
-	// - `standard`
-	// - `large_model`
-	// - `complex_model_s`
-	// - `complex_model_m`
-	// - `complex_model_l`
-	// - `standard_gpu`
-	// - `complex_model_m_gpu`
-	// - `complex_model_l_gpu`
-	// - `standard_p100`
-	// - `complex_model_m_p100`
-	// - `standard_v100`
-	// - `large_model_v100`
-	// - `complex_model_m_v100`
-	// - `complex_model_l_v100`
-	//
-	// Learn more about [using legacy
-	// machine
-	// types](/ml-engine/docs/machine-types#legacy-machine-types).
-	//
-	// F
-	// inally, if you want to use a TPU for training, specify `cloud_tpu` in
-	// this
+	// for your training job's master worker. You must specify this field
+	// when `scaleTier` is set to `CUSTOM`. You can use certain Compute
+	// Engine machine types directly in this field. The following types are
+	// supported: - `n1-standard-4` - `n1-standard-8` - `n1-standard-16` -
+	// `n1-standard-32` - `n1-standard-64` - `n1-standard-96` -
+	// `n1-highmem-2` - `n1-highmem-4` - `n1-highmem-8` - `n1-highmem-16` -
+	// `n1-highmem-32` - `n1-highmem-64` - `n1-highmem-96` - `n1-highcpu-16`
+	// - `n1-highcpu-32` - `n1-highcpu-64` - `n1-highcpu-96` Learn more
+	// about [using Compute Engine machine
+	// types](/ml-engine/docs/machine-types#compute-engine-machine-types).
+	// Alternatively, you can use the following legacy machine types: -
+	// `standard` - `large_model` - `complex_model_s` - `complex_model_m` -
+	// `complex_model_l` - `standard_gpu` - `complex_model_m_gpu` -
+	// `complex_model_l_gpu` - `standard_p100` - `complex_model_m_p100` -
+	// `standard_v100` - `large_model_v100` - `complex_model_m_v100` -
+	// `complex_model_l_v100` Learn more about [using legacy machine
+	// types](/ml-engine/docs/machine-types#legacy-machine-types). Finally,
+	// if you want to use a TPU for training, specify `cloud_tpu` in this
 	// field. Learn more about the [special configuration options for
-	// training
-	// with
-	// TPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_
-	// a_custom_tpu_machine).
+	// training with
+	// TPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_m
+	// achine).
 	MasterType string `json:"masterType,omitempty"`
 
 	// Network: Optional. The full name of the [Compute Engine
-	// network](/vpc/docs/vpc) to which the
-	// Job is peered. For example, `projects/12345/global/networks/myVPC`.
-	// The
-	// format of this field is
-	// `projects/{project}/global/networks/{network}`,
-	// where {project} is a project number (like `12345`) and {network} is
-	// network
-	// name.
-	//
-	// Private services access must already be configured for the network.
-	// If left
+	// network](/vpc/docs/vpc) to which the Job is peered. For example,
+	// `projects/12345/global/networks/myVPC`. The format of this field is
+	// `projects/{project}/global/networks/{network}`, where {project} is a
+	// project number (like `12345`) and {network} is network name. Private
+	// services access must already be configured for the network. If left
 	// unspecified, the Job is not peered with any network. [Learn about
-	// using VPC
-	// Network Peering.](/ai-platform/training/docs/vpc-peering).
+	// using VPC Network Peering.](/ai-platform/training/docs/vpc-peering).
 	Network string `json:"network,omitempty"`
 
 	// PackageUris: Required. The Google Cloud Storage location of the
-	// packages with
-	// the training program and any additional dependencies.
+	// packages with the training program and any additional dependencies.
 	// The maximum number of package URIs is 100.
 	PackageUris []string `json:"packageUris,omitempty"`
 
 	// ParameterServerConfig: Optional. The configuration for parameter
-	// servers.
-	//
-	// You should only set `parameterServerConfig.acceleratorConfig`
-	// if
-	// `parameterServerType` is set to a Compute Engine machine type.
-	// [Learn
-	// about restrictions on accelerator configurations
-	// for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
-	// chine-types-with-gpu)
-	//
-	// Set `parameterServerConfig.imageUri` only if you build a custom image
-	// for
-	// your parameter server. If `parameterServerConfig.imageUri` has not
-	// been
-	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
-	// more about [configuring
+	// servers. You should only set
+	// `parameterServerConfig.acceleratorConfig` if `parameterServerType` is
+	// set to a Compute Engine machine type. [Learn about restrictions on
+	// accelerator configurations for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
+	// e-types-with-gpu) Set `parameterServerConfig.imageUri` only if you
+	// build a custom image for your parameter server. If
+	// `parameterServerConfig.imageUri` has not been set, AI Platform uses
+	// the value of `masterConfig.imageUri`. Learn more about [configuring
 	// custom
-	// containers](/ai-platform/training/docs/distributed-training-con
-	// tainers).
+	// containers](/ai-platform/training/docs/distributed-training-containers
+	// ).
 	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
-	// replicas to use for the training
-	// job. Each replica in the cluster will be of the type specified
-	// in
-	// `parameter_server_type`.
-	//
-	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
-	// you
-	// set this value, you must also set `parameter_server_type`.
-	//
-	// The default value is zero.
+	// replicas to use for the training job. Each replica in the cluster
+	// will be of the type specified in `parameter_server_type`. This value
+	// can only be used when `scale_tier` is set to `CUSTOM`. If you set
+	// this value, you must also set `parameter_server_type`. The default
+	// value is zero.
 	ParameterServerCount int64 `json:"parameterServerCount,omitempty,string"`
 
 	// ParameterServerType: Optional. Specifies the type of virtual machine
-	// to use for your training
-	// job's parameter server.
-	//
-	// The supported values are the same as those described in the entry
-	// for
-	// `master_type`.
-	//
-	// This value must be consistent with the category of machine type
-	// that
+	// to use for your training job's parameter server. The supported values
+	// are the same as those described in the entry for `master_type`. This
+	// value must be consistent with the category of machine type that
 	// `masterType` uses. In other words, both must be Compute Engine
-	// machine
-	// types or both must be legacy machine types.
-	//
-	// This value must be present when `scaleTier` is set to `CUSTOM`
-	// and
+	// machine types or both must be legacy machine types. This value must
+	// be present when `scaleTier` is set to `CUSTOM` and
 	// `parameter_server_count` is greater than zero.
 	ParameterServerType string `json:"parameterServerType,omitempty"`
 
@@ -3532,189 +3115,115 @@ type GoogleCloudMlV1__TrainingInput struct {
 	PythonModule string `json:"pythonModule,omitempty"`
 
 	// PythonVersion: Optional. The version of Python used in training. You
-	// must either specify
-	// this field or specify `masterConfig.imageUri`.
-	//
-	// The following Python versions are available:
-	//
-	// * Python '3.7' is available when `runtime_version` is set to '1.15'
-	// or
-	//   later.
-	// * Python '3.5' is available when `runtime_version` is set to a
-	// version
-	//   from '1.4' to '1.14'.
-	// * Python '2.7' is available when `runtime_version` is set to '1.15'
-	// or
-	//   earlier.
-	//
-	// Read more about the Python versions available for [each
-	// runtime
+	// must either specify this field or specify `masterConfig.imageUri`.
+	// The following Python versions are available: * Python '3.7' is
+	// available when `runtime_version` is set to '1.15' or later. * Python
+	// '3.5' is available when `runtime_version` is set to a version from
+	// '1.4' to '1.14'. * Python '2.7' is available when `runtime_version`
+	// is set to '1.15' or earlier. Read more about the Python versions
+	// available for [each runtime
 	// version](/ml-engine/docs/runtime-version-list).
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// Region: Required. The region to run the training job in. See the
-	// [available
-	// regions](/ai-platform/training/docs/regions) for AI Platform
-	// Training.
+	// [available regions](/ai-platform/training/docs/regions) for AI
+	// Platform Training.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
-	// training. You must
-	// either specify this field or specify `masterConfig.imageUri`.
-	//
-	// For more information, see the [runtime
-	// version
-	// list](/ai-platform/training/docs/runtime-version-list) and learn [how
-	// to
-	// manage runtime versions](/ai-platform/training/docs/versioning).
+	// training. You must either specify this field or specify
+	// `masterConfig.imageUri`. For more information, see the [runtime
+	// version list](/ai-platform/training/docs/runtime-version-list) and
+	// learn [how to manage runtime
+	// versions](/ai-platform/training/docs/versioning).
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ScaleTier: Required. Specifies the machine types, the number of
-	// replicas for workers
-	// and parameter servers.
+	// replicas for workers and parameter servers.
 	//
 	// Possible values:
 	//   "BASIC" - A single worker instance. This tier is suitable for
-	// learning how to use
-	// Cloud ML, and for experimenting with new models using small datasets.
+	// learning how to use Cloud ML, and for experimenting with new models
+	// using small datasets.
 	//   "STANDARD_1" - Many workers and a few parameter servers.
 	//   "PREMIUM_1" - A large number of workers with many parameter
 	// servers.
-	//   "BASIC_GPU" - A single worker instance [with
-	// a
+	//   "BASIC_GPU" - A single worker instance [with a
 	// GPU](/ai-platform/training/docs/using-gpus).
-	//   "BASIC_TPU" - A single worker instance with a
-	// [Cloud TPU](/ml-engine/docs/tensorflow/using-tpus).
+	//   "BASIC_TPU" - A single worker instance with a [Cloud
+	// TPU](/ml-engine/docs/tensorflow/using-tpus).
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
-	// you to use your
-	// own cluster specification. When you use this tier, set values
-	// to
-	// configure your processing cluster according to these guidelines:
-	//
-	// *   You _must_ set `TrainingInput.masterType` to specify the type
-	//     of machine to use for your master node. This is the only
-	// required
-	//     setting.
-	//
-	// *   You _may_ set `TrainingInput.workerCount` to specify the number
-	// of
-	//     workers to use. If you specify one or more workers, you _must_
-	// also
-	//     set `TrainingInput.workerType` to specify the type of machine to
-	// use
-	//     for your worker nodes.
-	//
-	// *   You _may_ set `TrainingInput.parameterServerCount` to specify
-	// the
-	//     number of parameter servers to use. If you specify one or more
-	//     parameter servers, you _must_ also set
-	//     `TrainingInput.parameterServerType` to specify the type of
-	// machine to
-	//     use for your parameter servers.
-	//
-	// Note that all of your workers must use the same machine type, which
-	// can
-	// be different from your parameter server type and master type.
-	// Your
+	// you to use your own cluster specification. When you use this tier,
+	// set values to configure your processing cluster according to these
+	// guidelines: * You _must_ set `TrainingInput.masterType` to specify
+	// the type of machine to use for your master node. This is the only
+	// required setting. * You _may_ set `TrainingInput.workerCount` to
+	// specify the number of workers to use. If you specify one or more
+	// workers, you _must_ also set `TrainingInput.workerType` to specify
+	// the type of machine to use for your worker nodes. * You _may_ set
+	// `TrainingInput.parameterServerCount` to specify the number of
+	// parameter servers to use. If you specify one or more parameter
+	// servers, you _must_ also set `TrainingInput.parameterServerType` to
+	// specify the type of machine to use for your parameter servers. Note
+	// that all of your workers must use the same machine type, which can be
+	// different from your parameter server type and master type. Your
 	// parameter servers must likewise use the same machine type, which can
-	// be
-	// different from your worker type and master type.
+	// be different from your worker type and master type.
 	ScaleTier string `json:"scaleTier,omitempty"`
 
 	// Scheduling: Optional. Scheduling options for a training job.
 	Scheduling *GoogleCloudMlV1__Scheduling `json:"scheduling,omitempty"`
 
 	// ServiceAccount: Optional. The email address of a service account to
-	// use when running the
-	// training appplication. You must have the
-	// `iam.serviceAccounts.actAs`
-	// permission for the specified service account. In addition, the AI
-	// Platform
-	// Training Google-managed service account must have
-	// the
-	// `roles/iam.serviceAccountAdmin` role for the specified service
-	// account.
-	// [Learn more about configuring a
-	// service
-	// account.](/ai-platform/training/docs/custom-service-account)
-	//
-	//
-	// If not specified, the AI Platform Training Google-managed service
-	// account
-	// is used by default.
+	// use when running the training appplication. You must have the
+	// `iam.serviceAccounts.actAs` permission for the specified service
+	// account. In addition, the AI Platform Training Google-managed service
+	// account must have the `roles/iam.serviceAccountAdmin` role for the
+	// specified service account. [Learn more about configuring a service
+	// account.](/ai-platform/training/docs/custom-service-account) If not
+	// specified, the AI Platform Training Google-managed service account is
+	// used by default.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// UseChiefInTfConfig: Optional. Use `chief` instead of `master` in the
-	// `TF_CONFIG` environment
-	// variable when training with a custom container. Defaults to `false`.
-	// [Learn
-	// more about
-	// this
-	// field.](/ai-platform/training/docs/distributed-training-details#c
-	// hief-versus-master)
-	//
-	// This field has no effect for training jobs that don't use a
-	// custom
-	// container.
+	// `TF_CONFIG` environment variable when training with a custom
+	// container. Defaults to `false`. [Learn more about this
+	// field.](/ai-platform/training/docs/distributed-training-details#chief-
+	// versus-master) This field has no effect for training jobs that don't
+	// use a custom container.
 	UseChiefInTfConfig bool `json:"useChiefInTfConfig,omitempty"`
 
-	// WorkerConfig: Optional. The configuration for workers.
-	//
-	// You should only set `workerConfig.acceleratorConfig` if `workerType`
-	// is set
-	// to a Compute Engine machine type. [Learn about restrictions on
-	// accelerator
-	// configurations
-	// for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-ma
-	// chine-types-with-gpu)
-	//
-	// Set `workerConfig.imageUri` only if you build a custom image for
-	// your
-	// worker. If `workerConfig.imageUri` has not been set, AI Platform
-	// uses
-	// the value of `masterConfig.imageUri`. Learn more about [configuring
-	// custom
-	// containers](/ai-platform/training/docs/distributed-training-con
-	// tainers).
+	// WorkerConfig: Optional. The configuration for workers. You should
+	// only set `workerConfig.acceleratorConfig` if `workerType` is set to a
+	// Compute Engine machine type. [Learn about restrictions on accelerator
+	// configurations for
+	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
+	// e-types-with-gpu) Set `workerConfig.imageUri` only if you build a
+	// custom image for your worker. If `workerConfig.imageUri` has not been
+	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
+	// more about [configuring custom
+	// containers](/ai-platform/training/docs/distributed-training-containers
+	// ).
 	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
-	// training job. Each
-	// replica in the cluster will be of the type specified in
-	// `worker_type`.
-	//
-	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
-	// you
-	// set this value, you must also set `worker_type`.
-	//
-	// The default value is zero.
+	// training job. Each replica in the cluster will be of the type
+	// specified in `worker_type`. This value can only be used when
+	// `scale_tier` is set to `CUSTOM`. If you set this value, you must also
+	// set `worker_type`. The default value is zero.
 	WorkerCount int64 `json:"workerCount,omitempty,string"`
 
 	// WorkerType: Optional. Specifies the type of virtual machine to use
-	// for your training
-	// job's worker nodes.
-	//
-	// The supported values are the same as those described in the entry
-	// for
-	// `masterType`.
-	//
-	// This value must be consistent with the category of machine type
-	// that
+	// for your training job's worker nodes. The supported values are the
+	// same as those described in the entry for `masterType`. This value
+	// must be consistent with the category of machine type that
 	// `masterType` uses. In other words, both must be Compute Engine
-	// machine
-	// types or both must be legacy machine types.
-	//
-	// If you use `cloud_tpu` for this value, see special instructions
-	// for
-	// [configuring a custom
-	// TPU
-	// machine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custo
-	// m_tpu_machine).
-	//
-	// This value must be present when `scaleTier` is set to `CUSTOM`
-	// and
-	// `workerCount` is greater than zero.
+	// machine types or both must be legacy machine types. If you use
+	// `cloud_tpu` for this value, see special instructions for [configuring
+	// a custom TPU
+	// machine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tp
+	// u_machine). This value must be present when `scaleTier` is set to
+	// `CUSTOM` and `workerCount` is greater than zero.
 	WorkerType string `json:"workerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -3743,26 +3252,22 @@ func (s *GoogleCloudMlV1__TrainingInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__TrainingOutput: Represents results of a training
 // job. Output only.
 type GoogleCloudMlV1__TrainingOutput struct {
-	// BuiltInAlgorithmOutput: Details related to built-in algorithms
-	// jobs.
+	// BuiltInAlgorithmOutput: Details related to built-in algorithms jobs.
 	// Only set for built-in algorithms jobs.
 	BuiltInAlgorithmOutput *GoogleCloudMlV1__BuiltInAlgorithmOutput `json:"builtInAlgorithmOutput,omitempty"`
 
 	// CompletedTrialCount: The number of hyperparameter tuning trials that
-	// completed successfully.
-	// Only set for hyperparameter tuning jobs.
+	// completed successfully. Only set for hyperparameter tuning jobs.
 	CompletedTrialCount int64 `json:"completedTrialCount,omitempty,string"`
 
 	// ConsumedMLUnits: The amount of ML units consumed by the job.
 	ConsumedMLUnits float64 `json:"consumedMLUnits,omitempty"`
 
 	// HyperparameterMetricTag: The TensorFlow summary tag name used for
-	// optimizing hyperparameter tuning
-	// trials.
-	// See
-	// [`HyperparameterSpec.hyperparameterMetricTag`](#HyperparameterSpec
-	// .FIELDS.hyperparameter_metric_tag)
-	// for more information. Only set for hyperparameter tuning jobs.
+	// optimizing hyperparameter tuning trials. See
+	// [`HyperparameterSpec.hyperparameterMetricTag`](#HyperparameterSpec.FIE
+	// LDS.hyperparameter_metric_tag) for more information. Only set for
+	// hyperparameter tuning jobs.
 	HyperparameterMetricTag string `json:"hyperparameterMetricTag,omitempty"`
 
 	// IsBuiltInAlgorithmJob: Whether this job is a built-in Algorithm job.
@@ -3772,8 +3277,8 @@ type GoogleCloudMlV1__TrainingOutput struct {
 	// tuning job.
 	IsHyperparameterTuningJob bool `json:"isHyperparameterTuningJob,omitempty"`
 
-	// Trials: Results for individual Hyperparameter trials.
-	// Only set for hyperparameter tuning jobs.
+	// Trials: Results for individual Hyperparameter trials. Only set for
+	// hyperparameter tuning jobs.
 	Trials []*GoogleCloudMlV1__HyperparameterOutput `json:"trials,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3830,14 +3335,13 @@ type GoogleCloudMlV1__Trial struct {
 	FinalMeasurement *GoogleCloudMlV1__Measurement `json:"finalMeasurement,omitempty"`
 
 	// InfeasibleReason: Output only. A human readable string describing why
-	// the trial is
-	// infeasible. This should only be set if trial_infeasible is true.
+	// the trial is infeasible. This should only be set if trial_infeasible
+	// is true.
 	InfeasibleReason string `json:"infeasibleReason,omitempty"`
 
 	// Measurements: A list of measurements that are strictly
-	// lexicographically
-	// ordered by their induced tuples (steps, elapsed_time).
-	// These are used for early stopping computations.
+	// lexicographically ordered by their induced tuples (steps,
+	// elapsed_time). These are used for early stopping computations.
 	Measurements []*GoogleCloudMlV1__Measurement `json:"measurements,omitempty"`
 
 	// Name: Output only. Name of the trial assigned by the service.
@@ -3854,12 +3358,10 @@ type GoogleCloudMlV1__Trial struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The trial state is unspecified.
 	//   "REQUESTED" - Indicates that a specific trial has been requested,
-	// but it has not yet
-	// been suggested by the service.
+	// but it has not yet been suggested by the service.
 	//   "ACTIVE" - Indicates that the trial has been suggested.
 	//   "COMPLETED" - Indicates that the trial is done, and either has a
-	// final_measurement
-	// set, or is marked as trial_infeasible.
+	// final_measurement set, or is marked as trial_infeasible.
 	//   "STOPPING" - Indicates that the trial should stop according to the
 	// service.
 	State string `json:"state,omitempty"`
@@ -3895,113 +3397,81 @@ func (s *GoogleCloudMlV1__Trial) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__Version: Represents a version of the model.
-//
-// Each version is a trained model deployed in the cloud, ready to
-// handle
-// prediction requests. A model can have multiple versions. You can
-// get
-// information about all of the versions of a given model by
-// calling
+// GoogleCloudMlV1__Version: Represents a version of the model. Each
+// version is a trained model deployed in the cloud, ready to handle
+// prediction requests. A model can have multiple versions. You can get
+// information about all of the versions of a given model by calling
 // projects.models.versions.list.
 type GoogleCloudMlV1__Version struct {
 	// AcceleratorConfig: Optional. Accelerator config for using GPUs for
-	// online prediction (beta).
-	// Only specify this field if you have specified a Compute Engine (N1)
-	// machine
-	// type in the `machineType` field. Learn more about [using GPUs for
-	// online
-	// prediction](/ml-engine/docs/machine-types-online-prediction#gpu
-	// s).
+	// online prediction (beta). Only specify this field if you have
+	// specified a Compute Engine (N1) machine type in the `machineType`
+	// field. Learn more about [using GPUs for online
+	// prediction](/ml-engine/docs/machine-types-online-prediction#gpus).
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// AutoScaling: Automatically scale the number of nodes used to serve
-	// the model in
-	// response to increases and decreases in traffic. Care should be
-	// taken to ramp up traffic according to the model's ability to scale
-	// or you will start seeing increases in latency and 429 response
-	// codes.
-	//
-	// Note that you cannot use AutoScaling if your version
-	// uses
-	// [GPUs](#Version.FIELDS.accelerator_config). Instead, you must use
-	// specify
-	// `manual_scaling`.
+	// the model in response to increases and decreases in traffic. Care
+	// should be taken to ramp up traffic according to the model's ability
+	// to scale or you will start seeing increases in latency and 429
+	// response codes. Note that you cannot use AutoScaling if your version
+	// uses [GPUs](#Version.FIELDS.accelerator_config). Instead, you must
+	// use specify `manual_scaling`.
 	AutoScaling *GoogleCloudMlV1__AutoScaling `json:"autoScaling,omitempty"`
 
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DeploymentUri: Required. The Cloud Storage location of the trained
-	// model used to
-	// create the version. See the
-	// [guide to
-	// model
-	// deployment](/ml-engine/docs/tensorflow/deploying-models) for
-	// more
-	// information.
-	//
-	// When passing Version to
-	// projects.models.versions.create
+	// model used to create the version. See the [guide to model
+	// deployment](/ml-engine/docs/tensorflow/deploying-models) for more
+	// information. When passing Version to projects.models.versions.create
 	// the model service uses the specified location as the source of the
-	// model.
-	// Once deployed, the model version is hosted by the prediction service,
-	// so
-	// this location is useful only as a historical record.
-	// The total number of model files can't exceed 1000.
+	// model. Once deployed, the model version is hosted by the prediction
+	// service, so this location is useful only as a historical record. The
+	// total number of model files can't exceed 1000.
 	DeploymentUri string `json:"deploymentUri,omitempty"`
 
 	// Description: Optional. The description specified for the version when
 	// it was created.
 	Description string `json:"description,omitempty"`
 
+	// Endpoints: Optional. Output only. If set by server, the http(s)
+	// endpoints returned to user after the public/private deployment is
+	// successful.
+	// https://cloud.google.com/apis/design/design_patterns#output_fields.
+	Endpoints *GoogleCloudMlV1__EndpointMap `json:"endpoints,omitempty"`
+
 	// ErrorMessage: Output only. The details of a failure or a
 	// cancellation.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a model from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform model updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `GetVersion`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `UpdateVersion` to
-	// ensure that their change will be applied to the model as intended.
+	// help prevent simultaneous updates of a model from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform model updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `GetVersion`, and systems are expected to put that etag in the
+	// request to `UpdateVersion` to ensure that their change will be
+	// applied to the model as intended.
 	Etag string `json:"etag,omitempty"`
 
 	// ExplanationConfig: Optional. Configures explainability features on
-	// the model's version.
-	// Some explanation features require additional metadata to be loaded
-	// as part of the model payload.
+	// the model's version. Some explanation features require additional
+	// metadata to be loaded as part of the model payload.
 	ExplanationConfig *GoogleCloudMlV1__ExplanationConfig `json:"explanationConfig,omitempty"`
 
 	// Framework: Optional. The machine learning framework AI Platform uses
-	// to train
-	// this version of the model. Valid values are `TENSORFLOW`,
-	// `SCIKIT_LEARN`,
-	// `XGBOOST`. If you do not specify a framework, AI Platform
-	// will analyze files in the deployment_uri to determine a framework. If
-	// you
-	// choose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime
-	// version
-	// of the model to 1.4 or greater.
-	//
-	// Do **not** specify a framework if you're deploying a
-	// [custom
-	// prediction
-	// routine](/ml-engine/docs/tensorflow/custom-prediction-routines).
-	//
-	// If you specify a [Compute Engine (N1)
-	// machine
-	// type](/ml-engine/docs/machine-types-online-prediction) in
-	// the
-	// `machineType` field, you must specify `TENSORFLOW`
-	// for the framework.
+	// to train this version of the model. Valid values are `TENSORFLOW`,
+	// `SCIKIT_LEARN`, `XGBOOST`. If you do not specify a framework, AI
+	// Platform will analyze files in the deployment_uri to determine a
+	// framework. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also
+	// set the runtime version of the model to 1.4 or greater. Do **not**
+	// specify a framework if you're deploying a [custom prediction
+	// routine](/ml-engine/docs/tensorflow/custom-prediction-routines). If
+	// you specify a [Compute Engine (N1) machine
+	// type](/ml-engine/docs/machine-types-online-prediction) in the
+	// `machineType` field, you must specify `TENSORFLOW` for the framework.
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Assigns a value
@@ -4012,22 +3482,14 @@ type GoogleCloudMlV1__Version struct {
 	Framework string `json:"framework,omitempty"`
 
 	// IsDefault: Output only. If true, this version will be used to handle
-	// prediction
-	// requests that do not specify a version.
-	//
-	// You can change the default version by
-	// calling
-	// projects.methods.versions.setDefault.
+	// prediction requests that do not specify a version. You can change the
+	// default version by calling projects.methods.versions.setDefault.
 	IsDefault bool `json:"isDefault,omitempty"`
 
 	// Labels: Optional. One or more labels that you can add, to organize
-	// your model
-	// versions. Each label is a key-value pair, where both the key and the
-	// value
-	// are arbitrary strings that you supply.
-	// For more information, see the documentation on
-	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
-	// labels</a>.
+	// your model versions. Each label is a key-value pair, where both the
+	// key and the value are arbitrary strings that you supply. For more
+	// information, see the documentation on using labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastUseTime: Output only. The time the version was last used for
@@ -4035,195 +3497,97 @@ type GoogleCloudMlV1__Version struct {
 	LastUseTime string `json:"lastUseTime,omitempty"`
 
 	// MachineType: Optional. The type of machine on which to serve the
-	// model. Currently only
-	// applies to online prediction service. If this field is not specified,
-	// it
-	// defaults to `mls1-c1-m2`.
-	//
-	// Online prediction supports the following machine types:
-	//
-	// * `mls1-c1-m2`
-	// * `mls1-c4-m2`
-	// * `n1-standard-2`
-	// * `n1-standard-4`
-	// * `n1-standard-8`
-	// * `n1-standard-16`
-	// * `n1-standard-32`
-	// * `n1-highmem-2`
-	// * `n1-highmem-4`
-	// * `n1-highmem-8`
-	// * `n1-highmem-16`
-	// * `n1-highmem-32`
-	// * `n1-highcpu-2`
-	// * `n1-highcpu-4`
-	// * `n1-highcpu-8`
-	// * `n1-highcpu-16`
-	// * `n1-highcpu-32`
-	//
+	// model. Currently only applies to online prediction service. If this
+	// field is not specified, it defaults to `mls1-c1-m2`. Online
+	// prediction supports the following machine types: * `mls1-c1-m2` *
+	// `mls1-c4-m2` * `n1-standard-2` * `n1-standard-4` * `n1-standard-8` *
+	// `n1-standard-16` * `n1-standard-32` * `n1-highmem-2` * `n1-highmem-4`
+	// * `n1-highmem-8` * `n1-highmem-16` * `n1-highmem-32` * `n1-highcpu-2`
+	// * `n1-highcpu-4` * `n1-highcpu-8` * `n1-highcpu-16` * `n1-highcpu-32`
 	// `mls1-c1-m2` is generally available. All other machine types are
-	// available
-	// in beta. Learn more about the [differences between
-	// machine
+	// available in beta. Learn more about the [differences between machine
 	// types](/ml-engine/docs/machine-types-online-prediction).
 	MachineType string `json:"machineType,omitempty"`
 
 	// ManualScaling: Manually select the number of nodes to use for serving
-	// the
-	// model. You should generally use `auto_scaling` with an
-	// appropriate
-	// `min_nodes` instead, but this option is available if you want
-	// more
-	// predictable billing. Beware that latency and error rates will
-	// increase
-	// if the traffic exceeds that capability of the system to serve it
-	// based
-	// on the selected number of nodes.
+	// the model. You should generally use `auto_scaling` with an
+	// appropriate `min_nodes` instead, but this option is available if you
+	// want more predictable billing. Beware that latency and error rates
+	// will increase if the traffic exceeds that capability of the system to
+	// serve it based on the selected number of nodes.
 	ManualScaling *GoogleCloudMlV1__ManualScaling `json:"manualScaling,omitempty"`
 
 	// Name: Required. The name specified for the version when it was
-	// created.
-	//
-	// The version name must be unique within the model it is created in.
+	// created. The version name must be unique within the model it is
+	// created in.
 	Name string `json:"name,omitempty"`
 
 	// PackageUris: Optional. Cloud Storage paths (`gs://…`) of packages
-	// for [custom
-	// prediction
-	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines)
-	// or [scikit-learn pipelines with
-	// custom
-	// code](/ml-engine/docs/scikit/exporting-for-prediction#custom-pi
-	// peline-code).
-	//
-	// For a custom prediction routine, one of these packages must contain
-	// your
-	// Predictor class
-	// (see
-	// [`predictionClass`](#Version.FIELDS.prediction_class)).
-	// Additionally,
+	// for [custom prediction
+	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines) or
+	// [scikit-learn pipelines with custom
+	// code](/ml-engine/docs/scikit/exporting-for-prediction#custom-pipeline-
+	// code). For a custom prediction routine, one of these packages must
+	// contain your Predictor class (see
+	// [`predictionClass`](#Version.FIELDS.prediction_class)). Additionally,
 	// include any dependencies used by your Predictor or scikit-learn
-	// pipeline
-	// uses that are not already included in your selected
-	// [runtime
-	// version](/ml-engine/docs/tensorflow/runtime-version-list).
-	//
-	// I
-	// f you specify this field, you must also
-	// set
+	// pipeline uses that are not already included in your selected [runtime
+	// version](/ml-engine/docs/tensorflow/runtime-version-list). If you
+	// specify this field, you must also set
 	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or
 	// greater.
 	PackageUris []string `json:"packageUris,omitempty"`
 
-	// PredictionClass: Optional. The fully qualified
-	// name
-	// (<var>module_name</var>.<var>class_name</var>) of a class that
-	// implements
-	// the Predictor interface described in this reference field. The
-	// module
-	// containing this class should be included in a package provided to
-	// the
-	// [`packageUris` field](#Version.FIELDS.package_uris).
-	//
-	// Specify this field if and only if you are deploying a [custom
-	// prediction
-	// routine
-	// (beta)](/ml-engine/docs/tensorflow/custom-prediction-routines).
-	// If you specify this field, you must
-	// set
+	// PredictionClass: Optional. The fully qualified name
+	// (module_name.class_name) of a class that implements the Predictor
+	// interface described in this reference field. The module containing
+	// this class should be included in a package provided to the
+	// [`packageUris` field](#Version.FIELDS.package_uris). Specify this
+	// field if and only if you are deploying a [custom prediction routine
+	// (beta)](/ml-engine/docs/tensorflow/custom-prediction-routines). If
+	// you specify this field, you must set
 	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or greater
-	// and
-	// you must set `machineType` to a [legacy (MLS1)
-	// machine type](/ml-engine/docs/machine-types-online-prediction).
-	//
-	// The following code sample provides the Predictor interface:
-	//
-	// <pre style="max-width: 626px;">
-	// class Predictor(object):
-	// """Interface for constructing custom predictors."""
-	//
-	// def predict(self, instances, **kwargs):
-	//     """Performs custom prediction.
-	//
-	//     Instances are the decoded values from the request. They have
-	// already
-	//     been deserialized from JSON.
-	//
-	//     Args:
-	//         instances: A list of prediction input instances.
-	//         **kwargs: A dictionary of keyword args provided as
-	// additional
-	//             fields on the predict request body.
-	//
-	//     Returns:
-	//         A list of outputs containing the prediction results. This
-	// list must
-	//         be JSON serializable.
-	//     """
-	//     raise NotImplementedError()
-	//
-	// @classmethod
-	// def from_path(cls, model_dir):
-	//     """Creates an instance of Predictor using the given path.
-	//
-	//     Loading of the predictor should be done in this method.
-	//
-	//     Args:
-	//         model_dir: The local directory that contains the exported
-	// model
-	//             file along with any additional files uploaded when
-	// creating the
-	//             version resource.
-	//
-	//     Returns:
-	//         An instance implementing this Predictor class.
-	//     """
-	//     raise NotImplementedError()
-	// </pre>
-	//
-	// Learn more about [the Predictor interface and custom
-	// prediction
-	// routines](/ml-engine/docs/tensorflow/custom-prediction-rout
-	// ines).
+	// and you must set `machineType` to a [legacy (MLS1) machine
+	// type](/ml-engine/docs/machine-types-online-prediction). The following
+	// code sample provides the Predictor interface: class
+	// Predictor(object): """Interface for constructing custom
+	// predictors.""" def predict(self, instances, **kwargs): """Performs
+	// custom prediction. Instances are the decoded values from the request.
+	// They have already been deserialized from JSON. Args: instances: A
+	// list of prediction input instances. **kwargs: A dictionary of keyword
+	// args provided as additional fields on the predict request body.
+	// Returns: A list of outputs containing the prediction results. This
+	// list must be JSON serializable. """ raise NotImplementedError()
+	// @classmethod def from_path(cls, model_dir): """Creates an instance of
+	// Predictor using the given path. Loading of the predictor should be
+	// done in this method. Args: model_dir: The local directory that
+	// contains the exported model file along with any additional files
+	// uploaded when creating the version resource. Returns: An instance
+	// implementing this Predictor class. """ raise NotImplementedError()
+	// Learn more about [the Predictor interface and custom prediction
+	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines).
 	PredictionClass string `json:"predictionClass,omitempty"`
 
-	// PythonVersion: Required. The version of Python used in
-	// prediction.
-	//
-	// The following Python versions are available:
-	//
-	// * Python '3.7' is available when `runtime_version` is set to '1.15'
-	// or
-	//   later.
-	// * Python '3.5' is available when `runtime_version` is set to a
-	// version
-	//   from '1.4' to '1.14'.
-	// * Python '2.7' is available when `runtime_version` is set to '1.15'
-	// or
-	//   earlier.
-	//
-	// Read more about the Python versions available for [each
-	// runtime
+	// PythonVersion: Required. The version of Python used in prediction.
+	// The following Python versions are available: * Python '3.7' is
+	// available when `runtime_version` is set to '1.15' or later. * Python
+	// '3.5' is available when `runtime_version` is set to a version from
+	// '1.4' to '1.14'. * Python '2.7' is available when `runtime_version`
+	// is set to '1.15' or earlier. Read more about the Python versions
+	// available for [each runtime
 	// version](/ml-engine/docs/runtime-version-list).
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
-	// RequestLoggingConfig: Optional. *Only* specify this field in
-	// a
-	// projects.models.versions.patch
-	// request. Specifying it in a
-	// projects.models.versions.create
-	// request has no effect.
-	//
-	// Configures the request-response pair logging on predictions from
-	// this
-	// Version.
+	// RequestLoggingConfig: Optional. *Only* specify this field in a
+	// projects.models.versions.patch request. Specifying it in a
+	// projects.models.versions.create request has no effect. Configures the
+	// request-response pair logging on predictions from this Version.
 	RequestLoggingConfig *GoogleCloudMlV1__RequestLoggingConfig `json:"requestLoggingConfig,omitempty"`
 
 	// RuntimeVersion: Required. The AI Platform runtime version to use for
-	// this deployment.
-	//
-	// For more information, see the
-	// [runtime version list](/ml-engine/docs/runtime-version-list) and
-	// [how to manage runtime versions](/ml-engine/docs/versioning).
+	// this deployment. For more information, see the [runtime version
+	// list](/ml-engine/docs/runtime-version-list) and [how to manage
+	// runtime versions](/ml-engine/docs/versioning).
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ServiceAccount: Optional. Specifies the service account for resource
@@ -4236,17 +3600,16 @@ type GoogleCloudMlV1__Version struct {
 	//   "UNKNOWN" - The version state is unspecified.
 	//   "READY" - The version is ready for prediction.
 	//   "CREATING" - The version is being created. New UpdateVersion and
-	// DeleteVersion
-	// requests will fail if a version is in the CREATING state.
-	//   "FAILED" - The version failed to be created, possibly
-	// cancelled.
+	// DeleteVersion requests will fail if a version is in the CREATING
+	// state.
+	//   "FAILED" - The version failed to be created, possibly cancelled.
 	// `error_message` should contain the details of the failure.
 	//   "DELETING" - The version is being deleted. New UpdateVersion and
-	// DeleteVersion
-	// requests will fail if a version is in the DELETING state.
+	// DeleteVersion requests will fail if a version is in the DELETING
+	// state.
 	//   "UPDATING" - The version is being updated. New UpdateVersion and
-	// DeleteVersion
-	// requests will fail if a version is in the UPDATING state.
+	// DeleteVersion requests will fail if a version is in the UPDATING
+	// state.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4278,16 +3641,14 @@ func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__XraiAttribution: Attributes credit by computing the
-// XRAI taking advantage
-// of the model's fully differentiable structure. Refer to this paper
-// for
-// more details: https://arxiv.org/abs/1906.02825
-// Currently only implemented for models with natural image inputs.
+// XRAI taking advantage of the model's fully differentiable structure.
+// Refer to this paper for more details:
+// https://arxiv.org/abs/1906.02825 Currently only implemented for
+// models with natural image inputs.
 type GoogleCloudMlV1__XraiAttribution struct {
 	// NumIntegralSteps: Number of steps for approximating the path
-	// integral.
-	// A good value to start is 50 and gradually increase until the
-	// sum to diff property is met within the desired error range.
+	// integral. A good value to start is 50 and gradually increase until
+	// the sum to diff property is met within the desired error range.
 	NumIntegralSteps int64 `json:"numIntegralSteps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumIntegralSteps") to
@@ -4315,72 +3676,30 @@ func (s *GoogleCloudMlV1__XraiAttribution) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleIamV1__AuditConfig: Specifies the audit configuration for a
-// service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
+// service. The configuration determines which permission types are
+// logged, and what identities, if any, are exempted from logging. An
+// AuditConfig must have one or more AuditLogConfigs. If there are
+// AuditConfigs for both `allServices` and a specific service, the union
+// of the two AuditConfigs is used for that service: the log_types
 // specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditLogConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE"
-//             },
-//             {
-//               "log_type": "ADMIN_READ"
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com",
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ"
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For sampleservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts jose@example.com from DATA_READ logging,
-// and
-// aliya@example.com from DATA_WRITE logging.
+// in each AuditLogConfig are exempted. Example Policy with multiple
+// AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
+// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
+// "log_type": "ADMIN_READ" } ] }, { "service":
+// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
+// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
+// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
+// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
+// jose@example.com from DATA_READ logging, and aliya@example.com from
+// DATA_WRITE logging.
 type GoogleIamV1__AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
 	AuditLogConfigs []*GoogleIamV1__AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
+	// Service: Specifies a service that will be enabled for audit logging.
+	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
 	// `allServices` is a special value that covers all services.
 	Service string `json:"service,omitempty"`
 
@@ -4409,31 +3728,15 @@ func (s *GoogleIamV1__AuditConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleIamV1__AuditLogConfig: Provides the configuration for logging a
-// type of permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE"
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// jose@example.com from DATA_READ logging.
+// type of permissions. Example: { "audit_log_configs": [ { "log_type":
+// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
+// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
+// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
+// logging.
 type GoogleIamV1__AuditLogConfig struct {
 	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
+	// for this type of permission. Follows the same format of
+	// Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
 
 	// LogType: The log type that this config enables.
@@ -4471,95 +3774,53 @@ func (s *GoogleIamV1__AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleIamV1__Binding: Associates `members` with a `role`.
 type GoogleIamV1__Binding struct {
-	// Condition: The condition that is associated with this binding.
-	//
-	// If the condition evaluates to `true`, then this binding applies to
-	// the
-	// current request.
-	//
-	// If the condition evaluates to `false`, then this binding does not
-	// apply to
-	// the current request. However, a different role binding might grant
-	// the same
-	// role to one or more of the members in this binding.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see
-	// the
-	// [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/r
-	// esource-policies).
+	// Condition: The condition that is associated with this binding. If the
+	// condition evaluates to `true`, then this binding applies to the
+	// current request. If the condition evaluates to `false`, then this
+	// binding does not apply to the current request. However, a different
+	// role binding might grant the same role to one or more of the members
+	// in this binding. To learn which resources support conditions in their
+	// IAM policies, see the [IAM
+	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+	// olicies).
 	Condition *GoogleType__Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
-	// `members` can have the following values:
-	//
-	// * `allUsers`: A special identifier that represents anyone who is
-	//    on the internet; with or without a Google account.
-	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
-	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
-	//    account. For example, `alice@example.com` .
-	//
-	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
-	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
-	//    For example, `admins@example.com`.
-	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
-	//    retains the role in the binding.
-	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
-	//    deleted. For example,
-	//
+	// Platform resource. `members` can have the following values: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@example.com` . *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
+	// (plus unique identifier) representing a service account that has been
+	// recently deleted. For example,
 	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
-	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
-	//    role in the binding.
-	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
-	//    recovered group retains the role in the binding.
-	//
-	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
-	//
-	//
+	// If the service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains
+	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
+	// An email address (plus unique identifier) representing a Google group
+	// that has been recently deleted. For example,
+	// `admins@example.com?uid=123456789012345678901`. If the group is
+	// recovered, this value reverts to `group:{emailid}` and the recovered
+	// group retains the role in the binding. * `domain:{domain}`: The G
+	// Suite domain (primary) that represents all the users of that domain.
+	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -4586,154 +3847,77 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleIamV1__Policy: An Identity and Access Management (IAM) policy,
-// which specifies access
-// controls for Google Cloud resources.
-//
-//
-// A `Policy` is a collection of `bindings`. A `binding` binds one or
-// more
+// which specifies access controls for Google Cloud resources. A
+// `Policy` is a collection of `bindings`. A `binding` binds one or more
 // `members` to a single `role`. Members can be user accounts, service
-// accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
-// permissions; each `role` can be an IAM predefined role or a
-// user-created
-// custom role.
-//
-// For some types of Google Cloud resources, a `binding` can also
-// specify a
-// `condition`, which is a logical expression that allows access to a
-// resource
-// only if the expression evaluates to `true`. A condition can add
-// constraints
-// based on attributes of the request, the resource, or both. To learn
-// which
-// resources support conditions in their IAM policies, see the
-// [IAM
+// accounts, Google groups, and domains (such as G Suite). A `role` is a
+// named list of permissions; each `role` can be an IAM predefined role
+// or a user-created custom role. For some types of Google Cloud
+// resources, a `binding` can also specify a `condition`, which is a
+// logical expression that allows access to a resource only if the
+// expression evaluates to `true`. A condition can add constraints based
+// on attributes of the request, the resource, or both. To learn which
+// resources support conditions in their IAM policies, see the [IAM
 // documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
-//
-// **JSON example:**
-//
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": [
-//             "user:eve@example.com"
-//           ],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
-// timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
-//
-// **YAML example:**
-//
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
-//
-// For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// olicies). **JSON example:** { "bindings": [ { "role":
+// "roles/resourcemanager.organizationAdmin", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
+// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:eve@example.com" ], "condition": { "title": "expirable access",
+// "description": "Does not grant access after Sep 2020", "expression":
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
+// "etag": "BwWWja0YfJA=", "version": 3 } **YAML example:** bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com -
+// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
+// roles/resourcemanager.organizationAdmin - members: -
+// user:eve@example.com role: roles/resourcemanager.organizationViewer
+// condition: title: expirable access description: Does not grant access
+// after Sep 2020 expression: request.time <
+// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
+// 3 For a description of IAM and its features, see the [IAM
+// documentation](https://cloud.google.com/iam/docs/).
 type GoogleIamV1__Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
 	AuditConfigs []*GoogleIamV1__AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
-	// of the `bindings` must contain at least one member.
+	// specify a `condition` that determines how and when the `bindings` are
+	// applied. Each of the `bindings` must contain at least one member.
 	Bindings []*GoogleIamV1__Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
-	// It is strongly suggested that systems make use of the `etag` in
-	// the
-	// read-modify-write cycle to perform policy updates in order to avoid
-	// race
-	// conditions: An `etag` is returned in the response to `getIamPolicy`,
-	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
-	// ensure that their change will be applied to the same version of the
-	// policy.
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. **Important:** If you use IAM
+	// Conditions, you must include the `etag` field whenever you call
+	// `setIamPolicy`. If you omit this field, then IAM allows you to
+	// overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Specifies the format of the policy.
-	//
-	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
-	// value
-	// are rejected.
-	//
+	// Version: Specifies the format of the policy. Valid values are `0`,
+	// `1`, and `3`. Requests that specify an invalid value are rejected.
 	// Any operation that affects conditional role bindings must specify
-	// version
-	// `3`. This requirement applies to the following operations:
-	//
-	// * Getting a policy that includes a conditional role binding
-	// * Adding a conditional role binding to a policy
-	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
-	//   that includes conditions
-	//
-	// **Important:** If you use IAM Conditions, you must include the `etag`
-	// field
-	// whenever you call `setIamPolicy`. If you omit this field, then IAM
-	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
-	// the conditions in the version `3` policy are lost.
-	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
-	// specify any valid version or leave the field unset.
-	//
-	// To learn which resources support conditions in their IAM policies,
-	// see the
-	// [IAM
+	// version `3`. This requirement applies to the following operations: *
+	// Getting a policy that includes a conditional role binding * Adding a
+	// conditional role binding to a policy * Changing a conditional role
+	// binding in a policy * Removing any role binding, with or without a
+	// condition, from a policy that includes conditions **Important:** If
+	// you use IAM Conditions, you must include the `etag` field whenever
+	// you call `setIamPolicy`. If you omit this field, then IAM allows you
+	// to overwrite a version `3` policy with a version `1` policy, and all
+	// of the conditions in the version `3` policy are lost. If a policy
+	// does not include any conditions, operations on that policy may
+	// specify any valid version or leave the field unset. To learn which
+	// resources support conditions in their IAM policies, see the [IAM
 	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
 	// olicies).
 	Version int64 `json:"version,omitempty"`
@@ -4769,20 +3953,15 @@ func (s *GoogleIamV1__Policy) MarshalJSON() ([]byte, error) {
 // method.
 type GoogleIamV1__SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
-	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
-	// might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *GoogleIamV1__Policy `json:"policy,omitempty"`
 
 	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only
-	// the fields in the mask will be modified. If no mask is provided,
-	// the
-	// following default mask is used:
-	//
-	// `paths: "bindings, etag"
+	// policy to modify. Only the fields in the mask will be modified. If no
+	// mask is provided, the following default mask is used: `paths:
+	// "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -4812,11 +3991,8 @@ func (s *GoogleIamV1__SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // `TestIamPermissions` method.
 type GoogleIamV1__TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
-	// information see
-	// [IAM
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed. For more information see [IAM
 	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
@@ -4847,8 +4023,7 @@ func (s *GoogleIamV1__TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 // `TestIamPermissions` method.
 type GoogleIamV1__TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
-	// allowed.
+	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4916,52 +4091,38 @@ func (s *GoogleLongrunning__ListOperationsResponse) MarshalJSON() ([]byte, error
 }
 
 // GoogleLongrunning__Operation: This resource represents a long-running
-// operation that is the result of a
-// network API call.
+// operation that is the result of a network API call.
 type GoogleLongrunning__Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *GoogleRpc__Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4992,17 +4153,11 @@ func (s *GoogleLongrunning__Operation) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleProtobuf__Empty: A generic empty message that you can re-use to
-// avoid defining duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// avoid defining duplicated empty messages in your APIs. A typical
+// example is to use it as the request or the response type of an API
+// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
+// returns (google.protobuf.Empty); } The JSON representation for
+// `Empty` is empty JSON object `{}`.
 type GoogleProtobuf__Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -5010,32 +4165,24 @@ type GoogleProtobuf__Empty struct {
 }
 
 // GoogleRpc__Status: The `Status` type defines a logical error model
-// that is suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
+// that is suitable for different programming environments, including
+// REST APIs and RPC APIs. It is used by
+// [gRPC](https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can
+// find out more about this error model and how to work with it in the
 // [API Design Guide](https://cloud.google.com/apis/design/errors).
 type GoogleRpc__Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -5062,65 +4209,40 @@ func (s *GoogleRpc__Status) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleType__Expr: Represents a textual expression in the Common
-// Expression Language (CEL)
-// syntax. CEL is a C-like expression language. The syntax and semantics
-// of CEL
-// are documented at https://github.com/google/cel-spec.
-//
-// Example (Comparison):
-//
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
-//
-// Example (Equality):
-//
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
-// request.auth.claims.email"
-//
-// Example (Logic):
-//
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
-// visible"
-//     expression: "document.type != 'private' && document.type !=
-// 'internal'"
-//
-// Example (Data Manipulation):
-//
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
-// string(document.create_time)"
-//
-// The exact variables and functions that may be referenced within an
-// expression
-// are determined by the service that evaluates it. See the
-// service
-// documentation for additional information.
+// Expression Language (CEL) syntax. CEL is a C-like expression
+// language. The syntax and semantics of CEL are documented at
+// https://github.com/google/cel-spec. Example (Comparison): title:
+// "Summary size limit" description: "Determines if a summary is less
+// than 100 chars" expression: "document.summary.size() < 100" Example
+// (Equality): title: "Requestor is owner" description: "Determines if
+// requestor is the document owner" expression: "document.owner ==
+// request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly
+// visible" expression: "document.type != 'private' && document.type !=
+// 'internal'" Example (Data Manipulation): title: "Notification string"
+// description: "Create a notification string with a timestamp."
+// expression: "'New message received at ' +
+// string(document.create_time)" The exact variables and functions that
+// may be referenced within an expression are determined by the service
+// that evaluates it. See the service documentation for additional
+// information.
 type GoogleType__Expr struct {
 	// Description: Optional. Description of the expression. This is a
-	// longer text which
-	// describes the expression, e.g. when hovered over it in a UI.
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
 	Description string `json:"description,omitempty"`
 
 	// Expression: Textual representation of an expression in Common
-	// Expression Language
-	// syntax.
+	// Expression Language syntax.
 	Expression string `json:"expression,omitempty"`
 
 	// Location: Optional. String indicating the location of the expression
-	// for error
-	// reporting, e.g. a file name and a position in the file.
+	// for error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
 
 	// Title: Optional. Title for the expression, i.e. a short string
-	// describing
-	// its purpose. This can be used e.g. in UIs which allow to enter
-	// the
-	// expression.
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -5157,10 +4279,8 @@ type ProjectsExplainCall struct {
 	header_                         http.Header
 }
 
-// Explain: Performs explanation on the data in the request.
-//
-// <div>{% dynamic include "/ai-platform/includes/___explain-request"
-// %}</div>
+// Explain: Performs explanation on the data in the request. {% dynamic
+// include "/ai-platform/includes/___explain-request" %}
 func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
 	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5195,7 +4315,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5259,7 +4379,7 @@ func (c *ProjectsExplainCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs explanation on the data in the request.\n\n\u003cdiv\u003e{% dynamic include \"/ai-platform/includes/___explain-request\" %}\u003c/div\u003e",
+	//   "description": "Performs explanation on the data in the request. {% dynamic include \"/ai-platform/includes/___explain-request\" %} ",
 	//   "flatPath": "v1/projects/{projectsId}:explain",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.explain",
@@ -5268,7 +4388,7 @@ func (c *ProjectsExplainCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
+	//       "description": "Required. The resource name of a model or a version. Authorization: requires the `predict` permission on the specified resource.",
 	//       "location": "path",
 	//       "pattern": "^projects/.*$",
 	//       "required": true,
@@ -5301,12 +4421,10 @@ type ProjectsGetConfigCall struct {
 }
 
 // GetConfig: Get the service account information associated with your
-// project. You need
-// this information in order to grant the service account permissions
-// for
-// the Google Cloud Storage location where you put your model training
-// code
-// for training the model with Google Cloud Machine Learning.
+// project. You need this information in order to grant the service
+// account permissions for the Google Cloud Storage location where you
+// put your model training code for training the model with Google Cloud
+// Machine Learning.
 func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 	c := &ProjectsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5350,7 +4468,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5413,7 +4531,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the service account information associated with your project. You need\nthis information in order to grant the service account permissions for\nthe Google Cloud Storage location where you put your model training code\nfor training the model with Google Cloud Machine Learning.",
+	//   "description": "Get the service account information associated with your project. You need this information in order to grant the service account permissions for the Google Cloud Storage location where you put your model training code for training the model with Google Cloud Machine Learning.",
 	//   "flatPath": "v1/projects/{projectsId}:getConfig",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.getConfig",
@@ -5451,11 +4569,8 @@ type ProjectsPredictCall struct {
 	header_                         http.Header
 }
 
-// Predict: Performs online prediction on the data in the
-// request.
-//
-// <div>{% dynamic include "/ai-platform/includes/___predict-request"
-// %}</div>
+// Predict: Performs online prediction on the data in the request. {%
+// dynamic include "/ai-platform/includes/___predict-request" %}
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5490,7 +4605,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5559,7 +4674,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	ret.Data = b.String()
 	return ret, nil
 	// {
-	//   "description": "Performs online prediction on the data in the request.\n\n\u003cdiv\u003e{% dynamic include \"/ai-platform/includes/___predict-request\" %}\u003c/div\u003e",
+	//   "description": "Performs online prediction on the data in the request. {% dynamic include \"/ai-platform/includes/___predict-request\" %} ",
 	//   "flatPath": "v1/projects/{projectsId}:predict",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.predict",
@@ -5568,7 +4683,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of a model or a version.\n\nAuthorization: requires the `predict` permission on the specified resource.",
+	//       "description": "Required. The resource name of a model or a version. Authorization: requires the `predict` permission on the specified resource.",
 	//       "location": "path",
 	//       "pattern": "^projects/.*$",
 	//       "required": true,
@@ -5635,7 +4750,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5775,7 +4890,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5924,7 +5039,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6025,9 +5140,8 @@ type ProjectsJobsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
 	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6037,24 +5151,14 @@ func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamP
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsJobsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsJobsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -6097,7 +5201,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6159,7 +5263,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.jobs.getIamPolicy",
@@ -6168,13 +5272,13 @@ func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6203,11 +5307,9 @@ type ProjectsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the jobs in the project.
-//
-// If there are no jobs that match the request parameters, the
-// list
-// request returns an empty response body: {}.
+// List: Lists the jobs in the project. If there are no jobs that match
+// the request parameters, the list request returns an empty response
+// body: {}.
 func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6215,43 +5317,30 @@ func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 }
 
 // Filter sets the optional parameter "filter": Specifies the subset of
-// jobs to retrieve.
-// You can filter on the value of one or more attributes of the job
-// object.
-// For example, retrieve jobs with a job identifier that starts with
-// 'census':
-// <p><code>gcloud ai-platform jobs list
-// --filter='jobId:census*'</code>
-// <p>List all failed jobs with names that start with
-// 'rnn':
-// <p><code>gcloud ai-platform jobs list --filter='jobId:rnn*
-// AND state:FAILED'</code>
-// <p>For more examples, see the guide to
-// <a href="/ml-engine/docs/tensorflow/monitor-training">monitoring
-// jobs</a>.
+// jobs to retrieve. You can filter on the value of one or more
+// attributes of the job object. For example, retrieve jobs with a job
+// identifier that starts with 'census': gcloud ai-platform jobs list
+// --filter='jobId:census*' List all failed jobs with names that start
+// with 'rnn': gcloud ai-platform jobs list --filter='jobId:rnn* AND
+// state:FAILED' For more examples, see the guide to monitoring jobs.
 func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The number of jobs
-// to retrieve per "page" of results. If there
-// are more remaining results than this number, the response message
-// will
-// contain a valid value in the `next_page_token` field.
-//
-// The default value is 20, and the maximum page size is 100.
+// to retrieve per "page" of results. If there are more remaining
+// results than this number, the response message will contain a valid
+// value in the `next_page_token` field. The default value is 20, and
+// the maximum page size is 100.
 func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token to
-// request the next page of results.
-//
-// You get the token from the `next_page_token` field of the response
-// from
-// the previous call.
+// request the next page of results. You get the token from the
+// `next_page_token` field of the response from the previous call.
 func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6294,7 +5383,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6357,7 +5446,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the jobs in the project.\n\nIf there are no jobs that match the request parameters, the list\nrequest returns an empty response body: {}.",
+	//   "description": "Lists the jobs in the project. If there are no jobs that match the request parameters, the list request returns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.jobs.list",
@@ -6366,18 +5455,18 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ai-platform jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ai-platform jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/tensorflow/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
+	//       "description": "Optional. Specifies the subset of jobs to retrieve. You can filter on the value of one or more attributes of the job object. For example, retrieve jobs with a job identifier that starts with 'census': gcloud ai-platform jobs list --filter='jobId:census*' List all failed jobs with names that start with 'rnn': gcloud ai-platform jobs list --filter='jobId:rnn* AND state:FAILED' For more examples, see the guide to monitoring jobs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The number of jobs to retrieve per \"page\" of results. If there\nare more remaining results than this number, the response message will\ncontain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
+	//       "description": "Optional. The number of jobs to retrieve per \"page\" of results. If there are more remaining results than this number, the response message will contain a valid value in the `next_page_token` field. The default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A page token to request the next page of results.\n\nYou get the token from the `next_page_token` field of the response from\nthe previous call.",
+	//       "description": "Optional. A page token to request the next page of results. You get the token from the `next_page_token` field of the response from the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6433,9 +5522,8 @@ type ProjectsJobsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates a specific job resource.
-//
-// Currently the only supported fields to update are `labels`.
+// Patch: Updates a specific job resource. Currently the only supported
+// fields to update are `labels`.
 func (r *ProjectsJobsService) Patch(name string, googlecloudmlv1__job *GoogleCloudMlV1__Job) *ProjectsJobsPatchCall {
 	c := &ProjectsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6444,28 +5532,15 @@ func (r *ProjectsJobsService) Patch(name string, googlecloudmlv1__job *GoogleClo
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required.
-// Specifies the path, relative to `Job`, of the field to update.
-// To adopt etag mechanism, include `etag` field in the mask, and
-// include the
-// `etag` value in your job resource.
-//
-// For example, to change the labels of a job, the `update_mask`
-// parameter
-// would be specified as `labels`, `etag`, and the
-// `PATCH` request body would specify the new value, as follows:
-//     {
-//       "labels": {
-//          "owner": "Google",
-//          "color": "Blue"
-//       }
-//       "etag": "33a64df551425fcc55e4d42a148795d9f25f89d4"
-//     }
-// If `etag` matches the one on the server, the labels of the job will
-// be
-// replaced with the given ones, and the server end `etag` will
-// be
-// recalculated.
-//
+// Specifies the path, relative to `Job`, of the field to update. To
+// adopt etag mechanism, include `etag` field in the mask, and include
+// the `etag` value in your job resource. For example, to change the
+// labels of a job, the `update_mask` parameter would be specified as
+// `labels`, `etag`, and the `PATCH` request body would specify the new
+// value, as follows: { "labels": { "owner": "Google", "color": "Blue" }
+// "etag": "33a64df551425fcc55e4d42a148795d9f25f89d4" } If `etag`
+// matches the one on the server, the labels of the job will be replaced
+// with the given ones, and the server end `etag` will be recalculated.
 // Currently the only supported update masks are `labels` and `etag`.
 func (c *ProjectsJobsPatchCall) UpdateMask(updateMask string) *ProjectsJobsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -6499,7 +5574,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6563,7 +5638,7 @@ func (c *ProjectsJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a specific job resource.\n\nCurrently the only supported fields to update are `labels`.",
+	//   "description": "Updates a specific job resource. Currently the only supported fields to update are `labels`.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "ml.projects.jobs.patch",
@@ -6579,7 +5654,7 @@ func (c *ProjectsJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Job`, of the field to update.\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your job resource.\n\nFor example, to change the labels of a job, the `update_mask` parameter\nwould be specified as `labels`, `etag`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"labels\": {\n         \"owner\": \"Google\",\n         \"color\": \"Blue\"\n      }\n      \"etag\": \"33a64df551425fcc55e4d42a148795d9f25f89d4\"\n    }\nIf `etag` matches the one on the server, the labels of the job will be\nreplaced with the given ones, and the server end `etag` will be\nrecalculated.\n\nCurrently the only supported update masks are `labels` and `etag`.",
+	//       "description": "Required. Specifies the path, relative to `Job`, of the field to update. To adopt etag mechanism, include `etag` field in the mask, and include the `etag` value in your job resource. For example, to change the labels of a job, the `update_mask` parameter would be specified as `labels`, `etag`, and the `PATCH` request body would specify the new value, as follows: { \"labels\": { \"owner\": \"Google\", \"color\": \"Blue\" } \"etag\": \"33a64df551425fcc55e4d42a148795d9f25f89d4\" } If `etag` matches the one on the server, the labels of the job will be replaced with the given ones, and the server end `etag` will be recalculated. Currently the only supported update masks are `labels` and `etag`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6611,11 +5686,8 @@ type ProjectsJobsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6650,7 +5722,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6714,7 +5786,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.jobs.setIamPolicy",
@@ -6723,7 +5795,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6756,16 +5828,11 @@ type ProjectsJobsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsJobsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
 	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6800,7 +5867,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6865,7 +5932,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.jobs.testIamPermissions",
@@ -6874,7 +5941,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6907,8 +5974,7 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Get the complete list of CMLE capabilities in a location, along
-// with their
-// location-specific properties.
+// with their location-specific properties.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6952,7 +6018,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7014,7 +6080,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the complete list of CMLE capabilities in a location, along with their\nlocation-specific properties.",
+	//   "description": "Get the complete list of CMLE capabilities in a location, along with their location-specific properties.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.get",
@@ -7062,23 +6128,18 @@ func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCal
 }
 
 // PageSize sets the optional parameter "pageSize": The number of
-// locations to retrieve per "page" of results. If
-// there are more remaining results than this number, the response
-// message
-// will contain a valid value in the `next_page_token` field.
-//
-// The default value is 20, and the maximum page size is 100.
+// locations to retrieve per "page" of results. If there are more
+// remaining results than this number, the response message will contain
+// a valid value in the `next_page_token` field. The default value is
+// 20, and the maximum page size is 100.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token to
-// request the next page of results.
-//
-// You get the token from the `next_page_token` field of the response
-// from
-// the previous call.
+// request the next page of results. You get the token from the
+// `next_page_token` field of the response from the previous call.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7121,7 +6182,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7193,18 +6254,18 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The number of locations to retrieve per \"page\" of results. If\nthere are more remaining results than this number, the response message\nwill contain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
+	//       "description": "Optional. The number of locations to retrieve per \"page\" of results. If there are more remaining results than this number, the response message will contain a valid value in the `next_page_token` field. The default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A page token to request the next page of results.\n\nYou get the token from the `next_page_token` field of the response from\nthe previous call.",
+	//       "description": "Optional. A page token to request the next page of results. You get the token from the `next_page_token` field of the response from the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project for which available locations are to be\nlisted (since some locations might be whitelisted for specific projects).",
+	//       "description": "Required. The name of the project for which available locations are to be listed (since some locations might be whitelisted for specific projects).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7255,23 +6316,15 @@ type ProjectsLocationsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7305,7 +6358,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7364,7 +6417,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.operations.cancel",
@@ -7402,11 +6455,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7450,7 +6501,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7512,7 +6563,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.locations.operations.get",
@@ -7559,8 +6610,8 @@ func (r *ProjectsLocationsStudiesService) Create(parent string, googlecloudmlv1_
 }
 
 // StudyId sets the optional parameter "studyId": Required. The ID to
-// use for the study, which will become the final component of
-// the study's resource name.
+// use for the study, which will become the final component of the
+// study's resource name.
 func (c *ProjectsLocationsStudiesCreateCall) StudyId(studyId string) *ProjectsLocationsStudiesCreateCall {
 	c.urlParams_.Set("studyId", studyId)
 	return c
@@ -7593,7 +6644,7 @@ func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7666,14 +6717,14 @@ func (c *ProjectsLocationsStudiesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+	//       "description": "Required. The project and location that the study belongs to. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "studyId": {
-	//       "description": "Required. The ID to use for the study, which will become the final component of\nthe study's resource name.",
+	//       "description": "Required. The ID to use for the study, which will become the final component of the study's resource name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7736,7 +6787,7 @@ func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7877,7 +6928,7 @@ func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,7 +7072,7 @@ func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8093,7 +7144,7 @@ func (c *ProjectsLocationsStudiesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project and location that the study belongs to.\nFormat: projects/{project}/locations/{location}",
+	//       "description": "Required. The project and location that the study belongs to. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -8123,8 +7174,8 @@ type ProjectsLocationsStudiesTrialsAddMeasurementCall struct {
 }
 
 // AddMeasurement: Adds a measurement of the objective metrics to a
-// trial. This measurement
-// is assumed to have been taken before the trial is complete.
+// trial. This measurement is assumed to have been taken before the
+// trial is complete.
 func (r *ProjectsLocationsStudiesTrialsService) AddMeasurement(name string, googlecloudmlv1__addtrialmeasurementrequest *GoogleCloudMlV1__AddTrialMeasurementRequest) *ProjectsLocationsStudiesTrialsAddMeasurementCall {
 	c := &ProjectsLocationsStudiesTrialsAddMeasurementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8159,7 +7210,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header 
 
 func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8223,7 +7274,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a measurement of the objective metrics to a trial. This measurement\nis assumed to have been taken before the trial is complete.",
+	//   "description": "Adds a measurement of the objective metrics to a trial. This measurement is assumed to have been taken before the trial is complete.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:addMeasurement",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.addMeasurement",
@@ -8264,11 +7315,9 @@ type ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall struct {
 	header_                                              http.Header
 }
 
-// CheckEarlyStoppingState: Checks  whether a trial should stop or not.
-// Returns a
-// long-running operation. When the operation is successful,
-// it will contain a
-// CheckTrialEarlyStoppingStateResponse.
+// CheckEarlyStoppingState: Checks whether a trial should stop or not.
+// Returns a long-running operation. When the operation is successful,
+// it will contain a CheckTrialEarlyStoppingStateResponse.
 func (r *ProjectsLocationsStudiesTrialsService) CheckEarlyStoppingState(name string, googlecloudmlv1__checktrialearlystoppingstaterequest *GoogleCloudMlV1__CheckTrialEarlyStoppingStateRequest) *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall {
 	c := &ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8303,7 +7352,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() htt
 
 func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8367,7 +7416,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks  whether a trial should stop or not. Returns a\nlong-running operation. When the operation is successful,\nit will contain a\nCheckTrialEarlyStoppingStateResponse.",
+	//   "description": "Checks whether a trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}:checkEarlyStoppingState",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.checkEarlyStoppingState",
@@ -8443,7 +7492,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8583,7 +7632,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8721,7 +7770,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8862,7 +7911,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9006,7 +8055,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9142,7 +8191,7 @@ func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9247,12 +8296,11 @@ type ProjectsLocationsStudiesTrialsSuggestCall struct {
 	header_                               http.Header
 }
 
-// Suggest: Adds one or more trials to a study, with parameter
-// values
-// suggested by AI Platform Optimizer. Returns a long-running
-// operation associated with the generation of trial suggestions.
-// When this long-running operation succeeds, it will contain
-// a SuggestTrialsResponse.
+// Suggest: Adds one or more trials to a study, with parameter values
+// suggested by AI Platform Optimizer. Returns a long-running operation
+// associated with the generation of trial suggestions. When this
+// long-running operation succeeds, it will contain a
+// SuggestTrialsResponse.
 func (r *ProjectsLocationsStudiesTrialsService) Suggest(parent string, googlecloudmlv1__suggesttrialsrequest *GoogleCloudMlV1__SuggestTrialsRequest) *ProjectsLocationsStudiesTrialsSuggestCall {
 	c := &ProjectsLocationsStudiesTrialsSuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9287,7 +8335,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9351,7 +8399,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more trials to a study, with parameter values\nsuggested by AI Platform Optimizer. Returns a long-running\noperation associated with the generation of trial suggestions.\nWhen this long-running operation succeeds, it will contain\na SuggestTrialsResponse.",
+	//   "description": "Adds one or more trials to a study, with parameter values suggested by AI Platform Optimizer. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.locations.studies.trials.suggest",
@@ -9393,11 +8441,8 @@ type ProjectsModelsCreateCall struct {
 }
 
 // Create: Creates a model which will later contain one or more
-// versions.
-//
-// You must add at least one version before you can request predictions
-// from
-// the model. Add versions by calling
+// versions. You must add at least one version before you can request
+// predictions from the model. Add versions by calling
 // projects.models.versions.create.
 func (r *ProjectsModelsService) Create(parent string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9433,7 +8478,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9497,7 +8542,7 @@ func (c *ProjectsModelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a model which will later contain one or more versions.\n\nYou must add at least one version before you can request predictions from\nthe model. Add versions by calling\nprojects.models.versions.create.",
+	//   "description": "Creates a model which will later contain one or more versions. You must add at least one version before you can request predictions from the model. Add versions by calling projects.models.versions.create.",
 	//   "flatPath": "v1/projects/{projectsId}/models",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.create",
@@ -9537,11 +8582,8 @@ type ProjectsModelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a model.
-//
-// You can only delete a model if there are no versions in it. You can
-// delete
-// versions by calling
+// Delete: Deletes a model. You can only delete a model if there are no
+// versions in it. You can delete versions by calling
 // projects.models.versions.delete.
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9576,7 +8618,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9635,7 +8677,7 @@ func (c *ProjectsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a model.\n\nYou can only delete a model if there are no versions in it. You can delete\nversions by calling\nprojects.models.versions.delete.",
+	//   "description": "Deletes a model. You can only delete a model if there are no versions in it. You can delete versions by calling projects.models.versions.delete.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "ml.projects.models.delete",
@@ -9674,10 +8716,8 @@ type ProjectsModelsGetCall struct {
 }
 
 // Get: Gets information about a model, including its name, the
-// description (if
-// set), and the default version (if at least one version of the model
-// has
-// been deployed).
+// description (if set), and the default version (if at least one
+// version of the model has been deployed).
 func (r *ProjectsModelsService) Get(name string) *ProjectsModelsGetCall {
 	c := &ProjectsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9721,7 +8761,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9783,7 +8823,7 @@ func (c *ProjectsModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a model, including its name, the description (if\nset), and the default version (if at least one version of the model has\nbeen deployed).",
+	//   "description": "Gets information about a model, including its name, the description (if set), and the default version (if at least one version of the model has been deployed).",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.get",
@@ -9822,9 +8862,8 @@ type ProjectsModelsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource.
-// Returns an empty policy if the resource exists and does not have a
-// policy
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
 // set.
 func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGetIamPolicyCall {
 	c := &ProjectsModelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9834,24 +8873,14 @@ func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGet
 
 // OptionsRequestedPolicyVersion sets the optional parameter
 // "options.requestedPolicyVersion": The policy format version to be
-// returned.
-//
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
-// rejected.
-//
-// Requests for policies with any conditional bindings must specify
-// version 3.
-// Policies without any conditional bindings may specify any valid value
-// or
-// leave the field unset.
-//
-// To learn which resources support conditions in their IAM policies,
-// see
-// the
-// [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/r
-// esource-policies).
+// returned. Valid values are 0, 1, and 3. Requests specifying an
+// invalid value will be rejected. Requests for policies with any
+// conditional bindings must specify version 3. Policies without any
+// conditional bindings may specify any valid value or leave the field
+// unset. To learn which resources support conditions in their IAM
+// policies, see the [IAM
+// documentation](https://cloud.google.com/iam/help/conditions/resource-p
+// olicies).
 func (c *ProjectsModelsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsModelsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -9894,7 +8923,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9956,7 +8985,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.getIamPolicy",
@@ -9965,13 +8994,13 @@ func (c *ProjectsModelsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.\n\nTo learn which resources support conditions in their IAM policies, see the\n[IAM\ndocumentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -10000,14 +9029,9 @@ type ProjectsModelsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the models in a project.
-//
-// Each project can contain multiple models, and each model can have
-// multiple
-// versions.
-//
-// If there are no models that match the request parameters, the list
-// request
+// List: Lists the models in a project. Each project can contain
+// multiple models, and each model can have multiple versions. If there
+// are no models that match the request parameters, the list request
 // returns an empty response body: {}.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10023,23 +9047,18 @@ func (c *ProjectsModelsListCall) Filter(filter string) *ProjectsModelsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The number of models
-// to retrieve per "page" of results. If there
-// are more remaining results than this number, the response message
-// will
-// contain a valid value in the `next_page_token` field.
-//
-// The default value is 20, and the maximum page size is 100.
+// to retrieve per "page" of results. If there are more remaining
+// results than this number, the response message will contain a valid
+// value in the `next_page_token` field. The default value is 20, and
+// the maximum page size is 100.
 func (c *ProjectsModelsListCall) PageSize(pageSize int64) *ProjectsModelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token to
-// request the next page of results.
-//
-// You get the token from the `next_page_token` field of the response
-// from
-// the previous call.
+// request the next page of results. You get the token from the
+// `next_page_token` field of the response from the previous call.
 func (c *ProjectsModelsListCall) PageToken(pageToken string) *ProjectsModelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10082,7 +9101,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10145,7 +9164,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the models in a project.\n\nEach project can contain multiple models, and each model can have multiple\nversions.\n\nIf there are no models that match the request parameters, the list request\nreturns an empty response body: {}.",
+	//   "description": "Lists the models in a project. Each project can contain multiple models, and each model can have multiple versions. If there are no models that match the request parameters, the list request returns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/models",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.list",
@@ -10159,13 +9178,13 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The number of models to retrieve per \"page\" of results. If there\nare more remaining results than this number, the response message will\ncontain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
+	//       "description": "Optional. The number of models to retrieve per \"page\" of results. If there are more remaining results than this number, the response message will contain a valid value in the `next_page_token` field. The default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A page token to request the next page of results.\n\nYou get the token from the `next_page_token` field of the response from\nthe previous call.",
+	//       "description": "Optional. A page token to request the next page of results. You get the token from the `next_page_token` field of the response from the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10221,10 +9240,8 @@ type ProjectsModelsPatchCall struct {
 	header_                http.Header
 }
 
-// Patch: Updates a specific model resource.
-//
-// Currently the only supported fields to update are `description`
-// and
+// Patch: Updates a specific model resource. Currently the only
+// supported fields to update are `description` and
 // `default_version.name`.
 func (r *ProjectsModelsService) Patch(name string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsPatchCall {
 	c := &ProjectsModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10234,24 +9251,13 @@ func (r *ProjectsModelsService) Patch(name string, googlecloudmlv1__model *Googl
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required.
-// Specifies the path, relative to `Model`, of the field to update.
-//
-// For example, to change the description of a model to "foo" and set
-// its
-// default version to "version_1", the `update_mask` parameter would
-// be
-// specified as `description`, `default_version.name`, and the
-// `PATCH`
-// request body would specify the new value, as follows:
-//     {
-//       "description": "foo",
-//       "defaultVersion": {
-//         "name":"version_1"
-//       }
-//     }
-//
-// Currently the supported update masks are `description`
-// and
+// Specifies the path, relative to `Model`, of the field to update. For
+// example, to change the description of a model to "foo" and set its
+// default version to "version_1", the `update_mask` parameter would be
+// specified as `description`, `default_version.name`, and the `PATCH`
+// request body would specify the new value, as follows: {
+// "description": "foo", "defaultVersion": { "name":"version_1" } }
+// Currently the supported update masks are `description` and
 // `default_version.name`.
 func (c *ProjectsModelsPatchCall) UpdateMask(updateMask string) *ProjectsModelsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -10285,7 +9291,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10349,7 +9355,7 @@ func (c *ProjectsModelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a specific model resource.\n\nCurrently the only supported fields to update are `description` and\n`default_version.name`.",
+	//   "description": "Updates a specific model resource. Currently the only supported fields to update are `description` and `default_version.name`.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "ml.projects.models.patch",
@@ -10365,7 +9371,7 @@ func (c *ProjectsModelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Model`, of the field to update.\n\nFor example, to change the description of a model to \"foo\" and set its\ndefault version to \"version_1\", the `update_mask` parameter would be\nspecified as `description`, `default_version.name`, and the `PATCH`\nrequest body would specify the new value, as follows:\n    {\n      \"description\": \"foo\",\n      \"defaultVersion\": {\n        \"name\":\"version_1\"\n      }\n    }\n\nCurrently the supported update masks are `description` and\n`default_version.name`.",
+	//       "description": "Required. Specifies the path, relative to `Model`, of the field to update. For example, to change the description of a model to \"foo\" and set its default version to \"version_1\", the `update_mask` parameter would be specified as `description`, `default_version.name`, and the `PATCH` request body would specify the new value, as follows: { \"description\": \"foo\", \"defaultVersion\": { \"name\":\"version_1\" } } Currently the supported update masks are `description` and `default_version.name`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10397,11 +9403,8 @@ type ProjectsModelsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
-// existing policy.
-//
-// Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
-// errors.
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10436,7 +9439,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10500,7 +9503,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.setIamPolicy",
@@ -10509,7 +9512,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -10542,16 +9545,11 @@ type ProjectsModelsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
-// If the resource does not exist, this will return an empty set
-// of
-// permissions, not a `NOT_FOUND` error.
-//
-// Note: This operation is designed to be used for building
-// permission-aware
-// UIs and command-line tools, not for authorization checking. This
-// operation
-// may "fail open" without warning.
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
 func (r *ProjectsModelsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsModelsTestIamPermissionsCall {
 	c := &ProjectsModelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10586,7 +9584,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10651,7 +9649,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a `NOT_FOUND` error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.testIamPermissions",
@@ -10660,7 +9658,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+$",
 	//       "required": true,
@@ -10693,18 +9691,11 @@ type ProjectsModelsVersionsCreateCall struct {
 }
 
 // Create: Creates a new version of a model from a trained TensorFlow
-// model.
-//
-// If the version created in the cloud by this call is the first
-// deployed
-// version of the specified model, it will be made the default version
-// of the
-// model. When you add a version to a model that already has one or
-// more
-// versions, the default version does not automatically change. If you
-// want a
-// new version to be the default, you must
-// call
+// model. If the version created in the cloud by this call is the first
+// deployed version of the specified model, it will be made the default
+// version of the model. When you add a version to a model that already
+// has one or more versions, the default version does not automatically
+// change. If you want a new version to be the default, you must call
 // projects.models.versions.setDefault.
 func (r *ProjectsModelsVersionsService) Create(parent string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsCreateCall {
 	c := &ProjectsModelsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10740,7 +9731,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10804,7 +9795,7 @@ func (c *ProjectsModelsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new version of a model from a trained TensorFlow model.\n\nIf the version created in the cloud by this call is the first deployed\nversion of the specified model, it will be made the default version of the\nmodel. When you add a version to a model that already has one or more\nversions, the default version does not automatically change. If you want a\nnew version to be the default, you must call\nprojects.models.versions.setDefault.",
+	//   "description": "Creates a new version of a model from a trained TensorFlow model. If the version created in the cloud by this call is the first deployed version of the specified model, it will be made the default version of the model. When you add a version to a model that already has one or more versions, the default version does not automatically change. If you want a new version to be the default, you must call projects.models.versions.setDefault.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.versions.create",
@@ -10844,15 +9835,11 @@ type ProjectsModelsVersionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a model version.
-//
-// Each model can have multiple versions deployed and in use at any
-// given
-// time. Use this method to remove a single version.
-//
-// Note: You cannot delete the version that is set as the default
-// version
-// of the model unless it is the only remaining version.
+// Delete: Deletes a model version. Each model can have multiple
+// versions deployed and in use at any given time. Use this method to
+// remove a single version. Note: You cannot delete the version that is
+// set as the default version of the model unless it is the only
+// remaining version.
 func (r *ProjectsModelsVersionsService) Delete(name string) *ProjectsModelsVersionsDeleteCall {
 	c := &ProjectsModelsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10886,7 +9873,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10945,7 +9932,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a model version.\n\nEach model can have multiple versions deployed and in use at any given\ntime. Use this method to remove a single version.\n\nNote: You cannot delete the version that is set as the default version\nof the model unless it is the only remaining version.",
+	//   "description": "Deletes a model version. Each model can have multiple versions deployed and in use at any given time. Use this method to remove a single version. Note: You cannot delete the version that is set as the default version of the model unless it is the only remaining version.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions/{versionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "ml.projects.models.versions.delete",
@@ -10954,7 +9941,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the version. You can get the names of all the\nversions of a model by calling\nprojects.models.versions.list.",
+	//       "description": "Required. The name of the version. You can get the names of all the versions of a model by calling projects.models.versions.list.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -10983,14 +9970,10 @@ type ProjectsModelsVersionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information about a model version.
-//
-// Models can have multiple versions. You can
-// call
-// projects.models.versions.list
-// to get the same information that this method returns for all of
-// the
-// versions of a model.
+// Get: Gets information about a model version. Models can have multiple
+// versions. You can call projects.models.versions.list to get the same
+// information that this method returns for all of the versions of a
+// model.
 func (r *ProjectsModelsVersionsService) Get(name string) *ProjectsModelsVersionsGetCall {
 	c := &ProjectsModelsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11034,7 +10017,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11096,7 +10079,7 @@ func (c *ProjectsModelsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a model version.\n\nModels can have multiple versions. You can call\nprojects.models.versions.list\nto get the same information that this method returns for all of the\nversions of a model.",
+	//   "description": "Gets information about a model version. Models can have multiple versions. You can call projects.models.versions.list to get the same information that this method returns for all of the versions of a model.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions/{versionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.versions.get",
@@ -11134,17 +10117,12 @@ type ProjectsModelsVersionsListCall struct {
 	header_      http.Header
 }
 
-// List: Gets basic information about all the versions of a model.
-//
-// If you expect that a model has many versions, or if you need to
-// handle
+// List: Gets basic information about all the versions of a model. If
+// you expect that a model has many versions, or if you need to handle
 // only a limited number of results at a time, you can request that the
-// list
-// be retrieved in batches (called pages).
-//
-// If there are no versions that match the request parameters, the
-// list
-// request returns an empty response body: {}.
+// list be retrieved in batches (called pages). If there are no versions
+// that match the request parameters, the list request returns an empty
+// response body: {}.
 func (r *ProjectsModelsVersionsService) List(parent string) *ProjectsModelsVersionsListCall {
 	c := &ProjectsModelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11159,23 +10137,18 @@ func (c *ProjectsModelsVersionsListCall) Filter(filter string) *ProjectsModelsVe
 }
 
 // PageSize sets the optional parameter "pageSize": The number of
-// versions to retrieve per "page" of results. If
-// there are more remaining results than this number, the response
-// message
-// will contain a valid value in the `next_page_token` field.
-//
-// The default value is 20, and the maximum page size is 100.
+// versions to retrieve per "page" of results. If there are more
+// remaining results than this number, the response message will contain
+// a valid value in the `next_page_token` field. The default value is
+// 20, and the maximum page size is 100.
 func (c *ProjectsModelsVersionsListCall) PageSize(pageSize int64) *ProjectsModelsVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token to
-// request the next page of results.
-//
-// You get the token from the `next_page_token` field of the response
-// from
-// the previous call.
+// request the next page of results. You get the token from the
+// `next_page_token` field of the response from the previous call.
 func (c *ProjectsModelsVersionsListCall) PageToken(pageToken string) *ProjectsModelsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -11218,7 +10191,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11281,7 +10254,7 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets basic information about all the versions of a model.\n\nIf you expect that a model has many versions, or if you need to handle\nonly a limited number of results at a time, you can request that the list\nbe retrieved in batches (called pages).\n\nIf there are no versions that match the request parameters, the list\nrequest returns an empty response body: {}.",
+	//   "description": "Gets basic information about all the versions of a model. If you expect that a model has many versions, or if you need to handle only a limited number of results at a time, you can request that the list be retrieved in batches (called pages). If there are no versions that match the request parameters, the list request returns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.versions.list",
@@ -11295,13 +10268,13 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The number of versions to retrieve per \"page\" of results. If\nthere are more remaining results than this number, the response message\nwill contain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
+	//       "description": "Optional. The number of versions to retrieve per \"page\" of results. If there are more remaining results than this number, the response message will contain a valid value in the `next_page_token` field. The default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A page token to request the next page of results.\n\nYou get the token from the `next_page_token` field of the response from\nthe previous call.",
+	//       "description": "Optional. A page token to request the next page of results. You get the token from the `next_page_token` field of the response from the previous call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11357,12 +10330,9 @@ type ProjectsModelsVersionsPatchCall struct {
 	header_                  http.Header
 }
 
-// Patch: Updates the specified Version resource.
-//
-// Currently the only update-able fields are
-// `description`,
-// `requestLoggingConfig`, `autoScaling.minNodes`, and
-// `manualScaling.nodes`.
+// Patch: Updates the specified Version resource. Currently the only
+// update-able fields are `description`, `requestLoggingConfig`,
+// `autoScaling.minNodes`, and `manualScaling.nodes`.
 func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsPatchCall {
 	c := &ProjectsModelsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11371,28 +10341,15 @@ func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__vers
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required.
-// Specifies the path, relative to `Version`, of the field to
-// update. Must be present and non-empty.
-//
-// For example, to change the description of a version to "foo",
-// the
-// `update_mask` parameter would be specified as `description`, and
-// the
-// `PATCH` request body would specify the new value, as follows:
-//
-// ```
-// {
-//   "description": "foo"
-// }
-// ```
-//
-// Currently the only supported update mask fields are
-// `description`,
+// Specifies the path, relative to `Version`, of the field to update.
+// Must be present and non-empty. For example, to change the description
+// of a version to "foo", the `update_mask` parameter would be specified
+// as `description`, and the `PATCH` request body would specify the new
+// value, as follows: ``` { "description": "foo" } ``` Currently the
+// only supported update mask fields are `description`,
 // `requestLoggingConfig`, `autoScaling.minNodes`, and
-// `manualScaling.nodes`.
-// However, you can only update `manualScaling.nodes` if the version
-// uses a
-// [Compute Engine (N1)
+// `manualScaling.nodes`. However, you can only update
+// `manualScaling.nodes` if the version uses a [Compute Engine (N1)
 // machine type](/ml-engine/docs/machine-types-online-prediction).
 func (c *ProjectsModelsVersionsPatchCall) UpdateMask(updateMask string) *ProjectsModelsVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -11426,7 +10383,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11490,7 +10447,7 @@ func (c *ProjectsModelsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Version resource.\n\nCurrently the only update-able fields are `description`,\n`requestLoggingConfig`, `autoScaling.minNodes`, and `manualScaling.nodes`.",
+	//   "description": "Updates the specified Version resource. Currently the only update-able fields are `description`, `requestLoggingConfig`, `autoScaling.minNodes`, and `manualScaling.nodes`.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions/{versionsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "ml.projects.models.versions.patch",
@@ -11506,7 +10463,7 @@ func (c *ProjectsModelsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Version`, of the field to\nupdate. Must be present and non-empty.\n\nFor example, to change the description of a version to \"foo\", the\n`update_mask` parameter would be specified as `description`, and the\n`PATCH` request body would specify the new value, as follows:\n\n```\n{\n  \"description\": \"foo\"\n}\n```\n\nCurrently the only supported update mask fields are `description`,\n`requestLoggingConfig`, `autoScaling.minNodes`, and `manualScaling.nodes`.\nHowever, you can only update `manualScaling.nodes` if the version uses a\n[Compute Engine (N1)\nmachine type](/ml-engine/docs/machine-types-online-prediction).",
+	//       "description": "Required. Specifies the path, relative to `Version`, of the field to update. Must be present and non-empty. For example, to change the description of a version to \"foo\", the `update_mask` parameter would be specified as `description`, and the `PATCH` request body would specify the new value, as follows: ``` { \"description\": \"foo\" } ``` Currently the only supported update mask fields are `description`, `requestLoggingConfig`, `autoScaling.minNodes`, and `manualScaling.nodes`. However, you can only update `manualScaling.nodes` if the version uses a [Compute Engine (N1) machine type](/ml-engine/docs/machine-types-online-prediction).",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -11537,18 +10494,12 @@ type ProjectsModelsVersionsSetDefaultCall struct {
 	header_                                   http.Header
 }
 
-// SetDefault: Designates a version to be the default for the
-// model.
-//
-// The default version is used for prediction requests made against the
-// model
-// that don't specify a version.
-//
-// The first version to be created for a model is automatically set as
-// the
-// default. You must make any subsequent changes to the default
-// version
-// setting manually using this method.
+// SetDefault: Designates a version to be the default for the model. The
+// default version is used for prediction requests made against the
+// model that don't specify a version. The first version to be created
+// for a model is automatically set as the default. You must make any
+// subsequent changes to the default version setting manually using this
+// method.
 func (r *ProjectsModelsVersionsService) SetDefault(name string, googlecloudmlv1__setdefaultversionrequest *GoogleCloudMlV1__SetDefaultVersionRequest) *ProjectsModelsVersionsSetDefaultCall {
 	c := &ProjectsModelsVersionsSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11583,7 +10534,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11647,7 +10598,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Designates a version to be the default for the model.\n\nThe default version is used for prediction requests made against the model\nthat don't specify a version.\n\nThe first version to be created for a model is automatically set as the\ndefault. You must make any subsequent changes to the default version\nsetting manually using this method.",
+	//   "description": "Designates a version to be the default for the model. The default version is used for prediction requests made against the model that don't specify a version. The first version to be created for a model is automatically set as the default. You must make any subsequent changes to the default version setting manually using this method.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions/{versionsId}:setDefault",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.models.versions.setDefault",
@@ -11656,7 +10607,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the version to make the default for the model. You\ncan get the names of all the versions of a model by calling\nprojects.models.versions.list.",
+	//       "description": "Required. The name of the version to make the default for the model. You can get the names of all the versions of a model by calling projects.models.versions.list.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/models/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -11688,23 +10639,15 @@ type ProjectsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11738,7 +10681,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11797,7 +10740,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.operations.cancel",
@@ -11835,11 +10778,9 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11883,7 +10824,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11945,7 +10886,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.operations.get",
@@ -11984,22 +10925,15 @@ type ProjectsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12064,7 +10998,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12128,7 +11062,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.operations.list",

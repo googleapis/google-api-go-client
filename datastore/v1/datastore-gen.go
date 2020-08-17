@@ -181,8 +181,7 @@ type ProjectsOperationsService struct {
 // AllocateIdsRequest: The request for Datastore.AllocateIds.
 type AllocateIdsRequest struct {
 	// Keys: Required. A list of keys with incomplete key paths for which to
-	// allocate IDs.
-	// No key may be reserved/read-only.
+	// allocate IDs. No key may be reserved/read-only.
 	Keys []*Key `json:"keys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Keys") to
@@ -211,8 +210,7 @@ func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 // AllocateIdsResponse: The response for Datastore.AllocateIds.
 type AllocateIdsResponse struct {
 	// Keys: The keys specified in the request (in the same order), each
-	// with
-	// its key path completed with a newly allocated ID.
+	// with its key path completed with a newly allocated ID.
 	Keys []*Key `json:"keys,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -244,10 +242,9 @@ func (s *AllocateIdsResponse) MarshalJSON() ([]byte, error) {
 
 // ArrayValue: An array value.
 type ArrayValue struct {
-	// Values: Values in the array.
-	// The order of values in an array is preserved as long as all values
-	// have
-	// identical settings for 'exclude_from_indexes'.
+	// Values: Values in the array. The order of values in an array is
+	// preserved as long as all values have identical settings for
+	// 'exclude_from_indexes'.
 	Values []*Value `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -342,37 +339,23 @@ type CommitRequest struct {
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - Unspecified. This value must not be used.
 	//   "TRANSACTIONAL" - Transactional: The mutations are either all
-	// applied, or none are applied.
-	// Learn about
-	// transactions
-	// [here](https://cloud.google.com/datastore/docs/concepts/t
-	// ransactions).
+	// applied, or none are applied. Learn about transactions
+	// [here](https://cloud.google.com/datastore/docs/concepts/transactions).
 	//   "NON_TRANSACTIONAL" - Non-transactional: The mutations may not
 	// apply as all or none.
 	Mode string `json:"mode,omitempty"`
 
-	// Mutations: The mutations to perform.
-	//
-	// When mode is `TRANSACTIONAL`, mutations affecting a single entity
-	// are
-	// applied in order. The following sequences of mutations affecting a
-	// single
-	// entity are not permitted in a single `Commit` request:
-	//
-	// - `insert` followed by `insert`
-	// - `update` followed by `insert`
-	// - `upsert` followed by `insert`
-	// - `delete` followed by `update`
-	//
-	// When mode is `NON_TRANSACTIONAL`, no two mutations may affect a
-	// single
-	// entity.
+	// Mutations: The mutations to perform. When mode is `TRANSACTIONAL`,
+	// mutations affecting a single entity are applied in order. The
+	// following sequences of mutations affecting a single entity are not
+	// permitted in a single `Commit` request: - `insert` followed by
+	// `insert` - `update` followed by `insert` - `upsert` followed by
+	// `insert` - `delete` followed by `update` When mode is
+	// `NON_TRANSACTIONAL`, no two mutations may affect a single entity.
 	Mutations []*Mutation `json:"mutations,omitempty"`
 
 	// Transaction: The identifier of the transaction associated with the
-	// commit. A
-	// transaction identifier is returned by a call
-	// to
+	// commit. A transaction identifier is returned by a call to
 	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
@@ -402,13 +385,11 @@ func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 // CommitResponse: The response for Datastore.Commit.
 type CommitResponse struct {
 	// IndexUpdates: The number of index entries updated during the commit,
-	// or zero if none were
-	// updated.
+	// or zero if none were updated.
 	IndexUpdates int64 `json:"indexUpdates,omitempty"`
 
-	// MutationResults: The result of performing the mutations.
-	// The i-th mutation result corresponds to the i-th mutation in the
-	// request.
+	// MutationResults: The result of performing the mutations. The i-th
+	// mutation result corresponds to the i-th mutation in the request.
 	MutationResults []*MutationResult `json:"mutationResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -441,8 +422,8 @@ func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 // CompositeFilter: A filter that merges multiple other filters using
 // the given operator.
 type CompositeFilter struct {
-	// Filters: The list of filters to combine.
-	// Must contain at least one filter.
+	// Filters: The list of filters to combine. Must contain at least one
+	// filter.
 	Filters []*Filter `json:"filters,omitempty"`
 
 	// Op: The operator for combining multiple filters.
@@ -477,47 +458,32 @@ func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Entity: A Datastore data object.
-//
-// An entity is limited to 1 megabyte when stored. That
-// _roughly_
-// corresponds to a limit of 1 megabyte for the serialized form of
-// this
-// message.
+// Entity: A Datastore data object. An entity is limited to 1 megabyte
+// when stored. That _roughly_ corresponds to a limit of 1 megabyte for
+// the serialized form of this message.
 type Entity struct {
-	// Key: The entity's key.
-	//
-	// An entity must have a key, unless otherwise documented (for
-	// example,
-	// an entity in `Value.entity_value` may have no key).
-	// An entity's kind is its key path's last element's kind,
-	// or null if it has no key.
+	// Key: The entity's key. An entity must have a key, unless otherwise
+	// documented (for example, an entity in `Value.entity_value` may have
+	// no key). An entity's kind is its key path's last element's kind, or
+	// null if it has no key.
 	Key *Key `json:"key,omitempty"`
 
-	// Properties: The entity's properties.
-	// The map's keys are property names.
-	// A property name matching regex `__.*__` is reserved.
-	// A reserved property name is forbidden in certain documented
-	// contexts.
-	// The name must not contain more than 500 characters.
-	// The name cannot be "".
+	// Properties: The entity's properties. The map's keys are property
+	// names. A property name matching regex `__.*__` is reserved. A
+	// reserved property name is forbidden in certain documented contexts.
+	// The name must not contain more than 500 characters. The name cannot
+	// be "".
 	Properties map[string]Value `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -545,8 +511,7 @@ func (s *Entity) MarshalJSON() ([]byte, error) {
 
 // EntityResult: The result of fetching an entity from Datastore.
 type EntityResult struct {
-	// Cursor: A cursor that points to the position after the result
-	// entity.
+	// Cursor: A cursor that points to the position after the result entity.
 	// Set only when the `EntityResult` is part of a `QueryResultBatch`
 	// message.
 	Cursor string `json:"cursor,omitempty"`
@@ -555,16 +520,10 @@ type EntityResult struct {
 	Entity *Entity `json:"entity,omitempty"`
 
 	// Version: The version of the entity, a strictly positive number that
-	// monotonically
-	// increases with changes to the entity.
-	//
-	// This field is set for `FULL` entity
-	// results.
-	//
-	// For missing entities in `LookupResponse`, this
-	// is the version of the snapshot that was used to look up the entity,
-	// and it
-	// is always set except for eventually consistent reads.
+	// monotonically increases with changes to the entity. This field is set
+	// for `FULL` entity results. For missing entities in `LookupResponse`,
+	// this is the version of the snapshot that was used to look up the
+	// entity, and it is always set except for eventually consistent reads.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Cursor") to
@@ -630,12 +589,10 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Labels: The client-assigned labels which were provided when the
-	// operation was
-	// created. May also include additional labels.
+	// operation was created. May also include additional labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: The type of the operation. Can be used as a filter
-	// in
+	// OperationType: The type of the operation. Can be used as a filter in
 	// ListOperationsRequest.
 	//
 	// Possible values:
@@ -656,16 +613,15 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -692,40 +648,24 @@ func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleDatastoreAdminV1EntityFilter: Identifies a subset of entities
-// in a project. This is specified as
-// combinations of kinds and namespaces (either or both of which may be
-// all, as
-// described in the following examples).
-// Example usage:
-//
-// Entire project:
-//   kinds=[], namespace_ids=[]
-//
-// Kinds Foo and Bar in all namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=[]
-//
-// Kinds Foo and Bar only in the default namespace:
-//   kinds=['Foo', 'Bar'], namespace_ids=['']
-//
-// Kinds Foo and Bar in both the default and Baz namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=['', 'Baz']
-//
-// The entire Baz namespace:
-//   kinds=[], namespace_ids=['Baz']
+// in a project. This is specified as combinations of kinds and
+// namespaces (either or both of which may be all, as described in the
+// following examples). Example usage: Entire project: kinds=[],
+// namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
+// 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[''] Kinds Foo and Bar
+// in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
+// namespace_ids=['', 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=['Baz']
 type GoogleDatastoreAdminV1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
 	Kinds []string `json:"kinds,omitempty"`
 
 	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred
-	// usage for projects that don't use namespaces.
-	//
-	// An empty string element represents the default namespace. This should
-	// be
-	// used if the project has data in non-default namespaces, but doesn't
-	// want to
-	// include them.
-	// Each namespace in this list must be unique.
+	// preferred usage for projects that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the project has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kinds") to
@@ -761,13 +701,9 @@ type GoogleDatastoreAdminV1ExportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1EntityFilter `json:"entityFilter,omitempty"`
 
 	// OutputUrlPrefix: Location for the export metadata and data files.
-	// This will be the same
-	// value as
-	// the
+	// This will be the same value as the
 	// google.datastore.admin.v1.ExportEntitiesRequest.output_url_prefix
-	//
-	// field. The final output location is provided
-	// in
+	// field. The final output location is provided in
 	// google.datastore.admin.v1.ExportEntitiesResponse.output_url.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
@@ -800,8 +736,7 @@ func (s *GoogleDatastoreAdminV1ExportEntitiesMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1ExportEntitiesRequest: The request
-// for
+// GoogleDatastoreAdminV1ExportEntitiesRequest: The request for
 // google.datastore.admin.v1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1ExportEntitiesRequest struct {
 	// EntityFilter: Description of what data from the project is included
@@ -812,35 +747,21 @@ type GoogleDatastoreAdminV1ExportEntitiesRequest struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// OutputUrlPrefix: Required. Location for the export metadata and data
-	// files.
-	//
-	// The full resource URL of the external storage location. Currently,
-	// only
-	// Google Cloud Storage is supported. So output_url_prefix should be of
-	// the
-	// form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is
-	// the
-	// name of the Cloud Storage bucket and `NAMESPACE_PATH` is an optional
-	// Cloud
+	// files. The full resource URL of the external storage location.
+	// Currently, only Google Cloud Storage is supported. So
+	// output_url_prefix should be of the form:
+	// `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is the name
+	// of the Cloud Storage bucket and `NAMESPACE_PATH` is an optional Cloud
 	// Storage namespace path (this is not a Cloud Datastore namespace). For
-	// more
-	// information about Cloud Storage namespace paths, see
-	// [Object
+	// more information about Cloud Storage namespace paths, see [Object
 	// name
-	// considerations](https://cloud.google.com/storage/docs/naming#obje
-	// ct-considerations).
-	//
-	// The resulting files will be nested deeper than the specified URL
-	// prefix.
-	// The final output URL will be provided in
-	// the
+	// considerations](https://cloud.google.com/storage/docs/naming#object-co
+	// nsiderations). The resulting files will be nested deeper than the
+	// specified URL prefix. The final output URL will be provided in the
 	// google.datastore.admin.v1.ExportEntitiesResponse.output_url field.
-	// That
-	// value should be used for subsequent ImportEntities operations.
-	//
+	// That value should be used for subsequent ImportEntities operations.
 	// By nesting the data files deeper, the same Cloud Storage bucket can
-	// be used
-	// in multiple ExportEntities operations without conflict.
+	// be used in multiple ExportEntities operations without conflict.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityFilter") to
@@ -866,16 +787,14 @@ func (s *GoogleDatastoreAdminV1ExportEntitiesRequest) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1ExportEntitiesResponse: The response
-// for
+// GoogleDatastoreAdminV1ExportEntitiesResponse: The response for
 // google.datastore.admin.v1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1ExportEntitiesResponse struct {
 	// OutputUrl: Location of the output metadata file. This can be used to
-	// begin an import
-	// into Cloud Datastore (this project or another project).
-	// See
-	// google.datastore.admin.v1.ImportEntitiesRequest.input_url.
-	// Only present if the operation completed successfully.
+	// begin an import into Cloud Datastore (this project or another
+	// project). See
+	// google.datastore.admin.v1.ImportEntitiesRequest.input_url. Only
+	// present if the operation completed successfully.
 	OutputUrl string `json:"outputUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUrl") to
@@ -911,9 +830,8 @@ type GoogleDatastoreAdminV1ImportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: The location of the import metadata file. This will be the
-	// same value as
-	// the google.datastore.admin.v1.ExportEntitiesResponse.output_url
-	// field.
+	// same value as the
+	// google.datastore.admin.v1.ExportEntitiesResponse.output_url field.
 	InputUrl string `json:"inputUrl,omitempty"`
 
 	// ProgressBytes: An estimate of the number of bytes processed.
@@ -945,41 +863,28 @@ func (s *GoogleDatastoreAdminV1ImportEntitiesMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1ImportEntitiesRequest: The request
-// for
+// GoogleDatastoreAdminV1ImportEntitiesRequest: The request for
 // google.datastore.admin.v1.DatastoreAdmin.ImportEntities.
 type GoogleDatastoreAdminV1ImportEntitiesRequest struct {
 	// EntityFilter: Optionally specify which kinds/namespaces are to be
-	// imported. If provided,
-	// the list must be a subset of the EntityFilter used in creating the
-	// export,
-	// otherwise a FAILED_PRECONDITION error will be returned. If no filter
-	// is
-	// specified then all entities from the export are imported.
+	// imported. If provided, the list must be a subset of the EntityFilter
+	// used in creating the export, otherwise a FAILED_PRECONDITION error
+	// will be returned. If no filter is specified then all entities from
+	// the export are imported.
 	EntityFilter *GoogleDatastoreAdminV1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: Required. The full resource URL of the external storage
-	// location. Currently, only
-	// Google Cloud Storage is supported. So input_url should be of the
-	// form:
-	// `gs://BUCKET_NAME[/NAMESPACE_PATH]/OVERALL_EXPORT_METADATA_FILE`
-	// , where
-	// `BUCKET_NAME` is the name of the Cloud Storage bucket,
-	// `NAMESPACE_PATH` is
-	// an optional Cloud Storage namespace path (this is not a Cloud
-	// Datastore
-	// namespace), and `OVERALL_EXPORT_METADATA_FILE` is the metadata file
-	// written
-	// by the ExportEntities operation. For more information about Cloud
-	// Storage
-	// namespace paths, see
-	// [Object
+	// location. Currently, only Google Cloud Storage is supported. So
+	// input_url should be of the form:
+	// `gs://BUCKET_NAME[/NAMESPACE_PATH]/OVERALL_EXPORT_METADATA_FILE`,
+	// where `BUCKET_NAME` is the name of the Cloud Storage bucket,
+	// `NAMESPACE_PATH` is an optional Cloud Storage namespace path (this is
+	// not a Cloud Datastore namespace), and `OVERALL_EXPORT_METADATA_FILE`
+	// is the metadata file written by the ExportEntities operation. For
+	// more information about Cloud Storage namespace paths, see [Object
 	// name
-	// considerations](https://cloud.google.com/storage/docs/naming#obje
-	// ct-considerations).
-	//
-	// For more information,
-	// see
+	// considerations](https://cloud.google.com/storage/docs/naming#object-co
+	// nsiderations). For more information, see
 	// google.datastore.admin.v1.ExportEntitiesResponse.output_url.
 	InputUrl string `json:"inputUrl,omitempty"`
 
@@ -1011,7 +916,7 @@ func (s *GoogleDatastoreAdminV1ImportEntitiesRequest) MarshalJSON() ([]byte, err
 
 // GoogleDatastoreAdminV1Index: Datastore composite index definition.
 type GoogleDatastoreAdminV1Index struct {
-	// Ancestor: Required. The index's ancestor mode.  Must not be
+	// Ancestor: Required. The index's ancestor mode. Must not be
 	// ANCESTOR_MODE_UNSPECIFIED.
 	//
 	// Possible values:
@@ -1038,25 +943,20 @@ type GoogleDatastoreAdminV1Index struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unspecified.
 	//   "CREATING" - The index is being created, and cannot be used by
-	// queries.
-	// There is an active long-running operation for the index.
-	// The index is updated when writing an entity.
-	// Some index data may exist.
-	//   "READY" - The index is ready to be used.
-	// The index is updated when writing an entity.
-	// The index is fully populated from all stored entities it applies to.
+	// queries. There is an active long-running operation for the index. The
+	// index is updated when writing an entity. Some index data may exist.
+	//   "READY" - The index is ready to be used. The index is updated when
+	// writing an entity. The index is fully populated from all stored
+	// entities it applies to.
 	//   "DELETING" - The index is being deleted, and cannot be used by
-	// queries.
-	// There is an active long-running operation for the index.
-	// The index is not updated when writing an entity.
-	// Some index data may exist.
+	// queries. There is an active long-running operation for the index. The
+	// index is not updated when writing an entity. Some index data may
+	// exist.
 	//   "ERROR" - The index was being created or deleted, but something
-	// went wrong.
-	// The index cannot by used by queries.
-	// There is no active long-running operation for the index,
-	// and the most recently finished long-running operation failed.
-	// The index is not updated when writing an entity.
-	// Some index data may exist.
+	// went wrong. The index cannot by used by queries. There is no active
+	// long-running operation for the index, and the most recently finished
+	// long-running operation failed. The index is not updated when writing
+	// an entity. Some index data may exist.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1123,17 +1023,15 @@ func (s *GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 
 // GoogleDatastoreAdminV1IndexedProperty: A property of an index.
 type GoogleDatastoreAdminV1IndexedProperty struct {
-	// Direction: Required. The indexed property's direction.  Must not be
+	// Direction: Required. The indexed property's direction. Must not be
 	// DIRECTION_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "DIRECTION_UNSPECIFIED" - The direction is unspecified.
 	//   "ASCENDING" - The property's values are indexed so as to support
-	// sequencing in
-	// ascending order and also query by <, >, <=, >=, and =.
+	// sequencing in ascending order and also query by <, >, <=, >=, and =.
 	//   "DESCENDING" - The property's values are indexed so as to support
-	// sequencing in
-	// descending order and also query by <, >, <=, >=, and =.
+	// sequencing in descending order and also query by <, >, <=, >=, and =.
 	Direction string `json:"direction,omitempty"`
 
 	// Name: Required. The property name to index.
@@ -1162,8 +1060,7 @@ func (s *GoogleDatastoreAdminV1IndexedProperty) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1ListIndexesResponse: The response
-// for
+// GoogleDatastoreAdminV1ListIndexesResponse: The response for
 // google.datastore.admin.v1.DatastoreAdmin.ListIndexes.
 type GoogleDatastoreAdminV1ListIndexesResponse struct {
 	// Indexes: The indexes.
@@ -1203,13 +1100,11 @@ func (s *GoogleDatastoreAdminV1ListIndexesResponse) MarshalJSON() ([]byte, error
 // metric.
 type GoogleDatastoreAdminV1Progress struct {
 	// WorkCompleted: The amount of work that has been completed. Note that
-	// this may be greater
-	// than work_estimated.
+	// this may be greater than work_estimated.
 	WorkCompleted int64 `json:"workCompleted,omitempty,string"`
 
 	// WorkEstimated: An estimate of how much work needs to be performed.
-	// May be zero if the
-	// work estimate is unavailable.
+	// May be zero if the work estimate is unavailable.
 	WorkEstimated int64 `json:"workEstimated,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "WorkCompleted") to
@@ -1243,12 +1138,10 @@ type GoogleDatastoreAdminV1beta1CommonMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// Labels: The client-assigned labels which were provided when the
-	// operation was
-	// created. May also include additional labels.
+	// operation was created. May also include additional labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// OperationType: The type of the operation. Can be used as a filter
-	// in
+	// OperationType: The type of the operation. Can be used as a filter in
 	// ListOperationsRequest.
 	//
 	// Possible values:
@@ -1267,16 +1160,15 @@ type GoogleDatastoreAdminV1beta1CommonMetadata struct {
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
 	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
+	// user called google.longrunning.Operations.CancelOperation on the
+	// operation.
 	//   "FINALIZING" - Request has been processed and is in its
 	// finalization stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
 	//   "FAILED" - Request has finished being processed, but encountered an
 	// error.
 	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
+	// called google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1303,40 +1195,24 @@ func (s *GoogleDatastoreAdminV1beta1CommonMetadata) MarshalJSON() ([]byte, error
 }
 
 // GoogleDatastoreAdminV1beta1EntityFilter: Identifies a subset of
-// entities in a project. This is specified as
-// combinations of kinds and namespaces (either or both of which may be
-// all, as
-// described in the following examples).
-// Example usage:
-//
-// Entire project:
-//   kinds=[], namespace_ids=[]
-//
-// Kinds Foo and Bar in all namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=[]
-//
-// Kinds Foo and Bar only in the default namespace:
-//   kinds=['Foo', 'Bar'], namespace_ids=['']
-//
-// Kinds Foo and Bar in both the default and Baz namespaces:
-//   kinds=['Foo', 'Bar'], namespace_ids=['', 'Baz']
-//
-// The entire Baz namespace:
-//   kinds=[], namespace_ids=['Baz']
+// entities in a project. This is specified as combinations of kinds and
+// namespaces (either or both of which may be all, as described in the
+// following examples). Example usage: Entire project: kinds=[],
+// namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
+// 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[''] Kinds Foo and Bar
+// in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
+// namespace_ids=['', 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=['Baz']
 type GoogleDatastoreAdminV1beta1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
 	Kinds []string `json:"kinds,omitempty"`
 
 	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred
-	// usage for projects that don't use namespaces.
-	//
-	// An empty string element represents the default namespace. This should
-	// be
-	// used if the project has data in non-default namespaces, but doesn't
-	// want to
-	// include them.
-	// Each namespace in this list must be unique.
+	// preferred usage for projects that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the project has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kinds") to
@@ -1372,13 +1248,9 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1beta1EntityFilter `json:"entityFilter,omitempty"`
 
 	// OutputUrlPrefix: Location for the export metadata and data files.
-	// This will be the same
-	// value as
-	// the
-	// google.datastore.admin.v1beta1.ExportEntitiesRequest.output_url_pr
-	// efix
-	// field. The final output location is provided
-	// in
+	// This will be the same value as the
+	// google.datastore.admin.v1beta1.ExportEntitiesRequest.output_url_prefix
+	//  field. The final output location is provided in
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url.
 	OutputUrlPrefix string `json:"outputUrlPrefix,omitempty"`
 
@@ -1411,17 +1283,14 @@ func (s *GoogleDatastoreAdminV1beta1ExportEntitiesMetadata) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1beta1ExportEntitiesResponse: The response
-// for
+// GoogleDatastoreAdminV1beta1ExportEntitiesResponse: The response for
 // google.datastore.admin.v1beta1.DatastoreAdmin.ExportEntities.
 type GoogleDatastoreAdminV1beta1ExportEntitiesResponse struct {
 	// OutputUrl: Location of the output metadata file. This can be used to
-	// begin an import
-	// into Cloud Datastore (this project or another project).
-	// See
-	// google.datastore.admin.v1beta1.ImportEntitiesRequest.input_url.
-	// On
-	// ly present if the operation completed successfully.
+	// begin an import into Cloud Datastore (this project or another
+	// project). See
+	// google.datastore.admin.v1beta1.ImportEntitiesRequest.input_url. Only
+	// present if the operation completed successfully.
 	OutputUrl string `json:"outputUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUrl") to
@@ -1457,11 +1326,9 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesMetadata struct {
 	EntityFilter *GoogleDatastoreAdminV1beta1EntityFilter `json:"entityFilter,omitempty"`
 
 	// InputUrl: The location of the import metadata file. This will be the
-	// same value as
-	// the
+	// same value as the
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url
-	// field
-	// .
+	// field.
 	InputUrl string `json:"inputUrl,omitempty"`
 
 	// ProgressBytes: An estimate of the number of bytes processed.
@@ -1497,13 +1364,11 @@ func (s *GoogleDatastoreAdminV1beta1ImportEntitiesMetadata) MarshalJSON() ([]byt
 // particular metric.
 type GoogleDatastoreAdminV1beta1Progress struct {
 	// WorkCompleted: The amount of work that has been completed. Note that
-	// this may be greater
-	// than work_estimated.
+	// this may be greater than work_estimated.
 	WorkCompleted int64 `json:"workCompleted,omitempty,string"`
 
 	// WorkEstimated: An estimate of how much work needs to be performed.
-	// May be zero if the
-	// work estimate is unavailable.
+	// May be zero if the work estimate is unavailable.
 	WorkEstimated int64 `json:"workEstimated,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "WorkCompleted") to
@@ -1567,52 +1432,38 @@ func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
-// operation that is the result of a
-// network API call.
+// operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1642,41 +1493,32 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GqlQuery: A
-// [GQL
-// query](https://cloud.google.com/datastore/docs/apis/gql/gql_refer
-// ence).
+// GqlQuery: A [GQL
+// query](https://cloud.google.com/datastore/docs/apis/gql/gql_reference)
+// .
 type GqlQuery struct {
 	// AllowLiterals: When false, the query string must not contain any
-	// literals and instead must
-	// bind all values. For example,
-	// `SELECT * FROM Kind WHERE a = 'string literal'` is not allowed,
-	// while
-	// `SELECT * FROM Kind WHERE a = @value` is.
+	// literals and instead must bind all values. For example, `SELECT *
+	// FROM Kind WHERE a = 'string literal'` is not allowed, while `SELECT *
+	// FROM Kind WHERE a = @value` is.
 	AllowLiterals bool `json:"allowLiterals,omitempty"`
 
 	// NamedBindings: For each non-reserved named binding site in the query
-	// string, there must be
-	// a named parameter with that name, but not necessarily the
-	// inverse.
-	//
-	// Key must match regex `A-Za-z_$*`, must not match regex
-	// `__.*__`, and must not be "".
+	// string, there must be a named parameter with that name, but not
+	// necessarily the inverse. Key must match regex `A-Za-z_$*`, must not
+	// match regex `__.*__`, and must not be "".
 	NamedBindings map[string]GqlQueryParameter `json:"namedBindings,omitempty"`
 
 	// PositionalBindings: Numbered binding site @1 references the first
-	// numbered parameter,
-	// effectively using 1-based indexing, rather than the usual 0.
-	//
-	// For each binding site numbered i in `query_string`, there must be an
-	// i-th
-	// numbered parameter. The inverse must also be true.
+	// numbered parameter, effectively using 1-based indexing, rather than
+	// the usual 0. For each binding site numbered i in `query_string`,
+	// there must be an i-th numbered parameter. The inverse must also be
+	// true.
 	PositionalBindings []*GqlQueryParameter `json:"positionalBindings,omitempty"`
 
-	// QueryString: A string of the format
-	// described
-	// [here](https://cloud.google.com/datastore/docs/apis/gql/gql_
-	// reference).
+	// QueryString: A string of the format described
+	// [here](https://cloud.google.com/datastore/docs/apis/gql/gql_reference)
+	// .
 	QueryString string `json:"queryString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowLiterals") to
@@ -1704,8 +1546,8 @@ func (s *GqlQuery) MarshalJSON() ([]byte, error) {
 
 // GqlQueryParameter: A binding parameter for a GQL query.
 type GqlQueryParameter struct {
-	// Cursor: A query cursor. Query cursors are returned in query
-	// result batches.
+	// Cursor: A query cursor. Query cursors are returned in query result
+	// batches.
 	Cursor string `json:"cursor,omitempty"`
 
 	// Value: A value parameter.
@@ -1734,43 +1576,29 @@ func (s *GqlQueryParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Key: A unique identifier for an entity.
-// If a key's partition ID or any of its path kinds or names
-// are
-// reserved/read-only, the key is reserved/read-only.
-// A reserved/read-only key is forbidden in certain documented contexts.
+// Key: A unique identifier for an entity. If a key's partition ID or
+// any of its path kinds or names are reserved/read-only, the key is
+// reserved/read-only. A reserved/read-only key is forbidden in certain
+// documented contexts.
 type Key struct {
 	// PartitionId: Entities are partitioned into subsets, currently
-	// identified by a project
-	// ID and namespace ID.
-	// Queries are scoped to a single partition.
+	// identified by a project ID and namespace ID. Queries are scoped to a
+	// single partition.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
-	// Path: The entity path.
-	// An entity path consists of one or more elements composed of a kind
-	// and a
-	// string or numerical identifier, which identify entities. The
-	// first
-	// element identifies a _root entity_, the second element identifies
-	// a _child_ of the root entity, the third element identifies a child of
-	// the
-	// second entity, and so forth. The entities identified by all prefixes
-	// of
-	// the path are called the element's _ancestors_.
-	//
-	// An entity path is always fully complete: *all* of the entity's
-	// ancestors
-	// are required to be in the path along with the entity identifier
-	// itself.
-	// The only exception is that in some documented cases, the identifier
-	// in the
-	// last path element (for the entity) itself may be omitted. For
-	// example,
-	// the last path element of the key of `Mutation.insert` may have
-	// no
-	// identifier.
-	//
-	// A path can never be empty, and a path can have at most 100 elements.
+	// Path: The entity path. An entity path consists of one or more
+	// elements composed of a kind and a string or numerical identifier,
+	// which identify entities. The first element identifies a _root
+	// entity_, the second element identifies a _child_ of the root entity,
+	// the third element identifies a child of the second entity, and so
+	// forth. The entities identified by all prefixes of the path are called
+	// the element's _ancestors_. An entity path is always fully complete:
+	// *all* of the entity's ancestors are required to be in the path along
+	// with the entity identifier itself. The only exception is that in some
+	// documented cases, the identifier in the last path element (for the
+	// entity) itself may be omitted. For example, the last path element of
+	// the key of `Mutation.insert` may have no identifier. A path can never
+	// be empty, and a path can have at most 100 elements.
 	Path []*PathElement `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PartitionId") to
@@ -1825,14 +1653,9 @@ func (s *KindExpression) MarshalJSON() ([]byte, error) {
 }
 
 // LatLng: An object representing a latitude/longitude pair. This is
-// expressed as a pair
-// of doubles representing degrees latitude and degrees longitude.
-// Unless
-// specified otherwise, this must conform to the
-// <a
-// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-// st
-// andard</a>. Values must be within normalized ranges.
+// expressed as a pair of doubles representing degrees latitude and
+// degrees longitude. Unless specified otherwise, this must conform to
+// the WGS84 standard. Values must be within normalized ranges.
 type LatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -1915,24 +1738,18 @@ func (s *LookupRequest) MarshalJSON() ([]byte, error) {
 // LookupResponse: The response for Datastore.Lookup.
 type LookupResponse struct {
 	// Deferred: A list of keys that were not looked up due to resource
-	// constraints. The
-	// order of results in this field is undefined and has no relation to
-	// the
-	// order of the keys in the input.
+	// constraints. The order of results in this field is undefined and has
+	// no relation to the order of the keys in the input.
 	Deferred []*Key `json:"deferred,omitempty"`
 
 	// Found: Entities found as `ResultType.FULL` entities. The order of
-	// results in this
-	// field is undefined and has no relation to the order of the keys in
-	// the
-	// input.
+	// results in this field is undefined and has no relation to the order
+	// of the keys in the input.
 	Found []*EntityResult `json:"found,omitempty"`
 
 	// Missing: Entities not found as `ResultType.KEY_ONLY` entities. The
-	// order of results
-	// in this field is undefined and has no relation to the order of the
-	// keys
-	// in the input.
+	// order of results in this field is undefined and has no relation to
+	// the order of the keys in the input.
 	Missing []*EntityResult `json:"missing,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1965,27 +1782,25 @@ func (s *LookupResponse) MarshalJSON() ([]byte, error) {
 // Mutation: A mutation to apply to an entity.
 type Mutation struct {
 	// BaseVersion: The version of the entity that this mutation is being
-	// applied to. If this
-	// does not match the current version on the server, the mutation
-	// conflicts.
+	// applied to. If this does not match the current version on the server,
+	// the mutation conflicts.
 	BaseVersion int64 `json:"baseVersion,omitempty,string"`
 
 	// Delete: The key of the entity to delete. The entity may or may not
-	// already exist.
-	// Must have a complete key path and must not be reserved/read-only.
+	// already exist. Must have a complete key path and must not be
+	// reserved/read-only.
 	Delete *Key `json:"delete,omitempty"`
 
-	// Insert: The entity to insert. The entity must not already exist.
-	// The entity key's final path element may be incomplete.
+	// Insert: The entity to insert. The entity must not already exist. The
+	// entity key's final path element may be incomplete.
 	Insert *Entity `json:"insert,omitempty"`
 
-	// Update: The entity to update. The entity must already exist.
-	// Must have a complete key path.
+	// Update: The entity to update. The entity must already exist. Must
+	// have a complete key path.
 	Update *Entity `json:"update,omitempty"`
 
 	// Upsert: The entity to upsert. The entity may or may not already
-	// exist.
-	// The entity key's final path element may be incomplete.
+	// exist. The entity key's final path element may be incomplete.
 	Upsert *Entity `json:"upsert,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseVersion") to
@@ -2014,23 +1829,20 @@ func (s *Mutation) MarshalJSON() ([]byte, error) {
 // MutationResult: The result of applying a mutation.
 type MutationResult struct {
 	// ConflictDetected: Whether a conflict was detected for this mutation.
-	// Always false when a
-	// conflict detection strategy field is not set in the mutation.
+	// Always false when a conflict detection strategy field is not set in
+	// the mutation.
 	ConflictDetected bool `json:"conflictDetected,omitempty"`
 
-	// Key: The automatically allocated key.
-	// Set only when the mutation allocated a key.
+	// Key: The automatically allocated key. Set only when the mutation
+	// allocated a key.
 	Key *Key `json:"key,omitempty"`
 
 	// Version: The version of the entity on the server after processing the
-	// mutation. If
-	// the mutation doesn't change anything on the server, then the version
-	// will
-	// be the version of the current entity or, if no entity is present, a
-	// version
-	// that is strictly greater than the version of any previous entity and
-	// less
-	// than the version of any possible future entity.
+	// mutation. If the mutation doesn't change anything on the server, then
+	// the version will be the version of the current entity or, if no
+	// entity is present, a version that is strictly greater than the
+	// version of any previous entity and less than the version of any
+	// possible future entity.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "ConflictDetected") to
@@ -2058,28 +1870,16 @@ func (s *MutationResult) MarshalJSON() ([]byte, error) {
 }
 
 // PartitionId: A partition ID identifies a grouping of entities. The
-// grouping is always
-// by project and namespace, however the namespace ID may be empty.
-//
-// A partition ID contains several dimensions:
-// project ID and namespace ID.
-//
-// Partition dimensions:
-//
-// - May be "".
-// - Must be valid UTF-8 bytes.
-// - Must have values that match regex `[A-Za-z\d\.\-_]{1,100}`
-// If the value of any dimension matches regex `__.*__`, the partition
-// is
-// reserved/read-only.
-// A reserved/read-only partition ID is forbidden in certain
-// documented
-// contexts.
-//
-// Foreign partition IDs (in which the project ID does
-// not match the context project ID ) are discouraged.
-// Reads and writes of foreign partition IDs may fail if the project is
-// not in an active state.
+// grouping is always by project and namespace, however the namespace ID
+// may be empty. A partition ID contains several dimensions: project ID
+// and namespace ID. Partition dimensions: - May be "". - Must be
+// valid UTF-8 bytes. - Must have values that match regex
+// `[A-Za-z\d\.\-_]{1,100}` If the value of any dimension matches regex
+// `__.*__`, the partition is reserved/read-only. A reserved/read-only
+// partition ID is forbidden in certain documented contexts. Foreign
+// partition IDs (in which the project ID does not match the context
+// project ID ) are discouraged. Reads and writes of foreign partition
+// IDs may fail if the project is not in an active state.
 type PartitionId struct {
 	// NamespaceId: If not empty, the ID of the namespace to which the
 	// entities belong.
@@ -2111,28 +1911,23 @@ func (s *PartitionId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PathElement: A (kind, ID/name) pair used to construct a key path.
-//
-// If either name or ID is set, the element is complete.
-// If neither is set, the element is incomplete.
+// PathElement: A (kind, ID/name) pair used to construct a key path. If
+// either name or ID is set, the element is complete. If neither is set,
+// the element is incomplete.
 type PathElement struct {
-	// Id: The auto-allocated ID of the entity.
-	// Never equal to zero. Values less than zero are discouraged and may
-	// not
-	// be supported in the future.
+	// Id: The auto-allocated ID of the entity. Never equal to zero. Values
+	// less than zero are discouraged and may not be supported in the
+	// future.
 	Id int64 `json:"id,omitempty,string"`
 
-	// Kind: The kind of the entity.
-	// A kind matching regex `__.*__` is reserved/read-only.
-	// A kind must not contain more than 1500 bytes when UTF-8
-	// encoded.
-	// Cannot be "".
+	// Kind: The kind of the entity. A kind matching regex `__.*__` is
+	// reserved/read-only. A kind must not contain more than 1500 bytes when
+	// UTF-8 encoded. Cannot be "".
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The name of the entity.
-	// A name matching regex `__.*__` is reserved/read-only.
-	// A name must not be more than 1500 bytes when UTF-8 encoded.
-	// Cannot be "".
+	// Name: The name of the entity. A name matching regex `__.*__` is
+	// reserved/read-only. A name must not be more than 1500 bytes when
+	// UTF-8 encoded. Cannot be "".
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -2268,8 +2063,8 @@ func (s *PropertyOrder) MarshalJSON() ([]byte, error) {
 // PropertyReference: A reference to a property relative to the kind
 // expressions.
 type PropertyReference struct {
-	// Name: The name of the property.
-	// If name includes "."s, it may be interpreted as a property name path.
+	// Name: The name of the property. If name includes "."s, it may be
+	// interpreted as a property name path.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2298,39 +2093,31 @@ func (s *PropertyReference) MarshalJSON() ([]byte, error) {
 // Query: A query for entities.
 type Query struct {
 	// DistinctOn: The properties to make distinct. The query results will
-	// contain the first
-	// result for each distinct combination of values for the given
-	// properties
-	// (if empty, all results are returned).
+	// contain the first result for each distinct combination of values for
+	// the given properties (if empty, all results are returned).
 	DistinctOn []*PropertyReference `json:"distinctOn,omitempty"`
 
-	// EndCursor: An ending point for the query results. Query cursors
-	// are
-	// returned in query result batches and
-	// [can only be used to limit the
+	// EndCursor: An ending point for the query results. Query cursors are
+	// returned in query result batches and [can only be used to limit the
 	// same
-	// query](https://cloud.google.com/datastore/docs/concepts/queries#c
-	// ursors_limits_and_offsets).
+	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
+	// s_limits_and_offsets).
 	EndCursor string `json:"endCursor,omitempty"`
 
 	// Filter: The filter to apply.
 	Filter *Filter `json:"filter,omitempty"`
 
-	// Kind: The kinds to query (if empty, returns entities of all
-	// kinds).
+	// Kind: The kinds to query (if empty, returns entities of all kinds).
 	// Currently at most 1 kind may be specified.
 	Kind []*KindExpression `json:"kind,omitempty"`
 
 	// Limit: The maximum number of results to return. Applies after all
-	// other
-	// constraints. Optional.
-	// Unspecified is interpreted as no limit.
+	// other constraints. Optional. Unspecified is interpreted as no limit.
 	// Must be >= 0 if specified.
 	Limit int64 `json:"limit,omitempty"`
 
 	// Offset: The number of results to skip. Applies before limit, but
-	// after all other
-	// constraints. Optional. Must be >= 0 if specified.
+	// after all other constraints. Optional. Must be >= 0 if specified.
 	Offset int64 `json:"offset,omitempty"`
 
 	// Order: The order to apply to the query results (if empty, order is
@@ -2342,12 +2129,10 @@ type Query struct {
 	Projection []*Projection `json:"projection,omitempty"`
 
 	// StartCursor: A starting point for the query results. Query cursors
-	// are
-	// returned in query result batches and
-	// [can only be used to continue the
-	// same
-	// query](https://cloud.google.com/datastore/docs/concepts/queries#c
-	// ursors_limits_and_offsets).
+	// are returned in query result batches and [can only be used to
+	// continue the same
+	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
+	// s_limits_and_offsets).
 	StartCursor string `json:"startCursor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctOn") to
@@ -2403,15 +2188,13 @@ type QueryResultBatch struct {
 	//   "MORE_RESULTS_AFTER_LIMIT" - The query is finished, but there may
 	// be more results after the limit.
 	//   "MORE_RESULTS_AFTER_CURSOR" - The query is finished, but there may
-	// be more results after the end
-	// cursor.
+	// be more results after the end cursor.
 	//   "NO_MORE_RESULTS" - The query is finished, and there are no more
 	// results.
 	MoreResults string `json:"moreResults,omitempty"`
 
 	// SkippedCursor: A cursor that points to the position after the last
-	// skipped result.
-	// Will be set when `skipped_results` != 0.
+	// skipped result. Will be set when `skipped_results` != 0.
 	SkippedCursor string `json:"skippedCursor,omitempty"`
 
 	// SkippedResults: The number of results skipped, typically because of
@@ -2419,19 +2202,13 @@ type QueryResultBatch struct {
 	SkippedResults int64 `json:"skippedResults,omitempty"`
 
 	// SnapshotVersion: The version number of the snapshot this batch was
-	// returned from.
-	// This applies to the range of results from the query's `start_cursor`
-	// (or
-	// the beginning of the query if no cursor was given) to this
-	// batch's
-	// `end_cursor` (not the query's `end_cursor`).
-	//
-	// In a single transaction, subsequent query result batches for the same
-	// query
-	// can have a greater snapshot version number. Each batch's snapshot
-	// version
-	// is valid for all preceding batches.
-	// The value will be zero for eventually consistent queries.
+	// returned from. This applies to the range of results from the query's
+	// `start_cursor` (or the beginning of the query if no cursor was given)
+	// to this batch's `end_cursor` (not the query's `end_cursor`). In a
+	// single transaction, subsequent query result batches for the same
+	// query can have a greater snapshot version number. Each batch's
+	// snapshot version is valid for all preceding batches. The value will
+	// be zero for eventually consistent queries.
 	SnapshotVersion int64 `json:"snapshotVersion,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "EndCursor") to
@@ -2463,8 +2240,7 @@ type ReadOnly struct {
 
 // ReadOptions: The options shared by read requests.
 type ReadOptions struct {
-	// ReadConsistency: The non-transactional read consistency to
-	// use.
+	// ReadConsistency: The non-transactional read consistency to use.
 	// Cannot be set to `STRONG` for global queries.
 	//
 	// Possible values:
@@ -2474,10 +2250,8 @@ type ReadOptions struct {
 	//   "EVENTUAL" - Eventual consistency.
 	ReadConsistency string `json:"readConsistency,omitempty"`
 
-	// Transaction: The identifier of the transaction in which to read.
-	// A
-	// transaction identifier is returned by a call
-	// to
+	// Transaction: The identifier of the transaction in which to read. A
+	// transaction identifier is returned by a call to
 	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
@@ -2542,8 +2316,7 @@ type ReserveIdsRequest struct {
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Keys: Required. A list of keys with complete key paths whose numeric
-	// IDs should not be
-	// auto-allocated.
+	// IDs should not be auto-allocated.
 	Keys []*Key `json:"keys,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
@@ -2579,8 +2352,7 @@ type ReserveIdsResponse struct {
 // RollbackRequest: The request for Datastore.Rollback.
 type RollbackRequest struct {
 	// Transaction: Required. The transaction identifier, returned by a call
-	// to
-	// Datastore.BeginTransaction.
+	// to Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transaction") to
@@ -2606,8 +2378,8 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RollbackResponse: The response for Datastore.Rollback.
-// (an empty message).
+// RollbackResponse: The response for Datastore.Rollback. (an empty
+// message).
 type RollbackResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2620,10 +2392,8 @@ type RunQueryRequest struct {
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
 
 	// PartitionId: Entities are partitioned into subsets, identified by a
-	// partition ID.
-	// Queries are scoped to a single partition.
-	// This partition ID is normalized with the standard default
-	// context
+	// partition ID. Queries are scoped to a single partition. This
+	// partition ID is normalized with the standard default context
 	// partition ID.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
@@ -2693,32 +2463,24 @@ func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -2744,13 +2506,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TransactionOptions: Options for beginning a new
-// transaction.
-//
-// Transactions can be created explicitly with calls
-// to
-// Datastore.BeginTransaction or implicitly by
-// setting
+// TransactionOptions: Options for beginning a new transaction.
+// Transactions can be created explicitly with calls to
+// Datastore.BeginTransaction or implicitly by setting
 // ReadOptions.new_transaction in read requests.
 type TransactionOptions struct {
 	// ReadOnly: The transaction should only allow reads.
@@ -2783,20 +2541,16 @@ func (s *TransactionOptions) MarshalJSON() ([]byte, error) {
 }
 
 // Value: A message that can hold any of the supported value types and
-// associated
-// metadata.
+// associated metadata.
 type Value struct {
-	// ArrayValue: An array value.
-	// Cannot contain another array value.
-	// A `Value` instance that sets field `array_value` must not set
-	// fields
+	// ArrayValue: An array value. Cannot contain another array value. A
+	// `Value` instance that sets field `array_value` must not set fields
 	// `meaning` or `exclude_from_indexes`.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 
-	// BlobValue: A blob value.
-	// May have at most 1,000,000 bytes.
-	// When `exclude_from_indexes` is false, may have at most 1500 bytes.
-	// In JSON requests, must be base64-encoded.
+	// BlobValue: A blob value. May have at most 1,000,000 bytes. When
+	// `exclude_from_indexes` is false, may have at most 1500 bytes. In JSON
+	// requests, must be base64-encoded.
 	BlobValue string `json:"blobValue,omitempty"`
 
 	// BooleanValue: A boolean value.
@@ -2805,16 +2559,12 @@ type Value struct {
 	// DoubleValue: A double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
 
-	// EntityValue: An entity value.
-	//
-	// - May have no key.
-	// - May have a key with an incomplete key path.
-	// - May have a reserved/read-only key.
+	// EntityValue: An entity value. - May have no key. - May have a key
+	// with an incomplete key path. - May have a reserved/read-only key.
 	EntityValue *Entity `json:"entityValue,omitempty"`
 
 	// ExcludeFromIndexes: If the value should be excluded from all indexes
-	// including those defined
-	// explicitly.
+	// including those defined explicitly.
 	ExcludeFromIndexes bool `json:"excludeFromIndexes,omitempty"`
 
 	// GeoPointValue: A geo point value representing a point on the surface
@@ -2837,15 +2587,14 @@ type Value struct {
 	//   "NULL_VALUE" - Null value.
 	NullValue string `json:"nullValue,omitempty"`
 
-	// StringValue: A UTF-8 encoded string value.
-	// When `exclude_from_indexes` is false (it is indexed) , may have at
-	// most 1500 bytes.
-	// Otherwise, may be set to at most 1,000,000 bytes.
+	// StringValue: A UTF-8 encoded string value. When
+	// `exclude_from_indexes` is false (it is indexed) , may have at most
+	// 1500 bytes. Otherwise, may be set to at most 1,000,000 bytes.
 	StringValue string `json:"stringValue,omitempty"`
 
-	// TimestampValue: A timestamp value.
-	// When stored in the Datastore, precise only to microseconds;
-	// any additional precision is rounded down.
+	// TimestampValue: A timestamp value. When stored in the Datastore,
+	// precise only to microseconds; any additional precision is rounded
+	// down.
 	TimestampValue string `json:"timestampValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayValue") to
@@ -2897,8 +2646,7 @@ type ProjectsAllocateIdsCall struct {
 }
 
 // AllocateIds: Allocates IDs for the given keys, which is useful for
-// referencing an entity
-// before it is inserted.
+// referencing an entity before it is inserted.
 func (r *ProjectsService) AllocateIds(projectId string, allocateidsrequest *AllocateIdsRequest) *ProjectsAllocateIdsCall {
 	c := &ProjectsAllocateIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2933,7 +2681,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2997,7 +2745,7 @@ func (c *ProjectsAllocateIdsCall) Do(opts ...googleapi.CallOption) (*AllocateIds
 	}
 	return ret, nil
 	// {
-	//   "description": "Allocates IDs for the given keys, which is useful for referencing an entity\nbefore it is inserted.",
+	//   "description": "Allocates IDs for the given keys, which is useful for referencing an entity before it is inserted.",
 	//   "flatPath": "v1/projects/{projectId}:allocateIds",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.allocateIds",
@@ -3073,7 +2821,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3179,8 +2927,7 @@ type ProjectsCommitCall struct {
 }
 
 // Commit: Commits a transaction, optionally creating, deleting or
-// modifying some
-// entities.
+// modifying some entities.
 func (r *ProjectsService) Commit(projectId string, commitrequest *CommitRequest) *ProjectsCommitCall {
 	c := &ProjectsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3215,7 +2962,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3279,7 +3026,7 @@ func (c *ProjectsCommitCall) Do(opts ...googleapi.CallOption) (*CommitResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Commits a transaction, optionally creating, deleting or modifying some\nentities.",
+	//   "description": "Commits a transaction, optionally creating, deleting or modifying some entities.",
 	//   "flatPath": "v1/projects/{projectId}:commit",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.commit",
@@ -3321,20 +3068,13 @@ type ProjectsExportCall struct {
 }
 
 // Export: Exports a copy of all or a subset of entities from Google
-// Cloud Datastore
-// to another storage system, such as Google Cloud Storage. Recent
-// updates to
-// entities may not be reflected in the export. The export occurs in
-// the
-// background and its progress can be monitored and managed via
-// the
-// Operation resource that is created. The output of an export may only
-// be
-// used once the associated operation is done. If an export operation
-// is
-// cancelled before completion it may leave partial data behind in
-// Google
-// Cloud Storage.
+// Cloud Datastore to another storage system, such as Google Cloud
+// Storage. Recent updates to entities may not be reflected in the
+// export. The export occurs in the background and its progress can be
+// monitored and managed via the Operation resource that is created. The
+// output of an export may only be used once the associated operation is
+// done. If an export operation is cancelled before completion it may
+// leave partial data behind in Google Cloud Storage.
 func (r *ProjectsService) Export(projectId string, googledatastoreadminv1exportentitiesrequest *GoogleDatastoreAdminV1ExportEntitiesRequest) *ProjectsExportCall {
 	c := &ProjectsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3369,7 +3109,7 @@ func (c *ProjectsExportCall) Header() http.Header {
 
 func (c *ProjectsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3433,7 +3173,7 @@ func (c *ProjectsExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a copy of all or a subset of entities from Google Cloud Datastore\nto another storage system, such as Google Cloud Storage. Recent updates to\nentities may not be reflected in the export. The export occurs in the\nbackground and its progress can be monitored and managed via the\nOperation resource that is created. The output of an export may only be\nused once the associated operation is done. If an export operation is\ncancelled before completion it may leave partial data behind in Google\nCloud Storage.",
+	//   "description": "Exports a copy of all or a subset of entities from Google Cloud Datastore to another storage system, such as Google Cloud Storage. Recent updates to entities may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.",
 	//   "flatPath": "v1/projects/{projectId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.export",
@@ -3475,15 +3215,11 @@ type ProjectsImportCall struct {
 }
 
 // Import: Imports entities into Google Cloud Datastore. Existing
-// entities with the
-// same key are overwritten. The import occurs in the background and
-// its
-// progress can be monitored and managed via the Operation resource that
-// is
-// created. If an ImportEntities operation is cancelled, it is
-// possible
-// that a subset of the data has already been imported to Cloud
-// Datastore.
+// entities with the same key are overwritten. The import occurs in the
+// background and its progress can be monitored and managed via the
+// Operation resource that is created. If an ImportEntities operation is
+// cancelled, it is possible that a subset of the data has already been
+// imported to Cloud Datastore.
 func (r *ProjectsService) Import(projectId string, googledatastoreadminv1importentitiesrequest *GoogleDatastoreAdminV1ImportEntitiesRequest) *ProjectsImportCall {
 	c := &ProjectsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3518,7 +3254,7 @@ func (c *ProjectsImportCall) Header() http.Header {
 
 func (c *ProjectsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3582,7 +3318,7 @@ func (c *ProjectsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports entities into Google Cloud Datastore. Existing entities with the\nsame key are overwritten. The import occurs in the background and its\nprogress can be monitored and managed via the Operation resource that is\ncreated. If an ImportEntities operation is cancelled, it is possible\nthat a subset of the data has already been imported to Cloud Datastore.",
+	//   "description": "Imports entities into Google Cloud Datastore. Existing entities with the same key are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportEntities operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Datastore.",
 	//   "flatPath": "v1/projects/{projectId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.import",
@@ -3658,7 +3394,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3764,8 +3500,7 @@ type ProjectsReserveIdsCall struct {
 }
 
 // ReserveIds: Prevents the supplied keys' IDs from being auto-allocated
-// by Cloud
-// Datastore.
+// by Cloud Datastore.
 func (r *ProjectsService) ReserveIds(projectId string, reserveidsrequest *ReserveIdsRequest) *ProjectsReserveIdsCall {
 	c := &ProjectsReserveIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3800,7 +3535,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,7 +3599,7 @@ func (c *ProjectsReserveIdsCall) Do(opts ...googleapi.CallOption) (*ReserveIdsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud\nDatastore.",
+	//   "description": "Prevents the supplied keys' IDs from being auto-allocated by Cloud Datastore.",
 	//   "flatPath": "v1/projects/{projectId}:reserveIds",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.reserveIds",
@@ -3940,7 +3675,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4080,7 +3815,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4185,24 +3920,15 @@ type ProjectsIndexesCreateCall struct {
 	header_                     http.Header
 }
 
-// Create: Creates the specified index.
-// A newly created index's initial state is `CREATING`. On completion of
-// the
-// returned google.longrunning.Operation, the state will be `READY`.
-// If the index already exists, the call will return an
-// `ALREADY_EXISTS`
-// status.
-//
-// During index creation, the process could result in an error, in
-// which
+// Create: Creates the specified index. A newly created index's initial
+// state is `CREATING`. On completion of the returned
+// google.longrunning.Operation, the state will be `READY`. If the index
+// already exists, the call will return an `ALREADY_EXISTS` status.
+// During index creation, the process could result in an error, in which
 // case the index will move to the `ERROR` state. The process can be
-// recovered
-// by fixing the data that caused the error, removing the index
-// with
-// delete, then
-// re-creating the index with create.
-//
-// Indexes with a single property cannot be created.
+// recovered by fixing the data that caused the error, removing the
+// index with delete, then re-creating the index with create. Indexes
+// with a single property cannot be created.
 func (r *ProjectsIndexesService) Create(projectId string, googledatastoreadminv1index *GoogleDatastoreAdminV1Index) *ProjectsIndexesCreateCall {
 	c := &ProjectsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4237,7 +3963,7 @@ func (c *ProjectsIndexesCreateCall) Header() http.Header {
 
 func (c *ProjectsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4301,7 +4027,7 @@ func (c *ProjectsIndexesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the specified index.\nA newly created index's initial state is `CREATING`. On completion of the\nreturned google.longrunning.Operation, the state will be `READY`.\nIf the index already exists, the call will return an `ALREADY_EXISTS`\nstatus.\n\nDuring index creation, the process could result in an error, in which\ncase the index will move to the `ERROR` state. The process can be recovered\nby fixing the data that caused the error, removing the index with\ndelete, then\nre-creating the index with create.\n\nIndexes with a single property cannot be created.",
+	//   "description": "Creates the specified index. A newly created index's initial state is `CREATING`. On completion of the returned google.longrunning.Operation, the state will be `READY`. If the index already exists, the call will return an `ALREADY_EXISTS` status. During index creation, the process could result in an error, in which case the index will move to the `ERROR` state. The process can be recovered by fixing the data that caused the error, removing the index with delete, then re-creating the index with create. Indexes with a single property cannot be created.",
 	//   "flatPath": "v1/projects/{projectId}/indexes",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.indexes.create",
@@ -4342,21 +4068,14 @@ type ProjectsIndexesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing index.
-// An index can only be deleted if it is in a `READY` or `ERROR` state.
-// On
-// successful execution of the request, the index will be in a
-// `DELETING`
-// state. And on completion of the
-// returned google.longrunning.Operation, the index will be
-// removed.
-//
-// During index deletion, the process could result in an error, in
-// which
-// case the index will move to the `ERROR` state. The process can be
-// recovered
-// by fixing the data that caused the error, followed by calling
-// delete again.
+// Delete: Deletes an existing index. An index can only be deleted if it
+// is in a `READY` or `ERROR` state. On successful execution of the
+// request, the index will be in a `DELETING` state. And on completion
+// of the returned google.longrunning.Operation, the index will be
+// removed. During index deletion, the process could result in an error,
+// in which case the index will move to the `ERROR` state. The process
+// can be recovered by fixing the data that caused the error, followed
+// by calling delete again.
 func (r *ProjectsIndexesService) Delete(projectId string, indexId string) *ProjectsIndexesDeleteCall {
 	c := &ProjectsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4391,7 +4110,7 @@ func (c *ProjectsIndexesDeleteCall) Header() http.Header {
 
 func (c *ProjectsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4451,7 +4170,7 @@ func (c *ProjectsIndexesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing index.\nAn index can only be deleted if it is in a `READY` or `ERROR` state. On\nsuccessful execution of the request, the index will be in a `DELETING`\nstate. And on completion of the\nreturned google.longrunning.Operation, the index will be removed.\n\nDuring index deletion, the process could result in an error, in which\ncase the index will move to the `ERROR` state. The process can be recovered\nby fixing the data that caused the error, followed by calling\ndelete again.",
+	//   "description": "Deletes an existing index. An index can only be deleted if it is in a `READY` or `ERROR` state. On successful execution of the request, the index will be in a `DELETING` state. And on completion of the returned google.longrunning.Operation, the index will be removed. During index deletion, the process could result in an error, in which case the index will move to the `ERROR` state. The process can be recovered by fixing the data that caused the error, followed by calling delete again.",
 	//   "flatPath": "v1/projects/{projectId}/indexes/{indexId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datastore.projects.indexes.delete",
@@ -4542,7 +4261,7 @@ func (c *ProjectsIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4650,11 +4369,9 @@ type ProjectsIndexesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the indexes that match the specified filters.  Datastore
-// uses an
-// eventually consistent query to fetch the list of indexes and
-// may
-// occasionally return stale results.
+// List: Lists the indexes that match the specified filters. Datastore
+// uses an eventually consistent query to fetch the list of indexes and
+// may occasionally return stale results.
 func (r *ProjectsIndexesService) List(projectId string) *ProjectsIndexesListCall {
 	c := &ProjectsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -4668,8 +4385,7 @@ func (c *ProjectsIndexesListCall) Filter(filter string) *ProjectsIndexesListCall
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return.  If zero, then all results will be
-// returned.
+// of items to return. If zero, then all results will be returned.
 func (c *ProjectsIndexesListCall) PageSize(pageSize int64) *ProjectsIndexesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4719,7 +4435,7 @@ func (c *ProjectsIndexesListCall) Header() http.Header {
 
 func (c *ProjectsIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4783,7 +4499,7 @@ func (c *ProjectsIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleDatas
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the indexes that match the specified filters.  Datastore uses an\neventually consistent query to fetch the list of indexes and may\noccasionally return stale results.",
+	//   "description": "Lists the indexes that match the specified filters. Datastore uses an eventually consistent query to fetch the list of indexes and may occasionally return stale results.",
 	//   "flatPath": "v1/projects/{projectId}/indexes",
 	//   "httpMethod": "GET",
 	//   "id": "datastore.projects.indexes.list",
@@ -4796,7 +4512,7 @@ func (c *ProjectsIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleDatas
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return.  If zero, then all results will be\nreturned.",
+	//       "description": "The maximum number of items to return. If zero, then all results will be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4857,23 +4573,15 @@ type ProjectsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4907,7 +4615,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4966,7 +4674,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "datastore.projects.operations.cancel",
@@ -5005,12 +4713,9 @@ type ProjectsOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
 	c := &ProjectsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5044,7 +4749,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5103,7 +4808,7 @@ func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datastore.projects.operations.delete",
@@ -5142,11 +4847,9 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5190,7 +4893,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5252,7 +4955,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "datastore.projects.operations.get",
@@ -5292,22 +4995,15 @@ type ProjectsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5372,7 +5068,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5435,7 +5131,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "datastore.projects.operations.list",

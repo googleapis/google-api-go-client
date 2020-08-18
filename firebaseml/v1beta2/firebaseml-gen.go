@@ -479,10 +479,6 @@ type TfLiteModel struct {
 	// pick up and validate the updated file.
 	GcsTfliteUri string `json:"gcsTfliteUri,omitempty"`
 
-	// ManagedUpload: Output only. A boolean indicating that this model was
-	// uploaded from the console. Read only
-	ManagedUpload bool `json:"managedUpload,omitempty"`
-
 	// SizeBytes: Output only. The size of the TFLite model
 	SizeBytes string `json:"sizeBytes,omitempty"`
 
@@ -556,7 +552,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -694,7 +690,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -835,7 +831,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1000,7 +996,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1179,7 +1175,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1336,7 +1332,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

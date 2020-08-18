@@ -2687,7 +2687,7 @@
       }
     }
   },
-  "revision": "20200723",
+  "revision": "20200813",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3220,7 +3220,7 @@
       "id": "GoogleCloudHealthcareV1FhirBigQueryDestination",
       "properties": {
         "datasetUri": {
-          "description": "BigQuery URI to a dataset, up to 2000 characters long, in the format\n`bq://projectId.bqDatasetId`",
+          "description": "BigQuery URI to an existing  dataset, up to 2000 characters long, in the\nformat `bq://projectId.bqDatasetId`.",
           "type": "string"
         },
         "force": {

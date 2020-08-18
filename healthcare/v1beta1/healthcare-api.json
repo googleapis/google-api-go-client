@@ -3512,7 +3512,7 @@
       }
     }
   },
-  "revision": "20200723",
+  "revision": "20200813",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3967,6 +3967,13 @@
         "notificationConfig": {
           "$ref": "NotificationConfig",
           "description": "Notification destination for new DICOM instances.\nSupplied by the client."
+        },
+        "streamConfigs": {
+          "description": "A list of streaming configs used to configure the destination of streaming\nexports for every DICOM instance insertion in this DICOM store.\nAfter a new config is added to `stream_configs`, DICOM instance\ninsertions are streamed to the new destination.\nWhen a config is removed from `stream_configs`, the server stops streaming\nto that destination.\nEach config must contain a unique destination.",
+          "items": {
+            "$ref": "GoogleCloudHealthcareV1beta1DicomStreamConfig"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4473,12 +4480,23 @@
       },
       "type": "object"
     },
+    "GoogleCloudHealthcareV1beta1DicomStreamConfig": {
+      "description": "StreamConfig specifies configuration for a streaming DICOM export.",
+      "id": "GoogleCloudHealthcareV1beta1DicomStreamConfig",
+      "properties": {
+        "bigqueryDestination": {
+          "$ref": "GoogleCloudHealthcareV1beta1DicomBigQueryDestination",
+          "description": "Results are appended to this table. The server creates a new table in\nthe given BigQuery dataset if the specified table does not exist.\nTo enable the Cloud Healthcare API to write to your BigQuery table,\nyou must give the Cloud Healthcare API service account the\nbigquery.dataEditor role. The service account is:\n`service-{PROJECT_NUMBER}@gcp-sa-healthcare.iam.gserviceaccount.com`.\nThe PROJECT_NUMBER identifies the project that the DICOM store resides\nin. To get the project number, go to the Cloud Console Dashboard.\nIt is recommended to not have a custom schema in the destination\ntable which could conflict with the schema created by the Cloud\nHealthcare API. Instance deletions are not applied to the\ndestination table.\n\nThe destination's table schema will be automatically updated in case\na new instance's data is incompatible with the current schema. The\nschema should not be updated manually as this can cause incompatibilies\nthat cannot be resolved automatically. One resolution in this case is\nto delete the incompatible table and let the server recreate one,\nthough the newly created table only contains data after the table\nrecreation.\n\nBigQuery imposes a 1 MB limit on streaming insert row size, therefore\nany instance that generates more than 1 MB of BigQuery data will not be\nstreamed.\n\nIf an instance cannot be streamed to BigQuery, errors will be\nlogged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-\n[Viewing logs](/healthcare/docs/how-tos/logging))."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudHealthcareV1beta1FhirBigQueryDestination": {
       "description": "The configuration for exporting to BigQuery.",
       "id": "GoogleCloudHealthcareV1beta1FhirBigQueryDestination",
       "properties": {
         "datasetUri": {
-          "description": "BigQuery URI to a dataset, up to 2000 characters long, in the format\n`bq://projectId.bqDatasetId`",
+          "description": "BigQuery URI to an existing  dataset, up to 2000 characters long, in the\nformat `bq://projectId.bqDatasetId`.",
           "type": "string"
         },
         "force": {

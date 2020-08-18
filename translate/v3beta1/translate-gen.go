@@ -192,61 +192,40 @@ type ProjectsLocationsOperationsService struct {
 
 // BatchTranslateTextRequest: The batch translation request.
 type BatchTranslateTextRequest struct {
-	// Glossaries: Optional. Glossaries to be applied for translation.
-	// It's keyed by target language code.
+	// Glossaries: Optional. Glossaries to be applied for translation. It's
+	// keyed by target language code.
 	Glossaries map[string]TranslateTextGlossaryConfig `json:"glossaries,omitempty"`
 
-	// InputConfigs: Required. Input configurations.
-	// The total number of files matched should be <= 1000.
-	// The total content size should be <= 100M Unicode codepoints.
-	// The files must use UTF-8 encoding.
+	// InputConfigs: Required. Input configurations. The total number of
+	// files matched should be <= 1000. The total content size should be <=
+	// 100M Unicode codepoints. The files must use UTF-8 encoding.
 	InputConfigs []*InputConfig `json:"inputConfigs,omitempty"`
 
 	// Labels: Optional. The labels with user-defined metadata for the
-	// request.
-	//
-	// Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters,
-	// numeric
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
 	// characters, underscores and dashes. International characters are
-	// allowed.
-	// Label values are optional. Label keys must start with a letter.
-	//
-	// See https://cloud.google.com/translate/docs/labels for more
+	// allowed. Label values are optional. Label keys must start with a
+	// letter. See https://cloud.google.com/translate/docs/labels for more
 	// information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Models: Optional. The models to use for translation. Map's key is
-	// target language
-	// code. Map's value is model name. Value can be a built-in general
-	// model,
-	// or an AutoML Translation model.
-	//
-	// The value format depends on model type:
-	//
-	// - AutoML Translation models:
-	//
+	// target language code. Map's value is model name. Value can be a
+	// built-in general model, or an AutoML Translation model. The value
+	// format depends on model type: - AutoML Translation models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}`
-	//
-	// - General (built-in) models:
-	//
+	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
 	// l/nmt`,
-	//
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base`
-	//
-	//
-	// If the map is empty or a specific model is
-	// not requested for a language pair, then default google model (nmt) is
-	// used.
+	// l/base` If the map is empty or a specific model is not requested for
+	// a language pair, then default google model (nmt) is used.
 	Models map[string]string `json:"models,omitempty"`
 
-	// OutputConfig: Required. Output configuration.
-	// If 2 input configs match to the same file (that is, same input
-	// path),
-	// we don't generate output for duplicate inputs.
+	// OutputConfig: Required. Output configuration. If 2 input configs
+	// match to the same file (that is, same input path), we don't generate
+	// output for duplicate inputs.
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
 
 	// SourceLanguageCode: Required. Source language code.
@@ -289,37 +268,25 @@ type DetectLanguageRequest struct {
 	Content string `json:"content,omitempty"`
 
 	// Labels: Optional. The labels with user-defined metadata for the
-	// request.
-	//
-	// Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters,
-	// numeric
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
 	// characters, underscores and dashes. International characters are
-	// allowed.
-	// Label values are optional. Label keys must start with a letter.
-	//
-	// See https://cloud.google.com/translate/docs/labels for more
+	// allowed. Label values are optional. Label keys must start with a
+	// letter. See https://cloud.google.com/translate/docs/labels for more
 	// information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MimeType: Optional. The format of the source text, for example,
-	// "text/html",
-	// "text/plain". If left blank, the MIME type defaults to "text/html".
+	// "text/html", "text/plain". If left blank, the MIME type defaults to
+	// "text/html".
 	MimeType string `json:"mimeType,omitempty"`
 
-	// Model: Optional. The language detection model to be
-	// used.
-	//
-	// Format:
-	// `projects/{project-number-or-id}/locations/{location-id
-	// }/models/language-detection/{model-id}`
-	//
-	// Only one language detection model is currently
-	// supported:
-	// `projects/{project-number-or-id}/locations/{location-id}/mo
-	// dels/language-detection/default`.
-	//
-	// If not specified, the default model is used.
+	// Model: Optional. The language detection model to be used. Format:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/langua
+	// ge-detection/{model-id}` Only one language detection model is
+	// currently supported:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/langua
+	// ge-detection/default`. If not specified, the default model is used.
 	Model string `json:"model,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -348,8 +315,7 @@ func (s *DetectLanguageRequest) MarshalJSON() ([]byte, error) {
 // DetectLanguageResponse: The response message for language detection.
 type DetectLanguageResponse struct {
 	// Languages: A list of detected languages sorted by detection
-	// confidence in descending
-	// order. The most probable language first.
+	// confidence in descending order. The most probable language first.
 	Languages []*DetectedLanguage `json:"languages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -385,8 +351,7 @@ type DetectedLanguage struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LanguageCode: The BCP-47 language code of source content in the
-	// request, detected
-	// automatically.
+	// request, detected automatically.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -427,17 +392,11 @@ func (s *DetectedLanguage) UnmarshalJSON(data []byte) error {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -448,10 +407,8 @@ type Empty struct {
 // content.
 type GcsDestination struct {
 	// OutputUriPrefix: Required. There must be no files under
-	// 'output_uri_prefix'.
-	// 'output_uri_prefix' must end with "/" and start with "gs://",
-	// otherwise an
-	// INVALID_ARGUMENT (400) error is returned.
+	// 'output_uri_prefix'. 'output_uri_prefix' must end with "/" and start
+	// with "gs://", otherwise an INVALID_ARGUMENT (400) error is returned.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
@@ -516,8 +473,7 @@ type Glossary struct {
 	// glossary.
 	EntryCount int64 `json:"entryCount,omitempty"`
 
-	// InputConfig: Required. Provides examples to build the glossary
-	// from.
+	// InputConfig: Required. Provides examples to build the glossary from.
 	// Total glossary must not exceed 10M Unicode codepoints.
 	InputConfig *GlossaryInputConfig `json:"inputConfig,omitempty"`
 
@@ -528,10 +484,9 @@ type Glossary struct {
 	LanguagePair *LanguageCodePair `json:"languagePair,omitempty"`
 
 	// Name: Required. The resource name of the glossary. Glossary names
-	// have the
-	// form
-	// `projects/{project-number-or-id}/locations/{location-id}/glossari
-	// es/{glossary-id}`.
+	// have the form
+	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{g
+	// lossary-id}`.
 	Name string `json:"name,omitempty"`
 
 	// SubmitTime: Output only. When CreateGlossary was called.
@@ -566,36 +521,19 @@ func (s *Glossary) MarshalJSON() ([]byte, error) {
 
 // GlossaryInputConfig: Input configuration for glossaries.
 type GlossaryInputConfig struct {
-	// GcsSource: Required. Google Cloud Storage location of glossary
-	// data.
+	// GcsSource: Required. Google Cloud Storage location of glossary data.
 	// File format is determined based on the filename extension. API
-	// returns
-	// [google.rpc.Code.INVALID_ARGUMENT] for unsupported URI-s and
-	// file
-	// formats. Wildcards are not allowed. This must be a single file in one
-	// of
-	// the following formats:
-	//
-	// For unidirectional glossaries:
-	//
-	// - TSV/CSV (`.tsv`/`.csv`): 2 column file, tab- or comma-separated.
-	//   The first column is source text. The second column is target text.
-	//   The file must not contain headers. That is, the first row is data,
-	// not
-	//   column names.
-	//
-	// - TMX (`.tmx`): TMX file with parallel data defining source/target
-	// term
-	// pairs.
-	//
-	// For equivalent term sets glossaries:
-	//
-	// - CSV (`.csv`): Multi-column CSV file defining equivalent glossary
-	// terms
-	//   in multiple languages. The format is defined for Google
-	// Translation
-	//   Toolkit and documented in [Use a
-	//
+	// returns [google.rpc.Code.INVALID_ARGUMENT] for unsupported URI-s and
+	// file formats. Wildcards are not allowed. This must be a single file
+	// in one of the following formats: For unidirectional glossaries: -
+	// TSV/CSV (`.tsv`/`.csv`): 2 column file, tab- or comma-separated. The
+	// first column is source text. The second column is target text. The
+	// file must not contain headers. That is, the first row is data, not
+	// column names. - TMX (`.tmx`): TMX file with parallel data defining
+	// source/target term pairs. For equivalent term sets glossaries: - CSV
+	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
+	// multiple languages. The format is defined for Google Translation
+	// Toolkit and documented in [Use a
 	// glossary](https://support.google.com/translatortoolkit/answer/6306379?
 	// hl=en).
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
@@ -626,39 +564,26 @@ func (s *GlossaryInputConfig) MarshalJSON() ([]byte, error) {
 // InputConfig: Input configuration for BatchTranslateText request.
 type InputConfig struct {
 	// GcsSource: Required. Google Cloud Storage location for the source
-	// input.
-	// This can be a single file (for
-	// example,
-	// `gs://translation-test/input.tsv`) or a wildcard (for
-	// example,
-	// `gs://translation-test/*`). If a file extension is `.tsv`, it
-	// can
+	// input. This can be a single file (for example,
+	// `gs://translation-test/input.tsv`) or a wildcard (for example,
+	// `gs://translation-test/*`). If a file extension is `.tsv`, it can
 	// contain either one or two columns. The first column (optional) is the
-	// id
-	// of the text request. If the first column is missing, we use the
-	// row
-	// number (0-based) from the input file as the ID in the output file.
-	// The
-	// second column is the actual text to be
-	//  translated. We recommend each row be <= 10K Unicode
-	// codepoints,
-	// otherwise an error might be returned.
-	// Note that the input tsv must be RFC 4180 compliant.
-	//
-	// You could use https://github.com/Clever/csvlint to check
-	// potential
-	// formatting errors in your tsv file.
-	// csvlint --delimiter='\t' your_input_file.tsv
-	//
-	// The other supported file extensions are `.txt` or `.html`, which
-	// is
-	// treated as a single large chunk of text.
+	// id of the text request. If the first column is missing, we use the
+	// row number (0-based) from the input file as the ID in the output
+	// file. The second column is the actual text to be translated. We
+	// recommend each row be <= 10K Unicode codepoints, otherwise an error
+	// might be returned. Note that the input tsv must be RFC 4180
+	// compliant. You could use https://github.com/Clever/csvlint to check
+	// potential formatting errors in your tsv file. csvlint
+	// --delimiter='\t' your_input_file.tsv The other supported file
+	// extensions are `.txt` or `.html`, which is treated as a single large
+	// chunk of text.
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: Optional. Can be "text/plain" or "text/html".
-	// For `.tsv`, "text/html" is used if mime_type is missing.
-	// For `.html`, this field must be "text/html" or empty.
-	// For `.txt`, this field must be "text/plain" or empty.
+	// MimeType: Optional. Can be "text/plain" or "text/html". For `.tsv`,
+	// "text/html" is used if mime_type is missing. For `.html`, this field
+	// must be "text/html" or empty. For `.txt`, this field must be
+	// "text/plain" or empty.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
@@ -687,15 +612,13 @@ func (s *InputConfig) MarshalJSON() ([]byte, error) {
 // LanguageCodePair: Used with unidirectional glossaries.
 type LanguageCodePair struct {
 	// SourceLanguageCode: Required. The BCP-47 language code of the input
-	// text, for example,
-	// "en-US". Expected to be an exact match for
+	// text, for example, "en-US". Expected to be an exact match for
 	// GlossaryTerm.language_code.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
 	// TargetLanguageCode: Required. The BCP-47 language code for
-	// translation output, for example,
-	// "zh-CN". Expected to be an exact match for
-	// GlossaryTerm.language_code.
+	// translation output, for example, "zh-CN". Expected to be an exact
+	// match for GlossaryTerm.language_code.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SourceLanguageCode")
@@ -725,10 +648,9 @@ func (s *LanguageCodePair) MarshalJSON() ([]byte, error) {
 // LanguageCodesSet: Used with equivalent term set glossaries.
 type LanguageCodesSet struct {
 	// LanguageCodes: The BCP-47 language code(s) for terms defined in the
-	// glossary.
-	// All entries are unique. The list contains at least two
-	// entries.
-	// Expected to be an exact match for GlossaryTerm.language_code.
+	// glossary. All entries are unique. The list contains at least two
+	// entries. Expected to be an exact match for
+	// GlossaryTerm.language_code.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
@@ -760,10 +682,8 @@ type ListGlossariesResponse struct {
 	Glossaries []*Glossary `json:"glossaries,omitempty"`
 
 	// NextPageToken: A token to retrieve a page of results. Pass this value
-	// in the
-	// [ListGlossariesRequest.page_token] field in the subsequent call
-	// to
-	// `ListGlossaries` method to retrieve the next page of results.
+	// in the [ListGlossariesRequest.page_token] field in the subsequent
+	// call to `ListGlossaries` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -870,13 +790,11 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
-	// city name.
-	// For example, "Tokyo".
+	// city name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Cross-service attributes for the location. For example
-	//
-	//     {"cloud.googleapis.com/region": "us-east1"}
+	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LocationId: The canonical id for this location. For example:
@@ -884,13 +802,12 @@ type Location struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given
-	// location.
+	// capacity at the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: Resource name for the location, which may vary between
-	// implementations.
-	// For example: "projects/example-project/locations/us-east1"
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -921,52 +838,38 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -998,108 +901,53 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 
 // OutputConfig: Output configuration for BatchTranslateText request.
 type OutputConfig struct {
-	// GcsDestination: Google Cloud Storage destination for output
-	// content.
-	// For every single input file (for example, gs://a/b/c.[extension]),
-	// we
+	// GcsDestination: Google Cloud Storage destination for output content.
+	// For every single input file (for example, gs://a/b/c.[extension]), we
 	// generate at most 2 * n output files. (n is the # of
-	// target_language_codes
-	// in the BatchTranslateTextRequest).
-	//
-	// Output files (tsv) generated are compliant with RFC 4180 except
-	// that
-	// record delimiters are '\n' instead of '\r\n'. We don't provide any
-	// way to
-	// change record delimiters.
-	//
-	// While the input files are being processed, we write/update an index
-	// file
-	// 'index.csv'  under 'output_uri_prefix' (for
-	// example,
-	// gs://translation-test/index.csv) The index file is generated/updated
-	// as
-	// new files are being translated. The format
-	// is:
-	//
+	// target_language_codes in the BatchTranslateTextRequest). Output files
+	// (tsv) generated are compliant with RFC 4180 except that record
+	// delimiters are '\n' instead of '\r\n'. We don't provide any way to
+	// change record delimiters. While the input files are being processed,
+	// we write/update an index file 'index.csv' under 'output_uri_prefix'
+	// (for example, gs://translation-test/index.csv) The index file is
+	// generated/updated as new files are being translated. The format is:
 	// input_file,target_language_code,translations_file,errors_file,
-	// gl
-	// ossary_translations_file,glossary_errors_file
-	//
-	// input_file is one file we matched using
-	// gcs_source.input_uri.
-	// target_language_code is provided in the request.
-	// translations_file contains the translations. (details provided
-	// below)
-	// errors_file contains the errors during processing of the file.
-	// (details
-	// below). Both translations_file and errors_file could be empty
-	// strings if we have no content to output.
-	// glossary_translations_file and glossary_errors_file are always
-	// empty
+	// glossary_translations_file,glossary_errors_file input_file is one
+	// file we matched using gcs_source.input_uri. target_language_code is
+	// provided in the request. translations_file contains the translations.
+	// (details provided below) errors_file contains the errors during
+	// processing of the file. (details below). Both translations_file and
+	// errors_file could be empty strings if we have no content to output.
+	// glossary_translations_file and glossary_errors_file are always empty
 	// strings if the input_file is tsv. They could also be empty if we have
-	// no
-	// content to output.
-	//
-	// Once a row is present in index.csv, the input/output matching
-	// never
-	// changes. Callers should also expect all the content in input_file
-	// are
-	// processed and ready to be consumed (that is, no partial output file
-	// is
-	// written).
-	//
-	// The format of translations_file (for target language code 'trg')
-	// is:
-	// gs://translation_test/a_b_c_'trg'_translations.[extension]
-	//
-	// If the input file extension is tsv, the output has the
-	// following
-	// columns:
-	// Column 1: ID of the request provided in the input, if it's
-	// not
-	// provided in the input, then the input row number is used
-	// (0-based).
-	// Column 2: source sentence.
-	// Column 3: translation without applying a glossary. Empty string if
-	// there
-	// is an error.
-	// Column 4 (only present if a glossary is provided in the
-	// request):
-	// translation after applying the glossary. Empty string if there is
-	// an
-	// error applying the glossary. Could be same string as column 3 if
-	// there is
-	// no glossary applied.
-	//
-	// If input file extension is a txt or html, the translation is
-	// directly
-	// written to the output file. If glossary is requested, a
-	// separate
-	// glossary_translations_file has format
-	// of
+	// no content to output. Once a row is present in index.csv, the
+	// input/output matching never changes. Callers should also expect all
+	// the content in input_file are processed and ready to be consumed
+	// (that is, no partial output file is written). The format of
+	// translations_file (for target language code 'trg') is:
+	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
+	// input file extension is tsv, the output has the following columns:
+	// Column 1: ID of the request provided in the input, if it's not
+	// provided in the input, then the input row number is used (0-based).
+	// Column 2: source sentence. Column 3: translation without applying a
+	// glossary. Empty string if there is an error. Column 4 (only present
+	// if a glossary is provided in the request): translation after applying
+	// the glossary. Empty string if there is an error applying the
+	// glossary. Could be same string as column 3 if there is no glossary
+	// applied. If input file extension is a txt or html, the translation is
+	// directly written to the output file. If glossary is requested, a
+	// separate glossary_translations_file has format of
 	// gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]
-	//
-	//
-	// The format of errors file (for target language code 'trg')
-	// is:
-	// gs://translation_test/a_b_c_'trg'_errors.[extension]
-	//
-	// If the input file extension is tsv, errors_file contains the
-	// following:
-	// Column 1: ID of the request provided in the input, if it's
-	// not
-	// provided in the input, then the input row number is used
-	// (0-based).
-	// Column 2: source sentence.
-	// Column 3: Error detail for the translation. Could be empty.
-	// Column 4 (only present if a glossary is provided in the
-	// request):
-	// Error when applying the glossary.
-	//
-	// If the input file extension is txt or html, glossary_error_file will
-	// be
-	// generated that contains error details. glossary_error_file has format
-	// of
+	// The format of errors file (for target language code 'trg') is:
+	// gs://translation_test/a_b_c_'trg'_errors.[extension] If the input
+	// file extension is tsv, errors_file contains the following: Column 1:
+	// ID of the request provided in the input, if it's not provided in the
+	// input, then the input row number is used (0-based). Column 2: source
+	// sentence. Column 3: Error detail for the translation. Could be empty.
+	// Column 4 (only present if a glossary is provided in the request):
+	// Error when applying the glossary. If the input file extension is txt
+	// or html, glossary_error_file will be generated that contains error
+	// details. glossary_error_file has format of
 	// gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
 
@@ -1128,32 +976,24 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1180,21 +1020,16 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // SupportedLanguage: A single supported language response corresponds
-// to information related
-// to one supported language.
+// to information related to one supported language.
 type SupportedLanguage struct {
 	// DisplayName: Human readable name of the language localized in the
-	// display language
-	// specified in the request.
+	// display language specified in the request.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LanguageCode: Supported language code, generally consisting of its
-	// ISO 639-1
-	// identifier, for example, 'en', 'ja'. In certain cases, BCP-47
-	// codes
-	// including language and region identifiers are returned (for
-	// example,
-	// 'zh-TW' and 'zh-CN')
+	// ISO 639-1 identifier, for example, 'en', 'ja'. In certain cases,
+	// BCP-47 codes including language and region identifiers are returned
+	// (for example, 'zh-TW' and 'zh-CN')
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SupportSource: Can be used as source language.
@@ -1230,8 +1065,7 @@ func (s *SupportedLanguage) MarshalJSON() ([]byte, error) {
 // languages.
 type SupportedLanguages struct {
 	// Languages: A list of supported language responses. This list contains
-	// an entry
-	// for each language the Translation API supports.
+	// an entry for each language the Translation API supports.
 	Languages []*SupportedLanguage `json:"languages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1262,16 +1096,15 @@ func (s *SupportedLanguages) MarshalJSON() ([]byte, error) {
 }
 
 // TranslateTextGlossaryConfig: Configures which glossary should be used
-// for a specific target language,
-// and defines options for applying that glossary.
+// for a specific target language, and defines options for applying that
+// glossary.
 type TranslateTextGlossaryConfig struct {
 	// Glossary: Required. Specifies the glossary used for this translation.
-	// Use
-	// this format: projects/*/locations/*/glossaries/*
+	// Use this format: projects/*/locations/*/glossaries/*
 	Glossary string `json:"glossary,omitempty"`
 
-	// IgnoreCase: Optional. Indicates match is case-insensitive.
-	// Default value is false if missing.
+	// IgnoreCase: Optional. Indicates match is case-insensitive. Default
+	// value is false if missing.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Glossary") to
@@ -1300,80 +1133,53 @@ func (s *TranslateTextGlossaryConfig) MarshalJSON() ([]byte, error) {
 // TranslateTextRequest: The request message for synchronous
 // translation.
 type TranslateTextRequest struct {
-	// Contents: Required. The content of the input in string format.
-	// We recommend the total content be less than 30k codepoints.
-	// Use BatchTranslateText for larger text.
+	// Contents: Required. The content of the input in string format. We
+	// recommend the total content be less than 30k codepoints. Use
+	// BatchTranslateText for larger text.
 	Contents []string `json:"contents,omitempty"`
 
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
-	// be
-	// within the same region (have the same location-id) as the model,
-	// otherwise
-	// an INVALID_ARGUMENT (400) error is returned.
+	// be within the same region (have the same location-id) as the model,
+	// otherwise an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
 
 	// Labels: Optional. The labels with user-defined metadata for the
-	// request.
-	//
-	// Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters,
-	// numeric
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
 	// characters, underscores and dashes. International characters are
-	// allowed.
-	// Label values are optional. Label keys must start with a letter.
-	//
-	// See https://cloud.google.com/translate/docs/labels for more
+	// allowed. Label values are optional. Label keys must start with a
+	// letter. See https://cloud.google.com/translate/docs/labels for more
 	// information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MimeType: Optional. The format of the source text, for example,
-	// "text/html",
-	//  "text/plain". If left blank, the MIME type defaults to "text/html".
+	// "text/html", "text/plain". If left blank, the MIME type defaults to
+	// "text/html".
 	MimeType string `json:"mimeType,omitempty"`
 
-	// Model: Optional. The `model` type requested for this
-	// translation.
-	//
-	// The format depends on model type:
-	//
-	// - AutoML Translation models:
-	//
+	// Model: Optional. The `model` type requested for this translation. The
+	// format depends on model type: - AutoML Translation models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}`
-	//
-	// - General (built-in) models:
-	//
+	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
 	// l/nmt`,
-	//
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base`
-	//
-	//
-	// For global (non-regionalized) requests, use `location-id`
-	// `global`.
-	// For
-	// example,
-	// `projects/{project-number-or-id}/locations/global/models/gene
-	// ral/nmt`.
-	//
-	// If missing, the system decides which google base model to use.
+	// l/base` For global (non-regionalized) requests, use `location-id`
+	// `global`. For example,
+	// `projects/{project-number-or-id}/locations/global/models/general/nmt`.
+	//  If missing, the system decides which google base model to use.
 	Model string `json:"model,omitempty"`
 
 	// SourceLanguageCode: Optional. The BCP-47 language code of the input
-	// text if
-	// known, for example, "en-US" or "sr-Latn". Supported language codes
-	// are
-	// listed in Language Support. If the source language isn't specified,
-	// the API
-	// attempts to identify the source language automatically and returns
-	// the
-	// source language within the response.
+	// text if known, for example, "en-US" or "sr-Latn". Supported language
+	// codes are listed in Language Support. If the source language isn't
+	// specified, the API attempts to identify the source language
+	// automatically and returns the source language within the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
 
 	// TargetLanguageCode: Required. The BCP-47 language code to use for
-	// translation of the input
-	// text, set to one of the language codes listed in Language Support.
+	// translation of the input text, set to one of the language codes
+	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
@@ -1401,17 +1207,12 @@ func (s *TranslateTextRequest) MarshalJSON() ([]byte, error) {
 
 type TranslateTextResponse struct {
 	// GlossaryTranslations: Text translation responses if a glossary is
-	// provided in the request.
-	// This can be the same as
-	// `translations` if no terms apply.
-	// This field has the same length as
-	// `contents`.
+	// provided in the request. This can be the same as `translations` if no
+	// terms apply. This field has the same length as `contents`.
 	GlossaryTranslations []*Translation `json:"glossaryTranslations,omitempty"`
 
-	// Translations: Text translation responses with no glossary
-	// applied.
-	// This field has the same length as
-	// `contents`.
+	// Translations: Text translation responses with no glossary applied.
+	// This field has the same length as `contents`.
 	Translations []*Translation `json:"translations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1446,29 +1247,22 @@ func (s *TranslateTextResponse) MarshalJSON() ([]byte, error) {
 // Translation: A single translation response.
 type Translation struct {
 	// DetectedLanguageCode: The BCP-47 language code of source text in the
-	// initial request, detected
-	// automatically, if no source language was passed within the
-	// initial
-	// request. If the source language was passed, auto-detection of the
-	// language
-	// does not occur and this field is empty.
+	// initial request, detected automatically, if no source language was
+	// passed within the initial request. If the source language was passed,
+	// auto-detection of the language does not occur and this field is
+	// empty.
 	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
 
 	// GlossaryConfig: The `glossary_config` used for this translation.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
 
-	// Model: Only present when `model` is present in the request.
-	// `model` here is normalized to have project number.
-	//
-	// For example:
-	// If the `model` requested in TranslationTextRequest
-	// is
+	// Model: Only present when `model` is present in the request. `model`
+	// here is normalized to have project number. For example: If the
+	// `model` requested in TranslationTextRequest is
 	// `projects/{project-id}/locations/{location-id}/models/general/nmt`
-	// then
-	// `model` here would be normalized
-	// to
-	// `projects/{project-number}/locations/{location-id}/models/general/n
-	// mt`.
+	// then `model` here would be normalized to
+	// `projects/{project-number}/locations/{location-id}/models/general/nmt`
+	// .
 	Model string `json:"model,omitempty"`
 
 	// TranslatedText: Text translated into the target language.
@@ -1503,11 +1297,9 @@ func (s *Translation) MarshalJSON() ([]byte, error) {
 // Operations.WaitOperation.
 type WaitOperationRequest struct {
 	// Timeout: The maximum duration to wait before timing out. If left
-	// blank, the wait
-	// will be at most the time permitted by the underlying HTTP/RPC
-	// protocol.
-	// If RPC context deadline is also specified, the shorter one will be
-	// used.
+	// blank, the wait will be at most the time permitted by the underlying
+	// HTTP/RPC protocol. If RPC context deadline is also specified, the
+	// shorter one will be used.
 	Timeout string `json:"timeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Timeout") to
@@ -1579,7 +1371,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1652,7 +1444,7 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}` or\n`projects/{project-number-or-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Only models within the same region (has same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1695,36 +1487,23 @@ func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSuppo
 
 // DisplayLanguageCode sets the optional parameter
 // "displayLanguageCode": The language to use to return localized, human
-// readable names
-// of supported languages. If missing, then display names are not
-// returned
-// in a response.
+// readable names of supported languages. If missing, then display names
+// are not returned in a response.
 func (c *ProjectsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageCode string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("displayLanguageCode", displayLanguageCode)
 	return c
 }
 
 // Model sets the optional parameter "model": Get supported languages of
-// this model.
-//
-// The format depends on model type:
-//
-// - AutoML Translation models:
-//
+// this model. The format depends on model type: - AutoML Translation
+// models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
-// -id}`
-//
-// - General (built-in) models:
-//
+// -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
 // l/nmt`,
-//
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base`
-//
-//
-// Returns languages supported by the specified model.
-// If missing, we get supported languages of Google general base (PBMT)
+// l/base` Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general base (PBMT)
 // model.
 func (c *ProjectsGetSupportedLanguagesCall) Model(model string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
@@ -1768,7 +1547,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1839,17 +1618,17 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "displayLanguageCode": {
-	//       "description": "Optional. The language to use to return localized, human readable names\nof supported languages. If missing, then display names are not returned\nin a response.",
+	//       "description": "Optional. The language to use to return localized, human readable names of supported languages. If missing, then display names are not returned in a response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for AutoML models. Only models within the same region (have same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1914,7 +1693,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1987,7 +1766,7 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2021,16 +1800,12 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 }
 
 // BatchTranslateText: Translates a large volume of text in asynchronous
-// batch mode.
-// This function provides real-time output as the inputs are being
-// processed.
-// If caller cancels a request, the partial results (for an input file,
-// it's
-// all or nothing) may still be available on the specified output
-// location.
-//
-// This call returns immediately and you can
-// use google.longrunning.Operation.name to poll the status of the call.
+// batch mode. This function provides real-time output as the inputs are
+// being processed. If caller cancels a request, the partial results
+// (for an input file, it's all or nothing) may still be available on
+// the specified output location. This call returns immediately and you
+// can use google.longrunning.Operation.name to poll the status of the
+// call.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2065,7 +1840,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2129,7 +1904,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Translates a large volume of text in asynchronous batch mode.\nThis function provides real-time output as the inputs are being processed.\nIf caller cancels a request, the partial results (for an input file, it's\nall or nothing) may still be available on the specified output location.\n\nThis call returns immediately and you can\nuse google.longrunning.Operation.name to poll the status of the call.",
+	//   "description": "Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}:batchTranslateText",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.batchTranslateText",
@@ -2138,7 +1913,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Location to make a call. Must refer to a caller's project.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}`.\n\nThe `global` location is not supported for batch translation.\n\nOnly AutoML Translation models or glossaries within the same region (have\nthe same location-id) can be used, otherwise an INVALID_ARGUMENT (400)\nerror is returned.",
+	//       "description": "Required. Location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}`. The `global` location is not supported for batch translation. Only AutoML Translation models or glossaries within the same region (have the same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2205,7 +1980,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2278,7 +2053,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}/locations/{location-id}` or\n`projects/{project-number-or-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nOnly models within the same region (has same location-id) can be used.\nOtherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Only models within the same region (has same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2355,7 +2130,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2466,36 +2241,23 @@ func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *Project
 
 // DisplayLanguageCode sets the optional parameter
 // "displayLanguageCode": The language to use to return localized, human
-// readable names
-// of supported languages. If missing, then display names are not
-// returned
-// in a response.
+// readable names of supported languages. If missing, then display names
+// are not returned in a response.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageCode string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("displayLanguageCode", displayLanguageCode)
 	return c
 }
 
 // Model sets the optional parameter "model": Get supported languages of
-// this model.
-//
-// The format depends on model type:
-//
-// - AutoML Translation models:
-//
+// this model. The format depends on model type: - AutoML Translation
+// models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
-// -id}`
-//
-// - General (built-in) models:
-//
+// -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
 // l/nmt`,
-//
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base`
-//
-//
-// Returns languages supported by the specified model.
-// If missing, we get supported languages of Google general base (PBMT)
+// l/base` Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general base (PBMT)
 // model.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Model(model string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
@@ -2539,7 +2301,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2610,17 +2372,17 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "displayLanguageCode": {
-	//       "description": "Optional. The language to use to return localized, human readable names\nof supported languages. If missing, then display names are not returned\nin a response.",
+	//       "description": "Optional. The language to use to return localized, human readable names of supported languages. If missing, then display names are not returned in a response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model.\n\nThe format depends on model type:\n\n- AutoML Translation models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`\n\n- General (built-in) models:\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,\n  `projects/{project-number-or-id}/locations/{location-id}/models/general/base`\n\n\nReturns languages supported by the specified model.\nIf missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for AutoML models.\n\nOnly models within the same region (have same location-id) can be used,\notherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for AutoML models. Only models within the same region (have same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2716,7 +2478,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2889,7 +2651,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2962,7 +2724,7 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's\nproject.\n\nFormat: `projects/{project-number-or-id}` or\n`projects/{project-number-or-id}/locations/{location-id}`.\n\nFor global calls, use `projects/{project-number-or-id}/locations/global` or\n`projects/{project-number-or-id}`.\n\nNon-global location is required for requests using AutoML models or\ncustom glossaries.\n\nModels and glossaries must be within the same region (have same\nlocation-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2996,8 +2758,7 @@ type ProjectsLocationsGlossariesCreateCall struct {
 }
 
 // Create: Creates a glossary and returns the long-running operation.
-// Returns
-// NOT_FOUND, if the project doesn't exist.
+// Returns NOT_FOUND, if the project doesn't exist.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, glossary *Glossary) *ProjectsLocationsGlossariesCreateCall {
 	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3032,7 +2793,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3096,7 +2857,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a glossary and returns the long-running operation. Returns\nNOT_FOUND, if the project doesn't exist.",
+	//   "description": "Creates a glossary and returns the long-running operation. Returns NOT_FOUND, if the project doesn't exist.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/glossaries",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.glossaries.create",
@@ -3136,9 +2897,9 @@ type ProjectsLocationsGlossariesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a glossary, or cancels glossary construction
-// if the glossary isn't created yet.
-// Returns NOT_FOUND, if the glossary doesn't exist.
+// Delete: Deletes a glossary, or cancels glossary construction if the
+// glossary isn't created yet. Returns NOT_FOUND, if the glossary
+// doesn't exist.
 func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
 	c := &ProjectsLocationsGlossariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3172,7 +2933,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3231,7 +2992,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a glossary, or cancels glossary construction\nif the glossary isn't created yet.\nReturns NOT_FOUND, if the glossary doesn't exist.",
+	//   "description": "Deletes a glossary, or cancels glossary construction if the glossary isn't created yet. Returns NOT_FOUND, if the glossary doesn't exist.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "translate.projects.locations.glossaries.delete",
@@ -3270,8 +3031,7 @@ type ProjectsLocationsGlossariesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a glossary. Returns NOT_FOUND, if the glossary
-// doesn't
+// Get: Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
 // exist.
 func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
 	c := &ProjectsLocationsGlossariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3316,7 +3076,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3378,7 +3138,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a glossary. Returns NOT_FOUND, if the glossary doesn't\nexist.",
+	//   "description": "Gets a glossary. Returns NOT_FOUND, if the glossary doesn't exist.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.glossaries.get",
@@ -3418,8 +3178,7 @@ type ProjectsLocationsGlossariesListCall struct {
 }
 
 // List: Lists glossaries in a project. Returns NOT_FOUND, if the
-// project doesn't
-// exist.
+// project doesn't exist.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3427,51 +3186,39 @@ func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": Filter specifying
-// constraints of a list operation.
-// Specify the constraint by the format of "key=value", where key must
-// be
-// "src" or "tgt", and the value must be a valid language code.
-// For multiple restrictions, concatenate them by "AND" (uppercase
-// only),
-// such as: "src=en-US AND tgt=zh-CN". Notice that the exact match is
-// used
-// here, which means using 'en-US' and 'en' can lead to different
-// results,
-// which depends on the language code you used when you create the
-// glossary.
-// For the unidirectional glossaries, the "src" and "tgt" add
-// restrictions
-// on the source and target language code separately.
-// For the equivalent term set glossaries, the "src" and/or "tgt"
-// add
-// restrictions on the term set.
-// For example: "src=en-US AND tgt=zh-CN" will only pick the
-// unidirectional
+// constraints of a list operation. Specify the constraint by the format
+// of "key=value", where key must be "src" or "tgt", and the value must
+// be a valid language code. For multiple restrictions, concatenate them
+// by "AND" (uppercase only), such as: "src=en-US AND tgt=zh-CN". Notice
+// that the exact match is used here, which means using 'en-US' and 'en'
+// can lead to different results, which depends on the language code you
+// used when you create the glossary. For the unidirectional glossaries,
+// the "src" and "tgt" add restrictions on the source and target
+// language code separately. For the equivalent term set glossaries, the
+// "src" and/or "tgt" add restrictions on the term set. For example:
+// "src=en-US AND tgt=zh-CN" will only pick the unidirectional
 // glossaries which exactly match the source language code as "en-US"
-// and the
-// target language code "zh-CN", but all equivalent term set glossaries
-// which
-// contain "en-US" and "zh-CN" in their language set will be picked.
-// If missing, no filtering is performed.
+// and the target language code "zh-CN", but all equivalent term set
+// glossaries which contain "en-US" and "zh-CN" in their language set
+// will be picked. If missing, no filtering is performed.
 func (c *ProjectsLocationsGlossariesListCall) Filter(filter string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer glossaries than
-// requested. If unspecified, the server picks an appropriate default.
+// The server may return fewer glossaries than requested. If
+// unspecified, the server picks an appropriate default.
 func (c *ProjectsLocationsGlossariesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// [ListGlossariesResponse.next_page_token]
-// returned from the previous call to `ListGlossaries` method.
-// The first page is returned if `page_token`is empty or missing.
+// identifying a page of results the server should return. Typically,
+// this is the value of [ListGlossariesResponse.next_page_token]
+// returned from the previous call to `ListGlossaries` method. The first
+// page is returned if `page_token`is empty or missing.
 func (c *ProjectsLocationsGlossariesListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3514,7 +3261,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3576,7 +3323,7 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't\nexist.",
+	//   "description": "Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't exist.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/glossaries",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.glossaries.list",
@@ -3585,18 +3332,18 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter specifying constraints of a list operation.\nSpecify the constraint by the format of \"key=value\", where key must be\n\"src\" or \"tgt\", and the value must be a valid language code.\nFor multiple restrictions, concatenate them by \"AND\" (uppercase only),\nsuch as: \"src=en-US AND tgt=zh-CN\". Notice that the exact match is used\nhere, which means using 'en-US' and 'en' can lead to different results,\nwhich depends on the language code you used when you create the glossary.\nFor the unidirectional glossaries, the \"src\" and \"tgt\" add restrictions\non the source and target language code separately.\nFor the equivalent term set glossaries, the \"src\" and/or \"tgt\" add\nrestrictions on the term set.\nFor example: \"src=en-US AND tgt=zh-CN\" will only pick the unidirectional\nglossaries which exactly match the source language code as \"en-US\" and the\ntarget language code \"zh-CN\", but all equivalent term set glossaries which\ncontain \"en-US\" and \"zh-CN\" in their language set will be picked.\nIf missing, no filtering is performed.",
+	//       "description": "Optional. Filter specifying constraints of a list operation. Specify the constraint by the format of \"key=value\", where key must be \"src\" or \"tgt\", and the value must be a valid language code. For multiple restrictions, concatenate them by \"AND\" (uppercase only), such as: \"src=en-US AND tgt=zh-CN\". Notice that the exact match is used here, which means using 'en-US' and 'en' can lead to different results, which depends on the language code you used when you create the glossary. For the unidirectional glossaries, the \"src\" and \"tgt\" add restrictions on the source and target language code separately. For the equivalent term set glossaries, the \"src\" and/or \"tgt\" add restrictions on the term set. For example: \"src=en-US AND tgt=zh-CN\" will only pick the unidirectional glossaries which exactly match the source language code as \"en-US\" and the target language code \"zh-CN\", but all equivalent term set glossaries which contain \"en-US\" and \"zh-CN\" in their language set will be picked. If missing, no filtering is performed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server may return fewer glossaries than\nrequested. If unspecified, the server picks an appropriate default.",
+	//       "description": "Optional. Requested page size. The server may return fewer glossaries than requested. If unspecified, the server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return.\nTypically, this is the value of [ListGlossariesResponse.next_page_token]\nreturned from the previous call to `ListGlossaries` method.\nThe first page is returned if `page_token`is empty or missing.",
+	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of [ListGlossariesResponse.next_page_token] returned from the previous call to `ListGlossaries` method. The first page is returned if `page_token`is empty or missing.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3653,23 +3400,15 @@ type ProjectsLocationsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
-// makes a best effort to cancel the operation, but success is
-// not
-// guaranteed.  If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
-// use
-// Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether
-// the
-// operation completed despite cancellation. On successful
-// cancellation,
-// the operation is not deleted; instead, it becomes an operation
-// with
-// an Operation.error value with a google.rpc.Status.code of
-// 1,
-// corresponding to `Code.CANCELLED`.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3704,7 +3443,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3768,7 +3507,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.operations.cancel",
@@ -3810,12 +3549,9 @@ type ProjectsLocationsOperationsDeleteCall struct {
 }
 
 // Delete: Deletes a long-running operation. This method indicates that
-// the client is
-// no longer interested in the operation result. It does not cancel
-// the
-// operation. If the server doesn't support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3849,7 +3585,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3908,7 +3644,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "translate.projects.locations.operations.delete",
@@ -3947,11 +3683,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3995,7 +3729,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4057,7 +3791,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.operations.get",
@@ -4097,22 +3831,15 @@ type ProjectsLocationsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4177,7 +3904,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4239,7 +3966,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "translate.projects.locations.operations.list",
@@ -4316,21 +4043,15 @@ type ProjectsLocationsOperationsWaitCall struct {
 }
 
 // Wait: Waits for the specified long-running operation until it is done
-// or reaches
-// at most a specified timeout, returning the latest state.  If the
-// operation
-// is already done, the latest state is immediately returned.  If the
-// timeout
-// specified is greater than the default HTTP/RPC timeout, the
-// HTTP/RPC
-// timeout is used.  If the server does not support this method, it
-// returns
-// `google.rpc.Code.UNIMPLEMENTED`.
-// Note that this method is on a best-effort basis.  It may return the
-// latest
-// state before the specified timeout (including immediately), meaning
-// even an
-// immediate response is no guarantee that the operation is done.
+// or reaches at most a specified timeout, returning the latest state.
+// If the operation is already done, the latest state is immediately
+// returned. If the timeout specified is greater than the default
+// HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
+// not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Note that this method is on a best-effort basis. It may return the
+// latest state before the specified timeout (including immediately),
+// meaning even an immediate response is no guarantee that the operation
+// is done.
 func (r *ProjectsLocationsOperationsService) Wait(name string, waitoperationrequest *WaitOperationRequest) *ProjectsLocationsOperationsWaitCall {
 	c := &ProjectsLocationsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4365,7 +4086,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200812")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4429,7 +4150,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Waits for the specified long-running operation until it is done or reaches\nat most a specified timeout, returning the latest state.  If the operation\nis already done, the latest state is immediately returned.  If the timeout\nspecified is greater than the default HTTP/RPC timeout, the HTTP/RPC\ntimeout is used.  If the server does not support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.\nNote that this method is on a best-effort basis.  It may return the latest\nstate before the specified timeout (including immediately), meaning even an\nimmediate response is no guarantee that the operation is done.",
+	//   "description": "Waits for the specified long-running operation until it is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.operations.wait",

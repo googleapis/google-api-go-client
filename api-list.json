@@ -345,13 +345,12 @@
       "id": "androidpublisher:v3",
       "name": "androidpublisher",
       "version": "v3",
-      "title": "Google Play Developer API",
-      "description": "Accesses Android application developers' Google Play accounts.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v3/rest",
-      "discoveryLink": "./apis/androidpublisher/v3/rest",
+      "title": "Google Play Android Developer API",
+      "description": "Lets Android application developers access their Google Play accounts.",
+      "discoveryRestUrl": "https://androidpublisher.googleapis.com/$discovery/rest?version=v3",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/android-publisher",
       "preferred": true
@@ -1692,6 +1691,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "dialogflow:v3beta1",
+      "name": "dialogflow",
+      "version": "v3beta1",
+      "title": "Dialogflow API",
+      "description": "Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).",
+      "discoveryRestUrl": "https://dialogflow.googleapis.com/$discovery/rest?version=v3beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/dialogflow/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "digitalassetlinks:v1",
       "name": "digitalassetlinks",
       "version": "v1",
@@ -2293,7 +2307,7 @@
       "id": "gmailpostmastertools:v1beta1",
       "name": "gmailpostmastertools",
       "version": "v1beta1",
-      "title": "Postmaster Tools API",
+      "title": "Gmail Postmaster Tools API",
       "description": "The Postmaster Tools API is a RESTful API that provides programmatic access to email traffic metrics (like spam reports, delivery errors etc) otherwise available through the Gmail Postmaster Tools UI currently.",
       "discoveryRestUrl": "https://gmailpostmastertools.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {

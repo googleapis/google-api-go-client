@@ -170,9 +170,48 @@ type GroupsMembershipsService struct {
 	s *Service
 }
 
-// AndroidAttributes: Resource representing the Android specific
-// attributes of a Device.
-type AndroidAttributes struct {
+// EntityKey: An EntityKey uniquely identifies an Entity. Namespaces are
+// used to provide isolation for IDs. A single ID can be reused across
+// namespaces but the combination of a namespace and an ID must be
+// unique.
+type EntityKey struct {
+	// Id: The ID of the entity within the given namespace. The ID must be
+	// unique within its namespace.
+	Id string `json:"id,omitempty"`
+
+	// Namespace: Namespaces provide isolation for IDs, so an ID only needs
+	// to be unique within its namespace. Namespaces are currently only
+	// created as part of IdentitySource creation from Admin Console. A
+	// namespace "identitysources/{identity_source_id}" is created
+	// corresponding to every Identity Source `identity_source_id`.
+	Namespace string `json:"namespace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EntityKey) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1AndroidAttributes: Resource
+// representing the Android specific attributes of a Device.
+type GoogleAppsCloudidentityDevicesV1AndroidAttributes struct {
 	// EnabledUnknownSources: Whether applications from unknown sources can
 	// be installed on device.
 	EnabledUnknownSources bool `json:"enabledUnknownSources,omitempty"`
@@ -217,17 +256,17 @@ type AndroidAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidAttributes) MarshalJSON() ([]byte, error) {
-	type NoMethod AndroidAttributes
+func (s *GoogleAppsCloudidentityDevicesV1AndroidAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1AndroidAttributes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApproveDeviceUserResponse: Response message for approving the device
-// to access user data.
-type ApproveDeviceUserResponse struct {
+// GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse: Response
+// message for approving the device to access user data.
+type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse struct {
 	// DeviceUser: Resultant DeviceUser object for the action.
-	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+	DeviceUser *GoogleAppsCloudidentityDevicesV1DeviceUser `json:"deviceUser,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
@@ -246,17 +285,17 @@ type ApproveDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ApproveDeviceUserResponse
+func (s *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BlockDeviceUserResponse: Response message for blocking the device
-// from accessing user data.
-type BlockDeviceUserResponse struct {
+// GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse: Response
+// message for blocking the device from accessing user data.
+type GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse struct {
 	// DeviceUser: Resultant DeviceUser object for the action.
-	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+	DeviceUser *GoogleAppsCloudidentityDevicesV1DeviceUser `json:"deviceUser,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
@@ -275,18 +314,18 @@ type BlockDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod BlockDeviceUserResponse
+func (s *GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CancelWipeDeviceResponse: Response message for cancelling an
-// unfinished device wipe.
-type CancelWipeDeviceResponse struct {
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse: Response
+// message for cancelling an unfinished device wipe.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse struct {
 	// Device: Resultant Device object for the action. Note that asset tags
 	// will not be returned in the device object.
-	Device *Device `json:"device,omitempty"`
+	Device *GoogleAppsCloudidentityDevicesV1Device `json:"device,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
@@ -305,17 +344,17 @@ type CancelWipeDeviceResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod CancelWipeDeviceResponse
+func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CancelWipeDeviceUserResponse: Response message for cancelling an
-// unfinished user account wipe.
-type CancelWipeDeviceUserResponse struct {
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse:
+// Response message for cancelling an unfinished user account wipe.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse struct {
 	// DeviceUser: Resultant DeviceUser object for the action.
-	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
+	DeviceUser *GoogleAppsCloudidentityDevicesV1DeviceUser `json:"deviceUser,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
@@ -334,16 +373,16 @@ type CancelWipeDeviceUserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod CancelWipeDeviceUserResponse
+func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ClientState: Represents the state associated with an API client
-// calling the Devices API. Resource representing ClientState and
-// supports updates from API users
-type ClientState struct {
+// GoogleAppsCloudidentityDevicesV1ClientState: Represents the state
+// associated with an API client calling the Devices API. Resource
+// representing ClientState and supports updates from API users
+type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	// AssetTags: The caller can specify asset tags for this resource
 	AssetTags []string `json:"assetTags,omitempty"`
 
@@ -385,7 +424,7 @@ type ClientState struct {
 	// KeyValuePairs: The map of key-value attributes stored by callers
 	// specific to a device. The total serialized length of this map may not
 	// exceed 10KB. No limit is placed on the number of attributes in a map.
-	KeyValuePairs map[string]CustomAttributeValue `json:"keyValuePairs,omitempty"`
+	KeyValuePairs map[string]GoogleAppsCloudidentityDevicesV1CustomAttributeValue `json:"keyValuePairs,omitempty"`
 
 	// LastUpdateTime: Output only. The time the client state data was last
 	// updated.
@@ -436,15 +475,15 @@ type ClientState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientState) MarshalJSON() ([]byte, error) {
-	type NoMethod ClientState
+func (s *GoogleAppsCloudidentityDevicesV1ClientState) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ClientState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CustomAttributeValue: Additional custom attribute values may be one
-// of these types
-type CustomAttributeValue struct {
+// GoogleAppsCloudidentityDevicesV1CustomAttributeValue: Additional
+// custom attribute values may be one of these types
+type GoogleAppsCloudidentityDevicesV1CustomAttributeValue struct {
 	// BoolValue: Represents a boolean value.
 	BoolValue bool `json:"boolValue,omitempty"`
 
@@ -471,14 +510,14 @@ type CustomAttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAttributeValue) MarshalJSON() ([]byte, error) {
-	type NoMethod CustomAttributeValue
+func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CustomAttributeValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
-	type NoMethod CustomAttributeValue
+func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CustomAttributeValue
 	var s1 struct {
 		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
 		*NoMethod
@@ -491,13 +530,14 @@ func (s *CustomAttributeValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Device: A Device within the Cloud Identity Devices API. Represents a
-// Device known to Google Cloud, independent of the device ownership,
-// type, and whether it is assigned or in use by a user.
-type Device struct {
+// GoogleAppsCloudidentityDevicesV1Device: A Device within the Cloud
+// Identity Devices API. Represents a Device known to Google Cloud,
+// independent of the device ownership, type, and whether it is assigned
+// or in use by a user.
+type GoogleAppsCloudidentityDevicesV1Device struct {
 	// AndroidSpecificAttributes: Output only. Attributes specific to
 	// Android devices.
-	AndroidSpecificAttributes *AndroidAttributes `json:"androidSpecificAttributes,omitempty"`
+	AndroidSpecificAttributes *GoogleAppsCloudidentityDevicesV1AndroidAttributes `json:"androidSpecificAttributes,omitempty"`
 
 	// AssetTag: Asset tag of the device.
 	AssetTag string `json:"assetTag,omitempty"`
@@ -659,16 +699,16 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
-	type NoMethod Device
+func (s *GoogleAppsCloudidentityDevicesV1Device) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1Device
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeviceUser: Represents a user's use of a Device in the Cloud Identity
-// Devices API. A DeviceUser is a resource representing a user's use of
-// a Device
-type DeviceUser struct {
+// GoogleAppsCloudidentityDevicesV1DeviceUser: Represents a user's use
+// of a Device in the Cloud Identity Devices API. A DeviceUser is a
+// resource representing a user's use of a Device
+type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 	// CompromisedState: Compromised State of the DeviceUser object
 	//
 	// Possible values:
@@ -747,29 +787,20 @@ type DeviceUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceUser) MarshalJSON() ([]byte, error) {
-	type NoMethod DeviceUser
+func (s *GoogleAppsCloudidentityDevicesV1DeviceUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1DeviceUser
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EntityKey: An EntityKey uniquely identifies an Entity. Namespaces are
-// used to provide isolation for IDs. A single ID can be reused across
-// namespaces but the combination of a namespace and an ID must be
-// unique.
-type EntityKey struct {
-	// Id: The ID of the entity within the given namespace. The ID must be
-	// unique within its namespace.
-	Id string `json:"id,omitempty"`
+// GoogleAppsCloudidentityDevicesV1WipeDeviceResponse: Response message
+// for wiping all data on the device.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceResponse struct {
+	// Device: Resultant Device object for the action. Note that asset tags
+	// will not be returned in the device object.
+	Device *GoogleAppsCloudidentityDevicesV1Device `json:"device,omitempty"`
 
-	// Namespace: Namespaces provide isolation for IDs, so an ID only needs
-	// to be unique within its namespace. Namespaces are currently only
-	// created as part of IdentitySource creation from Admin Console. A
-	// namespace "identitysources/{identity_source_id}" is created
-	// corresponding to every Identity Source `identity_source_id`.
-	Namespace string `json:"namespace,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -777,7 +808,7 @@ type EntityKey struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
+	// NullFields is a list of field names (e.g. "Device") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -786,8 +817,37 @@ type EntityKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityKey) MarshalJSON() ([]byte, error) {
-	type NoMethod EntityKey
+func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse: Response
+// message for wiping the user's account from the device.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse struct {
+	// DeviceUser: Resultant DeviceUser object for the action.
+	DeviceUser *GoogleAppsCloudidentityDevicesV1DeviceUser `json:"deviceUser,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUser") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1229,65 +1289,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WipeDeviceResponse: Response message for wiping all data on the
-// device.
-type WipeDeviceResponse struct {
-	// Device: Resultant Device object for the action. Note that asset tags
-	// will not be returned in the device object.
-	Device *Device `json:"device,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Device") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Device") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WipeDeviceResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod WipeDeviceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WipeDeviceUserResponse: Response message for wiping the user's
-// account from the device.
-type WipeDeviceUserResponse struct {
-	// DeviceUser: Resultant DeviceUser object for the action.
-	DeviceUser *DeviceUser `json:"deviceUser,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceUser") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WipeDeviceUserResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod WipeDeviceUserResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "cloudidentity.groups.create":
 
 type GroupsCreateCall struct {
@@ -1332,7 +1333,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1458,7 +1459,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1600,7 +1601,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1778,7 +1779,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1983,7 +1984,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2125,7 +2126,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2317,7 +2318,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2495,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2633,7 +2634,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2775,7 +2776,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2948,7 +2949,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3162,7 +3163,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200815")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

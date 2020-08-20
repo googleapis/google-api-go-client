@@ -364,3 +364,49 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 		}
 	}
 }
+
+func TestResumableUploadWithPredefinedBuffer(t *testing.T) {
+	const (
+		mediaSize = 256
+	)
+	media := strings.Repeat("a", mediaSize)
+	tr := &interruptibleTransport{
+		buf: make([]byte, 0, mediaSize),
+		events: []event{
+			{"bytes 0-255/*", 200},
+		},
+		bodies: bodyTracker{},
+	}
+	buffer := make([]byte, 0, mediaSize)
+	rx := &ResumableUpload{
+		Client:    &http.Client{Transport: tr},
+		Media:     NewMediaBufferWithBuffer(strings.NewReader(media), mediaSize, buffer),
+		MediaType: "text/plain",
+		Callback:  func(int64) {},
+	}
+
+	res, err := rx.Upload(context.Background())
+	if err == nil {
+		res.Body.Close()
+	}
+	if err != nil || res == nil || res.StatusCode != http.StatusOK {
+		if res == nil {
+			t.Fatalf("Upload not successful, res=nil: %v", err)
+		} else {
+			t.Fatalf("Upload not successful, statusCode=%v, err=%v", res.StatusCode, err)
+		}
+	}
+	if !reflect.DeepEqual(tr.buf, []byte(media)) {
+		t.Fatalf("transferred contents:\ngot %s\nwant %s", tr.buf, []byte(media))
+	}
+	// Media fits in single chunk, input buffer should have media content inside.
+	if !reflect.DeepEqual(buffer[:cap(buffer)], []byte(media)) {
+		t.Fatalf("buffer contents:\ngot  %v\nwant %v", buffer, []byte(media))
+	}
+	if len(tr.events) > 0 {
+		t.Fatalf("did not observe all expected events.  leftover events: %v", tr.events)
+	}
+	if len(tr.bodies) > 0 {
+		t.Errorf("unclosed request bodies: %v", tr.bodies)
+	}
+}

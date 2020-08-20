@@ -149,19 +149,21 @@ func TestDetermineContentType(t *testing.T) {
 
 func TestNewInfoFromMedia(t *testing.T) {
 	const textType = "text/plain; charset=utf-8"
+	chunkBuffer := make([]byte, 0)
 	for _, test := range []struct {
-		desc                                   string
-		r                                      io.Reader
-		opts                                   []googleapi.MediaOption
-		wantType                               string
-		wantMedia, wantBuffer, wantSingleChunk bool
+		desc                                      string
+		r                                         io.Reader
+		opts                                      []googleapi.MediaOption
+		wantType                                  string
+		wantChunkBuffer                           []byte
+		wantMedia, wantAnyBuffer, wantSingleChunk bool
 	}{
 		{
 			desc:            "an empty reader results in a MediaBuffer with a single, empty chunk",
 			r:               new(bytes.Buffer),
 			opts:            nil,
 			wantType:        textType,
-			wantBuffer:      true,
+			wantAnyBuffer:   true,
 			wantSingleChunk: true,
 		},
 		{
@@ -169,7 +171,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 			r:               new(bytes.Buffer),
 			opts:            []googleapi.MediaOption{googleapi.ContentType("xyz")},
 			wantType:        "xyz",
-			wantBuffer:      true,
+			wantAnyBuffer:   true,
 			wantSingleChunk: true,
 		},
 		{
@@ -185,7 +187,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 			r:               strings.NewReader("12345"),
 			opts:            []googleapi.MediaOption{googleapi.ChunkSize(100)},
 			wantType:        textType,
-			wantBuffer:      true,
+			wantAnyBuffer:   true,
 			wantSingleChunk: true,
 		},
 		{
@@ -193,7 +195,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 			r:               &nullReader{googleapi.MinUploadChunkSize},
 			opts:            []googleapi.MediaOption{googleapi.ChunkSize(1)},
 			wantType:        "application/octet-stream",
-			wantBuffer:      true,
+			wantAnyBuffer:   true,
 			wantSingleChunk: true,
 		},
 		{
@@ -202,7 +204,15 @@ func TestNewInfoFromMedia(t *testing.T) {
 			r:               &nullReader{2 * googleapi.MinUploadChunkSize},
 			opts:            []googleapi.MediaOption{googleapi.ChunkSize(1)},
 			wantType:        "application/octet-stream",
-			wantBuffer:      true,
+			wantAnyBuffer:   true,
+			wantSingleChunk: false,
+		},
+		{
+			desc:            "WithBuffer is observed",
+			r:               new(bytes.Buffer),
+			opts:            []googleapi.MediaOption{googleapi.WithBuffer(chunkBuffer)},
+			wantType:        textType,
+			wantChunkBuffer: chunkBuffer,
 			wantSingleChunk: false,
 		},
 	} {
@@ -214,8 +224,15 @@ func TestNewInfoFromMedia(t *testing.T) {
 		if got, want := (mi.media != nil), test.wantMedia; got != want {
 			t.Errorf("%s: media non-nil: got %t, want %t", test.desc, got, want)
 		}
-		if got, want := (mi.buffer != nil), test.wantBuffer; got != want {
-			t.Errorf("%s: buffer non-nil: got %t, want %t", test.desc, got, want)
+		if test.wantAnyBuffer {
+			if got, want := (mi.buffer != nil), test.wantAnyBuffer; got != want {
+				t.Errorf("%s: buffer non-nil: got %t, want %t", test.desc, got, want)
+			}
+		}
+		if test.wantChunkBuffer != nil {
+			if got, want := reflect.ValueOf(mi.buffer.chunk).Pointer(), reflect.ValueOf(test.wantChunkBuffer).Pointer(); got != want {
+				t.Errorf("%s: chunk buffer: got %v, want %v", test.desc, got, want)
+			}
 		}
 		if got, want := mi.singleChunk, test.wantSingleChunk; got != want {
 			t.Errorf("%s: singleChunk: got %t, want %t", test.desc, got, want)

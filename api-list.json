@@ -3907,22 +3907,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "tasks:v1",
-      "name": "tasks",
-      "version": "v1",
-      "title": "Tasks API",
-      "description": "Manages your tasks and task lists.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest",
-      "discoveryLink": "./apis/tasks/v1/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/tasks-16.png",
-        "x32": "https://www.google.com/images/icons/product/tasks-32.png"
-      },
-      "documentationLink": "https://developers.google.com/google-apps/tasks/firstapp",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "testing:v1",
       "name": "testing",
       "version": "v1",
@@ -4234,6 +4218,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/vision/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "webfonts:v1",
+      "name": "webfonts",
+      "version": "v1",
+      "title": "Web Fonts Developer API",
+      "description": "The Google Web Fonts Developer API lets you retrieve information about web fonts served by Google.",
+      "discoveryRestUrl": "https://webfonts.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/fonts/docs/developer_api",
       "preferred": true
     },
     {

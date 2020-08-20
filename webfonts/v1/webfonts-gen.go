@@ -142,8 +142,7 @@ type Webfont struct {
 	Family string `json:"family,omitempty"`
 
 	// Files: The font files (with all supported scripts) for each one of
-	// the available
-	// variants, as a key : value map.
+	// the available variants, as a key : value map.
 	Files map[string]string `json:"files,omitempty"`
 
 	// Kind: This kind represents a webfont object in the webfonts service.
@@ -186,8 +185,7 @@ func (s *Webfont) MarshalJSON() ([]byte, error) {
 }
 
 // WebfontList: Response containing the list of fonts currently served
-// by the
-// Google Fonts API.
+// by the Google Fonts API.
 type WebfontList struct {
 	// Items: The list of fonts currently served by the Google Fonts API.
 	Items []*Webfont `json:"items,omitempty"`
@@ -234,8 +232,7 @@ type WebfontsListCall struct {
 }
 
 // List: Retrieves the list of fonts currently served by the Google
-// Fonts Developer
-// API.
+// Fonts Developer API.
 func (r *WebfontsService) List() *WebfontsListCall {
 	c := &WebfontsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -244,12 +241,13 @@ func (r *WebfontsService) List() *WebfontsListCall {
 // Sort sets the optional parameter "sort": Enables sorting of the list.
 //
 // Possible values:
-//   "SORT_UNDEFINED"
-//   "ALPHA"
-//   "DATE"
-//   "POPULARITY"
-//   "STYLE"
-//   "TRENDING"
+//   "SORT_UNDEFINED" - No sorting specified, use the default sorting
+// method.
+//   "ALPHA" - Sort alphabetically
+//   "DATE" - Sort by date added
+//   "POPULARITY" - Sort by popularity
+//   "STYLE" - Sort by number of styles
+//   "TRENDING" - Sort by trending
 func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
@@ -292,7 +290,7 @@ func (c *WebfontsListCall) Header() http.Header {
 
 func (c *WebfontsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -351,7 +349,7 @@ func (c *WebfontsListCall) Do(opts ...googleapi.CallOption) (*WebfontList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of fonts currently served by the Google Fonts Developer\nAPI.",
+	//   "description": "Retrieves the list of fonts currently served by the Google Fonts Developer API.",
 	//   "flatPath": "v1/webfonts",
 	//   "httpMethod": "GET",
 	//   "id": "webfonts.webfonts.list",
@@ -366,6 +364,14 @@ func (c *WebfontsListCall) Do(opts ...googleapi.CallOption) (*WebfontList, error
 	//         "POPULARITY",
 	//         "STYLE",
 	//         "TRENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No sorting specified, use the default sorting method.",
+	//         "Sort alphabetically",
+	//         "Sort by date added",
+	//         "Sort by popularity",
+	//         "Sort by number of styles",
+	//         "Sort by trending"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

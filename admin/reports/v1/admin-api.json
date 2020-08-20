@@ -129,26 +129,26 @@
             "applicationName": {
               "description": "Application name for which the events are to be retrieved.",
               "enum": [
-                "APPLICATION_NAME_UNDEFINED",
-                "ACCESS_TRANSPARENCY",
-                "ADMIN",
-                "CALENDAR",
-                "CHAT",
-                "DRIVE",
-                "GCP",
-                "GPLUS",
-                "GROUPS",
-                "GROUPS_ENTERPRISE",
-                "JAMBOARD",
-                "LOGIN",
-                "MEET",
-                "MOBILE",
-                "RULES",
-                "SAML",
-                "TOKEN",
-                "USER_ACCOUNTS",
-                "CONTEXT_AWARE_ACCESS",
-                "CHROME"
+                "application_name_undefined",
+                "access_transparency",
+                "admin",
+                "calendar",
+                "chat",
+                "drive",
+                "gcp",
+                "gplus",
+                "groups",
+                "groups_enterprise",
+                "jamboard",
+                "login",
+                "meet",
+                "mobile",
+                "rules",
+                "saml",
+                "token",
+                "user_accounts",
+                "context_aware_access",
+                "chrome"
               ],
               "enumDescriptions": [
                 "",
@@ -260,26 +260,26 @@
             "applicationName": {
               "description": "Application name for which the events are to be retrieved.",
               "enum": [
-                "APPLICATION_NAME_UNSPECIFIED",
-                "ACCESS_TRANSPARENCY",
-                "ADMIN",
-                "CALENDAR",
-                "CHAT",
-                "DRIVE",
-                "GCP",
-                "GPLUS",
-                "GROUPS",
-                "GROUPS_ENTERPRISE",
-                "JAMBOARD",
-                "LOGIN",
-                "MEET",
-                "MOBILE",
-                "RULES",
-                "SAML",
-                "TOKEN",
-                "USER_ACCOUNTS",
-                "CONTEXT_AWARE_ACCESS",
-                "CHROME"
+                "application_name_unspecified",
+                "access_transparency",
+                "admin",
+                "calendar",
+                "chat",
+                "drive",
+                "gcp",
+                "gplus",
+                "groups",
+                "groups_enterprise",
+                "jamboard",
+                "login",
+                "meet",
+                "mobile",
+                "rules",
+                "saml",
+                "token",
+                "user_accounts",
+                "context_aware_access",
+                "chrome"
               ],
               "enumDescriptions": [
                 "",
@@ -472,9 +472,9 @@
             "entityKey": {
               "description": "Represents the key of the object to filter the data with.",
               "enum": [
-                "ENTITY_KEY_UNDEFINED",
-                "ALL",
-                "ENTITY_KEY"
+                "entityKeyUndefined",
+                "all",
+                "entityKey"
               ],
               "enumDescriptions": [
                 "",
@@ -488,8 +488,8 @@
             "entityType": {
               "description": "Represents the type of entity for the report.",
               "enum": [
-                "ENTITY_TYPE_UNDEFINED",
-                "GPLUS_COMMUNITIES"
+                "entity_type_undefined",
+                "gplus_communities"
               ],
               "enumDescriptions": [
                 "",
@@ -613,7 +613,7 @@
       }
     }
   },
-  "revision": "20200810",
+  "revision": "20200819",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Activities": {

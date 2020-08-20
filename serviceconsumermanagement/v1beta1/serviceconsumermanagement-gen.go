@@ -2159,7 +2159,7 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // The mixin construct implies that all methods in `AccessControl` are
 // also declared with same name and request/response types in `Storage`.
 // A documentation generator or annotation processor will see the
-// effective `Storage.GetAcl` method after inherting documentation and
+// effective `Storage.GetAcl` method after inheriting documentation and
 // annotations as follows: service Storage { // Get the underlying ACL
 // object. rpc GetAcl(GetAclRequest) returns (Acl) { option
 // (google.api.http).get = "/v2/{resource=**}:getAcl"; } ... } Note how
@@ -3669,7 +3669,8 @@ func (s *V1Beta1ListProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 type V1Beta1OverrideInlineSource struct {
 	// Overrides: The overrides to create. Each override must have a value
 	// for 'metric' and 'unit', to specify which metric and which limit the
-	// override should be applied to.
+	// override should be applied to. The 'name' field of the override does
+	// not need to be set; it is ignored.
 	Overrides []*V1Beta1QuotaOverride `json:"overrides,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Overrides") to
@@ -4246,7 +4247,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4409,7 +4410,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4562,7 +4563,7 @@ func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) Header() http.
 
 func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4748,7 +4749,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4959,7 +4960,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5127,7 +5128,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5281,7 +5282,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5441,7 +5442,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5627,7 +5628,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -401,14 +401,14 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "ORDER_BY_UNDEFINED",
-                "ANNOTATED_LOCATION",
-                "ANNOTATED_USER",
-                "LAST_SYNC",
-                "NOTES",
-                "SERIAL_NUMBER",
-                "STATUS",
-                "SUPPORT_END_DATE"
+                "orderByUndefined",
+                "annotatedLocation",
+                "annotatedUser",
+                "lastSync",
+                "notes",
+                "serialNumber",
+                "status",
+                "supportEndDate"
               ],
               "enumDescriptions": [
                 "",
@@ -1023,8 +1023,8 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "ORDER_BY_UNDEFINED",
-                "EMAIL"
+                "orderByUndefined",
+                "email"
               ],
               "enumDescriptions": [
                 "",
@@ -1601,15 +1601,15 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "ORDER_BY_UNDEFINED",
-                "DEVICE_ID",
-                "EMAIL",
-                "LAST_SYNC",
-                "MODEL",
-                "NAME",
-                "OS",
-                "STATUS",
-                "TYPE"
+                "orderByUndefined",
+                "deviceId",
+                "email",
+                "lastSync",
+                "model",
+                "name",
+                "os",
+                "status",
+                "type"
               ],
               "enumDescriptions": [
                 "",
@@ -1793,9 +1793,9 @@
             "type": {
               "description": "Whether to return all sub-organizations or just immediate children",
               "enum": [
-                "TYPE_UNDEFINED",
-                "ALL",
-                "CHILDREN"
+                "typeUndefined",
+                "all",
+                "children"
               ],
               "enumDescriptions": [
                 "",
@@ -3254,10 +3254,10 @@
               "default": "basic",
               "description": "What subset of fields to fetch for this user.",
               "enum": [
-                "PROJECTION_UNDEFINED",
-                "BASIC",
-                "CUSTOM",
-                "FULL"
+                "projectionUndefined",
+                "basic",
+                "custom",
+                "full"
               ],
               "enumDescriptions": [
                 "",
@@ -3278,9 +3278,9 @@
               "default": "admin_view",
               "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
               "enum": [
-                "VIEW_TYPE_UNDEFINED",
-                "ADMIN_VIEW",
-                "DOMAIN_PUBLIC"
+                "view_type_undefined",
+                "admin_view",
+                "domain_public"
               ],
               "enumDescriptions": [
                 "",
@@ -3352,10 +3352,10 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "ORDER_BY_UNDEFINED",
-                "EMAIL",
-                "FAMILY_NAME",
-                "GIVEN_NAME"
+                "orderByUndefined",
+                "email",
+                "familyName",
+                "givenName"
               ],
               "enumDescriptions": [
                 "",
@@ -3375,10 +3375,10 @@
               "default": "basic",
               "description": "What subset of fields to fetch for this user.",
               "enum": [
-                "PROJECTION_UNDEFINED",
-                "BASIC",
-                "CUSTOM",
-                "FULL"
+                "projectionUndefined",
+                "basic",
+                "custom",
+                "full"
               ],
               "enumDescriptions": [
                 "",
@@ -3418,9 +3418,9 @@
               "default": "admin_view",
               "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
               "enum": [
-                "VIEW_TYPE_UNDEFINED",
-                "ADMIN_VIEW",
-                "DOMAIN_PUBLIC"
+                "view_type_undefined",
+                "admin_view",
+                "domain_public"
               ],
               "enumDescriptions": [
                 "",
@@ -3563,12 +3563,12 @@
             "event": {
               "description": "Event on which subscription is intended",
               "enum": [
-                "EVENT_TYPE_UNSPECIFIED",
-                "ADD",
-                "DELETE",
-                "MAKE_ADMIN",
-                "UNDELETE",
-                "UPDATE"
+                "eventTypeUnspecified",
+                "add",
+                "delete",
+                "makeAdmin",
+                "undelete",
+                "update"
               ],
               "enumDescriptions": [
                 "",
@@ -3694,9 +3694,9 @@
                 "event": {
                   "description": "Event on which subscription is intended (if subscribing)",
                   "enum": [
-                    "EVENT_UNDEFINED",
-                    "ADD",
-                    "DELETE"
+                    "eventUndefined",
+                    "add",
+                    "delete"
                   ],
                   "enumDescriptions": [
                     "",
@@ -3906,7 +3906,7 @@
       }
     }
   },
-  "revision": "20200810",
+  "revision": "20200819",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {

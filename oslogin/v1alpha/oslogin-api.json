@@ -344,7 +344,7 @@
       }
     }
   },
-  "revision": "20200801",
+  "revision": "20200817",
   "rootUrl": "https://oslogin.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -357,6 +357,10 @@
       "description": "A response message from importing an SSH public key.",
       "id": "ImportSshPublicKeyResponse",
       "properties": {
+        "details": {
+          "description": "Detailed information about import results.",
+          "type": "string"
+        },
         "loginProfile": {
           "$ref": "LoginProfile",
           "description": "The login profile information for the user."

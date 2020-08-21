@@ -1116,7 +1116,7 @@
       }
     }
   },
-  "revision": "20200803",
+  "revision": "20200819",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1743,10 +1743,6 @@
           "$ref": "MessageSet",
           "description": "message_set associates an arbitrary proto message with the status."
         },
-        "payload": {
-          "$ref": "TypedMessage",
-          "description": "DEPRECATED. This field was deprecated in 2011 with cl/20297133. Java support for the field was moved to a proto1 backward compatibility class in April 2017 with cl/142615857 and cl/154123203. There was never support for this field in Go; if set Go will ignore it. C++ stopped setting StatusProto::payload in October 2015 with cl/106347055, and stopped reading the field in October 2017 with cl/173324114. In general, newly written code should use only \"message_set\". If you need to maintain backward compatibility with code written before 3/25/2011, do the following: - During the transition period, either (1) set both \"payload\" and \"message_set\", or (2) write the consumer of StatusProto so that it can forge a MessageSet object from \"payload\" if \"message_set\" is missing. The C++ util::Status implementation does (2). - Once all the consumers are converted to accept \"message_set\", then remove the use of \"payload\" on the producer side."
-        },
         "space": {
           "description": "The following are usually only present when code != 0 Space to which this status belongs",
           "type": "string"
@@ -1770,23 +1766,6 @@
           "description": "The unique Google-assigned identifier of the Google Analytics data stream associated with the Firebase App. Learn more about Google Analytics data streams in the [Analytics documentation](https://support.google.com/analytics/answer/9303323).",
           "format": "int64",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "TypedMessage": {
-      "description": "Message that groups a protocol type_id (as defined by MessageSet), with an encoded message of that type. Its use is similar to MessageSet, except it represents a single (type, encoded message) instead of a set. To embed \"proto\" inside \"typed_msg\": MyProtoMessage proto; TypedMessage typed_msg; typed_msg.set_type_id(proto2::bridge::GetTypeId(proto)); proto.AppendToCord(typed_msg.mutable_message()); Error handling is omitted from the sample code above. GetTypeId() will return 0 for messages that don't have a TypeId specified.",
-      "id": "TypedMessage",
-      "properties": {
-        "message": {
-          "description": "Message bytes.",
-          "format": "byte",
-          "type": "string"
-        },
-        "typeId": {
-          "description": "Identifier for the type.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"

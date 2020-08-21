@@ -630,7 +630,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200820")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -731,10 +731,10 @@ func (r *VoicesService) List() *VoicesListCall {
 // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
 // If specified, the ListVoices call will only return voices that can be
 // used to synthesize this language_code. E.g. when specifying "en-NZ",
-// you will get supported "en-*" voices; when specifying "no", you will
-// get supported "no-*" (Norwegian) and "nb-*" (Norwegian Bokmal)
-// voices; specifying "zh" will also get supported "cmn-*" voices;
-// specifying "zh-hk" will also get supported "yue-*" voices.
+// you will get supported "en-\*" voices; when specifying "no", you will
+// get supported "no-\*" (Norwegian) and "nb-\*" (Norwegian Bokmal)
+// voices; specifying "zh" will also get supported "cmn-\*" voices;
+// specifying "zh-hk" will also get supported "yue-\*" voices.
 func (c *VoicesListCall) LanguageCode(languageCode string) *VoicesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -777,7 +777,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200819")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200820")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -843,7 +843,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-*\" voices; when specifying \"no\", you will get supported \"no-*\" (Norwegian) and \"nb-*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-*\" voices; specifying \"zh-hk\" will also get supported \"yue-*\" voices.",
+	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-\\*\" voices; when specifying \"no\", you will get supported \"no-\\*\" (Norwegian) and \"nb-\\*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-\\*\" voices; specifying \"zh-hk\" will also get supported \"yue-\\*\" voices.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

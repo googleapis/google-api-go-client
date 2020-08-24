@@ -12,7 +12,7 @@
   "baseUrl": "https://www.googleapis.com/",
   "batchPath": "batch/groupsmigration/v1",
   "canonicalName": "Groups Migration",
-  "description": "The Groups Migration API allows domain administrators to archive\n    emails into Google groups.",
+  "description": "The Groups Migration API allows domain administrators to archive emails into Google groups.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/groups-migration/",
   "icons": {
@@ -146,7 +146,7 @@
       }
     }
   },
-  "revision": "20200608",
+  "revision": "20200813",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Groups": {

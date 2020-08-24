@@ -859,12 +859,13 @@ type IamPolicyAnalysisQuery struct {
 
 	// Parent: Required. The relative name of the root asset. Only resources
 	// and IAM policies within the parent will be analyzed. This can only be
-	// an organization number (such as "organizations/123") or a folder
-	// number (such as "folders/123"). To know how to get organization id,
-	// visit [here
+	// an organization number (such as "organizations/123"), a folder number
+	// (such as "folders/123"), a project ID (such as
+	// "projects/my-project-id"), or a project number (such as
+	// "projects/12345"). To know how to get organization id, visit [here
 	// ](https://cloud.google.com/resource-manager/docs/creating-managing-org
 	// anization#retrieving_your_organization_id). To know how to get folder
-	// id, visit [here
+	// or project id, visit [here
 	// ](https://cloud.google.com/resource-manager/docs/creating-managing-fol
 	// ders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
@@ -1400,7 +1401,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200820")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,7 +1530,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*Analy
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\") or a folder number (such as \"folders/123\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -1600,7 +1601,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200820")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1673,7 +1674,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\") or a folder number (such as \"folders/123\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the parent will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

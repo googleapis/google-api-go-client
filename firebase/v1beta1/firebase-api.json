@@ -427,6 +427,11 @@
             "parent"
           ],
           "parameters": {
+            "filter": {
+              "description": "A query string compatible with Google's [AIP-160](https://google.aip.dev/160) standard. Use any of the following fields in a query: * [`appId`](../projects.apps#FirebaseProjectInfo.FIELDS.app_id) * [`namespace`](../projects.apps#FirebaseProjectInfo.FIELDS.namespace) * [`platform`](../projects.apps#FirebaseProjectInfo.FIELDS.platform)",
+              "location": "query",
+              "type": "string"
+            },
             "pageSize": {
               "description": "The maximum number of Apps to return in the response. The server may return fewer than this value at its discretion. If no value is specified (or too large a value is specified), then the server will impose its own limit. This value cannot be negative.",
               "format": "int32",
@@ -1293,7 +1298,8 @@
       "id": "FirebaseAppInfo",
       "properties": {
         "appId": {
-          "description": "Immutable. The globally unique, Firebase-assigned identifier for the `WebApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "description": "Output only. Immutable. The globally unique, Firebase-assigned identifier for the `WebApp`. This identifier should be treated as an opaque token, as the data format is not specified.",
+          "readOnly": true,
           "type": "string"
         },
         "displayName": {
@@ -1302,6 +1308,11 @@
         },
         "name": {
           "description": "The resource name of the Firebase App, in the format: projects/PROJECT_ID /iosApps/APP_ID or projects/PROJECT_ID/androidApps/APP_ID or projects/ PROJECT_ID/webApps/APP_ID",
+          "type": "string"
+        },
+        "namespace": {
+          "description": "Output only. Immutable. The platform-specific identifier of the App. *Note:* For most use cases, use `appId`, which is the canonical, globally unique identifier for referencing an App. This string is derived from a native identifier for each platform: `packageName` for an `AndroidApp`, `bundleId` for an `IosApp`, and `webId` for a `WebApp`. Its contents should be treated as opaque, as the native identifier format may change as platforms evolve. This string is only unique within a `FirebaseProject` and its associated Apps.",
+          "readOnly": true,
           "type": "string"
         },
         "platform": {
@@ -1795,6 +1806,11 @@
         },
         "projectId": {
           "description": "Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `WebApp`.",
+          "type": "string"
+        },
+        "webId": {
+          "description": "Output only. Immutable. A unique, Firebase-assigned identifier for the `WebApp`. This identifier is only used to populate the `namespace` value for the `WebApp`. For most use cases, use `appId` to identify or reference the App. The `webId` value is only unique within a `FirebaseProject` and its associated Apps.",
+          "readOnly": true,
           "type": "string"
         }
       },

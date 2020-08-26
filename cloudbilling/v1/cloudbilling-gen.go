@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithScopes(cloudbilling.CloudPlatformScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -79,6 +83,12 @@ const mtlsBasePath = "https://cloudbilling.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage your Google Cloud Platform billing accounts
+	CloudBillingScope = "https://www.googleapis.com/auth/cloud-billing"
+
+	// View your Google Cloud Platform billing accounts
+	CloudBillingReadonlyScope = "https://www.googleapis.com/auth/cloud-billing.readonly"
+
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
@@ -86,6 +96,8 @@ const (
 // NewService creates a new APIService.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/cloud-billing",
+		"https://www.googleapis.com/auth/cloud-billing.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1415,7 +1427,7 @@ func (c *BillingAccountsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1490,6 +1502,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1553,7 +1566,7 @@ func (c *BillingAccountsGetCall) Header() http.Header {
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1636,6 +1649,8 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1716,7 +1731,7 @@ func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1805,6 +1820,8 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -1895,7 +1912,7 @@ func (c *BillingAccountsListCall) Header() http.Header {
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1982,6 +1999,8 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//     "$ref": "ListBillingAccountsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2067,7 +2086,7 @@ func (c *BillingAccountsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2161,6 +2180,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 	//     "$ref": "BillingAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2218,7 +2238,7 @@ func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 
 func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2306,6 +2326,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2361,7 +2382,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 
 func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2449,6 +2470,8 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2532,7 +2555,7 @@ func (c *BillingAccountsProjectsListCall) Header() http.Header {
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,6 +2649,8 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     "$ref": "ListProjectBillingInfoResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2711,7 +2736,7 @@ func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2794,6 +2819,8 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 	//     "$ref": "ProjectBillingInfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -2873,7 +2900,7 @@ func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2961,6 +2988,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 	//     "$ref": "ProjectBillingInfo"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3036,7 +3064,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3118,6 +3146,8 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//     "$ref": "ListServicesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3247,7 +3277,7 @@ func (c *ServicesSkusListCall) Header() http.Header {
 
 func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200821")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3358,6 +3388,8 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//     "$ref": "ListSkusResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

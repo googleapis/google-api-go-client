@@ -2,6 +2,12 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/cloud-billing": {
+          "description": "View and manage your Google Cloud Platform billing accounts"
+        },
+        "https://www.googleapis.com/auth/cloud-billing.readonly": {
+          "description": "View your Google Cloud Platform billing accounts"
+        },
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
         }
@@ -122,6 +128,7 @@
             "$ref": "BillingAccount"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -147,6 +154,8 @@
             "$ref": "BillingAccount"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -178,6 +187,8 @@
             "$ref": "Policy"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -210,6 +221,8 @@
             "$ref": "ListBillingAccountsResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -244,6 +257,7 @@
             "$ref": "BillingAccount"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -272,6 +286,7 @@
             "$ref": "Policy"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -300,6 +315,8 @@
             "$ref": "TestIamPermissionsResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
@@ -340,6 +357,8 @@
                 "$ref": "ListProjectBillingInfoResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/cloud-billing",
+                "https://www.googleapis.com/auth/cloud-billing.readonly",
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
@@ -371,6 +390,8 @@
             "$ref": "ProjectBillingInfo"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
@@ -399,6 +420,7 @@
             "$ref": "ProjectBillingInfo"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
@@ -430,6 +452,8 @@
             "$ref": "ListServicesResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-billing",
+            "https://www.googleapis.com/auth/cloud-billing.readonly",
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
@@ -487,6 +511,8 @@
                 "$ref": "ListSkusResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/cloud-billing",
+                "https://www.googleapis.com/auth/cloud-billing.readonly",
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
@@ -495,7 +521,7 @@
       }
     }
   },
-  "revision": "20200817",
+  "revision": "20200821",
   "rootUrl": "https://cloudbilling.googleapis.com/",
   "schemas": {
     "AggregationInfo": {

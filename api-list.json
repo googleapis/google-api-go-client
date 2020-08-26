@@ -1847,7 +1847,7 @@
       "version": "v1",
       "title": "DoubleClick Bid Manager API",
       "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
-      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v1",
+      "discoveryRestUrl": "https://doubleclickbidmanager.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1862,7 +1862,7 @@
       "version": "v1.1",
       "title": "DoubleClick Bid Manager API",
       "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
-      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v1.1",
+      "discoveryRestUrl": "https://doubleclickbidmanager.googleapis.com/$discovery/rest?version=v1.1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2419,7 +2419,7 @@
       "name": "iam",
       "version": "v1",
       "title": "Identity and Access Management (IAM) API",
-      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. *Note:* This API is tied to the IAM service account credentials API \u003c/iam/docs/reference/credentials/rest\u003e (iamcredentials.googleapis.com). Enabling or disabling this API will also enable or disable the IAM service account credentials API.",
       "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2434,7 +2434,7 @@
       "name": "iamcredentials",
       "version": "v1",
       "title": "IAM Service Account Credentials API",
-      "description": "Creates short-lived credentials for impersonating IAM service accounts.",
+      "description": "Creates short-lived credentials for impersonating IAM service accounts. *Note:* This API is tied to the IAM API \u003c/iam/docs/reference/rest\u003e ( iam.googleapis.com). Enabling or disabling this API will also enable or disable the IAM API.",
       "discoveryRestUrl": "https://iamcredentials.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2652,6 +2652,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/life-sciences",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "localservices:v1",
+      "name": "localservices",
+      "version": "v1",
+      "title": "Local Services API",
+      "description": "",
+      "discoveryRestUrl": "https://localservices.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://ads.google.com/local-services-ads/",
       "preferred": true
     },
     {
@@ -3692,6 +3707,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/sheets/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "siteVerification:v1",
+      "name": "siteVerification",
+      "version": "v1",
+      "title": "Site Verification API",
+      "description": "The Google Site Verification API lets applications automate the process of managing ownership records for websites and domains.",
+      "discoveryRestUrl": "https://siteverification.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://code.google.com/apis/siteverification/",
       "preferred": true
     },
     {

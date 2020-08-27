@@ -1549,7 +1549,7 @@
       }
     }
   },
-  "revision": "20200817",
+  "revision": "20200825",
   "rootUrl": "https://sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -1763,11 +1763,6 @@
         },
         "measurementCapabilities": {
           "description": "Measurement reporting capabilities of the device.",
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "MEASUREMENT_CAPABILITY_UNSPECIFIED",

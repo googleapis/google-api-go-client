@@ -1121,7 +1121,7 @@
       }
     }
   },
-  "revision": "20200819",
+  "revision": "20200825",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1545,12 +1545,6 @@
       "properties": {
         "features": {
           "description": "Products and services that are available in the GCP resource location.",
-          "enumDescriptions": [
-            "Used internally for distinguishing unset values and is not intended for external use.",
-            "This location supports Cloud Firestore database instances. App Engine is available in this location, so it can be a Project's [default GCP resource location](//firebase.google.com/docs/projects/locations#default-cloud-location).",
-            "This location supports default Cloud Storage buckets. App Engine is available in this location, so it can be a Project's [default GCP resource location](//firebase.google.com/docs/projects/locations#default-cloud-location).",
-            "Cloud Functions for Firebase is available in this location."
-          ],
           "items": {
             "enum": [
               "LOCATION_FEATURE_UNSPECIFIED",

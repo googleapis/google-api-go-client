@@ -184,10 +184,12 @@ type Finding struct {
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EventTime: The time at which the event took place. For example, if
-	// the finding represents an open firewall it would capture the time the
-	// detector believes the firewall became open. The accuracy is
-	// determined by the detector.
+	// EventTime: The time at which the event took place, or when an update
+	// to the finding occurred. For example, if the finding represents an
+	// open firewall it would capture the time the detector believes the
+	// firewall became open. The accuracy is determined by the detector. If
+	// the finding were to be resolved afterward, this time would reflect
+	// when the finding was resolved.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -500,10 +502,12 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EventTime: The time at which the event took place. For example, if
-	// the finding represents an open firewall it would capture the time the
-	// detector believes the firewall became open. The accuracy is
-	// determined by the detector.
+	// EventTime: The time at which the event took place, or when an update
+	// to the finding occurred. For example, if the finding represents an
+	// open firewall it would capture the time the detector believes the
+	// firewall became open. The accuracy is determined by the detector. If
+	// the finding were to be resolved afterward, this time would reflect
+	// when the finding was resolved.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -1130,7 +1134,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1263,7 +1267,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1406,7 +1410,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1580,7 +1584,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -813,7 +813,7 @@
       }
     }
   },
-  "revision": "20200820",
+  "revision": "20200825",
   "rootUrl": "https://fitness.googleapis.com/",
   "schemas": {
     "AggregateBucket": {
@@ -925,18 +925,6 @@
         },
         "filteredDataQualityStandard": {
           "description": "DO NOT POPULATE THIS FIELD. It is ignored.",
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "dataQualityUnknown",
@@ -1171,18 +1159,6 @@
         },
         "dataQualityStandard": {
           "description": "DO NOT POPULATE THIS FIELD. It is never populated in responses from the platform, and is ignored in queries. It will be removed in a future version entirely.",
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "dataQualityUnknown",

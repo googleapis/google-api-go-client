@@ -74,8 +74,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "groupsmigration:v1"
 const apiName = "groupsmigration"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/"
-const mtlsBasePath = "https://www.mtls.googleapis.com/"
+const basePath = "https://groupsmigration.googleapis.com/"
+const mtlsBasePath = "https://groupsmigration.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -263,7 +263,7 @@ func (c *ArchiveInsertCall) Header() http.Header {
 
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

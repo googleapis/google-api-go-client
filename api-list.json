@@ -1633,12 +1633,11 @@
       "name": "dfareporting",
       "version": "v3.3",
       "title": "DCM/DFA Reporting And Trafficking API",
-      "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v3.3/rest",
-      "discoveryLink": "./apis/dfareporting/v3.3/rest",
+      "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+      "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.3",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-        "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
       "preferred": false
@@ -1649,12 +1648,11 @@
       "name": "dfareporting",
       "version": "v3.4",
       "title": "DCM/DFA Reporting And Trafficking API",
-      "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v3.4/rest",
-      "discoveryLink": "./apis/dfareporting/v3.4/rest",
+      "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+      "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.4",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-        "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
       "preferred": true
@@ -1876,14 +1874,13 @@
       "name": "doubleclicksearch",
       "version": "v2",
       "title": "Search Ads 360 API",
-      "description": "Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/doubleclicksearch/v2/rest",
-      "discoveryLink": "./apis/doubleclicksearch/v2/rest",
+      "description": "The Search Ads 360 API allows developers to automate uploading conversions and downloading reports from Search Ads 360.",
+      "discoveryRestUrl": "https://doubleclicksearch.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/doubleclick-search/",
+      "documentationLink": "https://developers.google.com/search-ads",
       "preferred": true
     },
     {
@@ -2359,13 +2356,14 @@
       "name": "groupssettings",
       "version": "v1",
       "title": "Groups Settings API",
-      "description": "The Groups Settings API allows domain administrators to view and manage access levels and advanced settings for a group.",
-      "discoveryRestUrl": "https://groupssettings.googleapis.com/$discovery/rest?version=v1",
+      "description": "Manages permission levels and related settings of a group.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/groupssettings/v1/rest",
+      "discoveryLink": "./apis/groupssettings/v1/rest",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/admin-sdk/groups-settings",
+      "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
       "preferred": true
     },
     {
@@ -3884,14 +3882,13 @@
       "name": "tagmanager",
       "version": "v1",
       "title": "Tag Manager API",
-      "description": "Accesses Tag Manager accounts and containers.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/tagmanager/v1/rest",
-      "discoveryLink": "./apis/tagmanager/v1/rest",
+      "description": "This API allows clients to access and modify container and tag configuration.",
+      "discoveryRestUrl": "https://tagmanager.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/tag-manager/api/v1/",
+      "documentationLink": "https://developers.google.com/tag-manager",
       "preferred": false
     },
     {
@@ -3900,14 +3897,13 @@
       "name": "tagmanager",
       "version": "v2",
       "title": "Tag Manager API",
-      "description": "Accesses Tag Manager accounts and containers.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/tagmanager/v2/rest",
-      "discoveryLink": "./apis/tagmanager/v2/rest",
+      "description": "This API allows clients to access and modify container and tag configuration.",
+      "discoveryRestUrl": "https://tagmanager.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/tag-manager/api/v2/",
+      "documentationLink": "https://developers.google.com/tag-manager",
       "preferred": true
     },
     {

@@ -2610,7 +2610,7 @@
       }
     }
   },
-  "revision": "20200801",
+  "revision": "20200825",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2649,11 +2649,6 @@
         },
         "permission": {
           "description": "Deprecated. Use PlaySearch.approveApps.",
-          "enumDescriptions": [
-            "Unknown permission.",
-            "Permission to approve and unapprove apps.",
-            "Permission to manage app restrictions."
-          ],
           "items": {
             "enum": [
               "unknown",
@@ -3955,12 +3950,6 @@
         },
         "availableTracks": {
           "description": "Deprecated, use appTracks instead.",
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "appTrackUnspecified",
@@ -4024,10 +4013,6 @@
         },
         "features": {
           "description": "Noteworthy features (if any) of this product.",
-          "enumDescriptions": [
-            "",
-            "The app is a VPN."
-          ],
           "items": {
             "enum": [
               "featureUnknown",
@@ -4234,12 +4219,6 @@
         },
         "tracks": {
           "description": "Deprecated. Use trackIds instead.",
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "appTrackUnspecified",
@@ -4328,12 +4307,6 @@
         },
         "tracks": {
           "description": "Deprecated. Use trackIds instead.",
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
           "items": {
             "enum": [
               "appTrackUnspecified",

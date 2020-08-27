@@ -1594,7 +1594,7 @@
       }
     }
   },
-  "revision": "20200802",
+  "revision": "20200822",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -3443,6 +3443,13 @@
           "description": "Metadata settings that are supplied to this version to enable beta runtime features.",
           "type": "object"
         },
+        "buildEnvVariables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Environment variables available to the build environment.Only returned in GET requests if view=FULL is set.",
+          "type": "object"
+        },
         "createTime": {
           "description": "Time that this version was created.@OutputOnly",
           "format": "google-datetime",
@@ -3509,17 +3516,6 @@
         },
         "inboundServices": {
           "description": "Before an application can receive email or XMPP messages, the application must be configured to enable the service.",
-          "enumDescriptions": [
-            "Not specified.",
-            "Allows an application to receive mail.",
-            "Allows an application to receive email-bound notifications.",
-            "Allows an application to receive error stanzas.",
-            "Allows an application to receive instant messages.",
-            "Allows an application to receive user subscription POSTs.",
-            "Allows an application to receive a user's chat presence.",
-            "Registers an application for notifications when a client connects or disconnects from a channel.",
-            "Enables warmup requests."
-          ],
           "items": {
             "enum": [
               "INBOUND_SERVICE_UNSPECIFIED",

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/-cxFi5x9QP7nGEy7qxpdbRvhe9g\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/3BrMzyfGS9HuSl7YrgvUzK5f9DE\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3745,7 +3745,7 @@
       }
     }
   },
-  "revision": "20200805",
+  "revision": "20200821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -9409,6 +9409,13 @@
           "$ref": "ProductShippingDimension",
           "description": "Width of the item for shipping."
         },
+        "shoppingAdsExcludedCountries": {
+          "description": "List of country codes (ISO 3166-1 alpha-2) to exclude the offer from Shopping Ads destination. Countries from this list are removed from countries configured in MC feed settings.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "sizeSystem": {
           "description": "System in which the size is specified. Recommended for apparel items.",
           "type": "string"
@@ -9625,7 +9632,7 @@
     "ProductStatusDestinationStatus": {
       "id": "ProductStatusDestinationStatus",
       "properties": {
-        "approvedCountrys": {
+        "approvedCountries": {
           "description": "List of country codes (ISO 3166-1 alpha-2) where the offer is approved.",
           "items": {
             "type": "string"
@@ -9636,14 +9643,14 @@
           "description": "The name of the destination",
           "type": "string"
         },
-        "disapprovedCountrys": {
+        "disapprovedCountries": {
           "description": "List of country codes (ISO 3166-1 alpha-2) where the offer is disapproved.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
-        "pendingCountrys": {
+        "pendingCountries": {
           "description": "List of country codes (ISO 3166-1 alpha-2) where the offer is pending approval.",
           "items": {
             "type": "string"
@@ -9660,7 +9667,7 @@
     "ProductStatusItemLevelIssue": {
       "id": "ProductStatusItemLevelIssue",
       "properties": {
-        "applicableCountrys": {
+        "applicableCountries": {
           "description": "List of country codes (ISO 3166-1 alpha-2) where issue applies to the offer.",
           "items": {
             "type": "string"

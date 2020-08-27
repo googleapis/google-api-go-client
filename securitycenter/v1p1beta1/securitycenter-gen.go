@@ -504,10 +504,12 @@ type Finding struct {
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EventTime: The time at which the event took place. For example, if
-	// the finding represents an open firewall it would capture the time the
-	// detector believes the firewall became open. The accuracy is
-	// determined by the detector.
+	// EventTime: The time at which the event took place, or when an update
+	// to the finding occurred. For example, if the finding represents an
+	// open firewall it would capture the time the detector believes the
+	// firewall became open. The accuracy is determined by the detector. If
+	// the finding were to be resolved afterward, this time would reflect
+	// when the finding was resolved.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -887,10 +889,12 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EventTime: The time at which the event took place. For example, if
-	// the finding represents an open firewall it would capture the time the
-	// detector believes the firewall became open. The accuracy is
-	// determined by the detector.
+	// EventTime: The time at which the event took place, or when an update
+	// to the finding occurred. For example, if the finding represents an
+	// open firewall it would capture the time the detector believes the
+	// firewall became open. The accuracy is determined by the detector. If
+	// the finding were to be resolved afterward, this time would reflect
+	// when the finding was resolved.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -2180,7 +2184,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 }
 
 // Resource: Information related to the Google Cloud resource that is
-// associated with this finding. LINT.IfChange
+// associated with this finding.
 type Resource struct {
 	// Name: The full resource name of the resource. See:
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
@@ -2604,7 +2608,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2704,7 +2708,7 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 	header_              http.Header
 }
 
-// UpdateOrganizationSettings:  Updates an organization's settings.
+// UpdateOrganizationSettings: Updates an organization's settings.
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2747,7 +2751,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2811,7 +2815,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates an organization's settings.",
+	//   "description": "Updates an organization's settings.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/organizationSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.updateOrganizationSettings",
@@ -2894,7 +2898,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3187,7 +3191,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3264,7 +3268,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": " A field mask to specify the ListAssetsResult fields to be listed in the response. An empty field mask will list all fields.",
+	//       "description": "A field mask to specify the ListAssetsResult fields to be listed in the response. An empty field mask will list all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3348,7 +3352,7 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 }
 
 // RunDiscovery: Runs asset discovery. The discovery is tracked with a
-// long-running operation. // This API can only be called with limited
+// long-running operation. This API can only be called with limited
 // frequency for an organization. If it is called too frequently the
 // caller will receive a TOO_MANY_REQUESTS error.
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
@@ -3385,7 +3389,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3449,7 +3453,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs asset discovery. The discovery is tracked with a long-running operation. // This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.",
+	//   "description": "Runs asset discovery. The discovery is tracked with a long-running operation. This API can only be called with limited frequency for an organization. If it is called too frequently the caller will receive a TOO_MANY_REQUESTS error.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/assets:runDiscovery",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.assets.runDiscovery",
@@ -3490,7 +3494,7 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 	header_                                         http.Header
 }
 
-// UpdateSecurityMarks:  Updates security marks.
+// UpdateSecurityMarks: Updates security marks.
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1p1beta1securitymarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3543,7 +3547,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3609,7 +3613,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates security marks.",
+	//   "description": "Updates security marks.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/assets/{assetsId}/securityMarks",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.assets.updateSecurityMarks",
@@ -3706,7 +3710,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3849,7 +3853,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3990,7 +3994,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4151,7 +4155,7 @@ func (c *OrganizationsNotificationConfigsListCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4283,8 +4287,8 @@ type OrganizationsNotificationConfigsPatchCall struct {
 	header_            http.Header
 }
 
-// Patch:  Updates a notification config. The following update fields
-// are allowed: description, pubsub_topic, streaming_config.filter
+// Patch: Updates a notification config. The following update fields are
+// allowed: description, pubsub_topic, streaming_config.filter
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4327,7 +4331,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4391,7 +4395,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "description": "Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/notificationConfigs/{notificationConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.notificationConfigs.patch",
@@ -4480,7 +4484,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4613,7 +4617,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4756,7 +4760,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4930,7 +4934,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5102,7 +5106,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5251,7 +5255,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5386,7 +5390,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5552,7 +5556,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5684,7 +5688,7 @@ type OrganizationsSourcesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch:  Updates a source.
+// Patch: Updates a source.
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5727,7 +5731,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5791,7 +5795,7 @@ func (c *OrganizationsSourcesPatchCall) Do(opts ...googleapi.CallOption) (*Sourc
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates a source.",
+	//   "description": "Updates a source.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/sources/{sourcesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.sources.patch",
@@ -5873,7 +5877,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6014,7 +6018,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6119,7 +6123,7 @@ type OrganizationsSourcesFindingsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create:  Creates a finding. The corresponding source must exist for
+// Create: Creates a finding. The corresponding source must exist for
 // finding creation to succeed.
 func (r *OrganizationsSourcesFindingsService) Create(parent string, googlecloudsecuritycenterv1p1beta1finding *GoogleCloudSecuritycenterV1p1beta1Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6162,7 +6166,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6228,7 +6232,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": " Creates a finding. The corresponding source must exist for finding creation to succeed.",
+	//   "description": "Creates a finding. The corresponding source must exist for finding creation to succeed.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/sources/{sourcesId}/findings",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.create",
@@ -6312,7 +6316,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6592,7 +6596,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6669,7 +6673,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": " A field mask to specify the Finding fields to be listed in the response. An empty field mask will list all fields.",
+	//       "description": "A field mask to specify the Finding fields to be listed in the response. An empty field mask will list all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6752,7 +6756,7 @@ type OrganizationsSourcesFindingsPatchCall struct {
 	header_                                   http.Header
 }
 
-// Patch:  Creates or updates a finding. The corresponding source must
+// Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 func (r *OrganizationsSourcesFindingsService) Patch(name string, googlecloudsecuritycenterv1p1beta1finding *GoogleCloudSecuritycenterV1p1beta1Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6799,7 +6803,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6865,7 +6869,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": " Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.",
+	//   "description": "Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.sources.findings.patch",
@@ -6912,7 +6916,7 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 	header_                http.Header
 }
 
-// SetState:  Updates the state of a finding.
+// SetState: Updates the state of a finding.
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6947,7 +6951,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7013,7 +7017,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates the state of a finding.",
+	//   "description": "Updates the state of a finding.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}:setState",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.setState",
@@ -7054,7 +7058,7 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 	header_                                         http.Header
 }
 
-// UpdateSecurityMarks:  Updates security marks.
+// UpdateSecurityMarks: Updates security marks.
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1p1beta1securitymarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7107,7 +7111,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200822")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7173,7 +7177,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": " Updates security marks.",
+	//   "description": "Updates security marks.",
 	//   "flatPath": "v1p1beta1/organizations/{organizationsId}/sources/{sourcesId}/findings/{findingsId}/securityMarks",
 	//   "httpMethod": "PATCH",
 	//   "id": "securitycenter.organizations.sources.findings.updateSecurityMarks",

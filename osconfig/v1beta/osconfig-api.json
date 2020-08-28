@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20200807",
+  "revision": "20200824",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptRepository": {
@@ -2631,18 +2631,6 @@
       "properties": {
         "classifications": {
           "description": "Only apply updates of these windows update classifications. If empty, all updates are applied.",
-          "enumDescriptions": [
-            "Invalid. If classifications are included, they must be specified.",
-            "\"A widely released fix for a specific problem that addresses a critical, non-security-related bug.\" [1]",
-            "\"A widely released fix for a product-specific, security-related vulnerability. Security vulnerabilities are rated by their severity. The severity rating is indicated in the Microsoft security bulletin as critical, important, moderate, or low.\" [1]",
-            "\"A widely released and frequent software update that contains additions to a product's definition database. Definition databases are often used to detect objects that have specific attributes, such as malicious code, phishing websites, or junk mail.\" [1]",
-            "\"Software that controls the input and output of a device.\" [1]",
-            "\"New product functionality that is first distributed outside the context of a product release and that is typically included in the next full product release.\" [1]",
-            "\"A tested, cumulative set of all hotfixes, security updates, critical updates, and updates. Additionally, service packs may contain additional fixes for problems that are found internally since the release of the product. Service packs my also contain a limited number of customer-requested design changes or features.\" [1]",
-            "\"A utility or feature that helps complete a task or set of tasks.\" [1]",
-            "\"A tested, cumulative set of hotfixes, security updates, critical updates, and updates that are packaged together for easy deployment. A rollup generally targets a specific area, such as security, or a component of a product, such as Internet Information Services (IIS).\" [1]",
-            "\"A widely released fix for a specific problem. An update addresses a noncritical, non-security-related bug.\" [1]"
-          ],
           "items": {
             "enum": [
               "CLASSIFICATION_UNSPECIFIED",

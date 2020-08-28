@@ -9,8 +9,8 @@
     }
   },
   "basePath": "/doubleclickbidmanager/v1.1/",
-  "baseUrl": "https://www.googleapis.com/doubleclickbidmanager/v1.1/",
-  "batchPath": "batch/doubleclickbidmanager",
+  "baseUrl": "https://doubleclickbidmanager.googleapis.com/doubleclickbidmanager/v1.1/",
+  "batchPath": "batch",
   "canonicalName": "DoubleClick Bid Manager",
   "description": "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
   "discoveryVersion": "v1",
@@ -22,7 +22,7 @@
   },
   "id": "doubleclickbidmanager:v1.1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://www.mtls.googleapis.com/",
+  "mtlsRootUrl": "https://doubleclickbidmanager.mtls.googleapis.com/",
   "name": "doubleclickbidmanager",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -342,8 +342,8 @@
       }
     }
   },
-  "revision": "20200817",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20200819",
+  "rootUrl": "https://doubleclickbidmanager.googleapis.com/",
   "schemas": {
     "ChannelGrouping": {
       "description": "A channel grouping defines a set of rules that can be used to categorize events in a path report.",

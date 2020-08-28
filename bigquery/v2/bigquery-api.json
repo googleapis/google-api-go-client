@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20200805",
+  "revision": "20200818",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -4198,7 +4198,7 @@
             "Linear regression model.",
             "Logistic regression based classification model.",
             "K-means clustering model.",
-            "[Beta] Matrix factorization model.",
+            "Matrix factorization model.",
             "[Beta] DNN classifier model.",
             "[Beta] An imported TensorFlow model.",
             "[Beta] DNN regressor model.",

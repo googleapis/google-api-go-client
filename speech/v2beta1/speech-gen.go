@@ -208,26 +208,24 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LongRunningRecognizeMetadata: Describes the progress of a
-// long-running `LongRunningRecognize` call. It is
-// included in the `metadata` field of the `Operation` returned by
-// the
-// `GetOperation` call of the `google::longrunning::Operations` service.
+// long-running `LongRunningRecognize` call. It is included in the
+// `metadata` field of the `Operation` returned by the `GetOperation`
+// call of the `google::longrunning::Operations` service.
 type LongRunningRecognizeMetadata struct {
 	// LastUpdateTime: Output only. Time of the most recent processing
 	// update.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// ProgressPercent: Output only. Approximate percentage of audio
-	// processed thus far. Guaranteed to be 100
-	// when the audio is fully processed and the results are available.
+	// processed thus far. Guaranteed to be 100 when the audio is fully
+	// processed and the results are available.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: Output only. Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Uri: The URI of the audio file being transcribed. Empty if the audio
-	// was sent
-	// as byte content.
+	// was sent as byte content.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
@@ -255,18 +253,13 @@ func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // LongRunningRecognizeResponse: The only message returned to the client
-// by the `LongRunningRecognize` method.
-// It contains the result as zero or more sequential
-// SpeechRecognitionResult
-// messages. It is included in the `result.response` field of the
-// `Operation`
-// returned by the `GetOperation` call of the
-// `google::longrunning::Operations`
-// service.
+// by the `LongRunningRecognize` method. It contains the result as zero
+// or more sequential SpeechRecognitionResult messages. It is included
+// in the `result.response` field of the `Operation` returned by the
+// `GetOperation` call of the `google::longrunning::Operations` service.
 type LongRunningRecognizeResponse struct {
 	// Results: Output only. Sequential list of transcription results
-	// corresponding to
-	// sequential portions of audio.
+	// corresponding to sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Results") to
@@ -293,52 +286,38 @@ func (s *LongRunningRecognizeResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -372,17 +351,12 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // list).
 type SpeechRecognitionAlternative struct {
 	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
-	// A higher number
-	// indicates an estimated greater likelihood that the recognized words
-	// are
-	// correct. This field is set only for the top alternative of a
-	// non-streaming
-	// result or, of a streaming result where `is_final=true`.
-	// This field is not guaranteed to be accurate and users should not rely
-	// on it
-	// to be always provided.
-	// The default of 0.0 is a sentinel value indicating `confidence` was
-	// not set.
+	// A higher number indicates an estimated greater likelihood that the
+	// recognized words are correct. This field is set only for the top
+	// alternative of a non-streaming result or, of a streaming result where
+	// `is_final=true`. This field is not guaranteed to be accurate and
+	// users should not rely on it to be always provided. The default of 0.0
+	// is a sentinel value indicating `confidence` was not set.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Transcript: Output only. Transcript text representing the words that
@@ -390,10 +364,8 @@ type SpeechRecognitionAlternative struct {
 	Transcript string `json:"transcript,omitempty"`
 
 	// Words: Output only. A list of word-specific information for each
-	// recognized word.
-	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// recognized word. Note: When `enable_speaker_diarization` is true, you
+	// will see all the words from the beginning of the audio.
 	Words []*WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -437,27 +409,21 @@ func (s *SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
 // a portion of the audio.
 type SpeechRecognitionResult struct {
 	// Alternatives: Output only. May contain one or more recognition
-	// hypotheses (up to the
-	// maximum specified in `max_alternatives`).
-	// These alternatives are ordered in terms of accuracy, with the top
-	// (first)
+	// hypotheses (up to the maximum specified in `max_alternatives`). These
+	// alternatives are ordered in terms of accuracy, with the top (first)
 	// alternative being the most probable, as ranked by the recognizer.
 	Alternatives []*SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
 	// ChannelTag: Output only. For multi-channel audio, this is the channel
-	// number corresponding to the
-	// recognized result for the audio from that channel.
-	// For `audio_channel_count` = N, its output values can range from `1`
-	// to `N`.
+	// number corresponding to the recognized result for the audio from that
+	// channel. For `audio_channel_count` = N, its output values can range
+	// from `1` to `N`.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
-	// LanguageCode: Output only.
-	// The
+	// LanguageCode: Output only. The
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the
-	// language in this result. This language code was detected to have the
-	// most
-	// likelihood of being spoken in the audio.
+	// of the language in this result. This language code was detected to
+	// have the most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -484,32 +450,24 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -538,50 +496,34 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
 	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
-	// A higher number
-	// indicates an estimated greater likelihood that the recognized words
-	// are
-	// correct. This field is set only for the top alternative of a
-	// non-streaming
-	// result or, of a streaming result where `is_final=true`.
-	// This field is not guaranteed to be accurate and users should not rely
-	// on it
-	// to be always provided.
-	// The default of 0.0 is a sentinel value indicating `confidence` was
-	// not set.
+	// A higher number indicates an estimated greater likelihood that the
+	// recognized words are correct. This field is set only for the top
+	// alternative of a non-streaming result or, of a streaming result where
+	// `is_final=true`. This field is not guaranteed to be accurate and
+	// users should not rely on it to be always provided. The default of 0.0
+	// is a sentinel value indicating `confidence` was not set.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// EndOffset: Output only. Time offset relative to the beginning of the
-	// audio,
-	// and corresponding to the end of the spoken word.
-	// This field is only set if `enable_word_time_offsets=true` and only
-	// in the top hypothesis.
-	// This is an experimental feature and the accuracy of the time offset
-	// can
-	// vary.
+	// audio, and corresponding to the end of the spoken word. This field is
+	// only set if `enable_word_time_offsets=true` and only in the top
+	// hypothesis. This is an experimental feature and the accuracy of the
+	// time offset can vary.
 	EndOffset string `json:"endOffset,omitempty"`
 
 	// SpeakerTag: Output only. A distinct integer value is assigned for
-	// every speaker within
-	// the audio. This field specifies which one of those speakers was
-	// detected to
-	// have spoken this word. Value ranges from `1`
-	// to
-	// `diarization_config.max_speaker_count` . `speaker_tag` is set
-	// if
-	// `diarization_config.enable_speaker_diarization` = `true` and only in
-	// the
-	// top alternative.
+	// every speaker within the audio. This field specifies which one of
+	// those speakers was detected to have spoken this word. Value ranges
+	// from `1` to `diarization_config.max_speaker_count` . `speaker_tag` is
+	// set if `diarization_config.enable_speaker_diarization` = `true` and
+	// only in the top alternative.
 	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
 	// StartOffset: Output only. Time offset relative to the beginning of
-	// the audio,
-	// and corresponding to the start of the spoken word.
-	// This field is only set if `enable_word_time_offsets=true` and only
-	// in the top hypothesis.
-	// This is an experimental feature and the accuracy of the time offset
-	// can
-	// vary.
+	// the audio, and corresponding to the start of the spoken word. This
+	// field is only set if `enable_word_time_offsets=true` and only in the
+	// top hypothesis. This is an experimental feature and the accuracy of
+	// the time offset can vary.
 	StartOffset string `json:"startOffset,omitempty"`
 
 	// Word: Output only. The word corresponding to this set of information.
@@ -635,11 +577,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -683,7 +623,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -745,7 +685,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "speech.projects.locations.operations.get",
@@ -784,22 +724,15 @@ type ProjectsLocationsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -864,7 +797,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -926,7 +859,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "speech.projects.locations.operations.list",

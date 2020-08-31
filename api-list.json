@@ -2744,21 +2744,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "memcache:v1",
-      "name": "memcache",
-      "version": "v1",
-      "title": "Cloud Memorystore for Memcached API",
-      "description": "Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.",
-      "discoveryRestUrl": "https://memcache.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/memorystore/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "memcache:v1beta2",
       "name": "memcache",
       "version": "v1beta2",
@@ -2770,7 +2755,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/memorystore/",
-      "preferred": false
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
@@ -3003,13 +2988,14 @@
       "name": "playcustomapp",
       "version": "v1",
       "title": "Google Play Custom App Publishing API",
-      "description": "API to create and publish custom Android apps",
-      "discoveryRestUrl": "https://www.googleapis.com/$discovery/rest?version=v1",
+      "description": "An API to publish custom Android apps.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playcustomapp/v1/rest",
+      "discoveryLink": "./apis/playcustomapp/v1/rest",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/android/work/play/custom-app-api/",
+      "documentationLink": "https://developers.google.com/android/work/play/custom-app-api",
       "preferred": true
     },
     {
@@ -3465,36 +3451,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/secret-manager/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "securitycenter:v1p1alpha1",
-      "name": "securitycenter",
-      "version": "v1p1alpha1",
-      "title": "Security Command Center API",
-      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
-      "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://console.cloud.google.com/apis/api/securitycenter.googleapis.com/overview",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "securitycenter:v1p1beta1",
-      "name": "securitycenter",
-      "version": "v1p1beta1",
-      "title": "Security Command Center API",
-      "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
-      "discoveryRestUrl": "https://securitycenter.googleapis.com/$discovery/rest?version=v1p1beta1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://console.cloud.google.com/apis/api/securitycenter.googleapis.com/overview",
       "preferred": false
     },
     {
@@ -4309,6 +4265,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/security-command-center/docs/concepts-web-security-scanner-overview/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "workflows:v1beta",
+      "name": "workflows",
+      "version": "v1beta",
+      "title": "Workflows API",
+      "description": "",
+      "discoveryRestUrl": "https://workflows.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/workflows",
       "preferred": true
     },
     {

@@ -232,25 +232,23 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // LongRunningRecognizeMetadata: Describes the progress of a
-// long-running `LongRunningRecognize` call. It is
-// included in the `metadata` field of the `Operation` returned by
-// the
-// `GetOperation` call of the `google::longrunning::Operations` service.
+// long-running `LongRunningRecognize` call. It is included in the
+// `metadata` field of the `Operation` returned by the `GetOperation`
+// call of the `google::longrunning::Operations` service.
 type LongRunningRecognizeMetadata struct {
 	// LastUpdateTime: Time of the most recent processing update.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// ProgressPercent: Approximate percentage of audio processed thus far.
-	// Guaranteed to be 100
-	// when the audio is fully processed and the results are available.
+	// Guaranteed to be 100 when the audio is fully processed and the
+	// results are available.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Uri: Output only. The URI of the audio file being transcribed. Empty
-	// if the audio was sent
-	// as byte content.
+	// if the audio was sent as byte content.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
@@ -278,15 +276,13 @@ func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // LongRunningRecognizeRequest: The top-level message sent by the client
-// for the `LongRunningRecognize`
-// method.
+// for the `LongRunningRecognize` method.
 type LongRunningRecognizeRequest struct {
 	// Audio: Required. The audio data to be recognized.
 	Audio *RecognitionAudio `json:"audio,omitempty"`
 
 	// Config: Required. Provides information to the recognizer that
-	// specifies how to
-	// process the request.
+	// specifies how to process the request.
 	Config *RecognitionConfig `json:"config,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audio") to
@@ -313,17 +309,12 @@ func (s *LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // LongRunningRecognizeResponse: The only message returned to the client
-// by the `LongRunningRecognize` method.
-// It contains the result as zero or more sequential
-// `SpeechRecognitionResult`
-// messages. It is included in the `result.response` field of the
-// `Operation`
-// returned by the `GetOperation` call of the
-// `google::longrunning::Operations`
-// service.
+// by the `LongRunningRecognize` method. It contains the result as zero
+// or more sequential `SpeechRecognitionResult` messages. It is included
+// in the `result.response` field of the `Operation` returned by the
+// `GetOperation` call of the `google::longrunning::Operations` service.
 type LongRunningRecognizeResponse struct {
-	// Results: Sequential list of transcription results corresponding
-	// to
+	// Results: Sequential list of transcription results corresponding to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
@@ -351,52 +342,38 @@ func (s *LongRunningRecognizeResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -427,31 +404,24 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // RecognitionAudio: Contains audio data in the encoding specified in
-// the `RecognitionConfig`.
-// Either `content` or `uri` must be supplied. Supplying both or
-// neither
-// returns google.rpc.Code.INVALID_ARGUMENT. See
-// [content
+// the `RecognitionConfig`. Either `content` or `uri` must be supplied.
+// Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
+// See [content
 // limits](https://cloud.google.com/speech-to-text/quotas#content).
 type RecognitionAudio struct {
-	// Content: The audio data bytes encoded as specified
-	// in
+	// Content: The audio data bytes encoded as specified in
 	// `RecognitionConfig`. Note: as with all bytes fields, proto buffers
-	// use a
-	// pure binary representation, whereas JSON representations use base64.
+	// use a pure binary representation, whereas JSON representations use
+	// base64.
 	Content string `json:"content,omitempty"`
 
 	// Uri: URI that points to a file that contains audio data bytes as
-	// specified in
-	// `RecognitionConfig`. The file must not be compressed (for example,
-	// gzip).
-	// Currently, only Google Cloud Storage URIs are
-	// supported, which must be specified in the following
-	// format:
-	// `gs://bucket_name/object_name` (other URI formats
-	// return
-	// google.rpc.Code.INVALID_ARGUMENT). For more information, see
-	// [Request URIs](https://cloud.google.com/storage/docs/reference-uris).
+	// specified in `RecognitionConfig`. The file must not be compressed
+	// (for example, gzip). Currently, only Google Cloud Storage URIs are
+	// supported, which must be specified in the following format:
+	// `gs://bucket_name/object_name` (other URI formats return
+	// google.rpc.Code.INVALID_ARGUMENT). For more information, see [Request
+	// URIs](https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -478,235 +448,151 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 }
 
 // RecognitionConfig: Provides information to the recognizer that
-// specifies how to process the
-// request.
+// specifies how to process the request.
 type RecognitionConfig struct {
-	// AudioChannelCount: The number of channels in the input audio
-	// data.
-	// ONLY set this for MULTI-CHANNEL recognition.
-	// Valid values for LINEAR16 and FLAC are `1`-`8`.
-	// Valid values for OGG_OPUS are '1'-'254'.
-	// Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only
-	// `1`.
-	// If `0` or omitted, defaults to one channel (mono).
-	// Note: We only recognize the first channel by default.
-	// To perform independent recognition on each channel
-	// set
+	// AudioChannelCount: The number of channels in the input audio data.
+	// ONLY set this for MULTI-CHANNEL recognition. Valid values for
+	// LINEAR16 and FLAC are `1`-`8`. Valid values for OGG_OPUS are
+	// '1'-'254'. Valid value for MULAW, AMR, AMR_WB and
+	// SPEEX_WITH_HEADER_BYTE is only `1`. If `0` or omitted, defaults to
+	// one channel (mono). Note: We only recognize the first channel by
+	// default. To perform independent recognition on each channel set
 	// `enable_separate_recognition_per_channel` to 'true'.
 	AudioChannelCount int64 `json:"audioChannelCount,omitempty"`
 
 	// DiarizationConfig: Config to enable speaker diarization and set
-	// additional
-	// parameters to make diarization better suited for your
-	// application.
-	// Note: When this is enabled, we send all the words from the beginning
-	// of the
-	// audio for the top alternative in every consecutive STREAMING
-	// responses.
-	// This is done in order to improve our speaker tags as our models learn
-	// to
-	// identify the speakers in the conversation over time.
-	// For non-streaming requests, the diarization results will be provided
-	// only
-	// in the top alternative of the FINAL SpeechRecognitionResult.
+	// additional parameters to make diarization better suited for your
+	// application. Note: When this is enabled, we send all the words from
+	// the beginning of the audio for the top alternative in every
+	// consecutive STREAMING responses. This is done in order to improve our
+	// speaker tags as our models learn to identify the speakers in the
+	// conversation over time. For non-streaming requests, the diarization
+	// results will be provided only in the top alternative of the FINAL
+	// SpeechRecognitionResult.
 	DiarizationConfig *SpeakerDiarizationConfig `json:"diarizationConfig,omitempty"`
 
 	// EnableAutomaticPunctuation: If 'true', adds punctuation to
-	// recognition result hypotheses.
-	// This feature is only available in select languages. Setting this
-	// for
-	// requests in other languages has no effect at all.
-	// The default 'false' value does not add punctuation to result
-	// hypotheses.
+	// recognition result hypotheses. This feature is only available in
+	// select languages. Setting this for requests in other languages has no
+	// effect at all. The default 'false' value does not add punctuation to
+	// result hypotheses.
 	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
 
 	// EnableSeparateRecognitionPerChannel: This needs to be set to `true`
-	// explicitly and `audio_channel_count` > 1
-	// to get each channel recognized separately. The recognition result
-	// will
-	// contain a `channel_tag` field to state which channel that result
-	// belongs
-	// to. If this is not true, we will only recognize the first channel.
-	// The
-	// request is billed cumulatively for all channels
-	// recognized:
+	// explicitly and `audio_channel_count` > 1 to get each channel
+	// recognized separately. The recognition result will contain a
+	// `channel_tag` field to state which channel that result belongs to. If
+	// this is not true, we will only recognize the first channel. The
+	// request is billed cumulatively for all channels recognized:
 	// `audio_channel_count` multiplied by the length of the audio.
 	EnableSeparateRecognitionPerChannel bool `json:"enableSeparateRecognitionPerChannel,omitempty"`
 
 	// EnableWordTimeOffsets: If `true`, the top result includes a list of
-	// words and
-	// the start and end time offsets (timestamps) for those words.
-	// If
-	// `false`, no word-level time offset information is returned. The
-	// default is
-	// `false`.
+	// words and the start and end time offsets (timestamps) for those
+	// words. If `false`, no word-level time offset information is returned.
+	// The default is `false`.
 	EnableWordTimeOffsets bool `json:"enableWordTimeOffsets,omitempty"`
 
 	// Encoding: Encoding of audio data sent in all `RecognitionAudio`
-	// messages.
-	// This field is optional for `FLAC` and `WAV` audio files and
-	// required
-	// for all other audio formats. For details, see AudioEncoding.
+	// messages. This field is optional for `FLAC` and `WAV` audio files and
+	// required for all other audio formats. For details, see AudioEncoding.
 	//
 	// Possible values:
 	//   "ENCODING_UNSPECIFIED" - Not specified.
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples
 	// (Linear PCM).
-	//   "FLAC" - `FLAC` (Free Lossless Audio
-	// Codec) is the recommended encoding because it is
-	// lossless--therefore recognition is not compromised--and
-	// requires only about half the bandwidth of `LINEAR16`. `FLAC`
-	// stream
-	// encoding supports 16-bit and 24-bit samples, however, not all fields
-	// in
-	// `STREAMINFO` are supported.
+	//   "FLAC" - `FLAC` (Free Lossless Audio Codec) is the recommended
+	// encoding because it is lossless--therefore recognition is not
+	// compromised--and requires only about half the bandwidth of
+	// `LINEAR16`. `FLAC` stream encoding supports 16-bit and 24-bit
+	// samples, however, not all fields in `STREAMINFO` are supported.
 	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
 	// G.711 PCMU/mu-law.
 	//   "AMR" - Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz`
 	// must be 8000.
 	//   "AMR_WB" - Adaptive Multi-Rate Wideband codec. `sample_rate_hertz`
 	// must be 16000.
-	//   "OGG_OPUS" - Opus encoded audio frames in Ogg
-	// container
-	// ([OggOpus](https://wiki.xiph.org/OggOpus)).
-	// `sample_rate_her
-	// tz` must be one of 8000, 12000, 16000, 24000, or 48000.
+	//   "OGG_OPUS" - Opus encoded audio frames in Ogg container
+	// ([OggOpus](https://wiki.xiph.org/OggOpus)). `sample_rate_hertz` must
+	// be one of 8000, 12000, 16000, 24000, or 48000.
 	//   "SPEEX_WITH_HEADER_BYTE" - Although the use of lossy encodings is
-	// not recommended, if a very low
-	// bitrate encoding is required, `OGG_OPUS` is highly preferred
-	// over
-	// Speex encoding. The [Speex](https://speex.org/)  encoding supported
-	// by
-	// Cloud Speech API has a header byte in each block, as in MIME
-	// type
-	// `audio/x-speex-with-header-byte`.
-	// It is a variant of the RTP Speex encoding defined in
-	// [RFC 5574](https://tools.ietf.org/html/rfc5574).
+	// not recommended, if a very low bitrate encoding is required,
+	// `OGG_OPUS` is highly preferred over Speex encoding. The
+	// [Speex](https://speex.org/) encoding supported by Cloud Speech API
+	// has a header byte in each block, as in MIME type
+	// `audio/x-speex-with-header-byte`. It is a variant of the RTP Speex
+	// encoding defined in [RFC 5574](https://tools.ietf.org/html/rfc5574).
 	// The stream is a sequence of blocks, one block per RTP packet. Each
-	// block
-	// starts with a byte containing the length of the block, in bytes,
-	// followed
-	// by one or more frames of Speex data, padded to an integral number
-	// of
-	// bytes (octets) as specified in RFC 5574. In other words, each RTP
-	// header
-	// is replaced with a single byte containing the block length. Only
-	// Speex
-	// wideband is supported. `sample_rate_hertz` must be 16000.
+	// block starts with a byte containing the length of the block, in
+	// bytes, followed by one or more frames of Speex data, padded to an
+	// integral number of bytes (octets) as specified in RFC 5574. In other
+	// words, each RTP header is replaced with a single byte containing the
+	// block length. Only Speex wideband is supported. `sample_rate_hertz`
+	// must be 16000.
 	Encoding string `json:"encoding,omitempty"`
 
-	// LanguageCode: Required. The language of the supplied audio as
-	// a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
-	// tag.
-	// Example: "en-US".
-	// See
-	// [Language
-	// Support](https://cloud.google.com/speech-to-text/docs/langua
-	// ges) for a list
-	// of the currently supported language codes.
+	// LanguageCode: Required. The language of the supplied audio as a
+	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+	// Example: "en-US". See [Language
+	// Support](https://cloud.google.com/speech-to-text/docs/languages) for
+	// a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: Maximum number of recognition hypotheses to be
-	// returned.
-	// Specifically, the maximum number of `SpeechRecognitionAlternative`
-	// messages
-	// within each `SpeechRecognitionResult`.
-	// The server may return fewer than `max_alternatives`.
-	// Valid values are `0`-`30`. A value of `0` or `1` will return a
-	// maximum of
-	// one. If omitted, will return a maximum of one.
+	// returned. Specifically, the maximum number of
+	// `SpeechRecognitionAlternative` messages within each
+	// `SpeechRecognitionResult`. The server may return fewer than
+	// `max_alternatives`. Valid values are `0`-`30`. A value of `0` or `1`
+	// will return a maximum of one. If omitted, will return a maximum of
+	// one.
 	MaxAlternatives int64 `json:"maxAlternatives,omitempty"`
 
 	// Metadata: Metadata regarding this request.
 	Metadata *RecognitionMetadata `json:"metadata,omitempty"`
 
-	// Model: Which model to select for the given request. Select the
-	// model
-	// best suited to your domain to get best results. If a model is
-	// not
+	// Model: Which model to select for the given request. Select the model
+	// best suited to your domain to get best results. If a model is not
 	// explicitly specified, then we auto-select a model based on the
-	// parameters
-	// in the RecognitionConfig.
-	// <table>
-	//   <tr>
-	//     <td><b>Model</b></td>
-	//     <td><b>Description</b></td>
-	//   </tr>
-	//   <tr>
-	//     <td><code>command_and_search</code></td>
-	//     <td>Best for short queries such as voice commands or voice
-	// search.</td>
-	//   </tr>
-	//   <tr>
-	//     <td><code>phone_call</code></td>
-	//     <td>Best for audio that originated from a phone call (typically
-	//     recorded at an 8khz sampling rate).</td>
-	//   </tr>
-	//   <tr>
-	//     <td><code>video</code></td>
-	//     <td>Best for audio that originated from from video or includes
-	// multiple
-	//         speakers. Ideally the audio is recorded at a 16khz or
-	// greater
-	//         sampling rate. This is a premium model that costs more than
-	// the
-	//         standard rate.</td>
-	//   </tr>
-	//   <tr>
-	//     <td><code>default</code></td>
-	//     <td>Best for audio that is not one of the specific audio models.
-	//         For example, long-form audio. Ideally the audio is
-	// high-fidelity,
-	//         recorded at a 16khz or greater sampling rate.</td>
-	//   </tr>
-	// </table>
+	// parameters in the RecognitionConfig. *Model* *Description*
+	// command_and_search Best for short queries such as voice commands or
+	// voice search. phone_call Best for audio that originated from a phone
+	// call (typically recorded at an 8khz sampling rate). video Best for
+	// audio that originated from from video or includes multiple speakers.
+	// Ideally the audio is recorded at a 16khz or greater sampling rate.
+	// This is a premium model that costs more than the standard rate.
+	// default Best for audio that is not one of the specific audio models.
+	// For example, long-form audio. Ideally the audio is high-fidelity,
+	// recorded at a 16khz or greater sampling rate.
 	Model string `json:"model,omitempty"`
 
 	// ProfanityFilter: If set to `true`, the server will attempt to filter
-	// out
-	// profanities, replacing all but the initial character in each filtered
-	// word
-	// with asterisks, e.g. "f***". If set to `false` or omitted,
-	// profanities
-	// won't be filtered out.
+	// out profanities, replacing all but the initial character in each
+	// filtered word with asterisks, e.g. "f***". If set to `false` or
+	// omitted, profanities won't be filtered out.
 	ProfanityFilter bool `json:"profanityFilter,omitempty"`
 
-	// SampleRateHertz: Sample rate in Hertz of the audio data sent in
-	// all
-	// `RecognitionAudio` messages. Valid values are: 8000-48000.
-	// 16000 is optimal. For best results, set the sampling rate of the
-	// audio
-	// source to 16000 Hz. If that's not possible, use the native sample
-	// rate of
-	// the audio source (instead of re-sampling).
-	// This field is optional for FLAC and WAV audio files, but is
-	// required for all other audio formats. For details, see AudioEncoding.
+	// SampleRateHertz: Sample rate in Hertz of the audio data sent in all
+	// `RecognitionAudio` messages. Valid values are: 8000-48000. 16000 is
+	// optimal. For best results, set the sampling rate of the audio source
+	// to 16000 Hz. If that's not possible, use the native sample rate of
+	// the audio source (instead of re-sampling). This field is optional for
+	// FLAC and WAV audio files, but is required for all other audio
+	// formats. For details, see AudioEncoding.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
-	// SpeechContexts: Array of SpeechContext.
-	// A means to provide context to assist the speech recognition. For
-	// more
-	// information,
-	// see
-	// [speech
-	// adaptation](https://cloud.google.com/speech-to-text/docs/c
-	// ontext-strength).
+	// SpeechContexts: Array of SpeechContext. A means to provide context to
+	// assist the speech recognition. For more information, see [speech
+	// adaptation](https://cloud.google.com/speech-to-text/docs/context-stren
+	// gth).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
-	// recognition.
-	// If `use_enhanced` is set to true and the `model` field is not set,
-	// then
-	// an appropriate enhanced model is chosen if an enhanced model exists
-	// for
-	// the audio.
-	//
-	// If `use_enhanced` is true and an enhanced version of the specified
-	// model
-	// does not exist, then the speech is recognized using the standard
-	// version
-	// of the specified model.
+	// recognition. If `use_enhanced` is set to true and the `model` field
+	// is not set, then an appropriate enhanced model is chosen if an
+	// enhanced model exists for the audio. If `use_enhanced` is true and an
+	// enhanced version of the specified model does not exist, then the
+	// speech is recognized using the standard version of the specified
+	// model.
 	UseEnhanced bool `json:"useEnhanced,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AudioChannelCount")
@@ -736,16 +622,13 @@ func (s *RecognitionConfig) MarshalJSON() ([]byte, error) {
 // RecognitionMetadata: Description of audio data to be recognized.
 type RecognitionMetadata struct {
 	// AudioTopic: Description of the content. Eg. "Recordings of federal
-	// supreme court
-	// hearings from 2012".
+	// supreme court hearings from 2012".
 	AudioTopic string `json:"audioTopic,omitempty"`
 
 	// IndustryNaicsCodeOfAudio: The industry vertical to which this speech
-	// recognition request most
-	// closely applies. This is most indicative of the topics contained
-	// in the audio.  Use the 6-digit NAICS code to identify the
-	// industry
-	// vertical - see https://www.naics.com/search/.
+	// recognition request most closely applies. This is most indicative of
+	// the topics contained in the audio. Use the 6-digit NAICS code to
+	// identify the industry vertical - see https://www.naics.com/search/.
 	IndustryNaicsCodeOfAudio int64 `json:"industryNaicsCodeOfAudio,omitempty"`
 
 	// InteractionType: The use case most closely describing the audio
@@ -753,20 +636,16 @@ type RecognitionMetadata struct {
 	//
 	// Possible values:
 	//   "INTERACTION_TYPE_UNSPECIFIED" - Use case is either unknown or is
-	// something other than one of the other
-	// values below.
+	// something other than one of the other values below.
 	//   "DISCUSSION" - Multiple people in a conversation or discussion. For
-	// example in a
-	// meeting with two or more people actively participating. Typically
-	// all the primary people speaking would be in the same room (if
-	// not,
-	// see PHONE_CALL)
+	// example in a meeting with two or more people actively participating.
+	// Typically all the primary people speaking would be in the same room
+	// (if not, see PHONE_CALL)
 	//   "PRESENTATION" - One or more persons lecturing or presenting to
-	// others, mostly
-	// uninterrupted.
+	// others, mostly uninterrupted.
 	//   "PHONE_CALL" - A phone-call or video-conference in which two or
-	// more people, who are
-	// not in the same room, are actively participating.
+	// more people, who are not in the same room, are actively
+	// participating.
 	//   "VOICEMAIL" - A recorded message intended for another person to
 	// listen to.
 	//   "PROFESSIONALLY_PRODUCED" - Professionally produced audio (eg. TV
@@ -775,8 +654,7 @@ type RecognitionMetadata struct {
 	//   "VOICE_COMMAND" - Transcribe voice commands, such as for
 	// controlling a device.
 	//   "DICTATION" - Transcribe speech to text to create a written
-	// document, such as a
-	// text-message, email or report.
+	// document, such as a text-message, email or report.
 	InteractionType string `json:"interactionType,omitempty"`
 
 	// MicrophoneDistance: The audio type that most closely describes the
@@ -785,10 +663,8 @@ type RecognitionMetadata struct {
 	// Possible values:
 	//   "MICROPHONE_DISTANCE_UNSPECIFIED" - Audio type is not known.
 	//   "NEARFIELD" - The audio was captured from a closely placed
-	// microphone. Eg. phone,
-	// dictaphone, or handheld microphone. Generally if there speaker is
-	// within
-	// 1 meter of the microphone.
+	// microphone. Eg. phone, dictaphone, or handheld microphone. Generally
+	// if there speaker is within 1 meter of the microphone.
 	//   "MIDFIELD" - The speaker if within 3 meters of the microphone.
 	//   "FARFIELD" - The speaker is more than 3 meters away from the
 	// microphone.
@@ -802,17 +678,14 @@ type RecognitionMetadata struct {
 	//   "VIDEO" - The speech data originally recorded on a video.
 	OriginalMediaType string `json:"originalMediaType,omitempty"`
 
-	// OriginalMimeType: Mime type of the original audio file.  For example
-	// `audio/m4a`,
-	// `audio/x-alaw-basic`, `audio/mp3`, `audio/3gpp`.
-	// A list of possible audio mime types is maintained
-	// at
+	// OriginalMimeType: Mime type of the original audio file. For example
+	// `audio/m4a`, `audio/x-alaw-basic`, `audio/mp3`, `audio/3gpp`. A list
+	// of possible audio mime types is maintained at
 	// http://www.iana.org/assignments/media-types/media-types.xhtml#audio
 	OriginalMimeType string `json:"originalMimeType,omitempty"`
 
-	// RecordingDeviceName: The device used to make the recording.  Examples
-	// 'Nexus 5X' or
-	// 'Polycom SoundStation IP 6000' or 'POTS' or 'VoIP' or
+	// RecordingDeviceName: The device used to make the recording. Examples
+	// 'Nexus 5X' or 'Polycom SoundStation IP 6000' or 'POTS' or 'VoIP' or
 	// 'Cardioid Microphone'.
 	RecordingDeviceName string `json:"recordingDeviceName,omitempty"`
 
@@ -859,8 +732,7 @@ type RecognizeRequest struct {
 	Audio *RecognitionAudio `json:"audio,omitempty"`
 
 	// Config: Required. Provides information to the recognizer that
-	// specifies how to
-	// process the request.
+	// specifies how to process the request.
 	Config *RecognitionConfig `json:"config,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audio") to
@@ -887,13 +759,10 @@ func (s *RecognizeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RecognizeResponse: The only message returned to the client by the
-// `Recognize` method. It
-// contains the result as zero or more sequential
-// `SpeechRecognitionResult`
-// messages.
+// `Recognize` method. It contains the result as zero or more sequential
+// `SpeechRecognitionResult` messages.
 type RecognizeResponse struct {
-	// Results: Sequential list of transcription results corresponding
-	// to
+	// Results: Sequential list of transcription results corresponding to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
@@ -927,24 +796,20 @@ func (s *RecognizeResponse) MarshalJSON() ([]byte, error) {
 // SpeakerDiarizationConfig: Config to enable speaker diarization.
 type SpeakerDiarizationConfig struct {
 	// EnableSpeakerDiarization: If 'true', enables speaker detection for
-	// each recognized word in
-	// the top alternative of the recognition result using a speaker_tag
-	// provided
-	// in the WordInfo.
+	// each recognized word in the top alternative of the recognition result
+	// using a speaker_tag provided in the WordInfo.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
 	// MaxSpeakerCount: Maximum number of speakers in the conversation. This
-	// range gives you more
-	// flexibility by allowing the system to automatically determine the
-	// correct
-	// number of speakers. If not set, the default value is 6.
+	// range gives you more flexibility by allowing the system to
+	// automatically determine the correct number of speakers. If not set,
+	// the default value is 6.
 	MaxSpeakerCount int64 `json:"maxSpeakerCount,omitempty"`
 
 	// MinSpeakerCount: Minimum number of speakers in the conversation. This
-	// range gives you more
-	// flexibility by allowing the system to automatically determine the
-	// correct
-	// number of speakers. If not set, the default value is 2.
+	// range gives you more flexibility by allowing the system to
+	// automatically determine the correct number of speakers. If not set,
+	// the default value is 2.
 	MinSpeakerCount int64 `json:"minSpeakerCount,omitempty"`
 
 	// SpeakerTag: Output only. Unused.
@@ -976,32 +841,20 @@ func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 }
 
 // SpeechContext: Provides "hints" to the speech recognizer to favor
-// specific words and phrases
-// in the results.
+// specific words and phrases in the results.
 type SpeechContext struct {
 	// Phrases: A list of strings containing words and phrases "hints" so
-	// that
-	// the speech recognition is more likely to recognize them. This can be
-	// used
-	// to improve the accuracy for specific words and phrases, for example,
-	// if
-	// specific commands are typically spoken by the user. This can also be
-	// used
-	// to add additional words to the vocabulary of the recognizer.
-	// See
-	// [usage
-	// limits](https://cloud.google.com/speech-to-text/quotas#content).
-	//
-	// List
-	//  items can also be set to classes for groups of words that
-	// represent
+	// that the speech recognition is more likely to recognize them. This
+	// can be used to improve the accuracy for specific words and phrases,
+	// for example, if specific commands are typically spoken by the user.
+	// This can also be used to add additional words to the vocabulary of
+	// the recognizer. See [usage
+	// limits](https://cloud.google.com/speech-to-text/quotas#content). List
+	// items can also be set to classes for groups of words that represent
 	// common concepts that occur in natural language. For example, rather
-	// than
-	// providing phrase hints for every month of the year, using the $MONTH
-	// class
-	// improves the likelihood of correctly transcribing audio that
-	// includes
-	// months.
+	// than providing phrase hints for every month of the year, using the
+	// $MONTH class improves the likelihood of correctly transcribing audio
+	// that includes months.
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to
@@ -1031,28 +884,21 @@ func (s *SpeechContext) MarshalJSON() ([]byte, error) {
 // list).
 type SpeechRecognitionAlternative struct {
 	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
-	// number
-	// indicates an estimated greater likelihood that the recognized words
-	// are
-	// correct. This field is set only for the top alternative of a
-	// non-streaming
-	// result or, of a streaming result where `is_final=true`.
-	// This field is not guaranteed to be accurate and users should not rely
-	// on it
-	// to be always provided.
-	// The default of 0.0 is a sentinel value indicating `confidence` was
-	// not set.
+	// number indicates an estimated greater likelihood that the recognized
+	// words are correct. This field is set only for the top alternative of
+	// a non-streaming result or, of a streaming result where
+	// `is_final=true`. This field is not guaranteed to be accurate and
+	// users should not rely on it to be always provided. The default of 0.0
+	// is a sentinel value indicating `confidence` was not set.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Transcript: Transcript text representing the words that the user
 	// spoke.
 	Transcript string `json:"transcript,omitempty"`
 
-	// Words: A list of word-specific information for each recognized
-	// word.
+	// Words: A list of word-specific information for each recognized word.
 	// Note: When `enable_speaker_diarization` is true, you will see all the
-	// words
-	// from the beginning of the audio.
+	// words from the beginning of the audio.
 	Words []*WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -1096,18 +942,15 @@ func (s *SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
 // a portion of the audio.
 type SpeechRecognitionResult struct {
 	// Alternatives: May contain one or more recognition hypotheses (up to
-	// the
-	// maximum specified in `max_alternatives`).
-	// These alternatives are ordered in terms of accuracy, with the top
-	// (first)
-	// alternative being the most probable, as ranked by the recognizer.
+	// the maximum specified in `max_alternatives`). These alternatives are
+	// ordered in terms of accuracy, with the top (first) alternative being
+	// the most probable, as ranked by the recognizer.
 	Alternatives []*SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
 	// ChannelTag: For multi-channel audio, this is the channel number
-	// corresponding to the
-	// recognized result for the audio from that channel.
-	// For audio_channel_count = N, its output values can range from '1' to
-	// 'N'.
+	// corresponding to the recognized result for the audio from that
+	// channel. For audio_channel_count = N, its output values can range
+	// from '1' to 'N'.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -1134,32 +977,24 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1187,33 +1022,25 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
-	// EndTime: Time offset relative to the beginning of the audio,
-	// and corresponding to the end of the spoken word.
-	// This field is only set if `enable_word_time_offsets=true` and only
-	// in the top hypothesis.
+	// EndTime: Time offset relative to the beginning of the audio, and
+	// corresponding to the end of the spoken word. This field is only set
+	// if `enable_word_time_offsets=true` and only in the top hypothesis.
 	// This is an experimental feature and the accuracy of the time offset
-	// can
-	// vary.
+	// can vary.
 	EndTime string `json:"endTime,omitempty"`
 
 	// SpeakerTag: Output only. A distinct integer value is assigned for
-	// every speaker within
-	// the audio. This field specifies which one of those speakers was
-	// detected to
-	// have spoken this word. Value ranges from '1' to
-	// diarization_speaker_count.
-	// speaker_tag is set if enable_speaker_diarization = 'true' and only in
-	// the
-	// top alternative.
+	// every speaker within the audio. This field specifies which one of
+	// those speakers was detected to have spoken this word. Value ranges
+	// from '1' to diarization_speaker_count. speaker_tag is set if
+	// enable_speaker_diarization = 'true' and only in the top alternative.
 	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
-	// StartTime: Time offset relative to the beginning of the audio,
-	// and corresponding to the start of the spoken word.
-	// This field is only set if `enable_word_time_offsets=true` and only
-	// in the top hypothesis.
+	// StartTime: Time offset relative to the beginning of the audio, and
+	// corresponding to the start of the spoken word. This field is only set
+	// if `enable_word_time_offsets=true` and only in the top hypothesis.
 	// This is an experimental feature and the accuracy of the time offset
-	// can
-	// vary.
+	// can vary.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Word: The word corresponding to this set of information.
@@ -1253,11 +1080,9 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1301,7 +1126,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1363,7 +1188,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "speech.operations.get",
@@ -1401,22 +1226,15 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *OperationsService) List() *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1487,7 +1305,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1546,7 +1364,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "speech.operations.list",
@@ -1617,11 +1435,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1665,7 +1481,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1727,7 +1543,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "speech.projects.locations.operations.get",
@@ -1766,22 +1582,15 @@ type ProjectsLocationsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. If the
-// server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding allows API services to override the
-// binding
-// to use different resource name schemes, such as `users/*/operations`.
-// To
-// override the binding, API services can add a binding such
-// as
-// "/v1/{name=users/*}/operations" to their service configuration.
-// For backwards compatibility, the default name includes the
-// operations
-// collection id, however overriding users must ensure the name
-// binding
-// is the parent resource, without the operations collection id.
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1846,7 +1655,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1908,7 +1717,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "speech.projects.locations.operations.list",
@@ -1983,15 +1792,12 @@ type SpeechLongrunningrecognizeCall struct {
 }
 
 // Longrunningrecognize: Performs asynchronous speech recognition:
-// receive results via the
-// google.longrunning.Operations interface. Returns either
-// an
-// `Operation.error` or an `Operation.response` which contains
-// a `LongRunningRecognizeResponse` message.
-// For more information on asynchronous speech recognition, see
-// the
-// [how-to](https://cloud.google.com/speech-to-text/docs/async-recogn
-// ize).
+// receive results via the google.longrunning.Operations interface.
+// Returns either an `Operation.error` or an `Operation.response` which
+// contains a `LongRunningRecognizeResponse` message. For more
+// information on asynchronous speech recognition, see the
+// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize)
+// .
 func (r *SpeechService) Longrunningrecognize(longrunningrecognizerequest *LongRunningRecognizeRequest) *SpeechLongrunningrecognizeCall {
 	c := &SpeechLongrunningrecognizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.longrunningrecognizerequest = longrunningrecognizerequest
@@ -2025,7 +1831,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2086,7 +1892,7 @@ func (c *SpeechLongrunningrecognizeCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `LongRunningRecognizeResponse` message.\nFor more information on asynchronous speech recognition, see the\n[how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).",
+	//   "description": "Performs asynchronous speech recognition: receive results via the google.longrunning.Operations interface. Returns either an `Operation.error` or an `Operation.response` which contains a `LongRunningRecognizeResponse` message. For more information on asynchronous speech recognition, see the [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).",
 	//   "flatPath": "v1/speech:longrunningrecognize",
 	//   "httpMethod": "POST",
 	//   "id": "speech.speech.longrunningrecognize",
@@ -2117,8 +1923,7 @@ type SpeechRecognizeCall struct {
 }
 
 // Recognize: Performs synchronous speech recognition: receive results
-// after all audio
-// has been sent and processed.
+// after all audio has been sent and processed.
 func (r *SpeechService) Recognize(recognizerequest *RecognizeRequest) *SpeechRecognizeCall {
 	c := &SpeechRecognizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.recognizerequest = recognizerequest
@@ -2152,7 +1957,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2213,7 +2018,7 @@ func (c *SpeechRecognizeCall) Do(opts ...googleapi.CallOption) (*RecognizeRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs synchronous speech recognition: receive results after all audio\nhas been sent and processed.",
+	//   "description": "Performs synchronous speech recognition: receive results after all audio has been sent and processed.",
 	//   "flatPath": "v1/speech:recognize",
 	//   "httpMethod": "POST",
 	//   "id": "speech.speech.recognize",

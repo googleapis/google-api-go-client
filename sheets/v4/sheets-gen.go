@@ -351,6 +351,70 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AddDataSourceRequest: Adds a data source. After the data source is
+// added successfully, an associated DataSource sheet is created and an
+// execution is triggered to refresh the sheet to read data from the
+// data source. The request requires an additional bigquery.readonly
+// OAuth scope.
+type AddDataSourceRequest struct {
+	// DataSource: The data source to add.
+	DataSource *DataSource `json:"dataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddDataSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDataSourceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddDataSourceResponse: The result of adding a data source.
+type AddDataSourceResponse struct {
+	// DataExecutionStatus: The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSource: The data source that was created.
+	DataSource *DataSource `json:"dataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataExecutionStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataExecutionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddDataSourceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDataSourceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AddDimensionGroupRequest: Creates a group over the specified range.
 // If the requested range is a superset of the range of an existing
 // group G, then the depth of G is incremented and this new group G' has
@@ -884,23 +948,29 @@ func (s *AutoFillRequest) MarshalJSON() ([]byte, error) {
 // AutoResizeDimensionsRequest: Automatically resizes one or more
 // dimensions based on the contents of the cells in that dimension.
 type AutoResizeDimensionsRequest struct {
+	// DataSourceSheetDimensions: The dimensions on a data source sheet to
+	// automatically resize.
+	DataSourceSheetDimensions *DataSourceSheetDimensionRange `json:"dataSourceSheetDimensions,omitempty"`
+
 	// Dimensions: The dimensions to automatically resize.
 	Dimensions *DimensionRange `json:"dimensions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataSourceSheetDimensions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DataSourceSheetDimensions") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1382,6 +1452,11 @@ type BasicFilter struct {
 	// map's key is the column index, and the value is the criteria for that
 	// column.
 	Criteria map[string]FilterCriteria `json:"criteria,omitempty"`
+
+	// FilterSpecs: The filter criteria per column. Both criteria and
+	// filter_specs are populated in responses. If both fields are specified
+	// in an update request, this field takes precedence.
+	FilterSpecs []*FilterSpec `json:"filterSpecs,omitempty"`
 
 	// Range: The range the filter covers.
 	Range *GridRange `json:"range,omitempty"`
@@ -2076,6 +2151,106 @@ func (s *BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryDataSourceSpec: The specification of a BigQuery data source.
+type BigQueryDataSourceSpec struct {
+	// ProjectId: The ID of a BigQuery enabled GCP project with a billing
+	// account attached. For any queries executed against the data source,
+	// the project is charged.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// QuerySpec: A BigQueryQuerySpec.
+	QuerySpec *BigQueryQuerySpec `json:"querySpec,omitempty"`
+
+	// TableSpec: A BigQueryTableSpec.
+	TableSpec *BigQueryTableSpec `json:"tableSpec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryDataSourceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDataSourceSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryQuerySpec: Specifies a custom BigQuery query.
+type BigQueryQuerySpec struct {
+	// RawQuery: The raw query string.
+	RawQuery string `json:"rawQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RawQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RawQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryQuerySpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryTableSpec: Specifies a BigQuery table definition. Only native
+// tables is allowed.
+type BigQueryTableSpec struct {
+	// DatasetId: The BigQuery dataset id.
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// TableId: The BigQuery table id.
+	TableId string `json:"tableId,omitempty"`
+
+	// TableProjectId: The ID of a BigQuery project the table belongs to. If
+	// not specified, the project_id is assumed.
+	TableProjectId string `json:"tableProjectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryTableSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryTableSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BooleanCondition: A condition that can evaluate to true or false.
 // BooleanConditions are used by conditional formatting, data
 // validation, and the criteria in filters.
@@ -2178,6 +2353,12 @@ type BooleanCondition struct {
 	// second value. For example, ["Yes","No"] indicates that the cell will
 	// render a checked box when it has the value "Yes" and an unchecked box
 	// when it has the value "No".
+	//   "TEXT_NOT_EQ" - The cell's value must be exactly not the
+	// condition's value. Supported by filters on data source objects.
+	// Requires at least one ConditionValue.
+	//   "DATE_NOT_EQ" - The cell's value must be exactly not the
+	// condition's value. Supported by filters on data source objects.
+	// Requires at least one ConditionValue.
 	Type string `json:"type,omitempty"`
 
 	// Values: The values of the condition. The number of supported values
@@ -2574,6 +2755,20 @@ func (s *CandlestickSeries) MarshalJSON() ([]byte, error) {
 
 // CellData: Data about a specific cell.
 type CellData struct {
+	// DataSourceFormula: Output only. Information about a data source
+	// formula on the cell. The field is set if user_entered_value is a
+	// formula referencing some [SheetType.DATA_SOURCE] sheet, e.g
+	// `=SUM(DataSheet!Column)`.
+	DataSourceFormula *DataSourceFormula `json:"dataSourceFormula,omitempty"`
+
+	// DataSourceTable: A data source table anchored at this cell. The size
+	// of data source table itself is computed dynamically based on its
+	// configuration. Only the first cell of the data source table contains
+	// the data source table definition. The other cells will contain the
+	// display values of the data source table result in their
+	// effective_value fields.
+	DataSourceTable *DataSourceTable `json:"dataSourceTable,omitempty"`
+
 	// DataValidation: A data validation rule on the cell, if any. When
 	// writing, the new data validation rule will overwrite any prior rule.
 	DataValidation *DataValidationRule `json:"dataValidation,omitempty"`
@@ -2629,15 +2824,15 @@ type CellData struct {
 	// represented as doubles in serial number format.
 	UserEnteredValue *ExtendedValue `json:"userEnteredValue,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataValidation") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DataSourceFormula")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataValidation") to
+	// NullFields is a list of field names (e.g. "DataSourceFormula") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2874,10 +3069,31 @@ func (s *ChartCustomNumberFormatOptions) MarshalJSON() ([]byte, error) {
 
 // ChartData: The data included in a domain or series.
 type ChartData struct {
+	// AggregateType: The aggregation type for the series of a data source
+	// chart. Not supported for regular charts.
+	//
+	// Possible values:
+	//   "CHART_AGGREGATE_TYPE_UNSPECIFIED" - Default value, do not use.
+	//   "AVERAGE" - Average aggregate function.
+	//   "COUNT" - Count aggregate function.
+	//   "MAX" - Maximum aggregate function.
+	//   "MEDIAN" - Median aggregate function.
+	//   "MIN" - Minimum aggregate function.
+	//   "SUM" - Sum aggregate function.
+	AggregateType string `json:"aggregateType,omitempty"`
+
+	// ColumnReference: The reference to the data source column that the
+	// data reads from.
+	ColumnReference *DataSourceColumnReference `json:"columnReference,omitempty"`
+
+	// GroupRule: The rule to group the data by if the ChartData backs the
+	// domain of a data source chart. Not supported for regular charts.
+	GroupRule *ChartGroupRule `json:"groupRule,omitempty"`
+
 	// SourceRange: The source ranges of the data.
 	SourceRange *ChartSourceRange `json:"sourceRange,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SourceRange") to
+	// ForceSendFields is a list of field names (e.g. "AggregateType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2885,7 +3101,7 @@ type ChartData struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SourceRange") to include
+	// NullFields is a list of field names (e.g. "AggregateType") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2898,6 +3114,162 @@ func (s *ChartData) MarshalJSON() ([]byte, error) {
 	type NoMethod ChartData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChartDateTimeRule: Allows you to organize the date-time values in a
+// source data column into buckets based on selected parts of their date
+// or time values.
+type ChartDateTimeRule struct {
+	// Type: The type of date-time grouping to apply.
+	//
+	// Possible values:
+	//   "CHART_DATE_TIME_RULE_TYPE_UNSPECIFIED" - The default type, do not
+	// use.
+	//   "SECOND" - Group dates by second, from 0 to 59.
+	//   "MINUTE" - Group dates by minute, from 0 to 59.
+	//   "HOUR" - Group dates by hour using a 24-hour system, from 0 to 23.
+	//   "HOUR_MINUTE" - Group dates by hour and minute using a 24-hour
+	// system, for example 19:45.
+	//   "HOUR_MINUTE_AMPM" - Group dates by hour and minute using a 12-hour
+	// system, for example 7:45 PM. The AM/PM designation is translated
+	// based on the spreadsheet locale.
+	//   "DAY_OF_WEEK" - Group dates by day of week, for example Sunday. The
+	// days of the week will be translated based on the spreadsheet locale.
+	//   "DAY_OF_YEAR" - Group dates by day of year, from 1 to 366. Note
+	// that dates after Feb. 29 fall in different buckets in leap years than
+	// in non-leap years.
+	//   "DAY_OF_MONTH" - Group dates by day of month, from 1 to 31.
+	//   "DAY_MONTH" - Group dates by day and month, for example 22-Nov. The
+	// month is translated based on the spreadsheet locale.
+	//   "MONTH" - Group dates by month, for example Nov. The month is
+	// translated based on the spreadsheet locale.
+	//   "QUARTER" - Group dates by quarter, for example Q1 (which
+	// represents Jan-Mar).
+	//   "YEAR" - Group dates by year, for example 2008.
+	//   "YEAR_MONTH" - Group dates by year and month, for example 2008-Nov.
+	// The month is translated based on the spreadsheet locale.
+	//   "YEAR_QUARTER" - Group dates by year and quarter, for example 2008
+	// Q4.
+	//   "YEAR_MONTH_DAY" - Group dates by year, month, and day, for example
+	// 2008-11-22.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChartDateTimeRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ChartDateTimeRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChartGroupRule: An optional setting on the ChartData of the domain of
+// a data source chart that defines buckets for the values in the domain
+// rather than breaking out each individual value. For example, when
+// plotting a data source chart, you can specify a histogram rule on the
+// domain (it should only contain numeric values), grouping its values
+// into buckets. Any values of a chart series that fall into the same
+// bucket are aggregated based on the aggregate_type.
+type ChartGroupRule struct {
+	// DateTimeRule: A ChartDateTimeRule.
+	DateTimeRule *ChartDateTimeRule `json:"dateTimeRule,omitempty"`
+
+	// HistogramRule: A ChartHistogramRule
+	HistogramRule *ChartHistogramRule `json:"histogramRule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateTimeRule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateTimeRule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChartGroupRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ChartGroupRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChartHistogramRule: Allows you to organize numeric values in a source
+// data column into buckets of constant size.
+type ChartHistogramRule struct {
+	// IntervalSize: The size of the buckets that are created. Must be
+	// positive.
+	IntervalSize float64 `json:"intervalSize,omitempty"`
+
+	// MaxValue: The maximum value at which items are placed into buckets.
+	// Values greater than the maximum are grouped into a single bucket. If
+	// omitted, it is determined by the maximum item value.
+	MaxValue float64 `json:"maxValue,omitempty"`
+
+	// MinValue: The minimum value at which items are placed into buckets.
+	// Values that are less than the minimum are grouped into a single
+	// bucket. If omitted, it is determined by the minimum item value.
+	MinValue float64 `json:"minValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IntervalSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntervalSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChartHistogramRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ChartHistogramRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ChartHistogramRule) UnmarshalJSON(data []byte) error {
+	type NoMethod ChartHistogramRule
+	var s1 struct {
+		IntervalSize gensupport.JSONFloat64 `json:"intervalSize"`
+		MaxValue     gensupport.JSONFloat64 `json:"maxValue"`
+		MinValue     gensupport.JSONFloat64 `json:"minValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.IntervalSize = float64(s1.IntervalSize)
+	s.MaxValue = float64(s1.MaxValue)
+	s.MinValue = float64(s1.MinValue)
+	return nil
 }
 
 // ChartSourceRange: Source ranges for a chart.
@@ -2961,6 +3333,14 @@ type ChartSpec struct {
 	// CandlestickChart: A candlestick chart specification.
 	CandlestickChart *CandlestickChartSpec `json:"candlestickChart,omitempty"`
 
+	// DataSourceChartProperties: If present, the field contains data source
+	// chart specific properties.
+	DataSourceChartProperties *DataSourceChartProperties `json:"dataSourceChartProperties,omitempty"`
+
+	// FilterSpecs: The filters applied to the source data of the chart.
+	// Only supported for data source charts.
+	FilterSpecs []*FilterSpec `json:"filterSpecs,omitempty"`
+
 	// FontName: The name of the font to use by default for all chart text
 	// (e.g. title, axis labels, legend). If a font is specified for a
 	// specific part of the chart it will override this font name.
@@ -2995,6 +3375,10 @@ type ChartSpec struct {
 
 	// ScorecardChart: A scorecard chart specification.
 	ScorecardChart *ScorecardChartSpec `json:"scorecardChart,omitempty"`
+
+	// SortSpecs: The order to sort the chart data by. Only a single sort
+	// spec is supported. Only supported for data source charts.
+	SortSpecs []*SortSpec `json:"sortSpecs,omitempty"`
 
 	// Subtitle: The subtitle of the chart.
 	Subtitle string `json:"subtitle,omitempty"`
@@ -3561,6 +3945,85 @@ func (s *CutPasteRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataExecutionStatus: The data execution status.
+type DataExecutionStatus struct {
+	// ErrorCode: The error code.
+	//
+	// Possible values:
+	//   "DATA_EXECUTION_ERROR_CODE_UNSPECIFIED" - Default value, do not
+	// use.
+	//   "TIMED_OUT" - The data execution timed out.
+	//   "TOO_MANY_ROWS" - The data execution returns more rows than the
+	// limit.
+	//   "TOO_MANY_CELLS" - The data execution returns more cells than the
+	// limit.
+	//   "ENGINE" - Error is received from the backend data execution engine
+	// (e.g. BigQuery). Check error_message for details.
+	//   "PARAMETER_INVALID" - One or some of the provided data source
+	// parameters are invalid.
+	//   "UNSUPPORTED_DATA_TYPE" - The data execution returns an unsupported
+	// data type.
+	//   "DUPLICATE_COLUMN_NAMES" - The data execution returns duplicate
+	// column names or aliases.
+	//   "INTERRUPTED" - The data execution is interrupted. Please refresh
+	// later.
+	//   "CONCURRENT_QUERY" - The data execution is currently in progress,
+	// can not be refreshed until it completes.
+	//   "OTHER" - Other errors.
+	//   "TOO_MANY_CHARS_PER_CELL" - The data execution returns values that
+	// exceed the maximum characters allowed in a single cell.
+	//   "DATA_NOT_FOUND" - The database referenced by the data source is
+	// not found. */
+	//   "PERMISSION_DENIED" - The user does not have access to the database
+	// referenced by the data source.
+	//   "MISSING_COLUMN_ALIAS" - The data execution returns columns with
+	// missing aliases.
+	//   "OBJECT_NOT_FOUND" - The data source object does not exist.
+	//   "OBJECT_IN_ERROR_STATE" - The data source object is currently in
+	// error state. To force refresh, set force in RefreshDataSourceRequest.
+	//   "OBJECT_SPEC_INVALID" - The data source object specification is
+	// invalid.
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// ErrorMessage: The error message, which may be empty.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// LastRefreshTime: Gets the time the data last successfully refreshed.
+	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
+
+	// State: The state of the data execution.
+	//
+	// Possible values:
+	//   "DATA_EXECUTION_STATE_UNSPECIFIED" - Default value, do not use.
+	//   "NOT_STARTED" - The data execution has not started.
+	//   "RUNNING" - The data execution has started and is running.
+	//   "SUCCEEDED" - The data execution has completed successfully.
+	//   "FAILED" - The data execution has completed with errors.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataExecutionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod DataExecutionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DataFilter: Filter that describes what data should be selected or
 // returned from a request.
 type DataFilter struct {
@@ -3640,6 +4103,617 @@ type DataFilterValueRange struct {
 
 func (s *DataFilterValueRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DataFilterValueRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSource: Information about an external data source in the
+// spreadsheet.
+type DataSource struct {
+	// CalculatedColumns: All calculated columns in the data source.
+	CalculatedColumns []*DataSourceColumn `json:"calculatedColumns,omitempty"`
+
+	// DataSourceId: The spreadsheet-scoped unique ID that identifies the
+	// data source.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// SheetId: The ID of the Sheet connected with the data source. The
+	// field cannot be changed once set. When creating a data source, an
+	// associated SheetType.DATA_SOURCE sheet is also created, if the field
+	// is not specified, the ID of the created sheet will be randomly
+	// generated.
+	SheetId int64 `json:"sheetId,omitempty"`
+
+	// Spec: The DataSourceSpec.
+	Spec *DataSourceSpec `json:"spec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CalculatedColumns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CalculatedColumns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSource) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceChartProperties: Properties of a data source chart.
+type DataSourceChartProperties struct {
+	// DataExecutionStatus: Output only. The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSourceId: ID of the data source that the chart is associated
+	// with.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataExecutionStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataExecutionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceChartProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceChartProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceColumn: A data source column.
+type DataSourceColumn struct {
+	// Formula: The formula of the calculated column.
+	Formula string `json:"formula,omitempty"`
+
+	// Reference: The column reference.
+	Reference *DataSourceColumnReference `json:"reference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Formula") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Formula") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceColumnReference: An unique identifier that references to a
+// data source column.
+type DataSourceColumnReference struct {
+	// Name: The display name of the column. It should be unique within a
+	// data source.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceColumnReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceColumnReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceFormula: A data source formula.
+type DataSourceFormula struct {
+	// DataExecutionStatus: Output only. The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSourceId: The ID of the data source the formula is associated
+	// with.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataExecutionStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataExecutionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceFormula) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceFormula
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceObjectReference: Reference to a data source object.
+type DataSourceObjectReference struct {
+	// ChartId: References to a DataSourceChart.
+	ChartId int64 `json:"chartId,omitempty"`
+
+	// DataSourceFormulaCell: References to a cell containing
+	// DataSourceFormula.
+	DataSourceFormulaCell *GridCoordinate `json:"dataSourceFormulaCell,omitempty"`
+
+	// DataSourcePivotTableAnchorCell: References to a data source
+	// PivotTable anchored at the cell.
+	DataSourcePivotTableAnchorCell *GridCoordinate `json:"dataSourcePivotTableAnchorCell,omitempty"`
+
+	// DataSourceTableAnchorCell: References to a DataSourceTable anchored
+	// at the cell.
+	DataSourceTableAnchorCell *GridCoordinate `json:"dataSourceTableAnchorCell,omitempty"`
+
+	// SheetId: References to a SheetType.DATA_SOURCE sheet.
+	SheetId string `json:"sheetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChartId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChartId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceObjectReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceObjectReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceObjectReferences: A list of references to data source
+// objects.
+type DataSourceObjectReferences struct {
+	// References: The references.
+	References []*DataSourceObjectReference `json:"references,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "References") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "References") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceObjectReferences
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceParameter: A parameter in a data source's query. The
+// parameter allows user to pass in values from the spreadsheet into a
+// query.
+type DataSourceParameter struct {
+	// Name: Named parameter. Must be a legitimate identifier for the
+	// DataSource that supports it. For example, BigQuery identifier
+	Name string `json:"name,omitempty"`
+
+	// NamedRangeId: ID of a NamedRange. Its size must be 1x1.
+	NamedRangeId string `json:"namedRangeId,omitempty"`
+
+	// Range: A range that contains the value of the parameter. Its size
+	// must be 1x1.
+	Range *GridRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceRefreshDailySchedule: Schedule refreshes in a time interval
+// everyday.
+type DataSourceRefreshDailySchedule struct {
+	// StartTime: The start time of a time interval in which a data source
+	// refresh is scheduled. Only `hours` part is used. The time interval
+	// size defaults to that in the Sheets editor.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StartTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceRefreshDailySchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceRefreshMonthlySchedule: Schedule refreshes in a time
+// interval on specified days in a month and repeats monthly.
+type DataSourceRefreshMonthlySchedule struct {
+	// DaysOfMonth: Days of the month to refresh. Only 1-28 are supported,
+	// mapping to the 1st to the 28th day. At lesat one day must be
+	// specified.
+	DaysOfMonth []int64 `json:"daysOfMonth,omitempty"`
+
+	// StartTime: The start time of a time interval in which a data source
+	// refresh is scheduled. Only `hours` part is used. The time interval
+	// size defaults to that in the Sheets editor.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DaysOfMonth") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DaysOfMonth") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceRefreshMonthlySchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceRefreshSchedule: The data source refresh schedule. All data
+// sources in the spreadsheet are scheduled to refresh in a future time
+// interval. The time interval size defaults to the one defined in the
+// Sheets editor. For example, if a daily schedule at start time of 8am
+// is scheduled, and the time interval is 4 hours, the scheduled refresh
+// will happen between 8am and 12pm every day.
+type DataSourceRefreshSchedule struct {
+	// DailySchedule: Daily refresh schedule.
+	DailySchedule *DataSourceRefreshDailySchedule `json:"dailySchedule,omitempty"`
+
+	// Enabled: True if the refresh schedule is enabled, or false otherwise.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// MonthlySchedule: Monthly refresh schedule.
+	MonthlySchedule *DataSourceRefreshMonthlySchedule `json:"monthlySchedule,omitempty"`
+
+	// NextRun: Output only. The time interval of the next run.
+	NextRun *Interval `json:"nextRun,omitempty"`
+
+	// RefreshScope: The scope of the refresh.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_REFRESH_SCOPE_UNSPECIFIED" - Default value; Do not
+	// use.
+	//   "ALL_DATA_SOURCES" - Refreshes all data sources and their
+	// associated data source objects in the spreadsheet.
+	RefreshScope string `json:"refreshScope,omitempty"`
+
+	// WeeklySchedule: Weekly refresh schedule.
+	WeeklySchedule *DataSourceRefreshWeeklySchedule `json:"weeklySchedule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DailySchedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailySchedule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceRefreshSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceRefreshSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceRefreshWeeklySchedule: Schedule refreshes in a time
+// interval on specified days in a week and repeats weekly.
+type DataSourceRefreshWeeklySchedule struct {
+	// DaysOfWeek: Days of the week to refresh. At least one day must be
+	// specified.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
+
+	// StartTime: The start time of a time interval in which a data source
+	// refresh is scheduled. Only `hours` part is used. The time interval
+	// size defaults to that in the Sheets editor.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DaysOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DaysOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceRefreshWeeklySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceRefreshWeeklySchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceSheetDimensionRange: A range along a single dimension on a
+// DataSource sheet.
+type DataSourceSheetDimensionRange struct {
+	// ColumnReferences: The columns on the data source sheet.
+	ColumnReferences []*DataSourceColumnReference `json:"columnReferences,omitempty"`
+
+	// SheetId: The ID of the data source sheet the range is on.
+	SheetId int64 `json:"sheetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnReferences") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnReferences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceSheetDimensionRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceSheetDimensionRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceSheetProperties: Additional properties of a
+// SheetType.DATA_SOURCE sheet.
+type DataSourceSheetProperties struct {
+	// Columns: The columns displayed on the sheet, corresponding to the
+	// values in RowData.
+	Columns []*DataSourceColumn `json:"columns,omitempty"`
+
+	// DataExecutionStatus: The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSourceId: ID of the DataSource the sheet connected with.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceSheetProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceSheetProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceSpec: The specification of a data source.
+type DataSourceSpec struct {
+	// BigQuery: A BigQueryDataSourceSpec.
+	BigQuery *BigQueryDataSourceSpec `json:"bigQuery,omitempty"`
+
+	// Parameters: The parameters of the data source.
+	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceTable: A data source table, allowing to import a static
+// table of data from the DataSource into Sheets. This is also known as
+// "Extract" in the Sheets editor.
+type DataSourceTable struct {
+	// ColumnSelectionType: The type to select columns for the data source
+	// table. Defaults to SELECTED.
+	//
+	// Possible values:
+	//   "DATA_SOURCE_TABLE_COLUMN_SELECTION_TYPE_UNSPECIFIED" - The default
+	// column selection type, do not use.
+	//   "SELECTED" - Select columns specified by columns field.
+	//   "SYNC_ALL" - Sync all current and future columns in the data
+	// source. If set, the data source table fetches all the columns in the
+	// data source at the time of refresh.
+	ColumnSelectionType string `json:"columnSelectionType,omitempty"`
+
+	// Columns: Columns selected for the data source table. The
+	// column_selection_type must be SELECTED.
+	Columns []*DataSourceColumnReference `json:"columns,omitempty"`
+
+	// DataExecutionStatus: Output only. The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSourceId: The ID of the data source the data source table is
+	// associated with.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// FilterSpecs: Filter specifications in the data source table.
+	FilterSpecs []*FilterSpec `json:"filterSpecs,omitempty"`
+
+	// RowLimit: The limit of rows to return. If not set, a default limit is
+	// applied. Please refer to the Sheets editor for the default and max
+	// limit.
+	RowLimit int64 `json:"rowLimit,omitempty"`
+
+	// SortSpecs: Sort specifications in the data source table. The result
+	// of the data source table is sorted based on the sort specifications
+	// in order.
+	SortSpecs []*SortSpec `json:"sortSpecs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnSelectionType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnSelectionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataSourceTable) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceTable
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3837,6 +4911,36 @@ type DeleteConditionalFormatRuleResponse struct {
 
 func (s *DeleteConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteConditionalFormatRuleResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteDataSourceRequest: Deletes a data source. The request also
+// deletes the associated data source sheet, and unlinks all associated
+// data source objects.
+type DeleteDataSourceRequest struct {
+	// DataSourceId: The ID of the data source to delete.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSourceId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteDataSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDataSourceRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4526,6 +5630,10 @@ func (s *DimensionGroup) MarshalJSON() ([]byte, error) {
 
 // DimensionProperties: Properties about a dimension.
 type DimensionProperties struct {
+	// DataSourceColumnReference: Output only. If set, this is a column in a
+	// data source sheet.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
+
 	// DeveloperMetadata: The developer metadata associated with a single
 	// row or column.
 	DeveloperMetadata []*DeveloperMetadata `json:"developerMetadata,omitempty"`
@@ -4541,21 +5649,22 @@ type DimensionProperties struct {
 	// dimension in pixels.
 	PixelSize int64 `json:"pixelSize,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeveloperMetadata")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataSourceColumnReference") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeveloperMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "DataSourceColumnReference") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5011,12 +6120,52 @@ func (s *FilterCriteria) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FilterSpec: The filter criteria associated with a specific column.
+type FilterSpec struct {
+	// ColumnIndex: The column index.
+	ColumnIndex int64 `json:"columnIndex,omitempty"`
+
+	// DataSourceColumnReference: Reference to a data source column.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
+
+	// FilterCriteria: The criteria for the column.
+	FilterCriteria *FilterCriteria `json:"filterCriteria,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnIndex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnIndex") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FilterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod FilterSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FilterView: A filter view.
 type FilterView struct {
 	// Criteria: The criteria for showing/hiding values per column. The
 	// map's key is the column index, and the value is the criteria for that
 	// column.
 	Criteria map[string]FilterCriteria `json:"criteria,omitempty"`
+
+	// FilterSpecs: The filter criteria for showing/hiding values per
+	// column. Both criteria and filter_specs are populated in responses. If
+	// both fields are specified in an update request, this field takes
+	// precedence.
+	FilterSpecs []*FilterSpec `json:"filterSpecs,omitempty"`
 
 	// FilterViewId: The ID of the filter view.
 	FilterViewId int64 `json:"filterViewId,omitempty"`
@@ -5757,6 +6906,44 @@ func (s *InterpolationPoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive). The start must be less
+// than or equal to the end. When the start equals the end, the interval
+// is empty (matches no time). When both start and end are unspecified,
+// the interval matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a
+	// Timestamp matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after
+	// the start.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IterativeCalculationSettings: Settings to control how circular
 // dependencies are resolved with iterative calculation.
 type IterativeCalculationSettings struct {
@@ -6491,9 +7678,53 @@ func (s *PivotFilterCriteria) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PivotFilterSpec: The pivot table filter criteria associated with a
+// specific source column offset.
+type PivotFilterSpec struct {
+	// ColumnOffsetIndex: The column offset of the source range.
+	ColumnOffsetIndex int64 `json:"columnOffsetIndex,omitempty"`
+
+	// DataSourceColumnReference: The reference to the data source column.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
+
+	// FilterCriteria: The criteria for the column.
+	FilterCriteria *PivotFilterCriteria `json:"filterCriteria,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnOffsetIndex")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnOffsetIndex") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PivotFilterSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PivotFilterSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PivotGroup: A single grouping (either row or column) in a pivot
 // table.
 type PivotGroup struct {
+	// DataSourceColumnReference: The reference to the data source column
+	// this grouping is based on.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
+
+	// GroupLimit: The count limit on rows or columns to apply to this pivot
+	// group.
+	GroupLimit *PivotGroupLimit `json:"groupLimit,omitempty"`
+
 	// GroupRule: The group rule to apply to this row/column group.
 	GroupRule *PivotGroupRule `json:"groupRule,omitempty"`
 
@@ -6547,7 +7778,47 @@ type PivotGroup struct {
 	// ValueMetadata: Metadata about values in the grouping.
 	ValueMetadata []*PivotGroupValueMetadata `json:"valueMetadata,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GroupRule") to
+	// ForceSendFields is a list of field names (e.g.
+	// "DataSourceColumnReference") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DataSourceColumnReference") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PivotGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod PivotGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PivotGroupLimit: The count limit on rows or columns in the pivot
+// group.
+type PivotGroupLimit struct {
+	// ApplyOrder: The order in which the group limit is applied to the
+	// pivot table. Pivot group limits are applied from lower to higher
+	// order number. Order numbers are normalized to consecutive integers
+	// from 0. For write request, to fully customize the applying orders,
+	// all pivot group limits should have this field set with an unique
+	// number. Otherwise, the order is determined by the index in the
+	// PivotTable.rows list and then the PivotTable.columns list.
+	ApplyOrder int64 `json:"applyOrder,omitempty"`
+
+	// CountLimit: The count limit.
+	CountLimit int64 `json:"countLimit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplyOrder") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6555,7 +7826,7 @@ type PivotGroup struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GroupRule") to include in
+	// NullFields is a list of field names (e.g. "ApplyOrder") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -6564,8 +7835,8 @@ type PivotGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotGroup) MarshalJSON() ([]byte, error) {
-	type NoMethod PivotGroup
+func (s *PivotGroupLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod PivotGroupLimit
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6694,6 +7965,20 @@ type PivotTable struct {
 	// filter for column `C`, whereas the key `1` is for column `D`.
 	Criteria map[string]PivotFilterCriteria `json:"criteria,omitempty"`
 
+	// DataExecutionStatus: Output only. The data execution status for data
+	// source pivot tables.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSourceId: The ID of the data source the pivot table is reading
+	// data from.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// FilterSpecs: The filters applied to the source columns before
+	// aggregating data for the pivot table. Both criteria and filter_specs
+	// are populated in responses. If both fields are specified in an update
+	// request, this field takes precedence.
+	FilterSpecs []*PivotFilterSpec `json:"filterSpecs,omitempty"`
+
 	// Rows: Each row grouping in the pivot table.
 	Rows []*PivotGroup `json:"rows,omitempty"`
 
@@ -6741,8 +8026,8 @@ type PivotValue struct {
 	// should be displayed as the result of a calculation with another pivot
 	// value. For example, if calculated_display_type is specified as
 	// PERCENT_OF_GRAND_TOTAL, all the pivot values are displayed as the
-	// percentage of the grand total. In the Sheets UI, this is referred to
-	// as "Show As" in the value section of a pivot table.
+	// percentage of the grand total. In the Sheets editor, this is referred
+	// to as "Show As" in the value section of a pivot table.
 	//
 	// Possible values:
 	//   "PIVOT_VALUE_CALCULATED_DISPLAY_TYPE_UNSPECIFIED" - Default value,
@@ -6754,6 +8039,10 @@ type PivotValue struct {
 	//   "PERCENT_OF_GRAND_TOTAL" - Shows the pivot values as percentage of
 	// the grand total values.
 	CalculatedDisplayType string `json:"calculatedDisplayType,omitempty"`
+
+	// DataSourceColumnReference: The reference to the data source column
+	// that this value reads from.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
 
 	// Formula: A custom formula to calculate the value. The formula must
 	// start with an `=` character.
@@ -6910,6 +8199,115 @@ func (s *RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RefreshDataSourceObjectExecutionStatus: The execution status of
+// refreshing one data source object.
+type RefreshDataSourceObjectExecutionStatus struct {
+	// DataExecutionStatus: The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// Reference: Reference to a data source object being refreshed.
+	Reference *DataSourceObjectReference `json:"reference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataExecutionStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataExecutionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshDataSourceObjectExecutionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshDataSourceObjectExecutionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RefreshDataSourceRequest: Refreshes one or multiple data source
+// objects in the spreadsheet by the specified references. The request
+// requires an additional bigquery.readonly OAuth scope. If there're
+// multiple refresh requests referencing the same data source objects in
+// one batch, only the last refresh request is processed, and all those
+// requests will have the same response accordingly.
+type RefreshDataSourceRequest struct {
+	// DataSourceId: Reference to a DataSource. If specified, refreshes all
+	// associated data source objects for the data source.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+
+	// Force: Refreshes the data source objects regardless of the current
+	// state. If not set and a referenced data source object was in error
+	// state, the refresh will fail immediately.
+	Force bool `json:"force,omitempty"`
+
+	// IsAll: Refreshes all existing data source objects in the spreadsheet.
+	IsAll bool `json:"isAll,omitempty"`
+
+	// References: References to data source objects to refresh.
+	References *DataSourceObjectReferences `json:"references,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSourceId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshDataSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshDataSourceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RefreshDataSourceResponse: The response from refreshing one or
+// multiple data source objects.
+type RefreshDataSourceResponse struct {
+	// Statuses: All the refresh status for the data source object
+	// references specified in the request. If is_all is specified, the
+	// field contains only those in failure status.
+	Statuses []*RefreshDataSourceObjectExecutionStatus `json:"statuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Statuses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Statuses") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshDataSourceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshDataSourceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RepeatCellRequest: Updates all cells in the range to the values in
 // the given Cell object. Only the fields listed in the fields field are
 // updated; others are unchanged. If writing a cell with a formula, the
@@ -6966,6 +8364,9 @@ type Request struct {
 	// AddConditionalFormatRule: Adds a new conditional format rule.
 	AddConditionalFormatRule *AddConditionalFormatRuleRequest `json:"addConditionalFormatRule,omitempty"`
 
+	// AddDataSource: Adds a data source.
+	AddDataSource *AddDataSourceRequest `json:"addDataSource,omitempty"`
+
 	// AddDimensionGroup: Creates a group over the specified range.
 	AddDimensionGroup *AddDimensionGroupRequest `json:"addDimensionGroup,omitempty"`
 
@@ -7015,6 +8416,9 @@ type Request struct {
 	// DeleteConditionalFormatRule: Deletes an existing conditional format
 	// rule.
 	DeleteConditionalFormatRule *DeleteConditionalFormatRuleRequest `json:"deleteConditionalFormatRule,omitempty"`
+
+	// DeleteDataSource: Deletes a data source.
+	DeleteDataSource *DeleteDataSourceRequest `json:"deleteDataSource,omitempty"`
 
 	// DeleteDeveloperMetadata: Deletes developer metadata
 	DeleteDeveloperMetadata *DeleteDeveloperMetadataRequest `json:"deleteDeveloperMetadata,omitempty"`
@@ -7078,6 +8482,10 @@ type Request struct {
 	// RandomizeRange: Randomizes the order of the rows in a range.
 	RandomizeRange *RandomizeRangeRequest `json:"randomizeRange,omitempty"`
 
+	// RefreshDataSource: Refreshs one or multiple data sources and
+	// associated dbobjects.
+	RefreshDataSource *RefreshDataSourceRequest `json:"refreshDataSource,omitempty"`
+
 	// RepeatCell: Repeats a single cell across a range.
 	RepeatCell *RepeatCellRequest `json:"repeatCell,omitempty"`
 
@@ -7115,6 +8523,9 @@ type Request struct {
 	// UpdateConditionalFormatRule: Updates an existing conditional format
 	// rule.
 	UpdateConditionalFormatRule *UpdateConditionalFormatRuleRequest `json:"updateConditionalFormatRule,omitempty"`
+
+	// UpdateDataSource: Updates a data source.
+	UpdateDataSource *UpdateDataSourceRequest `json:"updateDataSource,omitempty"`
 
 	// UpdateDeveloperMetadata: Updates an existing developer metadata entry
 	UpdateDeveloperMetadata *UpdateDeveloperMetadataRequest `json:"updateDeveloperMetadata,omitempty"`
@@ -7178,6 +8589,9 @@ type Response struct {
 	// AddChart: A reply from adding a chart.
 	AddChart *AddChartResponse `json:"addChart,omitempty"`
 
+	// AddDataSource: A reply from adding a data source.
+	AddDataSource *AddDataSourceResponse `json:"addDataSource,omitempty"`
+
 	// AddDimensionGroup: A reply from adding a dimension group.
 	AddDimensionGroup *AddDimensionGroupResponse `json:"addDimensionGroup,omitempty"`
 
@@ -7224,12 +8638,18 @@ type Response struct {
 	// FindReplace: A reply from doing a find/replace.
 	FindReplace *FindReplaceResponse `json:"findReplace,omitempty"`
 
+	// RefreshDataSource: A reply from refreshing data source objects.
+	RefreshDataSource *RefreshDataSourceResponse `json:"refreshDataSource,omitempty"`
+
 	// TrimWhitespace: A reply from trimming whitespace.
 	TrimWhitespace *TrimWhitespaceResponse `json:"trimWhitespace,omitempty"`
 
 	// UpdateConditionalFormatRule: A reply from updating a conditional
 	// format rule.
 	UpdateConditionalFormatRule *UpdateConditionalFormatRuleResponse `json:"updateConditionalFormatRule,omitempty"`
+
+	// UpdateDataSource: A reply from updating a data source.
+	UpdateDataSource *UpdateDataSourceResponse `json:"updateDataSource,omitempty"`
 
 	// UpdateDeveloperMetadata: A reply from updating a developer metadata
 	// entry.
@@ -7587,6 +9007,10 @@ func (s *Sheet) MarshalJSON() ([]byte, error) {
 
 // SheetProperties: Properties of a sheet.
 type SheetProperties struct {
+	// DataSourceSheetProperties: Output only. If present, the field
+	// contains SheetType.DATA_SOURCE sheet specific properties.
+	DataSourceSheetProperties *DataSourceSheetProperties `json:"dataSourceSheetProperties,omitempty"`
+
 	// GridProperties: Additional properties of the sheet if this sheet is a
 	// grid. (If the sheet is an object sheet, containing a chart or image,
 	// then this field will be absent.) When writing it is an error to set
@@ -7623,6 +9047,8 @@ type SheetProperties struct {
 	//   "GRID" - The sheet is a grid.
 	//   "OBJECT" - The sheet has no grid and instead has an object like a
 	// chart or image.
+	//   "DATA_SOURCE" - The sheet connects with an external DataSource and
+	// shows the preview of data.
 	SheetType string `json:"sheetType,omitempty"`
 
 	// TabColor: The color of the tab in the UI.
@@ -7639,21 +9065,22 @@ type SheetProperties struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "GridProperties") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataSourceSheetProperties") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GridProperties") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "DataSourceSheetProperties") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7810,6 +9237,9 @@ type SortSpec struct {
 	// is also set, this field takes precedence.
 	BackgroundColorStyle *ColorStyle `json:"backgroundColorStyle,omitempty"`
 
+	// DataSourceColumnReference: Reference to a data source column.
+	DataSourceColumnReference *DataSourceColumnReference `json:"dataSourceColumnReference,omitempty"`
+
 	// DimensionIndex: The dimension the sort should be applied to.
 	DimensionIndex int64 `json:"dimensionIndex,omitempty"`
 
@@ -7902,6 +9332,14 @@ func (s *SourceAndDestination) MarshalJSON() ([]byte, error) {
 
 // Spreadsheet: Resource that represents a spreadsheet.
 type Spreadsheet struct {
+	// DataSourceSchedules: Output only. A list of data source refresh
+	// schedules.
+	DataSourceSchedules []*DataSourceRefreshSchedule `json:"dataSourceSchedules,omitempty"`
+
+	// DataSources: A list of external data sources connected with the
+	// spreadsheet.
+	DataSources []*DataSource `json:"dataSources,omitempty"`
+
 	// DeveloperMetadata: The developer metadata associated with a
 	// spreadsheet.
 	DeveloperMetadata []*DeveloperMetadata `json:"developerMetadata,omitempty"`
@@ -7925,7 +9363,7 @@ type Spreadsheet struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DeveloperMetadata")
+	// ForceSendFields is a list of field names (e.g. "DataSourceSchedules")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -7933,7 +9371,7 @@ type Spreadsheet struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeveloperMetadata") to
+	// NullFields is a list of field names (e.g. "DataSourceSchedules") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -8294,6 +9732,50 @@ type ThemeColorPair struct {
 
 func (s *ThemeColorPair) MarshalJSON() ([]byte, error) {
 	type NoMethod ThemeColorPair
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8813,6 +10295,76 @@ func (s *UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateDataSourceRequest: Updates a data source. After the data source
+// is updated successfully, an execution is triggered to refresh the
+// associated DataSource sheet to read data from the updated data
+// source. The request requires an additional bigquery.readonly OAuth
+// scope.
+type UpdateDataSourceRequest struct {
+	// DataSource: The data source to update.
+	DataSource *DataSource `json:"dataSource,omitempty"`
+
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root 'dataSource' is implied and should not be
+	// specified. A single "*" can be used as short-hand for listing every
+	// field.
+	Fields string `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDataSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDataSourceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDataSourceResponse: The response from updating data source.
+type UpdateDataSourceResponse struct {
+	// DataExecutionStatus: The data execution status.
+	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
+
+	// DataSource: The updated data source.
+	DataSource *DataSource `json:"dataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataExecutionStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataExecutionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDataSourceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDataSourceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateDeveloperMetadataRequest: A request to update properties of
 // developer metadata. Updates the properties of the developer metadata
 // selected by the filters to the values provided in the
@@ -8928,6 +10480,9 @@ func (s *UpdateDimensionGroupRequest) MarshalJSON() ([]byte, error) {
 // UpdateDimensionPropertiesRequest: Updates properties of dimensions
 // within the specified range.
 type UpdateDimensionPropertiesRequest struct {
+	// DataSourceSheetRange: The columns on a data source sheet to update.
+	DataSourceSheetRange *DataSourceSheetDimensionRange `json:"dataSourceSheetRange,omitempty"`
+
 	// Fields: The fields that should be updated. At least one field must be
 	// specified. The root `properties` is implied and should not be
 	// specified. A single "*" can be used as short-hand for listing every
@@ -8940,20 +10495,22 @@ type UpdateDimensionPropertiesRequest struct {
 	// Range: The rows or columns to update.
 	Range *DimensionRange `json:"range,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataSourceSheetRange") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSourceSheetRange") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -9683,7 +11240,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9823,7 +11380,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9987,7 +11544,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10148,7 +11705,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10302,7 +11859,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10453,7 +12010,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10597,7 +12154,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10844,7 +12401,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11057,7 +12614,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11202,7 +12759,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11422,7 +12979,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11612,7 +13169,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11756,7 +13313,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11899,7 +13456,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12046,7 +13603,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12268,7 +13825,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12535,7 +14092,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

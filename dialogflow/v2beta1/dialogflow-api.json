@@ -4517,7 +4517,7 @@
       }
     }
   },
-  "revision": "20200817",
+  "revision": "20200823",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata": {
@@ -4542,6 +4542,17 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ImportAgentResponse": {
+      "description": "The response message for Agents.ImportAgent.",
+      "id": "GoogleCloudDialogflowCxV3beta1ImportAgentResponse",
+      "properties": {
+        "agent": {
+          "description": "The unique identifier of the new agent. Format: `projects//locations//agents/`.",
           "type": "string"
         }
       },
@@ -5179,18 +5190,6 @@
         },
         "defaultResponsePlatforms": {
           "description": "Optional. The list of platforms for which the first responses will be copied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
-          "enumDescriptions": [
-            "Default platform.",
-            "Facebook.",
-            "Slack.",
-            "Telegram.",
-            "Kik.",
-            "Skype.",
-            "Line.",
-            "Viber.",
-            "Google Assistant See [Dialogflow webhook format](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
-            "Google Hangouts."
-          ],
           "items": {
             "enum": [
               "PLATFORM_UNSPECIFIED",
@@ -6835,11 +6834,6 @@
         },
         "knowledgeTypes": {
           "description": "Required. The knowledge type of document content.",
-          "enumDescriptions": [
-            "The type is unspecified or arbitrary.",
-            "The document content contains question and answer pairs as either HTML or CSV. Typical FAQ HTML formats are parsed accurately, but unusual formats may fail to be parsed. CSV must have questions in the first column and answers in the second, with no header. Because of this explicit format, they are always parsed accurately.",
-            "Documents for which unstructured text is extracted and used for question answering."
-          ],
           "items": {
             "enum": [
               "KNOWLEDGE_TYPE_UNSPECIFIED",
@@ -7269,19 +7263,6 @@
         },
         "defaultResponsePlatforms": {
           "description": "Optional. The list of platforms for which the first responses will be copied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
-          "enumDescriptions": [
-            "Not specified.",
-            "Facebook.",
-            "Slack.",
-            "Telegram.",
-            "Kik.",
-            "Skype.",
-            "Line.",
-            "Viber.",
-            "Google Assistant See [Dialogflow webhook format](https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)",
-            "Telephony Gateway.",
-            "Google Hangouts."
-          ],
           "items": {
             "enum": [
               "PLATFORM_UNSPECIFIED",
@@ -9338,6 +9319,17 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV3alpha1ImportAgentResponse": {
+      "description": "The response message for Agents.ImportAgent.",
+      "id": "GoogleCloudDialogflowV3alpha1ImportAgentResponse",
+      "properties": {
+        "agent": {
+          "description": "The unique identifier of the new agent. Format: `projects//locations//agents/`.",
           "type": "string"
         }
       },

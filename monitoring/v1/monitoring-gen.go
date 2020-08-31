@@ -608,6 +608,10 @@ type Dashboard struct {
 	// simple list of informational elements like widgets or tiles.
 	GridLayout *GridLayout `json:"gridLayout,omitempty"`
 
+	// MosaicLayout: The content is arranged as a grid of tiles, with each
+	// content widget occupying one or more tiles.
+	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
+
 	// Name: Immutable. The resource name of the dashboard.
 	Name string `json:"name,omitempty"`
 
@@ -971,6 +975,40 @@ type ListDashboardsResponse struct {
 
 func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDashboardsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MosaicLayout: A mosaic layout divides the available space into a grid
+// of squares, and overlays the grid with tiles. Unlike GridLayout,
+// tiles may span multiple grid squares and can be placed at arbitrary
+// locations in the grid.
+type MosaicLayout struct {
+	// Columns: The number of columns in the mosaic grid.
+	Columns int64 `json:"columns,omitempty"`
+
+	// Tiles: The tiles to display.
+	Tiles []*Tile `json:"tiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MosaicLayout) MarshalJSON() ([]byte, error) {
+	type NoMethod MosaicLayout
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1487,6 +1525,49 @@ func (s *Threshold) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Tile: A single tile in the mosaic. The placement and size of the tile
+// are configurable.
+type Tile struct {
+	// Height: The height of the tile, measured in grid squares.
+	Height int64 `json:"height,omitempty"`
+
+	// Widget: The informational widget contained in the tile.
+	Widget *Widget `json:"widget,omitempty"`
+
+	// Width: The width of the tile, measured in grid squares.
+	Width int64 `json:"width,omitempty"`
+
+	// XPos: The zero-indexed position of the tile in grid squares relative
+	// to the left edge of the grid.
+	XPos int64 `json:"xPos,omitempty"`
+
+	// YPos: The zero-indexed position of the tile in grid squares relative
+	// to the top edge of the grid.
+	YPos int64 `json:"yPos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tile) MarshalJSON() ([]byte, error) {
+	type NoMethod Tile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeSeriesFilter: A filter that defines a subset of time series data
 // that is displayed in a widget. Time series data is fetched using the
 // ListTimeSeries
@@ -1812,7 +1893,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1955,7 +2036,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2101,7 +2182,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2267,7 +2348,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2439,7 +2520,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -124,32 +124,23 @@ func (s *Service) userAgent() string {
 // Backup: A backup of a Cloud Bigtable table.
 type Backup struct {
 	// EndTime: Output only. `end_time` is the time that the backup was
-	// finished. The row
-	// data in the backup will be no newer than this timestamp.
+	// finished. The row data in the backup will be no newer than this
+	// timestamp.
 	EndTime string `json:"endTime,omitempty"`
 
 	// ExpireTime: Required. The expiration time of the backup, with
-	// microseconds
-	// granularity that must be at least 6 hours and at most 30 days
-	// from the time the request is received. Once the `expire_time`
-	// has passed, Cloud Bigtable will delete the backup and free
-	// the
+	// microseconds granularity that must be at least 6 hours and at most 30
+	// days from the time the request is received. Once the `expire_time`
+	// has passed, Cloud Bigtable will delete the backup and free the
 	// resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Name: A globally unique identifier for the backup which cannot
-	// be
-	// changed. Values are of the
-	// form
+	// Name: A globally unique identifier for the backup which cannot be
+	// changed. Values are of the form
 	// `projects/{project}/instances/{instance}/clusters/{cluster}/
-	//    backups/_a-zA-Z0-9*`
-	// The final segment of the name must be between 1 and 50 characters
-	// in length.
-	//
-	// The backup is stored in the cluster identified by the prefix of the
-	// backup
-	// name of the
-	// form
+	// backups/_a-zA-Z0-9*` The final segment of the name must be between 1
+	// and 50 characters in length. The backup is stored in the cluster
+	// identified by the prefix of the backup name of the form
 	// `projects/{project}/instances/{instance}/clusters/{cluster}`.
 	Name string `json:"name,omitempty"`
 
@@ -157,17 +148,15 @@ type Backup struct {
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
 	// SourceTable: Required. Immutable. Name of the table from which this
-	// backup was created. This needs
-	// to be in the same instance as the backup. Values are of the
-	// form
+	// backup was created. This needs to be in the same instance as the
+	// backup. Values are of the form
 	// `projects/{project}/instances/{instance}/tables/{source_table}`.
 	SourceTable string `json:"sourceTable,omitempty"`
 
 	// StartTime: Output only. `start_time` is the time that the backup was
-	// started
-	// (i.e. approximately the time the
-	// CreateBackup request is received).  The
-	// row data in this backup will be no older than this timestamp.
+	// started (i.e. approximately the time the CreateBackup request is
+	// received). The row data in this backup will be no older than this
+	// timestamp.
 	StartTime string `json:"startTime,omitempty"`
 
 	// State: Output only. The current state of the backup.
@@ -175,8 +164,7 @@ type Backup struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
 	//   "CREATING" - The pending backup is still being created. Operations
-	// on the
-	// backup may fail with `FAILED_PRECONDITION` in this state.
+	// on the backup may fail with `FAILED_PRECONDITION` in this state.
 	//   "READY" - The backup is complete and ready for use.
 	State string `json:"state,omitempty"`
 
@@ -209,8 +197,7 @@ type BackupInfo struct {
 	Backup string `json:"backup,omitempty"`
 
 	// EndTime: Output only. This time that the backup was finished. Row
-	// data in the
-	// backup will be no newer than this timestamp.
+	// data in the backup will be no newer than this timestamp.
 	EndTime string `json:"endTime,omitempty"`
 
 	// SourceTable: Output only. Name of the table the backup was created
@@ -218,8 +205,7 @@ type BackupInfo struct {
 	SourceTable string `json:"sourceTable,omitempty"`
 
 	// StartTime: Output only. The time that the backup was started. Row
-	// data in the backup
-	// will be no older than this timestamp.
+	// data in the backup will be no older than this timestamp.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Backup") to
@@ -246,13 +232,11 @@ func (s *BackupInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Cluster: A resizable group of nodes in a particular cloud location,
-// capable
-// of serving all Tables in the parent
-// Instance.
+// capable of serving all Tables in the parent Instance.
 type Cluster struct {
 	// DefaultStorageType: Immutable. The type of storage used by this
-	// cluster to serve its
-	// parent instance's tables, unless explicitly overridden.
+	// cluster to serve its parent instance's tables, unless explicitly
+	// overridden.
 	//
 	// Possible values:
 	//   "STORAGE_TYPE_UNSPECIFIED" - The user did not specify a storage
@@ -262,22 +246,18 @@ type Cluster struct {
 	DefaultStorageType string `json:"defaultStorageType,omitempty"`
 
 	// Location: Immutable. The location where this cluster's nodes and
-	// storage reside. For best
-	// performance, clients should be located as close as possible to
-	// this
-	// cluster. Currently only zones are supported, so values should be of
-	// the
-	// form `projects/{project}/locations/{zone}`.
+	// storage reside. For best performance, clients should be located as
+	// close as possible to this cluster. Currently only zones are
+	// supported, so values should be of the form
+	// `projects/{project}/locations/{zone}`.
 	Location string `json:"location,omitempty"`
 
-	// Name: The unique name of the cluster. Values are of the
-	// form
+	// Name: The unique name of the cluster. Values are of the form
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
 
 	// ServeNodes: Required. The number of nodes allocated to this cluster.
-	// More nodes enable higher
-	// throughput and more consistent performance.
+	// More nodes enable higher throughput and more consistent performance.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
 	// State: Output only. The current state of the cluster.
@@ -288,20 +268,15 @@ type Cluster struct {
 	//   "READY" - The cluster has been successfully created and is ready to
 	// serve requests.
 	//   "CREATING" - The cluster is currently being created, and may be
-	// destroyed
-	// if the creation process encounters an error.
-	// A cluster may not be able to serve requests while being created.
+	// destroyed if the creation process encounters an error. A cluster may
+	// not be able to serve requests while being created.
 	//   "RESIZING" - The cluster is currently being resized, and may revert
-	// to its previous
-	// node count if the process encounters an error.
-	// A cluster is still capable of serving requests while being
-	// resized,
-	// but may exhibit performance as if its number of allocated nodes
-	// is
+	// to its previous node count if the process encounters an error. A
+	// cluster is still capable of serving requests while being resized, but
+	// may exhibit performance as if its number of allocated nodes is
 	// between the starting and requested states.
 	//   "DISABLED" - The cluster has no backing nodes. The data (tables)
-	// still
-	// exist, but no operations can be performed on the cluster.
+	// still exist, but no operations can be performed on the cluster.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultStorageType")
@@ -328,8 +303,7 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateBackupMetadata: Metadata type for the operation returned
-// by
+// CreateBackupMetadata: Metadata type for the operation returned by
 // CreateBackup.
 type CreateBackupMetadata struct {
 	// EndTime: If set, the time at which this operation finished or was
@@ -383,18 +357,11 @@ type CreateClusterMetadata struct {
 	RequestTime string `json:"requestTime,omitempty"`
 
 	// Tables: Keys: the full `name` of each table that existed in the
-	// instance when
-	// CreateCluster was first called,
-	// i.e.
-	// `projects/<project>/instances/<instance>/tables/<table>`. Any table
-	// added
-	// to the instance by a later API call will be created in the new
-	// cluster by
-	// that API call, not this one.
-	//
-	// Values: information on how much of a table's data has been copied to
-	// the
-	// newly-created cluster so far.
+	// instance when CreateCluster was first called, i.e.
+	// `projects//instances//tables/`. Any table added to the instance by a
+	// later API call will be created in the new cluster by that API call,
+	// not this one. Values: information on how much of a table's data has
+	// been copied to the newly-created cluster so far.
 	Tables map[string]TableProgress `json:"tables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
@@ -423,20 +390,17 @@ func (s *CreateClusterMetadata) MarshalJSON() ([]byte, error) {
 // CreateClusterRequest: Request message for
 // BigtableInstanceAdmin.CreateCluster.
 type CreateClusterRequest struct {
-	// Cluster: Required. The cluster to be created.
-	// Fields marked `OutputOnly` must be left blank.
+	// Cluster: Required. The cluster to be created. Fields marked
+	// `OutputOnly` must be left blank.
 	Cluster *Cluster `json:"cluster,omitempty"`
 
 	// ClusterId: Required. The ID to be used when referring to the new
-	// cluster within its instance,
-	// e.g., just `mycluster` rather
-	// than
+	// cluster within its instance, e.g., just `mycluster` rather than
 	// `projects/myproject/instances/myinstance/clusters/mycluster`.
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Parent: Required. The unique name of the instance in which to create
-	// the new cluster.
-	// Values are of the form
+	// the new cluster. Values are of the form
 	// `projects/{project}/instances/{instance}`.
 	Parent string `json:"parent,omitempty"`
 
@@ -504,29 +468,23 @@ func (s *CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
 // BigtableInstanceAdmin.CreateInstance.
 type CreateInstanceRequest struct {
 	// Clusters: Required. The clusters to be created within the instance,
-	// mapped by desired
-	// cluster ID, e.g., just `mycluster` rather
-	// than
-	// `projects/myproject/instances/myinstance/clusters/mycluster`.
-	// Fie
-	// lds marked `OutputOnly` must be left blank.
-	// Currently, at most four clusters can be specified.
+	// mapped by desired cluster ID, e.g., just `mycluster` rather than
+	// `projects/myproject/instances/myinstance/clusters/mycluster`. Fields
+	// marked `OutputOnly` must be left blank. Currently, at most four
+	// clusters can be specified.
 	Clusters map[string]Cluster `json:"clusters,omitempty"`
 
-	// Instance: Required. The instance to create.
-	// Fields marked `OutputOnly` must be left blank.
+	// Instance: Required. The instance to create. Fields marked
+	// `OutputOnly` must be left blank.
 	Instance *Instance `json:"instance,omitempty"`
 
 	// InstanceId: Required. The ID to be used when referring to the new
-	// instance within its project,
-	// e.g., just `myinstance` rather
-	// than
+	// instance within its project, e.g., just `myinstance` rather than
 	// `projects/myproject/instances/myinstance`.
 	InstanceId string `json:"instanceId,omitempty"`
 
 	// Parent: Required. The unique name of the project in which to create
-	// the new instance.
-	// Values are of the form `projects/{project}`.
+	// the new instance. Values are of the form `projects/{project}`.
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
@@ -609,37 +567,28 @@ func (s *Frame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A collection of Bigtable Tables and
-// the resources that serve them.
-// All tables in an instance are served from all
-// Clusters in the instance.
+// Instance: A collection of Bigtable Tables and the resources that
+// serve them. All tables in an instance are served from all Clusters in
+// the instance.
 type Instance struct {
 	// DisplayName: Required. The descriptive name for this instance as it
-	// appears in UIs.
-	// Can be changed at any time, but should be kept globally unique
-	// to avoid confusion.
+	// appears in UIs. Can be changed at any time, but should be kept
+	// globally unique to avoid confusion.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Required. Labels are a flexible and lightweight mechanism for
-	// organizing cloud
-	// resources into groups that reflect a customer's organizational needs
-	// and
-	// deployment strategies. They can be used to filter resources and
-	// aggregate
-	// metrics.
-	//
-	// * Label keys must be between 1 and 63 characters long and must
-	// conform to
-	//   the regular expression: `\p{Ll}\p{Lo}{0,62}`.
-	// * Label values must be between 0 and 63 characters long and must
-	// conform to
-	//   the regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`.
-	// * No more than 64 labels can be associated with a given resource.
-	// * Keys and values must both be under 128 bytes.
+	// organizing cloud resources into groups that reflect a customer's
+	// organizational needs and deployment strategies. They can be used to
+	// filter resources and aggregate metrics. * Label keys must be between
+	// 1 and 63 characters long and must conform to the regular expression:
+	// `\p{Ll}\p{Lo}{0,62}`. * Label values must be between 0 and 63
+	// characters long and must conform to the regular expression:
+	// `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
+	// associated with a given resource. * Keys and values must both be
+	// under 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The unique name of the instance. Values are of the
-	// form
+	// Name: The unique name of the instance. Values are of the form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
 	Name string `json:"name,omitempty"`
 
@@ -649,27 +598,22 @@ type Instance struct {
 	//   "STATE_NOT_KNOWN" - The state of the instance could not be
 	// determined.
 	//   "READY" - The instance has been successfully created and can serve
-	// requests
-	// to its tables.
+	// requests to its tables.
 	//   "CREATING" - The instance is currently being created, and may be
-	// destroyed
-	// if the creation process encounters an error.
+	// destroyed if the creation process encounters an error.
 	State string `json:"state,omitempty"`
 
 	// Type: Required. The type of the instance. Defaults to `PRODUCTION`.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the instance is unspecified. If
-	// set when creating an
-	// instance, a `PRODUCTION` instance will be created. If set when
-	// updating
-	// an instance, the type will be left unchanged.
+	// set when creating an instance, a `PRODUCTION` instance will be
+	// created. If set when updating an instance, the type will be left
+	// unchanged.
 	//   "PRODUCTION" - An instance meant for production use. `serve_nodes`
-	// must be set
-	// on the cluster.
+	// must be set on the cluster.
 	//   "DEVELOPMENT" - DEPRECATED: Prefer PRODUCTION for all use cases, as
-	// it no longer enforces
-	// a higher minimum node count than DEVELOPMENT.
+	// it no longer enforces a higher minimum node count than DEVELOPMENT.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -696,16 +640,14 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 }
 
 // OperationProgress: Encapsulates progress related information for a
-// Cloud Bigtable long
-// running operation.
+// Cloud Bigtable long running operation.
 type OperationProgress struct {
 	// EndTime: If set, the time at which this operation failed or was
-	// completed
-	// successfully.
+	// completed successfully.
 	EndTime string `json:"endTime,omitempty"`
 
-	// ProgressPercent: Percent completion of the operation.
-	// Values are between 0 and 100 inclusive.
+	// ProgressPercent: Percent completion of the operation. Values are
+	// between 0 and 100 inclusive.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: Time the request was received.
@@ -735,12 +677,10 @@ func (s *OperationProgress) MarshalJSON() ([]byte, error) {
 }
 
 // OptimizeRestoredTableMetadata: Metadata type for the long-running
-// operation used to track the progress
-// of optimizations performed on a newly restored table. This
-// long-running
-// operation is automatically created by the system after the
-// successful
-// completion of a table restore, and cannot be cancelled.
+// operation used to track the progress of optimizations performed on a
+// newly restored table. This long-running operation is automatically
+// created by the system after the successful completion of a table
+// restore, and cannot be cancelled.
 type OptimizeRestoredTableMetadata struct {
 	// Name: Name of the restored table being optimized.
 	Name string `json:"name,omitempty"`
@@ -779,8 +719,7 @@ type PartialUpdateInstanceRequest struct {
 	Instance *Instance `json:"instance,omitempty"`
 
 	// UpdateMask: Required. The subset of Instance fields which should be
-	// replaced.
-	// Must be explicitly set.
+	// replaced. Must be explicitly set.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
@@ -807,8 +746,7 @@ func (s *PartialUpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RestoreTableMetadata: Metadata type for the long-running operation
-// returned by
-// RestoreTable.
+// returned by RestoreTable.
 type RestoreTableMetadata struct {
 	BackupInfo *BackupInfo `json:"backupInfo,omitempty"`
 
@@ -816,24 +754,17 @@ type RestoreTableMetadata struct {
 	Name string `json:"name,omitempty"`
 
 	// OptimizeTableOperationName: If exists, the name of the long-running
-	// operation that will be used to
-	// track the post-restore optimization process to optimize the
-	// performance of
-	// the restored table. The metadata type of the long-running operation
-	// is
-	// OptimizeRestoreTableMetadata. The response type is
-	// Empty. This long-running operation may be
-	// automatically created by the system if applicable after
-	// the
-	// RestoreTable long-running operation completes successfully. This
-	// operation
-	// may not be created if the table is already optimized or the restore
-	// was
-	// not successful.
+	// operation that will be used to track the post-restore optimization
+	// process to optimize the performance of the restored table. The
+	// metadata type of the long-running operation is
+	// OptimizeRestoreTableMetadata. The response type is Empty. This
+	// long-running operation may be automatically created by the system if
+	// applicable after the RestoreTable long-running operation completes
+	// successfully. This operation may not be created if the table is
+	// already optimized or the restore was not successful.
 	OptimizeTableOperationName string `json:"optimizeTableOperationName,omitempty"`
 
-	// Progress: The progress of the RestoreTable
-	// operation.
+	// Progress: The progress of the RestoreTable operation.
 	Progress *OperationProgress `json:"progress,omitempty"`
 
 	// SourceType: The type of the restore source.
@@ -870,10 +801,8 @@ func (s *RestoreTableMetadata) MarshalJSON() ([]byte, error) {
 // cluster.
 type TableProgress struct {
 	// EstimatedCopiedBytes: Estimate of the number of bytes copied so far
-	// for this table.
-	// This will eventually reach 'estimated_size_bytes' unless the table
-	// copy
-	// is CANCELLED.
+	// for this table. This will eventually reach 'estimated_size_bytes'
+	// unless the table copy is CANCELLED.
 	EstimatedCopiedBytes int64 `json:"estimatedCopiedBytes,omitempty,string"`
 
 	// EstimatedSizeBytes: Estimate of the size of the table to be copied.
@@ -885,10 +814,8 @@ type TableProgress struct {
 	//   "COPYING" - The table is actively being copied to the new cluster.
 	//   "COMPLETED" - The table has been fully copied to the new cluster.
 	//   "CANCELLED" - The table was deleted before it finished copying to
-	// the new cluster.
-	// Note that tables deleted after completion will stay marked
-	// as
-	// COMPLETED, not CANCELLED.
+	// the new cluster. Note that tables deleted after completion will stay
+	// marked as COMPLETED, not CANCELLED.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

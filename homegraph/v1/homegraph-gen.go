@@ -77,8 +77,19 @@ const apiVersion = "v1"
 const basePath = "https://homegraph.googleapis.com/"
 const mtlsBasePath = "https://homegraph.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// New Service: https://www.googleapis.com/auth/homegraph
+	HomegraphScope = "https://www.googleapis.com/auth/homegraph"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/homegraph",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -899,7 +910,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -982,7 +993,10 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   "path": "v1/{+agentUserId}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1035,7 +1049,7 @@ func (c *DevicesQueryCall) Header() http.Header {
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1108,7 +1122,10 @@ func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, err
 	//   },
 	//   "response": {
 	//     "$ref": "QueryResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1169,7 +1186,7 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1243,7 +1260,10 @@ func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "response": {
 	//     "$ref": "ReportStateAndNotificationResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1298,7 +1318,7 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1371,7 +1391,10 @@ func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncD
 	//   },
 	//   "response": {
 	//     "$ref": "RequestSyncDevicesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }
@@ -1423,7 +1446,7 @@ func (c *DevicesSyncCall) Header() http.Header {
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1496,7 +1519,10 @@ func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error
 	//   },
 	//   "response": {
 	//     "$ref": "SyncResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/homegraph"
+	//   ]
 	// }
 
 }

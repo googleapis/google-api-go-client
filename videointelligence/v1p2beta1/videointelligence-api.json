@@ -128,7 +128,7 @@
       }
     }
   },
-  "revision": "20200810",
+  "revision": "20200824",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -2260,16 +2260,6 @@
       "properties": {
         "features": {
           "description": "Required. Requested video annotation features.",
-          "enumDescriptions": [
-            "Unspecified.",
-            "Label detection. Detect objects, such as dog or flower.",
-            "Shot change detection.",
-            "Explicit content detection.",
-            "Speech transcription.",
-            "OCR text detection and tracking.",
-            "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
-          ],
           "items": {
             "enum": [
               "FEATURE_UNSPECIFIED",

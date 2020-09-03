@@ -9,8 +9,8 @@ set -ex
 
 # Only run the linter on go1.13, since it needs type aliases (and we only care
 # about its output once).
-if [[ `go version` != *"go1.13"* ]]; then
-    exit 0
+if [[ $(go version) != *"go1.15"* ]]; then
+  exit 0
 fi
 
 go install \
